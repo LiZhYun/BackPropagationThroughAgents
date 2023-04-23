@@ -37,7 +37,7 @@ def pruning_1(G, A):
         return new_G, A
 
 def matrix_poly(matrix, d):
-    x = torch.eye(d).double().cuda() + torch.div(matrix, d)
+    x = torch.eye(d).double().to(matrix.device) + torch.div(matrix, d)
     return torch.matrix_power(x, d)
 
 # compute constraint h(A) value

@@ -2,7 +2,7 @@ from tokenize import Single
 import numpy as np
 from bta.envs.overcooked_new.script_agent.base import BaseScriptAgent
 from bta.envs.overcooked_new.script_agent.script_period import SCRIPT_PERIODS_CLASSES
-import bta.envs.overcooked_new.script_agent.utils as utils
+from bta.envs.overcooked.script_agent import utils
 from bta.envs.overcooked_new.src.overcooked_ai_py.mdp.actions import Direction, Action
 import random
 import functools

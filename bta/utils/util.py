@@ -219,7 +219,7 @@ def update_linear_schedule(optimizer, epoch, total_num_epochs, initial_lr):
         param_group['lr'] = lr
 
 def matrix_poly(matrix, d):
-    x = torch.eye(d).double().cuda() + torch.div(matrix, d)
+    x = torch.eye(d).double().to(matrix.device) + torch.div(matrix, d)
     return torch.matrix_power(x, d)
 
 # compute constraint h(A) value

@@ -7,7 +7,8 @@ from bta.algorithms.utils.gobigger.encoder import Encoder
 from bta.utils.util import get_shape_from_obs_space, read_config, deep_merge_dicts
 import numpy as np
 import math
-from torch_geometric.nn import GATConv
+# from torch_geometric.nn import GATConv
+# import dgl.nn.pytorch.conv.GATConv as GATConv
 import itertools
 
 class TransEncoder(nn.Module):
@@ -123,7 +124,7 @@ class Actor_graph(nn.Module):
         self.device = device
         self.tpdv = dict(dtype=torch.float32, device=device)
 
-        # self.encoder = TransEncoder(self.n_xdims, self.nhead, self.num_layers)
+        
         if args.env_name == "GoBigger":
             self._mixed_obs = False
             self._nested_obs = True
@@ -135,8 +136,8 @@ class Actor_graph(nn.Module):
             self.base = None
             self._mixed_obs = False
             self._nested_obs = False
-        
-        self.encoder = GATEncoder(self.n_xdims, self.gat_nhead, self.node_num)
+        self.encoder = TransEncoder(self.n_xdims, self.nhead, self.num_layers)
+        # self.encoder = GATEncoder(self.n_xdims, self.gat_nhead, self.node_num)
         self.decoder = SingleLayerDecoder(self.n_xdims, self.decoder_hidden_dim, self.node_num, self.device)
 
         self.to(device)

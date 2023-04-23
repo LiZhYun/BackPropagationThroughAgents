@@ -39,7 +39,10 @@ def make_eval_env(all_args, run_dir):
     def get_env_fn(rank):
         def init_env():
             if all_args.env_name == "Overcooked":
-                env = Overcooked(all_args, run_dir)
+                if all_args.overcooked_version == "old":
+                    env = Overcooked(all_args, run_dir)
+                else:
+                    env = Overcooked_new(all_args, run_dir)
             else:
                 print("Can not support the " +
                       all_args.env_name + "environment.")
@@ -139,7 +142,7 @@ def main(args):
     all_args.device = device
     if "gcs" in all_args.algorithm_name:
         all_args.n_xdims = 144
-        all_args.nhead = 3
+        all_args.nhead = 1
         all_args.gat_nhead = 2
         all_args.decoder_hidden_dim = 64
         all_args.node_num = num_agents

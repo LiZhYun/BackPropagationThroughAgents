@@ -1,6 +1,6 @@
 from bta.envs.overcooked_new.script_agent.base import BaseScriptPeriod
 from bta.envs.overcooked_new.src.overcooked_ai_py.mdp.actions import Direction, Action
-import bta.envs.overcooked_new.script_agent.utils as utils
+from bta.envs.overcooked.script_agent import utils
 import numpy as np
 import random
 

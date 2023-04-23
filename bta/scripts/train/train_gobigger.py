@@ -50,6 +50,9 @@ def make_eval_env(all_args, env_args):
         return GoBiggerSubprocVecEnv([get_env_fn(i) for i in range(all_args.n_eval_rollout_threads)])
 
 def parse_args(args, parser):
+    parser.add_argument("--scenario_name", type=str,
+                        default="t4p3", 
+                        help="which scenario to run on.")
     parser.add_argument("--team_num", type=int,
                         default=4, 
                         help="team numbers")
@@ -184,7 +187,7 @@ def main(args):
     all_args.device = device
     if "gcs" in all_args.algorithm_name:
         all_args.n_xdims = 144
-        all_args.nhead = 3
+        all_args.nhead = 1
         all_args.gat_nhead = 2
         all_args.decoder_hidden_dim = 64
         all_args.node_num = num_agents
