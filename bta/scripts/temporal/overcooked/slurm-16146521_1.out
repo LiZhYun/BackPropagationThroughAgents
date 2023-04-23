@@ -1,0 +1,399 @@
+env is Overcooked, layout is distant_tomato, algo is temporal, exp is check version is new
+INFO:    /etc/singularity/ exists; cleanup by system administrator is not complete (see https://apptainer.org/docs/admin/latest/singularity_migration.html)
+WARNING: Could not find any nv files on this host!
+MOFED version '4.9-6.0.6' not available in this container.
+Selected 4.9-0.1.7.0 as an alternative.
+/home/liz23/.local/lib/python3.6/site-packages/gym/envs/registration.py:216: UserWarning: [33mWARN: Overriding environment Overcooked-v0[0m
+  logger.warn("Overriding environment {}".format(id))
+wandb: Currently logged in as: zhiyuan-li (zhiyuanli). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.14.2
+wandb: Run data is saved locally in /scratch/work/liz23/BackpropagationThroughAgents/bta/scripts/results/Overcooked/distant_tomato/temporal/check/wandb/run-20230419_200619-hsagkmxw
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run temporal_check_seed1
+wandb: ⭐️ View project at https://wandb.ai/zhiyuanli/Overcooked
+wandb: 🚀 View run at https://wandb.ai/zhiyuanli/Overcooked/runs/hsagkmxw
+pygame 2.3.0 (SDL 2.24.2, Python 3.6.10)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+choose to use cpu...
+/scratch/work/liz23/BackpropagationThroughAgents/bta/utils/util.py:20: UserWarning: This overload of nonzero is deprecated:
+	nonzero(Tensor input, *, Tensor out)
+Consider using one of the following signatures instead:
+	nonzero(Tensor input, *, bool as_tuple) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:773.)
+  A_nonzero = torch.nonzero(A).to(adjacency.device)
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:                      agent0/acyclic_loss █▅▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:           agent0/average_episode_rewards ▁▁▁▁▁▁▂▂▂▂▂▂▂▃▃▃▄▄▅▅▆▆▆▆▇▇▇▇█▇██████████
+wandb: agent0/average_episode_rewards_per_agent ▁▁▁▁▁▁▁▁▂▂▂▂▂▂▃▃▄▄▄▅▅▅▅▆▇▇▇▇████████████
+wandb:                      agent0/dist_entropy █████▇▇▇▆▆▆▆▆▆▆▆▆▅▅▅▄▃▄▃▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁
+wandb:                       agent0/policy_loss ▆▆▆▆▆▆▆▆▇▇▆▇▇▆▅▄▄▅▂▂▁▃▃▄▆▆▅▅▆▆▇▆▆▇█▇▆▇█▇
+wandb:                             agent0/ratio ▁▁▁▁▁▂▂▂▃▃▃▃▃▃▃▃▃▄▄▄▅▆▅▆▆▆▇▇▇▇▇▇▇███████
+wandb:                        agent0/value_loss ▃▄▅█▅▅▄▃▃▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                      agent1/acyclic_loss █▅▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:           agent1/average_episode_rewards ▁▁▁▁▁▁▂▂▂▂▂▂▂▃▃▃▄▄▅▅▆▆▆▆▇▇▇▇█▇██████████
+wandb: agent1/average_episode_rewards_per_agent ▁▁▁▁▁▁▂▂▂▂▂▂▂▃▃▄▅▅▅▆▆▆▆▆▇▇▇▇█▇██████████
+wandb:                      agent1/dist_entropy █████▇▇▇▆▆▆▆▆▆▆▆▅▅▅▅▄▄▅▄▃▃▃▃▂▂▂▂▁▁▁▁▁▁▁▁
+wandb:                       agent1/policy_loss ▃▃▃▃▃▃▃▃▃▄▄▄▅▁▁▂▁▁▂▃▃▃▁▄▂█▂▄▃▅▆▃▄▅▄▅▄▄▃▃
+wandb:                             agent1/ratio ▁▁▁▁▁▂▂▂▃▃▃▃▃▃▃▃▄▄▄▄▅▅▄▅▆▆▆▆▇▇▇▇████████
+wandb:                        agent1/value_loss ▃▄▆█▆▄▄▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                              ep_shaped_r ▁▁▁▁▁▁▂▁▂▂▂▂▂▂▃▃▄▄▄▅▅▅▅▅▇▇▇▇█▇██████████
+wandb:                    ep_shaped_r_by_agent0 ▁▁▁▁▁▁▁▁▁▁▁▁▂▁▂▂▂▂▃▃▄▄▄▅▇▇▇▇█▇██████████
+wandb:                    ep_shaped_r_by_agent1 ▁▁▁▁▂▂▂▂▂▂▂▃▃▅▅▆▇██▆▅▄▅▃▂▂▃▂▂▁▂▂▂▂▂▂▂▂▂▂
+wandb:                              ep_sparse_r ▁▁▁▁▁▁▂▂▂▂▂▂▂▃▃▃▄▅▅▅▆▆▆▆▇▇▇▇█▇██████████
+wandb:                    ep_sparse_r_by_agent0 ▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▂▃▃▄▅▅▅▆▇▇▇▇████████████
+wandb:                    ep_sparse_r_by_agent1 ▁▁▁▁▂▂▂▂▂▂▂▃▃▅▅▆▇██▆▅▅▅▃▂▂▂▂▂▁▂▂▂▂▂▂▂▂▂▂
+wandb:             eval_average_episode_rewards ▁▁▁▁▁▁▁▁▁▁
+wandb:                         eval_ep_shaped_r ▁▁▁▁▁▁▁▁▁▁
+wandb:               eval_ep_shaped_r_by_agent0 ▁▁▁▁▁▁▁▁▁▁
+wandb:               eval_ep_shaped_r_by_agent1 ▁▁▁▁▁▁▁▁▁▁
+wandb:                         eval_ep_sparse_r ▁▁▁▁▁▁▁▁▁▁
+wandb:               eval_ep_sparse_r_by_agent0 ▁▁▁▁▁▁▁▁▁▁
+wandb:               eval_ep_sparse_r_by_agent1 ▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:                      agent0/acyclic_loss 0.12549
+wandb:           agent0/average_episode_rewards 333.78268
+wandb: agent0/average_episode_rewards_per_agent 380.08101
+wandb:                      agent0/dist_entropy 0.40971
+wandb:                       agent0/policy_loss -0.01124
+wandb:                             agent0/ratio -0.40991
+wandb:                        agent0/value_loss 0.03285
+wandb:                      agent1/acyclic_loss 0.12549
+wandb:           agent1/average_episode_rewards 333.78268
+wandb: agent1/average_episode_rewards_per_agent 287.48436
+wandb:                      agent1/dist_entropy 0.32058
+wandb:                       agent1/policy_loss -0.01934
+wandb:                             agent1/ratio -0.31391
+wandb:                        agent1/value_loss 0.03728
+wandb:                              ep_shaped_r 114.4
+wandb:                    ep_shaped_r_by_agent0 108.54
+wandb:                    ep_shaped_r_by_agent1 5.86
+wandb:                              ep_sparse_r 282.2
+wandb:                    ep_sparse_r_by_agent0 268.2
+wandb:                    ep_sparse_r_by_agent1 14.0
+wandb:             eval_average_episode_rewards 0.0
+wandb:                         eval_ep_shaped_r 0.0
+wandb:               eval_ep_shaped_r_by_agent0 0.0
+wandb:               eval_ep_shaped_r_by_agent1 0.0
+wandb:                         eval_ep_sparse_r 0.0
+wandb:               eval_ep_sparse_r_by_agent0 0.0
+wandb:               eval_ep_sparse_r_by_agent1 0.0
+wandb: 
+wandb: 🚀 View run temporal_check_seed1 at: https://wandb.ai/zhiyuanli/Overcooked/runs/hsagkmxw
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 5 other file(s)
+wandb: Find logs at: /scratch/work/liz23/BackpropagationThroughAgents/bta/scripts/results/Overcooked/distant_tomato/temporal/check/wandb/run-20230419_200619-hsagkmxw/logs
+(5, 7, 26)
+(5, 7, 52)
+(5, 7, 26)
+(5, 7, 52)
+
+ Layout distant_tomato Algo temporal Exp check updates 0/250 episodes, total num timesteps 40000/10000000, FPS 125.
+
+average episode rewards agent 0 is 1.229837816208601
+average episode rewards agent 1 is 0.899897888302803
+average episode rewards for team is 1.064867852255702
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 5/250 episodes, total num timesteps 240000/10000000, FPS 119.
+
+average episode rewards agent 0 is 2.0173173397779465
+average episode rewards agent 1 is 1.668090932071209
+average episode rewards for team is 1.8427041359245777
+
+ Layout distant_tomato Algo temporal Exp check updates 10/250 episodes, total num timesteps 440000/10000000, FPS 121.
+
+average episode rewards agent 0 is 3.2546598464250565
+average episode rewards agent 1 is 3.284594789147377
+average episode rewards for team is 3.2696273177862167
+
+ Layout distant_tomato Algo temporal Exp check updates 15/250 episodes, total num timesteps 640000/10000000, FPS 123.
+
+average episode rewards agent 0 is 7.587528228759766
+average episode rewards agent 1 is 7.1602292358875275
+average episode rewards for team is 7.3738787323236465
+
+ Layout distant_tomato Algo temporal Exp check updates 20/250 episodes, total num timesteps 840000/10000000, FPS 123.
+
+average episode rewards agent 0 is 12.219919264316559
+average episode rewards agent 1 is 12.428142130374908
+average episode rewards for team is 12.324030697345734
+
+ Layout distant_tomato Algo temporal Exp check updates 25/250 episodes, total num timesteps 1040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 14.533886313438416
+average episode rewards agent 1 is 14.969341456890106
+average episode rewards for team is 14.75161388516426
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 30/250 episodes, total num timesteps 1240000/10000000, FPS 123.
+
+average episode rewards agent 0 is 21.48197442293167
+average episode rewards agent 1 is 21.244843304157257
+average episode rewards for team is 21.363408863544464
+
+ Layout distant_tomato Algo temporal Exp check updates 35/250 episodes, total num timesteps 1440000/10000000, FPS 123.
+
+average episode rewards agent 0 is 28.172430396080017
+average episode rewards agent 1 is 27.383840084075928
+average episode rewards for team is 27.778135240077972
+
+ Layout distant_tomato Algo temporal Exp check updates 40/250 episodes, total num timesteps 1640000/10000000, FPS 124.
+
+average episode rewards agent 0 is 26.413974165916443
+average episode rewards agent 1 is 24.721945822238922
+average episode rewards for team is 25.567959994077682
+
+ Layout distant_tomato Algo temporal Exp check updates 45/250 episodes, total num timesteps 1840000/10000000, FPS 124.
+
+average episode rewards agent 0 is 27.646425366401672
+average episode rewards agent 1 is 26.94929540157318
+average episode rewards for team is 27.297860383987427
+
+ Layout distant_tomato Algo temporal Exp check updates 50/250 episodes, total num timesteps 2040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 30.928310751914978
+average episode rewards agent 1 is 31.770992279052734
+average episode rewards for team is 31.349651515483856
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 55/250 episodes, total num timesteps 2240000/10000000, FPS 123.
+
+average episode rewards agent 0 is 29.37781810760498
+average episode rewards agent 1 is 28.83021831512451
+average episode rewards for team is 29.104018211364746
+
+ Layout distant_tomato Algo temporal Exp check updates 60/250 episodes, total num timesteps 2440000/10000000, FPS 124.
+
+average episode rewards agent 0 is 35.181549191474915
+average episode rewards agent 1 is 34.40093696117401
+average episode rewards for team is 34.79124307632446
+
+ Layout distant_tomato Algo temporal Exp check updates 65/250 episodes, total num timesteps 2640000/10000000, FPS 124.
+
+average episode rewards agent 0 is 49.27940368652344
+average episode rewards agent 1 is 51.509445905685425
+average episode rewards for team is 50.39442479610443
+
+ Layout distant_tomato Algo temporal Exp check updates 70/250 episodes, total num timesteps 2840000/10000000, FPS 124.
+
+average episode rewards agent 0 is 51.42441987991333
+average episode rewards agent 1 is 53.2418429851532
+average episode rewards for team is 52.333131432533264
+
+ Layout distant_tomato Algo temporal Exp check updates 75/250 episodes, total num timesteps 3040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 60.621464252471924
+average episode rewards agent 1 is 62.83274292945862
+average episode rewards for team is 61.72710359096527
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 80/250 episodes, total num timesteps 3240000/10000000, FPS 124.
+
+average episode rewards agent 0 is 71.23897671699524
+average episode rewards agent 1 is 79.24298048019409
+average episode rewards for team is 75.24097859859467
+
+ Layout distant_tomato Algo temporal Exp check updates 85/250 episodes, total num timesteps 3440000/10000000, FPS 124.
+
+average episode rewards agent 0 is 92.86232590675354
+average episode rewards agent 1 is 102.09540128707886
+average episode rewards for team is 97.4788635969162
+
+ Layout distant_tomato Algo temporal Exp check updates 90/250 episodes, total num timesteps 3640000/10000000, FPS 124.
+
+average episode rewards agent 0 is 111.3099455833435
+average episode rewards agent 1 is 120.33131122589111
+average episode rewards for team is 115.82062840461731
+
+ Layout distant_tomato Algo temporal Exp check updates 95/250 episodes, total num timesteps 3840000/10000000, FPS 124.
+
+average episode rewards agent 0 is 128.97363901138306
+average episode rewards agent 1 is 137.05300092697144
+average episode rewards for team is 133.01331996917725
+
+ Layout distant_tomato Algo temporal Exp check updates 100/250 episodes, total num timesteps 4040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 149.75097179412842
+average episode rewards agent 1 is 156.6331148147583
+average episode rewards for team is 153.19204330444336
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 105/250 episodes, total num timesteps 4240000/10000000, FPS 124.
+
+average episode rewards agent 0 is 166.7166829109192
+average episode rewards agent 1 is 174.55140352249146
+average episode rewards for team is 170.63404321670532
+
+ Layout distant_tomato Algo temporal Exp check updates 110/250 episodes, total num timesteps 4440000/10000000, FPS 124.
+
+average episode rewards agent 0 is 183.11082124710083
+average episode rewards agent 1 is 187.9379153251648
+average episode rewards for team is 185.5243682861328
+
+ Layout distant_tomato Algo temporal Exp check updates 115/250 episodes, total num timesteps 4640000/10000000, FPS 124.
+
+average episode rewards agent 0 is 210.97049713134766
+average episode rewards agent 1 is 196.13946676254272
+average episode rewards for team is 203.5549819469452
+
+ Layout distant_tomato Algo temporal Exp check updates 120/250 episodes, total num timesteps 4840000/10000000, FPS 124.
+
+average episode rewards agent 0 is 217.1858549118042
+average episode rewards agent 1 is 199.80603456497192
+average episode rewards for team is 208.49594473838806
+
+ Layout distant_tomato Algo temporal Exp check updates 125/250 episodes, total num timesteps 5040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 237.23421096801758
+average episode rewards agent 1 is 206.01415634155273
+average episode rewards for team is 221.62418365478516
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 130/250 episodes, total num timesteps 5240000/10000000, FPS 124.
+
+average episode rewards agent 0 is 237.2889280319214
+average episode rewards agent 1 is 205.71739673614502
+average episode rewards for team is 221.5031623840332
+
+ Layout distant_tomato Algo temporal Exp check updates 135/250 episodes, total num timesteps 5440000/10000000, FPS 124.
+
+average episode rewards agent 0 is 248.60281944274902
+average episode rewards agent 1 is 212.90853023529053
+average episode rewards for team is 230.75567483901978
+
+ Layout distant_tomato Algo temporal Exp check updates 140/250 episodes, total num timesteps 5640000/10000000, FPS 124.
+
+average episode rewards agent 0 is 261.00828647613525
+average episode rewards agent 1 is 215.92326164245605
+average episode rewards for team is 238.46577405929565
+
+ Layout distant_tomato Algo temporal Exp check updates 145/250 episodes, total num timesteps 5840000/10000000, FPS 124.
+
+average episode rewards agent 0 is 281.89141750335693
+average episode rewards agent 1 is 233.62460136413574
+average episode rewards for team is 257.75800943374634
+
+ Layout distant_tomato Algo temporal Exp check updates 150/250 episodes, total num timesteps 6040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 318.0433511734009
+average episode rewards agent 1 is 241.31784439086914
+average episode rewards for team is 279.680597782135
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 155/250 episodes, total num timesteps 6240000/10000000, FPS 124.
+
+average episode rewards agent 0 is 331.0559272766113
+average episode rewards agent 1 is 250.78909397125244
+average episode rewards for team is 290.9225106239319
+
+ Layout distant_tomato Algo temporal Exp check updates 160/250 episodes, total num timesteps 6440000/10000000, FPS 124.
+
+average episode rewards agent 0 is 336.2783670425415
+average episode rewards agent 1 is 255.64987659454346
+average episode rewards for team is 295.9641218185425
+
+ Layout distant_tomato Algo temporal Exp check updates 165/250 episodes, total num timesteps 6640000/10000000, FPS 124.
+
+average episode rewards agent 0 is 354.83434200286865
+average episode rewards agent 1 is 267.26231575012207
+average episode rewards for team is 311.04832887649536
+
+ Layout distant_tomato Algo temporal Exp check updates 170/250 episodes, total num timesteps 6840000/10000000, FPS 124.
+
+average episode rewards agent 0 is 358.4484100341797
+average episode rewards agent 1 is 267.57915019989014
+average episode rewards for team is 313.0137801170349
+
+ Layout distant_tomato Algo temporal Exp check updates 175/250 episodes, total num timesteps 7040000/10000000, FPS 124.
+
+average episode rewards agent 0 is 367.43359565734863
+average episode rewards agent 1 is 274.74188804626465
+average episode rewards for team is 321.08774185180664
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 180/250 episodes, total num timesteps 7240000/10000000, FPS 124.
+
+average episode rewards agent 0 is 361.90242767333984
+average episode rewards agent 1 is 268.73271465301514
+average episode rewards for team is 315.3175711631775
+
+ Layout distant_tomato Algo temporal Exp check updates 185/250 episodes, total num timesteps 7440000/10000000, FPS 124.
+
+average episode rewards agent 0 is 385.317063331604
+average episode rewards agent 1 is 286.14561557769775
+average episode rewards for team is 335.7313394546509
+
+ Layout distant_tomato Algo temporal Exp check updates 190/250 episodes, total num timesteps 7640000/10000000, FPS 125.
+
+average episode rewards agent 0 is 381.516170501709
+average episode rewards agent 1 is 282.3005437850952
+average episode rewards for team is 331.9083571434021
+
+ Layout distant_tomato Algo temporal Exp check updates 195/250 episodes, total num timesteps 7840000/10000000, FPS 125.
+
+average episode rewards agent 0 is 383.7505102157593
+average episode rewards agent 1 is 284.8417282104492
+average episode rewards for team is 334.29611921310425
+
+ Layout distant_tomato Algo temporal Exp check updates 200/250 episodes, total num timesteps 8040000/10000000, FPS 125.
+
+average episode rewards agent 0 is 383.2855463027954
+average episode rewards agent 1 is 286.0905408859253
+average episode rewards for team is 334.68804359436035
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 205/250 episodes, total num timesteps 8240000/10000000, FPS 126.
+
+average episode rewards agent 0 is 379.757022857666
+average episode rewards agent 1 is 285.3611469268799
+average episode rewards for team is 332.55908489227295
+
+ Layout distant_tomato Algo temporal Exp check updates 210/250 episodes, total num timesteps 8440000/10000000, FPS 126.
+
+average episode rewards agent 0 is 386.33124828338623
+average episode rewards agent 1 is 289.21101093292236
+average episode rewards for team is 337.7711296081543
+
+ Layout distant_tomato Algo temporal Exp check updates 215/250 episodes, total num timesteps 8640000/10000000, FPS 126.
+
+average episode rewards agent 0 is 387.64359951019287
+average episode rewards agent 1 is 289.5838975906372
+average episode rewards for team is 338.61374855041504
+
+ Layout distant_tomato Algo temporal Exp check updates 220/250 episodes, total num timesteps 8840000/10000000, FPS 127.
+
+average episode rewards agent 0 is 388.0128860473633
+average episode rewards agent 1 is 289.0920162200928
+average episode rewards for team is 338.552451133728
+
+ Layout distant_tomato Algo temporal Exp check updates 225/250 episodes, total num timesteps 9040000/10000000, FPS 127.
+
+average episode rewards agent 0 is 380.667781829834
+average episode rewards agent 1 is 285.85784435272217
+average episode rewards for team is 333.2628130912781
+eval average sparse rewards: 0.0
+
+ Layout distant_tomato Algo temporal Exp check updates 230/250 episodes, total num timesteps 9240000/10000000, FPS 127.
+
+average episode rewards agent 0 is 385.1660490036011
+average episode rewards agent 1 is 289.148473739624
+average episode rewards for team is 337.15726137161255
+
+ Layout distant_tomato Algo temporal Exp check updates 235/250 episodes, total num timesteps 9440000/10000000, FPS 128.
+
+average episode rewards agent 0 is 387.64641284942627
+average episode rewards agent 1 is 293.8693046569824
+average episode rewards for team is 340.75785875320435
+
+ Layout distant_tomato Algo temporal Exp check updates 240/250 episodes, total num timesteps 9640000/10000000, FPS 128.
+
+average episode rewards agent 0 is 387.76769638061523
+average episode rewards agent 1 is 303.1805753707886
+average episode rewards for team is 345.4741358757019
+
+ Layout distant_tomato Algo temporal Exp check updates 245/250 episodes, total num timesteps 9840000/10000000, FPS 128.
+
+average episode rewards agent 0 is 380.08100986480713
+average episode rewards agent 1 is 287.48435974121094
+average episode rewards for team is 333.78268480300903

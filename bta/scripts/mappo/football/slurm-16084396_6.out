@@ -1,0 +1,620 @@
+INFO:    /etc/singularity/ exists; cleanup by system administrator is not complete (see https://apptainer.org/docs/admin/latest/singularity_migration.html)
+WARNING: Could not find any nv files on this host!
+MOFED version '4.9-6.0.6' not available in this container.
+Selected 4.9-0.1.7.0 as an alternative.
+wandb: Currently logged in as: zhiyuan-li (zhiyuanli). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.14.2
+wandb: Run data is saved locally in /scratch/work/liz23/BackpropagationThroughAgents/bta/scripts/results/Football/academy_3_vs_1_with_keeper/mappo/check/wandb/run-20230418_120836-y8l6234s
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run mappo_check_seed1
+wandb: ⭐️ View project at https://wandb.ai/zhiyuanli/Football
+wandb: 🚀 View run at https://wandb.ai/zhiyuanli/Football/runs/y8l6234s
+choose to use cpu...
+/scratch/work/liz23/BackpropagationThroughAgents/bta/algorithms/utils/rnn.py:45: UserWarning: This overload of nonzero is deprecated:
+	nonzero()
+Consider using one of the following signatures instead:
+	nonzero(*, bool as_tuple) (Triggered internally at  ../torch/csrc/utils/python_arg_parser.cpp:773.)
+  .any(dim=-1)
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.014 MB of 0.014 MB uploaded (0.000 MB deduped)wandb: \ 0.014 MB of 0.388 MB uploaded (0.000 MB deduped)wandb: | 0.244 MB of 0.388 MB uploaded (0.000 MB deduped)wandb: / 0.244 MB of 0.388 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:          actor_grad_norm ▁▂▃▄▄▅▅▆▆▆▆▆▅▅█▆▅▅▅▅▆▇▅▆██▅▅▆▇▆▆▆▇▅▆▅▇▇▇
+wandb:  average_episode_rewards ▁▁▂▃▄▅▆▆▆▇▇▇▇██▆█▇▇▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇█
+wandb:         critic_grad_norm ▁▃▃▇▇█▅▇▄▄▂▃▂▃▁▄▁▁▂▁▂▂▂▁▃▂▁▂▃▂▂▁▃▂▂▁▂▄▂▃
+wandb:             dist_entropy █▅▃▂▂▂▁▂▂▂▂▂▁▂▂▂▂▂▂▁▂▁▁▁▁▁▁▂▁▂▁▁▂▂▂▂▂▁▂▁
+wandb:                eval_goal ▁▁▁▁▆▆▇▆▇▇█▇██▇▇██▇█▇█▇████▇▇██████▇▇█▇█
+wandb:                eval_step ▁█▄▅▃▃▄▃▃▃▃▃▂▂▃▃▂▃▃▃▃▂▃▂▂▂▂▂▂▂▂▂▃▃▂▃▃▂▂▂
+wandb:            eval_win_rate ▁▁▁▁▆▆▇▆▇▇█▇██▇▇██▇█▇█▇████▇▇██████▇▇█▇█
+wandb:                     goal ▁▁▂▃▅▆▆▇▇▇▇▇███▇████████████████████████
+wandb:              policy_loss █▇▇▆▆▅▅▄▄▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▁▁▁▁▂▁▁▁▁
+wandb:  pred_shaped_info_class0 ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                    ratio ▃▅▃▂▂▃▁▂▂▄▂▁▆▁▃▄█▁▄▆▅▇▁▆▆▃▆▄▂▄▃▄▇▄▅▄▅▄▄▆
+wandb: shaped_info_error_class0 ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:         shaped_info_loss ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                    steps ▇█▇▄▄▃▂▂▂▂▂▂▁▁▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:               value_loss ▇▆█▇▅▄▃▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 win_rate ▁▁▂▃▅▆▆▇▇▇▇▇███▇████████████████████████
+wandb: 
+wandb: Run summary:
+wandb:          actor_grad_norm 1.12378
+wandb:  average_episode_rewards 19.606
+wandb:         critic_grad_norm 2.16167
+wandb:             dist_entropy 1.99491
+wandb:                eval_goal 0.9
+wandb:                eval_step 47.31
+wandb:            eval_win_rate 0.9
+wandb:                     goal 0.81659
+wandb:              policy_loss -0.01466
+wandb:  pred_shaped_info_class0 0.0
+wandb:                    ratio 1.00089
+wandb: shaped_info_error_class0 0.0
+wandb:         shaped_info_loss 0.0
+wandb:                    steps 53.16932
+wandb:               value_loss 0.06323
+wandb:                 win_rate 0.81712
+wandb: 
+wandb: 🚀 View run mappo_check_seed1 at: https://wandb.ai/zhiyuanli/Football/runs/y8l6234s
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 3 other file(s)
+wandb: Find logs at: /scratch/work/liz23/BackpropagationThroughAgents/bta/scripts/results/Football/academy_3_vs_1_with_keeper/mappo/check/wandb/run-20230418_120836-y8l6234s/logs
+
+ Env Football Algo mappo Exp check updates 19/2500 episodes, total num timesteps 200000/25000000, FPS 511.
+
+average episode rewards is 3.3020000904798508
+
+ Env Football Algo mappo Exp check updates 39/2500 episodes, total num timesteps 400000/25000000, FPS 507.
+
+average episode rewards is 3.976000100374222
+eval expected goal is 0.01.
+
+ Env Football Algo mappo Exp check updates 59/2500 episodes, total num timesteps 600000/25000000, FPS 503.
+
+average episode rewards is 4.284000396728516
+
+ Env Football Algo mappo Exp check updates 79/2500 episodes, total num timesteps 800000/25000000, FPS 503.
+
+average episode rewards is 4.368000477552414
+eval expected goal is 0.0.
+
+ Env Football Algo mappo Exp check updates 99/2500 episodes, total num timesteps 1000000/25000000, FPS 503.
+
+average episode rewards is 3.799999877810478
+
+ Env Football Algo mappo Exp check updates 119/2500 episodes, total num timesteps 1200000/25000000, FPS 505.
+
+average episode rewards is 4.796000197529793
+eval expected goal is 0.11.
+
+ Env Football Algo mappo Exp check updates 139/2500 episodes, total num timesteps 1400000/25000000, FPS 504.
+
+average episode rewards is 6.132000312209129
+
+ Env Football Algo mappo Exp check updates 159/2500 episodes, total num timesteps 1600000/25000000, FPS 507.
+
+average episode rewards is 6.940000504255295
+eval expected goal is 0.05.
+
+ Env Football Algo mappo Exp check updates 179/2500 episodes, total num timesteps 1800000/25000000, FPS 505.
+
+average episode rewards is 8.074000477790833
+
+ Env Football Algo mappo Exp check updates 199/2500 episodes, total num timesteps 2000000/25000000, FPS 505.
+
+average episode rewards is 8.222000300884247
+eval expected goal is 0.03.
+
+ Env Football Algo mappo Exp check updates 219/2500 episodes, total num timesteps 2200000/25000000, FPS 504.
+
+average episode rewards is 8.816000074148178
+
+ Env Football Algo mappo Exp check updates 239/2500 episodes, total num timesteps 2400000/25000000, FPS 504.
+
+average episode rewards is 8.707999438047409
+eval expected goal is 0.5.
+
+ Env Football Algo mappo Exp check updates 259/2500 episodes, total num timesteps 2600000/25000000, FPS 503.
+
+average episode rewards is 11.084000766277313
+
+ Env Football Algo mappo Exp check updates 279/2500 episodes, total num timesteps 2800000/25000000, FPS 501.
+
+average episode rewards is 12.130000442266464
+eval expected goal is 0.66.
+
+ Env Football Algo mappo Exp check updates 299/2500 episodes, total num timesteps 3000000/25000000, FPS 500.
+
+average episode rewards is 14.229999482631683
+
+ Env Football Algo mappo Exp check updates 319/2500 episodes, total num timesteps 3200000/25000000, FPS 499.
+
+average episode rewards is 13.732002675533295
+eval expected goal is 0.61.
+
+ Env Football Algo mappo Exp check updates 339/2500 episodes, total num timesteps 3400000/25000000, FPS 498.
+
+average episode rewards is 13.245999813079834
+
+ Env Football Algo mappo Exp check updates 359/2500 episodes, total num timesteps 3600000/25000000, FPS 497.
+
+average episode rewards is 12.970000505447388
+eval expected goal is 0.64.
+
+ Env Football Algo mappo Exp check updates 379/2500 episodes, total num timesteps 3800000/25000000, FPS 496.
+
+average episode rewards is 14.540000259876251
+
+ Env Football Algo mappo Exp check updates 399/2500 episodes, total num timesteps 4000000/25000000, FPS 496.
+
+average episode rewards is 16.53599888086319
+eval expected goal is 0.75.
+
+ Env Football Algo mappo Exp check updates 419/2500 episodes, total num timesteps 4200000/25000000, FPS 495.
+
+average episode rewards is 15.866000950336456
+
+ Env Football Algo mappo Exp check updates 439/2500 episodes, total num timesteps 4400000/25000000, FPS 496.
+
+average episode rewards is 14.462000131607056
+eval expected goal is 0.63.
+
+ Env Football Algo mappo Exp check updates 459/2500 episodes, total num timesteps 4600000/25000000, FPS 496.
+
+average episode rewards is 16.2540003657341
+
+ Env Football Algo mappo Exp check updates 479/2500 episodes, total num timesteps 4800000/25000000, FPS 498.
+
+average episode rewards is 16.300001740455627
+eval expected goal is 0.53.
+
+ Env Football Algo mappo Exp check updates 499/2500 episodes, total num timesteps 5000000/25000000, FPS 498.
+
+average episode rewards is 18.087999522686005
+
+ Env Football Algo mappo Exp check updates 519/2500 episodes, total num timesteps 5200000/25000000, FPS 499.
+
+average episode rewards is 17.108000814914703
+eval expected goal is 0.82.
+
+ Env Football Algo mappo Exp check updates 539/2500 episodes, total num timesteps 5400000/25000000, FPS 499.
+
+average episode rewards is 15.57600051164627
+
+ Env Football Algo mappo Exp check updates 559/2500 episodes, total num timesteps 5600000/25000000, FPS 500.
+
+average episode rewards is 16.026000678539276
+eval expected goal is 0.88.
+
+ Env Football Algo mappo Exp check updates 579/2500 episodes, total num timesteps 5800000/25000000, FPS 500.
+
+average episode rewards is 18.504001200199127
+
+ Env Football Algo mappo Exp check updates 599/2500 episodes, total num timesteps 6000000/25000000, FPS 501.
+
+average episode rewards is 17.796000838279724
+eval expected goal is 0.77.
+
+ Env Football Algo mappo Exp check updates 619/2500 episodes, total num timesteps 6200000/25000000, FPS 501.
+
+average episode rewards is 20.768000185489655
+
+ Env Football Algo mappo Exp check updates 639/2500 episodes, total num timesteps 6400000/25000000, FPS 501.
+
+average episode rewards is 19.419999420642853
+eval expected goal is 0.88.
+
+ Env Football Algo mappo Exp check updates 659/2500 episodes, total num timesteps 6600000/25000000, FPS 501.
+
+average episode rewards is 19.888001680374146
+
+ Env Football Algo mappo Exp check updates 679/2500 episodes, total num timesteps 6800000/25000000, FPS 502.
+
+average episode rewards is 16.94200038909912
+eval expected goal is 0.85.
+
+ Env Football Algo mappo Exp check updates 699/2500 episodes, total num timesteps 7000000/25000000, FPS 501.
+
+average episode rewards is 19.846001267433167
+
+ Env Football Algo mappo Exp check updates 719/2500 episodes, total num timesteps 7200000/25000000, FPS 502.
+
+average episode rewards is 20.217999815940857
+eval expected goal is 0.85.
+
+ Env Football Algo mappo Exp check updates 739/2500 episodes, total num timesteps 7400000/25000000, FPS 502.
+
+average episode rewards is 20.861998200416565
+
+ Env Football Algo mappo Exp check updates 759/2500 episodes, total num timesteps 7600000/25000000, FPS 502.
+
+average episode rewards is 19.5000022649765
+eval expected goal is 0.9.
+
+ Env Football Algo mappo Exp check updates 779/2500 episodes, total num timesteps 7800000/25000000, FPS 502.
+
+average episode rewards is 19.54199969768524
+
+ Env Football Algo mappo Exp check updates 799/2500 episodes, total num timesteps 8000000/25000000, FPS 502.
+
+average episode rewards is 19.20200139284134
+eval expected goal is 0.95.
+
+ Env Football Algo mappo Exp check updates 819/2500 episodes, total num timesteps 8200000/25000000, FPS 502.
+
+average episode rewards is 19.512002170085907
+
+ Env Football Algo mappo Exp check updates 839/2500 episodes, total num timesteps 8400000/25000000, FPS 502.
+
+average episode rewards is 20.890000462532043
+eval expected goal is 0.88.
+
+ Env Football Algo mappo Exp check updates 859/2500 episodes, total num timesteps 8600000/25000000, FPS 502.
+
+average episode rewards is 19.25399899482727
+
+ Env Football Algo mappo Exp check updates 879/2500 episodes, total num timesteps 8800000/25000000, FPS 501.
+
+average episode rewards is 18.957999348640442
+eval expected goal is 0.84.
+
+ Env Football Algo mappo Exp check updates 899/2500 episodes, total num timesteps 9000000/25000000, FPS 501.
+
+average episode rewards is 21.236002445220947
+
+ Env Football Algo mappo Exp check updates 919/2500 episodes, total num timesteps 9200000/25000000, FPS 501.
+
+average episode rewards is 20.900002121925354
+eval expected goal is 0.97.
+
+ Env Football Algo mappo Exp check updates 939/2500 episodes, total num timesteps 9400000/25000000, FPS 501.
+
+average episode rewards is 19.01400089263916
+
+ Env Football Algo mappo Exp check updates 959/2500 episodes, total num timesteps 9600000/25000000, FPS 501.
+
+average episode rewards is 17.000001668930054
+eval expected goal is 0.85.
+
+ Env Football Algo mappo Exp check updates 979/2500 episodes, total num timesteps 9800000/25000000, FPS 501.
+
+average episode rewards is 19.828000664711
+
+ Env Football Algo mappo Exp check updates 999/2500 episodes, total num timesteps 10000000/25000000, FPS 501.
+
+average episode rewards is 19.842001795768738
+eval expected goal is 0.86.
+
+ Env Football Algo mappo Exp check updates 1019/2500 episodes, total num timesteps 10200000/25000000, FPS 501.
+
+average episode rewards is 20.866000652313232
+
+ Env Football Algo mappo Exp check updates 1039/2500 episodes, total num timesteps 10400000/25000000, FPS 501.
+
+average episode rewards is 19.78200078010559
+eval expected goal is 0.93.
+
+ Env Football Algo mappo Exp check updates 1059/2500 episodes, total num timesteps 10600000/25000000, FPS 501.
+
+average episode rewards is 19.908002018928528
+
+ Env Football Algo mappo Exp check updates 1079/2500 episodes, total num timesteps 10800000/25000000, FPS 502.
+
+average episode rewards is 19.116000831127167
+eval expected goal is 0.9.
+
+ Env Football Algo mappo Exp check updates 1099/2500 episodes, total num timesteps 11000000/25000000, FPS 501.
+
+average episode rewards is 19.869999587535858
+
+ Env Football Algo mappo Exp check updates 1119/2500 episodes, total num timesteps 11200000/25000000, FPS 501.
+
+average episode rewards is 19.80000138282776
+eval expected goal is 0.87.
+
+ Env Football Algo mappo Exp check updates 1139/2500 episodes, total num timesteps 11400000/25000000, FPS 501.
+
+average episode rewards is 18.974000215530396
+
+ Env Football Algo mappo Exp check updates 1159/2500 episodes, total num timesteps 11600000/25000000, FPS 501.
+
+average episode rewards is 18.53800117969513
+eval expected goal is 0.84.
+
+ Env Football Algo mappo Exp check updates 1179/2500 episodes, total num timesteps 11800000/25000000, FPS 501.
+
+average episode rewards is 22.275999188423157
+
+ Env Football Algo mappo Exp check updates 1199/2500 episodes, total num timesteps 12000000/25000000, FPS 502.
+
+average episode rewards is 20.514000952243805
+eval expected goal is 0.92.
+
+ Env Football Algo mappo Exp check updates 1219/2500 episodes, total num timesteps 12200000/25000000, FPS 501.
+
+average episode rewards is 19.572001695632935
+
+ Env Football Algo mappo Exp check updates 1239/2500 episodes, total num timesteps 12400000/25000000, FPS 501.
+
+average episode rewards is 20.18200159072876
+eval expected goal is 0.91.
+
+ Env Football Algo mappo Exp check updates 1259/2500 episodes, total num timesteps 12600000/25000000, FPS 502.
+
+average episode rewards is 20.170000195503235
+
+ Env Football Algo mappo Exp check updates 1279/2500 episodes, total num timesteps 12800000/25000000, FPS 502.
+
+average episode rewards is 20.30400037765503
+eval expected goal is 0.8.
+
+ Env Football Algo mappo Exp check updates 1299/2500 episodes, total num timesteps 13000000/25000000, FPS 502.
+
+average episode rewards is 21.396000683307648
+
+ Env Football Algo mappo Exp check updates 1319/2500 episodes, total num timesteps 13200000/25000000, FPS 502.
+
+average episode rewards is 20.46000212430954
+eval expected goal is 0.89.
+
+ Env Football Algo mappo Exp check updates 1339/2500 episodes, total num timesteps 13400000/25000000, FPS 502.
+
+average episode rewards is 22.086000442504883
+
+ Env Football Algo mappo Exp check updates 1359/2500 episodes, total num timesteps 13600000/25000000, FPS 503.
+
+average episode rewards is 19.742001593112946
+eval expected goal is 0.89.
+
+ Env Football Algo mappo Exp check updates 1379/2500 episodes, total num timesteps 13800000/25000000, FPS 503.
+
+average episode rewards is 20.187997817993164
+
+ Env Football Algo mappo Exp check updates 1399/2500 episodes, total num timesteps 14000000/25000000, FPS 503.
+
+average episode rewards is 19.144000113010406
+eval expected goal is 0.84.
+
+ Env Football Algo mappo Exp check updates 1419/2500 episodes, total num timesteps 14200000/25000000, FPS 503.
+
+average episode rewards is 17.030002176761627
+
+ Env Football Algo mappo Exp check updates 1439/2500 episodes, total num timesteps 14400000/25000000, FPS 503.
+
+average episode rewards is 20.028001070022583
+eval expected goal is 0.9.
+
+ Env Football Algo mappo Exp check updates 1459/2500 episodes, total num timesteps 14600000/25000000, FPS 503.
+
+average episode rewards is 21.382001042366028
+
+ Env Football Algo mappo Exp check updates 1479/2500 episodes, total num timesteps 14800000/25000000, FPS 503.
+
+average episode rewards is 20.358000695705414
+eval expected goal is 0.9.
+
+ Env Football Algo mappo Exp check updates 1499/2500 episodes, total num timesteps 15000000/25000000, FPS 503.
+
+average episode rewards is 19.624000787734985
+
+ Env Football Algo mappo Exp check updates 1519/2500 episodes, total num timesteps 15200000/25000000, FPS 504.
+
+average episode rewards is 21.025998890399933
+eval expected goal is 0.92.
+
+ Env Football Algo mappo Exp check updates 1539/2500 episodes, total num timesteps 15400000/25000000, FPS 504.
+
+average episode rewards is 20.640000700950623
+
+ Env Football Algo mappo Exp check updates 1559/2500 episodes, total num timesteps 15600000/25000000, FPS 504.
+
+average episode rewards is 17.424000799655914
+eval expected goal is 0.89.
+
+ Env Football Algo mappo Exp check updates 1579/2500 episodes, total num timesteps 15800000/25000000, FPS 504.
+
+average episode rewards is 20.632000267505646
+
+ Env Football Algo mappo Exp check updates 1599/2500 episodes, total num timesteps 16000000/25000000, FPS 504.
+
+average episode rewards is 20.37000060081482
+eval expected goal is 0.92.
+
+ Env Football Algo mappo Exp check updates 1619/2500 episodes, total num timesteps 16200000/25000000, FPS 504.
+
+average episode rewards is 21.602001786231995
+
+ Env Football Algo mappo Exp check updates 1639/2500 episodes, total num timesteps 16400000/25000000, FPS 505.
+
+average episode rewards is 20.03200203180313
+eval expected goal is 0.91.
+
+ Env Football Algo mappo Exp check updates 1659/2500 episodes, total num timesteps 16600000/25000000, FPS 505.
+
+average episode rewards is 20.364001393318176
+
+ Env Football Algo mappo Exp check updates 1679/2500 episodes, total num timesteps 16800000/25000000, FPS 505.
+
+average episode rewards is 18.226000666618347
+eval expected goal is 0.84.
+
+ Env Football Algo mappo Exp check updates 1699/2500 episodes, total num timesteps 17000000/25000000, FPS 505.
+
+average episode rewards is 19.390001893043518
+
+ Env Football Algo mappo Exp check updates 1719/2500 episodes, total num timesteps 17200000/25000000, FPS 505.
+
+average episode rewards is 19.009999930858612
+eval expected goal is 0.8.
+
+ Env Football Algo mappo Exp check updates 1739/2500 episodes, total num timesteps 17400000/25000000, FPS 505.
+
+average episode rewards is 20.044000446796417
+
+ Env Football Algo mappo Exp check updates 1759/2500 episodes, total num timesteps 17600000/25000000, FPS 505.
+
+average episode rewards is 19.884000718593597
+eval expected goal is 0.86.
+
+ Env Football Algo mappo Exp check updates 1779/2500 episodes, total num timesteps 17800000/25000000, FPS 505.
+
+average episode rewards is 19.870001077651978
+
+ Env Football Algo mappo Exp check updates 1799/2500 episodes, total num timesteps 18000000/25000000, FPS 505.
+
+average episode rewards is 19.55600082874298
+eval expected goal is 0.84.
+
+ Env Football Algo mappo Exp check updates 1819/2500 episodes, total num timesteps 18200000/25000000, FPS 505.
+
+average episode rewards is 19.354000687599182
+
+ Env Football Algo mappo Exp check updates 1839/2500 episodes, total num timesteps 18400000/25000000, FPS 505.
+
+average episode rewards is 20.558001101017
+eval expected goal is 0.88.
+
+ Env Football Algo mappo Exp check updates 1859/2500 episodes, total num timesteps 18600000/25000000, FPS 505.
+
+average episode rewards is 19.61800307035446
+
+ Env Football Algo mappo Exp check updates 1879/2500 episodes, total num timesteps 18800000/25000000, FPS 505.
+
+average episode rewards is 17.419999837875366
+eval expected goal is 0.93.
+
+ Env Football Algo mappo Exp check updates 1899/2500 episodes, total num timesteps 19000000/25000000, FPS 505.
+
+average episode rewards is 21.052001416683197
+
+ Env Football Algo mappo Exp check updates 1919/2500 episodes, total num timesteps 19200000/25000000, FPS 505.
+
+average episode rewards is 19.599999487400055
+eval expected goal is 0.95.
+
+ Env Football Algo mappo Exp check updates 1939/2500 episodes, total num timesteps 19400000/25000000, FPS 505.
+
+average episode rewards is 20.787999033927917
+
+ Env Football Algo mappo Exp check updates 1959/2500 episodes, total num timesteps 19600000/25000000, FPS 505.
+
+average episode rewards is 19.76800113916397
+eval expected goal is 0.92.
+
+ Env Football Algo mappo Exp check updates 1979/2500 episodes, total num timesteps 19800000/25000000, FPS 505.
+
+average episode rewards is 19.327999651432037
+
+ Env Football Algo mappo Exp check updates 1999/2500 episodes, total num timesteps 20000000/25000000, FPS 505.
+
+average episode rewards is 20.667999982833862
+eval expected goal is 0.87.
+
+ Env Football Algo mappo Exp check updates 2019/2500 episodes, total num timesteps 20200000/25000000, FPS 505.
+
+average episode rewards is 21.30800187587738
+
+ Env Football Algo mappo Exp check updates 2039/2500 episodes, total num timesteps 20400000/25000000, FPS 505.
+
+average episode rewards is 18.286001682281494
+eval expected goal is 0.88.
+
+ Env Football Algo mappo Exp check updates 2059/2500 episodes, total num timesteps 20600000/25000000, FPS 505.
+
+average episode rewards is 20.514000952243805
+
+ Env Football Algo mappo Exp check updates 2079/2500 episodes, total num timesteps 20800000/25000000, FPS 506.
+
+average episode rewards is 21.19000107049942
+eval expected goal is 0.91.
+
+ Env Football Algo mappo Exp check updates 2099/2500 episodes, total num timesteps 21000000/25000000, FPS 505.
+
+average episode rewards is 19.87600028514862
+
+ Env Football Algo mappo Exp check updates 2119/2500 episodes, total num timesteps 21200000/25000000, FPS 505.
+
+average episode rewards is 22.902001440525055
+eval expected goal is 0.93.
+
+ Env Football Algo mappo Exp check updates 2139/2500 episodes, total num timesteps 21400000/25000000, FPS 505.
+
+average episode rewards is 20.636001229286194
+
+ Env Football Algo mappo Exp check updates 2159/2500 episodes, total num timesteps 21600000/25000000, FPS 505.
+
+average episode rewards is 19.756001234054565
+eval expected goal is 0.88.
+
+ Env Football Algo mappo Exp check updates 2179/2500 episodes, total num timesteps 21800000/25000000, FPS 505.
+
+average episode rewards is 19.832000136375427
+
+ Env Football Algo mappo Exp check updates 2199/2500 episodes, total num timesteps 22000000/25000000, FPS 505.
+
+average episode rewards is 17.556001245975494
+eval expected goal is 0.74.
+
+ Env Football Algo mappo Exp check updates 2219/2500 episodes, total num timesteps 22200000/25000000, FPS 505.
+
+average episode rewards is 22.828000783920288
+
+ Env Football Algo mappo Exp check updates 2239/2500 episodes, total num timesteps 22400000/25000000, FPS 505.
+
+average episode rewards is 19.374001026153564
+eval expected goal is 0.89.
+
+ Env Football Algo mappo Exp check updates 2259/2500 episodes, total num timesteps 22600000/25000000, FPS 505.
+
+average episode rewards is 19.09400075674057
+
+ Env Football Algo mappo Exp check updates 2279/2500 episodes, total num timesteps 22800000/25000000, FPS 505.
+
+average episode rewards is 20.802001655101776
+eval expected goal is 0.84.
+
+ Env Football Algo mappo Exp check updates 2299/2500 episodes, total num timesteps 23000000/25000000, FPS 505.
+
+average episode rewards is 19.067999720573425
+
+ Env Football Algo mappo Exp check updates 2319/2500 episodes, total num timesteps 23200000/25000000, FPS 505.
+
+average episode rewards is 20.726001262664795
+eval expected goal is 0.91.
+
+ Env Football Algo mappo Exp check updates 2339/2500 episodes, total num timesteps 23400000/25000000, FPS 505.
+
+average episode rewards is 18.581999838352203
+
+ Env Football Algo mappo Exp check updates 2359/2500 episodes, total num timesteps 23600000/25000000, FPS 505.
+
+average episode rewards is 21.144001185894012
+eval expected goal is 0.87.
+
+ Env Football Algo mappo Exp check updates 2379/2500 episodes, total num timesteps 23800000/25000000, FPS 505.
+
+average episode rewards is 19.037999212741852
+
+ Env Football Algo mappo Exp check updates 2399/2500 episodes, total num timesteps 24000000/25000000, FPS 505.
+
+average episode rewards is 21.108001470565796
+eval expected goal is 0.86.
+
+ Env Football Algo mappo Exp check updates 2419/2500 episodes, total num timesteps 24200000/25000000, FPS 505.
+
+average episode rewards is 20.469999313354492
+
+ Env Football Algo mappo Exp check updates 2439/2500 episodes, total num timesteps 24400000/25000000, FPS 505.
+
+average episode rewards is 20.56800127029419
+eval expected goal is 0.95.
+
+ Env Football Algo mappo Exp check updates 2459/2500 episodes, total num timesteps 24600000/25000000, FPS 505.
+
+average episode rewards is 19.204001128673553
+
+ Env Football Algo mappo Exp check updates 2479/2500 episodes, total num timesteps 24800000/25000000, FPS 505.
+
+average episode rewards is 21.542000770568848
+eval expected goal is 0.9.
+
+ Env Football Algo mappo Exp check updates 2499/2500 episodes, total num timesteps 25000000/25000000, FPS 505.
+
+average episode rewards is 19.605998694896698
