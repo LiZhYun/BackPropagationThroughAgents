@@ -194,7 +194,7 @@ class Runner(object):
         old_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         new_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
-        ordered_vertices = reversed([i for i in range(self.num_agents)])
+        # ordered_vertices = reversed([i for i in range(self.num_agents)])
         ordered_vertices = reversed(self.agent_order[0])
 
         for agent_id in ordered_vertices:
