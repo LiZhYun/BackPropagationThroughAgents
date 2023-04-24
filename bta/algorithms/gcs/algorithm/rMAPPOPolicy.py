@@ -92,7 +92,7 @@ class R_MAPPOPolicy:
         update_linear_schedule(self.graph_actor_optimizer, episode, episodes, self.lr)
 
     def get_actions(self, cent_obs, obs, rnn_states_actor, rnn_states_critic, masks, last_actions, available_actions=None,
-                    deterministic=False):
+                    deterministic=False, agent_id=None, one_hot_actions=None):
         """
         Compute actions and value function predictions for the given inputs.
         :param cent_obs (np.ndarray): centralized input to the critic.
@@ -115,48 +115,53 @@ class R_MAPPOPolicy:
         self.n_agents = last_actions.shape[-2]  ### self.n_rollout_threads, num_agents, act_shape
         self.n_rollout_threads = last_actions.shape[0]
 
-        agent_id_graph = torch.eye(self.n_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1, 1).to(self.device)  # self.n_rollout_threads, num_agents, num_agents
-        if self._nested_obs:
-            for batch_idx in range(obs.shape[0]):
-                for key in obs[batch_idx].keys():
-                    if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
-                        for sub_key in obs[batch_idx][key].keys():
-                            obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
-                    else:
-                        obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
-        elif self._mixed_obs:
-            for key in obs.keys():
-                obs[key] = check(obs[key]).to(**self.tpdv)
+        if self.args.env_name == "Hanabi":
+            G_s = torch.stack([torch.ones(obs.shape[0])] * agent_id +
+                                            [torch.zeros(obs.shape[0])] *
+                                            (self.args.num_agents - agent_id), -1).to(self.device)
         else:
-            obs = check(obs).to(**self.tpdv)
-        obs_ = obs
-        if self.mix_action:
-            discrete_ = np.squeeze(np.eye(self.discrete_dim)[last_actions[:, :, self.continous_dim:].astype(np.int32)], 2)
-            last_actions = np.concatenate([last_actions[:, :, :self.continous_dim], discrete_], -1)
-        else:
-            # last_actions = np.eye(self.n_actions)[last_actions.astype(np.int32)]
-            last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
-        last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
+            agent_id_graph = torch.eye(self.n_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1, 1).to(self.device)  # self.n_rollout_threads, num_agents, num_agents
+            if self._nested_obs:
+                for batch_idx in range(obs.shape[0]):
+                    for key in obs[batch_idx].keys():
+                        if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
+                            for sub_key in obs[batch_idx][key].keys():
+                                obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
+                        else:
+                            obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
+            elif self._mixed_obs:
+                for key in obs.keys():
+                    obs[key] = check(obs[key]).to(**self.tpdv)
+            else:
+                obs = check(obs).to(**self.tpdv)
+            obs_ = obs
+            if self.mix_action:
+                discrete_ = np.squeeze(np.eye(self.discrete_dim)[last_actions[:, :, self.continous_dim:].astype(np.int32)], 2)
+                last_actions = np.concatenate([last_actions[:, :, :self.continous_dim], discrete_], -1)
+            else:
+                # last_actions = np.eye(self.n_actions)[last_actions.astype(np.int32)]
+                last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
+            last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
 
-        if self._nested_obs:
-            obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
-            inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
-        else:
-            obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
-            inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
-            inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
+            if self._nested_obs:
+                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
+                inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
+            else:
+                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
+                inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
+                inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
 
-        encoder_output, samples, mask_scores, entropy, adj_prob, \
-        log_softmax_logits_for_rewards, entropy_regularization = self.graph_actor(inputs_graph)
-        graph_A = samples.clone().cpu().numpy()
+            encoder_output, samples, mask_scores, entropy, adj_prob, \
+            log_softmax_logits_for_rewards, entropy_regularization = self.graph_actor(inputs_graph)
+            graph_A = samples.clone().cpu().numpy()
 
-        ######## pruning
-        G_s = []
-        for i in range(graph_A.shape[0]):
-            G = ig.Graph.Weighted_Adjacency(graph_A[i].tolist())
-            if not is_acyclic(graph_A[i]):
-                G, new_A = pruning_1(G, graph_A[i])
-            G_s.append(G)
+            ######## pruning
+            G_s = []
+            for i in range(graph_A.shape[0]):
+                G = ig.Graph.Weighted_Adjacency(graph_A[i].tolist())
+                if not is_acyclic(graph_A[i]):
+                    G, new_A = pruning_1(G, graph_A[i])
+                G_s.append(G)
 
         # if len(self.obs_shape) == 1:
         #     obs = obs.reshape(self.n_rollout_threads, self.n_agents, obs.shape[-1])
@@ -168,7 +173,8 @@ class R_MAPPOPolicy:
                                                                  rnn_states_actor,
                                                                  masks, G_s,
                                                                  available_actions,
-                                                                 deterministic)
+                                                                 deterministic,
+                                                                 one_hot_actions=one_hot_actions)
 
         values, rnn_states_critic = self.critic(cent_obs, rnn_states_critic, masks) # 4.1 ，  4.1.64
         return values, actions, action_log_probs, rnn_states_actor, rnn_states_critic, father_actions
@@ -219,7 +225,7 @@ class R_MAPPOPolicy:
         values, _ = self.critic(cent_obs, rnn_states_critic, masks)
         return values, action_log_probs, dist_entropy
 
-    def act(self, obs, rnn_states_actor, masks, last_actions, available_actions=None, deterministic=True):
+    def act(self, obs, rnn_states_actor, masks, last_actions, available_actions=None, deterministic=True, agent_id=None, one_hot_actions=None):
         """
         Compute actions using the given inputs.
         :param obs (np.ndarray): local agent inputs to the actor.
@@ -233,48 +239,53 @@ class R_MAPPOPolicy:
         self.n_agents = last_actions.shape[-2]  ### self.n_rollout_threads, num_agents, act_shape
         self.n_rollout_threads = last_actions.shape[0]
 
-        agent_id_graph = torch.eye(self.n_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1, 1).to(self.device)  # self.n_rollout_threads, num_agents, num_agents
-        if self._nested_obs:
-            for batch_idx in range(obs.shape[0]):
-                for key in obs[batch_idx].keys():
-                    if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
-                        for sub_key in obs[batch_idx][key].keys():
-                            obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
-                    else:
-                        obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
-        elif self._mixed_obs:
-            for key in obs.keys():
-                obs[key] = check(obs[key]).to(**self.tpdv)
+        if self.args.env_name == "Hanabi":
+            G_s = torch.stack([torch.ones(obs.shape[0])] * agent_id +
+                                            [torch.zeros(obs.shape[0])] *
+                                            (self.args.num_agents - agent_id), -1).to(self.device)
         else:
-            obs = check(obs).to(**self.tpdv)
-        obs_ = obs
-        if self.mix_action:
-            discrete_ = np.squeeze(np.eye(self.discrete_dim)[last_actions[:, :, self.continous_dim:].astype(np.int32)], 2)
-            last_actions = np.concatenate([last_actions[:, :, :self.continous_dim], discrete_], -1)
-        else:
-            # last_actions = np.eye(self.n_actions)[last_actions.astype(np.int32)]
-            last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
-        last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
+            agent_id_graph = torch.eye(self.n_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1, 1).to(self.device)  # self.n_rollout_threads, num_agents, num_agents
+            if self._nested_obs:
+                for batch_idx in range(obs.shape[0]):
+                    for key in obs[batch_idx].keys():
+                        if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
+                            for sub_key in obs[batch_idx][key].keys():
+                                obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
+                        else:
+                            obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
+            elif self._mixed_obs:
+                for key in obs.keys():
+                    obs[key] = check(obs[key]).to(**self.tpdv)
+            else:
+                obs = check(obs).to(**self.tpdv)
+            obs_ = obs
+            if self.mix_action:
+                discrete_ = np.squeeze(np.eye(self.discrete_dim)[last_actions[:, :, self.continous_dim:].astype(np.int32)], 2)
+                last_actions = np.concatenate([last_actions[:, :, :self.continous_dim], discrete_], -1)
+            else:
+                # last_actions = np.eye(self.n_actions)[last_actions.astype(np.int32)]
+                last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
+            last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
 
-        if self._nested_obs:
-            obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
-            inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
-        else:
-            obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
-            inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
-            inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
+            if self._nested_obs:
+                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
+                inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
+            else:
+                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
+                inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
+                inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
 
-        encoder_output, samples, mask_scores, entropy, adj_prob, \
-        log_softmax_logits_for_rewards, entropy_regularization = self.graph_actor(inputs_graph)
-        graph_A = samples.clone().cpu().numpy()
+            encoder_output, samples, mask_scores, entropy, adj_prob, \
+            log_softmax_logits_for_rewards, entropy_regularization = self.graph_actor(inputs_graph)
+            graph_A = samples.clone().cpu().numpy()
 
-        ######## pruning
-        G_s = []
-        for i in range(graph_A.shape[0]):
-            G = ig.Graph.Weighted_Adjacency(graph_A[i].tolist())
-            if not is_acyclic(graph_A[i]):
-                G, new_A = pruning_1(G, graph_A[i])
-            G_s.append(G)
+            ######## pruning
+            G_s = []
+            for i in range(graph_A.shape[0]):
+                G = ig.Graph.Weighted_Adjacency(graph_A[i].tolist())
+                if not is_acyclic(graph_A[i]):
+                    G, new_A = pruning_1(G, graph_A[i])
+                G_s.append(G)
 
         # if len(self.obs_shape) == 1:
         #     obs = obs.reshape(self.n_rollout_threads, self.n_agents, obs.shape[-1])
@@ -286,5 +297,6 @@ class R_MAPPOPolicy:
                                                                  rnn_states_actor,
                                                                  masks, G_s,
                                                                  available_actions,
-                                                                 deterministic)
+                                                                 deterministic,
+                                                                 one_hot_actions=one_hot_actions)
         return actions, rnn_states_actor

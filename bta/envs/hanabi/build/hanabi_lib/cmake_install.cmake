@@ -1,4 +1,4 @@
-# Install script for directory: /scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib
+# Install script for directory: /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

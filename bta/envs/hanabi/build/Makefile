@@ -48,10 +48,10 @@ RM = /share/apps/spack/envs/fgci-centos7-generic/software/cmake/3.15.3/qvh6hn6/b
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /scratch/work/liz23/on-policy/onpolicy/envs/hanabi
+CMAKE_SOURCE_DIR = /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build
+CMAKE_BINARY_DIR = /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/CMakeFiles /scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/CMakeFiles /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

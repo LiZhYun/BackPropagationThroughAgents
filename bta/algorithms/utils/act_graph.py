@@ -56,7 +56,7 @@ class ACTLayer(nn.Module):
                 [DiagGaussian(inputs_dim, self.continous_dim, use_orthogonal, gain), Categorical(
                     inputs_dim, self.discrete_dim, use_orthogonal, gain)])
 
-    def forward(self, obs, x, G_s, available_actions=None, deterministic=False):
+    def forward(self, obs, x, G_s, available_actions=None, deterministic=False, one_hot_actions=None):
         """
         Compute actions and action logprobs from given input.
         :param x: (torch.Tensor) input to network.
@@ -138,40 +138,50 @@ class ACTLayer(nn.Module):
 
             cur_time = datetime.now() + timedelta(hours=0)
             # print("--------------11------start time::", cur_time)
+            if "list" in G_s.__class__.__name__ :
+                for i in range(len(G_s)):
+                    G = G_s[i]
+                    ordered_vertices = G.topological_sorting()
+                    self.n_agents = len(ordered_vertices)
+                    actions, action_log_probs = [0] * self.n_agents, [0] * self.n_agents
+                    father_action_lst = [0] * self.n_agents
+                    for j in ordered_vertices:
+                        father_action_0 = torch.zeros(self.n_agents, self.action_dim)
+                        parents = G.neighbors(j, mode=ig.IN)
+                        if len(parents) != 0:
+                            for k in parents:
+                                father_act = torch.eye(self.action_dim).to(self.device)[actions[k]]
+                                father_action_0[k] = torch.tensor(father_act)
+                        father_action = father_action_0.reshape(-1)
+                        father_action_lst[j] = father_action
 
-            for i in range(len(G_s)):
-                G = G_s[i]
-                ordered_vertices = G.topological_sorting()
-                self.n_agents = len(ordered_vertices)
-                actions, action_log_probs = [0] * self.n_agents, [0] * self.n_agents
-                father_action_lst = [0] * self.n_agents
-                for j in ordered_vertices:
-                    father_action_0 = torch.zeros(self.n_agents, self.action_dim)
-                    parents = G.neighbors(j, mode=ig.IN)
-                    if len(parents) != 0:
-                        for k in parents:
-                            father_act = torch.eye(self.action_dim).to(self.device)[actions[k]]
-                            father_action_0[k] = torch.tensor(father_act)
-                    father_action = father_action_0.reshape(-1)
-                    father_action_lst[j] = father_action
-
-                    x_ = torch.cat((x[i][j], father_action.to(self.device)))
-                    action_logit = self.action_out(x_)  ## 4.64、 None  --> 4.5
-                    action = action_logit.mode() if deterministic else action_logit.sample()  # torch.Size([4, 1])
-                    action_log_prob = action_logit.log_probs(action)   # torch.Size([4, 1])
-                    actions[j], action_log_probs[j] = [action], [action_log_prob]
-                actions_outer.append(actions)
-                action_log_probs_outer.append(action_log_probs)
-                father_action_tensor = torch.tensor([item.cpu().detach().numpy() for item in father_action_lst]).to(self.device)
-                father_action_lst_outer.append(father_action_tensor)
-
-            father_action_lst_outer = torch.tensor([item.cpu().detach().numpy() for item in father_action_lst_outer]).to(self.device)
-            father_action_shape = father_action_lst_outer.shape[-1]
+                        x_ = torch.cat((x[i][j], father_action.to(self.device)))
+                        action_logit = self.action_out(x_)  ## 4.64、 None  --> 4.5
+                        action = action_logit.mode() if deterministic else action_logit.sample()  # torch.Size([4, 1])
+                        action_log_prob = action_logit.log_probs(action)   # torch.Size([4, 1])
+                        actions[j], action_log_probs[j] = [action], [action_log_prob]
+                    actions_outer.append(actions)
+                    action_log_probs_outer.append(action_log_probs)
+                    father_action_tensor = torch.tensor([item.cpu().detach().numpy() for item in father_action_lst]).to(self.device)
+                    father_action_lst_outer.append(father_action_tensor)
+                father_action_lst_outer = torch.tensor([item.cpu().detach().numpy() for item in father_action_lst_outer]).to(self.device)
+                father_action_shape = father_action_lst_outer.shape[-1]
+            else:
+                execution_masks = G_s
+                masked_actions = (check(one_hot_actions).to(x.device) * check(execution_masks).to(x.device).unsqueeze(-1))
+                actor_features = torch.cat([x, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=1)
+                action_logit = self.action_out(actor_features, available_actions)
+                action = action_logit.mode() if deterministic else action_logit.sample()  # torch.Size([4, 1])
+                actions_outer = action
+                action_log_prob = action_logit.log_probs(action)   # torch.Size([4, 1])
+                action_log_probs_outer = action_log_prob
+                father_action_lst_outer = masked_actions
+                father_action_shape = father_action_lst_outer.shape[0]
 
             cur_time = datetime.now() + timedelta(hours=0)
             # print("---------------11-----end time::", cur_time)
 
-            return torch.tensor(actions_outer).view(-1,1), torch.tensor(action_log_probs_outer).view(-1,1), father_action_lst_outer.view(-1,father_action_shape)
+            return torch.tensor(actions_outer).view(-1,1), torch.tensor(action_log_probs_outer).view(-1,1), father_action_lst_outer.view(-1, father_action_shape) if "list" in G_s.__class__.__name__ else father_action_lst_outer.view(father_action_shape, -1,)
 
     def get_probs(self, x, available_actions=None):
         """

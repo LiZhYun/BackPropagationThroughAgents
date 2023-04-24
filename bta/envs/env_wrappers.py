@@ -794,21 +794,12 @@ def chooseworker(remote, parent_remote, env_fn_wrapper):
             remote.close()
             break
         elif cmd == 'render':
-            if data == "rgb_array":
-                fr = env.render(mode=data)
-                remote.send(fr)
-            elif data == "human":
-                env.render(mode=data)
+            remote.send(env.render(mode='rgb_array'))
         elif cmd == 'get_spaces':
             remote.send(
                 (env.observation_space, env.share_observation_space, env.action_space))
-        elif cmd == 'anneal_reward_shaping_factor':
-            env.anneal_reward_shaping_factor(data)
-        elif cmd == 'reset_featurize_type':
-            env.reset_featurize_type(data)
         else:
             raise NotImplementedError
-
 
 class ChooseSubprocVecEnv(ShareVecEnv):
     def __init__(self, env_fns, spaces=None):
@@ -841,35 +832,20 @@ class ChooseSubprocVecEnv(ShareVecEnv):
         results = [remote.recv() for remote in self.remotes]
         self.waiting = False
         obs, share_obs, rews, dones, infos, available_actions = zip(*results)
-        return obs, np.stack(share_obs), np.stack(rews), np.stack(dones), infos, np.stack(available_actions)
+        return np.stack(obs), np.stack(share_obs), np.stack(rews), np.stack(dones), infos, np.stack(available_actions)
 
     def reset(self, reset_choose):
         for remote, choose in zip(self.remotes, reset_choose):
             remote.send(('reset', choose))
         results = [remote.recv() for remote in self.remotes]
         obs, share_obs, available_actions = zip(*results)
-        return obs, np.stack(share_obs), np.stack(available_actions)
+        return np.stack(obs), np.stack(share_obs), np.stack(available_actions)
 
     def reset_task(self):
         for remote in self.remotes:
             remote.send(('reset_task', None))
         return np.stack([remote.recv() for remote in self.remotes])
 
-    def anneal_reward_shaping_factor(self, steps):
-        for remote, step in zip(self.remotes, steps):
-            remote.send(('anneal_reward_shaping_factor', step))
-    
-    def reset_featurize_type(self, featurize_types):
-        for remote, featurize_type in zip(self.remotes, featurize_types):
-            remote.send(('reset_featurize_type', featurize_type))
-
-    def render(self, mode="rgb_array"):
-        for remote in self.remotes:
-            remote.send(('render', mode))
-        if mode == "rgb_array":   
-            frame = [remote.recv() for remote in self.remotes]
-            return np.stack(frame) 
-    
     def close(self):
         if self.closed:
             return

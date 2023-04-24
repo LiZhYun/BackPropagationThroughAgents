@@ -14,7 +14,7 @@ conda activate pytorch-env
 env="Hanabi"
 hanabi="Hanabi-Full"
 num_agents=2
-algo="mappo"
+algo="temporal"
 exp="check"
 
 python ../../train/train_hanabi_forward.py --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} \

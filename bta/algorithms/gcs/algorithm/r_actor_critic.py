@@ -74,7 +74,7 @@ class R_Actor(nn.Module):
 
         self.to(device)
 
-    def forward(self, obs, rnn_states, masks, G_s, available_actions=None, deterministic=False):
+    def forward(self, obs, rnn_states, masks, G_s, available_actions=None, deterministic=False, one_hot_actions=None):
         """
         Compute actions from the given inputs.
         :param obs: (np.ndarray / torch.Tensor) observation inputs into network.
@@ -105,7 +105,8 @@ class R_Actor(nn.Module):
         masks = check(masks).to(**self.tpdv)
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
-            available_actions = available_actions.reshape(self.args.n_rollout_threads, -1, available_actions.shape[-1])
+            if "Graph" in G_s.__class__.__name__ :
+                available_actions = available_actions.reshape(self.args.n_rollout_threads, -1, available_actions.shape[-1])
 
         if self._nested_obs:
             actor_features = torch.stack([self.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
@@ -117,8 +118,9 @@ class R_Actor(nn.Module):
                 actor_features = actor_features.reshape(-1, self.args.hidden_size)
                 rnn_states = rnn_states.reshape(-1, 1, self.args.hidden_size)
                 actor_features, rnn_states = self.rnn(actor_features, rnn_states, masks)  # 4.64    4.1.64
-            actor_features = actor_features.reshape(-1, self.args.num_agents, self.feature_size)
-            actions, action_log_probs, father_actions = self.act(obs, actor_features, G_s, available_actions, deterministic)
+            if "list" in G_s.__class__.__name__ :
+                actor_features = actor_features.reshape(-1, self.args.num_agents, self.feature_size)
+            actions, action_log_probs, father_actions = self.act(obs, actor_features, G_s, available_actions, deterministic, one_hot_actions)
         else:
             if self._use_naive_recurrent_policy or self._use_recurrent_policy:
                 actor_features, rnn_states = self.rnn(actor_features, rnn_states, masks)  # 4.64    4.1.64

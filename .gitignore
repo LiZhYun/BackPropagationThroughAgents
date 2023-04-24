@@ -1,17 +1,24 @@
 # Python:
 *.py[cod]
-*.so
 *.egg
-*.egg-info
-
 # 忽略Logs
 logs
 *.log
-
 # 忽略out
 *.out
-
-
 # 忽略/dist目录，相对.gitignore文件所在目录
-/bta/scripts/results
-/.vscode
+__pycache__
+results
+*.pyc
+/gifs/
+build
+win_rate
+*.so
+*.csv
+RODE
+*.egg-info
+wandb
+.vscode
+api
+.nfs*
+*.so

@@ -1,4 +1,4 @@
-# Install script for directory: /scratch/work/liz23/on-policy/onpolicy/envs/hanabi
+# Install script for directory: /scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/hanabi_lib/cmake_install.cmake")
+  include("/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/hanabi_lib/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

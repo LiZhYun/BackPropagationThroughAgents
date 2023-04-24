@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/canonical_encoders.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/canonical_encoders.cc
 algorithm
 -
 cassert
@@ -18,35 +18,35 @@ iostream
 vector
 -
 canonical_encoders.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/canonical_encoders.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/canonical_encoders.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/canonical_encoders.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/canonical_encoders.h
 vector
 -
 hanabi_game.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_game.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_game.h
 hanabi_observation.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_observation.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_observation.h
 observation_encoder.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/observation_encoder.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/observation_encoder.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.cc
 hanabi_card.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.h
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.h
 string
 -
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_game.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_game.cc
 hanabi_game.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_game.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_game.h
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_game.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_game.h
 random
 -
 string
@@ -56,21 +56,21 @@ unordered_map
 vector
 -
 hanabi_card.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.h
 hanabi_move.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_hand.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_hand.cc
 hanabi_hand.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_hand.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_hand.h
 algorithm
 -
 cassert
 -
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_hand.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_hand.h
 cstdint
 -
 string
@@ -78,67 +78,67 @@ string
 vector
 -
 hanabi_card.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_history_item.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_history_item.cc
 hanabi_history_item.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_history_item.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_history_item.h
 cassert
 -
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_history_item.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_history_item.h
 cstdint
 -
 string
 -
 hanabi_move.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.cc
 hanabi_move.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.h
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.h
 cstdint
 -
 string
 -
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_observation.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_observation.cc
 hanabi_observation.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_observation.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_observation.h
 algorithm
 -
 cassert
 -
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_observation.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_observation.h
 string
 -
 vector
 -
 hanabi_card.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.h
 hanabi_game.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_game.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_game.h
 hanabi_hand.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_hand.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_hand.h
 hanabi_history_item.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_history_item.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_history_item.h
 hanabi_move.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.h
 hanabi_state.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_state.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_state.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_state.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_state.cc
 hanabi_state.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_state.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_state.h
 algorithm
 -
 cassert
@@ -146,9 +146,9 @@ cassert
 numeric
 -
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_state.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_state.h
 random
 -
 string
@@ -156,29 +156,29 @@ string
 vector
 -
 hanabi_card.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_card.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_card.h
 hanabi_game.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_game.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_game.h
 hanabi_hand.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_hand.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_hand.h
 hanabi_history_item.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_history_item.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_history_item.h
 hanabi_move.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_move.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_move.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/observation_encoder.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/observation_encoder.h
 vector
 -
 hanabi_observation.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/hanabi_observation.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/hanabi_observation.h
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.cc
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.cc
 util.h
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 string
 -
 
-/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib/util.h
+/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib/util.h
 cassert
 -
 cstdlib

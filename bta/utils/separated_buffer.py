@@ -140,13 +140,14 @@ class SeparatedReplayBuffer(object):
             self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
             self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))
         
-    def chooseinsert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, action_log_probs,
+    def chooseinsert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, one_hot_actions, action_log_probs,
                      value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
         self.share_obs[self.step] = share_obs.copy()
         self.obs[self.step] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
         self.rnn_states_critic[self.step + 1] = rnn_states_critic.copy()
         self.actions[self.step] = actions.copy()
+        self.one_hot_actions[self.step] = one_hot_actions.copy()
         self.action_log_probs[self.step] = action_log_probs.copy()
         self.value_preds[self.step] = value_preds.copy()
         self.rewards[self.step] = rewards.copy()

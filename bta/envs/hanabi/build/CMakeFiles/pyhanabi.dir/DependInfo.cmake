@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/pyhanabi.cc" "/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/CMakeFiles/pyhanabi.dir/pyhanabi.cc.o"
+  "/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/pyhanabi.cc" "/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/CMakeFiles/pyhanabi.dir/pyhanabi.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -20,7 +20,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/build/hanabi_lib/CMakeFiles/hanabi.dir/DependInfo.cmake"
+  "/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/build/hanabi_lib/CMakeFiles/hanabi.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

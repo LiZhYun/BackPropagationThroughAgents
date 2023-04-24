@@ -6,5 +6,5 @@ CXX_FLAGS = -O2 -std=c++11 -Wall -Wextra -fPIC -Wno-sign-compare
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/scratch/work/liz23/on-policy/onpolicy/envs/hanabi/hanabi_lib 
+CXX_INCLUDES = -I/scratch/work/liz23/BackPropagationThroughAgents/bta/envs/hanabi/hanabi_lib 
 
