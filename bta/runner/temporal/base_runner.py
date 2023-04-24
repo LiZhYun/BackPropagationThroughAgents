@@ -48,6 +48,7 @@ class Runner(object):
         self.use_graph = self.all_args.use_graph
         self.recurrent_N = self.all_args.recurrent_N
         self.temperature = self.all_args.temperature
+        self.agent_order = None
         self.mix_actions = False
         if self.envs.action_space[0].__class__.__name__ == "Discrete":
             self.action_dim = self.envs.action_space[0].n
@@ -194,6 +195,7 @@ class Runner(object):
         new_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
         ordered_vertices = reversed([i for i in range(self.num_agents)])
+        ordered_vertices = reversed(self.agent_order[0])
 
         for agent_id in ordered_vertices:
             self.trainer[agent_id].prep_training()
@@ -210,7 +212,9 @@ class Runner(object):
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
             
-            agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
+            tmp_agent_order = self.agent_order[0].clone()
+            agent_order = torch.stack([tmp_agent_order for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
+            # agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
             execution_masks_batch = generate_mask_from_order(
                 agent_order, ego_exclusive=False).to(
                     self.device).float()[:, agent_id]  # [bs, n_agents, n_agents]
@@ -236,7 +240,7 @@ class Runner(object):
                                                         self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]))
             old_actions_logprobs[agent_id] = _t2n(old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
 
-            train_info = self.trainer[agent_id].train(self.buffer[agent_id])
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order)
 
             new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                         self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),

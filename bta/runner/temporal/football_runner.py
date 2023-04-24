@@ -10,7 +10,7 @@ import torch.nn.functional as F
 import imageio
 import warnings
 import functools
-from bta.utils.util import update_linear_schedule, is_acyclic, pruning
+from bta.utils.util import update_linear_schedule, is_acyclic, pruning, generate_mask_from_order
 from bta.utils.separated_buffer import SeparatedReplayBufferEval
 from bta.runner.temporal.base_runner import Runner
 from pathlib import Path
@@ -45,7 +45,7 @@ class FootballRunner(Runner):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
-
+            self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
@@ -170,10 +170,14 @@ class FootballRunner(Runner):
             ordered_vertices = np.stack([G.topological_sorting() for G in Gs])
             execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
         else:
-            ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_rollout_threads)])
-            execution_masks = torch.stack([torch.stack([torch.ones(self.n_rollout_threads)] * order +
-                                            [torch.zeros(self.n_rollout_threads)] *
-                                            (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
+            ordered_vertices = _t2n(self.agent_order)
+            # ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_rollout_threads)])
+            execution_masks = generate_mask_from_order(
+            self.agent_order.clone(), ego_exclusive=False).to(
+                self.device).float().view(-1, self.num_agents)  # [bs, n_agents, n_agents]
+            # execution_masks = torch.stack([torch.stack([torch.ones(self.n_rollout_threads)] * order +
+            #                                 [torch.zeros(self.n_rollout_threads)] *
+            #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
             orignal_adjs = execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents).permute(0, 2, 1)
             
         rollout_actors = np.array([self.policy for _ in range(self.n_rollout_threads)])
@@ -329,10 +333,15 @@ class FootballRunner(Runner):
             execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
         else:
             #test
-            ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_eval_rollout_threads)])
-            execution_masks = torch.stack([torch.stack([torch.ones(self.n_eval_rollout_threads)] * order +
-                                            [torch.zeros(self.n_eval_rollout_threads)] *
-                                            (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
+            eval_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.n_eval_rollout_threads)]).to(self.device)
+            ordered_vertices = _t2n(eval_order)
+            execution_masks = generate_mask_from_order(
+            eval_order, ego_exclusive=False).to(
+                self.device).float().view(-1, self.num_agents)
+            # ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_eval_rollout_threads)])
+            # execution_masks = torch.stack([torch.stack([torch.ones(self.n_eval_rollout_threads)] * order +
+            #                                 [torch.zeros(self.n_eval_rollout_threads)] *
+            #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
 
         rollout_actors = np.array([self.policy for _ in range(self.n_eval_rollout_threads)])
         rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)

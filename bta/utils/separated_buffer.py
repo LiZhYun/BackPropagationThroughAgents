@@ -112,7 +112,8 @@ class SeparatedReplayBuffer(object):
         self.rewards[self.step] = rewards.copy()
         self.masks[self.step + 1] = masks.copy()
         self.execution_masks[self.step] = execution_mask.clone()
-        self.adjs[self.step] = adj.clone()
+        if self.use_graph:
+            self.adjs[self.step] = adj.clone()
         if bad_masks is not None:
             self.bad_masks[self.step + 1] = bad_masks.copy()
         if active_masks is not None:

@@ -153,7 +153,7 @@ class T_POLICY():
 
         return policy_loss + acyclic_loss
     
-    def ppo_update(self, sample):
+    def ppo_update(self, sample, agent_order=None):
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
         value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
@@ -171,7 +171,10 @@ class T_POLICY():
         # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
         #                                 [torch.zeros(actions_batch.shape[0])] *
         #                                 (self.num_agents - self.agent_id), -1).to(**self.tpdv)
-        agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(actions_batch.shape[0])]).to(self.device)
+        if agent_order is None:
+            agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(actions_batch.shape[0])]).to(self.device)
+        else:
+            agent_order = torch.stack([agent_order for _ in range(actions_batch.shape[0])]).to(self.device)
         execution_masks_batch = generate_mask_from_order(
             agent_order, ego_exclusive=False).to(
                 self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
@@ -238,7 +241,7 @@ class T_POLICY():
             advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
         return advantages
 
-    def train(self, buffer, turn_on=True):
+    def train(self, buffer, agent_order=None):
         if self._use_popart or self._use_valuenorm:
             advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
         else:
@@ -270,7 +273,7 @@ class T_POLICY():
             for sample in data_generator:
 
                 value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights \
-                    = self.ppo_update(sample)
+                    = self.ppo_update(sample, agent_order)
 
                 train_info['value_loss'] += value_loss.item()
                 train_info['policy_loss'] += policy_loss.item()

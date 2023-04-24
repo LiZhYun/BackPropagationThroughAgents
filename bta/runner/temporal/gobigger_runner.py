@@ -10,7 +10,7 @@ import torch.nn.functional as F
 import imageio
 import warnings
 import functools
-from bta.utils.util import update_linear_schedule, is_acyclic, pruning, default_collate_with_dim
+from bta.utils.util import update_linear_schedule, is_acyclic, pruning, default_collate_with_dim, generate_mask_from_order
 from bta.utils.separated_buffer import SeparatedReplayBufferEval
 from bta.runner.temporal.base_runner import Runner
 from pathlib import Path
@@ -54,7 +54,7 @@ class GoBiggerRunner(Runner):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
-
+            self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
@@ -149,56 +149,61 @@ class GoBiggerRunner(Runner):
 
         # for agent_id in range(self.num_agents):
         #     self.trainer[agent_id].prep_rollout()
+        if self.use_graph:
+            edge_feats = torch.stack([check(self.buffer[agent_idx].temporal_neighbors_edge_feat) for agent_idx in range(self.num_agents)], 1)
+            edts = torch.stack([check(self.buffer[agent_idx].temporal_neighbors_edge_timestamps) for agent_idx in range(self.num_agents)], 1)
+            non_act_edge_mask = edts >= 0
+            assert not torch.isinf(edts).any(), "InF!!"
 
-        edge_feats = torch.stack([check(self.buffer[agent_idx].temporal_neighbors_edge_feat) for agent_idx in range(self.num_agents)], 1)
-        edts = torch.stack([check(self.buffer[agent_idx].temporal_neighbors_edge_timestamps) for agent_idx in range(self.num_agents)], 1)
-        non_act_edge_mask = edts >= 0
-        assert not torch.isinf(edts).any(), "InF!!"
+            temporal_inputs = [
+                edge_feats.to(self.device), 
+                edts.to(self.device), 
+                non_act_edge_mask.to(self.device)
+            ]
 
-        temporal_inputs = [
-            edge_feats.to(self.device), 
-            edts.to(self.device), 
-            non_act_edge_mask.to(self.device)
-        ]
+            raw_actions_results = [self.trainer[agent_idx].policy.get_raw_actions(
+                                                                self.buffer[agent_idx].share_obs[step],
+                                                                self.buffer[agent_idx].obs[step],
+                                                                self.buffer[agent_idx].rnn_states[step],
+                                                                self.buffer[agent_idx].rnn_states_critic[step],
+                                                                self.buffer[agent_idx].masks[step],
+                                                                self.buffer[agent_idx].available_actions[step])
+                                            for agent_idx in range(self.num_agents)]
+            node_feats, old_dist_entropy = zip(*raw_actions_results)
+            node_feats, old_dist_entropy = torch.stack(node_feats, 1), _t2n(torch.stack(old_dist_entropy, 1))
+            # node_feats = node_feats.permute(1, 0, 2)
+            # old_dist_entropy = old_dist_entropy.permute(1, 0, 2)
 
-        raw_actions_results = [self.trainer[agent_idx].policy.get_raw_actions(
-                                                            self.buffer[agent_idx].share_obs[step],
-                                                            self.buffer[agent_idx].obs[step],
-                                                            self.buffer[agent_idx].rnn_states[step],
-                                                            self.buffer[agent_idx].rnn_states_critic[step],
-                                                            self.buffer[agent_idx].masks[step],
-                                                            self.buffer[agent_idx].available_actions[step])
-                                        for agent_idx in range(self.num_agents)]
-        node_feats, old_dist_entropy = zip(*raw_actions_results)
-        node_feats, old_dist_entropy = torch.stack(node_feats, 1), _t2n(torch.stack(old_dist_entropy, 1))
-        # node_feats = node_feats.permute(1, 0, 2)
-        # old_dist_entropy = old_dist_entropy.permute(1, 0, 2)
+            agent_id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1, 1).to(self.device)
+            node_feats = torch.cat([node_feats, agent_id_feat], -1) 
 
-        agent_id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1, 1).to(self.device)
-        node_feats = torch.cat([node_feats, agent_id_feat], -1) 
+            temporal_neighbors = torch.stack([check(self.buffer[agent_idx].temporal_neighbors) for agent_idx in range(self.num_agents)], 1).to(self.device)
+            neighbors_feats_mask = temporal_neighbors >= 0
+            temporal_neighbors = temporal_neighbors * neighbors_feats_mask
+            neighbors_feats = node_feats.view(-1, self.all_args.node_feat_size).index_select(0, temporal_neighbors.view(-1)) \
+                                    .view(self.n_rollout_threads, self.num_agents, self.all_args.time_gap, self.all_args.node_feat_size)
+            neighbors_feats = neighbors_feats * neighbors_feats_mask.unsqueeze(-1)
+            node_feats = torch.mean(neighbors_feats, dim=-2) + node_feats
 
-        temporal_neighbors = torch.stack([check(self.buffer[agent_idx].temporal_neighbors) for agent_idx in range(self.num_agents)], 1).to(self.device)
-        neighbors_feats_mask = temporal_neighbors >= 0
-        temporal_neighbors = temporal_neighbors * neighbors_feats_mask
-        neighbors_feats = node_feats.view(-1, self.all_args.node_feat_size).index_select(0, temporal_neighbors.view(-1)) \
-                                .view(self.n_rollout_threads, self.num_agents, self.all_args.time_gap, self.all_args.node_feat_size)
-        neighbors_feats = neighbors_feats * neighbors_feats_mask.unsqueeze(-1)
-        node_feats = torch.mean(neighbors_feats, dim=-2) + node_feats
+            adjs = self.graph_policy(temporal_inputs, node_feats.detach())
 
-        adjs = self.graph_policy(temporal_inputs, node_feats.detach())
+            orignal_adjs = adjs.clone()
 
-        orignal_adjs = adjs.clone()
-
-        adjs = torch.stack([adj if is_acyclic(adj) else pruning(adj) for adj in adjs])
-        # print("adjs:", adjs, adjs.grad_fn)
-
-        Gs = [ig.Graph.Weighted_Adjacency(adj.tolist()) for adj in adjs]
-        ordered_vertices = np.stack([G.topological_sorting() for G in Gs])
-
-        #test
-        ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_rollout_threads)])
-
-        execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
+            adjs = torch.stack([adj if is_acyclic(adj) else pruning(adj) for adj in adjs])
+            # print("adjs:", adjs, adjs.grad_fn)
+            execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
+            Gs = [ig.Graph.Weighted_Adjacency(adj.tolist()) for adj in adjs]
+            ordered_vertices = np.stack([G.topological_sorting() for G in Gs])
+        else:
+            ordered_vertices = _t2n(self.agent_order)
+            # ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_rollout_threads)])
+            execution_masks = generate_mask_from_order(
+            self.agent_order.clone(), ego_exclusive=False).to(
+                self.device).float().view(-1, self.num_agents)  # [bs, n_agents, n_agents]
+            # execution_masks = torch.stack([torch.stack([torch.ones(self.n_rollout_threads)] * order +
+            #                                 [torch.zeros(self.n_rollout_threads)] *
+            #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
+            orignal_adjs = execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents).permute(0, 2, 1)
 
         rollout_actors = np.array([self.policy for _ in range(self.n_rollout_threads)])
         rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)
@@ -219,10 +224,6 @@ class GoBiggerRunner(Runner):
             # all_actions = actions.view(-1, self.num_agents)
             ego_inclusive_action = actions.reshape(-1, self.num_agents, self.action_dim)
             tmp_execution_mask = execution_masks.index_select(0, torch.from_numpy(raw_agent_indices).to(self.device))
-            #test
-            tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * order +
-                                        [torch.zeros(self.n_rollout_threads)] *
-                                        (self.num_agents - order), -1).to(self.device)
             
             inputs = [(rollout_actors[num, order], 
                 np.expand_dims(self.buffer[ordered_vertices[num, order]].share_obs[step][num], axis=0),
@@ -267,52 +268,53 @@ class GoBiggerRunner(Runner):
         rnn_states = rnn_states.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
         rnn_states_critic = rnn_states_critic.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
 
-        diff_dist_entropies = new_dist_entropies - old_dist_entropy
-        
         neighbors_agents = []
         edges_agents = []
         edges_agents_ts = []
-        direction_type = np.eye(2, dtype=np.float32)
-        src_dst_id = np.eye(self.num_agents, dtype=np.float32)
-        adjs_t = adjs.clone().permute(0, 2, 1)
-        for agent_idx in range(self.num_agents):
+        if self.use_graph:
+            diff_dist_entropies = new_dist_entropies - old_dist_entropy
+            
+            direction_type = np.eye(2, dtype=np.float32)
+            src_dst_id = np.eye(self.num_agents, dtype=np.float32)
+            adjs_t = adjs.clone().permute(0, 2, 1)
+            for agent_idx in range(self.num_agents):
 
-            adjs_per_agent = adjs[:, agent_idx]
-            adjs_t_per_agent = adjs_t[:, agent_idx]
+                adjs_per_agent = adjs[:, agent_idx]
+                adjs_t_per_agent = adjs_t[:, agent_idx]
 
-            neighbors_per_agent = []
-            edges_per_agent = []
-            edges_per_agent_ts = []
+                neighbors_per_agent = []
+                edges_per_agent = []
+                edges_per_agent_ts = []
 
-            for batch_idx in range(adjs_per_agent.shape[0]):
-                tmp_neighbors = []
-                tmp_edge_feat = []
-                tmp_edges_ts = []
+                for batch_idx in range(adjs_per_agent.shape[0]):
+                    tmp_neighbors = []
+                    tmp_edge_feat = []
+                    tmp_edges_ts = []
 
-                adj_ = adjs_per_agent[batch_idx]
-                neighbors = adj_.nonzero(as_tuple=True)[0].tolist()
-                diff_dist_entropies_ = diff_dist_entropies[batch_idx]
-                tmp_neighbors.extend(neighbors)
+                    adj_ = adjs_per_agent[batch_idx]
+                    neighbors = adj_.nonzero(as_tuple=True)[0].tolist()
+                    diff_dist_entropies_ = diff_dist_entropies[batch_idx]
+                    tmp_neighbors.extend(neighbors)
 
-                for idx in range(len(neighbors)):
-                    tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors[idx]], 0), src_dst_id[agent_idx], src_dst_id[neighbors[idx]], direction_type[0]], -1))
-                    tmp_edges_ts.append(int(step))
+                    for idx in range(len(neighbors)):
+                        tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors[idx]], 0), src_dst_id[agent_idx], src_dst_id[neighbors[idx]], direction_type[0]], -1))
+                        tmp_edges_ts.append(int(step))
 
-                adj_t = adjs_t_per_agent[batch_idx]
-                neighbors_t = adj_t.nonzero(as_tuple=True)[0].tolist()
-                tmp_neighbors.extend(neighbors_t)
+                    adj_t = adjs_t_per_agent[batch_idx]
+                    neighbors_t = adj_t.nonzero(as_tuple=True)[0].tolist()
+                    tmp_neighbors.extend(neighbors_t)
 
-                for idx in range(len(neighbors_t)):
-                    tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors_t[idx]], 0), src_dst_id[neighbors_t[idx]], src_dst_id[agent_idx], direction_type[1]], -1))
-                    tmp_edges_ts.append(int(step))
+                    for idx in range(len(neighbors_t)):
+                        tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors_t[idx]], 0), src_dst_id[neighbors_t[idx]], src_dst_id[agent_idx], direction_type[1]], -1))
+                        tmp_edges_ts.append(int(step))
 
-                neighbors_per_agent.append(tmp_neighbors)
-                edges_per_agent.append(tmp_edge_feat)
-                edges_per_agent_ts.append(tmp_edges_ts)
+                    neighbors_per_agent.append(tmp_neighbors)
+                    edges_per_agent.append(tmp_edge_feat)
+                    edges_per_agent_ts.append(tmp_edges_ts)
 
-            neighbors_agents.append(neighbors_per_agent)
-            edges_agents.append(edges_per_agent)
-            edges_agents_ts.append(edges_per_agent_ts)
+                neighbors_agents.append(neighbors_per_agent)
+                edges_agents.append(edges_per_agent)
+                edges_agents_ts.append(edges_per_agent_ts)
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, \
                     execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents), neighbors_agents, edges_agents, edges_agents_ts, orignal_adjs
@@ -329,56 +331,62 @@ class GoBiggerRunner(Runner):
 
         # for agent_id in range(self.num_agents):
         #     self.trainer[agent_id].prep_rollout()
+        if self.use_graph:
+            edge_feats = torch.stack([check(self.eval_buffer[agent_idx].temporal_neighbors_edge_feat) for agent_idx in range(self.num_agents)], 1)
+            edts = torch.stack([check(self.eval_buffer[agent_idx].temporal_neighbors_edge_timestamps) for agent_idx in range(self.num_agents)], 1)
+            non_act_edge_mask = edts >= 0
+            assert not torch.isinf(edts).any(), "InF!!"
 
-        edge_feats = torch.stack([check(self.eval_buffer[agent_idx].temporal_neighbors_edge_feat) for agent_idx in range(self.num_agents)], 1)
-        edts = torch.stack([check(self.eval_buffer[agent_idx].temporal_neighbors_edge_timestamps) for agent_idx in range(self.num_agents)], 1)
-        non_act_edge_mask = edts >= 0
-        assert not torch.isinf(edts).any(), "InF!!"
+            temporal_inputs = [
+                edge_feats.to(self.device), 
+                edts.to(self.device), 
+                non_act_edge_mask.to(self.device)
+            ]
 
-        temporal_inputs = [
-            edge_feats.to(self.device), 
-            edts.to(self.device), 
-            non_act_edge_mask.to(self.device)
-        ]
+            raw_actions_results = [self.trainer[agent_idx].policy.get_raw_actions(
+                                                                None,
+                                                                eval_obs,
+                                                                eval_rnn_states_old[:, agent_idx],
+                                                                None,
+                                                                eval_masks[:, agent_idx],
+                                                                deterministic=True)
+                                            for agent_idx in range(self.num_agents)]
+            node_feats, old_dist_entropy = zip(*raw_actions_results)
+            node_feats, old_dist_entropy = torch.stack(node_feats, 1), _t2n(torch.stack(old_dist_entropy, 1))
+            # node_feats = node_feats.permute(1, 0, 2)
+            # old_dist_entropy = old_dist_entropy.permute(1, 0, 2)
 
-        raw_actions_results = [self.trainer[agent_idx].policy.get_raw_actions(
-                                                            None,
-                                                            eval_obs,
-                                                            eval_rnn_states_old[:, agent_idx],
-                                                            None,
-                                                            eval_masks[:, agent_idx],
-                                                            deterministic=True)
-                                        for agent_idx in range(self.num_agents)]
-        node_feats, old_dist_entropy = zip(*raw_actions_results)
-        node_feats, old_dist_entropy = torch.stack(node_feats, 1), _t2n(torch.stack(old_dist_entropy, 1))
-        # node_feats = node_feats.permute(1, 0, 2)
-        # old_dist_entropy = old_dist_entropy.permute(1, 0, 2)
+            agent_id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(self.n_eval_rollout_threads, 1, 1).to(self.device)
+            node_feats = torch.cat([node_feats, agent_id_feat], -1) 
 
-        agent_id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(self.n_eval_rollout_threads, 1, 1).to(self.device)
-        node_feats = torch.cat([node_feats, agent_id_feat], -1) 
+            temporal_neighbors = torch.stack([check(self.eval_buffer[agent_idx].temporal_neighbors) for agent_idx in range(self.num_agents)], 1).to(self.device)
+            neighbors_feats_mask = temporal_neighbors >= 0
+            temporal_neighbors = temporal_neighbors * neighbors_feats_mask
+            neighbors_feats = node_feats.view(-1, self.all_args.node_feat_size).index_select(0, temporal_neighbors.view(-1)) \
+                                    .view(self.n_eval_rollout_threads, self.num_agents, self.all_args.time_gap, self.all_args.node_feat_size)
+            neighbors_feats = neighbors_feats * neighbors_feats_mask.unsqueeze(-1)
+            node_feats = torch.mean(neighbors_feats, dim=-2) + node_feats
 
-        temporal_neighbors = torch.stack([check(self.eval_buffer[agent_idx].temporal_neighbors) for agent_idx in range(self.num_agents)], 1).to(self.device)
-        neighbors_feats_mask = temporal_neighbors >= 0
-        temporal_neighbors = temporal_neighbors * neighbors_feats_mask
-        neighbors_feats = node_feats.view(-1, self.all_args.node_feat_size).index_select(0, temporal_neighbors.view(-1)) \
-                                .view(self.n_eval_rollout_threads, self.num_agents, self.all_args.time_gap, self.all_args.node_feat_size)
-        neighbors_feats = neighbors_feats * neighbors_feats_mask.unsqueeze(-1)
-        node_feats = torch.mean(neighbors_feats, dim=-2) + node_feats
+            adjs = self.graph_policy(temporal_inputs, node_feats.detach())
 
-        adjs = self.graph_policy(temporal_inputs, node_feats.detach())
+            orignal_adjs = adjs.clone()
 
-        orignal_adjs = adjs.clone()
+            adjs = torch.stack([adj if is_acyclic(adj) else pruning(adj) for adj in adjs])
+            # print("adjs:", adjs, adjs.grad_fn)
 
-        adjs = torch.stack([adj if is_acyclic(adj) else pruning(adj) for adj in adjs])
-        # print("adjs:", adjs, adjs.grad_fn)
-
-        Gs = [ig.Graph.Weighted_Adjacency(adj.tolist()) for adj in adjs]
-        ordered_vertices = np.stack([G.topological_sorting() for G in Gs])
-
-        #test
-        ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_eval_rollout_threads)])
-
-        execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
+            Gs = [ig.Graph.Weighted_Adjacency(adj.tolist()) for adj in adjs]
+            ordered_vertices = np.stack([G.topological_sorting() for G in Gs])
+            execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
+        else:
+            eval_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.n_eval_rollout_threads)]).to(self.device)
+            ordered_vertices = _t2n(eval_order)
+            execution_masks = generate_mask_from_order(
+            eval_order, ego_exclusive=False).to(
+                self.device).float().view(-1, self.num_agents)
+            # ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_eval_rollout_threads)])
+            # execution_masks = torch.stack([torch.stack([torch.ones(self.n_eval_rollout_threads)] * order +
+            #                                 [torch.zeros(self.n_eval_rollout_threads)] *
+            #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
 
         rollout_actors = np.array([self.policy for _ in range(self.n_eval_rollout_threads)])
         rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)
@@ -396,11 +404,7 @@ class GoBiggerRunner(Runner):
             # all_actions = actions.view(-1, self.num_agents)
             ego_inclusive_action = actions.reshape(-1, self.num_agents, self.action_dim)
             tmp_execution_mask = execution_masks.index_select(0, torch.from_numpy(raw_agent_indices).to(self.device))
-            #test
-            tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * order +
-                                        [torch.zeros(self.n_eval_rollout_threads)] *
-                                        (self.num_agents - order), -1).to(self.device)
-            # np.expand_dims(self.buffer[ordered_vertices[num, order]].share_obs[step, num], axis=0),
+
             inputs = [(rollout_actors[num, order], 
                 np.expand_dims(eval_obs[num], axis=0),
                 np.expand_dims(eval_rnn_states_old[num,ordered_vertices[num, order]], axis=0),
@@ -435,52 +439,52 @@ class GoBiggerRunner(Runner):
         new_dist_entropies = new_dist_entropies.reshape(self.n_eval_rollout_threads, self.num_agents)
         eval_rnn_states = eval_rnn_states.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
 
-        diff_dist_entropies = new_dist_entropies - old_dist_entropy
-        
         neighbors_agents = []
         edges_agents = []
         edges_agents_ts = []
-        direction_type = np.eye(2, dtype=np.float32)
-        src_dst_id = np.eye(self.num_agents, dtype=np.float32)
-        adjs_t = adjs.clone().permute(0, 2, 1)
-        for agent_idx in range(self.num_agents):
+        if self.use_graph:
+            diff_dist_entropies = new_dist_entropies - old_dist_entropy
+            direction_type = np.eye(2, dtype=np.float32)
+            src_dst_id = np.eye(self.num_agents, dtype=np.float32)
+            adjs_t = adjs.clone().permute(0, 2, 1)
+            for agent_idx in range(self.num_agents):
 
-            adjs_per_agent = adjs[:, agent_idx]
-            adjs_t_per_agent = adjs_t[:, agent_idx]
+                adjs_per_agent = adjs[:, agent_idx]
+                adjs_t_per_agent = adjs_t[:, agent_idx]
 
-            neighbors_per_agent = []
-            edges_per_agent = []
-            edges_per_agent_ts = []
+                neighbors_per_agent = []
+                edges_per_agent = []
+                edges_per_agent_ts = []
 
-            for batch_idx in range(adjs_per_agent.shape[0]):
-                tmp_neighbors = []
-                tmp_edge_feat = []
-                tmp_edges_ts = []
+                for batch_idx in range(adjs_per_agent.shape[0]):
+                    tmp_neighbors = []
+                    tmp_edge_feat = []
+                    tmp_edges_ts = []
 
-                adj_ = adjs_per_agent[batch_idx]
-                neighbors = adj_.nonzero(as_tuple=True)[0].tolist()
-                diff_dist_entropies_ = diff_dist_entropies[batch_idx]
-                tmp_neighbors.extend(neighbors)
+                    adj_ = adjs_per_agent[batch_idx]
+                    neighbors = adj_.nonzero(as_tuple=True)[0].tolist()
+                    diff_dist_entropies_ = diff_dist_entropies[batch_idx]
+                    tmp_neighbors.extend(neighbors)
 
-                for idx in range(len(neighbors)):
-                    tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors[idx]], 0), src_dst_id[agent_idx], src_dst_id[neighbors[idx]], direction_type[0]], -1))
-                    tmp_edges_ts.append(int(step))
+                    for idx in range(len(neighbors)):
+                        tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors[idx]], 0), src_dst_id[agent_idx], src_dst_id[neighbors[idx]], direction_type[0]], -1))
+                        tmp_edges_ts.append(int(step))
 
-                adj_t = adjs_t_per_agent[batch_idx]
-                neighbors_t = adj_t.nonzero(as_tuple=True)[0].tolist()
-                tmp_neighbors.extend(neighbors_t)
+                    adj_t = adjs_t_per_agent[batch_idx]
+                    neighbors_t = adj_t.nonzero(as_tuple=True)[0].tolist()
+                    tmp_neighbors.extend(neighbors_t)
 
-                for idx in range(len(neighbors_t)):
-                    tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors_t[idx]], 0), src_dst_id[neighbors_t[idx]], src_dst_id[agent_idx], direction_type[1]], -1))
-                    tmp_edges_ts.append(int(step))
+                    for idx in range(len(neighbors_t)):
+                        tmp_edge_feat.append(np.concatenate([np.expand_dims(diff_dist_entropies_[neighbors_t[idx]], 0), src_dst_id[neighbors_t[idx]], src_dst_id[agent_idx], direction_type[1]], -1))
+                        tmp_edges_ts.append(int(step))
 
-                neighbors_per_agent.append(tmp_neighbors)
-                edges_per_agent.append(tmp_edge_feat)
-                edges_per_agent_ts.append(tmp_edges_ts)
+                    neighbors_per_agent.append(tmp_neighbors)
+                    edges_per_agent.append(tmp_edge_feat)
+                    edges_per_agent_ts.append(tmp_edges_ts)
 
-            neighbors_agents.append(neighbors_per_agent)
-            edges_agents.append(edges_per_agent)
-            edges_agents_ts.append(edges_per_agent_ts)
+                neighbors_agents.append(neighbors_per_agent)
+                edges_agents.append(edges_per_agent)
+                edges_agents_ts.append(edges_per_agent_ts)
 
         return actions, hard_actions, eval_rnn_states, neighbors_agents, edges_agents, edges_agents_ts
 
@@ -517,10 +521,10 @@ class GoBiggerRunner(Runner):
                                         np.expand_dims(rewards[:, agent_id], -1),
                                         masks[:, agent_id],
                                         execution_masks[:, agent_id],
-                                        neighbors_agents[agent_id],
-                                        edges_agents[agent_id],
-                                        edges_agents_ts[agent_id],
-                                        adjs
+                                        neighbors_agents[agent_id] if self.use_graph else None,
+                                        edges_agents[agent_id] if self.use_graph else None,
+                                        edges_agents_ts[agent_id] if self.use_graph else None,
+                                        adjs if self.use_graph else None,
                                         )
 
     @torch.no_grad()
@@ -550,9 +554,9 @@ class GoBiggerRunner(Runner):
             for agent_id in range(self.num_agents):
                 self.eval_buffer[agent_id].insert(
                                             eval_masks[:, agent_id],
-                                            neighbors_agents[agent_id],
-                                            edges_agents[agent_id],
-                                            edges_agents_ts[agent_id],
+                                            neighbors_agents[agent_id] if self.use_graph else None,
+                                            edges_agents[agent_id] if self.use_graph else None,
+                                            edges_agents_ts[agent_id] if self.use_graph else None,
                                             )
 
             env_actions = []
