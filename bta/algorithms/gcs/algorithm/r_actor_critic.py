@@ -117,7 +117,7 @@ class R_Actor(nn.Module):
                 actor_features = actor_features.reshape(-1, self.args.hidden_size)
                 rnn_states = rnn_states.reshape(-1, 1, self.args.hidden_size)
                 actor_features, rnn_states = self.rnn(actor_features, rnn_states, masks)  # 4.64    4.1.64
-            actor_features = actor_features.reshape(self.args.n_rollout_threads, -1, self.feature_size)
+            actor_features = actor_features.reshape(-1, self.args.num_agents, self.feature_size)
             actions, action_log_probs, father_actions = self.act(obs, actor_features, G_s, available_actions, deterministic)
         else:
             if self._use_naive_recurrent_policy or self._use_recurrent_policy:

@@ -100,7 +100,7 @@ class SeparatedReplayBuffer(object):
         self.step = 0
 
     def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, hard_actions, action_log_probs,
-               value_preds, rewards, masks, execution_mask, neighbors, neighbors_edge_feat, neighbors_edge_timestamps, adj, bad_masks=None, active_masks=None, available_actions=None):
+               value_preds, rewards, masks, execution_mask, neighbors=None, neighbors_edge_feat=None, neighbors_edge_timestamps=None, adj=None, bad_masks=None, active_masks=None, available_actions=None):
         self.share_obs[self.step + 1] = share_obs.copy()
         self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -122,21 +122,22 @@ class SeparatedReplayBuffer(object):
         
         self.step = (self.step + 1) % self.episode_length
         
-        for batch_idx in range(len(neighbors)):
+        if self.use_graph:
+            for batch_idx in range(len(neighbors)):
 
-            for node_idx in range(len(neighbors[batch_idx])):
-                self.temporal_neighbors[batch_idx, self.temporal_step_node[batch_idx] ] = neighbors[batch_idx][node_idx]
-                self.temporal_step_node[batch_idx] = (self.temporal_step_node[batch_idx] + 1) % self.time_gap
+                for node_idx in range(len(neighbors[batch_idx])):
+                    self.temporal_neighbors[batch_idx, self.temporal_step_node[batch_idx] ] = neighbors[batch_idx][node_idx]
+                    self.temporal_step_node[batch_idx] = (self.temporal_step_node[batch_idx] + 1) % self.time_gap
 
-            for edge_idx in range(len(neighbors_edge_feat[batch_idx])):
-                self.temporal_neighbors_edge_feat[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_feat[batch_idx][edge_idx]
-                assert not np.isinf(neighbors_edge_timestamps[batch_idx][edge_idx]).any(), "InF!!"
-                self.temporal_neighbors_edge_timestamps[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_timestamps[batch_idx][edge_idx]
-                self.temporal_step_edge[batch_idx] = (self.temporal_step_edge[batch_idx] + 1) % self.max_edges
+                for edge_idx in range(len(neighbors_edge_feat[batch_idx])):
+                    self.temporal_neighbors_edge_feat[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_feat[batch_idx][edge_idx]
+                    assert not np.isinf(neighbors_edge_timestamps[batch_idx][edge_idx]).any(), "InF!!"
+                    self.temporal_neighbors_edge_timestamps[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_timestamps[batch_idx][edge_idx]
+                    self.temporal_step_edge[batch_idx] = (self.temporal_step_edge[batch_idx] + 1) % self.max_edges
 
-        self.temporal_neighbors_edge_feat = self.temporal_neighbors_edge_feat * np.tile(np.expand_dims(masks.copy(), -1), (1, self.max_edges, 1))
-        self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
-        self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))
+            self.temporal_neighbors_edge_feat = self.temporal_neighbors_edge_feat * np.tile(np.expand_dims(masks.copy(), -1), (1, self.max_edges, 1))
+            self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
+            self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))
         
     def chooseinsert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, action_log_probs,
                      value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
@@ -586,20 +587,21 @@ class SeparatedReplayBufferEval(object):
         self.max_edges = args.max_edges
         self.time_gap = args.time_gap
 
-    def insert(self, masks, neighbors, neighbors_edge_feat, neighbors_edge_timestamps, bad_masks=None, active_masks=None, available_actions=None):
+    def insert(self, masks, neighbors=None, neighbors_edge_feat=None, neighbors_edge_timestamps=None, bad_masks=None, active_masks=None, available_actions=None):
         
-        for batch_idx in range(len(neighbors)):
+        if self.use_graph:
+            for batch_idx in range(len(neighbors)):
 
-            for node_idx in range(len(neighbors[batch_idx])):
-                self.temporal_neighbors[batch_idx, self.temporal_step_node[batch_idx] ] = neighbors[batch_idx][node_idx]
-                self.temporal_step_node[batch_idx] = (self.temporal_step_node[batch_idx] + 1) % self.time_gap
+                for node_idx in range(len(neighbors[batch_idx])):
+                    self.temporal_neighbors[batch_idx, self.temporal_step_node[batch_idx] ] = neighbors[batch_idx][node_idx]
+                    self.temporal_step_node[batch_idx] = (self.temporal_step_node[batch_idx] + 1) % self.time_gap
 
-            for edge_idx in range(len(neighbors_edge_feat[batch_idx])):
-                self.temporal_neighbors_edge_feat[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_feat[batch_idx][edge_idx]
-                assert not np.isinf(neighbors_edge_timestamps[batch_idx][edge_idx]).any(), "InF!!"
-                self.temporal_neighbors_edge_timestamps[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_timestamps[batch_idx][edge_idx]
-                self.temporal_step_edge[batch_idx] = (self.temporal_step_edge[batch_idx] + 1) % self.max_edges
+                for edge_idx in range(len(neighbors_edge_feat[batch_idx])):
+                    self.temporal_neighbors_edge_feat[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_feat[batch_idx][edge_idx]
+                    assert not np.isinf(neighbors_edge_timestamps[batch_idx][edge_idx]).any(), "InF!!"
+                    self.temporal_neighbors_edge_timestamps[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_timestamps[batch_idx][edge_idx]
+                    self.temporal_step_edge[batch_idx] = (self.temporal_step_edge[batch_idx] + 1) % self.max_edges
 
-        self.temporal_neighbors_edge_feat = self.temporal_neighbors_edge_feat * np.tile(np.expand_dims(masks.copy(), -1), (1, self.max_edges, 1))
-        self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
-        self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))
+            self.temporal_neighbors_edge_feat = self.temporal_neighbors_edge_feat * np.tile(np.expand_dims(masks.copy(), -1), (1, self.max_edges, 1))
+            self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
+            self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))
