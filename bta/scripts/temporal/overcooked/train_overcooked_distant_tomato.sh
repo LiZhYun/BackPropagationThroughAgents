@@ -4,7 +4,7 @@
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
+#SBATCH --mem=100G
 #SBATCH --time=72:00:00
 #SBATCH --array=0-1
 
