@@ -6,7 +6,7 @@
 #SBATCH --array=0-10
 
 module restore pytorch2002-di
-conda activate pytorch-env
+source activate pytorch-env
 
 env="Overcooked"
 
@@ -30,3 +30,6 @@ CUDA_VISIBLE_DEVICES=0 python train/train_overcooked.py --env_name ${env} --algo
     --cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" --save_interval 25 --log_inerval 10 --use_recurrent_policy\
     --overcooked_version ${version} \
     --wandb_name "zhiyuanli" --user_name "zhiyuanli" 
+
+# Deactivate the environment
+source deactivate
