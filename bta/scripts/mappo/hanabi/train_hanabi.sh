@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=hanabi-temporal
+#SBATCH --job-name=hanabi-mappo
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
