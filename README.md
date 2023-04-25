@@ -15,6 +15,14 @@ This repository implements Back-Propagatioin Through Agents(BPTA). The implement
 - [Google Research Football (GRF)](https://github.com/google-research/football)
 
 
+## Compared Algorithms supported:
+
+- [MAPPO](https://github.com/marlbenchmark/on-policy)
+- [HAPPO](https://github.com/cyanrain7/TRPO-in-MARL)
+- [Auto-Regressive MAPPO(AR-MAPPO)](https://github.com/garrett4wade/revisiting_marl)
+- [Graph-Based Coordination Strategy(GCS)](https://github.com/Amanda-1997/GCS_aamas337)
+
+
 ## 1. Usage
 
 All core code is located within the bta folder. The algorithms/ subfolder contains algorithm-specific code
@@ -22,10 +30,10 @@ for BPTA.
 
 * The envs/ subfolder contains environment wrapper implementations for the Go-Bigger, GRF, Overcooked-AI, and Hanabi. 
 
-* Code to perform training rollouts and policy updates are contained within the runner/ folder - there is a runner for 
+* Code to perform training rollouts and policy updates are contained within the runner/Compared-Algorithms/ folder - there is a runner for 
 each environment. 
 
-* Executable scripts for training with default hyperparameters can be found in the scripts/ folder. The files are named
+* Executable scripts for training with default hyperparameters can be found in the scripts/Compared-Algorithms/ folder. The files are named
 in the following manner: train_algo_environment.sh. Within each file, the scenario/layout name can be altered. 
 * Python training scripts for each environment can be found in the scripts/train/ folder. 
 
