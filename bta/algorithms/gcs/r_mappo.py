@@ -165,64 +165,67 @@ class R_MAPPO():
         #         value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
         #         adv_targ, available_actions_batch, father_action_batch = sample
         ### get the sequence
-        self.episode_length = self.args.episode_length
-        self.n_rollout_threads = self.args.n_rollout_threads
-        self.n_agents = self.args.num_agents  ### self.n_rollout_threads, num_agents, act_shape
-        self.n_actions = self.args.n_actions
-
-        epi_roll = self.episode_length * self.n_rollout_threads // self.num_mini_batch
-        if self.args.env_name == "GoBigger":
-            for batch_idx in range(obs_batch.shape[0]):
-                for key in obs_batch[batch_idx].keys():
-                    if 'Dict' in obs_batch[batch_idx][key].__class__.__name__.capitalize():
-                        for sub_key in obs_batch[batch_idx][key].keys():
-                            obs_batch[batch_idx][key][sub_key] = check(obs_batch[batch_idx][key][sub_key]).to(**self.tpdv)
-                    else:
-                        obs_batch[batch_idx][key] = check(obs_batch[batch_idx][key]).to(**self.tpdv)
-            obs_batch_ = obs_batch.reshape(epi_roll, self.n_agents)
+        if self.args.env_name == "Hanabi":
+            loss_graph_actor = torch.zeros(1)
         else:
-            obs_batch_ = check(obs_batch.reshape(epi_roll, self.n_agents, -1)).to(**self.tpdv)
-        agent_id_graph_ = torch.eye(self.n_agents).unsqueeze(0).repeat(epi_roll, 1, 1).to(self.device)
-        action_ids = np.repeat(np.expand_dims(np.eye(self.args.n_actions), axis=0), epi_roll*self.n_agents, 0)  # 600.19.19
+            self.episode_length = self.args.episode_length
+            self.n_rollout_threads = self.args.n_rollout_threads
+            self.n_agents = self.args.num_agents  ### self.n_rollout_threads, num_agents, act_shape
+            self.n_actions = self.args.n_actions
 
-        last_actions_batch = last_actions_batch[:,[0]]
-        last_actions_batch_ =[action_ids[i][last_actions_batch.astype(np.int32)[i]] for i in range(len(action_ids))]  # 600.1.19
-        last_actions_batch_ = torch.tensor(last_actions_batch_).reshape(epi_roll, self.n_agents, -1).float().to(self.device)  # 25.4.19
-        if self.args.env_name == "GoBigger":
-            inputs_graph = {'obs': obs_batch_, 'id_act': torch.cat((agent_id_graph_, last_actions_batch_), -1).float()}
-        else:
-            inputs_graph = torch.cat((obs_batch_, agent_id_graph_, last_actions_batch_), -1).float() # 25.4.33
+            epi_roll = self.episode_length * self.n_rollout_threads // self.num_mini_batch
+            if self.args.env_name == "GoBigger":
+                for batch_idx in range(obs_batch.shape[0]):
+                    for key in obs_batch[batch_idx].keys():
+                        if 'Dict' in obs_batch[batch_idx][key].__class__.__name__.capitalize():
+                            for sub_key in obs_batch[batch_idx][key].keys():
+                                obs_batch[batch_idx][key][sub_key] = check(obs_batch[batch_idx][key][sub_key]).to(**self.tpdv)
+                        else:
+                            obs_batch[batch_idx][key] = check(obs_batch[batch_idx][key]).to(**self.tpdv)
+                obs_batch_ = obs_batch.reshape(epi_roll, self.n_agents)
+            else:
+                obs_batch_ = check(obs_batch.reshape(epi_roll, self.n_agents, -1)).to(**self.tpdv)
+            agent_id_graph_ = torch.eye(self.n_agents).unsqueeze(0).repeat(epi_roll, 1, 1).to(self.device)
+            action_ids = np.repeat(np.expand_dims(np.eye(self.args.n_actions), axis=0), epi_roll*self.n_agents, 0)  # 600.19.19
 
-        encoder_output, samples, mask_scores, entropy, adj_prob, \
-        log_softmax_logits_for_rewards, entropy_regularization = self.policy.graph_actor(inputs_graph)
+            last_actions_batch = last_actions_batch[:,[0]]
+            last_actions_batch_ =[action_ids[i][last_actions_batch.astype(np.int32)[i]] for i in range(len(action_ids))]  # 600.1.19
+            last_actions_batch_ = torch.tensor(last_actions_batch_).reshape(epi_roll, self.n_agents, -1).float().to(self.device)  # 25.4.19
+            if self.args.env_name == "GoBigger":
+                inputs_graph = {'obs': obs_batch_, 'id_act': torch.cat((agent_id_graph_, last_actions_batch_), -1).float()}
+            else:
+                inputs_graph = torch.cat((obs_batch_, agent_id_graph_, last_actions_batch_), -1).float() # 25.4.33
 
-        loss_graph_actor = -(torch.sum(log_softmax_logits_for_rewards, dim=(1, 2)) * torch.sum(
-            adv_targ.reshape(epi_roll, self.n_agents, -1), dim=(1, 2))).mean()
+            encoder_output, samples, mask_scores, entropy, adj_prob, \
+            log_softmax_logits_for_rewards, entropy_regularization = self.policy.graph_actor(inputs_graph)
 
-        # ## DAG loss
-        loss = 0
-        # mask_scores_tensor = torch.stack(mask_scores).permute(1,0,2)
-        for i in range(epi_roll):
-            m_s = adj_prob[i]
-            # sparse_loss = self.args.tau_A * torch.sum(torch.abs(m_s))
-            h_A = _h_A(m_s, self.n_agents)
-            loss += h_A
-        loss_hA = loss / epi_roll
-        loss_graph_actor = loss_graph_actor + loss_hA
+            loss_graph_actor = -(torch.sum(log_softmax_logits_for_rewards, dim=(1, 2)) * torch.sum(
+                adv_targ.reshape(epi_roll, self.n_agents, -1), dim=(1, 2))).mean()
 
-        # x = torch.eye(d).double()+ torch.div(matrix, d)
-        # def _h_A(A, m):
-        #     expm_A = matrix_poly(A*A, m)
-        #     h_A = torch.trace(expm_A) - m
-        #     return h_A
+            # ## DAG loss
+            loss = 0
+            # mask_scores_tensor = torch.stack(mask_scores).permute(1,0,2)
+            for i in range(epi_roll):
+                m_s = adj_prob[i]
+                # sparse_loss = self.args.tau_A * torch.sum(torch.abs(m_s))
+                h_A = _h_A(m_s, self.n_agents)
+                loss += h_A
+            loss_hA = loss / epi_roll
+            loss_graph_actor = loss_graph_actor + loss_hA
 
-        self.policy.graph_actor_optimizer.zero_grad()
-        loss_graph_actor.backward()
-        if self._use_max_grad_norm:
-            critic_grad_norm = nn.utils.clip_grad_norm_(self.policy.graph_actor.parameters(), self.max_grad_norm)
-        else:
-            critic_grad_norm = get_gard_norm(self.policy.graph_actor.parameters())
-        self.policy.graph_actor_optimizer.step()
+            # x = torch.eye(d).double()+ torch.div(matrix, d)
+            # def _h_A(A, m):
+            #     expm_A = matrix_poly(A*A, m)
+            #     h_A = torch.trace(expm_A) - m
+            #     return h_A
+
+            self.policy.graph_actor_optimizer.zero_grad()
+            loss_graph_actor.backward()
+            if self._use_max_grad_norm:
+                critic_grad_norm = nn.utils.clip_grad_norm_(self.policy.graph_actor.parameters(), self.max_grad_norm)
+            else:
+                critic_grad_norm = get_gard_norm(self.policy.graph_actor.parameters())
+            self.policy.graph_actor_optimizer.step()
 
         return value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, loss_graph_actor
 
