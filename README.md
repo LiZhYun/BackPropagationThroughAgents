@@ -1,70 +1,112 @@
 # BPTA
-This is a repository for BackPropagation Through Agents.
 
-# Installation
+Zhiyuan Li*. 
+
+This repository implements Back-Propagatioin Through Agents(BPTA). The implementation in this repositorory is used in the paper "Back-Propagatioin Through Agents" (https://arxiv.org/abs/). This repository is heavily based on https://github.com/marlbenchmark/on-policy.
+
+<font color="red"> All hyperparameters and training curves are reported in appendix, we would strongly suggest to double check the important factors before runing the code, such as the rollout threads, episode length, ppo epoch, mini-batches, clip term and so on.
+ 
+
+## Environments supported:
+
+- [Go-Bigger](https://github.com/opendilab/GoBigger)
+- [Hanabi](https://github.com/deepmind/hanabi-learning-environment)
+- [Overcooked-AI](https://github.com/HumanCompatibleAI/overcooked_ai)
+- [Google Research Football (GRF)](https://github.com/google-research/football)
 
 
-```
-conda create -n bpta
+## 1. Usage
+
+All core code is located within the bta folder. The algorithms/ subfolder contains algorithm-specific code
+for BPTA. 
+
+* The envs/ subfolder contains environment wrapper implementations for the Go-Bigger, GRF, Overcooked-AI, and Hanabi. 
+
+* Code to perform training rollouts and policy updates are contained within the runner/ folder - there is a runner for 
+each environment. 
+
+* Executable scripts for training with default hyperparameters can be found in the scripts/ folder. The files are named
+in the following manner: train_algo_environment.sh. Within each file, the scenario/layout name can be altered. 
+* Python training scripts for each environment can be found in the scripts/train/ folder. 
+
+* The config.py file contains relevant hyperparameter and env settings. Most hyperparameters are defaulted to the ones
+used in the paper; however, please refer to the appendix for a full list of hyperparameters used. 
+
+
+## 2. Installation
+
+ Here we give an example installation on CUDA == 10.1. For non-GPU & other CUDA version installation, please refer to the [PyTorch website](https://pytorch.org/get-started/locally/). We remark that this repo. does not depend on a specific CUDA version, feel free to use any CUDA version suitable on your own computer.
+
+``` Bash
+# create conda environment
+conda create -n bpta python==3.6.1
 conda activate bpta
 pip install torch==1.5.1+cu101 torchvision==0.6.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
-cd hsp
-pip install -e . 
-pip install wandb icecream setproctitle gym seaborn tensorboardX slackweb psutil slackweb pyastar2d einops
 ```
 
-We use [wandb](https://wandb.ai) to monitor logs. See the the [official website](https://wandb.ai) and the code for some examples.
+```
+# install bpta package
+cd bta
+pip install -e .
+```
 
-# Overcooked
-Our experiments are conducted in three layouts from [On the Utility of Learning about Humans for Human-AI Coordination](https://github.com/HumanCompatibleAI/human_aware_rl/tree/neurips2019), named *Asymmetric Advantages*, *Coordination Ring*, and *Counter Circuit*,  and two designed layouts, named *Distant Tomato* and *Many Orders*. These layouts are named "unident_s", "random1", "random3", "distant_tomato" and "many_orders" respectively in the code.
+Even though we provide requirement.txt, it may have redundancy. We recommend that the user try to install other required packages by running the code and finding which required package hasn't installed yet.
 
-# Training
+### 2.1 Go-Bigger
 
-All training scripts are under directory `hsp/scripts`. All methods consist of two stages, in the first of which a pool of policies are trained and in the second of which an adaptive policy is trained against this policy pool. 
+   
 
-## Self-Play
+``` Bash
+pip install gobigger
+```
 
-To train self-play policies, change `layout` to one of "unident_s"(Asymmetric Advantages), "random1"(Coordination Ring), "random3"(Counter Circuit), "distant_tomato"(Distant_Tomato) and "many_orders"(Many Orders) and run `./train_overcooked_sp.sh`.
+* We referred to [GoBigger-Explore](https://github.com/opendilab/Gobigger-Explore)'s handling of observations.
 
-## FCP
 
-In the first stage, run `./train_sp_all_S1.sh` to train 12 polcicies via self-play on each layout. After the first stage training is done, run `python extract_sp_S1_models.py` to extract init, middle and final checkpoints of the self-play policies into the policy pool. At this step, the policy pools of FCP on all layouts should be in the directory `hsp/policy_pool/LAYOUT/fcp/s1`. 
+### 2.2 Hanabi
+Environment code for Hanabi is developed from the open-source environment code, but has been slightly modified to fit the algorithms used here.  
+To install, execute the following:
+``` Bash
+pip install cffi
+cd envs/hanabi
+mkdir build & cd build
+cmake ..
+make -j
+```
+Here are all hanabi [models](https://drive.google.com/drive/folders/1RIcP_rG9NY9UzaWfFsIncDcjASk5h4Nx?usp=sharing).
 
-In the second stage, run `./train_fcp_all_S2.sh` to train an adaptive policy against the policy pool for each layout.
+### 2.3 Overcooked-AI
 
-## MEP
-We reimplemented [Maximum Entropy Population-Based Training for Zero-Shot Human-AI Coordination](https://github.com/ruizhaogit/maximum_entropy_population_based_training) and achieved significant higher episode reward when paired with human proxy models than reported in original paper. 
+``` Bash
+pip install overcooked-ai
+```
 
-For the first stage, run `./train_mep_all_S1.sh`. After training is finished, run `python extract_mep_all_S1_models.py` to extract checkpoints of the MEP policies into the policy pool. 
+Our Overcooked experiments are conducted in five layouts from Learning Zero-Shot Cooperation with Humans, Assuming Humans Are Biased, named Asymmetric Advantages, Coordination Ring, Counter Circuit, Distant Tomato and Many Orders. These layouts are named "unident_s", "random1", "random3", "distant_tomato" and "many_orders" respectively in the code.
 
-For the second stage, run `./train_mep_all_S2.sh`.
+### 2.4 GRF
 
-## HSP
-**Important:** Please make sure you finished the first stage training of MEP before the second stage of HSP.
+Please see the [football](https://github.com/google-research/football/blob/master/README.md) repository to install the football environment.
 
-For the first stage, run `./train_hsp_all_S1.sh`. After training is finished, run `python extract_hsp_S1_models.py` to collect HSP policies into the policy pool. 
+## 3.Train
+Here we use train_football_3v1.sh as an example:
+```
+cd bta/scripts/temporal/football
+chmod +x ./train_football_3v1.sh
+./train_football_3v1.sh
+```
+Local results are stored in subfold scripts/results. Note that we use Weights & Bias as the default visualization platform; to use Weights & Bias, please register and login to the platform first. More instructions for using Weights&Bias can be found in the official [documentation](https://docs.wandb.ai/). Adding the `--use_wandb` in command line or in the .sh file will use Tensorboard instead of Weights & Biases. 
 
-Then run `./eval_events_all.sh` to do evaluation to obtain event features for each pair of biased policy and adaptive policy in HSP.  After evaluation is done, for each layout, run `python hsp/greedy_select.py --layout LAYOUT --k 18` to select HSP policies in a greedy manner and generate configuration of policy pool automatically.
 
-For the second stage, run `./train_hsp_all_S2.sh`.
+## 4. Publication
 
-## Evaluation
-
-Run `./eval_overcooked.sh` for evaluation. You can change the layout name, path to YAML file of population configuration and policies to evaluate in `eval_overcooked.sh`. To evaluate with script policies, change policy name to a string with `script:` as prefix, for example, `script:place_onion_and_deliver_soup`. For more script policies, check `script_agent.py` under the overcooked environment directories.
-
-TODO: more detailed evaluation.
-
-# Publication
-
-If you find this repository useful, please [cite our paper](https://openreview.net/forum?id=TrwE8l9aJzs):
-
+If you find this repository useful, please cite our [paper](https://arxiv.org/abs/):
 ```
 @inproceedings{
-yu2023learning,
-title={Learning Zero-Shot Cooperation with Humans, Assuming Humans Are Biased},
-author={Chao Yu and Jiaxuan Gao and Weilin Liu and Botian Xu and Hao Tang and Jiaqi Yang and Yu Wang and Yi Wu},
-booktitle={The Eleventh International Conference on Learning Representations },
-year={2023},
-url={https://openreview.net/forum?id=TrwE8l9aJzs}
+Back-Propagatioin,
+title={Back-Propagatioin Through Agents},
+author={Zhiyuan Li},
+booktitle={},
+year={2024}
 }
 ```
+
