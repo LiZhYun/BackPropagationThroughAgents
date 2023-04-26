@@ -42,9 +42,9 @@ class TemporalPolicy:
         return values
 
     def evaluate_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, task_id=None):
-        action_log_probs, dist_entropy = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks)
+        train_actions, action_log_probs, dist_entropy = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks)
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
-        return values, action_log_probs, dist_entropy
+        return values, train_actions, action_log_probs, dist_entropy
 
     def act(self, obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, **kwargs):
         actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)

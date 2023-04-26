@@ -224,9 +224,9 @@ class R_Actor(nn.Module):
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
         actor_features = torch.cat([actor_features, id_feat], dim=1)
 
-        action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None)
+        train_actions, action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True)
         
-        return action_log_probs, dist_entropy
+        return train_actions, action_log_probs, dist_entropy
 
 class R_Critic(nn.Module):
     def __init__(self, args, share_obs_space, action_space, device=torch.device("cpu")):

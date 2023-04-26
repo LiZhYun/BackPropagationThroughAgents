@@ -180,7 +180,7 @@ class T_POLICY():
                 self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
         
         # Reshape to do in a single forward pass for all steps
-        values, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
+        values, train_actions, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 
@@ -194,9 +194,9 @@ class T_POLICY():
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
 
-        surr1 = imp_weights * (factor_batch + action_log_probs.detach() * log_action_grad) * adv_targ
-        surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp((factor_batch \
-                 + action_log_probs.detach() * log_action_grad), 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) * adv_targ
+        surr1 = (imp_weights * factor_batch + imp_weights.detach() * log_action_grad * train_actions) * adv_targ
+        surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
+                 + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions) * adv_targ
 
         if self._use_policy_active_masks:
             policy_action_loss = (-torch.sum(torch.min(surr1, surr2),

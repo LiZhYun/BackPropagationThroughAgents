@@ -378,7 +378,7 @@ class GoBiggerRunner(Runner):
             ordered_vertices = np.stack([G.topological_sorting() for G in Gs])
             execution_masks = adjs.clone().permute(0, 2, 1).contiguous().view(-1, self.num_agents)
         else:
-            eval_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.n_eval_rollout_threads)]).to(self.device)
+            eval_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_eval_rollout_threads, 1).to(self.device)
             ordered_vertices = _t2n(eval_order)
             execution_masks = generate_mask_from_order(
             eval_order, ego_exclusive=False).to(

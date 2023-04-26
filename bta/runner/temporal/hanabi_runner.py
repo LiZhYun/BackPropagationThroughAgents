@@ -292,7 +292,7 @@ class HanabiRunner(Runner):
                 obs_batch = flatten(self.buffer[agent_id].obs[:-1])
             else:
                 obs_batch = self.buffer[agent_id].obs[:-1].reshape(-1, *self.buffer[agent_id].obs.shape[2:])
-            old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+            _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                         self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                         self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
                                                         self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
@@ -305,7 +305,7 @@ class HanabiRunner(Runner):
 
             train_info = self.trainer[agent_id].train(self.buffer[agent_id], torch.tensor([i for i in range(self.num_agents)]))
 
-            new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+            _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                         self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                         self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
                                                         self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
