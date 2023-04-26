@@ -70,9 +70,9 @@ def parse_args(args, parser):
                         help="step_mul.")
     parser.add_argument("--second_per_frame", type=int, default=0.05,
                         help="second_per_frame.")
-    parser.add_argument("--map_width", type=int, default=128,
+    parser.add_argument("--map_width", type=int, default=64,
                         help="map width.")
-    parser.add_argument("--map_height", type=int, default=128,
+    parser.add_argument("--map_height", type=int, default=64,
                         help="map height.")
     parser.add_argument("--match_time", type=int, default=1200,
                         help="match time.")
