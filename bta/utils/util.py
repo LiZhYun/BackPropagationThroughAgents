@@ -310,7 +310,7 @@ def generate_mask_from_order(agent_order, ego_exclusive):
         all_execution_mask[batch_indices, agent_indices, agent_indices] = 1
     if not ego_exclusive:
         # [*, n_agent, n_agents]
-        return all_execution_mask.view(*shape[:-1], n_agents, n_agents)
+        return all_execution_mask.view(*shape[:-1], n_agents, n_agents) * (1-torch.eye(n_agents).to(agent_order)).unsqueeze(0).repeat(bs, 1, 1)
     else:
         # [*, n_agents, n_agents - 1]
         execution_mask = torch.zeros(bs, n_agents,
