@@ -236,7 +236,7 @@ class GoBiggerRunner(Runner):
                 np.expand_dims(self.buffer[ordered_vertices[num, order]].available_actions[step, num], axis=0)) for num in range(self.n_rollout_threads)]
             results \
                 = [policy.get_actions(share_obs, obs, rnn_states, rnn_states_critic, 
-                                    masks, one_hot_action, exe_mask, available_actions) 
+                                    masks, one_hot_action, exe_mask, available_actions, tau=self.temperature) 
                                     for policy, share_obs, obs, rnn_states, rnn_states_critic, masks, one_hot_action, exe_mask, available_actions in inputs]
             value, action, action_log_prob, rnn_state, rnn_state_critic, _, new_dist_entropy = zip(*results)
             value, action, action_log_prob, rnn_state, rnn_state_critic, new_dist_entropy= \

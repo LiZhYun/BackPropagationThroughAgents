@@ -225,7 +225,7 @@ class OvercookedRunner(Runner):
                 tmp_execution_mask[num].unsqueeze(0)) for num in range(self.n_rollout_threads)]
             results \
                 = [policy.get_actions(share_ob, ob, rnn_state, rnn_state_critic, 
-                                    mask, one_hot_action, exe_mask) 
+                                    mask, one_hot_action, exe_mask, tau=self.temperature) 
                                     for policy, share_ob, ob, rnn_state, rnn_state_critic, mask, one_hot_action, exe_mask in inputs]
             value, action, action_log_prob, rnn_state, rnn_state_critic, _, new_dist_entropy = zip(*results)
             value, action, action_log_prob, rnn_state, rnn_state_critic, new_dist_entropy= \

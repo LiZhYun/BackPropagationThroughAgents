@@ -164,7 +164,8 @@ class HanabiRunner(Runner):
                                                 self.turn_masks[choose, current_agent_id],
                                                 ego_inclusive_action[choose],
                                                 execution_mask[choose],
-                                                self.use_available_actions[choose])
+                                                self.use_available_actions[choose],
+                                                tau=self.temperature)
             
             self.turn_obs[choose, current_agent_id] = self.use_obs[choose].copy()
             self.turn_share_obs[choose, current_agent_id] = self.use_share_obs[choose].copy()
@@ -300,10 +301,11 @@ class HanabiRunner(Runner):
                                                         # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
                                                         execution_masks_batch,
                                                         available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]))
+                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                        tau=self.temperature)
             old_actions_logprobs[agent_id] = _t2n(old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
 
-            train_info = self.trainer[agent_id].train(self.buffer[agent_id], torch.tensor([i for i in range(self.num_agents)]))
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id], torch.tensor([i for i in range(self.num_agents)]), tau=self.temperature)
 
             _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                         self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
@@ -313,7 +315,8 @@ class HanabiRunner(Runner):
                                                         # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
                                                         execution_masks_batch,
                                                         available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]))
+                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                        tau=self.temperature)
             new_actions_logprobs[agent_id] = _t2n(new_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
