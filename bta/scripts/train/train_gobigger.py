@@ -66,7 +66,7 @@ def parse_args(args, parser):
                         help="max_spore_num.")
     parser.add_argument("--direction_num", type=int, default=12,
                         help="direction_num.")
-    parser.add_argument("--step_mul", type=int, default=5,
+    parser.add_argument("--step_mul", type=int, default=2,
                         help="step_mul.")
     parser.add_argument("--second_per_frame", type=int, default=0.05,
                         help="second_per_frame.")
@@ -76,10 +76,6 @@ def parse_args(args, parser):
                         help="map height.")
     parser.add_argument("--match_time", type=int, default=1200,
                         help="match time.")
-    parser.add_argument("--resize_height", type=int, default=160,
-                        help="resize height.")
-    parser.add_argument("--resize_width", type=int, default=160,
-                        help="resize width.")
     parser.add_argument("--spatial", action="store_false", 
                         default=True, 
                         help="by default true.")
@@ -89,9 +85,6 @@ def parse_args(args, parser):
     parser.add_argument("--speed", action="store_false", 
                         default=True, 
                         help="by default True.")
-    parser.add_argument("--all_vision", action="store_true", 
-                        default=False, 
-                        help="by default False.")
     parser.add_argument("--save_videos", action="store_true", default=False, 
                         help="by default, do not save render video. If set, save video.")
     parser.add_argument("--video_dir", type=str, default="", 
@@ -172,13 +165,13 @@ def main(args):
         match_time=all_args.match_time,
         map_height=all_args.map_height,
         map_width=all_args.map_width,
-        resize_height=all_args.resize_height,
-        resize_width=all_args.resize_width,
         spatial=all_args.spatial,
         train=all_args.train,
         speed=all_args.speed,
-        all_vision=all_args.all_vision,
         device=device,
+        obs_settings=dict(
+        obs_type='all', # ['partial', 'all']
+        ),
     )
     envs = make_train_env(all_args, env_config)
     eval_envs = make_eval_env(all_args, env_config) if all_args.use_eval else None

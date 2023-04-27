@@ -117,15 +117,12 @@ class GoBiggerEnv(gym.Env):
         self._match_time = server_cfg.match_time
         self._map_height = server_cfg.map_height
         self._map_width = server_cfg.map_width
-        self._resize_height = server_cfg.resize_height
-        self._resize_width = server_cfg.resize_width
         self._spatial = server_cfg.spatial
         self._train = server_cfg.train
         self._last_team_size = None
         self._init_flag = False
         self._speed = server_cfg.speed
         self.device = server_cfg.device
-        self._all_vision = server_cfg.all_vision
         self.n_actions = 3
         self.max_player_num = self._player_num_per_team
         self.max_ball_num = self.server_cfg.max_ball_num
