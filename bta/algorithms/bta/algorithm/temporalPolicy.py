@@ -28,12 +28,12 @@ class TemporalPolicy:
         update_linear_schedule(self.actor_optimizer, episode, episodes, self.lr)
         update_linear_schedule(self.critic_optimizer, episode, episodes, self.critic_lr)
 
-    def get_raw_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, available_actions=None, deterministic=False, task_id=None, **kwargs):
-        actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor.get_raw_action(obs, rnn_states_actor, masks, available_actions, deterministic)
+    def get_raw_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, available_actions=None, deterministic=False, task_id=None, tau=1.0, **kwargs):
+        actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor.get_raw_action(obs, rnn_states_actor, masks, available_actions, deterministic, tau=tau)
         return agent_feat, dist_entropy
 
-    def get_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, task_id=None, **kwargs):
-        actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)
+    def get_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, task_id=None, tau=1.0, **kwargs):
+        actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic, tau=tau)
         values, rnn_states_critic = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, actions, action_log_probs, rnn_states_actor, rnn_states_critic, agent_feat, dist_entropy
 
@@ -41,8 +41,8 @@ class TemporalPolicy:
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values
 
-    def evaluate_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, task_id=None):
-        train_actions, action_log_probs, dist_entropy = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks)
+    def evaluate_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, task_id=None, tau=1.0):
+        train_actions, action_log_probs, dist_entropy = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau)
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, train_actions, action_log_probs, dist_entropy
 

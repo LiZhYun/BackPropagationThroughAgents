@@ -89,7 +89,7 @@ class R_Actor(nn.Module):
 
         self.to(device)
 
-    def forward(self, obs, rnn_states, masks, onehot_action, execution_mask, available_actions=None, deterministic=False):        
+    def forward(self, obs, rnn_states, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, tau=1.0):        
         if self._nested_obs:
             for batch_idx in range(obs.shape[0]):
                 for key in obs[batch_idx].keys():
@@ -131,11 +131,11 @@ class R_Actor(nn.Module):
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
         actor_features = torch.cat([actor_features, id_feat], dim=1)
 
-        actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic)
+        actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
         
         return actions, action_log_probs, rnn_states, agent_feat, dist_entropy
     
-    def get_raw_action(self, obs, rnn_states, masks, available_actions=None, deterministic=False):        
+    def get_raw_action(self, obs, rnn_states, masks, available_actions=None, deterministic=False, tau=1.0):        
         if self._nested_obs:
             for batch_idx in range(obs.shape[0]):
                 for key in obs[batch_idx].keys():
@@ -175,11 +175,11 @@ class R_Actor(nn.Module):
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
         actor_features = torch.cat([actor_features, id_feat], dim=1)
 
-        actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic)
+        actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
         
         return actions, action_log_probs, rnn_states, agent_feat, dist_entropy
 
-    def evaluate_actions(self, obs, rnn_states, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None):
+    def evaluate_actions(self, obs, rnn_states, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0):
         if self._nested_obs:
             for batch_idx in range(obs.shape[0]):
                 for key in obs[batch_idx].keys():
@@ -224,7 +224,7 @@ class R_Actor(nn.Module):
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
         actor_features = torch.cat([actor_features, id_feat], dim=1)
 
-        train_actions, action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True)
+        train_actions, action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
         
         return train_actions, action_log_probs, dist_entropy
 

@@ -49,6 +49,7 @@ class T_POLICY():
         self._use_value_active_masks = args.use_value_active_masks
         self._use_policy_active_masks = args.use_policy_active_masks
         self._use_policy_vhead = args.use_policy_vhead
+        self.use_graph = args.use_graph
         self._predict_other_shaped_info = (args.env_name == "Overcooked" and getattr(args, "predict_other_shaped_info", False))
         self._policy_group_normalization = (args.env_name == "Overcooked" and getattr(args, "policy_group_normalization", False))
         self._use_task_v_out = getattr(args, "use_task_v_out", False)
@@ -153,7 +154,7 @@ class T_POLICY():
 
         return policy_loss + acyclic_loss
     
-    def ppo_update(self, sample, agent_order=None):
+    def ppo_update(self, sample, agent_order=None, tau=1.0):
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
         value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
@@ -190,6 +191,7 @@ class T_POLICY():
                                                                             execution_masks_batch,
                                                                             available_actions_batch,
                                                                             active_masks_batch,
+                                                                            tau=tau
                                                                             )
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
@@ -241,7 +243,7 @@ class T_POLICY():
             advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
         return advantages
 
-    def train(self, buffer, agent_order=None):
+    def train(self, buffer, agent_order=None, tau=1.0):
         if self._use_popart or self._use_valuenorm:
             advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
         else:
@@ -256,7 +258,8 @@ class T_POLICY():
 
         train_info['value_loss'] = 0
         train_info['policy_loss'] = 0
-        train_info['graphic_loss'] = 0
+        if self.use_graph:
+            train_info['graphic_loss'] = 0
         train_info['dist_entropy'] = 0
         train_info['actor_grad_norm'] = 0
         train_info['critic_grad_norm'] = 0
@@ -273,7 +276,7 @@ class T_POLICY():
             for sample in data_generator:
 
                 value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights \
-                    = self.ppo_update(sample, agent_order)
+                    = self.ppo_update(sample, agent_order, tau)
 
                 train_info['value_loss'] += value_loss.item()
                 train_info['policy_loss'] += policy_loss.item()

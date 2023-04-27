@@ -277,7 +277,7 @@ def get_config():
     parser.add_argument('--time_channels', type=int, default=100)
     parser.add_argument('--time_gap', type=int, default=10)
     parser.add_argument("--temperature", type=float, default=10.0,
-                        help='soft update polyak (default: 0.995)')
+                        help='gumble softmax temperature')
     
     # optimizer parameters
     parser.add_argument("--lr", type=float, default=5e-4,

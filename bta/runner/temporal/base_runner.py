@@ -109,26 +109,27 @@ class Runner(object):
                         device = self.device)
             self.policy.append(po)
 
-        self.all_args.node_feat_size = self.policy[0].actor.abs_size + self.num_agents
-        self.all_args.edge_feat_size = 1 + self.num_agents*2 + 2
+        if self.use_graph:
+            self.all_args.node_feat_size = self.policy[0].actor.abs_size + self.num_agents
+            self.all_args.edge_feat_size = 1 + self.num_agents*2 + 2
 
-        edge_predictor_configs = {
-            'dim_in_time': self.all_args.hidden_size,
-            'dim_in_node': self.all_args.node_feat_size,
-            'hidden_channels' : self.all_args.hidden_size, 
-        }
+            edge_predictor_configs = {
+                'dim_in_time': self.all_args.hidden_size,
+                'dim_in_node': self.all_args.node_feat_size,
+                'hidden_channels' : self.all_args.hidden_size, 
+            }
 
-        mixer_configs = {
-            'per_graph_size'  : self.all_args.max_edges, 
-            'time_channels'   : self.all_args.time_channels, 
-            'input_channels'  : self.all_args.edge_feat_size, 
-            'hidden_channels' : self.all_args.hidden_size, 
-            'out_channels'    : self.all_args.hidden_size,
-            'num_layers'      : self.all_args.num_layers,
-            'use_single_layer' : False
-        }
-        self.graph_policy = Graph(mixer_configs, edge_predictor_configs, device = self.device)
-        self.graph_optimizer = torch.optim.Adam(self.graph_policy.parameters(), lr=self.all_args.graph_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
+            mixer_configs = {
+                'per_graph_size'  : self.all_args.max_edges, 
+                'time_channels'   : self.all_args.time_channels, 
+                'input_channels'  : self.all_args.edge_feat_size, 
+                'hidden_channels' : self.all_args.hidden_size, 
+                'out_channels'    : self.all_args.hidden_size,
+                'num_layers'      : self.all_args.num_layers,
+                'use_single_layer' : False
+            }
+            self.graph_policy = Graph(mixer_configs, edge_predictor_configs, device = self.device)
+            self.graph_optimizer = torch.optim.Adam(self.graph_policy.parameters(), lr=self.all_args.graph_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
 
         if self.model_dir is not None:
             self.restore()
@@ -237,10 +238,11 @@ class Runner(object):
                                                         # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
                                                         execution_masks_batch,
                                                         available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]))
+                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                        tau=self.temperature)
             old_actions_logprobs[agent_id] = _t2n(old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
 
-            train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order)
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order, tau=self.temperature)
 
             _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                         self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
@@ -250,7 +252,8 @@ class Runner(object):
                                                         # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
                                                         execution_masks_batch,
                                                         available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]))
+                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                        tau=self.temperature)
             new_actions_logprobs[agent_id] = _t2n(new_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
@@ -277,8 +280,9 @@ class Runner(object):
                 torch.save(policy_actor.state_dict(), str(self.save_dir) + "/actor_agent" + str(agent_id) + postfix)
                 policy_critic = self.trainer[agent_id].policy.critic
                 torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic_agent" + str(agent_id) + postfix)
-        graph_policy = self.graph_policy                 
-        torch.save(graph_policy.state_dict(), str(self.save_dir) + "/graph_agent" + postfix)
+        if self.use_graph:
+            graph_policy = self.graph_policy                 
+            torch.save(graph_policy.state_dict(), str(self.save_dir) + "/graph_agent" + postfix)
 
     def restore(self):
         for agent_id in range(self.num_agents):
@@ -291,8 +295,9 @@ class Runner(object):
                 if not self.use_render:
                     policy_critic_state_dict = torch.load(str(self.model_dir) + '/critic_agent' + str(agent_id) + '.pt')
                     self.policy[agent_id].critic.load_state_dict(policy_critic_state_dict)
-        graph_state_dict = torch.load(str(self.model_dir) + '/graph_agent.pt')
-        self.graph_policy.load_state_dict(graph_state_dict)
+        if self.use_graph:
+            graph_state_dict = torch.load(str(self.model_dir) + '/graph_agent.pt')
+            self.graph_policy.load_state_dict(graph_state_dict)
 
     def log_train(self, train_infos, total_num_steps): 
         for agent_id in range(self.num_agents):
@@ -316,13 +321,3 @@ class Runner(object):
                     wandb.log({k: np.mean(v)}, step=total_num_steps)
                 else:
                     self.writter.add_scalars(k, {k: np.mean(v)}, total_num_steps)
-
-    def log_system(self):
-        # RRAM
-        mem = psutil.virtual_memory()
-        total_mem = float(mem.total) / 1024 / 1024 / 1024
-        used_mem = float(mem.used) / 1024 / 1024 / 1024
-        if used_mem/total_mem > 0.95:
-            slack = slackweb.Slack(url=webhook_url)
-            host_name = socket.gethostname()
-            slack.notify(text="Host {}: occupied memory is *{:.2f}*%!".format(host_name, used_mem/total_mem*100))
