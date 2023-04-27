@@ -86,13 +86,14 @@ class SeparatedReplayBuffer(object):
         #### temporal graph ####
         self.adjs = torch.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, args.num_agents), dtype=torch.float32).to(args.device)
         self.execution_masks = torch.zeros((self.episode_length, self.n_rollout_threads, args.num_agents), dtype=torch.float32).to(args.device)
-        self.temporal_neighbors_edge_feat = np.zeros((self.n_rollout_threads, args.max_edges, args.edge_feat_size), dtype=np.float32)
-        self.temporal_neighbors_edge_timestamps = np.ones((self.n_rollout_threads, args.max_edges, 1), dtype=np.int32) * (-1)
-        self.temporal_neighbors = np.ones((self.n_rollout_threads, args.time_gap), dtype=np.int64) * (-1)
-        self.temporal_step_edge = [0 for _ in range(self.n_rollout_threads)]
-        self.temporal_step_node = [0 for _ in range(self.n_rollout_threads)]
-        self.max_edges = args.max_edges
-        self.time_gap = args.time_gap
+        if self.use_graph:
+            self.temporal_neighbors_edge_feat = np.zeros((self.n_rollout_threads, args.max_edges, args.edge_feat_size), dtype=np.float32)
+            self.temporal_neighbors_edge_timestamps = np.ones((self.n_rollout_threads, args.max_edges, 1), dtype=np.int32) * (-1)
+            self.temporal_neighbors = np.ones((self.n_rollout_threads, args.time_gap), dtype=np.int64) * (-1)
+            self.temporal_step_edge = [0 for _ in range(self.n_rollout_threads)]
+            self.temporal_step_node = [0 for _ in range(self.n_rollout_threads)]
+            self.max_edges = args.max_edges
+            self.time_gap = args.time_gap
 
         self.factor = None
         self.action_grad = None
