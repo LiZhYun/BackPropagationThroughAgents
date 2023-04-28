@@ -10,7 +10,7 @@
 
 # exp param
 env="Football"
-scenario="11_vs_11_easy_stochastic"
+scenario="academy_corner"
 algo="gcs" # "mappo" "ippo"
 exp="check"
 

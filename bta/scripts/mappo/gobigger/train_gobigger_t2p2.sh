@@ -4,9 +4,12 @@
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --time=72:00:00
 #SBATCH --array=0-1
+
+module restore bpta
+source activate pytorch-env
 
 env="GoBigger"
 
@@ -21,7 +24,7 @@ exp="check"
 num_env_steps=10000000
 episode_length=128
 
-CUDA_VISIBLE_DEVICES=0 singularity exec --bind /scratch --nv /scratch/work/liz23/bpta.sif python ../../train/train_gobigger.py \
+python ../../train/train_gobigger.py \
 --env_name ${env} --scenario_name ${scenario} --team_num ${team_num} --player_num_per_team ${player_num_per_team} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 100000 --log_interval 100000 --use_eval --eval_interval 200000 --n_eval_rollout_threads 5 --eval_episodes 100 \

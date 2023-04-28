@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-gcs
+#SBATCH --job-name=football-happo
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -10,8 +10,8 @@
 
 # exp param
 env="Football"
-scenario="11_vs_11_easy_stochastic"
-algo="gcs" # "mappo" "ippo"
+scenario="academy_corner"
+algo="happo" # "mappo" "ippo"
 exp="check"
 
 # football param
