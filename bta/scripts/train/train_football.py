@@ -110,6 +110,22 @@ def main(args):
 
     # wandb
     if all_args.use_wandb:
+        sweep_config = {
+        'method': 'random'
+        }
+
+        # 参数范围
+        parameters_dict = {
+            'max_grad_norm':{
+                'values':[0.25, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]
+                },
+            'entropy_coef': {
+                'values': [0.01, 0.02, 0.03, 0.04, 0.05]
+                }
+            }
+
+        sweep_config['parameters'] = parameters_dict
+        sweep_id = wandb.sweep(sweep_config, project=all_args.env_name)
         run = wandb.init(config=all_args,
                          project=all_args.env_name,
                          entity=all_args.wandb_name,
@@ -180,7 +196,8 @@ def main(args):
 
     runner = Runner(config)
     # with torch.autograd.set_detect_anomaly(True):
-    runner.run()
+    # runner.run()
+    wandb.agent(sweep_id, runner.run, count=20)
     
     # post process
     envs.close()
