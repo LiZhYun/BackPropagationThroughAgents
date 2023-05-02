@@ -127,30 +127,6 @@ def main(args):
                     'max': 0.1,
                 },
             }
-        # parameters_dict = {
-        #     'max_grad_norm': {
-        #             'distribution': 'uniform',
-        #             'min': 0.1,
-        #             'max': 2.5,
-        #         },
-        #     'entropy_coef': {
-        #             'distribution': 'uniform',
-        #             'min': 0.01,
-        #             'max': 0.05,
-        #         },
-        #     }
-        # parameters_dict = {
-        #     'max_grad_norm': {
-        #             'distribution': 'uniform',
-        #             'min': 2.5,
-        #             'max': 5.0,
-        #         },
-        #     'entropy_coef': {
-        #             'distribution': 'uniform',
-        #             'min': 0.05,
-        #             'max': 0.1,
-        #         },
-        #     }
 
         sweep_config['parameters'] = parameters_dict
         sweep_id = wandb.sweep(sweep_config, project=all_args.env_name)
@@ -232,7 +208,7 @@ def main(args):
             # with torch.autograd.set_detect_anomaly(True):
             runner.run()
 
-    wandb.agent(sweep_id, train, count=20)
+    wandb.agent(sweep_id, train, count=3)
     
     # post process
     envs.close()
