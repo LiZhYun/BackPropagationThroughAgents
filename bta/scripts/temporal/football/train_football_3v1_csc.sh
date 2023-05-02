@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --account=project_2007776
-#SBATCH --partition=small
+#SBATCH --partition=longrun
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
-#SBATCH --time=48:00:00
+#SBATCH --time=280:00:00
 
 #--gres=gpu:v100:1
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
