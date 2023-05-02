@@ -116,28 +116,56 @@ def main(args):
 
         # 参数范围
         parameters_dict = {
-            'max_grad_norm':{
-                'values':[0.25, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]
+            'max_grad_norm': {
+                    'distribution': 'uniform',
+                    'min': 0.1,
+                    'max': 5.0,
                 },
             'entropy_coef': {
-                'values': [0.01, 0.02, 0.03, 0.04, 0.05]
-                }
+                    'distribution': 'uniform',
+                    'min': 0.01,
+                    'max': 0.1,
+                },
             }
+        # parameters_dict = {
+        #     'max_grad_norm': {
+        #             'distribution': 'uniform',
+        #             'min': 0.1,
+        #             'max': 2.5,
+        #         },
+        #     'entropy_coef': {
+        #             'distribution': 'uniform',
+        #             'min': 0.01,
+        #             'max': 0.05,
+        #         },
+        #     }
+        # parameters_dict = {
+        #     'max_grad_norm': {
+        #             'distribution': 'uniform',
+        #             'min': 2.5,
+        #             'max': 5.0,
+        #         },
+        #     'entropy_coef': {
+        #             'distribution': 'uniform',
+        #             'min': 0.05,
+        #             'max': 0.1,
+        #         },
+        #     }
 
         sweep_config['parameters'] = parameters_dict
         sweep_id = wandb.sweep(sweep_config, project=all_args.env_name)
-        run = wandb.init(config=all_args,
-                         project=all_args.env_name,
-                         entity=all_args.wandb_name,
-                         notes=socket.gethostname(),
-                         name=str(all_args.algorithm_name) + "_" +
-                         str(all_args.experiment_name) +
-                         "_seed" + str(all_args.seed),
-                         group=all_args.scenario_name,
-                         dir=str(run_dir),
-                         job_type="training",
-                         reinit=True,
-                         tags=all_args.wandb_tags)
+        # run = wandb.init(config=all_args,
+        #                  project=all_args.env_name,
+        #                  entity=all_args.wandb_name,
+        #                  notes=socket.gethostname(),
+        #                  name=str(all_args.algorithm_name) + "_" +
+        #                  str(all_args.experiment_name) +
+        #                  "_seed" + str(all_args.seed),
+        #                  group=all_args.scenario_name,
+        #                  dir=str(run_dir),
+        #                  job_type="training",
+        #                  reinit=True,
+        #                  tags=all_args.wandb_tags)
     else:
         if not run_dir.exists():
             curr_run = 'run1'
@@ -194,10 +222,17 @@ def main(args):
     else: # mappo
         from bta.runner.mappo.football_runner import FootballRunner as Runner
 
-    runner = Runner(config)
-    # with torch.autograd.set_detect_anomaly(True):
-    # runner.run()
-    wandb.agent(sweep_id, runner.run, count=20)
+    def train(wconfig=None):
+        with wandb.init(config=wconfig,project=all_args.env_name,entity=all_args.wandb_name,name=str(all_args.algorithm_name) + "_" +
+                            str(all_args.experiment_name) +
+                            "_seed" + str(all_args.seed),group=all_args.scenario_name,dir=str(run_dir),):
+            config['all_args'].max_grad_norm = wandb.config.max_grad_norm
+            config['all_args'].entropy_coef = wandb.config.entropy_coef
+            runner = Runner(config)
+            # with torch.autograd.set_detect_anomaly(True):
+            runner.run()
+
+    wandb.agent(sweep_id, train, count=20)
     
     # post process
     envs.close()
