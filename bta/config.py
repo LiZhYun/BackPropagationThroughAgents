@@ -276,7 +276,7 @@ def get_config():
     parser.add_argument('--num_layers', type=int, default=1)
     parser.add_argument('--time_channels', type=int, default=100)
     parser.add_argument('--time_gap', type=int, default=10)
-    parser.add_argument("--temperature", type=float, default=10.0,
+    parser.add_argument("--temperature", type=float, default=2.0,
                         help='gumble softmax temperature')
     
     # optimizer parameters
