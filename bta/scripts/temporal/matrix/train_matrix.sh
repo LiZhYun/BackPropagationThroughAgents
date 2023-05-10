@@ -28,7 +28,7 @@ num_agents=2
 # train param
 num_env_steps=25000000
 episode_length=200
-threshold=1.0
+threshold=0.2
 
 echo "env is ${env}, scenario is ${scenario}, algo is ${algo}, threshold is ${threshold}"
 

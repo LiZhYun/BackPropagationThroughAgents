@@ -6,7 +6,7 @@ import numpy as np
 from functools import reduce
 import torch
 import wandb
-from runner.separated.base_runner import Runner
+from bta.runner.happo.base_runner import Runner
 
 
 def _t2n(x):
