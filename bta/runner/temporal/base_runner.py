@@ -257,9 +257,9 @@ class Runner(object):
             new_actions_logprobs[agent_id] = _t2n(new_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
-            torch.sum(new_actions_logprob, dim=-1, keepdim=True).mean().backward()
+            torch.sum(torch.exp(new_actions_logprob), dim=-1, keepdim=True).mean().backward()
             for i in range(self.num_agents):
-                action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i] / old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,action_dim)
+                action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i] / torch.exp(old_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,action_dim)
                 # action_grad[i] = action_grad[i] + _t2n(one_hot_actions.grad[:,i] / old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,action_dim)
             factor = factor*_t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
             if self.use_graph:
