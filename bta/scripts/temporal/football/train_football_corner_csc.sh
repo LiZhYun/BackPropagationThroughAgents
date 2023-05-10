@@ -4,7 +4,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
+#SBATCH --array=0-1
 
 #--gres=gpu:v100:1
 
@@ -24,7 +25,7 @@ num_agents=10
 # train param
 num_env_steps=25000000
 episode_length=200
-threshold=0.0
+threshold=1.0
 
 apptainer_wrapper exec python ../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
