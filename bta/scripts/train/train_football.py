@@ -122,6 +122,7 @@ def main(args):
         #     }
         # sweep_config['parameters'] = parameters_dict
         # sweep_id = wandb.sweep(sweep_config, project=all_args.env_name)
+        # print(all_args)
         run = wandb.init(config=all_args,
                          project=all_args.env_name,
                          entity=all_args.wandb_name,
