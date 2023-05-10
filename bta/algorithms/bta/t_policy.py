@@ -199,7 +199,7 @@ class T_POLICY():
 
         surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * log_action_grad * train_actions - imp_weights)) * adv_targ
         surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
-                 + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions - imp_weights)) * adv_targ
+                 + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
         # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
         #          + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions) * adv_targ
 
