@@ -38,6 +38,7 @@ class T_POLICY():
         self.max_grad_norm = args.max_grad_norm       
         self.huber_delta = args.huber_delta
         self.share_policy = args.share_policy
+        self.threshold = args.threshold
 
         self._use_recurrent_policy = args.use_recurrent_policy
         self._use_naive_recurrent = args.use_naive_recurrent_policy
@@ -196,9 +197,11 @@ class T_POLICY():
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
 
-        surr1 = (imp_weights * factor_batch + imp_weights.detach() * log_action_grad * train_actions) * adv_targ
-        surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
-                 + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions) * adv_targ
+        surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * log_action_grad * train_actions - imp_weights)) * adv_targ
+        surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
+                 + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions - imp_weights)) * adv_targ
+        # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
+        #          + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions) * adv_targ
 
         if self._use_policy_active_masks:
             policy_action_loss = (-torch.sum(torch.min(surr1, surr2),

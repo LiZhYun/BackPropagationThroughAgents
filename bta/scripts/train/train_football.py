@@ -112,15 +112,12 @@ def main(args):
     if all_args.use_wandb:
         # # sweep
         # sweep_config = {
-        # 'method': 'grid'
+        # 'method': 'random'
         # }
         # # 参数范围
         # parameters_dict = {
-        #     'max_grad_norm': {
-        #             'values': [0.2, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.5, 5.0]
-        #         },
-        #     'entropy_coef': {
-        #             'values': [1.0] #, 0.02, 0.03, 0.04, 0.05, 0.06]
+        #     'threshold': {
+        #             'values': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
         #         },
         #     }
         # sweep_config['parameters'] = parameters_dict
