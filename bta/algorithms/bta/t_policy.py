@@ -26,6 +26,7 @@ class T_POLICY():
         self.policy = policy
         self.num_agents = args.num_agents
         self.agent_id = agent_id
+        self.args = args
 
         self.clip_param = args.clip_param
         self.ppo_epoch = args.ppo_epoch
@@ -106,7 +107,7 @@ class T_POLICY():
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
         value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
-        adv_targ, available_actions_batch, adjs_batch, factor_batch, log_action_grad = sample
+        adv_targ, available_actions_batch, adjs_batch, factor_batch, action_grad = sample
 
         old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
         adv_targ = check(adv_targ).to(**self.tpdv)
@@ -159,7 +160,7 @@ class T_POLICY():
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
         value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
-        adv_targ, available_actions_batch, adjs_batch, factor_batch, log_action_grad = sample
+        adv_targ, available_actions_batch, adjs_batch, factor_batch, action_grad = sample
 
         old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
         adv_targ = check(adv_targ).to(**self.tpdv)
@@ -168,7 +169,7 @@ class T_POLICY():
         active_masks_batch = check(active_masks_batch).to(**self.tpdv)
 
         factor_batch = check(factor_batch).to(**self.tpdv)
-        log_action_grad = check(log_action_grad).to(**self.tpdv)
+        action_grad = check(action_grad).to(**self.tpdv)
         #test
         # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
         #                                 [torch.zeros(actions_batch.shape[0])] *
@@ -196,12 +197,20 @@ class T_POLICY():
                                                                             )
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
-
-        surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * log_action_grad * train_actions - imp_weights)) * adv_targ
-        surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
-                 + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
-        # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
-        #          + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * log_action_grad * train_actions) * adv_targ
+        if self.args.env_name == "matrix":
+            if self.agent_id == (self.num_agents - 1):
+                surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * action_grad * train_actions - imp_weights)) * adv_targ
+                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
+                        + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
+            else:
+                surr1 = (self.threshold * (imp_weights.detach() * action_grad * train_actions)) * adv_targ
+                surr2 = (self.threshold * (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions)) * adv_targ
+        else:
+            surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * action_grad * train_actions - imp_weights)) * adv_targ
+            surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
+                    + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
+            # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
+            #          + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions) * adv_targ
 
         if self._use_policy_active_masks:
             policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
