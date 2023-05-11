@@ -192,8 +192,8 @@ class Runner(object):
         action_dim=self.buffer[0].one_hot_actions.shape[-1]
         factor = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         # action_grad = [[] for _ in range(self.num_agents)]
-        old_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
-        new_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        old_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        new_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
         # ordered_vertices = reversed([i for i in range(self.num_agents)])
         ordered_vertices = reversed(self.agent_order[0])
@@ -204,10 +204,10 @@ class Runner(object):
             numerator = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
             denominator = np.ones((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
             for updated_agent in range(agent_id+1, self.num_agents):
-                multiplier = np.concatenate([new_actions_logprobs[agent_id+1:updated_agent], new_actions_logprobs[updated_agent+1:]],0)
+                multiplier = np.concatenate([new_actions_probs[agent_id+1:updated_agent], new_actions_probs[updated_agent+1:]],0)
                 multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
                 numerator += action_grad[updated_agent][agent_id] * multiplier
-                denominator *= old_actions_logprobs[updated_agent]
+                denominator *= old_actions_probs[updated_agent]
             action_grad_per_agent = numerator / denominator
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
@@ -240,7 +240,7 @@ class Runner(object):
                                                         available_actions,
                                                         self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                         tau=self.temperature)
-            old_actions_logprobs[agent_id] = _t2n(old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
+            old_actions_probs[agent_id] = _t2n(torch.exp(old_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
             train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order, tau=self.temperature)
 
@@ -254,7 +254,7 @@ class Runner(object):
                                                         available_actions,
                                                         self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                         tau=self.temperature)
-            new_actions_logprobs[agent_id] = _t2n(new_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
+            new_actions_probs[agent_id] = _t2n(torch.exp(new_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
             torch.sum(torch.exp(new_actions_logprob), dim=-1, keepdim=True).mean().backward()
