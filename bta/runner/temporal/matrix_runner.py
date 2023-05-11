@@ -352,7 +352,8 @@ class MatrixRunner(Runner):
             action, rnn_state = zip(*results)
             action, rnn_state= \
                 torch.stack(action).squeeze(1), torch.stack(rnn_state).squeeze(1)
-            
+            # if order == 0:
+            #     action = torch.ones_like(action)*1
             hard_action = action.to(torch.int)
             action = F.one_hot(action.long(), self.action_dim).squeeze(1)
             # hard_action = torch.argmax(action, -1).unsqueeze(1).to(torch.int)

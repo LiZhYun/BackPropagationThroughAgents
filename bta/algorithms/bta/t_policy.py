@@ -203,6 +203,7 @@ class T_POLICY():
                 surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
                         + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
             else:
+                thresholds = torch.where(adv_targ >= 0, 1.0, 0.01)
                 surr1 = (self.threshold * (imp_weights.detach() * action_grad * train_actions)) * adv_targ
                 surr2 = (self.threshold * (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions)) * adv_targ
         else:
@@ -260,6 +261,7 @@ class T_POLICY():
             advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
         else:
             advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
+        # if self.args.env_name != "matrix":
         advantages_copy = advantages.copy()
         advantages_copy[buffer.active_masks[:-1] == 0.0] = np.nan
         mean_advantages = np.nanmean(advantages_copy)
