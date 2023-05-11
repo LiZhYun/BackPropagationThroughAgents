@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
 #SBATCH --time=48:00:00
-#SBATCH --array=0-1
+#SBATCH --array=0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100
 
 #--gres=gpu:v100:1
 
@@ -25,7 +25,8 @@ num_agents=10
 # train param
 num_env_steps=25000000
 episode_length=200
-threshold=1.0
+deno=100
+threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
 apptainer_wrapper exec python ../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
