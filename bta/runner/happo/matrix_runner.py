@@ -6,6 +6,7 @@ import numpy as np
 from functools import reduce
 import torch
 import wandb
+import imageio
 from bta.runner.happo.base_runner import Runner
 
 
