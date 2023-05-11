@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-temporal
+#SBATCH --job-name=matrix-happo
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
