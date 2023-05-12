@@ -1,5 +1,7 @@
 #!/bin/bash
+
 #SBATCH --account=project_2007776
+#SBATCH --job-name=football-temporal
 #SBATCH --partition=hugemem
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -7,15 +9,13 @@
 #SBATCH --time=48:00:00
 #SBATCH --array=0-100:5
 
-#--gres=gpu:v100:1
-
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
 export SING_FLAGS=--nv
 export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 
 # exp param
 env="Football"
-scenario="academy_corner"
+scenario="11_vs_11_easy_stochastic"
 algo="temporal" # "mappo" "ippo"
 exp="check"
 
