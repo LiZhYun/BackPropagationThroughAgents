@@ -34,4 +34,4 @@ apptainer_wrapper exec python ../../train/train_football.py \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --ppo_epoch 15 --clip_param 0.2 --num_mini_batch 2 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---max_edges 10  --time_channels 100 --time_gap 10 --threshold ${threshold}
+--max_edges 10  --time_channels 100 --time_gap 10 --threshold ${threshold} --entropy_coef 0.05
