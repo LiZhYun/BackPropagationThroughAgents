@@ -173,7 +173,8 @@ class R_Actor(nn.Module):
         
         agent_feat = actor_features.clone()
 
-        masked_actions = torch.zeros((actor_features.shape[0], self.num_agents, self.action_dim)).to(**self.tpdv).view(*onehot_action.shape[:-2], -1)
+        masked_actions = torch.zeros((actor_features.shape[0], self.num_agents, self.action_dim)).to(**self.tpdv)
+        masked_actions = masked_actions.view(*masked_actions.shape[:-2], -1)
         # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=-1)
 
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
