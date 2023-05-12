@@ -5,8 +5,10 @@ import time
 import numpy as np
 from functools import reduce
 import torch
+import torch.nn.functional as F
 import wandb
-from runner.separated.base_runner import Runner
+from bta.runner.ar.base_runner import Runner
+from bta.algorithms.utils.util import check
 
 
 def _t2n(x):
@@ -89,32 +91,39 @@ class MatrixRunner(Runner):
 
     @torch.no_grad()
     def collect(self, step):
-        value_collector = []
-        action_collector = []
-        action_log_prob_collector = []
-        rnn_state_collector = []
-        rnn_state_critic_collector = []
-        for agent_id in range(self.num_agents):
-            self.trainer[agent_id].prep_rollout()
+        # with torch.autograd.set_detect_anomaly(True):
+        values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
+        actions = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_shape).to(dtype=torch.int ,device=self.device)
+        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
+        rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        
+        for agent_idx in range(self.num_agents):
+            self.trainer[agent_idx].prep_rollout()
+            # construct ego-exclusive one-hot actions based on current available actions
+            ego_exclusive_action = torch.cat(
+                [actions[:, :agent_idx], actions[:, agent_idx + 1:]],
+                -2).squeeze(-1)
+            execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
+                                            [torch.zeros(self.n_rollout_threads)] *
+                                            (self.num_agents - 1 - agent_idx), -1).to(self.device)
+
+            onehot_action = F.one_hot(ego_exclusive_action.long(), self.action_dim).float()
+
             value, action, action_log_prob, rnn_state, rnn_state_critic \
-                = self.trainer[agent_id].policy.get_actions(self.buffer[agent_id].share_obs[step],
-                                                            self.buffer[agent_id].obs[step],
-                                                            self.buffer[agent_id].rnn_states[step],
-                                                            self.buffer[agent_id].rnn_states_critic[step],
-                                                            self.buffer[agent_id].masks[step])
-            value_collector.append(_t2n(value))
-            action_collector.append(_t2n(action))
-            action_log_prob_collector.append(_t2n(action_log_prob))
-            rnn_state_collector.append(_t2n(rnn_state))
-            rnn_state_critic_collector.append(_t2n(rnn_state_critic))
-        # [self.envs, agents, dim]
-        values = np.array(value_collector).transpose(1, 0, 2)
-        actions = np.array(action_collector).transpose(1, 0, 2)
-        action_log_probs = np.array(
-            action_log_prob_collector).transpose(1, 0, 2)
-        rnn_states = np.array(rnn_state_collector).transpose(1, 0, 2, 3)
-        rnn_states_critic = np.array(
-            rnn_state_critic_collector).transpose(1, 0, 2, 3)
+                = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
+                                                            self.buffer[agent_idx].obs[step],
+                                                            self.buffer[agent_idx].rnn_states[step],
+                                                            self.buffer[agent_idx].rnn_states_critic[step],
+                                                            self.buffer[agent_idx].masks[step],
+                                                            onehot_action,
+                                                            execution_mask)
+            actions[:, agent_idx] = action.clone()
+            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            values[:, agent_idx] = _t2n(value)
+            rnn_states[:, agent_idx] = _t2n(rnn_state)
+            rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
+        actions = _t2n(actions)
         actions_env = [actions[idx, :, 0]
                        for idx in range(self.n_rollout_threads)]
 
@@ -138,7 +147,7 @@ class MatrixRunner(Runner):
                                          obs=obs[:, agent_id], 
                                          rnn_states=rnn_states[:, agent_id],
                                          rnn_states_critic=rnn_states_critic[:,agent_id], 
-                                         actions=actions[:, agent_id],
+                                         actions=actions[:, :],
                                          action_log_probs=action_log_probs[:, agent_id],
                                          value_preds=values[:, agent_id], 
                                          rewards=rewards[:,agent_id], 
@@ -155,17 +164,28 @@ class MatrixRunner(Runner):
 
         for eval_step in range(self.episode_length):
             eval_temp_actions_env = []
+            eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
             for agent_id in range(self.num_agents):
                 self.trainer[agent_id].prep_rollout()
-                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(np.array(list(eval_obs[:, agent_id])),
+                ego_exclusive_action = torch.cat(
+                [check(eval_actions[:, :agent_id]), check(eval_actions[:, agent_id + 1:])],
+                -2).squeeze(-1)
+                execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_id +
+                                                [torch.zeros(self.n_eval_rollout_threads)] *
+                                                (self.num_agents - 1 - agent_id), -1).to(self.device)
+                
+                onehot_action = F.one_hot(ego_exclusive_action.long(), self.action_dim).float()
+                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(eval_obs[:, agent_id],
                                                                                 eval_rnn_states[:, agent_id],
                                                                                 eval_masks[:, agent_id],
+                                                                                onehot_action,
+                                                                                execution_mask,
                                                                                 deterministic=True)
+                eval_actions[:, agent_id] = _t2n(eval_action)
 
-                eval_action = eval_action.detach().cpu().numpy()
-                # rearrange action
-                eval_temp_actions_env.append(eval_action)
                 eval_rnn_states[:, agent_id] = _t2n(eval_rnn_state)
+                # rearrange action
+                eval_temp_actions_env.append(_t2n(eval_action))
                 
             # [envs, agents, dim]
             eval_actions_env = []
