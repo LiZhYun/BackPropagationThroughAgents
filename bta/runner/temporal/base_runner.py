@@ -242,7 +242,6 @@ class Runner(object):
                                                         tau=self.temperature)
             old_actions_probs[agent_id] = _t2n(torch.exp(old_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
-            # if agent_id == self.num_agents-1:
             train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order, tau=self.temperature)
 
             _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,

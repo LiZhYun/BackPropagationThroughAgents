@@ -16,16 +16,19 @@ class ClimbingEnv(gym.Env):
         self.window_size = 512  # The size of the PyGame window
         # self.reward_array = np.array([[0, 6, 5], [-30, 7, 0], [11, -30, 0]])
         self.scenario_name=args.scenario_name
+        self.num_agents=2
         if self.scenario_name=='climbing':
             self.reward_array = np.array([[0, 6, 5], [-30, 7, 0], [11, -30, 0]])
         elif self.scenario_name.startswith('penalty'):
             self.k=-int(self.scenario_name.split('_')[1])
             self.reward_array = np.array([[self.k, 0, 10], [0, 2, 0], [10, 0, self.k]])
+        elif self.scenario_name=='permutation':
+            self.num_agents = args.num_agents
+
         self._step = 0
         self.highlight = (0, 0)
         self.length=1
         self.share_reward= True
-        self.num_agents=2
         self.use_fixed_obs=True
         self.fixed_obs=np.array([np.array([1, 1])] * self.num_agents)
 
@@ -35,8 +38,12 @@ class ClimbingEnv(gym.Env):
         self.share_observation_space = [self.agent_ob_space for _ in range(self.num_agents)]
 
         # Actions
-        self.agent_action_space=spaces.Discrete(3)
-        self.action_space = [self.agent_action_space]*self.num_agents
+        if self.scenario_name=='permutation':
+            self.agent_action_space=spaces.Discrete(self.num_agents)
+            self.action_space = [self.agent_action_space]*self.num_agents
+        else:
+            self.agent_action_space=spaces.Discrete(3)
+            self.action_space = [self.agent_action_space]*self.num_agents
 
 
         # assert render_mode is None or render_mode in self.metadata["render_modes"]
@@ -74,8 +81,10 @@ class ClimbingEnv(gym.Env):
         if not isinstance(actions, tuple):
             actions = tuple(actions)
         self.highlight = actions
-
-        reward = np.array([[self.reward_array[actions]]]*self.num_agents)
+        if self.scenario_name == 'permutation':
+            reward = np.array([[self.num_agents == len(set(actions))]]*self.num_agents, dtype=np.float32)
+        else:
+            reward = np.array([[self.reward_array[actions]]]*self.num_agents)
         info = self._get_info()
         self._step += 1
         if self._step==self.length:

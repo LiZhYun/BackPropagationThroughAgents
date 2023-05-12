@@ -186,14 +186,14 @@ class MatrixRunner(Runner):
                 eval_rnn_states[:, agent_id] = _t2n(eval_rnn_state)
                 # rearrange action
                 eval_temp_actions_env.append(_t2n(eval_action))
-                
-            # [envs, agents, dim]
-            eval_actions_env = []
-            for i in range(self.n_eval_rollout_threads):
-                eval_one_hot_action_env = []
-                for eval_temp_action_env in eval_temp_actions_env:
-                    eval_one_hot_action_env.append(eval_temp_action_env[i])
-                eval_actions_env.append(eval_one_hot_action_env)
+            eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)] 
+            # # [envs, agents, dim]
+            # eval_actions_env = []
+            # for i in range(self.n_eval_rollout_threads):
+            #     eval_one_hot_action_env = []
+            #     for eval_temp_action_env in eval_temp_actions_env:
+            #         eval_one_hot_action_env.append(eval_temp_action_env[i])
+            #     eval_actions_env.append(eval_one_hot_action_env)
 
             # Obser reward and next obs
             eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(eval_actions_env)
