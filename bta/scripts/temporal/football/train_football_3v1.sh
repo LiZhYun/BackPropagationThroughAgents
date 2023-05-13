@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
 #SBATCH --time=48:00:00
-#SBATCH --array=0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100
+#SBATCH --array=0-100:5
 
 #--partition=gpu
 #--array=0-1
