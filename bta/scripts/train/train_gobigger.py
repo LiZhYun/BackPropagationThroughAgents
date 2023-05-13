@@ -66,10 +66,12 @@ def parse_args(args, parser):
                         help="max_spore_num.")
     parser.add_argument("--direction_num", type=int, default=12,
                         help="direction_num.")
-    parser.add_argument("--step_mul", type=int, default=2,
+    parser.add_argument("--step_mul", type=int, default=8,
                         help="step_mul.")
-    parser.add_argument("--second_per_frame", type=int, default=0.05,
+    parser.add_argument("--second_per_frame", type=float, default=0.05,
                         help="second_per_frame.")
+    parser.add_argument("--frame_limit", type=int, default=3600,
+                        help="frame_limit: 3600.")
     parser.add_argument("--map_width", type=int, default=64,
                         help="map width.")
     parser.add_argument("--map_height", type=int, default=64,
@@ -162,6 +164,7 @@ def main(args):
         direction_num=all_args.direction_num,
         step_mul=all_args.step_mul,
         second_per_frame=all_args.second_per_frame,
+        frame_limit=all_args.frame_limit,
         match_time=all_args.match_time,
         map_height=all_args.map_height,
         map_width=all_args.map_width,

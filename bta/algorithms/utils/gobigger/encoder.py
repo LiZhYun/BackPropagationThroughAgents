@@ -500,20 +500,26 @@ class SpatialEncoder(nn.Module):
 
 
 class Encoder(nn.Module):
-    def __init__(self, cfg):
+    def __init__(self, cfg, hidden_size=64):
         super(Encoder, self).__init__()
         self.whole_cfg = cfg
         self.scalar_encoder = ScalarEncoder(cfg)
         self.team_encoder = TeamEncoder(cfg)
         self.ball_encoder = BallEncoder(cfg)
         self.spatial_encoder = SpatialEncoder(cfg)
-        self.output_size = self.scalar_encoder.output_size + self.team_encoder.output_size \
-            + self.ball_encoder.output_size + self.spatial_encoder.output_size
+        embedding_dim = (self.scalar_encoder.output_size + self.team_encoder.output_size \
+            + self.ball_encoder.output_size + self.spatial_encoder.output_size) * 3
+        self.output_fc = fc_block(embedding_dim,
+                                  hidden_size,
+                                  norm_type='LN',
+                                  activation='relu')
+        self.output_size = hidden_size
+        
 
     def forward(self, x):
         scalar_info = self.scalar_encoder(x['scalar_info'])
         team_info = self.team_encoder(x['team_info'])
         ball_embeddings, ball_info = self.ball_encoder(x['ball_info'])
         spatial_info = self.spatial_encoder(x, ball_embeddings)
-        x = torch.flatten(torch.cat([scalar_info, team_info, ball_info, spatial_info], dim=1))
+        x = self.output_fc(torch.flatten(torch.cat([scalar_info, team_info, ball_info, spatial_info], dim=1)))
         return x
