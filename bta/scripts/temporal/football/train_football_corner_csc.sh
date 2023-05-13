@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --account=project_2007776
-#SBATCH --partition=hugemem
+#SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=340G
+#SBATCH --mem=64G
 #SBATCH --time=48:00:00
 #SBATCH --array=0-100:5
 
