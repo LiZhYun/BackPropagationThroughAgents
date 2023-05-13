@@ -45,7 +45,7 @@ class R_Actor(nn.Module):
             default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
             config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
             self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg, self.hidden_size)
+            self.base = Encoder(self.whole_cfg, args)
         elif 'Dict' in obs_shape.__class__.__name__:
             self._mixed_obs = True
             self._nested_obs = False
@@ -260,7 +260,7 @@ class R_Critic(nn.Module):
             default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
             config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
             self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg)
+            self.base = Encoder(self.whole_cfg, args)
         elif 'Dict' in share_obs_shape.__class__.__name__:
             self._mixed_obs = True
             self._nested_obs = False

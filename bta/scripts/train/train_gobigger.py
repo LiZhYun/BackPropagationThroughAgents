@@ -54,9 +54,9 @@ def parse_args(args, parser):
                         default="t4p3", 
                         help="which scenario to run on.")
     parser.add_argument("--team_num", type=int,
-                        default=4, 
+                        default=2, 
                         help="team numbers")
-    parser.add_argument("--player_num_per_team", type=int, default=3,
+    parser.add_argument("--player_num_per_team", type=int, default=2,
                         help="number of players per team.")
     parser.add_argument("--max_ball_num", type=int, default=64,
                         help="max_ball_num.")

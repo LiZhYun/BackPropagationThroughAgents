@@ -500,7 +500,7 @@ class SpatialEncoder(nn.Module):
 
 
 class Encoder(nn.Module):
-    def __init__(self, cfg, hidden_size=64):
+    def __init__(self, cfg, args):
         super(Encoder, self).__init__()
         self.whole_cfg = cfg
         self.scalar_encoder = ScalarEncoder(cfg)
@@ -508,12 +508,12 @@ class Encoder(nn.Module):
         self.ball_encoder = BallEncoder(cfg)
         self.spatial_encoder = SpatialEncoder(cfg)
         embedding_dim = (self.scalar_encoder.output_size + self.team_encoder.output_size \
-            + self.ball_encoder.output_size + self.spatial_encoder.output_size) * 3
+            + self.ball_encoder.output_size + self.spatial_encoder.output_size) * args.player_num_per_team
         self.output_fc = fc_block(embedding_dim,
-                                  hidden_size,
+                                  args.hidden_size,
                                   norm_type='LN',
                                   activation='relu')
-        self.output_size = hidden_size
+        self.output_size = args.hidden_size
         
 
     def forward(self, x):
