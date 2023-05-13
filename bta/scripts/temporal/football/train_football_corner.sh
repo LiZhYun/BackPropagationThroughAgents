@@ -18,8 +18,8 @@ exp="check"
 num_agents=10
 
 # train param
-num_env_steps=25000000
-episode_length=200
+num_env_steps=50000000
+episode_length=1000
 deno=100
 threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
