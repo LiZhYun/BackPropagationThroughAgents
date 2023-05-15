@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --account=project_2007776
-#SBATCH --partition=small
+#SBATCH --partition=longrun
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=64G
-#SBATCH --time=48:00:00
+#SBATCH --time=240:00:00
 #SBATCH --array=0-100:5
 
 #--gres=gpu:v100:1

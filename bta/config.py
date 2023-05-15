@@ -315,6 +315,8 @@ def get_config():
                         action='store_false', default=True, help="by default, use max norm of gradients. If set, do not use.")
     parser.add_argument("--max_grad_norm", type=float, default=10.0,
                         help='max norm of gradients (default: 0.5)')
+    parser.add_argument("--inner_max_grad_norm", type=float, default=0.5,
+                        help='max norm of gradients (default: 0.5)')
     parser.add_argument("--use_gae", action='store_false',
                         default=True, help='use generalized advantage estimation')
     parser.add_argument("--gamma", type=float, default=0.99,
