@@ -69,6 +69,9 @@ class Runner(object):
         if self.all_args.algorithm_name == "happo":
             from bta.algorithms.happo.happo_trainer import HAPPO as TrainAlgo
             from bta.algorithms.happo.algorithm.happo_policy import HAPPO_Policy as Policy
+        elif self.all_args.algorithm_name == "hatrpo":
+            from bta.algorithms.happo.hatrpo_trainer import HATRPO as TrainAlgo
+            from bta.algorithms.happo.algorithm.hatrpo_policy import HATRPO_Policy as Policy
         else:
             raise NotImplementedError
 

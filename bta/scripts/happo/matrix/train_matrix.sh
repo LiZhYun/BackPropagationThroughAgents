@@ -3,10 +3,9 @@
 #SBATCH --job-name=matrix-happo
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=32G
-#SBATCH --time=48:00:00
-#SBATCH --array=0-1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=10G
+#SBATCH --time=2:00:00
 
 #--partition=gpu
 #--array=0-1
@@ -19,7 +18,7 @@ source activate pytorch-env
 
 env="matrix"
 scenario="climbing"
-algo="happo" # "mappo" "ippo"
+algo="hatrpo" # "mappo" "ippo"
 exp="check"
 
 # football param
