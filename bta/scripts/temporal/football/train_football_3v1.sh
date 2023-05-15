@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
 #SBATCH --time=48:00:00
-#SBATCH --array=0-100:5
+#SBATCH --array=0-2
 
 #--partition=gpu
 #--array=0-1
@@ -25,8 +25,8 @@ num_agents=3
 num_env_steps=25000000
 episode_length=200
 deno=100
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
-# threshold=`expr "sclae=2; $SLURM_ARRAY_TASK_ID/$deno" | bc`
+threshold=1.0
+# threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
 echo "env is ${env}, scenario is ${scenario}, algo is ${algo}, threshold is ${threshold}"
 

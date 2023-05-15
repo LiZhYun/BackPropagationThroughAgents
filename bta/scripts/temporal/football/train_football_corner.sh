@@ -5,8 +5,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
-#SBATCH --time=48:00:00
-#SBATCH --array=0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100
+#SBATCH --time=120:00:00
+#SBATCH --array=0-3
 
 # exp param
 env="Football"
@@ -21,7 +21,7 @@ num_agents=10
 num_env_steps=50000000
 episode_length=1000
 deno=100
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
 
 echo "env is ${env}, scenario is ${scenario}, algo is ${algo}, threshold is ${threshold}"
 
