@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem-per-cpu=10G
 #SBATCH --time=72:00:00
-#SBATCH --array=0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100
+#SBATCH --array=0-2
 
 module restore bpta
 source activate pytorch-env
@@ -25,7 +25,7 @@ num_agents=2
 algo="temporal"
 exp="check"
 deno=100
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
 
 echo "env is ${env}, layout is ${layout}, algo is ${algo}, exp is ${exp} version is ${version}"
 
