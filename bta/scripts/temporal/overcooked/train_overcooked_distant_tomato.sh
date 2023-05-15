@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=overcooked-temporal
-#SBATCH --partition=batch
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem-per-cpu=10G

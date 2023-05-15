@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #SBATCH --job-name=football-temporal
-#SBATCH --partition=batch
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=32G
 #SBATCH --time=120:00:00
-#SBATCH --array=0-3
+#SBATCH --array=0-2
 
 # exp param
 env="Football"
