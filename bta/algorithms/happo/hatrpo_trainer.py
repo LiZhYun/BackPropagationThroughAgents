@@ -1,10 +1,11 @@
 import numpy as np
 import torch
 import torch.nn as nn
-from utils.util import get_gard_norm, huber_loss, mse_loss
-from utils.popart import PopArt
-from algorithms.utils.util import check
-from algorithms.actor_critic import Actor
+from bta.utils.util import get_gard_norm, huber_loss, mse_loss
+from bta.utils.popart import PopArt
+from bta.algorithms.utils.util import check
+from bta.algorithms.happo.algorithm.actor_critic import Actor
+from bta.utils.valuenorm import ValueNorm
 
 class HATRPO():
     """
@@ -42,9 +43,12 @@ class HATRPO():
         self._use_popart = args.use_popart
         self._use_value_active_masks = args.use_value_active_masks
         self._use_policy_active_masks = args.use_policy_active_masks
+        self._use_valuenorm = args.use_valuenorm
         
         if self._use_popart:
             self.value_normalizer = PopArt(1, device=self.device)
+        elif self._use_valuenorm:
+            self.value_normalizer = ValueNorm(1, device = self.device)
         else:
             self.value_normalizer = None
 

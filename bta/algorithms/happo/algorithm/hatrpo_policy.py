@@ -1,6 +1,6 @@
 import torch
-from algorithms.actor_critic import Actor, Critic
-from utils.util import update_linear_schedule
+from bta.algorithms.happo.algorithm.actor_critic import Actor, Critic
+from bta.utils.util import update_linear_schedule
 
 
 class HATRPO_Policy:

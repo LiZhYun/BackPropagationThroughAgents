@@ -14,7 +14,7 @@ class ACTLayer(nn.Module):
         self.continuous_action = False
         self.mixed_action = False
         self.discrete_action = False
-
+        self.action_type = action_space.__class__.__name__
         if action_space.__class__.__name__ == "Discrete":
             self.discrete_action = True
             action_dim = action_space.n
@@ -229,3 +229,60 @@ class ACTLayer(nn.Module):
             return train_actions, action_log_probs, dist_entropy
         else:
             return action_log_probs, dist_entropy
+    
+    def evaluate_actions_trpo(self, x, action, available_actions=None, active_masks=None):
+        """
+        Compute log probability and entropy of given actions.
+        :param x: (torch.Tensor) input to network.
+        :param action: (torch.Tensor) actions whose entropy and log probability to evaluate.
+        :param available_actions: (torch.Tensor) denotes which actions are available to agent
+                                                              (if None, all actions available)
+        :param active_masks: (torch.Tensor) denotes whether an agent is active or dead.
+
+        :return action_log_probs: (torch.Tensor) log probabilities of the input actions.
+        :return dist_entropy: (torch.Tensor) action distribution entropy for the given inputs.
+        """
+
+        if self.multidiscrete_action:
+            action = torch.transpose(action, 0, 1)
+            action_log_probs = []
+            dist_entropy = []
+            mu_collector = []
+            std_collector = []
+            probs_collector = []
+            for action_out, act in zip(self.action_outs, action):
+                action_logit = action_out(x)
+                mu = action_logit.mean
+                std = action_logit.stddev
+                action_log_probs.append(action_logit.log_probs(act))
+                mu_collector.append(mu)
+                std_collector.append(std)
+                probs_collector.append(action_logit.logits)
+                if active_masks is not None:
+                    dist_entropy.append((action_logit.entropy()*active_masks.squeeze(-1)).sum()/active_masks.sum())
+                else:
+                    dist_entropy.append(action_logit.entropy().mean())
+            action_mu = torch.cat(mu_collector,-1)
+            action_std = torch.cat(std_collector,-1)
+            all_probs = torch.cat(probs_collector,-1)
+            action_log_probs = torch.cat(action_log_probs, -1)
+            dist_entropy = torch.tensor(dist_entropy).mean()
+        
+        else:
+            action_logits = self.action_out(x, available_actions)
+            action_mu = action_logits.mean
+            action_std = action_logits.stddev
+            action_log_probs = action_logits.log_probs(action)
+            if self.action_type=="Discrete":
+                all_probs = action_logits.logits
+            else:
+                all_probs = None
+            if active_masks is not None:
+                if self.action_type=="Discrete":
+                    dist_entropy = (action_logits.entropy()*active_masks.squeeze(-1)).sum()/active_masks.sum()
+                else:
+                    dist_entropy = (action_logits.entropy()*active_masks).sum()/active_masks.sum()
+            else:
+                dist_entropy = action_logits.entropy().mean()
+        
+        return action_log_probs, dist_entropy, action_mu, action_std, all_probs

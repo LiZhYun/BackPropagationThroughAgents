@@ -165,7 +165,7 @@ def main(args):
         from bta.runner.gcs.matrix_runner import MatrixRunner as Runner
     elif "ar" in all_args.algorithm_name:
         from bta.runner.ar.matrix_runner import MatrixRunner as Runner
-    elif "happo" in all_args.algorithm_name:
+    elif "ha" in all_args.algorithm_name:
         from bta.runner.happo.matrix_runner import MatrixRunner as Runner
     elif "temporal" in all_args.algorithm_name:
         from bta.runner.temporal.matrix_runner import MatrixRunner as Runner

@@ -294,6 +294,14 @@ def get_config():
                         help='RMSprop optimizer epsilon (default: 1e-5)')
     parser.add_argument("--weight_decay", type=float, default=0)
 
+    # trpo parameters
+    parser.add_argument("--kl_threshold", type=float, 
+                        default=0.01, help='the threshold of kl-divergence (default: 0.01)')
+    parser.add_argument("--ls_step", type=int, 
+                        default=10, help='number of line search (default: 10)')
+    parser.add_argument("--accept_ratio", type=float, 
+                        default=0.5, help='accept ratio of loss improve (default: 0.5)')
+
     # ppo parameters
     parser.add_argument("--ppo_epoch", type=int, default=15,
                         help='number of ppo epochs (default: 15)')
