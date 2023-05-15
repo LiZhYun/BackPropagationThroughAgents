@@ -4,9 +4,12 @@
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
+#SBATCH --mem-per-cpu=10G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-9
+#SBATCH --array=0-2
+
+module restore bpta
+source activate pytorch-env
 
 env="Overcooked"
 
@@ -27,4 +30,4 @@ CUDA_VISIBLE_DEVICES=0 singularity exec --bind /scratch --nv /scratch/work/liz23
     --cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" \
     --overcooked_version ${version} \
     --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
-    --max_edges 10 --time_channels 100 --time_gap 4
+    --max_edges 10 --time_channels 100 --time_gap 4 --entropy_coef 0.05

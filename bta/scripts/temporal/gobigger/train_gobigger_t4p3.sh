@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #SBATCH --job-name=gobigger-temporal
-#SBATCH --partition=hugemem
+#SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem-per-cpu=340G
+#SBATCH --mem=256G
 #SBATCH --time=72:00:00
 #SBATCH --array=0-2
 
