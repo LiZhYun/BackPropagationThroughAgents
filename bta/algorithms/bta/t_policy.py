@@ -200,8 +200,8 @@ class T_POLICY():
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
 
         surr1 = (imp_weights * factor_batch + imp_weights.detach() * action_grad * train_actions) * adv_targ
-        if self.use_max_grad_norm:
-            total_norm = torch.norm(torch.stack([torch.norm(g.detach(), 2.0).to(device) for g in action_grad]), 2.0)
+        if self._use_max_grad_norm:
+            total_norm = torch.norm(torch.stack([torch.norm(g.detach(), 2.0).to(self.device) for g in action_grad]), 2.0)
             clip_coef = self.inner_max_grad_norm / (total_norm + 1e-6)
             clip_coef_clamped = torch.clamp(clip_coef, max=1.0)
             for g in action_grad:
