@@ -2,11 +2,11 @@
 
 #SBATCH --account=project_2007776
 #SBATCH --job-name=football-temporal
-#SBATCH --partition=hugemem
+#SBATCH --partition=longrun
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=340G
-#SBATCH --time=48:00:00
+#SBATCH --mem=256G
+#SBATCH --time=240:00:00
 #SBATCH --array=0-100:5
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
@@ -34,4 +34,4 @@ apptainer_wrapper exec python ../../train/train_football.py \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --ppo_epoch 15 --clip_param 0.2 --num_mini_batch 2 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---max_edges 10  --time_channels 100 --time_gap 10 --threshold ${threshold} --entropy_coef 0.05
+--max_edges 10  --time_channels 100 --time_gap 10 --threshold ${threshold} --entropy_coef 0.025
