@@ -196,8 +196,8 @@ class Runner(object):
         new_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
         # ordered_vertices = reversed([i for i in range(self.num_agents)])
-        # ordered_vertices = self.agent_order[0]
-        ordered_vertices = torch.randperm(self.num_agents)
+        ordered_vertices = self.agent_order[0]
+        # ordered_vertices = torch.randperm(self.num_agents)
 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
