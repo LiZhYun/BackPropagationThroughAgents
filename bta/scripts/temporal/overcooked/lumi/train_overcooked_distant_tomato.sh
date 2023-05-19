@@ -13,7 +13,7 @@ source activate pytorch-env
 
 env="Overcooked"
 
-# unident_s, random1, random3, distant_tomato, many_orders
+# corridor cramped_corridor diff_orders forced_coordination_tomato h_far_tomato marshmallow_experiment_coordination pipeline multiplayer_schelling(old)
 layout="distant_tomato"
 
 version="old"
