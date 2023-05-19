@@ -68,23 +68,23 @@ class OvercookedEnv(object):
 
     @property
     def mlam(self):
-        if self._mlam is None:
-            if self.info_level > 0:
-                print("Computing MediumLevelActionManager")
-            self._mlam = MediumLevelActionManager.from_pickle_or_compute(self.mdp, self.mlam_params,
-                                                                  force_compute=False)
+        # if self._mlam is None:
+        #     if self.info_level > 0:
+        #         print("Computing MediumLevelActionManager")
+        #     self._mlam = MediumLevelActionManager.from_pickle_or_compute(self.mdp, self.mlam_params,
+        #                                                           force_compute=False)
         return self._mlam
 
     @property
     def mp(self):
-        if self._mp is None:
-            if self._mlam is not None:
-                self._mp = self.mlam.motion_planner
-            else:
-                if self.info_level > 0:
-                    print("Computing MotionPlanner")
-                self._mp = MotionPlanner.from_pickle_or_compute(self.mdp, self.mlam_params["counter_goals"],
-                                                                force_compute=False)
+        # if self._mp is None:
+        #     if self._mlam is not None:
+        #         self._mp = self.mlam.motion_planner
+        #     else:
+        #         if self.info_level > 0:
+        #             print("Computing MotionPlanner")
+        #         self._mp = MotionPlanner.from_pickle_or_compute(self.mdp, self.mlam_params["counter_goals"],
+        #                                                         force_compute=False)
         return self._mp
 
     @staticmethod
@@ -628,10 +628,10 @@ class Overcooked(gym.Env):
         self.use_agent_policy_id = dict(all_args._get_kwargs()).get("use_agent_policy_id", False) # Add policy id for loaded policy
         self.agent_policy_id = [-1. for _ in range(self.num_agents)]
         self.featurize_fn_ppo = lambda state: self.base_env.lossless_state_encoding_mdp(state) # Encoding obs for PPO
-        self.featurize_fn_bc = lambda state: self.base_env.featurize_state_mdp(state) # Encoding obs for BC
+        # self.featurize_fn_bc = lambda state: self.base_env.featurize_state_mdp(state) # Encoding obs for BC
         self.featurize_fn_mapping = {
             "ppo": self.featurize_fn_ppo,
-            "bc": self.featurize_fn_bc
+            # "bc": self.featurize_fn_bc
         }
         self.reset_featurize_type(featurize_type=featurize_type) # default agents are both ppo
 
@@ -688,7 +688,7 @@ class Overcooked(gym.Env):
     def _observation_space(self, featurize_type):
         return {
             "ppo": self.ppo_observation_space,
-            "bc": self.bc_observation_space
+            # "bc": self.bc_observation_space
         }[featurize_type]
 
     def _setup_observation_space(self):
@@ -701,12 +701,12 @@ class Overcooked(gym.Env):
         low = np.ones(obs_shape) * 0
         self.ppo_observation_space = gym.spaces.Box(np.float32(low), np.float32(high), dtype=np.float32)
 
-        # bc observation
-        featurize_fn_bc = lambda state: self.base_env.featurize_state_mdp(state)
-        obs_shape = featurize_fn_bc(dummy_state)[0].shape
-        high = np.ones(obs_shape) * 100
-        low = np.ones(obs_shape) * -100
-        self.bc_observation_space = gym.spaces.Box(np.float32(low), np.float32(high), dtype=np.float32)
+        # # bc observation
+        # featurize_fn_bc = lambda state: self.base_env.featurize_state_mdp(state)
+        # obs_shape = featurize_fn_bc(dummy_state)[0].shape
+        # high = np.ones(obs_shape) * 100
+        # low = np.ones(obs_shape) * -100
+        # self.bc_observation_space = gym.spaces.Box(np.float32(low), np.float32(high), dtype=np.float32)
 
     def _setup_share_observation_space(self):
         dummy_state = self.base_env.mdp.get_standard_start_state()

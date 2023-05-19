@@ -20,7 +20,7 @@ def make_train_env(all_args, run_dir):
         def init_env():
             if all_args.env_name == "Overcooked":
                 if all_args.overcooked_version == "old":
-                    env = Overcooked(all_args, run_dir)
+                    env = Overcooked(all_args, run_dir, featurize_type=("ppo",)*all_args.num_agents)
                 else:
                     env = Overcooked_new(all_args, run_dir)
             else:
@@ -40,7 +40,7 @@ def make_eval_env(all_args, run_dir):
         def init_env():
             if all_args.env_name == "Overcooked":
                 if all_args.overcooked_version == "old":
-                    env = Overcooked(all_args, run_dir)
+                    env = Overcooked(all_args, run_dir, featurize_type=("ppo",)*all_args.num_agents)
                 else:
                     env = Overcooked_new(all_args, run_dir)
             else:

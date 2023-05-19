@@ -101,7 +101,8 @@ class OvercookedEnv(object):
         # Update state and done
         self.state = next_state
         done = self.is_done()
-        env_info = self._prepare_info_dict([{}, {}], mdp_infos)
+        
+        env_info = self._prepare_info_dict([{}]*len(joint_action), mdp_infos)
         
         if done: self._add_episode_info(env_info)
 
@@ -357,18 +358,18 @@ class Overcooked(gym.Env):
         self.mdp_fn = lambda: OvercookedGridworld.from_layout_name(**mdp_params)
         self.base_mdp = self.mdp_fn()
         self.base_env = OvercookedEnv(self.mdp_fn, start_state_fn=self.random_start_prob, **env_params)
-        self.mlp = MediumLevelPlanner.from_pickle_or_compute(
-            mdp=self.base_mdp,
-            mlp_params=NO_COUNTERS_PARAMS,
-            force_compute=False
-        )
+        # self.mlp = MediumLevelPlanner.from_pickle_or_compute(
+        #     mdp=self.base_mdp,
+        #     mlp_params=NO_COUNTERS_PARAMS,
+        #     force_compute=False
+        # )
         self.use_agent_policy_id = dict(all_args._get_kwargs()).get("use_agent_policy_id", False) # Add policy id for loaded policy
         self.agent_policy_id = [-1. for _ in range(self.num_agents)]
         self.featurize_fn_ppo = lambda state: self.base_mdp.lossless_state_encoding(state) # Encoding obs for PPO
-        self.featurize_fn_bc = lambda state: self.base_mdp.featurize_state(state) # Encoding obs for BC
+        # self.featurize_fn_bc = lambda state: self.base_mdp.featurize_state(state) # Encoding obs for BC
         self.featurize_fn_mapping = {
             "ppo": self.featurize_fn_ppo,
-            "bc": self.featurize_fn_bc
+            # "bc": self.featurize_fn_bc
         }
         self.reset_featurize_type(featurize_type=featurize_type) # default agents are both ppo
 
@@ -380,10 +381,10 @@ class Overcooked(gym.Env):
                     self.script_agent[player_idx] = SCRIPT_AGENTS[policy_name[7:]]()
                     self.script_agent[player_idx].reset(self.base_env.mdp, self.base_env.state, player_idx)
         else:
-            self.script_agent = [None, None]
+            self.script_agent = [None]*self.num_agents
 
     def reset_featurize_type(self, featurize_type=("ppo", "ppo")):
-        assert len(featurize_type) == 2
+        # assert len(featurize_type) == 2
         self.featurize_type = featurize_type
         self.featurize_fn = lambda state: [self.featurize_fn_mapping[f](state)[i] * (255 if f == "ppo" else 1)for i, f in enumerate(self.featurize_type)]
 
@@ -392,7 +393,7 @@ class Overcooked(gym.Env):
         self.share_observation_space = []
         self.action_space = []
         self._setup_observation_space()
-        for i in range(2):
+        for i in range(self.num_agents):
             self.observation_space.append(self._observation_space(featurize_type[i]))
             self.action_space.append(gym.spaces.Discrete(len(Action.ALL_ACTIONS)))
             self.share_observation_space.append(self._setup_share_observation_space())
@@ -425,7 +426,7 @@ class Overcooked(gym.Env):
     def _observation_space(self, featurize_type):
         return {
             "ppo": self.ppo_observation_space,
-            "bc": self.bc_observation_space
+            # "bc": self.bc_observation_space
         }[featurize_type]
 
     def _setup_observation_space(self):
@@ -438,12 +439,12 @@ class Overcooked(gym.Env):
         low = np.ones(obs_shape) * 0
         self.ppo_observation_space = gym.spaces.Box(np.float32(low), np.float32(high), dtype=np.float32)
 
-        # bc observation
-        featurize_fn_bc = lambda state: self.base_mdp.featurize_state(state, self.mlp)
-        obs_shape = featurize_fn_bc(dummy_state)[0].shape
-        high = np.ones(obs_shape) * 100
-        low = np.ones(obs_shape) * -100
-        self.bc_observation_space = gym.spaces.Box(np.float32(low), np.float32(high), dtype=np.float32)
+        # # bc observation
+        # featurize_fn_bc = lambda state: self.base_mdp.featurize_state(state, self.mlp)
+        # obs_shape = featurize_fn_bc(dummy_state)[0].shape
+        # high = np.ones(obs_shape) * 100
+        # low = np.ones(obs_shape) * -100
+        # self.bc_observation_space = gym.spaces.Box(np.float32(low), np.float32(high), dtype=np.float32)
 
     def _setup_share_observation_space(self):
         dummy_state = self.base_env.mdp.get_standard_start_state()
@@ -466,9 +467,16 @@ class Overcooked(gym.Env):
         if self.use_agent_policy_id:
             for a in range(self.num_agents):
                 share_obs[a] = np.concatenate([share_obs[a], np.ones((*share_obs[a].shape[:2], 1), dtype=np.float32) * self.agent_policy_id[a]], axis=-1)
-        share_obs0 = np.concatenate([share_obs[0], share_obs[1]], axis=-1) * 255
-        share_obs1 = np.concatenate([share_obs[1], share_obs[0]], axis=-1) * 255
-        return np.stack([share_obs0, share_obs1], axis=0)
+        if self.layout_name == 'multiplayer_schelling':
+            share_obs0 = np.concatenate([share_obs[0], share_obs[1], share_obs[2], share_obs[3]], axis=-1) * 255
+            share_obs1 = np.concatenate([share_obs[1], share_obs[0], share_obs[2], share_obs[3]], axis=-1) * 255
+            share_obs2 = np.concatenate([share_obs[2], share_obs[0], share_obs[1], share_obs[3]], axis=-1) * 255
+            share_obs3 = np.concatenate([share_obs[3], share_obs[0], share_obs[1], share_obs[2]], axis=-1) * 255
+            return np.stack([share_obs0, share_obs1, share_obs2, share_obs3], axis=0)
+        else:
+            share_obs0 = np.concatenate([share_obs[0], share_obs[1]], axis=-1) * 255
+            share_obs1 = np.concatenate([share_obs[1], share_obs[0]], axis=-1) * 255
+            return np.stack([share_obs0, share_obs1], axis=0)
 
     def step(self, action):
         """
@@ -487,9 +495,12 @@ class Overcooked(gym.Env):
         action = self._action_convertor(action)
         assert all(self.action_space[0].contains(a) for a in action), "%r (%s) invalid"%(action, type(action))
 
-        agent_action, other_agent_action = [Action.INDEX_TO_ACTION[a] for a in action]
+        if self.layout_name == 'multiplayer_schelling':
+            joint_action = [Action.INDEX_TO_ACTION[a] for a in action]
+        else:
+            agent_action, other_agent_action = [Action.INDEX_TO_ACTION[a] for a in action]
 
-        joint_action = [agent_action, other_agent_action]
+            joint_action = [agent_action, other_agent_action]
         
         for a in range(self.num_agents):
             if self.script_agent[a] is not None:
@@ -534,12 +545,18 @@ class Overcooked(gym.Env):
                 dense_reward = info["shaped_r_by_agent"]
                 shaped_reward_p0 = sparse_reward + self.reward_shaping_factor * dense_reward[0]
                 shaped_reward_p1 = sparse_reward + self.reward_shaping_factor * dense_reward[1]
+                if self.layout_name == 'multiplayer_schelling':
+                    shaped_reward_p2 = sparse_reward + self.reward_shaping_factor * dense_reward[2]
+                    shaped_reward_p3 = sparse_reward + self.reward_shaping_factor * dense_reward[3]
         
         if self.store_traj:
             self.traj_to_store.append(info["shaped_info_by_agnet"])
             self.traj_to_store.append(self.base_env.state.to_dict())
 
-        reward = [[shaped_reward_p0], [shaped_reward_p1]]
+        if self.layout_name == 'multiplayer_schelling':
+            reward = [[shaped_reward_p0], [shaped_reward_p1], [shaped_reward_p2], [shaped_reward_p3]]
+        else:
+            reward = [[shaped_reward_p0], [shaped_reward_p1]]
         
         if self.agent_idx == 1:
             reward = [[shaped_reward_p1], [shaped_reward_p0]]
@@ -547,7 +564,7 @@ class Overcooked(gym.Env):
         self.history_sa = self.history_sa[1:] + [[next_state, None],]
 
         vec_shaped_info_by_agent = self.base_env.vectorize_shaped_info(info["shaped_info_by_agent"])
-        vec_shaped_info_by_agent = np.concatenate([vec_shaped_info_by_agent, (np.array(info["sparse_r_by_agent"])>0).astype(np.int32).reshape(2, 1)], axis=-1)
+        vec_shaped_info_by_agent = np.concatenate([vec_shaped_info_by_agent, (np.array(info["sparse_r_by_agent"])>0).astype(np.int32).reshape(self.num_agents, 1)], axis=-1)
         if self.agent_idx == 1:
             vec_shaped_info_by_agent = np.stack([vec_shaped_info_by_agent[1], vec_shaped_info_by_agent[0]])
         info["vec_shaped_info_by_agent"] = vec_shaped_info_by_agent
@@ -586,14 +603,20 @@ class Overcooked(gym.Env):
         if done and self.store_traj:
             self._store_trajectory()
 
-        ob_p0, ob_p1 = self.featurize_fn(next_state)
+        if self.layout_name == 'multiplayer_schelling':
+            ob_p0, ob_p1, ob_p2, ob_p3 = self.featurize_fn(next_state)
+        else:
+            ob_p0, ob_p1 = self.featurize_fn(next_state)
         
-        both_agents_ob = (ob_p0, ob_p1)
+        if self.layout_name == 'multiplayer_schelling':
+            both_agents_ob = (ob_p0, ob_p1, ob_p2, ob_p3) 
+        else:
+            both_agents_ob = (ob_p0, ob_p1) 
         if self.agent_idx == 1:
             both_agents_ob = (ob_p1, ob_p0)
 
         share_obs = self._gen_share_observation(self.base_env.state)
-        done = [done, done]
+        done = [done] * self.num_agents
         available_actions = np.ones((2, len(Action.ALL_ACTIONS)), dtype=np.uint8)
 
         return both_agents_ob, share_obs, reward, done, info, available_actions
@@ -634,11 +657,17 @@ class Overcooked(gym.Env):
                 self.script_agent[a].reset(self.base_env.mdp, self.base_env.state, a)
 
         self.mdp = self.base_env.mdp
-        ob_p0, ob_p1 = self.featurize_fn(self.base_env.state)
+        if self.layout_name == 'multiplayer_schelling':
+            ob_p0, ob_p1, ob_p2, ob_p3 = self.featurize_fn(self.base_env.state)
+        else:
+            ob_p0, ob_p1 = self.featurize_fn(self.base_env.state)
         if self.stuck_time > 0:
             self.history_sa = [None for _ in range(self.stuck_time - 1)] + [[self.base_env.state, None]]
 
-        both_agents_ob = (ob_p0, ob_p1) 
+        if self.layout_name == 'multiplayer_schelling':
+            both_agents_ob = (ob_p0, ob_p1, ob_p2, ob_p3) 
+        else:
+            both_agents_ob = (ob_p0, ob_p1) 
         if self.agent_idx == 1:
             both_agents_ob = (ob_p1, ob_p0)
 
