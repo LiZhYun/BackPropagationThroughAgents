@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=hanabi-temporal
-#SBATCH --output=hanabi-temporal.o%j # Name of stdout output file
-#SBATCH --error=hanabi-temporal.e%j  # Name of stderr error file
+#SBATCH --output=hanabi-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=hanabi-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50

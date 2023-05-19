@@ -23,6 +23,7 @@ wandb
 api
 .nfs*
 *.so
+*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

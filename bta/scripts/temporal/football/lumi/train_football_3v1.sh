@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=football-3v1-temporal
-#SBATCH --output=football-3v1-temporal.o%j # Name of stdout output file
-#SBATCH --error=football-3v1-temporal.e%j  # Name of stderr error file
+#SBATCH --output=football-3v1-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=football-3v1-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
@@ -10,7 +10,7 @@
 #SBATCH --time=1-12:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-100
+#SBATCH --array=0-5
 
 # exp param
 env="Football"
@@ -25,8 +25,8 @@ num_agents=3
 num_env_steps=25000000
 episode_length=200
 deno=100
-# threshold=0.2
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=0.41
+# threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \

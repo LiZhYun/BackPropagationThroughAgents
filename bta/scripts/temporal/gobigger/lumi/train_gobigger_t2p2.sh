@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=gobigger-t2p2-temporal
-#SBATCH --output=gobigger-t2p2-temporal.o%j # Name of stdout output file
-#SBATCH --error=gobigger-t2p2-temporal.e%j  # Name of stderr error file
+#SBATCH --output=gobigger-t2p2-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=gobigger-t2p2-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50

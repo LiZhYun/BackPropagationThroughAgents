@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=football-easy-temporal
-#SBATCH --output=football-easy-temporal.o%j # Name of stdout output file
-#SBATCH --error=football-easy-temporal.e%j  # Name of stderr error file
+#SBATCH --output=football-easy-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=football-easy-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
@@ -27,7 +27,7 @@ episode_length=1000
 deno=100
 threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
-apptainer_wrapper exec python ../../../train/train_football.py \
+srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
