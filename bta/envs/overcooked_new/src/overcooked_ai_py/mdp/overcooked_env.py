@@ -1,11 +1,11 @@
 import gym, tqdm
 import time
 import numpy as np
-from hsp.envs.overcooked_new.src.overcooked_ai_py.utils import mean_and_std_err, append_dictionaries
-from hsp.envs.overcooked_new.src.overcooked_ai_py.mdp.actions import Action
-from hsp.envs.overcooked_new.src.overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld, EVENT_TYPES
-from hsp.envs.overcooked_new.src.overcooked_ai_py.mdp.overcooked_trajectory import TIMESTEP_TRAJ_KEYS, EPISODE_TRAJ_KEYS, DEFAULT_TRAJ_KEYS
-from hsp.envs.overcooked_new.src.overcooked_ai_py.planning.planners import MediumLevelActionManager, MotionPlanner, NO_COUNTERS_PARAMS
+from bta.envs.overcooked_new.src.overcooked_ai_py.utils import mean_and_std_err, append_dictionaries
+from bta.envs.overcooked_new.src.overcooked_ai_py.mdp.actions import Action
+from bta.envs.overcooked_new.src.overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld, EVENT_TYPES
+from bta.envs.overcooked_new.src.overcooked_ai_py.mdp.overcooked_trajectory import TIMESTEP_TRAJ_KEYS, EPISODE_TRAJ_KEYS, DEFAULT_TRAJ_KEYS
+from bta.envs.overcooked_new.src.overcooked_ai_py.planning.planners import MediumLevelActionManager, MotionPlanner, NO_COUNTERS_PARAMS
 
 DEFAULT_ENV_PARAMS = {
     "horizon": 400
@@ -423,7 +423,7 @@ class OvercookedEnv(object):
         trajectories["metadatas"] = append_dictionaries(trajectories["metadatas"])
 
         # TODO: should probably transfer check methods over to Env class
-        from hsp.envs.overcooked_new.src.overcooked_ai_py.agents.benchmarking import AgentEvaluator
+        from bta.envs.overcooked_new.src.overcooked_ai_py.agents.benchmarking import AgentEvaluator
         AgentEvaluator.check_trajectories(trajectories, verbose=info)
         return trajectories
 
