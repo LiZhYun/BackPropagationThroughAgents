@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --account=project_2007776
-#SBATCH --partition=longrun
+#SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
-#SBATCH --time=240:00:00
-#SBATCH --array=0-100:5
+#SBATCH --mem=128G
+#SBATCH --time=72:00:00
+#SBATCH --array=0-100
 
 #--gres=gpu:v100:1
 
@@ -28,10 +28,9 @@ episode_length=1000
 deno=100
 threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
-apptainer_wrapper exec python ../../train/train_football.py \
+apptainer_wrapper exec python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
---representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --ppo_epoch 15 --clip_param 0.2 --num_mini_batch 2 \
---user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---max_edges 10  --time_channels 100 --time_gap 10 --threshold ${threshold} --entropy_coef 0.025
+--representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
+--user_name "zhiyuanli" --wandb_name "zhiyuanli" --threshold ${threshold}
