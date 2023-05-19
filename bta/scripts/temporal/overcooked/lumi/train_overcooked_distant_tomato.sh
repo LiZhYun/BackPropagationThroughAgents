@@ -13,7 +13,7 @@ source activate pytorch-env
 
 env="Overcooked"
 
-# corridor cramped_corridor diff_orders forced_coordination_tomato h_far_tomato marshmallow_experiment_coordination pipeline multiplayer_schelling(old)
+# corridor cramped_corridor diff_orders forced_coordination_tomato h_far_tomato marshmallow_experiment_coordination pipeline multiplayer_schelling(old) soup_coordination
 layout="distant_tomato"
 
 version="old"
