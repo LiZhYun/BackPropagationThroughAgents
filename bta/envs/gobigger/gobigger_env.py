@@ -7,10 +7,10 @@ from collections.abc import Sequence, Mapping
 import collections.abc as container_abcs
 import cv2
 import numpy as np
-from ding.envs import BaseEnv
-from ding.envs.common.env_element import EnvElement, EnvElementInfo
-from ding.torch_utils import to_tensor, to_ndarray, to_list
-from ding.utils import ENV_REGISTRY
+# from ding.envs import BaseEnv
+# from ding.envs.common.env_element import EnvElement, EnvElementInfo
+# from ding.torch_utils import to_tensor, to_ndarray, to_list
+# from ding.utils import ENV_REGISTRY
 from gobigger.server import Server
 from gobigger.render import EnvRender
 import torch

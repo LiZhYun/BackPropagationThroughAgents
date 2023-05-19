@@ -296,7 +296,7 @@ class HanabiEnv(Environment):
             observation["current_player"] = current_player
             player_observations = observation['player_observations']
             
-            agent_turn = np.zeros(self.players, dtype=np.int).tolist()
+            agent_turn = np.zeros(self.players, dtype=int).tolist()
             agent_turn[current_player] = 1
 
             available_actions = np.zeros(self.num_moves())
