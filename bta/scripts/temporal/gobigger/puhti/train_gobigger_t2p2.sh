@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=256G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-5
+#SBATCH --array=0-3
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
 export SING_FLAGS=--nv
@@ -24,7 +24,7 @@ deno=100
 threshold=1.0
 
 # train param
-num_env_steps=10000000000
+num_env_steps=2500000
 episode_length=256
 
 apptainer_wrapper exec python ../../../train/train_gobigger.py \

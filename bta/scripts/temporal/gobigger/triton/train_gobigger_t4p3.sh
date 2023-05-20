@@ -5,8 +5,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=256G
-#SBATCH --time=120:00:00
-#SBATCH --array=0-5
+#SBATCH --time=72:00:00
+#SBATCH --array=0-3
 
 module restore bpta
 source activate pytorch-env
@@ -21,7 +21,7 @@ algo="temporal"
 exp="check"
 
 # train param
-num_env_steps=10000000000
+num_env_steps=2500000
 episode_length=256
 deno=100
 threshold=1.0

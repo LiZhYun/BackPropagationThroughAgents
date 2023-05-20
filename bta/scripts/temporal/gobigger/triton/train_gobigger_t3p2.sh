@@ -5,8 +5,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=256G
-#SBATCH --time=120:00:00
-#SBATCH --array=0-5
+#SBATCH --time=72:00:00
+#SBATCH --array=0-3
 
 module restore pytorch2002-di
 conda activate pytorch-env
@@ -20,6 +20,10 @@ num_agents=2
 algo="temporal"
 exp="check"
 threshold=1.0
+
+# train param
+num_env_steps=2500000
+episode_length=256
 
 echo "env is ${env}, senario is ${senario}, algo is ${algo}, exp is ${exp}"
 

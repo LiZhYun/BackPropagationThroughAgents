@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=64G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-5
+#SBATCH --array=0-3
 
 #--partition=gpu
 #--array=0-1
@@ -22,7 +22,7 @@ exp="check"
 num_agents=3
 
 # train param
-num_env_steps=25000000
+num_env_steps=2500000
 episode_length=200
 deno=100
 threshold=1.0

@@ -336,7 +336,7 @@ class GoBiggerEnv(gym.Env):
         r"""Puts each data field into a tensor with outer dimension batch size"""
         elem = batch[0]
         elem_type = type(elem)
-        print("********type is:  ",elem_type)
+        # print("********type is:  ",elem_type)
         #if k is not None:
         #    print(k)
 

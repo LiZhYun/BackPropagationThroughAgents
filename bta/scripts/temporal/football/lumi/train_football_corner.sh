@@ -10,7 +10,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-5
+#SBATCH --array=0-3
 
 # exp param
 env="Football"
@@ -22,7 +22,7 @@ exp="check"
 num_agents=10
 
 # train param
-num_env_steps=50000000
+num_env_steps=2500000
 episode_length=1000
 deno=100
 threshold=1.0

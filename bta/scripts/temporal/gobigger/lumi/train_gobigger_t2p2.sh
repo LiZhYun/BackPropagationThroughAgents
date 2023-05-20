@@ -10,7 +10,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-5
+#SBATCH --array=0-3
 
 env="GoBigger"
 
@@ -24,7 +24,7 @@ deno=100
 threshold=1.0
 
 # train param
-num_env_steps=10000000000
+num_env_steps=2500000
 episode_length=256
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_gobigger.py \

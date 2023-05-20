@@ -208,7 +208,7 @@ def main(args):
             runner = Runner(config)
             runner.run()
 
-    wandb.agent(sweep_id, train, count=20)
+    wandb.agent(sweep_id, train, count=30)
     # runner = Runner(config)
     # runner.run()
     
