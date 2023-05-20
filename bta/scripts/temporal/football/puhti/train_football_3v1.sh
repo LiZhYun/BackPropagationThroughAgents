@@ -4,8 +4,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=64G
-#SBATCH --time=24:00:00
-#SBATCH --array=0-100
+#SBATCH --time=72:00:00
+#SBATCH --array=0-5
 
 #--gres=gpu:v100:1
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
@@ -25,8 +25,8 @@ num_agents=3
 num_env_steps=25000000
 episode_length=200
 deno=100
-# threshold=0.2
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
+# threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
 apptainer_wrapper exec python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
