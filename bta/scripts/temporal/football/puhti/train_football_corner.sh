@@ -3,9 +3,9 @@
 #SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=128G
+#SBATCH --mem=64G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-100
+#SBATCH --array=0-5
 
 #--gres=gpu:v100:1
 
@@ -26,7 +26,7 @@ num_agents=10
 num_env_steps=50000000
 episode_length=1000
 deno=100
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
 
 apptainer_wrapper exec python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \

@@ -14,10 +14,10 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 
 env="GoBigger"
 
-team_num=2
-player_num_per_team=2
-scenario="t2p2"
-num_agents=2
+team_num=4
+player_num_per_team=3
+scenario="t4p3"
+num_agents=3
 algo="temporal"
 exp="check"
 deno=100
