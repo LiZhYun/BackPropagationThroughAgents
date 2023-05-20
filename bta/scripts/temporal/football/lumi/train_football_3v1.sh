@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=50
 #SBATCH --gpus-per-node=1
 #SBATCH --mem=64G
-#SBATCH --time=1-12:00:00
+#SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
 #SBATCH --array=0-5
@@ -24,8 +24,8 @@ num_agents=3
 # train param
 num_env_steps=25000000
 episode_length=200
-deno=100
-threshold=0.41
+# deno=100
+threshold=1.0
 # threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \

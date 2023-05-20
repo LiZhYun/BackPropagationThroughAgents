@@ -102,18 +102,38 @@ def main(args):
 
     # wandb
     if all_args.use_wandb:
-        run = wandb.init(config=all_args,
-                         project=all_args.env_name,
-                         entity=all_args.wandb_name,
-                         notes=socket.gethostname(),
-                         name=str(all_args.algorithm_name) + "_" +
-                         str(all_args.experiment_name) +
-                         "_seed" + str(all_args.seed),
-                         group=all_args.layout_name,
-                         dir=str(run_dir),
-                         job_type="training",
-                         reinit=True,
-                         tags=all_args.wandb_tags)
+        # sweep
+        sweep_config = {
+            'method': 'bayes',
+            'metric': {
+            'name': 'eval_ep_sparse_r',
+            'goal': 'maximize'   
+            }
+        }
+        # 参数范围
+        parameters_dict = {
+            'threshold': {
+                # a flat distribution between 0 and 1.0
+                'distribution': 'uniform',
+                'min': 0,
+                'max': 1.0
+            }
+        }
+
+        sweep_config['parameters'] = parameters_dict
+        sweep_id = wandb.sweep(sweep_config, project=all_args.env_name + '_' + all_args.layout_name + '_sweep')
+        # run = wandb.init(config=all_args,
+        #                  project=all_args.env_name,
+        #                  entity=all_args.wandb_name,
+        #                  notes=socket.gethostname(),
+        #                  name=str(all_args.algorithm_name) + "_" +
+        #                  str(all_args.experiment_name) +
+        #                  "_seed" + str(all_args.seed),
+        #                  group=all_args.layout_name,
+        #                  dir=str(run_dir),
+        #                  job_type="training",
+        #                  reinit=True,
+        #                  tags=all_args.wandb_tags)
     else:
         if not run_dir.exists():
             curr_run = 'run1'
@@ -170,9 +190,18 @@ def main(args):
     else: # mappo
         from bta.runner.mappo.overcooked_runner import OvercookedRunner as Runner
 
-    runner = Runner(config)
-    # with torch.autograd.set_detect_anomaly(True):
-    runner.run()
+    # sweep
+    def train(wconfig=None):
+        with wandb.init(config=wconfig,project=all_args.env_name + '_' + all_args.layout_name + '_sweep',entity=all_args.wandb_name,name=str(all_args.algorithm_name) + "_" +
+                            str(all_args.experiment_name) +
+                            "_seed" + str(all_args.seed),group=all_args.scenario_name,dir=str(run_dir),):
+            config['all_args'].threshold = wandb.config.threshold
+            runner = Runner(config)
+            runner.run()
+
+    wandb.agent(sweep_id, train, count=20)
+    # runner = Runner(config)
+    # runner.run()
     
     # post process
     envs.close()
@@ -180,7 +209,8 @@ def main(args):
         eval_envs.close()
 
     if all_args.use_wandb:
-        run.finish()
+        pass
+        # run.finish()
     else:
         runner.writter.export_scalars_to_json(str(runner.log_dir + '/summary.json'))
         runner.writter.close()

@@ -110,31 +110,39 @@ def main(args):
 
     # wandb
     if all_args.use_wandb:
-        # # sweep
-        # sweep_config = {
-        # 'method': 'random'
-        # }
-        # # 参数范围
-        # parameters_dict = {
-        #     'threshold': {
-        #             'values': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-        #         },
-        #     }
-        # sweep_config['parameters'] = parameters_dict
-        # sweep_id = wandb.sweep(sweep_config, project=all_args.env_name)
+        # sweep
+        sweep_config = {
+        'method': 'bayes',
+        'metric': {
+        'name': 'eval_win_rate',
+        'goal': 'maximize'   
+        }
+        }
+        # 参数范围
+        parameters_dict = {
+            'threshold': {
+                # a flat distribution between 0 and 1.0
+                'distribution': 'uniform',
+                'min': 0,
+                'max': 1.0
+            }
+        }
+
+        sweep_config['parameters'] = parameters_dict
+        sweep_id = wandb.sweep(sweep_config, project=all_args.env_name + '_' + all_args.scenario_name + '_sweep')
         # print(all_args)
-        run = wandb.init(config=all_args,
-                         project=all_args.env_name,
-                         entity=all_args.wandb_name,
-                         notes=socket.gethostname(),
-                         name=str(all_args.algorithm_name) + "_" +
-                         str(all_args.experiment_name) +
-                         "_seed" + str(all_args.seed),
-                         group=all_args.scenario_name,
-                         dir=str(run_dir),
-                         job_type="training",
-                         reinit=True,
-                         tags=all_args.wandb_tags)
+        # run = wandb.init(config=all_args,
+        #                  project=all_args.env_name,
+        #                  entity=all_args.wandb_name,
+        #                  notes=socket.gethostname(),
+        #                  name=str(all_args.algorithm_name) + "_" +
+        #                  str(all_args.experiment_name) +
+        #                  "_seed" + str(all_args.seed),
+        #                  group=all_args.scenario_name,
+        #                  dir=str(run_dir),
+        #                  job_type="training",
+        #                  reinit=True,
+        #                  tags=all_args.wandb_tags)
     else:
         if not run_dir.exists():
             curr_run = 'run1'
@@ -192,19 +200,17 @@ def main(args):
         from bta.runner.mappo.football_runner import FootballRunner as Runner
 
     # sweep
-    # def train(wconfig=None):
-    #     with wandb.init(config=wconfig,project=all_args.env_name,entity=all_args.wandb_name,name=str(all_args.algorithm_name) + "_" +
-    #                         str(all_args.experiment_name) +
-    #                         "_seed" + str(all_args.seed),group=all_args.scenario_name,dir=str(run_dir),):
-    #         config['all_args'].max_grad_norm = wandb.config.max_grad_norm
-    #         config['all_args'].entropy_coef = wandb.config.entropy_coef
-    #         runner = Runner(config)
-    #         # with torch.autograd.set_detect_anomaly(True):
-    #         runner.run()
+    def train(wconfig=None):
+        with wandb.init(config=wconfig,project=all_args.env_name + '_' + all_args.scenario_name + '_sweep',entity=all_args.wandb_name,name=str(all_args.algorithm_name) + "_" +
+                            str(all_args.experiment_name) +
+                            "_seed" + str(all_args.seed),group=all_args.scenario_name,dir=str(run_dir),):
+            config['all_args'].threshold = wandb.config.threshold
+            runner = Runner(config)
+            runner.run()
 
-    # wandb.agent(sweep_id, train, count=10)
-    runner = Runner(config)
-    runner.run()
+    wandb.agent(sweep_id, train, count=20)
+    # runner = Runner(config)
+    # runner.run()
     
     # post process
     envs.close()
@@ -212,7 +218,8 @@ def main(args):
         eval_envs.close()
 
     if all_args.use_wandb:
-        run.finish()
+        pass
+        # run.finish()
     else:
         runner.writter.export_scalars_to_json(str(runner.log_dir + '/summary.json'))
         runner.writter.close()
