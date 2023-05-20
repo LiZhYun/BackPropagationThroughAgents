@@ -336,6 +336,7 @@ class GoBiggerEnv(gym.Env):
         r"""Puts each data field into a tensor with outer dimension batch size"""
         elem = batch[0]
         elem_type = type(elem)
+        print("********type is:  ",elem_type)
         #if k is not None:
         #    print(k)
 
@@ -347,15 +348,15 @@ class GoBiggerEnv(gym.Env):
                 numel = sum([x.numel() for x in batch])
                 storage = elem.storage()._new_shared(numel)
                 out = elem.new(storage)
-            try:
-                if cat == True:
-                    return torch.cat(batch, dim=dim, out=out).to(device=device)
-                else:
-                    return torch.stack(batch, dim=dim, out=out).to(device=device)
-            except:
-                print(batch)
-                if k is not None:
-                    print(k)
+            # try:
+            if cat == True:
+                return torch.cat(batch, dim=dim, out=out).to(device=device)
+            else:
+                return torch.stack(batch, dim=dim, out=out).to(device=device)
+            # except:
+            #     print(batch)
+            #     if k is not None:
+            #         print(k)
         elif elem_type.__module__ == 'numpy' and elem_type.__name__ != 'str_' \
                 and elem_type.__name__ != 'string_':
             if elem_type.__name__ == 'ndarray' or elem_type.__name__ == 'memmap':
@@ -363,28 +364,28 @@ class GoBiggerEnv(gym.Env):
                 if np_str_obj_array_pattern.search(elem.dtype.str) is not None:
                     raise TypeError(default_collate_err_msg_format.format(elem.dtype))
 
-                return self.default_collate_with_dim([torch.as_tensor(b,device=device) for b in batch],device=device,dim=dim,cat=cat)
+                return self.default_collate_with_dim([torch.from_numpy(b,device=device) for b in batch],device=device,dim=dim,cat=cat)
             elif elem.shape == ():  # scalars
-                try:
-                    return torch.as_tensor(batch,device=device)
-                except:
-                    print(batch)
-                    if k is not None:
-                        print(k)
+                # try:
+                return torch.as_tensor(batch,device=device)
+                # except:
+                #     print(batch)
+                #     if k is not None:
+                #         print(k)
         elif isinstance(elem, float):
-            try:
-                return torch.tensor(batch,device=device)
-            except:
-                print(batch)
-                if k is not None:
-                    print(k)
+            # try:
+            return torch.tensor(batch,device=device)
+            # except:
+            #     print(batch)
+            #     if k is not None:
+            #         print(k)
         elif isinstance(elem, int_classes):
-            try:
-                return torch.tensor(batch,device=device)
-            except:
-                print(batch)
-                if k is not None:
-                    print(k)
+            # try:
+            return torch.tensor(batch,device=device)
+            # except:
+            #     print(batch)
+            #     if k is not None:
+            #         print(k)
         elif isinstance(elem, string_classes):
             return batch
         elif isinstance(elem, container_abcs.Mapping):

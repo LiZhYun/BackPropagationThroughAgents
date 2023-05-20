@@ -10,7 +10,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-100
+#SBATCH --array=0-5
 
 env="GoBigger"
 
@@ -21,7 +21,7 @@ num_agents=2
 algo="temporal"
 exp="check"
 deno=100
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
 
 # train param
 num_env_steps=10000000000

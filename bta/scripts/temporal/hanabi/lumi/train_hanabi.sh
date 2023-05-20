@@ -10,15 +10,15 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-100
+#SBATCH --array=0-5
 
 env="Hanabi"
 hanabi="Hanabi-Full"
-num_agents=2
+num_agents=3
 algo="temporal"
-exp="Hanabi_2"
+exp="Hanabi_3"
 deno=100
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_hanabi.py --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} \
 --hanabi_name ${hanabi} --num_agents ${num_agents} --seed 1 --n_training_threads 1 --n_rollout_threads 1000 \

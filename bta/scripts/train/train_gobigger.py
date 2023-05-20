@@ -6,6 +6,7 @@ import socket
 import setproctitle
 import numpy as np
 from pathlib import Path
+import torch
 
 import torch
 from easydict import EasyDict
@@ -257,4 +258,5 @@ def main(args):
 
 
 if __name__ == "__main__":
+    torch.multiprocessing.set_start_method('spawn')
     main(sys.argv[1:])
