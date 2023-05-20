@@ -1,9 +1,12 @@
 #!/bin/bash
 
 #SBATCH --job-name=gobigger-temporal
-#SBATCH --time=10:00:00
-#SBATCH --partition=gpu
-#SBATCH --array=0-10
+#SBATCH --partition=batch
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=256G
+#SBATCH --time=120:00:00
+#SBATCH --array=0-5
 
 module restore pytorch2002-di
 conda activate pytorch-env
@@ -16,12 +19,14 @@ senario="t3p2"
 num_agents=2
 algo="temporal"
 exp="check"
+threshold=1.0
 
 echo "env is ${env}, senario is ${senario}, algo is ${algo}, exp is ${exp}"
 
-CUDA_VISIBLE_DEVICES=0 python train/train_gobigger.py --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} --layout_name ${layout} --num_agents ${num_agents} \
-    --seed ${seed} --n_training_threads 1 --n_rollout_threads 100 --num_mini_batch 1 --episode_length 400 --num_env_steps 10000000 --reward_shaping_horizon 100000000 \
-    --ppo_epoch 15 \
-    --save_interval 25 --log_inerval 10 --use_recurrent_policy\
-    --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
-    --max_edges 5  --time_channels 10 --time_gap 5
+python ../../../train/train_gobigger.py \
+--env_name ${env} --scenario_name ${scenario} --team_num ${team_num} --player_num_per_team ${player_num_per_team} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
+--num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
+--save_interval 100000 --log_interval 100000 --use_eval --eval_interval 200000 --n_eval_rollout_threads 5 --eval_episodes 100 \
+--representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 32 --ppo_epoch 15 --clip_param 0.2 --num_mini_batch 32 \
+--user_name "zhiyuanli" --wandb_name "zhiyuanli" \
+--max_edges 10  --time_channels 100 --time_gap 10 --lr 1e-4 --critic_lr 1e-4 --threshold ${threshold} --max_grad_norm 0.5 --value_loss_coef 0.5

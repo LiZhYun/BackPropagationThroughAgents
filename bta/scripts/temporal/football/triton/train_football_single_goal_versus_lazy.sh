@@ -5,8 +5,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=64G
-#SBATCH --time=72:00:00
-#SBATCH --array=0-100
+#SBATCH --time=120:00:00
+#SBATCH --array=0-5
 
 # exp param
 env="Football"
@@ -21,8 +21,8 @@ num_agents=10
 num_env_steps=50000000
 episode_length=1000
 deno=100
-# threshold=1.0
-threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
+threshold=1.0
+# threshold=`echo "scale=2; $SLURM_ARRAY_TASK_ID / $deno" | bc`
 
 CUDA_VISIBLE_DEVICES=0 singularity exec --bind /scratch --nv /scratch/work/liz23/bpta.sif python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
