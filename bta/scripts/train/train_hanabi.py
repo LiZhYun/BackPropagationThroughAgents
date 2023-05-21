@@ -98,7 +98,7 @@ def main(args):
         sweep_config = {
             'method': 'bayes',
             'metric': {
-            'name': 'eval_average_score',
+            'name': 'average_score',
             'goal': 'maximize'   
             }
         }

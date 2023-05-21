@@ -30,7 +30,7 @@ episode_length=256
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_gobigger.py \
 --env_name ${env} --scenario_name ${scenario} --team_num ${team_num} --player_num_per_team ${player_num_per_team} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
---save_interval 10000 --log_interval 10000 --use_eval --eval_interval 10000 --n_eval_rollout_threads 5 --eval_episodes 100 \
+--save_interval 10000 --log_interval 50000 --eval_interval 10000 --n_eval_rollout_threads 5 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 32 --num_mini_batch 32 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
 --lr 1e-4 --critic_lr 1e-4 --threshold ${threshold} --max_grad_norm 0.5 --value_loss_coef 0.5

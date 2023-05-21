@@ -126,7 +126,7 @@ def main(args):
         sweep_config = {
             'method': 'bayes',
             'metric': {
-            'name': 'eval_average_episode_rewards',
+            'name': 'average_episode_rewards',
             'goal': 'maximize'   
             }
         }

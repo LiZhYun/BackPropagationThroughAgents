@@ -114,7 +114,7 @@ def main(args):
         sweep_config = {
         'method': 'bayes',
         'metric': {
-        'name': 'eval_win_rate',
+        'name': 'win_rate',
         'goal': 'maximize'   
         }
         }
