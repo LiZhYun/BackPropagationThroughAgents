@@ -3,7 +3,7 @@
 #SBATCH --job-name=gobigger-temporal
 #SBATCH --partition=small
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=50
+#SBATCH --cpus-per-task=40
 #SBATCH --mem=256G
 #SBATCH --time=72:00:00
 #SBATCH --array=0-3
