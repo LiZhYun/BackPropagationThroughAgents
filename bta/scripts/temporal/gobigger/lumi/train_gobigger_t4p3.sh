@@ -5,6 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
+#SBATCH --gpus-per-node=1
 #SBATCH --mem=256G
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
@@ -53,5 +54,5 @@ srun singularity exec -B $SCRATCH $SCRATCH/bpta_lumi.sif python ../../../train/t
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 5 --eval_episodes 100 \
---n_rollout_threads 50 --num_mini_batch 2  --threshold ${threshold} \
+--n_rollout_threads 50 --num_mini_batch 10  --threshold ${threshold} \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli"

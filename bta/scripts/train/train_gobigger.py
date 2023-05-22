@@ -166,9 +166,9 @@ def main(args):
         run_dir = run_dir / curr_run
         if not run_dir.exists():
             os.makedirs(str(run_dir))
-    
+
+    gif_dir = str(run_dir / 'gifs')
     if all_args.use_render:
-        gif_dir = str(run_dir / 'gifs')
         if not os.path.exists(gif_dir):
             os.makedirs(gif_dir)
 
@@ -206,7 +206,7 @@ def main(args):
         playback_type='by_frame' if all_args.use_render else 'none',
         by_frame=dict(
             save_frame=True,
-            save_dir=gif_dir,
+            save_dir=gif_dir if all_args.use_render else None,
             save_name_prefix='test',
         ),)
     )
