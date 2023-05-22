@@ -20,7 +20,7 @@ env="Overcooked"
 layout="soup_coordination"
 
 version="new"
-if [[ "${layout}" == "multiplayer_schelling"]]; then
+if [[ "${layout}" == "multiplayer_schelling" ]]; then
     version="old"
 fi
 
