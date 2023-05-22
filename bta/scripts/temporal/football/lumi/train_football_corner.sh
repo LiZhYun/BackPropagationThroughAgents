@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=football-corner-temporal
-#SBATCH --output=football-corner-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=football-corner-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --output=./out/football-corner-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-corner-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50

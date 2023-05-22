@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=football-lazy-temporal
-#SBATCH --output=football-lazy-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=football-lazy-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --output=./out/football-lazy-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-lazy-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50

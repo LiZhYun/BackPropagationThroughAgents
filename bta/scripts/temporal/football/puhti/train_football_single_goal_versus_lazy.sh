@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#SBATCH --job-name=football-lazy-temporal
+#SBATCH --output=./out/football-lazy-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-lazy-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --job-name=football-temporal
 #SBATCH --partition=small

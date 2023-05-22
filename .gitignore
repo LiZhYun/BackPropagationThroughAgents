@@ -12,6 +12,7 @@ bta/envs/hanabi/build/
 results
 *.pyc
 /gifs/
+/out/
 build
 win_rate
 *.so
