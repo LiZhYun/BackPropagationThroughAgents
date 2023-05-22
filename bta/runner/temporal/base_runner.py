@@ -232,30 +232,71 @@ class Runner(object):
                 obs_batch = flatten(self.buffer[agent_id].obs[:-1])
             else:
                 obs_batch = self.buffer[agent_id].obs[:-1].reshape(-1, *self.buffer[agent_id].obs.shape[2:])
-            _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
-                                                        self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                        self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
-                                                        self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
-                                                        self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:]),
-                                                        # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
-                                                        execution_masks_batch,
-                                                        available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
-                                                        tau=self.temperature)
+            
+            if self.env_name == "GoBigger":
+                old_actions_logprobs = []
+                batch_size = self.n_rollout_threads * self.episode_length
+                rand = list(range(batch_size))
+                mini_batch_size = batch_size // self.all_args.num_mini_batch
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
+                for indices in sampler:
+                    _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                                                                self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
+                                                                self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
+                                                                self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:])[indices],
+                                                                # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                                execution_masks_batch[indices],
+                                                                available_actions[indices],
+                                                                self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])[indices],
+                                                                tau=self.temperature)
+                    old_actions_logprobs.append(old_actions_logprob)
+                old_actions_logprob = torch.stack(old_actions_logprobs, dim=0)
+            else:
+                _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                                                            self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
+                                                            self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
+                                                            self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:]),
+                                                            # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                            execution_masks_batch,
+                                                            available_actions,
+                                                            self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                            tau=self.temperature)
             old_actions_probs[agent_id] = _t2n(torch.exp(old_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
             train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order, tau=self.temperature)
 
-            _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
-                                                        self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                        self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
-                                                        self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
-                                                        one_hot_actions,
-                                                        # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
-                                                        execution_masks_batch,
-                                                        available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
-                                                        tau=self.temperature)
+            if self.env_name == "GoBigger":
+                new_actions_logprobs = []
+                batch_size = self.n_rollout_threads * self.episode_length
+                rand = list(range(batch_size))
+                mini_batch_size = batch_size // self.all_args.num_mini_batch
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
+                for indices in sampler:
+                    _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                                                                self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
+                                                                self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
+                                                                one_hot_actions[indices],
+                                                                # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                                execution_masks_batch[indices],
+                                                                available_actions[indices],
+                                                                self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])[indices],
+                                                                tau=self.temperature)
+                    new_actions_logprobs.append(new_actions_logprob)
+                new_actions_logprob = torch.stack(new_actions_logprobs, dim=0)
+            else:
+                _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                                                            self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
+                                                            self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
+                                                            one_hot_actions,
+                                                            # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                            execution_masks_batch,
+                                                            available_actions,
+                                                            self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                            tau=self.temperature)
             new_actions_probs[agent_id] = _t2n(torch.exp(new_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
