@@ -134,6 +134,7 @@ class GoBiggerEnv(gym.Env):
         self.step_mul = self.server_cfg.step_mul
         self.second_per_frame = self.server_cfg.second_per_frame
         self.action_num = self.direction_num * 2 + 3
+        self.use_render = self.server_cfg.use_render
         self.init_server()
         self.get_space()
         self.setup_action()

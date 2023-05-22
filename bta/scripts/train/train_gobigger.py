@@ -71,8 +71,8 @@ def parse_args(args, parser):
                         help="step_mul.")
     parser.add_argument("--second_per_frame", type=float, default=0.05,
                         help="second_per_frame.")
-    parser.add_argument("--frame_limit", type=int, default=3600,
-                        help="frame_limit: 3600.")
+    parser.add_argument("--frame_limit", type=int, default=10*60*20,
+                        help="frame_limit: 10*60*20.")
     parser.add_argument("--map_width", type=int, default=64,
                         help="map width.")
     parser.add_argument("--map_height", type=int, default=64,
@@ -122,38 +122,38 @@ def main(args):
 
     # wandb
     if all_args.use_wandb:
-        # sweep
-        sweep_config = {
-            'method': 'bayes',
-            'metric': {
-            'name': 'average_episode_rewards',
-            'goal': 'maximize'   
-            }
-        }
-        # 参数范围
-        parameters_dict = {
-            'threshold': {
-                # a flat distribution between 0 and 1.0
-                'distribution': 'uniform',
-                'min': 0,
-                'max': 1.0
-            }
-        }
+        # # sweep
+        # sweep_config = {
+        #     'method': 'bayes',
+        #     'metric': {
+        #     'name': 'average_episode_rewards',
+        #     'goal': 'maximize'   
+        #     }
+        # }
+        # # 参数范围
+        # parameters_dict = {
+        #     'threshold': {
+        #         # a flat distribution between 0 and 1.0
+        #         'distribution': 'uniform',
+        #         'min': 0,
+        #         'max': 1.0
+        #     }
+        # }
 
-        sweep_config['parameters'] = parameters_dict
-        sweep_id = wandb.sweep(sweep_config, project=all_args.env_name + '_' + all_args.scenario_name + '_sweep')
-        # run = wandb.init(config=all_args,
-        #                  project=all_args.env_name,
-        #                  entity=all_args.wandb_name,
-        #                  notes=socket.gethostname(),
-        #                  name=str(all_args.algorithm_name) + "_" +
-        #                  str(all_args.experiment_name) +
-        #                  "_seed" + str(all_args.seed),
-        #                  group=all_args.scenario_name,
-        #                  dir=str(run_dir),
-        #                  job_type="training",
-        #                  reinit=True,
-        #                  tags=all_args.wandb_tags)
+        # sweep_config['parameters'] = parameters_dict
+        # sweep_id = wandb.sweep(sweep_config, project=all_args.env_name + '_' + all_args.scenario_name + '_sweep')
+        run = wandb.init(config=all_args,
+                         project=all_args.env_name,
+                         entity=all_args.wandb_name,
+                         notes=socket.gethostname(),
+                         name=str(all_args.algorithm_name) + "_" +
+                         str(all_args.experiment_name) +
+                         "_seed" + str(all_args.seed),
+                         group=all_args.scenario_name,
+                         dir=str(run_dir),
+                         job_type="training",
+                         reinit=True,
+                         tags=all_args.wandb_tags)
     else:
         if not run_dir.exists():
             curr_run = 'run1'
@@ -166,6 +166,11 @@ def main(args):
         run_dir = run_dir / curr_run
         if not run_dir.exists():
             os.makedirs(str(run_dir))
+    
+    if all_args.use_render:
+        gif_dir = str(run_dir / 'gifs')
+        if not os.path.exists(gif_dir):
+            os.makedirs(gif_dir)
 
     setproctitle.setproctitle(str(all_args.algorithm_name) + "-" + \
         str(all_args.env_name) + "-" + str(all_args.experiment_name) + "@" + str(all_args.user_name))
@@ -192,10 +197,18 @@ def main(args):
         spatial=all_args.spatial,
         train=all_args.train,
         speed=all_args.speed,
+        use_render=all_args.use_render,
         device=torch.device("cpu"),
         obs_settings=dict(
         obs_type='all', # ['partial', 'all']
         ),
+        playback_settings=dict(
+        playback_type='by_frame' if all_args.use_render else 'none',
+        by_frame=dict(
+            save_frame=True,
+            save_dir=gif_dir,
+            save_name_prefix='test',
+        ),)
     )
     envs = make_train_env(all_args, env_config)
     eval_envs = make_eval_env(all_args, env_config) if all_args.use_eval else None
@@ -231,18 +244,18 @@ def main(args):
     else: # mappo
         from bta.runner.mappo.gobigger_runner import GoBiggerRunner as Runner
 
-    # sweep
-    def train(wconfig=None):
-        with wandb.init(config=wconfig,project=all_args.env_name + '_' + all_args.scenario_name + '_sweep',entity=all_args.wandb_name,name=str(all_args.algorithm_name) + "_" +
-                            str(all_args.experiment_name) +
-                            "_seed" + str(all_args.seed),group=all_args.scenario_name,dir=str(run_dir),):
-            config['all_args'].threshold = wandb.config.threshold
-            runner = Runner(config)
-            runner.run()
+    # # sweep
+    # def train(wconfig=None):
+    #     with wandb.init(config=wconfig,project=all_args.env_name + '_' + all_args.scenario_name + '_sweep',entity=all_args.wandb_name,name=str(all_args.algorithm_name) + "_" +
+    #                         str(all_args.experiment_name) +
+    #                         "_seed" + str(all_args.seed),group=all_args.scenario_name,dir=str(run_dir),):
+    #         config['all_args'].threshold = wandb.config.threshold
+    #         runner = Runner(config)
+    #         runner.run()
 
-    wandb.agent(sweep_id, train, count=30)
-    # runner = Runner(config)
-    # runner.run()
+    # wandb.agent(sweep_id, train, count=30)
+    runner = Runner(config)
+    runner.run()
     
     # post process
     envs.close()
@@ -250,8 +263,7 @@ def main(args):
         eval_envs.close()
 
     if all_args.use_wandb:
-        pass
-        # run.finish()
+        run.finish()
     else:
         runner.writter.export_scalars_to_json(str(runner.log_dir + '/summary.json'))
         runner.writter.close()

@@ -73,23 +73,23 @@ class Runner(object):
         # dir
         self.model_dir = self.all_args.model_dir
 
-        if self.use_render:
-            self.run_dir = config["run_dir"]
-            self.gif_dir = str(self.run_dir / 'gifs')
-            if not os.path.exists(self.gif_dir):
-                os.makedirs(self.gif_dir)
+        # if self.use_render:
+        self.run_dir = config["run_dir"]
+        self.gif_dir = str(self.run_dir / 'gifs')
+        if not os.path.exists(self.gif_dir):
+            os.makedirs(self.gif_dir)
+        # else:
+        if self.use_wandb:
+            self.run_dir = self.save_dir = str(wandb.run.dir)
         else:
-            if self.use_wandb:
-                self.run_dir = self.save_dir = str(wandb.run.dir)
-            else:
-                self.run_dir = config["run_dir"]
-                self.log_dir = str(self.run_dir / 'logs')
-                if not os.path.exists(self.log_dir):
-                    os.makedirs(self.log_dir)
-                self.writter = SummaryWriter(self.log_dir)
-                self.save_dir = str(self.run_dir / 'models')
-                if not os.path.exists(self.save_dir):
-                    os.makedirs(self.save_dir)
+            self.run_dir = config["run_dir"]
+            self.log_dir = str(self.run_dir / 'logs')
+            if not os.path.exists(self.log_dir):
+                os.makedirs(self.log_dir)
+            self.writter = SummaryWriter(self.log_dir)
+            self.save_dir = str(self.run_dir / 'models')
+            if not os.path.exists(self.save_dir):
+                os.makedirs(self.save_dir)
 
         from bta.algorithms.bta.t_policy import T_POLICY as TrainAlgo
         from bta.algorithms.bta.algorithm.temporalPolicy import TemporalPolicy as Policy
@@ -240,7 +240,7 @@ class Runner(object):
                 mini_batch_size = batch_size // self.all_args.num_mini_batch
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
                 for indices in sampler:
-                    _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                    _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                                 self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
@@ -251,7 +251,7 @@ class Runner(object):
                                                                 self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])[indices],
                                                                 tau=self.temperature)
                     old_actions_logprobs.append(old_actions_logprob)
-                old_actions_logprob = torch.stack(old_actions_logprobs, dim=0)
+                old_actions_logprob = torch.cat(old_actions_logprobs, dim=0)
             else:
                 _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
@@ -274,7 +274,7 @@ class Runner(object):
                 mini_batch_size = batch_size // self.all_args.num_mini_batch
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
                 for indices in sampler:
-                    _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                    _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                                 self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
@@ -285,7 +285,7 @@ class Runner(object):
                                                                 self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])[indices],
                                                                 tau=self.temperature)
                     new_actions_logprobs.append(new_actions_logprob)
-                new_actions_logprob = torch.stack(new_actions_logprobs, dim=0)
+                new_actions_logprob = torch.cat(new_actions_logprobs, dim=0)
             else:
                 _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
