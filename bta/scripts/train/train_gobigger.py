@@ -192,7 +192,7 @@ def main(args):
         spatial=all_args.spatial,
         train=all_args.train,
         speed=all_args.speed,
-        device=device,
+        device=torch.device("cpu"),
         obs_settings=dict(
         obs_type='all', # ['partial', 'all']
         ),
@@ -258,5 +258,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-    torch.multiprocessing.set_start_method('spawn')
+    # torch.multiprocessing.set_start_method('spawn')
     main(sys.argv[1:])
