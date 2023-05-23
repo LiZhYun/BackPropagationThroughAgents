@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=football-ca-temporal
-#SBATCH --output=football-ca-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=football-ca-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --output=./out/football-ca-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-ca-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50

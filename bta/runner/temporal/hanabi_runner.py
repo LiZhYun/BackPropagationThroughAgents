@@ -255,36 +255,30 @@ class HanabiRunner(Runner):
         action_dim=self.buffer[0].one_hot_actions.shape[-1]
         factor = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         # action_grad = [[] for _ in range(self.num_agents)]
-        old_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
-        new_actions_logprobs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        old_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        new_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
-        ordered_vertices = reversed([i for i in range(self.num_agents)])
-        # ordered_vertices = reversed(self.agent_order[0])
+        # ordered_vertices = reversed([i for i in range(self.num_agents)])
+        ordered_vertices = self.agent_order[0]
+        # ordered_vertices = torch.randperm(self.num_agents)
 
-        for agent_id in ordered_vertices:
+        for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
             self.buffer[agent_id].update_factor(factor)
-            numerator = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
-            denominator = np.ones((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
-            for updated_agent in range(agent_id+1, self.num_agents):
-                multiplier = np.concatenate([new_actions_logprobs[agent_id+1:updated_agent], new_actions_logprobs[updated_agent+1:]],0)
-                multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
-                numerator += action_grad[updated_agent][agent_id] * multiplier
-                denominator *= old_actions_logprobs[updated_agent]
-            action_grad_per_agent = numerator / denominator
+            action_grad_per_agent = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
+            for updated_agent in reversed(ordered_vertices)[0:idx]:
+                action_grad_per_agent += action_grad[updated_agent][agent_id]
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
             
             # tmp_agent_order = self.agent_order[0].clone()
-            # agent_order = torch.stack([tmp_agent_order for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
+            tmp_agent_order = ordered_vertices.clone()
+            agent_order = torch.stack([tmp_agent_order for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
             # agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
-            # execution_masks_batch = generate_mask_from_order(
-            #     agent_order, ego_exclusive=False).to(
-            #         self.device).float()[:, agent_id]  # [bs, n_agents, n_agents]
-            execution_masks_batch = torch.stack([torch.ones(self.episode_length*self.n_rollout_threads)] * agent_id +
-                                        [torch.zeros(self.episode_length*self.n_rollout_threads)] *
-                                        (self.num_agents - agent_id), -1).to(self.device)
+            execution_masks_batch = generate_mask_from_order(
+                agent_order, ego_exclusive=False).to(
+                    self.device).float()[:, agent_id]  # [bs, n_agents, n_agents]
                 
             one_hot_actions = torch.from_numpy(self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:])).to(self.device)
             one_hot_actions.requires_grad = True
@@ -293,42 +287,82 @@ class HanabiRunner(Runner):
                 obs_batch = flatten(self.buffer[agent_id].obs[:-1])
             else:
                 obs_batch = self.buffer[agent_id].obs[:-1].reshape(-1, *self.buffer[agent_id].obs.shape[2:])
-            _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
-                                                        self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                        self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
-                                                        self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
-                                                        self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:]),
-                                                        # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
-                                                        execution_masks_batch,
-                                                        available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
-                                                        tau=self.temperature)
-            old_actions_logprobs[agent_id] = _t2n(old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
+            
+            if self.env_name == "GoBigger":
+                old_actions_logprobs = []
+                batch_size = self.n_rollout_threads * self.episode_length
+                rand = list(range(batch_size))
+                mini_batch_size = batch_size // self.all_args.num_mini_batch
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
+                for indices in sampler:
+                    _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
+                                                                self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
+                                                                self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
+                                                                self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:])[indices],
+                                                                # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                                execution_masks_batch[indices],
+                                                                available_actions[indices],
+                                                                self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])[indices],
+                                                                tau=self.temperature)
+                    old_actions_logprobs.append(old_actions_logprob)
+                old_actions_logprob = torch.cat(old_actions_logprobs, dim=0)
+            else:
+                _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                                                            self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
+                                                            self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
+                                                            self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:]),
+                                                            # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                            execution_masks_batch,
+                                                            available_actions,
+                                                            self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                            tau=self.temperature)
+            old_actions_probs[agent_id] = _t2n(torch.exp(old_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
-            train_info = self.trainer[agent_id].train(self.buffer[agent_id], torch.tensor([i for i in range(self.num_agents)]), tau=self.temperature)
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id], tmp_agent_order, tau=self.temperature)
 
-            _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
-                                                        self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                        self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
-                                                        self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
-                                                        one_hot_actions,
-                                                        # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
-                                                        execution_masks_batch,
-                                                        available_actions,
-                                                        self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
-                                                        tau=self.temperature)
-            new_actions_logprobs[agent_id] = _t2n(new_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,1)
+            if self.env_name == "GoBigger":
+                new_actions_logprobs = []
+                batch_size = self.n_rollout_threads * self.episode_length
+                rand = list(range(batch_size))
+                mini_batch_size = batch_size // self.all_args.num_mini_batch
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
+                for indices in sampler:
+                    _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
+                                                                self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
+                                                                self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
+                                                                one_hot_actions[indices],
+                                                                # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                                execution_masks_batch[indices],
+                                                                available_actions[indices],
+                                                                self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])[indices],
+                                                                tau=self.temperature)
+                    new_actions_logprobs.append(new_actions_logprob)
+                new_actions_logprob = torch.cat(new_actions_logprobs, dim=0)
+            else:
+                _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                                                            self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
+                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
+                                                            self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
+                                                            one_hot_actions,
+                                                            # self.buffer[agent_id].execution_masks.reshape(-1, *self.buffer[agent_id].execution_masks.shape[2:]),
+                                                            execution_masks_batch,
+                                                            available_actions,
+                                                            self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
+                                                            tau=self.temperature)
+            new_actions_probs[agent_id] = _t2n(torch.exp(new_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
-            torch.sum(new_actions_logprob, dim=-1, keepdim=True).mean().backward()
+            torch.sum(torch.exp(new_actions_logprob), dim=-1, keepdim=True).mean().backward()
             for i in range(self.num_agents):
-                action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i] / old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,action_dim)
-                # action_grad[i] = action_grad[i] + _t2n(one_hot_actions.grad[:,i] / old_actions_logprob).reshape(self.episode_length,self.n_rollout_threads,action_dim)
+                action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i] / torch.exp(old_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,action_dim)
             factor = factor*_t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
             if self.use_graph:
                 train_info['graphic_loss'] = all_loss.item()
             train_infos.append(train_info)      
-            self.buffer[agent_id].chooseafter_update()
+            self.buffer[agent_id].after_update()
 
         return train_infos
   

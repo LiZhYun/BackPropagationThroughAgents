@@ -71,8 +71,8 @@ def parse_args(args, parser):
                         help="step_mul.")
     parser.add_argument("--second_per_frame", type=float, default=0.05,
                         help="second_per_frame.")
-    parser.add_argument("--frame_limit", type=int, default=5*60*20,
-                        help="frame_limit: 5*60*20.")
+    parser.add_argument("--frame_limit", type=int, default=2*60*20,
+                        help="frame_limit: 2*60*20.")
     parser.add_argument("--map_width", type=int, default=64,
                         help="map width.")
     parser.add_argument("--map_height", type=int, default=64,
