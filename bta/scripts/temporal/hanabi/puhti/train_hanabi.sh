@@ -9,7 +9,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=256G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-5
+#SBATCH --array=0-4
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
 export SING_FLAGS=--nv
@@ -17,36 +17,14 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 
 env="Hanabi"
 hanabi="Hanabi-Full"
-num_agents=2
+num_agents=$1
 algo="temporal"
-exp="Hanabi_2"
+exp="Hanabi_"${num_agents}
 
-case $SLURM_ARRAY_TASK_ID in
-   0)
-      threshold=0.0
-      ;;
-   1)
-      threshold=0.2
-      ;;
-   2)
-      threshold=0.4
-      ;;
-   3)
-      threshold=0.6
-      ;;
-   4)
-      threshold=0.8
-      ;;
-   5)
-      threshold=1.0
-      ;;
-   *)
-     threshold=1.0
-     ;;
-esac
+echo "env is ${env}, algo is ${algo}, exp is ${exp}"
 
 apptainer_wrapper exec python ../../../train/train_hanabi.py --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} \
---hanabi_name ${hanabi} --num_agents ${num_agents} --seed 1 --n_training_threads 1 --n_rollout_threads 1000 \
+--hanabi_name ${hanabi} --num_agents ${num_agents} --seed 1 --n_training_threads 1 --n_rollout_threads 1000 --use_eval \
 --num_mini_batch 1 --episode_length 100 --num_env_steps 10000000000000 --ppo_epoch 15 \
---threshold ${threshold} --gain 0.01 --lr 7e-4 --critic_lr 1e-3 --hidden_size 512 --layer_N 2 --entropy_coef 0.015 \ 
+--gain 0.01 --lr 7e-4 --critic_lr 1e-3 --hidden_size 512 --layer_N 2 --entropy_coef 0.015 \ 
 --user_name "zhiyuanli" --wandb_name "zhiyuanli"

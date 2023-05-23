@@ -9,7 +9,7 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=64G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-5
+#SBATCH --array=0-4
 
 #--gres=gpu:v100:1
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
@@ -29,33 +29,9 @@ num_agents=3
 num_env_steps=25000000
 episode_length=200
 
-case $SLURM_ARRAY_TASK_ID in
-   0)
-      threshold=0.0
-      ;;
-   1)
-      threshold=0.2
-      ;;
-   2)
-      threshold=0.4
-      ;;
-   3)
-      threshold=0.6
-      ;;
-   4)
-      threshold=0.8
-      ;;
-   5)
-      threshold=1.0
-      ;;
-   *)
-     threshold=1.0
-     ;;
-esac
-
 apptainer_wrapper exec python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
---representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 --threshold ${threshold} \
+--representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli"

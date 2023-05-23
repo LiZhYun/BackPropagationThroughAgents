@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=gobigger-t2p2-temporal
-#SBATCH --output=./out/gobigger-t2p2-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/gobigger-t2p2-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=gobigger-temporal
+#SBATCH --output=./out/gobigger-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/gobigger-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
@@ -10,48 +10,27 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-5
+#SBATCH --array=0-4
 
 env="GoBigger"
 
-team_num=2
-player_num_per_team=2
-scenario="t2p2"
-num_agents=2
+# t2p2, t3p2, t4p3
+team_num=$1
+player_num_per_team=$2
+scenario="t"${team_num}"p"${player_num_per_team}
+num_agents=$2
 algo="temporal"
 exp="check"
 
 # train param
-num_env_steps=25000000
-episode_length=200
+num_env_steps=60000000
+episode_length=600
 
-case $SLURM_ARRAY_TASK_ID in
-   0)
-      threshold=0.0
-      ;;
-   1)
-      threshold=0.2
-      ;;
-   2)
-      threshold=0.4
-      ;;
-   3)
-      threshold=0.6
-      ;;
-   4)
-      threshold=0.8
-      ;;
-   5)
-      threshold=1.0
-      ;;
-   *)
-     threshold=1.0
-     ;;
-esac
+echo "env is ${env}, scenario is ${scenario}, algo is ${algo}"
 
 srun singularity exec -B $SCRATCH $SCRATCH/bpta_lumi.sif python ../../../train/train_gobigger.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 5 --eval_episodes 100 \
---n_rollout_threads 50 --num_mini_batch 10  --threshold ${threshold} \
+--n_rollout_threads 32 --num_mini_batch 32 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli"
