@@ -308,6 +308,14 @@ def generate_mask_from_order(agent_order, ego_exclusive):
         all_execution_mask[batch_indices, :,
                            agent_indices] = 1 - cur_execution_mask
         all_execution_mask[batch_indices, agent_indices, agent_indices] = 1
+    for batch_idx in batch_indices:
+        tmp_mask = torch.zeros(n_agents).to(agent_order)
+        indices = torch.nonzero(all_execution_mask[batch_idx] == 1)
+        if indices.numel() > 0:
+            last_index = indices[-1]
+        else:
+            return None
+        all_execution_mask[batch_idx, agent_indices, agent_indices] = 1
     if not ego_exclusive:
         # [*, n_agent, n_agents]
         return all_execution_mask.view(*shape[:-1], n_agents, n_agents) * (1-torch.eye(n_agents).to(agent_order)).unsqueeze(0).repeat(bs, 1, 1)
