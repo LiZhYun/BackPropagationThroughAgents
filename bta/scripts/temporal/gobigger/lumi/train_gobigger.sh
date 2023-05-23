@@ -24,7 +24,7 @@ exp="check"
 
 # train param
 num_env_steps=25000000
-episode_length=200
+episode_length=100
 
 echo "env is ${env}, scenario is ${scenario}, algo is ${algo}"
 
