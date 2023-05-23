@@ -387,9 +387,9 @@ class HanabiRunner(Runner):
                     break
 
                 self.trainer[agent_id].prep_rollout()
-                execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_id +
-                                        [torch.zeros(self.n_eval_rollout_threads)] *
-                                        (self.num_agents - agent_id), -1).to(self.device)
+                execution_mask = np.stack([np.ones((self.n_eval_rollout_threads))] * agent_id +
+                                        [np.zeros((self.n_eval_rollout_threads))] *
+                                        (self.num_agents - agent_id), -1)
                 ego_inclusive_action = eval_one_hot_actions.copy()
                 eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(eval_obs[eval_choose],
                                                                 eval_rnn_states[eval_choose, agent_id],
