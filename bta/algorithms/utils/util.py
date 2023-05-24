@@ -46,14 +46,19 @@ def _h_A(A, m):
     h_A = torch.trace(expm_A) - m
     return h_A
 
-def relaxed_softmax(probs, tau = 1, hard = False, dim = -1):
-    relaxed_probs = (probs) / tau  # ~Gumbel(logits,tau)
-    y_soft = relaxed_probs.softmax(dim)
+def relaxed_softmax(logits: torch.Tensor, tau = 1, hard = False, dim = -1):
+    gumbels = (
+        -torch.empty_like(logits, memory_format=torch.legacy_contiguous_format).exponential_().log()
+    )  # ~Gumbel(0,1)
+    gumbels = (logits + gumbels) / tau  # ~Gumbel(logits,tau)
+    y_soft = gumbels.softmax(dim)
+    # relaxed_logits = (logits) / tau  # ~Gumbel(logits,tau)
+    # y_soft = gumbels.softmax(dim)
 
     if hard:
         # Straight through.
         index = y_soft.max(dim, keepdim=True)[1]
-        y_hard = torch.zeros_like(probs, memory_format=torch.legacy_contiguous_format).scatter_(dim, index, 1.0)
+        y_hard = torch.zeros_like(logits, memory_format=torch.legacy_contiguous_format).scatter_(dim, index, 1.0)
         ret = y_hard - y_soft.detach() + y_soft
     else:
         ret = y_soft

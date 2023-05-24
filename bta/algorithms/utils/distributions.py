@@ -20,9 +20,9 @@ class FixedCategorical(torch.distributions.Categorical):
         return super().sample().unsqueeze(-1)
     
     def rsample(self, hard=True, tau=1.0):
-        probs_2d = self.probs.reshape(-1, self._num_events)
+        logits_2d = self.logits.reshape(-1, self._num_events)
         
-        return relaxed_softmax(probs_2d, hard=hard, tau=tau)
+        return F.gumbel_softmax(logits_2d, hard=hard, tau=tau)
 
     def log_probs(self, actions):
         return (
