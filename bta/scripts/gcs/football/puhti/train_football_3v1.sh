@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-ca-temporal
-#SBATCH --output=./out/football-ca-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-ca-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-3v1-temporal
+#SBATCH --output=./out/football-3v1-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-3v1-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=small
 #SBATCH --ntasks=1
@@ -11,22 +11,23 @@
 #SBATCH --time=72:00:00
 #SBATCH --array=0-4
 
+#--gres=gpu:v100:1
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
 export SING_FLAGS=--nv
 export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 
 # exp param
 env="Football"
-scenario="academy_counterattack_hard"
+scenario="academy_3_vs_1_with_keeper"
 algo="temporal" # "mappo" "ippo"
 exp="check"
 
 # football param
-num_agents=4
+num_agents=3
 
 # train param
-num_env_steps=50000000
-episode_length=1000
+num_env_steps=25000000
+episode_length=200
 
 apptainer_wrapper exec python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \

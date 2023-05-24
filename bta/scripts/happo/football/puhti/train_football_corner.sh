@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-ca-temporal
-#SBATCH --output=./out/football-ca-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-ca-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-corner-temporal
+#SBATCH --output=./out/football-corner-temporal_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-corner-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=small
 #SBATCH --ntasks=1
@@ -11,18 +11,20 @@
 #SBATCH --time=72:00:00
 #SBATCH --array=0-4
 
+#--gres=gpu:v100:1
+
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
 export SING_FLAGS=--nv
 export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 
 # exp param
 env="Football"
-scenario="academy_counterattack_hard"
+scenario="academy_corner"
 algo="temporal" # "mappo" "ippo"
 exp="check"
 
 # football param
-num_agents=4
+num_agents=10
 
 # train param
 num_env_steps=50000000

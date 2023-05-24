@@ -4,6 +4,7 @@
 #SBATCH --output=./out/football-ca-temporal_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/football-ca-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
+#SBATCH --job-name=football-temporal
 #SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
