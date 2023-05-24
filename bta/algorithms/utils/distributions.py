@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from bta.algorithms.utils.util import init
+from bta.algorithms.utils.util import init, relaxed_softmax
 
 """
 Modify standard PyTorch distributions so they are compatible with this code.
@@ -20,9 +20,9 @@ class FixedCategorical(torch.distributions.Categorical):
         return super().sample().unsqueeze(-1)
     
     def rsample(self, hard=True, tau=1.0):
-        logits_2d = self.logits.reshape(-1, self._num_events)
+        probs_2d = self.probs.reshape(-1, self._num_events)
         
-        return F.gumbel_softmax(logits_2d, hard=hard, tau=tau)
+        return relaxed_softmax(probs_2d, hard=hard, tau=tau)
 
     def log_probs(self, actions):
         return (
