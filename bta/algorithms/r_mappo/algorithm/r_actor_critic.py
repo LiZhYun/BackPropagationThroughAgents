@@ -44,7 +44,7 @@ class R_Actor(nn.Module):
             default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
             config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
             self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg)
+            self.base = Encoder(self.whole_cfg, args)
         elif 'Dict' in obs_shape.__class__.__name__:
             self._mixed_obs = True
             self._nested_obs = False
@@ -55,10 +55,7 @@ class R_Actor(nn.Module):
             self.base = CNNBase(args, obs_shape, cnn_layers_params=args.cnn_layers_params) if len(obs_shape)==3 \
                 else MLPBase(args, obs_shape, use_attn_internal=args.use_attn_internal, use_cat_self=True)
         
-        if args.env_name == "GoBigger":
-            input_size = self.base.output_size * args.num_agents
-        else:
-            input_size = self.base.output_size
+        input_size = self.base.output_size
 
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
             self.rnn = RNNLayer(input_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)
@@ -311,7 +308,7 @@ class R_Critic(nn.Module):
             default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
             config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
             self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg)
+            self.base = Encoder(self.whole_cfg, args)
         elif 'Dict' in share_obs_shape.__class__.__name__:
             self._mixed_obs = True
             self._nested_obs = False
@@ -322,10 +319,7 @@ class R_Critic(nn.Module):
             self.base = CNNBase(args, share_obs_shape, cnn_layers_params=args.cnn_layers_params) if len(share_obs_shape)==3 \
                 else MLPBase(args, share_obs_shape, use_attn_internal=True, use_cat_self=args.use_cat_self)
 
-        if args.env_name == "GoBigger":
-            input_size = self.base.output_size * args.num_agents
-        else:
-            input_size = self.base.output_size
+        input_size = self.base.output_size
 
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
             self.rnn = RNNLayer(input_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)

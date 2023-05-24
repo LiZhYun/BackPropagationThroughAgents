@@ -114,12 +114,12 @@ class Runner(object):
 
         TrainAlgo, Policy = make_trainer_policy_cls(self.algorithm_name, use_single_network=self.use_single_network)
 
-        # dump policy config to allow loading population in yaml form
-        share_observation_space = self.envs.share_observation_space[0] if self.use_centralized_V else self.envs.observation_space[0]
-        self.policy_config = (self.all_args, self.envs.observation_space[0], share_observation_space, self.envs.action_space[0])
-        policy_config_path = os.path.join(self.run_dir, 'policy_config.pkl')
-        pickle.dump(self.policy_config, open(policy_config_path, "wb"))
-        print(f"Pickle dump policy config at {policy_config_path}")
+        # # dump policy config to allow loading population in yaml form
+        # share_observation_space = self.envs.share_observation_space[0] if self.use_centralized_V else self.envs.observation_space[0]
+        # self.policy_config = (self.all_args, self.envs.observation_space[0], share_observation_space, self.envs.action_space[0])
+        # policy_config_path = os.path.join(self.run_dir, 'policy_config.pkl')
+        # pickle.dump(self.policy_config, open(policy_config_path, "wb"))
+        # print(f"Pickle dump policy config at {policy_config_path}")
 
         self.policy = []
         for agent_id in range(self.num_agents):

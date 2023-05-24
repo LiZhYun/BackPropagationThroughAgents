@@ -120,7 +120,7 @@ class GoBiggerRunner(Runner):
                 self.env_infos = defaultdict(list)
 
             # eval
-            if episode % self.eval_interval == 0 and self.use_eval:
+            if total_num_steps % self.eval_interval == 0 and self.use_eval:
                 self.eval(total_num_steps)
 
     def warmup(self):
@@ -200,74 +200,96 @@ class GoBiggerRunner(Runner):
             # ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_rollout_threads)])
             execution_masks = generate_mask_from_order(
             self.agent_order.clone(), ego_exclusive=False).to(
-                self.device).float().view(-1, self.num_agents)  # [bs, n_agents, n_agents]
+                self.device).float()  # [bs, n_agents, n_agents]
             # execution_masks = torch.stack([torch.stack([torch.ones(self.n_rollout_threads)] * order +
             #                                 [torch.zeros(self.n_rollout_threads)] *
             #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
             orignal_adjs = execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents).permute(0, 2, 1)
 
-        rollout_actors = np.array([self.policy for _ in range(self.n_rollout_threads)])
-        rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)
+        for agent_idx in ordered_vertices[0]:
+            self.trainer[agent_idx].prep_rollout()
+            ego_exclusive_action = actions.copy()
+            tmp_execution_mask = execution_masks[:, agent_idx]
 
-        if self.mix_actions:
-            hard_actions = hard_actions.reshape(-1, self.continous_dim + 1)
-        else:
-            hard_actions = hard_actions.reshape(-1, 1)
-        actions = actions.reshape(-1, self.action_dim)
-        action_log_probs = action_log_probs.reshape(-1, 1)
-        new_dist_entropies = new_dist_entropies.reshape(-1)
-        values = values.reshape(-1, 1)
-        rnn_states = rnn_states.reshape(-1, self.recurrent_N, self.hidden_size)
-        rnn_states_critic = rnn_states_critic.reshape(-1, self.recurrent_N, self.hidden_size)
-        
-        for order in range(self.num_agents):
-            raw_agent_indices = ordered_vertices[:, order] + np.array([self.num_agents*i for i in range(self.n_rollout_threads)])
-            # all_actions = actions.view(-1, self.num_agents)
-            ego_inclusive_action = actions.reshape(-1, self.num_agents, self.action_dim)
-            tmp_execution_mask = execution_masks.index_select(0, torch.from_numpy(raw_agent_indices).to(self.device))
-            
-            inputs = [(rollout_actors[num, order], 
-                np.expand_dims(self.buffer[ordered_vertices[num, order]].share_obs[step][num], axis=0),
-                np.expand_dims(self.buffer[ordered_vertices[num, order]].obs[step][num], axis=0),
-                np.expand_dims(self.buffer[ordered_vertices[num, order]].rnn_states[step, num], axis=0),
-                np.expand_dims(self.buffer[ordered_vertices[num, order]].rnn_states_critic[step, num], axis=0),
-                np.expand_dims(self.buffer[ordered_vertices[num, order]].masks[step, num], axis=0),
-                np.expand_dims(ego_inclusive_action[num], axis=0),
-                tmp_execution_mask[num].unsqueeze(0),
-                np.expand_dims(self.buffer[ordered_vertices[num, order]].available_actions[step, num], axis=0)) for num in range(self.n_rollout_threads)]
-            results \
-                = [policy.get_actions(share_obs, obs, rnn_states, rnn_states_critic, 
-                                    masks, one_hot_action, exe_mask, available_actions, tau=self.temperature) 
-                                    for policy, share_obs, obs, rnn_states, rnn_states_critic, masks, one_hot_action, exe_mask, available_actions in inputs]
-            value, action, action_log_prob, rnn_state, rnn_state_critic, _, new_dist_entropy = zip(*results)
-            value, action, action_log_prob, rnn_state, rnn_state_critic, new_dist_entropy= \
-                torch.stack(value).squeeze(1), torch.stack(action).squeeze(1), torch.stack(action_log_prob).squeeze(1), torch.stack(rnn_state).squeeze(1), torch.stack(rnn_state_critic).squeeze(1), torch.stack(new_dist_entropy).squeeze(1)
-            
-            if self.mix_actions:
-                con_action = action[:, :2]
-                dis_action = torch.argmax(action[:, 2:], -1).unsqueeze(1)
-                hard_action = torch.cat([con_action, dis_action], -1)
-            else:
-                hard_action = torch.argmax(action, -1).unsqueeze(1).to(torch.int)
+            value, action, action_log_prob, rnn_state, rnn_state_critic, _, new_dist_entropy \
+                = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
+                                                            self.buffer[agent_idx].obs[step],
+                                                            self.buffer[agent_idx].rnn_states[step],
+                                                            self.buffer[agent_idx].rnn_states_critic[step],
+                                                            self.buffer[agent_idx].masks[step],
+                                                            ego_exclusive_action,
+                                                            tmp_execution_mask,
+                                                            tau=self.temperature)
+            hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1).unsqueeze(1).to(torch.int))
+            actions[:, agent_idx] = _t2n(action)
+            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            values[:, agent_idx] = _t2n(value)
+            rnn_states[:, agent_idx] = _t2n(rnn_state)
+            rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
+            new_dist_entropies[:, agent_idx] = _t2n(new_dist_entropy)
 
-            hard_actions[raw_agent_indices, :] = _t2n(hard_action)
-            actions[raw_agent_indices, :] = _t2n(action)
-            action_log_probs[raw_agent_indices, :] = _t2n(action_log_prob)
-            new_dist_entropies[raw_agent_indices] = _t2n(new_dist_entropy)
-            values[raw_agent_indices, :] = _t2n(value)
-            rnn_states[raw_agent_indices, :] = _t2n(rnn_state)
-            rnn_states_critic[raw_agent_indices, :] = _t2n(rnn_state_critic)
+        # rollout_actors = np.array([self.policy for _ in range(self.n_rollout_threads)])
+        # rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)
+
+        # if self.mix_actions:
+        #     hard_actions = hard_actions.reshape(-1, self.continous_dim + 1)
+        # else:
+        #     hard_actions = hard_actions.reshape(-1, 1)
+        # actions = actions.reshape(-1, self.action_dim)
+        # action_log_probs = action_log_probs.reshape(-1, 1)
+        # new_dist_entropies = new_dist_entropies.reshape(-1)
+        # values = values.reshape(-1, 1)
+        # rnn_states = rnn_states.reshape(-1, self.recurrent_N, self.hidden_size)
+        # rnn_states_critic = rnn_states_critic.reshape(-1, self.recurrent_N, self.hidden_size)
         
-        if self.mix_actions:
-            hard_actions = hard_actions.reshape(-1, self.num_agents, self.continous_dim + 1)
-        else:
-            hard_actions = hard_actions.reshape(-1, self.num_agents, 1)
-        actions = actions.reshape(-1, self.num_agents, self.action_dim)
-        action_log_probs = action_log_probs.reshape(self.n_rollout_threads, self.num_agents, 1)
-        new_dist_entropies = new_dist_entropies.reshape(self.n_rollout_threads, self.num_agents)
-        values = values.reshape(-1, self.num_agents, 1)
-        rnn_states = rnn_states.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
-        rnn_states_critic = rnn_states_critic.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
+        # for order in range(self.num_agents):
+        #     raw_agent_indices = ordered_vertices[:, order] + np.array([self.num_agents*i for i in range(self.n_rollout_threads)])
+        #     # all_actions = actions.view(-1, self.num_agents)
+        #     ego_inclusive_action = actions.reshape(-1, self.num_agents, self.action_dim)
+        #     tmp_execution_mask = execution_masks.index_select(0, torch.from_numpy(raw_agent_indices).to(self.device))
+            
+        #     inputs = [(rollout_actors[num, order], 
+        #         np.expand_dims(self.buffer[ordered_vertices[num, order]].share_obs[step][num], axis=0),
+        #         np.expand_dims(self.buffer[ordered_vertices[num, order]].obs[step][num], axis=0),
+        #         np.expand_dims(self.buffer[ordered_vertices[num, order]].rnn_states[step, num], axis=0),
+        #         np.expand_dims(self.buffer[ordered_vertices[num, order]].rnn_states_critic[step, num], axis=0),
+        #         np.expand_dims(self.buffer[ordered_vertices[num, order]].masks[step, num], axis=0),
+        #         np.expand_dims(ego_inclusive_action[num], axis=0),
+        #         tmp_execution_mask[num].unsqueeze(0),
+        #         np.expand_dims(self.buffer[ordered_vertices[num, order]].available_actions[step, num], axis=0)) for num in range(self.n_rollout_threads)]
+        #     results \
+        #         = [policy.get_actions(share_obs, obs, rnn_states, rnn_states_critic, 
+        #                             masks, one_hot_action, exe_mask, available_actions, tau=self.temperature) 
+        #                             for policy, share_obs, obs, rnn_states, rnn_states_critic, masks, one_hot_action, exe_mask, available_actions in inputs]
+        #     value, action, action_log_prob, rnn_state, rnn_state_critic, _, new_dist_entropy = zip(*results)
+        #     value, action, action_log_prob, rnn_state, rnn_state_critic, new_dist_entropy= \
+        #         torch.stack(value).squeeze(1), torch.stack(action).squeeze(1), torch.stack(action_log_prob).squeeze(1), torch.stack(rnn_state).squeeze(1), torch.stack(rnn_state_critic).squeeze(1), torch.stack(new_dist_entropy).squeeze(1)
+            
+        #     if self.mix_actions:
+        #         con_action = action[:, :2]
+        #         dis_action = torch.argmax(action[:, 2:], -1).unsqueeze(1)
+        #         hard_action = torch.cat([con_action, dis_action], -1)
+        #     else:
+        #         hard_action = torch.argmax(action, -1).unsqueeze(1).to(torch.int)
+
+        #     hard_actions[raw_agent_indices, :] = _t2n(hard_action)
+        #     actions[raw_agent_indices, :] = _t2n(action)
+        #     action_log_probs[raw_agent_indices, :] = _t2n(action_log_prob)
+        #     new_dist_entropies[raw_agent_indices] = _t2n(new_dist_entropy)
+        #     values[raw_agent_indices, :] = _t2n(value)
+        #     rnn_states[raw_agent_indices, :] = _t2n(rnn_state)
+        #     rnn_states_critic[raw_agent_indices, :] = _t2n(rnn_state_critic)
+        
+        # if self.mix_actions:
+        #     hard_actions = hard_actions.reshape(-1, self.num_agents, self.continous_dim + 1)
+        # else:
+        #     hard_actions = hard_actions.reshape(-1, self.num_agents, 1)
+        # actions = actions.reshape(-1, self.num_agents, self.action_dim)
+        # action_log_probs = action_log_probs.reshape(self.n_rollout_threads, self.num_agents, 1)
+        # new_dist_entropies = new_dist_entropies.reshape(self.n_rollout_threads, self.num_agents)
+        # values = values.reshape(-1, self.num_agents, 1)
+        # rnn_states = rnn_states.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
+        # rnn_states_critic = rnn_states_critic.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
 
         neighbors_agents = []
         edges_agents = []
@@ -320,7 +342,7 @@ class GoBiggerRunner(Runner):
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, \
                     execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents), neighbors_agents, edges_agents, edges_agents_ts, orignal_adjs
     
-    def collect_eval(self, step, eval_obs, eval_rnn_states_old, eval_masks):
+    def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         # with torch.autograd.set_detect_anomaly(True):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
         if self.mix_actions:
@@ -347,7 +369,7 @@ class GoBiggerRunner(Runner):
             raw_actions_results = [self.trainer[agent_idx].policy.get_raw_actions(
                                                                 None,
                                                                 eval_obs,
-                                                                eval_rnn_states_old[:, agent_idx],
+                                                                eval_rnn_states[:, agent_idx],
                                                                 None,
                                                                 eval_masks[:, agent_idx],
                                                                 deterministic=True)
@@ -383,62 +405,78 @@ class GoBiggerRunner(Runner):
             ordered_vertices = _t2n(eval_order)
             execution_masks = generate_mask_from_order(
             eval_order, ego_exclusive=False).to(
-                self.device).float().view(-1, self.num_agents)
+                self.device).float()
             # ordered_vertices = np.stack([[i for i in range(self.num_agents)] for _ in range(self.n_eval_rollout_threads)])
             # execution_masks = torch.stack([torch.stack([torch.ones(self.n_eval_rollout_threads)] * order +
             #                                 [torch.zeros(self.n_eval_rollout_threads)] *
             #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
 
-        rollout_actors = np.array([self.policy for _ in range(self.n_eval_rollout_threads)])
-        rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)
+        for agent_idx in ordered_vertices[0]:
+            self.trainer[agent_idx].prep_rollout()
+            ego_exclusive_action = actions.copy()
+            tmp_execution_mask = execution_masks[:, agent_idx]
 
-        if self.mix_actions:
-            hard_actions = hard_actions.reshape(-1, self.continous_dim + 1)
-        else:
-            hard_actions = hard_actions.reshape(-1, 1)
-        actions = actions.reshape(-1, self.action_dim)
-        new_dist_entropies = new_dist_entropies.reshape(-1)
-        eval_rnn_states = eval_rnn_states_old.reshape(-1, self.recurrent_N, self.hidden_size)
+            action, rnn_state \
+                = self.trainer[agent_idx].policy.act(eval_obs,
+                                                            eval_rnn_states[:, agent_idx],
+                                                            eval_masks[:, agent_idx],
+                                                            ego_exclusive_action,
+                                                            tmp_execution_mask,
+                                                            deterministic=True)
+            hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
+            actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
+            eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
+
+        # rollout_actors = np.array([self.policy for _ in range(self.n_eval_rollout_threads)])
+        # rollout_actors = np.take_along_axis(rollout_actors, ordered_vertices, axis=1)
+
+        # if self.mix_actions:
+        #     hard_actions = hard_actions.reshape(-1, self.continous_dim + 1)
+        # else:
+        #     hard_actions = hard_actions.reshape(-1, 1)
+        # actions = actions.reshape(-1, self.action_dim)
+        # new_dist_entropies = new_dist_entropies.reshape(-1)
+        # eval_rnn_states = eval_rnn_states_old.reshape(-1, self.recurrent_N, self.hidden_size)
         
-        for order in range(self.num_agents):
-            raw_agent_indices = ordered_vertices[:, order] + np.array([self.num_agents*i for i in range(self.n_eval_rollout_threads)])
-            # all_actions = actions.view(-1, self.num_agents)
-            ego_inclusive_action = actions.reshape(-1, self.num_agents, self.action_dim)
-            tmp_execution_mask = execution_masks.index_select(0, torch.from_numpy(raw_agent_indices).to(self.device))
+        # for order in range(self.num_agents):
+        #     raw_agent_indices = ordered_vertices[:, order] + np.array([self.num_agents*i for i in range(self.n_eval_rollout_threads)])
+        #     # all_actions = actions.view(-1, self.num_agents)
+        #     ego_inclusive_action = actions.reshape(-1, self.num_agents, self.action_dim)
+        #     tmp_execution_mask = execution_masks.index_select(0, torch.from_numpy(raw_agent_indices).to(self.device))
 
-            inputs = [(rollout_actors[num, order], 
-                np.expand_dims(eval_obs[num], axis=0),
-                np.expand_dims(eval_rnn_states_old[num,ordered_vertices[num, order]], axis=0),
-                np.expand_dims(eval_masks[num,ordered_vertices[num, order]], axis=0),
-                np.expand_dims(ego_inclusive_action[num], axis=0),
-                tmp_execution_mask[num].unsqueeze(0)) for num in range(self.n_eval_rollout_threads)]
-            results \
-                = [policy.act(obs, rnn_states, 
-                                    masks, one_hot_action, exe_mask, deterministic=True) 
-                                    for policy, obs, rnn_states, masks, one_hot_action, exe_mask in inputs]
-            action, rnn_state = zip(*results)
-            action, rnn_state= \
-                torch.stack(action).squeeze(1), torch.stack(rnn_state).squeeze(1)
+        #     inputs = [(rollout_actors[num, order], 
+        #         np.expand_dims(eval_obs[num], axis=0),
+        #         np.expand_dims(eval_rnn_states_old[num,ordered_vertices[num, order]], axis=0),
+        #         np.expand_dims(eval_masks[num,ordered_vertices[num, order]], axis=0),
+        #         np.expand_dims(ego_inclusive_action[num], axis=0),
+        #         tmp_execution_mask[num].unsqueeze(0)) for num in range(self.n_eval_rollout_threads)]
+        #     results \
+        #         = [policy.act(obs, rnn_states, 
+        #                             masks, one_hot_action, exe_mask, deterministic=True) 
+        #                             for policy, obs, rnn_states, masks, one_hot_action, exe_mask in inputs]
+        #     action, rnn_state = zip(*results)
+        #     action, rnn_state= \
+        #         torch.stack(action).squeeze(1), torch.stack(rnn_state).squeeze(1)
 
-            if self.mix_actions:
-                con_action = action[:, :2]
-                dis_action = action[:, 2:].to(torch.int)
-                hard_action = torch.cat([con_action, dis_action], -1)
-                action = torch.cat([con_action, F.one_hot(action[:, 2:].long(), self.discrete_dim).squeeze(1)], -1)
-            else:
-                hard_action = action.to(torch.int)
-                action = F.one_hot(action, self.action_dim).squeeze(1)
-            hard_actions[raw_agent_indices, :] = _t2n(hard_action)
-            actions[raw_agent_indices, :] = _t2n(action)
-            eval_rnn_states[raw_agent_indices, :] = _t2n(rnn_state)
+        #     if self.mix_actions:
+        #         con_action = action[:, :2]
+        #         dis_action = action[:, 2:].to(torch.int)
+        #         hard_action = torch.cat([con_action, dis_action], -1)
+        #         action = torch.cat([con_action, F.one_hot(action[:, 2:].long(), self.discrete_dim).squeeze(1)], -1)
+        #     else:
+        #         hard_action = action.to(torch.int)
+        #         action = F.one_hot(action, self.action_dim).squeeze(1)
+        #     hard_actions[raw_agent_indices, :] = _t2n(hard_action)
+        #     actions[raw_agent_indices, :] = _t2n(action)
+        #     eval_rnn_states[raw_agent_indices, :] = _t2n(rnn_state)
 
-        if self.mix_actions:
-            hard_actions = hard_actions.reshape(-1, self.num_agents, self.continous_dim + 1)
-        else:
-            hard_actions = hard_actions.reshape(-1, self.num_agents, 1)
-        actions = actions.reshape(-1, self.num_agents, self.action_dim)
-        new_dist_entropies = new_dist_entropies.reshape(self.n_eval_rollout_threads, self.num_agents)
-        eval_rnn_states = eval_rnn_states.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
+        # if self.mix_actions:
+        #     hard_actions = hard_actions.reshape(-1, self.num_agents, self.continous_dim + 1)
+        # else:
+        #     hard_actions = hard_actions.reshape(-1, self.num_agents, 1)
+        # actions = actions.reshape(-1, self.num_agents, self.action_dim)
+        # new_dist_entropies = new_dist_entropies.reshape(self.n_eval_rollout_threads, self.num_agents)
+        # eval_rnn_states = eval_rnn_states.reshape(-1, self.num_agents, self.recurrent_N, self.hidden_size)
 
         neighbors_agents = []
         edges_agents = []

@@ -41,19 +41,15 @@ class R_Actor(nn.Module):
             default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
             config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
             self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg)
+            self.base = Encoder(self.whole_cfg, args)
         else:
             self._mixed_obs = False
             self._nested_obs = False
             self.base = CNNBase(args, obs_shape, cnn_layers_params=args.cnn_layers_params) if len(obs_shape)==3 \
                 else MLPBase(args, obs_shape, use_attn_internal=args.use_attn_internal, use_cat_self=True)
         
-        if args.env_name == "GoBigger":
-            input_size = self.base.output_size * args.num_agents
-            self.feature_size = self.base.output_size * args.num_agents
-        else:
-            input_size = self.base.output_size
-            self.feature_size = self.base.output_size
+        input_size = self.base.output_size
+        self.feature_size = self.base.output_size
 
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
             self.rnn = RNNLayer(input_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)
@@ -88,19 +84,19 @@ class R_Actor(nn.Module):
         :return action_log_probs: (torch.Tensor) log probabilities of taken actions.
         :return rnn_states: (torch.Tensor) updated RNN hidden states.
         """
-        if self._nested_obs:
-            for batch_idx in range(obs.shape[0]):
-                for key in obs[batch_idx].keys():
-                    if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
-                        for sub_key in obs[batch_idx][key].keys():
-                            obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
-                    else:
-                        obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
-        elif self._mixed_obs:
-            for key in obs.keys():
-                obs[key] = check(obs[key]).to(**self.tpdv)
-        else:
-            obs = check(obs).to(**self.tpdv)
+        # if self._nested_obs:
+        #     for batch_idx in range(obs.shape[0]):
+        #         for key in obs[batch_idx].keys():
+        #             if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
+        #                 for sub_key in obs[batch_idx][key].keys():
+        #                     obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
+        #             else:
+        #                 obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
+        # elif self._mixed_obs:
+        #     for key in obs.keys():
+        #         obs[key] = check(obs[key]).to(**self.tpdv)
+        # else:
+        obs = check(obs).to(**self.tpdv)
         rnn_states = check(rnn_states).to(**self.tpdv)    # 4.1.64
         masks = check(masks).to(**self.tpdv)
         if available_actions is not None:
@@ -109,7 +105,8 @@ class R_Actor(nn.Module):
                 available_actions = available_actions.reshape(self.args.n_rollout_threads, -1, available_actions.shape[-1])
 
         if self._nested_obs:
-            actor_features = torch.stack([self.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
+            actor_features = obs
+            # actor_features = torch.stack([self.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
         else:
             actor_features = self.base(obs)
 
@@ -211,17 +208,14 @@ class R_Critic(nn.Module):
             default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
             config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
             self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg)
+            self.base = Encoder(self.whole_cfg, args)
         else:
             self._mixed_obs = False
             self._nested_obs = False
             self.base = CNNBase(args, share_obs_shape, cnn_layers_params=args.cnn_layers_params) if len(share_obs_shape)==3 \
                 else MLPBase(args, share_obs_shape, use_attn_internal=True, use_cat_self=args.use_cat_self)
 
-        if args.env_name == "GoBigger":
-            input_size = self.base.output_size * args.num_agents
-        else:
-            input_size = self.base.output_size
+        input_size = self.base.output_size
 
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
             self.rnn = RNNLayer(self.hidden_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)

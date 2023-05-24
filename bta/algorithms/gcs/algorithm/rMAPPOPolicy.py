@@ -129,6 +129,7 @@ class R_MAPPOPolicy:
                                 obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
                         else:
                             obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
+                obs = torch.stack([self.actor.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
             elif self._mixed_obs:
                 for key in obs.keys():
                     obs[key] = check(obs[key]).to(**self.tpdv)
@@ -143,13 +144,13 @@ class R_MAPPOPolicy:
                 last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
             last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
 
-            if self._nested_obs:
-                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
-                inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
-            else:
-                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
-                inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
-                inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
+            # if self._nested_obs:
+            #     obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
+            #     inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
+            # else:
+            obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
+            inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
+            inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
 
             encoder_output, samples, mask_scores, entropy, adj_prob, \
             log_softmax_logits_for_rewards, entropy_regularization = self.graph_actor(inputs_graph)
@@ -253,6 +254,7 @@ class R_MAPPOPolicy:
                                 obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
                         else:
                             obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
+                obs = torch.stack([self.actor.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
             elif self._mixed_obs:
                 for key in obs.keys():
                     obs[key] = check(obs[key]).to(**self.tpdv)
@@ -267,13 +269,13 @@ class R_MAPPOPolicy:
                 last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
             last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
 
-            if self._nested_obs:
-                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
-                inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
-            else:
-                obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
-                inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
-                inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
+            # if self._nested_obs:
+            #     obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents)
+            #     inputs_graph = {'obs': obs_, 'id_act': torch.cat((agent_id_graph, last_actions_), -1).float()}
+            # else:
+            obs_ = obs_.reshape(self.n_rollout_threads, self.n_agents, -1)
+            inputs_graph = torch.cat((obs_, agent_id_graph), -1).float()  # 1. 4.33
+            inputs_graph = torch.cat((inputs_graph, last_actions_), -1).float()  # 1. 4.33
 
             encoder_output, samples, mask_scores, entropy, adj_prob, \
             log_softmax_logits_for_rewards, entropy_regularization = self.graph_actor(inputs_graph)

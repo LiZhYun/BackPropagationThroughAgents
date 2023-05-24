@@ -182,7 +182,8 @@ class R_MAPPO():
                                 obs_batch[batch_idx][key][sub_key] = check(obs_batch[batch_idx][key][sub_key]).to(**self.tpdv)
                         else:
                             obs_batch[batch_idx][key] = check(obs_batch[batch_idx][key]).to(**self.tpdv)
-                obs_batch_ = obs_batch.reshape(epi_roll, self.n_agents)
+                obs_batch_ = torch.stack([self.policy.actor.base(obs_batch[batch_idx]) for batch_idx in range(obs_batch.shape[0])])
+                obs_batch_ = obs_batch_.reshape(epi_roll, self.n_agents, -1)
             else:
                 obs_batch_ = check(obs_batch.reshape(epi_roll, self.n_agents, -1)).to(**self.tpdv)
             agent_id_graph_ = torch.eye(self.n_agents).unsqueeze(0).repeat(epi_roll, 1, 1).to(self.device)
@@ -191,10 +192,10 @@ class R_MAPPO():
             last_actions_batch = last_actions_batch[:,[0]]
             last_actions_batch_ =[action_ids[i][last_actions_batch.astype(np.int32)[i]] for i in range(len(action_ids))]  # 600.1.19
             last_actions_batch_ = torch.tensor(last_actions_batch_).reshape(epi_roll, self.n_agents, -1).float().to(self.device)  # 25.4.19
-            if self.args.env_name == "GoBigger":
-                inputs_graph = {'obs': obs_batch_, 'id_act': torch.cat((agent_id_graph_, last_actions_batch_), -1).float()}
-            else:
-                inputs_graph = torch.cat((obs_batch_, agent_id_graph_, last_actions_batch_), -1).float() # 25.4.33
+            # if self.args.env_name == "GoBigger":
+            #     inputs_graph = {'obs': obs_batch_, 'id_act': torch.cat((agent_id_graph_, last_actions_batch_), -1).float()}
+            # else:
+            inputs_graph = torch.cat((obs_batch_, agent_id_graph_, last_actions_batch_), -1).float() # 25.4.33
 
             encoder_output, samples, mask_scores, entropy, adj_prob, \
             log_softmax_logits_for_rewards, entropy_regularization = self.policy.graph_actor(inputs_graph)

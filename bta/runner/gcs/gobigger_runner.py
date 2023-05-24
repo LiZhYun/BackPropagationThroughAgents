@@ -90,7 +90,7 @@ class GoBiggerRunner(Runner):
                 self.env_infos = defaultdict(list)
 
             # eval
-            if episode % self.eval_interval == 0 and self.use_eval:
+            if total_num_steps % self.eval_interval == 0 and self.use_eval:
                 self.eval(total_num_steps)
     
     def setup_action(self):

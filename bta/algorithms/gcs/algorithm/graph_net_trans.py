@@ -124,18 +124,17 @@ class Actor_graph(nn.Module):
         self.device = device
         self.tpdv = dict(dtype=torch.float32, device=device)
 
-        
-        if args.env_name == "GoBigger":
-            self._mixed_obs = False
-            self._nested_obs = True
-            default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
-            config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
-            self.whole_cfg = deep_merge_dicts(default_config, config)
-            self.base = Encoder(self.whole_cfg)
-        else:
-            self.base = None
-            self._mixed_obs = False
-            self._nested_obs = False
+        # if args.env_name == "GoBigger":
+        #     self._mixed_obs = False
+        #     self._nested_obs = True
+        #     # default_config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_model_config.yaml'))
+        #     # config = read_config(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'utils', 'gobigger', 'default_ppo_config.yaml'))
+        #     # self.whole_cfg = deep_merge_dicts(default_config, config)
+        #     # self.base = Encoder(self.whole_cfg, args)
+        # else:
+        #     self.base = None
+        #     self._mixed_obs = False
+        #     self._nested_obs = False
         self.encoder = TransEncoder(self.n_xdims, self.nhead, self.num_layers)
         # self.encoder = GATEncoder(self.n_xdims, self.gat_nhead, self.node_num)
         self.decoder = SingleLayerDecoder(self.n_xdims, self.decoder_hidden_dim, self.node_num, self.device)
@@ -143,12 +142,12 @@ class Actor_graph(nn.Module):
         self.to(device)
 
     def forward(self, src):
-        if self._nested_obs:
-            obs = src['obs']
-            obs_ = torch.stack([self.base(obs[batch_idx][0]) for batch_idx in range(obs.shape[0])])
-            id_act = src['id_act']
-            obs_ = obs_.reshape(*id_act.shape[:2], -1)
-            src = torch.cat((obs_, id_act), -1).float()  # 1. 4.33
+        # if self._nested_obs:
+        #     obs = src['obs']
+        #     obs_ = torch.stack([self.base(obs[batch_idx][0]) for batch_idx in range(obs.shape[0])])
+        #     id_act = src['id_act']
+        #     obs_ = obs_.reshape(*id_act.shape[:2], -1)
+        #     src = torch.cat((obs_, id_act), -1).float()  # 1. 4.33
         encoder_output = self.encoder(src)  # 1.4.33
         samples, mask_scores, entropy, adj_prob = self.decoder(encoder_output)
         # graphs_gen = torch.stack(samples).permute(1, 0, 2) # 1.3.3
