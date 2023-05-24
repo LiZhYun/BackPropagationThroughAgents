@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=football-3v1-temporal
-#SBATCH --output=./out/football-3v1-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-3v1-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-3v1-mappo
+#SBATCH --output=./out/football-3v1-mappo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-3v1-mappo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
@@ -15,7 +15,7 @@
 # exp param
 env="Football"
 scenario="academy_3_vs_1_with_keeper"
-algo="temporal"
+algo="mappo"
 exp="check"
 
 # football param

@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=gobigger-temporal
-#SBATCH --output=./out/gobigger-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/gobigger-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=gobigger-gcs
+#SBATCH --output=./out/gobigger-gcs_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/gobigger-gcs_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
@@ -19,7 +19,7 @@ team_num=$1
 player_num_per_team=$2
 scenario="t"${team_num}"p"${player_num_per_team}
 num_agents=$2
-algo="temporal"
+algo="gcs"
 exp="check"
 
 # train param

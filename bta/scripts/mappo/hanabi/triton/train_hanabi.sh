@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=hanabi-temporal
-#SBATCH --output=./out/hanabi-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/hanabi-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=hanabi-mappo
+#SBATCH --output=./out/hanabi-mappo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/hanabi-mappo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -16,7 +16,7 @@ source activate pytorch-env
 env="Hanabi"
 hanabi="Hanabi-Full"
 num_agents=$1
-algo="temporal"
+algo="mappo"
 exp="Hanabi_"${num_agents}
 
 echo "env is ${env}, algo is ${algo}, exp is ${exp}"

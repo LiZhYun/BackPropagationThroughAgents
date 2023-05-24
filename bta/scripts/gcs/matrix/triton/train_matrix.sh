@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=matrix-temporal
-#SBATCH --output=./out/matrix-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/matrix-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=matrix-gcs
+#SBATCH --output=./out/matrix-gcs_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/matrix-gcs_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -21,7 +21,7 @@ source activate pytorch-env
 
 env="matrix"
 scenario="climbing"
-algo="temporal" # "mappo" "ippo"
+algo="gcs" # "mappo" "ippo"
 exp="check"
 
 # football param

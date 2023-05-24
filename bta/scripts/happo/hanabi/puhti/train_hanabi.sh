@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #SBATCH --account=project_2007776
-#SBATCH --job-name=hanabi-temporal
-#SBATCH --output=./out/hanabi-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/hanabi-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=hanabi-happo
+#SBATCH --output=./out/hanabi-happo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/hanabi-happo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -18,7 +18,7 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 env="Hanabi"
 hanabi="Hanabi-Full"
 num_agents=$1
-algo="temporal"
+algo="happo"
 exp="Hanabi_"${num_agents}
 
 echo "env is ${env}, algo is ${algo}, exp is ${exp}"

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-corner-temporal
-#SBATCH --output=./out/football-corner-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-corner-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-corner-happo
+#SBATCH --output=./out/football-corner-happo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-corner-happo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=small
 #SBATCH --ntasks=1
@@ -20,7 +20,7 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 # exp param
 env="Football"
 scenario="academy_corner"
-algo="temporal" # "mappo" "ippo"
+algo="happo" # "mappo" "ippo"
 exp="check"
 
 # football param

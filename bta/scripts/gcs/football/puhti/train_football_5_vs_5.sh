@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-5v5-temporal
-#SBATCH --output=./out/football-5v5-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-5v5-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-5v5-gcs
+#SBATCH --output=./out/football-5v5-gcs_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-5v5-gcs_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=small
 #SBATCH --ntasks=1
@@ -18,7 +18,7 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 # exp param
 env="Football"
 scenario="5_vs_5"
-algo="temporal" # "mappo" "ippo"
+algo="gcs" # "mappo" "ippo"
 exp="check"
 
 # football param

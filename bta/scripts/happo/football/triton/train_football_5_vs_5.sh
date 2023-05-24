@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-5v5-temporal
-#SBATCH --output=./out/football-5v5-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-5v5-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-5v5-happo
+#SBATCH --output=./out/football-5v5-happo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-5v5-happo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -13,7 +13,7 @@
 # exp param
 env="Football"
 scenario="5_vs_5"
-algo="temporal" # "mappo" "ippo"
+algo="happo" # "mappo" "ippo"
 exp="check"
 
 # football param

@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=overcooked-temporal
-#SBATCH --output=./out/overcooked-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/overcooked-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=overcooked-gcs
+#SBATCH --output=./out/overcooked-gcs_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/overcooked-gcs_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=small
 #SBATCH --ntasks=1
@@ -25,7 +25,7 @@ if [[ "${layout}" == "multiplayer_schelling" ]]; then
     num_agents=4
 fi
 
-algo="temporal"
+algo="gcs"
 exp="check"
 
 echo "env is ${env}, layout is ${layout}, algo is ${algo}, exp is ${exp} version is ${version}"
