@@ -10,7 +10,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --account=project_462000277
-#SBATCH --array=0-4
+#SBATCH --array=0-2
 
 # exp param
 env="Football"
