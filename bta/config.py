@@ -311,6 +311,8 @@ def get_config():
                         action='store_false', default=True, help="by default, clip loss value. If set, do not clip loss value.")
     parser.add_argument("--clip_param", type=float, default=0.2,
                         help='ppo clip parameter (default: 0.2)')
+    parser.add_argument("--inner_clip_param", type=float, default=0.1,
+                        help='ppo clip parameter (default: 0.2)')
     parser.add_argument("--num_mini_batch", type=int, default=1,
                         help='number of batches for ppo (default: 1)')
     parser.add_argument("--policy_value_loss_coef", type=float,
