@@ -42,7 +42,7 @@ class T_POLICY():
         self.automatic_entropy_tuning = args.automatic_entropy_tuning
         if self.automatic_entropy_tuning:
             if action_space.__class__.__name__ == "Discrete":
-                self.target_entropy = (torch.log(torch.tensor(action_space.n)) * 0.98).to(self.device)
+                self.target_entropy = (torch.log(torch.tensor(action_space.n)) * 0.5).to(self.device)
             elif action_space.__class__.__name__ == "Box":
                 self.target_entropy = -torch.prod(torch.tensor(action_space.shape[0]).to(self.device)).item()
             self.log_entropy_coef = torch.tensor(np.log(args.entropy_coef), requires_grad=True, device=self.device) 
@@ -255,6 +255,7 @@ class T_POLICY():
 
         self.policy.critic_optimizer.step()
 
+        # entropy update
         if self.automatic_entropy_tuning:
             entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()
 
