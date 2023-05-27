@@ -191,7 +191,7 @@ class Runner(object):
             self.graph_optimizer.step()
 
         action_dim=self.buffer[0].one_hot_actions.shape[-1]
-        factor = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         old_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         new_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
@@ -199,16 +199,14 @@ class Runner(object):
 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
-            self.buffer[agent_id].update_factor(factor)
+            self.buffer[agent_id].update_factor(np.prod(factor, 0))
 
             # other agents' gradient to agent_id
             action_grad_per_agent = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
             for updated_agent in reversed(ordered_vertices)[0:idx]:
-                numerator = np.concatenate([new_actions_probs[agent_id+1:updated_agent], new_actions_probs[updated_agent+1:]],0)
-                denominator = np.concatenate([old_actions_probs[agent_id+1:updated_agent], old_actions_probs[updated_agent+1:]],0)
-                numerator = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if numerator is None else np.prod(numerator, 0)
-                denominator = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if denominator is None else np.prod(denominator, 0)
-                action_grad_per_agent += action_grad[updated_agent][agent_id] * (numerator / denominator)
+                multiplier = np.concatenate([factor[agent_id+1:updated_agent], factor[updated_agent+1:]],0)
+                multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
+                action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
@@ -302,9 +300,9 @@ class Runner(object):
             for i in range(self.num_agents):
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,action_dim)
             if self.inner_clip_param == 0.:
-                factor = factor*_t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
+                factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
             else:
-                factor = factor*_t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
+                factor[agent_id] = _t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
             if self.use_graph:
                 train_info['graphic_loss'] = all_loss.item()
             train_infos.append(train_info)      
