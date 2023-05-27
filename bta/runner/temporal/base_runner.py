@@ -200,9 +200,17 @@ class Runner(object):
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
             self.buffer[agent_id].update_factor(factor)
-            action_grad_per_agent = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
+            numerator = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
+            denominator = np.ones((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
             for updated_agent in reversed(ordered_vertices)[0:idx]:
-                action_grad_per_agent += action_grad[updated_agent][agent_id]
+                multiplier = np.concatenate([new_actions_probs[agent_id+1:updated_agent], new_actions_probs[updated_agent+1:]],0)
+                multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
+                numerator += action_grad[updated_agent][agent_id] * multiplier
+                denominator *= old_actions_probs[updated_agent]
+            action_grad_per_agent = numerator / denominator
+            # action_grad_per_agent = np.zeros((self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
+            # for updated_agent in reversed(ordered_vertices)[0:idx]:
+            #     action_grad_per_agent += action_grad[updated_agent][agent_id]
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
@@ -290,7 +298,7 @@ class Runner(object):
             new_actions_probs[agent_id] = _t2n(torch.exp(new_actions_logprob)).reshape(self.episode_length,self.n_rollout_threads,1)
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
-            torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1), dim=-1).mean().backward()
+            torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1), dim=-1).mean().backward()
             for i in range(self.num_agents):
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,action_dim)
             factor = factor*_t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
