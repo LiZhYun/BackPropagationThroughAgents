@@ -280,6 +280,18 @@ def get_config():
                         help='gumble softmax temperature')
     parser.add_argument("--automatic_entropy_tuning",  action='store_true', default=False,
                         help='Automaically adjust entropy_coef (default: False)')
+    parser.add_argument("--automatic_target_entropy_tuning",  action='store_true', default=False,
+                        help='Automaically adjust target entropy (default: False)')
+    parser.add_argument("--exponential_avg_discount", type=float, default=0.9,
+                        help='exponential average discount')
+    parser.add_argument("--exponential_std_discount", type=float, default=0.999,
+                        help='exponential standard deviation discount')
+    parser.add_argument("--target_entropy_discount", type=float, default=0.9,
+                        help='target entropy discount')
+    parser.add_argument("--standard_deviation_threshold", type=float, default=0.05,
+                        help='standard deviation threshold')
+    parser.add_argument("--average_threshold", type=float, default=0.01,
+                        help='average threshold')
     parser.add_argument("--threshold", type=float, default=1.0,
                         help='tradoff between bpta and mappo')
     

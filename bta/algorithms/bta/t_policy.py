@@ -39,10 +39,19 @@ class T_POLICY():
         self.data_chunk_length = args.data_chunk_length
         self.policy_value_loss_coef = args.policy_value_loss_coef
         self.value_loss_coef = args.value_loss_coef
+        self.target_entropy_discount = args.target_entropy_discount
+        self.average_threshold = args.average_threshold
+        self.standard_deviation_threshold = args.standard_deviation_threshold
+        self.exponential_std_discount = args.exponential_std_discount
+        self.exponential_avg_discount = args.exponential_avg_discount
         self.automatic_entropy_tuning = args.automatic_entropy_tuning
+        self.automatic_target_entropy_tuning = args.automatic_target_entropy_tuning
         if self.automatic_entropy_tuning:
+            if self.automatic_target_entropy_tuning:
+                self.avg_entropy = torch.zeros(1).to(self.device)
+                self.var_entropy = torch.zeros(1).to(self.device)
             if action_space.__class__.__name__ == "Discrete":
-                self.target_entropy = (torch.log(torch.tensor(action_space.n)) * 0.5).to(self.device)
+                self.target_entropy = (torch.log(torch.tensor(action_space.n))*0.98).to(self.device)
             elif action_space.__class__.__name__ == "Box":
                 self.target_entropy = -torch.prod(torch.tensor(action_space.shape[0]).to(self.device)).item()
             self.log_entropy_coef = torch.tensor(np.log(args.entropy_coef), requires_grad=True, device=self.device) 
@@ -257,6 +266,11 @@ class T_POLICY():
 
         # entropy update
         if self.automatic_entropy_tuning:
+            if self.automatic_target_entropy_tuning:
+                self.avg_entropy = self.exponential_avg_discount * self.avg_entropy + (1 - self.exponential_avg_discount) * dist_entropy
+                self.var_entropy = self.exponential_std_discount * self.var_entropy + (1 - self.exponential_std_discount) * (dist_entropy - self.var_entropy)**2
+                if (self.target_entropy - self.average_threshold) < self.avg_entropy < (self.target_entropy + self.average_threshold):
+                    self.target_entropy *= self.target_entropy_discount
             entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()
 
             self.entropy_coef_optim.zero_grad()
