@@ -34,7 +34,7 @@ class T_POLICY():
         self.data_chunk_length = args.data_chunk_length
         self.policy_value_loss_coef = args.policy_value_loss_coef
         self.value_loss_coef = args.value_loss_coef
-        self.entropy_coef = args.entropy_coef
+        self.entropy_coef = args.entropy_coef + (self.num_agents - self.agent_id - 1) * 0.005
         self.shaped_info_coef = getattr(args, "shaped_info_coef", 0.5)
         self.max_grad_norm = args.max_grad_norm       
         self.inner_max_grad_norm = args.inner_max_grad_norm       
@@ -202,14 +202,9 @@ class T_POLICY():
         surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions) * adv_targ
         surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
                 + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad * train_actions) * adv_targ
-        # surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + (imp_weights.detach() - 1) * action_grad * train_actions - imp_weights)) * adv_targ
-        # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
-        #         + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) - 1) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
         # surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * action_grad * train_actions - imp_weights)) * adv_targ
         # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
         #         + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ
-        # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * torch.clamp(factor_batch, 1.0 - self.clip_param / 2, 1.0 + self.clip_param / 2) \
-        #          + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions) * adv_targ
 
         if self._use_policy_active_masks:
             policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
