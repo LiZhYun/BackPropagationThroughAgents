@@ -9,7 +9,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small
 #SBATCH --account=project_462000277
-#SBATCH --array=0-4
+#SBATCH --array=0-5
 
 #--gpus-per-node=1
 # exp param
@@ -40,6 +40,9 @@ case $SLURM_ARRAY_TASK_ID in
         ;;
     4)
         inner_clip=0.25
+        ;;
+    5)
+        inner_clip=0.
         ;;
 esac
 
