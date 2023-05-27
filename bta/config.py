@@ -278,6 +278,8 @@ def get_config():
     parser.add_argument('--time_gap', type=int, default=10)
     parser.add_argument("--temperature", type=float, default=5.0,
                         help='gumble softmax temperature')
+    parser.add_argument("--automatic_entropy_tuning",  action='store_true', default=False,
+                        help='Automaically adjust entropy_coef (default: False)')
     parser.add_argument("--threshold", type=float, default=1.0,
                         help='tradoff between bpta and mappo')
     

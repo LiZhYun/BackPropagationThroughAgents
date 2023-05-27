@@ -19,6 +19,7 @@ class T_POLICY():
                  args,
                  policy: TemporalPolicy,
                  agent_id,
+                 action_space,
                  device=torch.device("cpu")):
 
         self.device = device
@@ -27,6 +28,10 @@ class T_POLICY():
         self.num_agents = args.num_agents
         self.agent_id = agent_id
         self.args = args
+        self.lr = args.lr
+        self.critic_lr = args.critic_lr
+        self.opti_eps = args.opti_eps
+        self.weight_decay = args.weight_decay
 
         self.clip_param = args.clip_param
         self.ppo_epoch = args.ppo_epoch
@@ -34,7 +39,17 @@ class T_POLICY():
         self.data_chunk_length = args.data_chunk_length
         self.policy_value_loss_coef = args.policy_value_loss_coef
         self.value_loss_coef = args.value_loss_coef
-        self.entropy_coef = args.entropy_coef + (self.num_agents - self.agent_id - 1) * 0.005
+        self.automatic_entropy_tuning = args.automatic_entropy_tuning
+        if self.automatic_entropy_tuning:
+            if action_space.__class__.__name__ == "Discrete":
+                self.target_entropy = (torch.log(torch.tensor(action_space.n)) * 0.98).to(self.device)
+            elif action_space.__class__.__name__ == "Box":
+                self.target_entropy = -torch.prod(torch.tensor(action_space.shape[0]).to(self.device)).item()
+            self.log_entropy_coef = torch.tensor(np.log(args.entropy_coef), requires_grad=True, device=self.device) 
+            self.entropy_coef = self.log_entropy_coef.exp()
+            self.entropy_coef_optim = torch.optim.Adam([self.log_entropy_coef], lr=self.lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+        else:
+            self.entropy_coef = args.entropy_coef + (self.num_agents - self.agent_id - 1) * 0.005
         self.shaped_info_coef = getattr(args, "shaped_info_coef", 0.5)
         self.max_grad_norm = args.max_grad_norm       
         self.inner_max_grad_norm = args.inner_max_grad_norm       
@@ -240,7 +255,20 @@ class T_POLICY():
 
         self.policy.critic_optimizer.step()
 
-        return value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights
+        if self.automatic_entropy_tuning:
+            entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()
+
+            self.entropy_coef_optim.zero_grad()
+            entropy_loss.backward()
+            self.entropy_coef_optim.step()
+
+            self.entropy_coef = self.log_entropy_coef.exp()
+            entropy_tlogs = self.entropy_coef.item() # For TensorboardX logs
+        else:
+            entropy_loss = torch.tensor(0.).to(self.device)
+            entropy_tlogs = self.entropy_coef # For TensorboardX log
+
+        return value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs
 
     def compute_advantages(self, buffer):
         if self._use_popart or self._use_valuenorm:
@@ -265,12 +293,14 @@ class T_POLICY():
 
         train_info['value_loss'] = 0
         train_info['policy_loss'] = 0
+        train_info['entropy_loss'] = 0
         if self.use_graph:
             train_info['graphic_loss'] = 0
         train_info['dist_entropy'] = 0
         train_info['actor_grad_norm'] = 0
         train_info['critic_grad_norm'] = 0
         train_info['ratio'] = 0
+        train_info['entropy_coef'] = 0
 
         for _ in range(self.ppo_epoch):
             if self._use_recurrent_policy:
@@ -282,13 +312,15 @@ class T_POLICY():
 
             for sample in data_generator:
 
-                value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights \
+                value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs \
                     = self.ppo_update(sample, agent_order, tau)
 
                 train_info['value_loss'] += value_loss.item()
                 train_info['policy_loss'] += policy_loss.item()
+                train_info['entropy_loss'] += entropy_loss.item()
                 train_info['dist_entropy'] += dist_entropy.item()
                 train_info['ratio'] += imp_weights.mean().item()
+                train_info['entropy_coef'] += entropy_tlogs
                 
                 if int(torch.__version__[2]) < 5:
                     train_info['actor_grad_norm'] += actor_grad_norm
