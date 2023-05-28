@@ -233,7 +233,7 @@ class Runner(object):
                 mini_batch_size = batch_size // self.all_args.num_mini_batch
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
                 for indices in sampler:
-                    _, old_actions_logprob, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
+                    _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                                 self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
@@ -246,7 +246,7 @@ class Runner(object):
                     old_actions_logprobs.append(old_actions_logprob)
                 old_actions_logprob = torch.cat(old_actions_logprobs, dim=0)
             else:
-                _, old_actions_logprob, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                             self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
                                                             self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
@@ -267,7 +267,7 @@ class Runner(object):
                 mini_batch_size = batch_size // self.all_args.num_mini_batch
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
                 for indices in sampler:
-                    _, new_actions_logprob, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
+                    _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                                 self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
@@ -280,7 +280,7 @@ class Runner(object):
                     new_actions_logprobs.append(new_actions_logprob)
                 new_actions_logprob = torch.cat(new_actions_logprobs, dim=0)
             else:
-                _, new_actions_logprob, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                             self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
                                                             self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),

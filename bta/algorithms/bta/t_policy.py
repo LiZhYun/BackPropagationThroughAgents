@@ -211,7 +211,7 @@ class T_POLICY():
                 self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
         
         # Reshape to do in a single forward pass for all steps
-        values, train_actions, action_log_probs, dist_entropy, dist_entropy_sp = self.policy.evaluate_actions(share_obs_batch,
+        values, train_actions, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 

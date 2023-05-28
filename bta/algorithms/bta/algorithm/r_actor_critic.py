@@ -231,9 +231,9 @@ class R_Actor(nn.Module):
 
         # actor_features = torch.cat([actor_features, id_feat], dim=1)
 
-        train_actions, action_log_probs, dist_entropy, dist_entropy_sp = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
+        train_actions, action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
         
-        return train_actions, action_log_probs, dist_entropy, dist_entropy_sp
+        return train_actions, action_log_probs, dist_entropy
 
 class R_Critic(nn.Module):
     def __init__(self, args, share_obs_space, action_space, device=torch.device("cpu")):
