@@ -43,12 +43,11 @@ class T_POLICY():
         self.target_entropy_discount = args.target_entropy_discount
         self.average_threshold = args.average_threshold
         self.standard_deviation_threshold = args.standard_deviation_threshold
-        self.exponential_std_discount = args.exponential_std_discount
-        self.exponential_avg_discount = args.exponential_avg_discount
+        self.exponential_discount = args.exponential_discount
         self.automatic_entropy_tuning = args.automatic_entropy_tuning
         self.automatic_target_entropy_tuning = args.automatic_target_entropy_tuning
-        self.avg_entropy = torch.zeros(1).to(self.device)
-        self.var_entropy = torch.zeros(1).to(self.device)
+        self.avg_entropy = nn.Parameter(torch.zeros(1), requires_grad=False).to(**self.tpdv)
+        self.var_entropy = nn.Parameter(torch.zeros(1), requires_grad=False).to(**self.tpdv)
         self.target_entropy = torch.zeros(1).to(self.device)
         if self.automatic_entropy_tuning:
             if action_space.__class__.__name__ == "Discrete":
@@ -212,7 +211,7 @@ class T_POLICY():
                 self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
         
         # Reshape to do in a single forward pass for all steps
-        values, train_actions, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
+        values, train_actions, action_log_probs, dist_entropy, dist_entropy_sp = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 
@@ -271,8 +270,9 @@ class T_POLICY():
         # entropy update
         if self.automatic_entropy_tuning:
             if self.automatic_target_entropy_tuning:
-                self.avg_entropy = self.exponential_avg_discount * self.avg_entropy + (1 - self.exponential_avg_discount) * dist_entropy
-                self.var_entropy = self.exponential_std_discount * self.var_entropy + (1 - self.exponential_std_discount) * (dist_entropy - self.var_entropy)**2
+                delta = dist_entropy - self.avg_entropy
+                self.avg_entropy.add_(delta * (1.0 - self.exponential_discount))
+                self.var_entropy.mul_(self.exponential_discount).add_((delta ** 2) * (1.0 - self.exponential_discount) * (self.exponential_discount))
                 if (self.target_entropy - self.average_threshold) < self.avg_entropy < (self.target_entropy + self.average_threshold) and torch.sqrt(self.var_entropy) < self.standard_deviation_threshold:
                     self.target_entropy *= self.target_entropy_discount
             entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()

@@ -226,7 +226,11 @@ class ACTLayer(nn.Module):
             index = action
             train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
             train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
-            return train_actions, action_log_probs, dist_entropy
+            if active_masks is not None:
+                dist_entropy_sp = ((action_logits.entropy()*active_masks.squeeze(-1)) ** 2).sum()/active_masks.sum()
+            else:
+                dist_entropy_sp = (action_logits.entropy() ** 2).mean()
+            return train_actions, action_log_probs, dist_entropy, dist_entropy_sp
         else:
             return action_log_probs, dist_entropy
     
