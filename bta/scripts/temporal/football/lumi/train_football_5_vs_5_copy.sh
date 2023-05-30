@@ -51,4 +51,4 @@ srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
---automatic_entropy_tuning --entropy_lr 5e-4 
+--automatic_entropy_tuning
