@@ -33,6 +33,7 @@ class T_POLICY():
         self.entropy_lr = args.entropy_lr
         self.opti_eps = args.opti_eps
         self.weight_decay = args.weight_decay
+        self.skip_connect = args.skip_connect 
 
         self.clip_param = args.clip_param
         self.ppo_epoch = args.ppo_epoch
@@ -43,21 +44,23 @@ class T_POLICY():
         self.target_entropy_discount = args.target_entropy_discount
         self.average_threshold = args.average_threshold
         self.standard_deviation_threshold = args.standard_deviation_threshold
-        self.exponential_discount = args.exponential_discount
+        self.exponential_avg_discount = args.exponential_avg_discount
+        self.exponential_var_discount = args.exponential_var_discount
         self.automatic_entropy_tuning = args.automatic_entropy_tuning
         self.automatic_target_entropy_tuning = args.automatic_target_entropy_tuning
         self.avg_entropy = nn.Parameter(torch.zeros(1), requires_grad=False).to(**self.tpdv)
         self.var_entropy = nn.Parameter(torch.zeros(1), requires_grad=False).to(**self.tpdv)
         self.target_entropy = torch.zeros(1).to(self.device)
         if self.automatic_entropy_tuning:
+            self.log_entropy_coef = torch.tensor(np.log(0.5), requires_grad=True, device=self.device)
             if action_space.__class__.__name__ == "Discrete":
                 if self.automatic_target_entropy_tuning:
-                    self.target_entropy = (torch.log(torch.tensor(action_space.n))).to(self.device)
+                    # self.log_entropy_coef = torch.tensor(np.log(1.0), requires_grad=True, device=self.device)
+                    self.target_entropy = (torch.log(torch.tensor(action_space.n))*0.8).to(self.device)
                 else:
                     self.target_entropy = (torch.log(torch.tensor(action_space.n))*0.01).to(self.device)
             elif action_space.__class__.__name__ == "Box":
                 self.target_entropy = -torch.prod(torch.tensor(action_space.shape[0]).to(self.device)).item()
-            self.log_entropy_coef = torch.tensor(np.log(1), requires_grad=True, device=self.device) 
             self.entropy_coef = self.log_entropy_coef.exp()
             self.entropy_coef_optim = torch.optim.Adam([self.log_entropy_coef], lr=self.entropy_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
         else:
@@ -144,9 +147,22 @@ class T_POLICY():
         active_masks_batch = check(active_masks_batch).to(**self.tpdv)
 
         #test
-        execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
-                                        [torch.zeros(actions_batch.shape[0])] *
-                                        (self.num_agents - self.agent_id), -1).to(**self.tpdv)
+        # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
+        #                                 [torch.zeros(actions_batch.shape[0])] *
+        #                                 (self.num_agents - self.agent_id), -1).to(**self.tpdv)
+        if self.skip_connect:
+            execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
+                                            [torch.zeros(actions_batch.shape[0])] *
+                                            (self.num_agents - self.agent_id), -1).to(**self.tpdv)
+        else:
+            if self.agent_id != 0:
+                execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * (self.agent_id - 1) +
+                                                [torch.ones(actions_batch.shape[0])] * 1 +
+                                                [torch.zeros(actions_batch.shape[0])] *
+                                                (self.num_agents - self.agent_id), -1).to(**self.tpdv)
+            else:
+                execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * self.num_agents, -1).to(**self.tpdv)
+
         
         # Reshape to do in a single forward pass for all steps
         values, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
@@ -270,10 +286,10 @@ class T_POLICY():
         # entropy update
         if self.automatic_entropy_tuning:
             if self.automatic_target_entropy_tuning:
-                delta = dist_entropy - self.avg_entropy
-                self.avg_entropy.add_(delta * (1.0 - self.exponential_discount))
-                self.var_entropy.mul_(self.exponential_discount).add_((delta ** 2) * (1.0 - self.exponential_discount) * (self.exponential_discount))
-                if (self.target_entropy - self.average_threshold) < self.avg_entropy < (self.target_entropy + self.average_threshold) and torch.sqrt(self.var_entropy) < self.standard_deviation_threshold:
+                delta = (dist_entropy - self.avg_entropy).detach()
+                self.avg_entropy.add_(delta * (1.0 - self.exponential_avg_discount))
+                self.var_entropy.mul_(self.exponential_var_discount).add_((delta ** 2) * (1.0 - self.exponential_var_discount))
+                if (self.target_entropy - self.average_threshold) < self.avg_entropy < (self.target_entropy + self.average_threshold) and (torch.sqrt(self.var_entropy) < self.standard_deviation_threshold):
                     self.target_entropy *= self.target_entropy_discount
             entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()
 
@@ -287,7 +303,7 @@ class T_POLICY():
             entropy_loss = torch.tensor(0.).to(self.device)
             entropy_tlogs = self.entropy_coef # For TensorboardX log
 
-        return value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs, self.target_entropy.item(), self.avg_entropy.item(), torch.sqrt(self.var_entropy).item()
+        return value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs
 
     def compute_advantages(self, buffer):
         if self._use_popart or self._use_valuenorm:
@@ -334,7 +350,7 @@ class T_POLICY():
 
             for sample in data_generator:
 
-                value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs, target_entropy, avg_entropy, std_entropy \
+                value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs \
                     = self.ppo_update(sample, agent_order, tau)
 
                 train_info['value_loss'] += value_loss.item()
@@ -343,9 +359,9 @@ class T_POLICY():
                 train_info['dist_entropy'] += dist_entropy.item()
                 train_info['ratio'] += imp_weights.mean().item()
                 train_info['entropy_coef'] += entropy_tlogs
-                train_info['target_entropy'] += target_entropy
-                train_info['avg_entropy'] += avg_entropy
-                train_info['std_entropy'] += std_entropy
+                train_info['target_entropy'] += self.target_entropy.item()
+                train_info['avg_entropy'] += self.avg_entropy.item()
+                train_info['std_entropy'] += self.var_entropy.sqrt().item()
                 
                 if int(torch.__version__[2]) < 5:
                     train_info['actor_grad_norm'] += actor_grad_norm

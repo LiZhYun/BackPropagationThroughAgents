@@ -44,7 +44,7 @@ class FootballRunner(Runner):
                 for agent_id in range(self.num_agents):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
-            self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 0.5)
+            self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             for step in range(self.episode_length):
@@ -184,7 +184,19 @@ class FootballRunner(Runner):
         for agent_idx in ordered_vertices[0]:
             self.trainer[agent_idx].prep_rollout()
             ego_exclusive_action = actions.copy()
-            tmp_execution_mask = execution_masks[:, agent_idx]
+            # tmp_execution_mask = execution_masks[:, agent_idx]
+            if self.skip_connect:
+                tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
+                                                [torch.zeros(self.n_rollout_threads)] *
+                                                (self.num_agents - agent_idx), -1).to(self.device)
+            else:
+                if agent_idx != 0:
+                    tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * (agent_idx - 1) +
+                                                    [torch.ones(self.n_rollout_threads)] * 1 +
+                                                    [torch.zeros(self.n_rollout_threads)] *
+                                                    (self.num_agents - agent_idx), -1).to(self.device)
+                else:
+                    tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
 
             value, action, action_log_prob, rnn_state, rnn_state_critic, _, new_dist_entropy \
                 = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
@@ -371,7 +383,19 @@ class FootballRunner(Runner):
         for agent_idx in ordered_vertices[0]:
             self.trainer[agent_idx].prep_rollout()
             ego_exclusive_action = actions.copy()
-            tmp_execution_mask = execution_masks[:, agent_idx]
+            # tmp_execution_mask = execution_masks[:, agent_idx]
+            if self.skip_connect:
+                tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_idx +
+                                                [torch.zeros(self.n_eval_rollout_threads)] *
+                                                (self.num_agents - agent_idx), -1).to(self.device)
+            else:
+                if agent_idx != 0:
+                    tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * (agent_idx - 1) +
+                                                    [torch.ones(self.n_eval_rollout_threads)] * 1 +
+                                                    [torch.zeros(self.n_eval_rollout_threads)] *
+                                                    (self.num_agents - agent_idx), -1).to(self.device)
+                else:
+                    tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * self.num_agents, -1).to(self.device)
 
             action, rnn_state \
                 = self.trainer[agent_idx].policy.act(eval_obs[:, agent_idx],

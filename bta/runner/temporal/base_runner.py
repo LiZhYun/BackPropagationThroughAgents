@@ -50,6 +50,7 @@ class Runner(object):
         self.temperature = self.all_args.temperature
         self.agent_order = None
         self.inner_clip_param = self.all_args.inner_clip_param
+        self.skip_connect = self.all_args.skip_connect
         self.mix_actions = False
         if self.envs.action_space[0].__class__.__name__ == "Discrete":
             self.action_dim = self.envs.action_space[0].n
@@ -214,9 +215,22 @@ class Runner(object):
             tmp_agent_order = ordered_vertices.clone()
             agent_order = torch.stack([tmp_agent_order for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
             # agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.episode_length*self.n_rollout_threads)]).to(self.device)
-            execution_masks_batch = generate_mask_from_order(
-                agent_order, ego_exclusive=False).to(
-                    self.device).float()[:, agent_id]  # [bs, n_agents, n_agents]
+            # execution_masks_batch = generate_mask_from_order(
+            #     agent_order, ego_exclusive=False).to(
+            #         self.device).float()[:, agent_id]  # [bs, n_agents, n_agents]
+            if self.skip_connect:
+                execution_masks_batch = torch.stack([torch.ones(self.episode_length*self.n_rollout_threads)] * agent_id +
+                                                [torch.zeros(self.episode_length*self.n_rollout_threads)] *
+                                                (self.num_agents - agent_id), -1).to(self.device)
+            else:
+                if agent_id != 0:
+                    execution_masks_batch = torch.stack([torch.zeros(self.episode_length*self.n_rollout_threads)] * (agent_id - 1) +
+                                                    [torch.ones(self.episode_length*self.n_rollout_threads)] * 1 +
+                                                    [torch.zeros(self.episode_length*self.n_rollout_threads)] *
+                                                    (self.num_agents - agent_id), -1).to(self.device)
+                else:
+                    execution_masks_batch = torch.stack([torch.zeros(self.episode_length*self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
+
                 
             one_hot_actions = torch.from_numpy(self.buffer[agent_id].one_hot_actions.reshape(-1, *self.buffer[agent_id].one_hot_actions.shape[2:])).to(self.device)
             one_hot_actions.requires_grad = True
