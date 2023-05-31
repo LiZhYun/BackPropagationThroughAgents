@@ -296,6 +296,8 @@ def get_config():
                         help='average threshold')
     parser.add_argument("--threshold", type=float, default=1.0,
                         help='tradoff between bpta and mappo')
+    parser.add_argument("--agent_layer", type=int, default=1,
+                        help='stacked agent layer')
     
     # optimizer parameters
     parser.add_argument("--lr", type=float, default=5e-4,
