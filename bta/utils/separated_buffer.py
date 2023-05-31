@@ -74,11 +74,12 @@ class SeparatedReplayBuffer(object):
         else:
             self.available_actions = None
 
-        self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape))
-        self.one_hot_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.action_dim), dtype=np.float32)
-        self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
+        self.agent_layer = self.args.agent_layer
+        self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer, self.act_shape))
+        self.one_hot_actions = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer*args.num_agents, self.action_dim), dtype=np.float32)
+        self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer, self.act_shape), dtype=np.float32)
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
-        
+    
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)
         self.active_masks = np.ones_like(self.masks)
@@ -259,7 +260,7 @@ class SeparatedReplayBuffer(object):
         adjs = self.adjs.reshape(-1, *self.adjs.shape[2:]).detach().cpu().numpy()
         rnn_states = self.rnn_states[:-1].reshape(-1, *self.rnn_states.shape[2:])
         rnn_states_critic = self.rnn_states_critic[:-1].reshape(-1, *self.rnn_states_critic.shape[2:])
-        actions = self.actions.reshape(-1, self.actions.shape[-1])
+        actions = self.actions.reshape(-1, *self.actions.shape[2:])
         if self.available_actions is not None:
             available_actions = self.available_actions[:-1].reshape(-1, self.available_actions.shape[-1])
         if self.factor is not None:
@@ -272,7 +273,7 @@ class SeparatedReplayBuffer(object):
         returns = self.returns[:-1].reshape(-1, 1)
         masks = self.masks[:-1].reshape(-1, 1)
         active_masks = self.active_masks[:-1].reshape(-1, 1)
-        action_log_probs = self.action_log_probs.reshape(-1, self.action_log_probs.shape[-1])
+        action_log_probs = self.action_log_probs.reshape(-1, *self.action_log_probs.shape[2:])
         advantages = advantages.reshape(-1, 1)
 
         for indices in sampler:

@@ -41,6 +41,7 @@ class T_POLICY():
         self.data_chunk_length = args.data_chunk_length
         self.policy_value_loss_coef = args.policy_value_loss_coef
         self.value_loss_coef = args.value_loss_coef
+        self.agent_layer = args.agent_layer
         self.target_entropy_discount = args.target_entropy_discount
         self.average_threshold = args.average_threshold
         self.standard_deviation_threshold = args.standard_deviation_threshold
@@ -200,7 +201,7 @@ class T_POLICY():
 
         return policy_loss + acyclic_loss
     
-    def ppo_update(self, sample, agent_order=None, tau=1.0):
+    def ppo_update(self, sample, train_id, train_list, tau=1.0):
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
         value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
@@ -226,33 +227,45 @@ class T_POLICY():
         #     agent_order, ego_exclusive=False).to(
         #         self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
         if self.skip_connect:
-            execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
-                                            [torch.zeros(actions_batch.shape[0])] *
-                                            (self.num_agents - self.agent_id), -1).to(**self.tpdv)
-        else:
-            if self.agent_id != 0:
-                execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * (self.agent_id - 1) +
-                                                [torch.ones(actions_batch.shape[0])] * 1 +
+            if train_id > (self.agent_layer - 1) * self.num_agents - 1:
+                execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
                                                 [torch.zeros(actions_batch.shape[0])] *
-                                                (self.num_agents - self.agent_id), -1).to(**self.tpdv)
+                                                (self.num_agents - self.agent_id), -1).to(self.device)
             else:
-                execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * self.num_agents, -1).to(**self.tpdv)
+                execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(train_list[train_id+1:train_id+self.num_agents]), 1.0)\
+                    .unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
+        else:
+            if train_id != self.agent_layer * self.num_agents - 1:
+                execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(train_list[train_id+1]), 1.0)\
+                    .unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
+            else:
+                execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * self.num_agents, -1).to(self.device)
         
+        actions = actions_batch[:,(self.agent_layer * self.num_agents - 1 - train_id) // self.num_agents]
+        old_action_log_probs = old_action_log_probs_batch[:,(self.agent_layer * self.num_agents - 1 - train_id) // self.num_agents]
+        if train_id > (self.agent_layer - 1) * self.num_agents - 1:
+            one_hot_actions = one_hot_actions_batch[:,0:self.num_agents]
+        else:
+            ordered_vertices = list(reversed(train_list))
+            sorted_tuples = sorted(zip(ordered_vertices[((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1)):((self.agent_layer * self.num_agents - 1)-(train_id-1))], [((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1-i)) for i in range(self.num_agents)]), key=lambda x: x[0])
+            _, sorted_index_vector = zip(*sorted_tuples)
+            one_hot_actions = np.stack([one_hot_actions_batch[:,i] for i in sorted_index_vector], -2)
+            # one_hot_actions = one_hot_actions_batch[:,((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1)):((self.agent_layer * self.num_agents - 1)-(train_id-1))]
         # Reshape to do in a single forward pass for all steps
         values, train_actions, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 
-                                                                            actions_batch, 
+                                                                            actions, 
                                                                             masks_batch, 
-                                                                            one_hot_actions_batch,
+                                                                            one_hot_actions,
                                                                             execution_masks_batch,
                                                                             available_actions_batch,
                                                                             active_masks_batch,
                                                                             tau=tau
                                                                             )
         # actor update
-        imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
+        imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs),dim=-1,keepdim=True)
 
         surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions) * adv_targ
         surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
@@ -324,7 +337,7 @@ class T_POLICY():
             advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
         return advantages
 
-    def train(self, buffer, agent_order=None, tau=1.0):
+    def train(self, buffer, train_id, train_list, tau=1.0):
         if self._use_popart or self._use_valuenorm:
             advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
         else:
@@ -363,7 +376,7 @@ class T_POLICY():
             for sample in data_generator:
 
                 value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights, entropy_loss, entropy_tlogs \
-                    = self.ppo_update(sample, agent_order, tau)
+                    = self.ppo_update(sample, train_id, train_list, tau)
 
                 train_info['value_loss'] += value_loss.item()
                 train_info['policy_loss'] += policy_loss.item()

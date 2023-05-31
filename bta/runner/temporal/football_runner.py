@@ -53,7 +53,7 @@ class FootballRunner(Runner):
                     rnn_states_critic, execution_masks, neighbors_agents, edges_agents, edges_agents_ts, adjs = self.collect(step)
                     
                 # Obser reward and next obs
-                obs, rewards, dones, infos = self.envs.step(np.squeeze(hard_actions, axis=-1))
+                obs, rewards, dones, infos = self.envs.step(np.squeeze(hard_actions[:,:,-1], axis=-1))
                 share_obs = obs.copy()
                 total_num_steps += (self.n_rollout_threads)
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
@@ -121,9 +121,9 @@ class FootballRunner(Runner):
 
     def collect(self, step):
         values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
-        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim))
-        hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, 1), dtype=np.int32)
-        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
+        actions = np.zeros((self.n_rollout_threads, self.agent_layer*self.num_agents, self.action_dim))
+        hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.agent_layer, 1), dtype=np.int32)
+        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.agent_layer, 1))
         new_dist_entropies = np.zeros((self.n_rollout_threads, self.num_agents))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
@@ -181,20 +181,30 @@ class FootballRunner(Runner):
             #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
             orignal_adjs = execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents).permute(0, 2, 1)
         
-        for agent_idx in ordered_vertices[0]:
+        ordered_vertices = [i for i in range(self.num_agents)] * self.agent_layer
+        for idx, agent_idx in enumerate(ordered_vertices):
             self.trainer[agent_idx].prep_rollout()
-            ego_exclusive_action = actions.copy()
+            # ego_exclusive_action = actions.copy()
+            if idx < self.num_agents:
+                ego_exclusive_action = actions[:,0:self.num_agents]
+            else:
+                # ego_exclusive_action = actions[:,idx-self.num_agents+1:idx+1]
+                sorted_tuples = sorted(zip(ordered_vertices[idx-self.num_agents+1:idx+1], [idx-self.num_agents+1+i for i in range(self.num_agents)]), key=lambda x: x[0])
+                _, sorted_index_vector = zip(*sorted_tuples)
+                ego_exclusive_action = np.stack([actions[:,i] for i in sorted_index_vector], -2)
             # tmp_execution_mask = execution_masks[:, agent_idx]
             if self.skip_connect:
-                tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
-                                                [torch.zeros(self.n_rollout_threads)] *
-                                                (self.num_agents - agent_idx), -1).to(self.device)
-            else:
-                if agent_idx != 0:
-                    tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * (agent_idx - 1) +
-                                                    [torch.ones(self.n_rollout_threads)] * 1 +
+                if idx < self.num_agents:
+                    tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
                                                     [torch.zeros(self.n_rollout_threads)] *
                                                     (self.num_agents - agent_idx), -1).to(self.device)
+                else:
+                    tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-self.num_agents+1:idx]), 1.0)\
+                        .unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
+            else:
+                if idx != 0:
+                    tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
+                        .unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
                 else:
                     tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
 
@@ -207,9 +217,9 @@ class FootballRunner(Runner):
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
                                                             tau=self.temperature)
-            hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1).unsqueeze(1).to(torch.int))
-            actions[:, agent_idx] = _t2n(action)
-            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            hard_actions[:, agent_idx, idx//self.num_agents] = _t2n(torch.argmax(action, -1).unsqueeze(1).to(torch.int))
+            actions[:, idx] = _t2n(action)
+            action_log_probs[:, agent_idx, idx//self.num_agents] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
@@ -322,8 +332,8 @@ class FootballRunner(Runner):
                     execution_masks.view(self.n_rollout_threads, self.num_agents, self.num_agents), neighbors_agents, edges_agents, edges_agents_ts, orignal_adjs
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
-        actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
-        hard_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
+        actions = np.zeros((self.n_eval_rollout_threads, self.agent_layer*self.num_agents, self.action_dim))
+        hard_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.agent_layer, 1), dtype=np.int32)
         new_dist_entropies = np.zeros((self.n_eval_rollout_threads, self.num_agents))
 
         if self.use_graph:
@@ -379,21 +389,30 @@ class FootballRunner(Runner):
             # execution_masks = torch.stack([torch.stack([torch.ones(self.n_eval_rollout_threads)] * order +
             #                                 [torch.zeros(self.n_eval_rollout_threads)] *
             #                                 (self.num_agents - order), -1) for order in range(self.num_agents)], -2).to(self.device).view(-1, self.num_agents)
-
-        for agent_idx in ordered_vertices[0]:
+        ordered_vertices = [i for i in range(self.num_agents)] * self.agent_layer
+        for idx, agent_idx in enumerate(ordered_vertices):
             self.trainer[agent_idx].prep_rollout()
-            ego_exclusive_action = actions.copy()
+            # ego_exclusive_action = actions.copy()
+            # tmp_execution_mask = execution_masks[:, agent_idx]
+            if idx < self.num_agents:
+                ego_exclusive_action = actions[:,0:self.num_agents]
+            else:
+                sorted_tuples = sorted(zip(ordered_vertices[idx-self.num_agents+1:idx+1], [idx-self.num_agents+1+i for i in range(self.num_agents)]), key=lambda x: x[0])
+                _, sorted_index_vector = zip(*sorted_tuples)
+                ego_exclusive_action = np.stack([actions[:,i] for i in sorted_index_vector], -2)
             # tmp_execution_mask = execution_masks[:, agent_idx]
             if self.skip_connect:
-                tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_idx +
-                                                [torch.zeros(self.n_eval_rollout_threads)] *
-                                                (self.num_agents - agent_idx), -1).to(self.device)
-            else:
-                if agent_idx != 0:
-                    tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * (agent_idx - 1) +
-                                                    [torch.ones(self.n_eval_rollout_threads)] * 1 +
+                if idx < self.num_agents:
+                    tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_idx +
                                                     [torch.zeros(self.n_eval_rollout_threads)] *
                                                     (self.num_agents - agent_idx), -1).to(self.device)
+                else:
+                    tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-self.num_agents+1:idx]), 1.0)\
+                        .unsqueeze(0).repeat(self.n_eval_rollout_threads, 1).to(self.device)
+            else:
+                if idx != 0:
+                    tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
+                        .unsqueeze(0).repeat(self.n_eval_rollout_threads, 1).to(self.device)
                 else:
                     tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * self.num_agents, -1).to(self.device)
 
@@ -404,8 +423,8 @@ class FootballRunner(Runner):
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
                                                             deterministic=True)
-            hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
-            actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
+            hard_actions[:, agent_idx, idx//self.num_agents] = _t2n(action.to(torch.int))
+            actions[:, idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
 
         # rollout_actors = np.array([self.policy for _ in range(self.n_eval_rollout_threads)])
@@ -502,7 +521,7 @@ class FootballRunner(Runner):
                 edges_agents.append(edges_per_agent)
                 edges_agents_ts.append(edges_per_agent_ts)
 
-        return actions, hard_actions, eval_rnn_states, neighbors_agents, edges_agents, edges_agents_ts
+        return actions, hard_actions[:,:,-1], eval_rnn_states, neighbors_agents, edges_agents, edges_agents_ts
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
