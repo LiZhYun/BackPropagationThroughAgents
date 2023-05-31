@@ -278,13 +278,15 @@ def get_config():
     parser.add_argument('--time_gap', type=int, default=10)
     parser.add_argument("--temperature", type=float, default=1.0,
                         help='gumble softmax temperature')
+    parser.add_argument("--skip_connect",  action='store_true', default=False,
+                        help='skip connection (default: False)')
     parser.add_argument("--automatic_entropy_tuning",  action='store_true', default=False,
                         help='Automaically adjust entropy_coef (default: False)')
     parser.add_argument("--automatic_target_entropy_tuning",  action='store_true', default=False,
                         help='Automaically adjust target entropy (default: False)')
-    parser.add_argument("--exponential_avg_discount", type=float, default=0.99,
+    parser.add_argument("--exponential_avg_discount", type=float, default=0.9,
                         help='exponential average discount')
-    parser.add_argument("--exponential_var_discount", type=float, default=0.999,
+    parser.add_argument("--exponential_var_discount", type=float, default=0.99,
                         help='exponential variance discount')
     parser.add_argument("--target_entropy_discount", type=float, default=0.9,
                         help='target entropy discount')
