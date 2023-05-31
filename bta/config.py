@@ -306,8 +306,8 @@ def get_config():
                         help='critic learning rate (default: 5e-4)')
     parser.add_argument("--graph_lr", type=float, default=5e-4,
                         help='graph learning rate (default: 5e-4)')
-    parser.add_argument("--entropy_lr", type=float, default=3e-4,
-                        help='entropy learning rate (default: 3e-4)')
+    parser.add_argument("--entropy_lr", type=float, default=5e-4,
+                        help='entropy learning rate (default: 5e-4)')
     parser.add_argument("--opti_eps", type=float, default=1e-5,
                         help='RMSprop optimizer epsilon (default: 1e-5)')
     parser.add_argument("--weight_decay", type=float, default=0)
