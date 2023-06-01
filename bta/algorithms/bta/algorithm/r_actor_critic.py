@@ -122,7 +122,7 @@ class R_Actor(nn.Module):
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
         
-        agent_feat = actor_features.clone()
+        # agent_feat = actor_features.clone()
 
         masked_actions = (onehot_action * execution_mask.unsqueeze(-1)).view(*onehot_action.shape[:-2], -1)
         # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=1)
@@ -132,9 +132,9 @@ class R_Actor(nn.Module):
         actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
         actor_features = self.feature_norm(actor_features)
 
-        actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
+        actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
         
-        return actions, action_log_probs, rnn_states, agent_feat, dist_entropy
+        return actions, action_log_probs, rnn_states, logits, dist_entropy
     
     def get_raw_action(self, obs, rnn_states, masks, available_actions=None, deterministic=False, tau=1.0):        
         if self._nested_obs:
@@ -231,9 +231,9 @@ class R_Actor(nn.Module):
 
         # actor_features = torch.cat([actor_features, id_feat], dim=1)
 
-        train_actions, action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
+        train_actions, action_log_probs, dist_entropy, logits = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
         
-        return train_actions, action_log_probs, dist_entropy
+        return train_actions, action_log_probs, dist_entropy, logits
 
 class R_Critic(nn.Module):
     def __init__(self, args, share_obs_space, action_space, device=torch.device("cpu")):

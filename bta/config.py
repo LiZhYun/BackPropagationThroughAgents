@@ -278,6 +278,8 @@ def get_config():
     parser.add_argument('--time_gap', type=int, default=10)
     parser.add_argument("--temperature", type=float, default=1.0,
                         help='gumble softmax temperature')
+    parser.add_argument("--use_action_attention",  action='store_true', default=False,
+                        help='action attention')
     parser.add_argument("--skip_connect",  action='store_true', default=False,
                         help='skip connection (default: False)')
     parser.add_argument("--automatic_entropy_tuning",  action='store_true', default=False,

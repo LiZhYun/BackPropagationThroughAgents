@@ -79,22 +79,13 @@ class SeparatedReplayBuffer(object):
         self.one_hot_actions = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer*args.num_agents, self.action_dim), dtype=np.float32)
         self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer, self.act_shape), dtype=np.float32)
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+
+        self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
+        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)
         self.active_masks = np.ones_like(self.masks)
-
-        #### temporal graph ####
-        self.adjs = torch.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, args.num_agents), dtype=torch.float32).to(args.device)
-        self.execution_masks = torch.zeros((self.episode_length, self.n_rollout_threads, args.num_agents), dtype=torch.float32).to(args.device)
-        if self.use_graph:
-            self.temporal_neighbors_edge_feat = np.zeros((self.n_rollout_threads, args.max_edges, args.edge_feat_size), dtype=np.float32)
-            self.temporal_neighbors_edge_timestamps = np.ones((self.n_rollout_threads, args.max_edges, 1), dtype=np.int32) * (-1)
-            self.temporal_neighbors = np.ones((self.n_rollout_threads, args.time_gap), dtype=np.int64) * (-1)
-            self.temporal_step_edge = [0 for _ in range(self.n_rollout_threads)]
-            self.temporal_step_node = [0 for _ in range(self.n_rollout_threads)]
-            self.max_edges = args.max_edges
-            self.time_gap = args.time_gap
 
         self.factor = None
         self.action_grad = None
@@ -102,7 +93,7 @@ class SeparatedReplayBuffer(object):
         self.step = 0
 
     def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, hard_actions, action_log_probs,
-               value_preds, rewards, masks, execution_mask, neighbors=None, neighbors_edge_feat=None, neighbors_edge_timestamps=None, adj=None, bad_masks=None, active_masks=None, available_actions=None):
+               value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, joint_actions=None, joint_action_log_probs=None):
         self.share_obs[self.step + 1] = share_obs.copy()
         self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -113,37 +104,21 @@ class SeparatedReplayBuffer(object):
         self.value_preds[self.step] = value_preds.copy()
         self.rewards[self.step] = rewards.copy()
         self.masks[self.step + 1] = masks.copy()
-        self.execution_masks[self.step] = execution_mask.clone()
-        if self.use_graph:
-            self.adjs[self.step] = adj.clone()
         if bad_masks is not None:
             self.bad_masks[self.step + 1] = bad_masks.copy()
         if active_masks is not None:
             self.active_masks[self.step + 1] = active_masks.copy()
         if available_actions is not None:
             self.available_actions[self.step + 1] = available_actions.copy()
+        if joint_actions is not None:
+            self.joint_actions[self.step + 1] = joint_actions.copy()
+        if joint_action_log_probs is not None:
+            self.joint_action_log_probs[self.step + 1] = joint_action_log_probs.copy()
         
         self.step = (self.step + 1) % self.episode_length
         
-        if self.use_graph:
-            for batch_idx in range(len(neighbors)):
-
-                for node_idx in range(len(neighbors[batch_idx])):
-                    self.temporal_neighbors[batch_idx, self.temporal_step_node[batch_idx] ] = neighbors[batch_idx][node_idx]
-                    self.temporal_step_node[batch_idx] = (self.temporal_step_node[batch_idx] + 1) % self.time_gap
-
-                for edge_idx in range(len(neighbors_edge_feat[batch_idx])):
-                    self.temporal_neighbors_edge_feat[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_feat[batch_idx][edge_idx]
-                    assert not np.isinf(neighbors_edge_timestamps[batch_idx][edge_idx]).any(), "InF!!"
-                    self.temporal_neighbors_edge_timestamps[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_timestamps[batch_idx][edge_idx]
-                    self.temporal_step_edge[batch_idx] = (self.temporal_step_edge[batch_idx] + 1) % self.max_edges
-
-            self.temporal_neighbors_edge_feat = self.temporal_neighbors_edge_feat * np.tile(np.expand_dims(masks.copy(), -1), (1, self.max_edges, 1))
-            self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
-            self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))
-        
     def chooseinsert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, one_hot_actions, action_log_probs,
-                     value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
+                     value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, joint_actions=None, joint_action_log_probs=None):
         self.share_obs[self.step] = share_obs.copy()
         self.obs[self.step] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -160,6 +135,10 @@ class SeparatedReplayBuffer(object):
             self.active_masks[self.step] = active_masks.copy()
         if available_actions is not None:
             self.available_actions[self.step] = available_actions.copy()
+        if joint_actions is not None:
+            self.joint_actions[self.step + 1] = joint_actions.copy()
+        if joint_action_log_probs is not None:
+            self.joint_action_log_probs[self.step + 1] = joint_action_log_probs.copy()
 
         self.step = (self.step + 1) % self.episode_length
     
@@ -256,8 +235,6 @@ class SeparatedReplayBuffer(object):
         else:
             share_obs = self.share_obs[:-1].reshape(-1, *self.share_obs.shape[2:])
             obs = self.obs[:-1].reshape(-1, *self.obs.shape[2:])
-        execution_masks = self.execution_masks.reshape(-1, *self.execution_masks.shape[2:]).detach().cpu().numpy()
-        adjs = self.adjs.reshape(-1, *self.adjs.shape[2:]).detach().cpu().numpy()
         rnn_states = self.rnn_states[:-1].reshape(-1, *self.rnn_states.shape[2:])
         rnn_states_critic = self.rnn_states_critic[:-1].reshape(-1, *self.rnn_states_critic.shape[2:])
         actions = self.actions.reshape(-1, *self.actions.shape[2:])
@@ -275,6 +252,8 @@ class SeparatedReplayBuffer(object):
         active_masks = self.active_masks[:-1].reshape(-1, 1)
         action_log_probs = self.action_log_probs.reshape(-1, *self.action_log_probs.shape[2:])
         advantages = advantages.reshape(-1, 1)
+        joint_actions = self.joint_actions.reshape(-1, *self.joint_actions.shape[2:])
+        joint_action_log_probs = self.joint_action_log_probs.reshape(-1, *self.joint_action_log_probs.shape[2:])
 
         for indices in sampler:
             # obs size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[index,Dim]
@@ -284,8 +263,6 @@ class SeparatedReplayBuffer(object):
             rnn_states_critic_batch = rnn_states_critic[indices]
             actions_batch = actions[indices]
             one_hot_actions_batch = one_hot_actions[indices]
-            adjs_batch = adjs[indices]
-            execution_masks_batch = execution_masks[indices]
             if self.available_actions is not None:
                 available_actions_batch = available_actions[indices]
             else:
@@ -295,6 +272,8 @@ class SeparatedReplayBuffer(object):
             masks_batch = masks[indices]
             active_masks_batch = active_masks[indices]
             old_action_log_probs_batch = action_log_probs[indices]
+            joint_actions_batch = joint_actions[indices]
+            joint_action_log_probs_batch = joint_action_log_probs[indices]
             if advantages is None:
                 adv_targ = None
             else:
@@ -308,7 +287,7 @@ class SeparatedReplayBuffer(object):
             else:
                 action_grad_batch = action_grad[indices]
 
-            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, adjs_batch, factor_batch, action_grad_batch
+            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch
 
     def graph_feed_forward_generator(self, advantages, num_mini_batch=None, mini_batch_size=None):
         episode_length, n_rollout_threads = self.rewards.shape[0:2]

@@ -51,6 +51,7 @@ class Runner(object):
         self.agent_order = None
         self.inner_clip_param = self.all_args.inner_clip_param
         self.skip_connect = self.all_args.skip_connect
+        self.use_action_attention = self.all_args.use_action_attention
         self.agent_layer = self.all_args.agent_layer
         self.mix_actions = False
         if self.envs.action_space[0].__class__.__name__ == "Discrete":
@@ -111,6 +112,11 @@ class Runner(object):
                         agent_id,
                         device = self.device)
             self.policy.append(po)
+        
+        if self.action_attention:
+            from bta.algorithms.utils.action_attention import Action_Attention
+            self.action_attention = Action_Attention(self.all_args)
+            self.attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
 
         if self.use_graph:
             self.all_args.node_feat_size = self.policy[0].actor.abs_size + self.num_agents

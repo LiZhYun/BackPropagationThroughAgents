@@ -101,6 +101,9 @@ class ACTLayer(nn.Module):
                 actions = action_logits.mode()
             elif rsample:
                 actions = action_logits.rsample() 
+                action_log_probs = action_logits.log_probs(actions)
+                dist_entropy = action_logits.entropy()
+                return actions, action_log_probs, dist_entropy, action_logits.logits
             else: 
                 actions = action_logits.sample()
             # actions = action_logits.mode() if deterministic else action_logits.rsample() 
@@ -115,6 +118,8 @@ class ACTLayer(nn.Module):
             elif rsample:
                 actions = action_logits.rsample(tau=tau) 
                 action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
+                dist_entropy = action_logits.entropy()
+                return actions, action_log_probs, dist_entropy, action_logits.logits
             else: 
                 actions = action_logits.sample()
                 action_log_probs = action_logits.log_probs(actions)
@@ -226,7 +231,7 @@ class ACTLayer(nn.Module):
             index = action
             train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
             train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
-            return train_actions, action_log_probs, dist_entropy
+            return train_actions, action_log_probs, dist_entropy, action_logits.logits
         else:
             return action_log_probs, dist_entropy
     

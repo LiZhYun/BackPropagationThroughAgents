@@ -33,21 +33,21 @@ class TemporalPolicy:
         return agent_feat, dist_entropy
 
     def get_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, task_id=None, tau=1.0, **kwargs):
-        actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic, tau=tau)
+        actions, action_log_probs, rnn_states_actor, logits, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic, tau=tau)
         values, rnn_states_critic = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
-        return values, actions, action_log_probs, rnn_states_actor, rnn_states_critic, agent_feat, dist_entropy
+        return values, actions, action_log_probs, rnn_states_actor, rnn_states_critic, logits
 
     def get_values(self, share_obs, rnn_states_critic, masks, task_id=None):
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values
 
     def evaluate_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, task_id=None, tau=1.0):
-        train_actions, action_log_probs, dist_entropy = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau)
+        train_actions, action_log_probs, dist_entropy, logits = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau)
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
-        return values, train_actions, action_log_probs, dist_entropy
+        return values, train_actions, action_log_probs, dist_entropy, logits
 
     def act(self, obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, **kwargs):
-        actions, action_log_probs, rnn_states_actor, agent_feat, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)
+        actions, action_log_probs, rnn_states_actor, logits, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)
         return actions, rnn_states_actor
 
     def load_checkpoint(self, ckpt_path):
