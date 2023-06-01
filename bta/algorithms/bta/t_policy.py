@@ -56,7 +56,7 @@ class T_POLICY():
             self.log_entropy_coef = torch.tensor(np.log(0.5), requires_grad=True, device=self.device)
             if action_space.__class__.__name__ == "Discrete":
                 if self.automatic_target_entropy_tuning:
-                    # self.log_entropy_coef = torch.tensor(np.log(1.0), requires_grad=True, device=self.device)
+                    self.log_entropy_coef = torch.tensor(np.log(np.e), requires_grad=True, device=self.device)
                     self.target_entropy = (torch.log(torch.tensor(action_space.n))).to(self.device)
                 else:
                     self.target_entropy = (torch.log(torch.tensor(action_space.n))*0.01).to(self.device)
@@ -65,7 +65,7 @@ class T_POLICY():
             self.entropy_coef = self.log_entropy_coef.exp()
             self.entropy_coef_optim = torch.optim.Adam([self.log_entropy_coef], lr=self.entropy_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
         else:
-            self.entropy_coef = args.entropy_coef + (self.num_agents - self.agent_id - 1) * 0.005
+            self.entropy_coef = args.entropy_coef
         self.shaped_info_coef = getattr(args, "shaped_info_coef", 0.5)
         self.max_grad_norm = args.max_grad_norm       
         self.inner_max_grad_norm = args.inner_max_grad_norm       
