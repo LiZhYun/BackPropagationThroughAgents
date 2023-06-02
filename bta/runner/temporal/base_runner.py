@@ -357,12 +357,12 @@ class Runner(object):
             else:
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advantages_all[:,:,agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
-            available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-            adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
-            active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
-            logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-            action_log_probs_kl_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
             for batch_idx in range(self.num_mini_batch):
+                available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                action_log_probs_kl_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \

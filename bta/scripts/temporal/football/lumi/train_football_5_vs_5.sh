@@ -24,31 +24,10 @@ num_agents=4
 num_env_steps=50000000
 episode_length=1000
 
-case $SLURM_ARRAY_TASK_ID in
-    0)
-        inner_clip=0.05
-        ;;
-    1)
-        inner_clip=0.1
-        ;;
-    2)
-        inner_clip=0.15
-        ;;
-    3)
-        inner_clip=0.2
-        ;;
-    4)
-        inner_clip=0.25
-        ;;
-    5)
-        inner_clip=0.
-        ;;
-esac
-
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
---user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
---automatic_entropy_tuning --automatic_target_entropy_tuning --agent_layer 2
+--user_name "zhiyuanli" --wandb_name "zhiyuanli" \
+--use_action_attention

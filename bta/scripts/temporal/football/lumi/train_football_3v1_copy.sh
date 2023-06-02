@@ -34,7 +34,7 @@ case $SLURM_ARRAY_TASK_ID in
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
         --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --skip_connect --agent_layer 2
+        --agent_layer 1
         ;;
     1)
         srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
@@ -43,7 +43,7 @@ case $SLURM_ARRAY_TASK_ID in
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
         --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --skip_connect
+        --agent_layer 2
         ;;
     2)
         srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
@@ -52,7 +52,7 @@ case $SLURM_ARRAY_TASK_ID in
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
         --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --agent_layer 2
+        --agent_layer 3
         ;;
     3)
         srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
@@ -60,6 +60,7 @@ case $SLURM_ARRAY_TASK_ID in
         --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
-        --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip}
+        --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
+        --agent_layer 4
         ;;
 esac
