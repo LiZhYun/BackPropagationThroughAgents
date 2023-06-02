@@ -138,8 +138,8 @@ class T_POLICY():
     def graph_update(self, sample):
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
-        value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
-        adv_targ, available_actions_batch, adjs_batch, factor_batch, action_grad = sample
+        value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
+        adv_targ, available_actions_batch, factor_batch, action_grad,_,_ = sample
 
         old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
         adv_targ = check(adv_targ).to(**self.tpdv)
@@ -204,8 +204,8 @@ class T_POLICY():
     def ppo_update(self, sample, train_id, train_list, tau=1.0):
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
-        value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, \
-        adv_targ, available_actions_batch, adjs_batch, factor_batch, action_grad = sample
+        value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
+        adv_targ, available_actions_batch, factor_batch, action_grad,_,_ = sample
 
         old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
         adv_targ = check(adv_targ).to(**self.tpdv)

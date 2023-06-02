@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .util import init, get_clones
+from .util import init, get_clones, check
 from bta.algorithms.utils.act import ACTLayer
 
 def init_(m, gain=0.01, activate=False):
@@ -14,7 +14,7 @@ def init_(m, gain=0.01, activate=False):
     return init(m, nn.init.orthogonal_, lambda x: nn.init.constant_(x, 0), gain=gain)
 
 class Action_Attention(nn.Module):
-    def __init__(self, args, action_space):
+    def __init__(self, args, action_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
         self._use_orthogonal = args.use_orthogonal
         self._activation_id = args.activation_id
@@ -23,8 +23,8 @@ class Action_Attention(nn.Module):
         self._attn_size = args.attn_size
         self._attn_heads = args.attn_heads
         self._dropout = args.dropout
-        self._use_average_pool = args.use_average_pool
         self._use_policy_active_masks = args.use_policy_active_masks
+        self.tpdv = dict(dtype=torch.float32, device=device)
 
         if action_space.__class__.__name__ == "Discrete":
             action_dim = action_space.n
@@ -33,40 +33,31 @@ class Action_Attention(nn.Module):
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size, bias=False), activate=True),
                                                     nn.GELU())
-        self.ln = nn.LayerNorm(self._attn_size)
 
         self.layers = get_clones(EncoderLayer(
             self._attn_size, self._attn_heads, self._dropout, self._use_orthogonal, self._activation_id), self._attn_N)
-        self.norm = nn.LayerNorm(self._attn_size)
+        self.ln = nn.LayerNorm(self._attn_size)
 
         self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+        self.to(device)
 
     def forward(self, x, mask=None, available_actions=None, deterministic=False, tau=1.0):
-        logit_embeddings = self.logit_encoder(x)
-        x = self.ln(logit_embeddings)
+        x = self.logit_encoder(x)
         for i in range(self._attn_N):
             x = self.layers[i](x, mask)
-        x = self.norm(x)
-        if self._use_average_pool:
-            x = torch.transpose(x, 1, 2)
-            x = F.avg_pool1d(x, kernel_size=x.size(-1)).view(x.size(0), -1)
-        x = x.view(x.size(0), -1)
+        x = self.ln(x)
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau)
         return actions, action_log_probs
     
     def evaluate_actions(self, x, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
-        logit_embeddings = self.logit_encoder(x)
-        x = self.ln(logit_embeddings)
+        action = check(action).to(**self.tpdv)
+        x = self.logit_encoder(x)
         for i in range(self._attn_N):
             x = self.layers[i](x, mask)
-        x = self.norm(x)
-        if self._use_average_pool:
-            x = torch.transpose(x, 1, 2)
-            x = F.avg_pool1d(x, kernel_size=x.size(-1)).view(x.size(0), -1)
-        x = x.view(x.size(0), -1)
+        x = self.ln(x)
 
-        train_actions, action_log_probs, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
+        train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
         
         return action_log_probs, dist_entropy
 

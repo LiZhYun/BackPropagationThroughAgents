@@ -11,7 +11,6 @@ import imageio
 import warnings
 import functools
 from bta.utils.util import update_linear_schedule, is_acyclic, pruning, generate_mask_from_order
-from bta.utils.separated_buffer import SeparatedReplayBufferEval
 from bta.runner.temporal.base_runner import Runner
 from pathlib import Path
 from collections import defaultdict, deque
@@ -50,21 +49,22 @@ class FootballRunner(Runner):
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
-                    rnn_states_critic, execution_masks, neighbors_agents, edges_agents, edges_agents_ts, adjs = self.collect(step)
+                    rnn_states_critic, joint_actions, joint_action_log_probs = self.collect(step)
                     
                 # Obser reward and next obs
-                obs, rewards, dones, infos = self.envs.step(np.squeeze(hard_actions[:,:,-1], axis=-1))
+                env_actions = joint_actions if joint_actions is not None else hard_actions[:,:,-1]
+                obs, rewards, dones, infos = self.envs.step(np.squeeze(env_actions, axis=-1))
                 share_obs = obs.copy()
                 total_num_steps += (self.n_rollout_threads)
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-                    rnn_states, rnn_states_critic, execution_masks, neighbors_agents, edges_agents, edges_agents_ts, adjs
+                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
                 
                 # insert data into buffer
                 self.insert(data)
 
             # compute return and update network
             self.compute()
-            train_infos = self.train()
+            train_infos = self.joint_train() if self.use_action_attention else self.train()
             
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -140,7 +140,7 @@ class FootballRunner(Runner):
                 _, sorted_index_vector = zip(*sorted_tuples)
                 ego_exclusive_action = np.stack([actions[:,i] for i in sorted_index_vector], -2)
             # tmp_execution_mask = execution_masks[:, agent_idx]
-            if self.action_attention:
+            if self.use_action_attention:
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
             else:
                 if self.skip_connect:
@@ -167,9 +167,9 @@ class FootballRunner(Runner):
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
                                                             tau=self.temperature)
-            hard_actions[:, agent_idx, idx//self.num_agents] = _t2n(torch.argmax(action, -1).unsqueeze(1).to(torch.int))
+            hard_actions[:, agent_idx, idx//self.num_agents] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
             actions[:, idx] = _t2n(action)
-            logits[:, idx] = logit.clone()
+            logits[:, idx] = action.clone()
             action_log_probs[:, agent_idx, idx//self.num_agents] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
@@ -178,6 +178,8 @@ class FootballRunner(Runner):
         joint_actions, joint_action_log_probs = None, None
         if self.use_action_attention:
             joint_actions, joint_action_log_probs = self.action_attention(logits, tau=self.temperature)
+            joint_actions = _t2n(torch.argmax(joint_actions, -1, keepdim=True).to(torch.int))
+            joint_action_log_probs = _t2n(joint_action_log_probs)
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
 
@@ -223,7 +225,6 @@ class FootballRunner(Runner):
             actions[:, idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
 
-
         return actions, hard_actions[:,:,-1], eval_rnn_states
 
     def insert(self, data):
@@ -260,8 +261,8 @@ class FootballRunner(Runner):
                                         values[:, agent_id],
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
-                                        joint_actions,
-                                        joint_action_log_probs
+                                        joint_actions=joint_actions,
+                                        joint_action_log_probs=joint_action_log_probs
                                         )
 
     @torch.no_grad()
@@ -284,11 +285,8 @@ class FootballRunner(Runner):
         unfinished_thread = (done_episodes_per_thread != eval_episodes_per_thread)
 
         while num_done < self.all_args.eval_episodes and step < self.episode_length:
-            eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
-            # for agent_id in range(self.num_agents):
-                # self.trainer[agent_id].prep_rollout()
             _, hard_actions, eval_rnn_states = self.collect_eval(step, eval_obs, eval_rnn_states, eval_masks)
-            
+
             eval_actions = hard_actions
             # step
             eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(np.squeeze(eval_actions, axis=-1))

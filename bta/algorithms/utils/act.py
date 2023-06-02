@@ -156,7 +156,7 @@ class ACTLayer(nn.Module):
         
         return action_probs
 
-    def evaluate_actions(self, x, action, available_actions=None, active_masks=None, rsample=False, tau=1.0):
+    def evaluate_actions(self, x, action, available_actions=None, active_masks=None, rsample=False, tau=1.0, kl=False, joint_actions=None):
         if self.mixed_action:
             a, b = action.split((2, 1), -1)
             b = b.long()
@@ -231,7 +231,11 @@ class ACTLayer(nn.Module):
             index = action
             train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
             train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
-            return train_actions, action_log_probs, dist_entropy, action_logits.logits
+            if kl:
+                action_log_probs_kl = action_logits.log_probs(joint_actions)
+            else:
+                action_log_probs_kl = None
+            return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, action_logits.logits
         else:
             return action_log_probs, dist_entropy
     

@@ -132,7 +132,11 @@ class R_Actor(nn.Module):
         actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
         actor_features = self.feature_norm(actor_features)
 
-        actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
+        if deterministic:
+            logits = None
+            actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
+        else:
+            actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
         
         return actions, action_log_probs, rnn_states, logits, dist_entropy
     
@@ -183,7 +187,7 @@ class R_Actor(nn.Module):
         
         return actions, action_log_probs, rnn_states, agent_feat, dist_entropy
 
-    def evaluate_actions(self, obs, rnn_states, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0):
+    def evaluate_actions(self, obs, rnn_states, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0, kl=False, joint_actions=None):
         if self._nested_obs:
             for batch_idx in range(obs.shape[0]):
                 for key in obs[batch_idx].keys():
@@ -209,6 +213,9 @@ class R_Actor(nn.Module):
         
         if active_masks is not None:
             active_masks = check(active_masks).to(**self.tpdv)
+
+        if joint_actions is not None:
+            joint_actions = check(joint_actions).to(**self.tpdv)
         
         if self._nested_obs:
             actor_features = torch.stack([self.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
@@ -230,10 +237,9 @@ class R_Actor(nn.Module):
         actor_features = self.feature_norm(actor_features)
 
         # actor_features = torch.cat([actor_features, id_feat], dim=1)
-
-        train_actions, action_log_probs, dist_entropy, logits = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
+        train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, kl=kl, joint_actions=joint_actions)
         
-        return train_actions, action_log_probs, dist_entropy, logits
+        return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits
 
 class R_Critic(nn.Module):
     def __init__(self, args, share_obs_space, action_space, device=torch.device("cpu")):

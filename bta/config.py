@@ -308,8 +308,8 @@ def get_config():
                         help='soft update polyak (default: 0.995)')
     parser.add_argument("--critic_lr", type=float, default=5e-4,
                         help='critic learning rate (default: 5e-4)')
-    parser.add_argument("--graph_lr", type=float, default=5e-4,
-                        help='graph learning rate (default: 5e-4)')
+    parser.add_argument("--attention_lr", type=float, default=5e-4,
+                        help='attention learning rate (default: 5e-4)')
     parser.add_argument("--entropy_lr", type=float, default=5e-4,
                         help='entropy learning rate (default: 5e-4)')
     parser.add_argument("--opti_eps", type=float, default=1e-5,
@@ -341,6 +341,8 @@ def get_config():
                         default=1, help='policy value loss coefficient (default: 0.5)')
     parser.add_argument("--entropy_coef", type=float, default=0.01,
                         help='entropy term coefficient (default: 0.01)')
+    parser.add_argument("--kl_coef", type=float, default=0.01,
+                        help='KL term coefficient (default: 0.01)')
     parser.add_argument("--value_loss_coef", type=float,
                         default=1, help='value loss coefficient (default: 0.5)')
     parser.add_argument("--use_max_grad_norm",

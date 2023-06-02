@@ -11,7 +11,6 @@ import imageio
 import warnings
 import functools
 from bta.utils.util import update_linear_schedule, is_acyclic, pruning, generate_mask_from_order
-from bta.utils.separated_buffer import SeparatedReplayBufferEval
 from bta.runner.temporal.base_runner import Runner
 from pathlib import Path
 from collections import defaultdict, deque

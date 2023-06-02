@@ -81,7 +81,7 @@ class SeparatedReplayBuffer(object):
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
 
         self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
-        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
+        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)
@@ -111,9 +111,9 @@ class SeparatedReplayBuffer(object):
         if available_actions is not None:
             self.available_actions[self.step + 1] = available_actions.copy()
         if joint_actions is not None:
-            self.joint_actions[self.step + 1] = joint_actions.copy()
+            self.joint_actions[self.step] = joint_actions.copy()
         if joint_action_log_probs is not None:
-            self.joint_action_log_probs[self.step + 1] = joint_action_log_probs.copy()
+            self.joint_action_log_probs[self.step] = joint_action_log_probs.copy()
         
         self.step = (self.step + 1) % self.episode_length
         
@@ -212,7 +212,7 @@ class SeparatedReplayBuffer(object):
                 for step in reversed(range(self.rewards.shape[0])):
                     self.returns[step] = self.returns[step + 1] * self.gamma * self.masks[step + 1] + self.rewards[step]
 
-    def feed_forward_generator(self, advantages, num_mini_batch=None, mini_batch_size=None):
+    def feed_forward_generator(self, advantages, num_mini_batch=None, mini_batch_size=None, sampler=None):
         episode_length, n_rollout_threads = self.rewards.shape[0:2]
         batch_size = n_rollout_threads * episode_length
 
@@ -225,8 +225,9 @@ class SeparatedReplayBuffer(object):
                           num_mini_batch))
             mini_batch_size = batch_size // num_mini_batch
 
-        rand = torch.randperm(batch_size).numpy()
-        sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
+        if sampler == None:
+            rand = torch.randperm(batch_size).numpy()
+            sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
 
         one_hot_actions = self.one_hot_actions.reshape(-1, *self.one_hot_actions.shape[2:])
         if self.args.env_name == "GoBigger":
@@ -278,11 +279,11 @@ class SeparatedReplayBuffer(object):
                 adv_targ = None
             else:
                 adv_targ = advantages[indices]
-            if factor is None:
+            if self.factor is None:
                 factor_batch = None
             else:
                 factor_batch = factor[indices]
-            if action_grad is None:
+            if self.action_grad is None:
                 action_grad_batch = None
             else:
                 action_grad_batch = action_grad[indices]
@@ -554,38 +555,3 @@ class SeparatedReplayBuffer(object):
             adv_targ = _flatten(L, N, adv_targ)
 
             yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, adjs_batch
-
-class SeparatedReplayBufferEval(object):
-    def __init__(self, args):
-        self.n_rollout_threads = args.n_eval_rollout_threads
-        self.args = args
-        self.use_graph = args.use_graph
-
-        if self.use_graph:
-            #### temporal graph ####
-            self.temporal_neighbors_edge_feat = np.zeros((self.n_rollout_threads, args.max_edges, args.edge_feat_size), dtype=np.float32)
-            self.temporal_neighbors_edge_timestamps = np.ones((self.n_rollout_threads, args.max_edges, 1), dtype=np.int32) * (-1)
-            self.temporal_neighbors = np.ones((self.n_rollout_threads, args.time_gap), dtype=np.int64) * (-1)
-            self.temporal_step_edge = [0 for _ in range(self.n_rollout_threads)]
-            self.temporal_step_node = [0 for _ in range(self.n_rollout_threads)]
-            self.max_edges = args.max_edges
-            self.time_gap = args.time_gap
-
-    def insert(self, masks, neighbors=None, neighbors_edge_feat=None, neighbors_edge_timestamps=None, bad_masks=None, active_masks=None, available_actions=None):
-        
-        if self.use_graph:
-            for batch_idx in range(len(neighbors)):
-
-                for node_idx in range(len(neighbors[batch_idx])):
-                    self.temporal_neighbors[batch_idx, self.temporal_step_node[batch_idx] ] = neighbors[batch_idx][node_idx]
-                    self.temporal_step_node[batch_idx] = (self.temporal_step_node[batch_idx] + 1) % self.time_gap
-
-                for edge_idx in range(len(neighbors_edge_feat[batch_idx])):
-                    self.temporal_neighbors_edge_feat[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_feat[batch_idx][edge_idx]
-                    assert not np.isinf(neighbors_edge_timestamps[batch_idx][edge_idx]).any(), "InF!!"
-                    self.temporal_neighbors_edge_timestamps[batch_idx, self.temporal_step_edge[batch_idx] ] = neighbors_edge_timestamps[batch_idx][edge_idx]
-                    self.temporal_step_edge[batch_idx] = (self.temporal_step_edge[batch_idx] + 1) % self.max_edges
-
-            self.temporal_neighbors_edge_feat = self.temporal_neighbors_edge_feat * np.tile(np.expand_dims(masks.copy(), -1), (1, self.max_edges, 1))
-            self.temporal_neighbors_edge_timestamps = self.temporal_neighbors_edge_timestamps * np.tile(np.expand_dims(masks.copy().astype(int), -1), (1, self.max_edges, 1))
-            self.temporal_neighbors = self.temporal_neighbors * np.tile(masks.copy().astype(int), (1, self.time_gap))

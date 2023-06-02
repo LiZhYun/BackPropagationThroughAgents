@@ -20,7 +20,7 @@ class FixedCategorical(torch.distributions.Categorical):
         return super().sample().unsqueeze(-1)
     
     def rsample(self, hard=True, tau=1.0):
-        logits_2d = self.logits.reshape(-1, self._num_events)
+        logits_2d = self.logits.reshape(*self.logits.shape[:-1], self._num_events)
         
         return F.gumbel_softmax(logits_2d, hard=hard, tau=tau)
 
