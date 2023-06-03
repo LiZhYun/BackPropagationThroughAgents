@@ -40,7 +40,7 @@ class ACTLayer(nn.Module):
             self.action_outs = nn.ModuleList([DiagGaussian(inputs_dim, continous_dim, use_orthogonal, gain), SoftCategorical(
                 inputs_dim, discrete_dim, use_orthogonal, gain)])
     
-    def forward(self, x, available_actions=None, deterministic=False, rsample=True, tau=1.0):
+    def forward(self, x, available_actions=None, deterministic=False, rsample=True, tau=1.0, joint=False):
         if self.mixed_action :
             actions = []
             action_log_probs = []
@@ -117,7 +117,10 @@ class ACTLayer(nn.Module):
                 action_log_probs = action_logits.log_probs(actions)
             elif rsample:
                 actions = action_logits.rsample(tau=tau) 
-                action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
+                if joint:
+                    action_log_probs = action_logits.log_probs_joint(torch.argmax(actions, -1))
+                else:
+                    action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
                 dist_entropy = action_logits.entropy()
                 return actions, action_log_probs, dist_entropy, action_logits.logits
             else: 
@@ -232,7 +235,7 @@ class ACTLayer(nn.Module):
             train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
             train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
             if kl:
-                action_log_probs_kl = action_logits.log_probs(joint_actions)
+                action_log_probs_kl = action_logits.log_probs_joint(joint_actions)
             else:
                 action_log_probs_kl = None
             return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, action_logits.logits

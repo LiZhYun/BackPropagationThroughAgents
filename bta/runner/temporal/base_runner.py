@@ -430,10 +430,15 @@ class Runner(object):
                 # actor update
                 ratio = torch.exp(joint_action_log_probs - old_joint_action_log_probs)
 
-                surr1 = ratio * (adv_targ_all.mean(-2))
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * (adv_targ_all.mean(-2))
+                surr1 = ratio * adv_targ_all
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
             
-                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                if self._use_policy_active_masks:
+                    policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                                            dim=-1,
+                                            keepdim=True) * active_masks_all).sum() / active_masks_all.sum()
+                else:
+                    policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
                 kl_loss = -action_log_probs_kl_all.sum(-2).mean()
             
                 policy_loss = policy_action_loss

@@ -81,7 +81,7 @@ class SeparatedReplayBuffer(object):
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
 
         self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
-        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
+        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)

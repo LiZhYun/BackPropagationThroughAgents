@@ -47,7 +47,7 @@ class Action_Attention(nn.Module):
             x = self.layers[i](x, mask)
         x = self.ln(x)
 
-        actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau)
+        actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
     
     def evaluate_actions(self, x, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
