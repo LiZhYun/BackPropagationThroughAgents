@@ -59,7 +59,7 @@ class Action_Attention(nn.Module):
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
         
-        return action_log_probs, dist_entropy
+        return action_log_probs, dist_entropy, logits
 
 class FeedForward(nn.Module):
     def __init__(self, d_model, d_ff=512, dropout=0.0, use_orthogonal=True, activation_id=1):

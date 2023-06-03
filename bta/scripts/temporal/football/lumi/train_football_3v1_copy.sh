@@ -24,7 +24,6 @@ num_agents=3
 # train param
 num_env_steps=25000000
 episode_length=200
-inner_clip=0.1
 
 case $SLURM_ARRAY_TASK_ID in
     0)
@@ -33,8 +32,8 @@ case $SLURM_ARRAY_TASK_ID in
         --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
-        --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --agent_layer 1
+        --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
+        --use_action_attention --kl_coef 0.
         ;;
     1)
         srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
@@ -42,8 +41,8 @@ case $SLURM_ARRAY_TASK_ID in
         --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
-        --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --agent_layer 2
+        --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
+        --use_action_attention --kl_coef 1e-5
         ;;
     2)
         srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
@@ -51,16 +50,7 @@ case $SLURM_ARRAY_TASK_ID in
         --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
         --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
         --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
-        --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --agent_layer 3
-        ;;
-    3)
-        srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
-        --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
-        --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
-        --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
-        --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
-        --user_name "zhiyuanli" --wandb_name "zhiyuanli" --inner_clip_param ${inner_clip} \
-        --agent_layer 4
+        --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
+        --use_action_attention --automatic_kl_tuning --kl_coef 1e-5
         ;;
 esac

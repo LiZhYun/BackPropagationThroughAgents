@@ -9,7 +9,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=small
 #SBATCH --account=project_462000277
-#SBATCH --array=0-5
+#SBATCH --array=0-3
 
 #--gpus-per-node=1
 # exp param
