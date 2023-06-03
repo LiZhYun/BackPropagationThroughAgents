@@ -159,7 +159,7 @@ class ACTLayer(nn.Module):
         
         return action_probs
 
-    def evaluate_actions(self, x, action, available_actions=None, active_masks=None, rsample=False, tau=1.0, kl=False, joint_actions=None):
+    def evaluate_actions(self, x, action, available_actions=None, active_masks=None, rsample=False, tau=1.0, kl=False, joint_actions=None, joint=False):
         if self.mixed_action:
             a, b = action.split((2, 1), -1)
             b = b.long()
@@ -217,7 +217,10 @@ class ACTLayer(nn.Module):
                 dist_entropy = action_logits.entropy().mean()   
         elif self.discrete_action:
             action_logits = self.action_out(x, available_actions)
-            action_log_probs = action_logits.log_probs(action)
+            if joint:
+                action_log_probs = action_logits.log_probs_joint(action)
+            else:
+                action_log_probs = action_logits.log_probs(action)
             if active_masks is not None:
                 dist_entropy = (action_logits.entropy()*active_masks.squeeze(-1)).sum()/active_masks.sum()
             else:
@@ -235,7 +238,7 @@ class ACTLayer(nn.Module):
             train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
             train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
             if kl:
-                action_log_probs_kl = action_logits.log_probs_joint(joint_actions)
+                action_log_probs_kl = action_logits.log_probs(joint_actions)
             else:
                 action_log_probs_kl = None
             return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, action_logits.logits

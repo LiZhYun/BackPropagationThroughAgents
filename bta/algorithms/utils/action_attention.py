@@ -57,7 +57,7 @@ class Action_Attention(nn.Module):
             x = self.layers[i](x, mask)
         x = self.ln(x)
 
-        train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau)
+        train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         
         return action_log_probs, dist_entropy, logits
 

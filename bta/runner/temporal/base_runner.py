@@ -439,7 +439,7 @@ class Runner(object):
                                             keepdim=True) * active_masks_all).sum() / active_masks_all.sum()
                 else:
                     policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
-                kl_loss = -action_log_probs_kl_all.sum(-2).mean()
+                kl_loss = -action_log_probs_kl_all.sum(-2).mean()- joint_dist_entropy
             
                 policy_loss = policy_action_loss
 
