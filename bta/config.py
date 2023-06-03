@@ -282,6 +282,8 @@ def get_config():
                         help='action attention')
     parser.add_argument("--skip_connect",  action='store_true', default=False,
                         help='skip connection (default: False)')
+    parser.add_argument("--automatic_kl_tuning",  action='store_true', default=False,
+                        help='Automaically adjust kl_coef (default: False)')
     parser.add_argument("--automatic_entropy_tuning",  action='store_true', default=False,
                         help='Automaically adjust entropy_coef (default: False)')
     parser.add_argument("--automatic_target_entropy_tuning",  action='store_true', default=False,
@@ -312,6 +314,8 @@ def get_config():
                         help='attention learning rate (default: 5e-4)')
     parser.add_argument("--entropy_lr", type=float, default=5e-4,
                         help='entropy learning rate (default: 5e-4)')
+    parser.add_argument("--kl_lr", type=float, default=3e-4,
+                        help='kl learning rate (default: 5e-5)')
     parser.add_argument("--opti_eps", type=float, default=1e-5,
                         help='RMSprop optimizer epsilon (default: 1e-5)')
     parser.add_argument("--weight_decay", type=float, default=0)
@@ -341,8 +345,8 @@ def get_config():
                         default=1, help='policy value loss coefficient (default: 0.5)')
     parser.add_argument("--entropy_coef", type=float, default=0.01,
                         help='entropy term coefficient (default: 0.01)')
-    parser.add_argument("--kl_coef", type=float, default=0.01,
-                        help='KL term coefficient (default: 0.01)')
+    parser.add_argument("--kl_coef", type=float, default=1e-4,
+                        help='KL term coefficient (default: 0.0001)')
     parser.add_argument("--value_loss_coef", type=float,
                         default=1, help='value loss coefficient (default: 0.5)')
     parser.add_argument("--use_max_grad_norm",

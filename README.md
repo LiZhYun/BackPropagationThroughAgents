@@ -47,9 +47,9 @@ used in the paper; however, please refer to the appendix for a full list of hype
 
 ``` Bash
 # create conda environment
-conda create -n bpta python==3.6.1
+conda create -n bpta python=3.8
 conda activate bpta
-pip install torch==1.5.1+cu101 torchvision==0.6.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
 ```
 
 ```

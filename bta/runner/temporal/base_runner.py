@@ -56,7 +56,6 @@ class Runner(object):
         self.policy_value_loss_coef = self.all_args.policy_value_loss_coef
         self.value_loss_coef = self.all_args.value_loss_coef
         self.entropy_coef = self.all_args.entropy_coef
-        self.kl_coef = self.all_args.kl_coef
         self.max_grad_norm = self.all_args.max_grad_norm  
         self.huber_delta = self.all_args.huber_delta
         self._use_recurrent_policy = self.all_args.use_recurrent_policy
@@ -69,6 +68,16 @@ class Runner(object):
         self._use_value_active_masks = self.all_args.use_value_active_masks
         self._use_policy_active_masks = self.all_args.use_policy_active_masks
         self._use_policy_vhead = self.all_args.use_policy_vhead
+        self.automatic_kl_tuning = self.all_args.automatic_kl_tuning
+        if self.automatic_kl_tuning:
+            self.log_kl_coef = torch.tensor(np.log(self.all_args.kl_coef), requires_grad=True, device=self.device)
+            self.kl_coef = self.log_kl_coef.exp()
+            self.kl_lr = self.all_args.kl_lr
+            self.opti_eps = self.all_args.opti_eps
+            self.weight_decay = self.all_args.weight_decay
+            self.kl_coef_optim = torch.optim.Adam([self.log_kl_coef], lr=self.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+        else:
+            self.kl_coef = self.all_args.kl_coef
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
@@ -328,6 +337,8 @@ class Runner(object):
             train_info['critic_grad_norm'] = 0
             train_info['ratio'] = 0
             train_info['kl_loss'] = 0
+            train_info['kl_coef'] = 0
+            train_info['kl_coef_loss'] = 0
             train_infos.append(train_info)
 
             self.trainer[agent_idx].prep_training()
@@ -440,12 +451,27 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
                 self.attention_optimizer.step()
+
+                if self.automatic_kl_tuning:
+                    kl_coef_loss = -(self.log_kl_coef * (kl_loss).detach()).mean()
+
+                    self.kl_coef_optim.zero_grad()
+                    kl_coef_loss.backward()
+                    self.kl_coef_optim.step()
+
+                    self.kl_coef = self.log_kl_coef.exp()
+                    kl_tlogs = self.kl_coef.item() # For TensorboardX logs
+                else:
+                    kl_coef_loss = torch.tensor(0.).to(self.device)
+                    kl_tlogs = self.kl_coef # For TensorboardX log
                 
                 for agent_idx in range(self.num_agents):
                     train_infos[agent_idx]['policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
-                    # train_infos[agent_idx]['kl_loss'] += kl_loss.item()
+                    train_infos[agent_idx]['kl_loss'] += kl_loss.item()
+                    train_infos[agent_idx]['kl_coef'] += kl_tlogs
+                    train_infos[agent_idx]['kl_coef_loss'] += kl_coef_loss.item()
 
         num_updates = self.ppo_epoch * self.num_mini_batch
 

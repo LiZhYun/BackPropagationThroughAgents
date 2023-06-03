@@ -8,7 +8,7 @@ import yaml
 from easydict import EasyDict
 import copy
 from typing import NoReturn, Optional, List
-from torch._six import string_classes
+string_classes=str
 import re
 from collections.abc import Sequence, Mapping
 import collections.abc as container_abcs
