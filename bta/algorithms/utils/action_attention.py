@@ -41,28 +41,28 @@ class Action_Attention(nn.Module):
         self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.to(device)
 
-    def forward(self, x, mask=None, available_actions=None, deterministic=False, tau=1.0):
+    def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
         x = self.logit_encoder(x)
-        for i in range(self._attn_N):
-            x = self.layers[i](x, mask)
         x = self.ln(x)
+        for i in range(self._attn_N):
+            x = self.layers[i](x, obs_rep, mask)
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
     
-    def evaluate_actions(self, x, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
+    def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
         x = self.logit_encoder(x)
-        for i in range(self._attn_N):
-            x = self.layers[i](x, mask)
         x = self.ln(x)
+        for i in range(self._attn_N):
+            x = self.layers[i](x, obs_rep, mask)
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         
         return action_log_probs, dist_entropy, logits
 
 class FeedForward(nn.Module):
-    def __init__(self, d_model, d_ff=512, dropout=0.0, use_orthogonal=True, activation_id=1):
+    def __init__(self, d_model, d_ff=128, dropout=0.0, use_orthogonal=True, activation_id=1):
         super(FeedForward, self).__init__()
         # We set d_ff as a default to 2048
         active_func = [nn.Tanh(), nn.ReLU(), nn.LeakyReLU(), nn.ELU()][activation_id]
@@ -146,21 +146,22 @@ class MultiHeadAttention(nn.Module):
 
 
 class EncoderLayer(nn.Module):
-    def __init__(self, d_model, heads, dropout=0.0, use_orthogonal=True, activation_id=False, d_ff=512, use_FF=False):
+    def __init__(self, d_model, heads, dropout=0.0, use_orthogonal=True, activation_id=False, d_ff=128):
         super(EncoderLayer, self).__init__()
-        self._use_FF = use_FF
         self.norm_1 = nn.LayerNorm(d_model)
         self.norm_2 = nn.LayerNorm(d_model)
-        self.attn = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
+        self.norm_3 = nn.LayerNorm(d_model)
+        self.attn1 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
+        self.attn2 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.ff = FeedForward(d_model, d_ff, dropout, use_orthogonal, activation_id)
         self.dropout_1 = nn.Dropout(dropout)
         self.dropout_2 = nn.Dropout(dropout)
+        self.dropout_3 = nn.Dropout(dropout)
 
-    def forward(self, x, mask):
-        x2 = self.norm_1(x)
-        x = x + self.dropout_1(self.attn(x2, x2, x2, mask))
-        if self._use_FF:
-            x2 = self.norm_2(x)
-            x = x + self.dropout_2(self.ff(x2))
+    def forward(self, x, obs_rep, mask):
+        x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
+        x = self.norm_2(obs_rep + self.dropout_2(self.attn2(k=x, v=x, q=obs_rep, mask=mask)))
+        x = self.norm_3(x + self.dropout_3(self.ff(x)))
+
         return x
 

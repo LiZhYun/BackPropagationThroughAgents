@@ -144,6 +144,7 @@ class Runner(object):
                         agent_id,
                         device = self.device)
             self.policy.append(po)
+        self.obs_emb_size = self.policy[0].actor.abs_size
         
         if self.use_action_attention:
             from bta.algorithms.utils.action_attention import Action_Attention
@@ -376,6 +377,7 @@ class Runner(object):
                 adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                 active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                 logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 kl_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 action_log_probs_kl_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                 for agent_idx in range(self.num_agents):
@@ -391,7 +393,7 @@ class Runner(object):
                     ego_exclusive_action = one_hot_actions_batch[:,0:self.num_agents]
                     execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(self.device)
 
-                    values, train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
+                    values, train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 
@@ -407,6 +409,7 @@ class Runner(object):
                                                                             )
                 
                     logits_all[:, agent_idx] = train_actions.clone()
+                    obs_feats_all[:, agent_idx] = obs_feat.clone()
                     kl_all[:, agent_idx] = logits.clone()
                     action_log_probs_kl_all[:, agent_idx] = action_log_probs_kl.clone()
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -425,7 +428,7 @@ class Runner(object):
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
                     train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
 
-                joint_action_log_probs, joint_dist_entropy, joint_logits = self.action_attention.evaluate_actions(logits_all, joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
+                joint_action_log_probs, joint_dist_entropy, joint_logits = self.action_attention.evaluate_actions(logits_all, obs_feats_all, joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
 
                 # actor update
                 ratio = torch.exp(joint_action_log_probs - old_joint_action_log_probs)
@@ -450,17 +453,17 @@ class Runner(object):
                 (policy_loss + kl_loss * self.kl_coef - joint_dist_entropy * self.entropy_coef).backward()
                 
                 if self._use_max_grad_norm:
+                    attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                     for agent_idx in range(self.num_agents): 
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
-                    train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
+                        train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                 else:
+                    attention_grad_norm = get_gard_norm(self.action_attention.parameters())
                     for agent_idx in range(self.num_agents): 
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    attention_grad_norm = get_gard_norm(self.action_attention.parameters())
-                    train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
+                        train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()

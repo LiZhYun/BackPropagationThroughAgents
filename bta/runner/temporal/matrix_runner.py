@@ -101,6 +101,7 @@ class MatrixRunner(Runner):
         values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         actions = np.zeros((self.n_rollout_threads, self.agent_layer*self.num_agents, self.action_dim))
         logits = torch.zeros(self.n_rollout_threads, self.agent_layer*self.num_agents, self.action_dim).to(self.device)
+        obs_feats = torch.zeros(self.n_rollout_threads, self.agent_layer*self.num_agents, self.obs_emb_size).to(self.device)
         hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.agent_layer, 1), dtype=np.int32)
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.agent_layer, 1))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
@@ -136,7 +137,7 @@ class MatrixRunner(Runner):
                     else:
                         tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
 
-            value, action, action_log_prob, rnn_state, rnn_state_critic, logit \
+            value, action, action_log_prob, rnn_state, rnn_state_critic, logit, obs_feat \
                 = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
                                                             self.buffer[agent_idx].obs[step],
                                                             self.buffer[agent_idx].rnn_states[step],
@@ -148,6 +149,7 @@ class MatrixRunner(Runner):
             hard_actions[:, agent_idx, idx//self.num_agents] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
             actions[:, idx] = _t2n(action)
             logits[:, idx] = action.clone()
+            obs_feats[:, idx] = obs_feat.clone()
             action_log_probs[:, agent_idx, idx//self.num_agents] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
@@ -155,7 +157,7 @@ class MatrixRunner(Runner):
 
         joint_actions, joint_action_log_probs = None, None
         if self.use_action_attention:
-            joint_actions, joint_action_log_probs = self.action_attention(logits, tau=self.temperature)
+            joint_actions, joint_action_log_probs = self.action_attention(logits, obs_feats, tau=self.temperature)
             joint_actions = _t2n(torch.argmax(joint_actions, -1, keepdim=True).to(torch.int))
             joint_action_log_probs = _t2n(joint_action_log_probs)
 

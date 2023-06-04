@@ -122,7 +122,7 @@ class R_Actor(nn.Module):
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
         
-        # agent_feat = actor_features.clone()
+        obs_feat = actor_features.clone()
 
         masked_actions = (onehot_action * execution_mask.unsqueeze(-1)).view(*onehot_action.shape[:-2], -1)
         # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=1)
@@ -138,7 +138,7 @@ class R_Actor(nn.Module):
         else:
             actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
         
-        return actions, action_log_probs, rnn_states, logits, dist_entropy
+        return actions, action_log_probs, rnn_states, logits, dist_entropy, obs_feat
     
     def get_raw_action(self, obs, rnn_states, masks, available_actions=None, deterministic=False, tau=1.0):        
         if self._nested_obs:
@@ -228,6 +228,8 @@ class R_Actor(nn.Module):
         if self._use_influence_policy:
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
+        
+        obs_feat = actor_features.clone()
 
         masked_actions = (onehot_action * execution_mask.unsqueeze(-1)).view(*onehot_action.shape[:-2], -1)
         # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=1)
@@ -239,7 +241,7 @@ class R_Actor(nn.Module):
         # actor_features = torch.cat([actor_features, id_feat], dim=1)
         train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, kl=kl, joint_actions=joint_actions)
         
-        return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits
+        return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat
 
 class R_Critic(nn.Module):
     def __init__(self, args, share_obs_space, action_space, device=torch.device("cpu")):
