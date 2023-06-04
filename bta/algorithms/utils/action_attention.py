@@ -42,7 +42,7 @@ class Action_Attention(nn.Module):
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
-        x = self.logit_encoder(x)
+        x = self.logit_encoder(x) + obs_rep
         x = self.ln(x)
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
@@ -52,7 +52,7 @@ class Action_Attention(nn.Module):
     
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
-        x = self.logit_encoder(x)
+        x = self.logit_encoder(x) + obs_rep
         x = self.ln(x)
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
@@ -160,7 +160,7 @@ class EncoderLayer(nn.Module):
 
     def forward(self, x, obs_rep, mask):
         x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
-        x = self.norm_2(obs_rep + self.dropout_2(self.attn2(k=x, v=x, q=obs_rep, mask=mask)))
+        # x = self.norm_2(obs_rep + self.dropout_2(self.attn2(k=x, v=x, q=obs_rep, mask=mask)))
         x = self.norm_3(x + self.dropout_3(self.ff(x)))
 
         return x

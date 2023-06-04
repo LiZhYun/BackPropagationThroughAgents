@@ -68,6 +68,12 @@ class Runner(object):
         self._use_value_active_masks = self.all_args.use_value_active_masks
         self._use_policy_active_masks = self.all_args.use_policy_active_masks
         self._use_policy_vhead = self.all_args.use_policy_vhead
+        self.gamma = self.all_args.gamma
+        self.gae_lambda = self.all_args.gae_lambda
+        self._use_gae = self.all_args.use_gae
+        self._use_popart = self.all_args.use_popart
+        self._use_valuenorm = self.all_args.use_valuenorm
+        self._use_proper_time_limits = self.all_args.use_proper_time_limits
         self.automatic_kl_tuning = self.all_args.automatic_kl_tuning
         if self.automatic_kl_tuning:
             self.log_kl_coef = torch.tensor(np.log(self.all_args.kl_coef), requires_grad=True, device=self.device)
@@ -192,6 +198,36 @@ class Runner(object):
                                                                 )
             next_value = _t2n(next_value)
             self.buffer[agent_id].compute_returns(next_value, self.trainer[agent_id].value_normalizer)
+
+    @torch.no_grad()
+    def joint_compute(self):
+        for agent_id in range(self.num_agents):
+            # self.trainer[agent_id].prep_rollout()
+            next_value = self.trainer[agent_id].policy.get_values(self.buffer[agent_id].share_obs[-1], 
+                                                                self.buffer[agent_id].rnn_states_critic[-1],
+                                                                self.buffer[agent_id].masks[-1],
+                                                                )
+            next_value = _t2n(next_value)
+            self.buffer[agent_id].value_preds[-1] = next_value
+        self.compute_returns(self.buffer[0].rewards, [self.trainer[i].value_normalizer for i in range(self.num_agents)])
+    
+    def compute_returns(self, rewards, value_normalizer=None):
+        self.value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
+        self.advg = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
+        if self._use_gae:
+            gae = 0
+            for step in reversed(range(rewards.shape[0])):
+                if self._use_popart or self._use_valuenorm:
+                    norm_next_value = 0
+                    norm_value = 0
+                    for i in range(self.num_agents):
+                        norm_next_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step + 1])
+                        norm_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step])
+                    norm_next_value /= self.num_agents
+                    norm_value /= self.num_agents
+                    delta = rewards[step] + self.gamma * norm_next_value * self.buffer[0].masks[step + 1] - norm_value
+                    gae = delta + self.gamma * self.gae_lambda * self.buffer[0].masks[step + 1] * gae
+                    self.advg[step] = gae + norm_value
 
     def train(self):
         train_infos = []
@@ -330,7 +366,11 @@ class Runner(object):
     
     def joint_train(self):
         train_infos = []
-        advantages_all = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
+        advantages_all = self.advg[:-1]
+        advantages_copy = advantages_all.copy()
+        mean_advantages = np.nanmean(advantages_copy)
+        std_advantages = np.nanstd(advantages_copy)
+        advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
         for agent_idx in range(self.num_agents):
             train_info = defaultdict(float)
             train_info['value_loss'] = 0
@@ -346,19 +386,7 @@ class Runner(object):
             train_infos.append(train_info)
 
             self.trainer[agent_idx].prep_training()
-            if self._use_popart or self._use_valuenorm:
-                advantages = self.buffer[agent_idx].returns[:-1] - self.trainer[agent_idx].value_normalizer.denormalize(self.buffer[agent_idx].value_preds[:-1])
-            else:
-                advantages = self.buffer[agent_idx].returns[:-1] - self.buffer[agent_idx].value_preds[:-1]
-            # if self.all_args.env_name != "matrix":
-            advantages_copy = advantages.copy()
-            advantages_copy[self.buffer[agent_idx].active_masks[:-1] == 0.0] = np.nan
-            mean_advantages = np.nanmean(advantages_copy)
-            std_advantages = np.nanstd(advantages_copy)
-            advantages = (advantages - mean_advantages) / (std_advantages + 1e-5)
-            advantages_all[:,:,agent_idx] = advantages.copy()
-        # advantages = np.nanmean(advantages_all, axis=2)
-
+            
         batch_size = self.n_rollout_threads * self.episode_length
         mini_batch_size = batch_size // self.num_mini_batch
 
@@ -366,11 +394,11 @@ class Runner(object):
             rand = torch.randperm(batch_size).numpy()
             sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
             if self._use_recurrent_policy:
-                data_generators = [self.buffer[agent_idx].recurrent_generator(advantages_all[:,:,agent_idx], self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
+                data_generators = [self.buffer[agent_idx].recurrent_generator(advantages_all, self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
             elif self._use_naive_recurrent:
-                data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advantages_all[:,:,agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
+                data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advantages_all, self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             else:
-                data_generators = [self.buffer[agent_idx].feed_forward_generator(advantages_all[:,:,agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
+                data_generators = [self.buffer[agent_idx].feed_forward_generator(advantages_all, self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
                 available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -433,15 +461,10 @@ class Runner(object):
                 # actor update
                 ratio = torch.exp(joint_action_log_probs - old_joint_action_log_probs)
 
-                surr1 = ratio * adv_targ_all
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+                surr1 = ratio * adv_targ_all.mean(-2)
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(-2)
             
-                if self._use_policy_active_masks:
-                    policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
-                                            dim=-1,
-                                            keepdim=True) * active_masks_all).sum() / active_masks_all.sum()
-                else:
-                    policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
                 kl_loss = -action_log_probs_kl_all.sum(-2).mean()- joint_dist_entropy
             
                 policy_loss = policy_action_loss

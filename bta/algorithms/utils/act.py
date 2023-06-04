@@ -118,7 +118,7 @@ class ACTLayer(nn.Module):
             elif rsample:
                 actions = action_logits.rsample(tau=tau) 
                 if joint:
-                    action_log_probs = action_logits.log_probs_joint(torch.argmax(actions, -1))
+                    action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
                 else:
                     action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
                 dist_entropy = action_logits.entropy()
@@ -218,7 +218,7 @@ class ACTLayer(nn.Module):
         elif self.discrete_action:
             action_logits = self.action_out(x, available_actions)
             if joint:
-                action_log_probs = action_logits.log_probs_joint(action)
+                action_log_probs = action_logits.log_probs(action)
             else:
                 action_log_probs = action_logits.log_probs(action)
             if active_masks is not None:
