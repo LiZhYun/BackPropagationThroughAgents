@@ -33,6 +33,7 @@ class R_Actor(nn.Module):
         self._use_policy_vhead = args.use_policy_vhead
         self._use_popart = args.use_popart 
         self._recurrent_N = args.recurrent_N 
+        self.use_action_attention = args.use_action_attention
         self.agent_id = agent_id 
         self.tpdv = dict(dtype=torch.float32, device=device)
 
@@ -79,7 +80,10 @@ class R_Actor(nn.Module):
             self.action_dim = continous_dim + discrete_dim
 
         # input_size += args.num_agents * self.action_dim + args.num_agents
-        self.action_base = MLPBase(args, [args.num_agents * self.action_dim + args.num_agents], use_attn_internal=args.use_attn_internal, use_cat_self=True)
+        if self.use_action_attention:
+            self.action_base = MLPBase(args, [args.num_agents], use_attn_internal=args.use_attn_internal, use_cat_self=True)
+        else:
+            self.action_base = MLPBase(args, [args.num_agents * self.action_dim + args.num_agents], use_attn_internal=args.use_attn_internal, use_cat_self=True)
         self.feature_norm = nn.LayerNorm(input_size)
 
         self.num_agents = args.num_agents
@@ -121,16 +125,18 @@ class R_Actor(nn.Module):
         if self._use_influence_policy:
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
-        
-        obs_feat = actor_features.clone()
 
         masked_actions = (onehot_action * execution_mask.unsqueeze(-1)).view(*onehot_action.shape[:-2], -1)
         # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=1)
 
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
         
-        actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
+        if self.use_action_attention:
+            actor_features = actor_features + self.action_base(id_feat)
+        else:
+            actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
         actor_features = self.feature_norm(actor_features)
+        obs_feat = actor_features.clone()
 
         if deterministic:
             logits = None
@@ -228,15 +234,17 @@ class R_Actor(nn.Module):
         if self._use_influence_policy:
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
-        
-        obs_feat = actor_features.clone()
 
         masked_actions = (onehot_action * execution_mask.unsqueeze(-1)).view(*onehot_action.shape[:-2], -1)
         # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=1)
 
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
-        actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
+        if self.use_action_attention:
+            actor_features = actor_features + self.action_base(id_feat)
+        else:
+            actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
         actor_features = self.feature_norm(actor_features)
+        obs_feat = actor_features.clone()
 
         # actor_features = torch.cat([actor_features, id_feat], dim=1)
         train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, kl=kl, joint_actions=joint_actions)
