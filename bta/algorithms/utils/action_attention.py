@@ -42,7 +42,7 @@ class Action_Attention(nn.Module):
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
-        x = self.logit_encoder(x) + obs_rep
+        x = self.logit_encoder(x)
         x = self.ln(x)
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
@@ -52,7 +52,7 @@ class Action_Attention(nn.Module):
     
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
-        x = self.logit_encoder(x) + obs_rep
+        x = self.logit_encoder(x)
         x = self.ln(x)
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
@@ -151,17 +151,21 @@ class EncoderLayer(nn.Module):
         self.norm_1 = nn.LayerNorm(d_model)
         self.norm_2 = nn.LayerNorm(d_model)
         self.norm_3 = nn.LayerNorm(d_model)
+        self.norm_4 = nn.LayerNorm(d_model)
         self.attn1 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.attn2 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
+        self.attn3 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.ff = FeedForward(d_model, d_ff, dropout, use_orthogonal, activation_id)
         self.dropout_1 = nn.Dropout(dropout)
         self.dropout_2 = nn.Dropout(dropout)
         self.dropout_3 = nn.Dropout(dropout)
+        self.dropout_4 = nn.Dropout(dropout)
 
     def forward(self, x, obs_rep, mask):
         x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
-        # x = self.norm_2(obs_rep + self.dropout_2(self.attn2(k=x, v=x, q=obs_rep, mask=mask)))
-        x = self.norm_3(x + self.dropout_3(self.ff(x)))
+        obs_rep = self.norm_2(obs_rep + self.dropout_2(self.attn2(obs_rep, obs_rep, obs_rep, mask)))
+        x = self.norm_3(x + self.dropout_3(self.attn3(k=obs_rep, v=obs_rep, q=x, mask=mask)))
+        x = self.norm_4(x + self.dropout_4(self.ff(x)))
 
         return x
 
