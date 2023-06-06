@@ -441,7 +441,7 @@ class Runner(object):
                                                                             joint_actions=joint_actions_batch[:,agent_idx]
                                                                             )
                 
-                    logits_all[:, agent_idx] = train_actions.clone()
+                    logits_all[:, agent_idx] = logits.clone()
                     obs_feats_all[:, agent_idx] = obs_feat.clone()
                     kl_all[:, agent_idx] = logits.clone()
                     action_log_probs_kl_all[:, agent_idx] = action_log_probs_kl.clone()

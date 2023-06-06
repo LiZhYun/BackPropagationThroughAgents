@@ -151,7 +151,7 @@ class MatrixRunner(Runner):
                                                             tau=self.temperature)
             hard_actions[:, agent_idx, idx//self.num_agents] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
             actions[:, idx] = _t2n(action)
-            logits[:, idx] = action.clone()
+            logits[:, idx] = logit.clone()
             obs_feats[:, idx] = obs_feat.clone()
             action_log_probs[:, agent_idx, idx//self.num_agents] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)

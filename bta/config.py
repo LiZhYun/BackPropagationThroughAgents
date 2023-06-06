@@ -263,7 +263,7 @@ def get_config():
     parser.add_argument("--use_attn", action='store_true', default=False, help=" by default False, use attention tactics.")
     parser.add_argument("--attn_N", type=int, default=1, help="the number of attn layers, by default 1")
     parser.add_argument("--attn_size", type=int, default=64, help="by default, the hidden size of attn layer")
-    parser.add_argument("--attn_heads", type=int, default=4, help="by default, the # of multiply heads")
+    parser.add_argument("--attn_heads", type=int, default=1, help="by default, the # of multiply heads")
     parser.add_argument("--dropout", type=float, default=0.0, help="by default 0, the dropout ratio of attn layer.")
     parser.add_argument("--use_average_pool",
                         action='store_false', default=True, help="by default True, use average pooling for attn model.")
