@@ -201,18 +201,20 @@ class Runner(object):
 
     @torch.no_grad()
     def joint_compute(self):
+        self.rewards = np.zeros((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         for agent_id in range(self.num_agents):
             # self.trainer[agent_id].prep_rollout()
+            self.rewards[agent_id] = self.buffer[agent_id].rewards.copy()
             next_value = self.trainer[agent_id].policy.get_values(self.buffer[agent_id].share_obs[-1], 
                                                                 self.buffer[agent_id].rnn_states_critic[-1],
                                                                 self.buffer[agent_id].masks[-1],
                                                                 )
             next_value = _t2n(next_value)
             self.buffer[agent_id].value_preds[-1] = next_value
-        self.compute_returns(self.buffer[0].rewards, [self.trainer[i].value_normalizer for i in range(self.num_agents)])
+        self.compute_returns(self.rewards.mean(0), [self.trainer[i].value_normalizer for i in range(self.num_agents)])
     
     def compute_returns(self, rewards, value_normalizer=None):
-        self.value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
+        self.returns = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.advg = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         if self._use_gae:
             gae = 0
@@ -227,7 +229,10 @@ class Runner(object):
                     norm_value /= self.num_agents
                     delta = rewards[step] + self.gamma * norm_next_value * self.buffer[0].masks[step + 1] - norm_value
                     gae = delta + self.gamma * self.gae_lambda * self.buffer[0].masks[step + 1] * gae
-                    self.advg[step] = gae + norm_value
+                    self.advg[step] = gae
+                    self.returns[step] = gae + norm_value
+        for agent_id in range(self.num_agents):
+            self.buffer[agent_id].returns = self.returns.copy()
 
     def train(self):
         train_infos = []
