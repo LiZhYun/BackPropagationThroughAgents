@@ -73,7 +73,7 @@ class FeedForward(nn.Module):
             return init(m, init_method, lambda x: nn.init.constant_(x, 0), gain=gain)
 
         self.linear_1 = nn.Sequential(
-            init_(nn.Linear(d_model, d_ff)), active_func, nn.LayerNorm(d_ff))
+            init_(nn.Linear(d_model, d_ff)), nn.GELU(), nn.LayerNorm(d_ff))
 
         self.dropout = nn.Dropout(dropout)
         self.linear_2 = init_(nn.Linear(d_ff, d_model))
