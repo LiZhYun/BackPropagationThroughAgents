@@ -31,31 +31,48 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
 
-        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size, bias=False), activate=True),
+        self.logit_encoder = nn.Sequential(init_(nn.Linear(1, self._attn_size, bias=False), activate=True),
                                                     nn.GELU())
+        self.id_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size, bias=False), activate=True), 
+                                        nn.GELU())
 
         self.layers = get_clones(EncoderLayer(
             self._attn_size, self._attn_heads, self._dropout, self._use_orthogonal, self._activation_id), self._attn_N)
-        self.ln = nn.LayerNorm(self._attn_size)
+        self.ln1 = nn.LayerNorm(self._attn_size)
+        self.ln2 = nn.LayerNorm(self._attn_size)
 
-        self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+        self.act = ACTLayer(action_space, action_dim * self._attn_size, self._use_orthogonal, self._gain)
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
-        x = self.logit_encoder(x)
-        x = self.ln(x)
+        bs, n_agents, action_dim = x.shape
+        x = x.view(bs, n_agents*action_dim, 1)
+        x = self.ln1(self.logit_encoder(x))
+        obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
+        logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
+        obs_rep = self.ln2(obs_rep + self.id_encoder(logit_id))
+
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
+        
+        x = x.view(bs, n_agents, -1)
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
     
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
-        x = self.logit_encoder(x)
-        x = self.ln(x)
+        bs, n_agents, action_dim = x.shape
+        x = x.view(bs, n_agents*action_dim, 1)
+        x = self.ln1(self.logit_encoder(x))
+        obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
+        logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
+        obs_rep = self.ln2(obs_rep + self.id_encoder(logit_id))
+
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
+        
+        x = x.view(bs, n_agents, -1)
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         
