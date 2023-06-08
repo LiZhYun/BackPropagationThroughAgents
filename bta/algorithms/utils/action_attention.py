@@ -35,13 +35,16 @@ class Action_Attention(nn.Module):
                                                     nn.GELU())
         self.id_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size, bias=False), activate=True), 
                                         nn.GELU())
+        self.compress_dim = nn.Sequential(init_(nn.Linear(action_dim, 1), activate=True), 
+                                        nn.GELU())
 
         self.layers = get_clones(EncoderLayer(
             self._attn_size, self._attn_heads, self._dropout, self._use_orthogonal, self._activation_id), self._attn_N)
         self.ln1 = nn.LayerNorm(self._attn_size)
         self.ln2 = nn.LayerNorm(self._attn_size)
+        self.ln3 = nn.LayerNorm(self._attn_size)
 
-        self.act = ACTLayer(action_space, action_dim * self._attn_size, self._use_orthogonal, self._gain)
+        self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
@@ -55,7 +58,8 @@ class Action_Attention(nn.Module):
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
         
-        x = x.view(bs, n_agents, -1)
+        x = x.view(bs, n_agents, action_dim, -1)
+        x = self.ln3(self.compress_dim(x.transpose(2, 3)).view(bs, n_agents, -1))
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
@@ -72,7 +76,8 @@ class Action_Attention(nn.Module):
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
         
-        x = x.view(bs, n_agents, -1)
+        x = x.view(bs, n_agents, action_dim, -1)
+        x = self.ln3(self.compress_dim(x.transpose(2, 3)).view(bs, n_agents, -1))
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         
