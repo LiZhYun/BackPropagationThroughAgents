@@ -31,11 +31,11 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
 
-        self.logit_encoder = nn.Sequential(init_(nn.Linear(1, self._attn_size, bias=False), activate=True),
+        self.logit_encoder = nn.Sequential(init_(nn.Linear(1, self._attn_size), activate=True),
                                                     nn.GELU())
-        self.id_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size, bias=False), activate=True), 
+        self.id_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                         nn.GELU())
-        self.compress_dim = nn.Sequential(init_(nn.Linear(action_dim, 1), activate=True), 
+        self.compress_dim = nn.Sequential(init_(nn.Conv2d(args.num_agents*action_dim, args.num_agents, 1), activate=True), 
                                         nn.GELU())
 
         self.layers = get_clones(EncoderLayer(
@@ -58,8 +58,9 @@ class Action_Attention(nn.Module):
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
         
-        x = x.view(bs, n_agents, action_dim, -1)
-        x = self.ln3(self.compress_dim(x.transpose(2, 3)).view(bs, n_agents, -1))
+        sqrt_dim = int(math.sqrt(self._attn_size))
+        x = x.view(bs, n_agents*action_dim, sqrt_dim, sqrt_dim)
+        x = self.ln3(self.compress_dim(x).view(bs, n_agents, self._attn_size))
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
@@ -76,8 +77,9 @@ class Action_Attention(nn.Module):
         for i in range(self._attn_N):
             x = self.layers[i](x, obs_rep, mask)
         
-        x = x.view(bs, n_agents, action_dim, -1)
-        x = self.ln3(self.compress_dim(x.transpose(2, 3)).view(bs, n_agents, -1))
+        sqrt_dim = int(math.sqrt(self._attn_size))
+        x = x.view(bs, n_agents*action_dim, sqrt_dim, sqrt_dim)
+        x = self.ln3(self.compress_dim(x).view(bs, n_agents, self._attn_size))
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         
