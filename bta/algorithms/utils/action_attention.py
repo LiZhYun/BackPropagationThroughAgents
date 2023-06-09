@@ -31,7 +31,7 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
 
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(1+self._attn_size+action_dim, self._attn_size), activate=True),
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True),
                                                     nn.GELU())
         
         self.layers = torch.nn.ModuleList()
@@ -42,15 +42,15 @@ class Action_Attention(nn.Module):
                             self._dropout)
             )
 
-        self.act = ACTLayer(action_space, action_dim*self._attn_size, self._use_orthogonal, self._gain)
+        self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
         bs, n_agents, action_dim = x.shape
-        x = x.view(bs, n_agents*action_dim, 1)
-        obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
-        logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
-        x = self.feat_encoder(torch.cat([x, obs_rep, logit_id], -1))
+        # x = x.view(bs, n_agents*action_dim, 1)
+        # obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
+        # logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
+        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         for i in range(self._attn_N):
             x = self.layers[i](x)
@@ -63,10 +63,10 @@ class Action_Attention(nn.Module):
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
         bs, n_agents, action_dim = x.shape
-        x = x.view(bs, n_agents*action_dim, 1)
-        obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
-        logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
-        x = self.feat_encoder(torch.cat([x, obs_rep, logit_id], -1))
+        # x = x.view(bs, n_agents*action_dim, 1)
+        # obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
+        # logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
+        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         for i in range(self._attn_N):
             x = self.layers[i](x)
@@ -86,7 +86,7 @@ class MixerBlock(nn.Module):
                  dropout=0):
         super().__init__()
         self.token_layernorm = nn.LayerNorm(dims)
-        self.token_forward = FeedForward(num_agents*action_dim, num_agents, dropout)
+        self.token_forward = FeedForward(num_agents, dims, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         self.channel_forward = FeedForward(dims, dims, dropout)
