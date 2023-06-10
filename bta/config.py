@@ -304,7 +304,7 @@ def get_config():
                         help='stacked agent layer')
     
     # optimizer parameters
-    parser.add_argument("--lr", type=float, default=5e-4,
+    parser.add_argument("--lr", type=float, default=5e-6,
                         help='learning rate (default: 5e-4)')
     parser.add_argument("--tau", type=float, default=0.995,
                         help='soft update polyak (default: 0.995)')

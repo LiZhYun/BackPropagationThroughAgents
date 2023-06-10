@@ -86,10 +86,10 @@ class MixerBlock(nn.Module):
                  dropout=0):
         super().__init__()
         self.token_layernorm = nn.LayerNorm(dims)
-        self.token_forward = FeedForward(num_agents, dims, dropout)
+        self.token_forward = FeedForward(num_agents, 1, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(dims, dims, dropout)
+        self.channel_forward = FeedForward(dims, 4*dims, dropout)
         
     def token_mixer(self, x):
         x = self.token_layernorm(x).permute(0, 2, 1)
