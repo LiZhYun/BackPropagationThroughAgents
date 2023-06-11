@@ -31,8 +31,8 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
 
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True),
-                                                    nn.GELU())
+        self.logit_encoder = init_(nn.Linear(action_dim, self._attn_size), activate=True)
+        self.feat_encoder = init_(nn.Linear(self._attn_size*2, self._attn_size), activate=True)
         
         self.layers = torch.nn.ModuleList()
         for ell in range(self._attn_N):
@@ -50,6 +50,7 @@ class Action_Attention(nn.Module):
         # x = x.view(bs, n_agents*action_dim, 1)
         # obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
         # logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
+        x = self.logit_encoder(x)
         x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         for i in range(self._attn_N):
@@ -66,6 +67,7 @@ class Action_Attention(nn.Module):
         # x = x.view(bs, n_agents*action_dim, 1)
         # obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
         # logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
+        x = self.logit_encoder(x)
         x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         for i in range(self._attn_N):
