@@ -272,6 +272,7 @@ def get_config():
 
     # temporal parameters
     parser.add_argument("--use_graph", action='store_true', default=False, help=" by default False, use temporal graph.")
+    parser.add_argument("--use_mix", action='store_true', default=False, help=" by default False, use mlp mix.")
     parser.add_argument('--max_edges', type=int, default=10)
     parser.add_argument('--num_layers', type=int, default=1)
     parser.add_argument('--time_channels', type=int, default=100)
