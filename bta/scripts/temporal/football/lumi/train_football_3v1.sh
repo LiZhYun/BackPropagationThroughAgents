@@ -7,9 +7,10 @@
 #SBATCH --cpus-per-task=50
 #SBATCH --mem=256G
 #SBATCH --time=3-00:00:00
-#SBATCH --partition=small
+#SBATCH --partition=small-g
+#SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
-#SBATCH --array=0-3
+#SBATCH --array=0-1
 
 #--gpus-per-node=1
 # exp param
@@ -31,4 +32,4 @@ srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---use_action_attention
+--use_action_attention --kl_coef 0. --lr 5e-5
