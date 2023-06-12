@@ -22,7 +22,7 @@ exp="check"
 num_agents=4
 
 # train param
-num_env_steps=50000000
+num_env_steps=100000000
 episode_length=1000
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
@@ -31,4 +31,4 @@ srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---use_action_attention --kl_coef 0. --lr 5e-5
+--use_action_attention --kl_coef 0.

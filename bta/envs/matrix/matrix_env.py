@@ -27,7 +27,7 @@ class ClimbingEnv(gym.Env):
 
         self._step = 0
         self.highlight = (0, 0)
-        self.length=25
+        self.length=1
         self.share_reward= True
         self.use_fixed_obs=True
         self.fixed_obs=np.array([np.array([1, 1])] * self.num_agents)

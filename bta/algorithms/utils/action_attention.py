@@ -18,6 +18,7 @@ class Action_Attention(nn.Module):
         super(Action_Attention, self).__init__()
         self._use_orthogonal = args.use_orthogonal
         self._activation_id = args.activation_id
+        self._mix_id = args.mix_id
         self._attn_N = args.attn_N
         self._gain = args.gain
         self._attn_size = args.attn_size
@@ -31,96 +32,87 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
 
-        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), nn.GELU())
-        # self.id_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), nn.GELU())
-        self.hyper_w11 = nn.Sequential(nn.Linear(args.num_agents*self._attn_size, self._attn_size),
-                                          nn.GELU(),
-                                          nn.Linear(self._attn_size, self._attn_size))
-        self.hyper_w12 = nn.Sequential(nn.Linear(self._attn_size, self._attn_size//2),
-                                          nn.GELU(),
-                                          nn.Linear(self._attn_size//2, args.num_agents))
-        self.hyper_w21 = nn.Sequential(nn.Linear(args.num_agents*self._attn_size, self._attn_size),
-                                        nn.GELU(),
-                                        nn.Linear(self._attn_size, self._attn_size))
-        self.hyper_w22 = nn.Sequential(nn.Linear(self._attn_size, self._attn_size//2),
-                                        nn.GELU(),
-                                        nn.Linear(self._attn_size//2, args.num_agents))
-        self.hyper_b11 = nn.Linear(args.num_agents*self._attn_size, self._attn_size//2)
-        self.hyper_b12 = nn.Linear(args.num_agents*self._attn_size, 1)
-        self.hyper_b21 = nn.Linear(args.num_agents*self._attn_size, self._attn_size//2)
-        self.hyper_b22 = nn.Linear(args.num_agents*self._attn_size, args.num_agents)
-                
-        self.mixer = MixerBlock(args.num_agents, action_dim, 
-                    self._attn_size, 
-                    self._dropout)
-        # self.mixer2 = MixerBlock(args.num_agents, action_dim, 
-        #             self._attn_size, 
-        #             self._dropout)
-        self.attention = EncoderLayer(self._attn_size, self._attn_heads, self._dropout, self._use_orthogonal, self._activation_id)
+        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
+                                           nn.GELU())
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+                                           nn.GELU())
+        
+        self.layers = nn.ModuleList()
+        mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
+        for layer in range(self._attn_N):
+            if mix_type in 'mixer':
+                self.layers.append(MixerBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout))
+            elif mix_type in 'hyper':
+                self.layers.append(HyperBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout))
+            elif mix_type in 'attention':
+                self.layers.append(EncoderLayer(self._attn_size, self._attn_heads, self._dropout, 
+                                                self._use_orthogonal, self._activation_id))
+            else:
+                self.layers.extend([MixerBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout),
+
+                            HyperBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout),
+
+                            EncoderLayer(self._attn_size, self._attn_heads, 
+                                         self._dropout, self._use_orthogonal, 
+                                         self._activation_id)]
+                            )
             
         self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
-        bs, n_agents, action_dim = x.shape
-        # logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
-        # id_embedding = self.id_encoder(logit_id)
-        # x = self.logit_encoder(x.view(bs, n_agents*action_dim, 1)) + id_embedding
-        x = self.logit_encoder(x)
-        # obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
-        # obs_rep = obs_rep + id_embedding
+        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
-        # x, obs_rep = self.attention(x, obs_rep, mask)
-
-        w11 = self.hyper_w11(obs_rep.view(bs, -1)).view(bs, n_agents, -1) # (3,2,32)
-        b11 = self.hyper_b11(obs_rep.view(bs, -1)).view(bs, 1, -1)  # (3,1,32)
-        hidden1 = F.elu(torch.bmm(x.permute(0,2,1), w11) + b11).view(bs, n_agents, -1)  # (3,2,1024)
-        w12 = self.hyper_w12(obs_rep.view(bs, -1)).view(bs, n_agents, 1) # (3,2,1)
-        b12 = self.hyper_b12(obs_rep.view(bs, -1)).view(bs, 1, 1)  # (3,1,1)
-        hidden2 = F.elu(torch.bmm(hidden1, w12) + b12).view(bs, -1, 1)  # (3,64,1)
-
-        w2 = self.hyper_w2(obs_rep.view(bs, -1)).view(bs, 1, n_agents)  # (3,1,2)
-        b2 = self.hyper_b2(obs_rep.view(bs, -1)).view(bs, 1, n_agents)  # (3,1,2)
-
-        x = F.elu(torch.bmm(hidden, w2) + b2)  # (3, 1, 1)
-        # x = self.mixer(x)
-        # x = self.mixer2(x)
-        
-        x = x.view(bs, n_agents, -1)
+        for layer in range(self._attn_N):
+            x = self.layers[layer](x, obs_rep)
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
     
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
-        bs, n_agents, action_dim = x.shape
-        # logit_id = torch.eye(action_dim).unsqueeze(0).repeat(bs*n_agents, 1, 1).view(bs, n_agents*action_dim, action_dim).to(obs_rep.device)
-        # id_embedding = self.id_encoder(logit_id)
-        # x = self.logit_encoder(x.view(bs, n_agents*action_dim, 1)) + id_embedding
-        x = self.logit_encoder(x)
-        # obs_rep = obs_rep.unsqueeze(-2).repeat(1, 1, action_dim, 1).view(bs, n_agents*action_dim, -1)
-        # obs_rep = obs_rep + id_embedding
+        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
-        # x, obs_rep = self.attention(x, obs_rep, mask)
-
-        w1 = self.hyper_w1(obs_rep.view(bs, -1)).view(bs, n_agents, 1) # (3,2,1)
-        b1 = self.hyper_b1(obs_rep.view(bs, -1)).view(bs, 1, 1)  # (3,1,1)
-
-        hidden = F.elu(torch.bmm(x.permute(0,2,1), w1) + b1).view(bs, -1, 1)  # (3,64,1)
-
-        w2 = self.hyper_w2(obs_rep.view(bs, -1)).view(bs, 1, n_agents)  # (3,1,2)
-        b2 = self.hyper_b2(obs_rep.view(bs, -1)).view(bs, 1, n_agents)  # (3,1,2)
-
-        x = F.elu(torch.bmm(hidden, w2) + b2)  # (3, 1, 1)
-        # x = self.mixer(x)
-        # x = self.mixer2(x)
-        
-        x = x.view(bs, n_agents, -1)
+        for layer in range(self._attn_N):
+            x = self.layers[layer](x, obs_rep)
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         
         return action_log_probs, dist_entropy, logits
 
+class HyperBlock(nn.Module):
+    def __init__(self, num_agents, action_dim, dims, 
+                 dropout=0):
+        super().__init__()
+        self.dims = dims
+        self.hyper_w1 = nn.Sequential(nn.Linear(num_agents*dims, dims),
+                                          nn.GELU(),
+                                          nn.Linear(dims, num_agents*1))
+        self.hyper_w2 = nn.Sequential(nn.Linear(num_agents*dims, dims),
+                                        nn.GELU(),
+                                        nn.Linear(dims, dims*dims*num_agents))
+        self.hyper_b1 = nn.Linear(num_agents*dims, 1)
+        self.hyper_b2 = nn.Linear(num_agents*dims, dims*num_agents)
+
+    def forward(self, x, obs_rep):
+        bs, n_agents, action_dim = x.shape
+        w1 = self.hyper_w1(obs_rep.view(bs, -1)).view(bs, n_agents, 1) # (3,2,1)
+        b1 = self.hyper_b1(obs_rep.view(bs, -1)).view(bs, 1, 1)  # (3,1,1)
+        hidden = F.gelu(torch.bmm(x.view(bs, -1, n_agents), w1) + b1).view(bs, 1, -1)  # (3,1,64)
+
+        w2 = self.hyper_w2(obs_rep.view(bs, -1)).view(bs, self.dims, n_agents*self.dims)  # (3,64,2*64)
+        b2 = self.hyper_b2(obs_rep.view(bs, -1)).view(bs, 1, n_agents*self.dims)  # (3,1,2*64)
+        x = F.gelu(torch.bmm(hidden, w2) + b2).view(bs, n_agents, -1)  # (3, 2, 64)
+        return x
+    
 class MixerBlock(nn.Module):
     """
     out = X.T + MLP_Layernorm(X.T)     # apply token mixing
@@ -145,7 +137,7 @@ class MixerBlock(nn.Module):
         x = self.channel_forward(x)
         return x
 
-    def forward(self, x):
+    def forward(self, x, obs_rep):
         x = x + self.token_mixer(x)
         x = x + self.channel_mixer(x)
         return x
@@ -251,9 +243,9 @@ class EncoderLayer(nn.Module):
         self.dropout_4 = nn.Dropout(dropout)
 
     def forward(self, x, obs_rep, mask=None):
-        # x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
-        # obs_rep = self.norm_2(obs_rep + self.dropout_2(self.attn2(obs_rep, obs_rep, obs_rep, mask)))
+        x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
+        obs_rep = self.norm_2(obs_rep + self.dropout_2(self.attn2(obs_rep, obs_rep, obs_rep, mask)))
         x = self.norm_3(obs_rep + self.dropout_3(self.attn3(k=x, v=x, q=obs_rep, mask=mask)))
         x = self.norm_4(x + self.dropout_4(self.ff(x)))
 
-        return x, obs_rep
+        return x
