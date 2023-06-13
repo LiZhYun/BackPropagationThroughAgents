@@ -88,31 +88,6 @@ class Action_Attention(nn.Module):
         
         return action_log_probs, dist_entropy, logits
 
-class HyperBlock(nn.Module):
-    def __init__(self, num_agents, action_dim, dims, 
-                 dropout=0):
-        super().__init__()
-        self.dims = dims
-        self.hyper_w1 = nn.Sequential(nn.Linear(num_agents*dims, dims),
-                                          nn.GELU(),
-                                          nn.Linear(dims, num_agents*1))
-        self.hyper_w2 = nn.Sequential(nn.Linear(num_agents*dims, dims),
-                                        nn.GELU(),
-                                        nn.Linear(dims, dims*dims*num_agents))
-        self.hyper_b1 = nn.Linear(num_agents*dims, 1)
-        self.hyper_b2 = nn.Linear(num_agents*dims, dims*num_agents)
-
-    def forward(self, x, obs_rep):
-        bs, n_agents, action_dim = x.shape
-        w1 = self.hyper_w1(obs_rep.view(bs, -1)).view(bs, n_agents, 1) # (3,2,1)
-        b1 = self.hyper_b1(obs_rep.view(bs, -1)).view(bs, 1, 1)  # (3,1,1)
-        hidden = F.gelu(torch.bmm(x.view(bs, -1, n_agents), w1) + b1).view(bs, 1, -1)  # (3,1,64)
-
-        w2 = self.hyper_w2(obs_rep.view(bs, -1)).view(bs, self.dims, n_agents*self.dims)  # (3,64,2*64)
-        b2 = self.hyper_b2(obs_rep.view(bs, -1)).view(bs, 1, n_agents*self.dims)  # (3,1,2*64)
-        x = F.gelu(torch.bmm(hidden, w2) + b2).view(bs, n_agents, -1)  # (3, 2, 64)
-        return x
-    
 class MixerBlock(nn.Module):
     """
     out = X.T + MLP_Layernorm(X.T)     # apply token mixing
@@ -122,13 +97,13 @@ class MixerBlock(nn.Module):
                  dropout=0):
         super().__init__()
         self.token_layernorm = nn.LayerNorm(dims)
-        self.token_forward = FeedForward(num_agents, 1, dropout)
+        self.token_forward = FeedForward(num_agents, dims, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         self.channel_forward = FeedForward(dims, 4*dims, dropout)
         
     def token_mixer(self, x):
-        x = self.token_layernorm(x).permute(0, 2, 1)
+        x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
         x = self.token_forward(x).permute(0, 2, 1)
         return x
     
@@ -138,8 +113,49 @@ class MixerBlock(nn.Module):
         return x
 
     def forward(self, x, obs_rep):
-        x = x + self.token_mixer(x)
+        x = x + self.token_mixer(x) # (10,2,64)
         x = x + self.channel_mixer(x)
+        return x
+
+class HyperBlock(nn.Module):
+    def __init__(self, num_agents, action_dim, dims, 
+                 dropout=0):
+        super().__init__()
+        self.dims = dims
+        self.hyper_w1 = nn.Sequential(nn.Linear(num_agents*dims, dims),
+                                          nn.GELU(),
+                                          nn.Linear(dims, num_agents*1))
+        self.hyper_w12 = nn.Sequential(nn.Linear(num_agents*dims, dims),
+                                          nn.GELU(),
+                                          nn.Linear(dims, num_agents*1))
+        self.hyper_w2 = nn.Sequential(nn.Linear(num_agents*dims, dims),
+                                        nn.GELU(),
+                                        nn.Linear(dims, dims*4*dims))
+        self.hyper_w22 = nn.Sequential(nn.Linear(num_agents*dims, dims),
+                                        nn.GELU(),
+                                        nn.Linear(dims, dims*4*dims))
+        self.hyper_b1 = nn.Linear(num_agents*dims, 1)
+        self.hyper_b12 = nn.Linear(num_agents*dims, num_agents)
+        self.hyper_b2 = nn.Linear(num_agents*dims, 4*dims)
+        self.hyper_b22 = nn.Linear(num_agents*dims, dims)
+
+    def forward(self, x, obs_rep):
+        bs, n_agents, action_dim = x.shape
+        w1 = self.hyper_w1(obs_rep.view(bs, -1)).view(bs, n_agents, -1) # (3,2,1)
+        b1 = self.hyper_b1(obs_rep.view(bs, -1)).view(bs, 1, -1)  # (3,1,1)
+        hidden = F.gelu(torch.bmm(x.view(bs, -1, n_agents), w1) + b1)  # (3,64,1)
+
+        w12 = self.hyper_w12(obs_rep.view(bs, -1)).view(bs, -1, n_agents) # (3,1,2)
+        b12 = self.hyper_b12(obs_rep.view(bs, -1)).view(bs, 1, -1)  # (3,1,1)
+        hidden = F.gelu(torch.bmm(hidden, w12) + b12).view(bs, n_agents, -1)  # (3,2,64)
+
+        w2 = self.hyper_w2(obs_rep.view(bs, -1)).view(bs, self.dims, 4*self.dims)  # (3,64,4*64)
+        b2 = self.hyper_b2(obs_rep.view(bs, -1)).view(bs, 1, 4*self.dims)  # (3,1,4*64)
+        hidden = F.gelu(torch.bmm(hidden, w2) + b2)  # (3, 2, 4*64)
+
+        w22 = self.hyper_w22(obs_rep.view(bs, -1)).view(bs, self.dims*4, self.dims)  # (3,4*64,64)
+        b22 = self.hyper_b22(obs_rep.view(bs, -1)).view(bs, 1, self.dims)  # (3,1,64)
+        x = x + F.gelu(torch.bmm(hidden, w22) + b22)  # (3, 2, 64)
         return x
 
 class FeedForward(nn.Module):
@@ -154,13 +170,14 @@ class FeedForward(nn.Module):
             return init(m, init_method, lambda x: nn.init.constant_(x, 0), gain=gain)
 
         self.linear_1 = nn.Sequential(
-            init_(nn.Linear(d_model, d_ff)), nn.GELU(), nn.LayerNorm(d_ff))
-
-        self.dropout = nn.Dropout(dropout)
-        self.linear_2 = init_(nn.Linear(d_ff, d_model))
+            init_(nn.Linear(d_model, d_ff)), 
+            nn.GELU(), 
+            nn.LayerNorm(d_ff))
+        self.dropout1 = nn.Dropout(dropout)
+        self.linear_2 = init_(nn.Linear(d_ff, d_model))  
 
     def forward(self, x):
-        x = self.dropout(self.linear_1(x))
+        x = self.dropout1(self.linear_1(x))
         x = self.linear_2(x)
         return x
 
@@ -236,7 +253,7 @@ class EncoderLayer(nn.Module):
         self.attn1 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.attn2 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.attn3 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
-        self.ff = FeedForward(d_model, 4*d_model, dropout, use_orthogonal, activation_id)
+        self.ff = FeedForward(d_model, d_model, dropout, use_orthogonal, activation_id)
         self.dropout_1 = nn.Dropout(dropout)
         self.dropout_2 = nn.Dropout(dropout)
         self.dropout_3 = nn.Dropout(dropout)
@@ -244,8 +261,6 @@ class EncoderLayer(nn.Module):
 
     def forward(self, x, obs_rep, mask=None):
         x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
-        obs_rep = self.norm_2(obs_rep + self.dropout_2(self.attn2(obs_rep, obs_rep, obs_rep, mask)))
-        x = self.norm_3(obs_rep + self.dropout_3(self.attn3(k=x, v=x, q=obs_rep, mask=mask)))
         x = self.norm_4(x + self.dropout_4(self.ff(x)))
 
         return x
