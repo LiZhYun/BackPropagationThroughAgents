@@ -97,7 +97,7 @@ class MixerBlock(nn.Module):
                  dropout=0):
         super().__init__()
         self.token_layernorm = nn.LayerNorm(dims)
-        self.token_forward = FeedForward(num_agents, dims, dropout)
+        self.token_forward = FeedForward(num_agents, 2*dims, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         self.channel_forward = FeedForward(dims, 4*dims, dropout)
