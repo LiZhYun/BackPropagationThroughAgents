@@ -252,7 +252,7 @@ class T_POLICY():
             one_hot_actions = np.stack([one_hot_actions_batch[:,i] for i in sorted_index_vector], -2)
             # one_hot_actions = one_hot_actions_batch[:,((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1)):((self.agent_layer * self.num_agents - 1)-(train_id-1))]
         # Reshape to do in a single forward pass for all steps
-        values, train_actions, action_log_probs, dist_entropy = self.policy.evaluate_actions(share_obs_batch,
+        values, train_actions, action_log_probs, _, dist_entropy, _, _ = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 

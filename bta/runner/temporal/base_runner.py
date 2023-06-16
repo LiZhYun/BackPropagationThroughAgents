@@ -298,7 +298,7 @@ class Runner(object):
                 mini_batch_size = batch_size // self.all_args.num_mini_batch
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
                 for indices in sampler:
-                    _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
+                    _, old_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                                 self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices, idx//self.num_agents],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
@@ -310,7 +310,7 @@ class Runner(object):
                     old_actions_logprobs.append(old_actions_logprob)
                 old_actions_logprob = torch.cat(old_actions_logprobs, dim=0)
             else:
-                _, old_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                _, old_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                             self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[:,idx//self.num_agents],
                                                             self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
@@ -330,7 +330,7 @@ class Runner(object):
                 mini_batch_size = batch_size // self.all_args.num_mini_batch
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.all_args.num_mini_batch)]
                 for indices in sampler:
-                    _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
+                    _, new_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                                 self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices,idx//self.num_agents],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
@@ -342,7 +342,7 @@ class Runner(object):
                     new_actions_logprobs.append(new_actions_logprob)
                 new_actions_logprob = torch.cat(new_actions_logprobs, dim=0)
             else:
-                _, new_actions_logprob, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
+                _, new_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
                                                             self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[:,idx//self.num_agents],
                                                             self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
@@ -528,6 +528,8 @@ class Runner(object):
 
     def save(self, steps=None):
         postfix = f"_{steps}.pt" if steps else ".pt"
+        if self.use_action_attention:
+            torch.save(self.action_attention.state_dict(), str(self.save_dir) + "/joint_agent" + postfix)
         for agent_id in range(self.num_agents):
             if self.use_single_network:
                 policy_model = self.trainer[agent_id].policy.model
@@ -539,6 +541,9 @@ class Runner(object):
                 torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic_agent" + str(agent_id) + postfix)
 
     def restore(self):
+        if self.use_action_attention:
+            joint_agent_state_dict = torch.load(str(self.model_dir) + '/joint_agent.pt')
+            self.action_attention.load_state_dict(joint_agent_state_dict)
         for agent_id in range(self.num_agents):
             if self.use_single_network:
                 policy_model_state_dict = torch.load(str(self.model_dir) + '/model_agent' + str(agent_id) + '.pt')
