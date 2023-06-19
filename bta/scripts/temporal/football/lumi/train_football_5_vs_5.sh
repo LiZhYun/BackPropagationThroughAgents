@@ -10,7 +10,7 @@
 #SBATCH --partition=small-g
 #SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
-#SBATCH --array=0-2
+#SBATCH --array=0-4
 
 # exp param
 env="Football"
@@ -22,7 +22,7 @@ exp="check"
 num_agents=4
 
 # train param
-num_env_steps=100000000
+num_env_steps=200000000
 episode_length=1000
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \

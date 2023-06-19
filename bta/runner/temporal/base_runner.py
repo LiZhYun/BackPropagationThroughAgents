@@ -530,20 +530,25 @@ class Runner(object):
         postfix = f"_{steps}.pt" if steps else ".pt"
         if self.use_action_attention:
             torch.save(self.action_attention.state_dict(), str(self.save_dir) + "/joint_agent" + postfix)
+            torch.save(self.attention_optimizer.state_dict(), str(self.save_dir) + "/joint_opti" + postfix)
         for agent_id in range(self.num_agents):
             if self.use_single_network:
                 policy_model = self.trainer[agent_id].policy.model
                 torch.save(policy_model.state_dict(), str(self.save_dir) + "/model_agent" + str(agent_id) + postfix)
             else:
                 policy_actor = self.trainer[agent_id].policy.actor
+                torch.save(self.trainer[agent_id].policy.actor_optimizer.state_dict(), str(self.save_dir) + "/actor_opti" + str(agent_id) + postfix)
                 torch.save(policy_actor.state_dict(), str(self.save_dir) + "/actor_agent" + str(agent_id) + postfix)
                 policy_critic = self.trainer[agent_id].policy.critic
                 torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic_agent" + str(agent_id) + postfix)
+                torch.save(self.trainer[agent_id].policy.critic_optimizer.state_dict(), str(self.save_dir) + "/critic_opti" + str(agent_id) + postfix)
 
     def restore(self):
         if self.use_action_attention:
             joint_agent_state_dict = torch.load(str(self.model_dir) + '/joint_agent.pt')
             self.action_attention.load_state_dict(joint_agent_state_dict)
+            joint_opti_state_dict = torch.load(str(self.model_dir) + '/joint_opti.pt')
+            self.attention_optimizer.load_state_dict(joint_opti_state_dict)
         for agent_id in range(self.num_agents):
             if self.use_single_network:
                 policy_model_state_dict = torch.load(str(self.model_dir) + '/model_agent' + str(agent_id) + '.pt')
@@ -551,9 +556,13 @@ class Runner(object):
             else:
                 policy_actor_state_dict = torch.load(str(self.model_dir) + '/actor_agent' + str(agent_id) + '.pt')
                 self.policy[agent_id].actor.load_state_dict(policy_actor_state_dict)
+                actor_opti_state_dict = torch.load(str(self.model_dir) + '/actor_opti.pt')
+                self.trainer[agent_id].policy.actor_optimizer.load_state_dict(actor_opti_state_dict)
                 if not self.use_render:
                     policy_critic_state_dict = torch.load(str(self.model_dir) + '/critic_agent' + str(agent_id) + '.pt')
                     self.policy[agent_id].critic.load_state_dict(policy_critic_state_dict)
+                    critic_opti_state_dict = torch.load(str(self.model_dir) + '/critic_opti.pt')
+                    self.trainer[agent_id].policy.critic_optimizer.load_state_dict(critic_opti_state_dict)
 
     def log_train(self, train_infos, total_num_steps): 
         for agent_id in range(self.num_agents):
