@@ -10,6 +10,7 @@ logs
 __pycache__
 bta/envs/hanabi/build/
 results
+/results/
 *.pyc
 /gifs/
 /out/

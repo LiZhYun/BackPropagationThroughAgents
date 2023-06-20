@@ -22,7 +22,7 @@ exp="check"
 num_agents=4
 
 # train param
-num_env_steps=200000000
+num_env_steps=150000000
 episode_length=1000
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
