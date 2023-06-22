@@ -557,12 +557,12 @@ class Runner(object):
                 policy_actor_state_dict = torch.load(str(self.model_dir) + '/actor_agent' + str(agent_id) + '.pt')
                 self.policy[agent_id].actor.load_state_dict(policy_actor_state_dict)
                 actor_opti_state_dict = torch.load(str(self.model_dir) + '/actor_opti' + str(agent_id) + '.pt')
-                self.trainer[agent_id].policy.actor_optimizer.load_state_dict(actor_opti_state_dict)
+                self.policy[agent_id].actor_optimizer.load_state_dict(actor_opti_state_dict)
                 if not self.use_render:
                     policy_critic_state_dict = torch.load(str(self.model_dir) + '/critic_agent' + str(agent_id) + '.pt')
                     self.policy[agent_id].critic.load_state_dict(policy_critic_state_dict)
                     critic_opti_state_dict = torch.load(str(self.model_dir) + '/critic_opti' + str(agent_id) + '.pt')
-                    self.trainer[agent_id].policy.critic_optimizer.load_state_dict(critic_opti_state_dict)
+                    self.policy[agent_id].critic_optimizer.load_state_dict(critic_opti_state_dict)
 
     def log_train(self, train_infos, total_num_steps): 
         for agent_id in range(self.num_agents):
