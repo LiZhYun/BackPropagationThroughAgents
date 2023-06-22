@@ -3,7 +3,8 @@
 #SBATCH --output=./out/overcooked-temporal_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/overcooked-temporal_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
-#SBATCH --partition=small
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=256G
@@ -31,9 +32,10 @@ exp="check"
 echo "env is ${env}, layout is ${layout}, algo is ${algo}, exp is ${exp} version is ${version}"
 
 apptainer_wrapper exec python ../../../train/train_overcooked.py \
-    --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} --layout_name ${layout} --num_agents ${num_agents} \
-    --seed 1 --n_training_threads 1 --n_rollout_threads 100 --num_mini_batch 1 --episode_length 400 --num_env_steps 10000000 --reward_shaping_horizon 100000000 \
-    --ppo_epoch 15 --max_grad_norm 10.0 \
-    --cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" --use_eval --n_eval_rollout_threads 100 --save_interval 25 --log_inerval 10 \
-    --overcooked_version ${version} \
-    --wandb_name "zhiyuanli" --user_name "zhiyuanli" 
+--env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} --layout_name ${layout} --num_agents ${num_agents} \
+--seed 1 --n_training_threads 1 --n_rollout_threads 100 --num_mini_batch 1 --episode_length 400 --num_env_steps 10000000 --reward_shaping_horizon 100000000 \
+--ppo_epoch 15 --max_grad_norm 10.0 \
+--cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" --use_eval --n_eval_rollout_threads 100 --save_interval 25 --log_inerval 10 \
+--overcooked_version ${version} \
+--wandb_name "zhiyuanli" --user_name "zhiyuanli" \
+--use_action_attention --kl_coef 0.
