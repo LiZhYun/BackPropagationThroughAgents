@@ -60,7 +60,7 @@ class GoBiggerRunner(Runner):
                     rnn_states_critic, joint_actions, joint_action_log_probs = self.collect(step)
                 
                 env_actions = []
-                trans_actions = self.transform_action(joint_actions) if joint_actions is not None else self.transform_action(hard_actions)
+                trans_actions = self.transform_action(joint_actions) if joint_actions is not None else self.transform_action(hard_actions[:,:,-1])
                 for env_idx in range(self.n_rollout_threads):
                     env_action = {i: [trans_actions[env_idx][i][0], trans_actions[env_idx][i][1], trans_actions[env_idx][i][2]] for i in range(self.num_agents)} 
                     env_action.update({bot.name: bot.step(obs_raw[env_idx][1][bot.name]) for bot in bot_agents[env_idx]})
@@ -269,15 +269,15 @@ class GoBiggerRunner(Runner):
             if not self.use_centralized_V:
                 share_obs = obs
 
-            self.buffer[agent_id].insert(share_obs[:, agent_id],
-                                        obs[:, agent_id],
+            self.buffer[agent_id].insert(share_obs,
+                                        share_obs,
                                         rnn_states[:, agent_id],
                                         rnn_states_critic[:, agent_id],
                                         actions[:, :],
                                         hard_actions[:, agent_id],
                                         action_log_probs[:, agent_id],
                                         values[:, agent_id],
-                                        rewards[:, agent_id],
+                                        np.expand_dims(rewards[:, agent_id], -1),
                                         masks[:, agent_id],
                                         joint_actions=joint_actions,
                                         joint_action_log_probs=joint_action_log_probs

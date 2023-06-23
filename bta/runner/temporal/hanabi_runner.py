@@ -24,9 +24,9 @@ class HanabiRunner(Runner):
         self.turn_share_obs = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].share_obs.shape[2:]), dtype=np.float32)
         self.turn_available_actions = np.zeros((self.n_rollout_threads, self.num_agents, *self.buffer[0].available_actions.shape[2:]), dtype=np.float32)
         self.turn_values = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].value_preds.shape[2:]), dtype=np.float32)
-        self.turn_actions = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].actions.shape[2:]), dtype=np.float32)       
+        self.turn_actions = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].actions.shape[3:]), dtype=np.float32)       
         self.turn_one_hot_actions = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].one_hot_actions.shape[3:]), dtype=np.float32)       
-        self.turn_action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].action_log_probs.shape[2:]), dtype=np.float32)
+        self.turn_action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].action_log_probs.shape[3:]), dtype=np.float32)
         self.turn_rnn_states = np.zeros((self.n_rollout_threads, self.num_agents,*self.buffer[0].rnn_states.shape[2:]), dtype=np.float32)
         self.turn_rnn_states_critic = np.zeros_like(self.turn_rnn_states)
         self.turn_masks = np.ones((self.n_rollout_threads, self.num_agents,*self.buffer[0].masks.shape[2:]), dtype=np.float32)
@@ -75,9 +75,9 @@ class HanabiRunner(Runner):
                                             self.turn_obs[:, agent_id],
                                             self.turn_rnn_states[:, agent_id],
                                             self.turn_rnn_states_critic[:, agent_id],
-                                            self.turn_actions[:, agent_id],
+                                            self.turn_actions[:, np.newaxis, agent_id],
                                             self.turn_one_hot_actions,
-                                            self.turn_action_log_probs[:, agent_id],
+                                            self.turn_action_log_probs[:, np.newaxis, agent_id],
                                             self.turn_values[:, agent_id],
                                             self.turn_rewards[:, agent_id],
                                             self.turn_masks[:, agent_id],

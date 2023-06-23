@@ -50,7 +50,7 @@ class OvercookedRunner(Runner):
                     rnn_states_critic, joint_actions, joint_action_log_probs = self.collect(step)
                     
                 # Obser reward and next obs
-                env_actions = joint_actions if joint_actions is not None else hard_actions
+                env_actions = joint_actions if joint_actions is not None else hard_actions[:,:,-1]
                 obs, share_obs, rewards, dones, infos, available_actions = self.envs.step(env_actions)
                 obs = np.stack(obs)
                 total_num_steps += (self.n_rollout_threads)
