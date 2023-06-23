@@ -38,4 +38,4 @@ apptainer_wrapper exec python ../../../train/train_overcooked.py \
 --cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" --use_eval --n_eval_rollout_threads 100 --save_interval 25 --log_inerval 10 \
 --overcooked_version ${version} \
 --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
---use_action_attention --kl_coef 0.
+--use_action_attention --kl_coef 0. --token_factor $SLURM_ARRAY_TASK_ID

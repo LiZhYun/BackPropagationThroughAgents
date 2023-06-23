@@ -37,4 +37,4 @@ apptainer_wrapper exec python ../../../train/train_gobigger.py \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 10 --eval_episodes 100 \
 --n_rollout_threads 20 --num_mini_batch 1 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---use_action_attention --kl_coef 0.
+--use_action_attention --kl_coef 0. --token_factor $SLURM_ARRAY_TASK_ID

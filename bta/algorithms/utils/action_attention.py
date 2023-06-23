@@ -41,7 +41,7 @@ class Action_Attention(nn.Module):
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
         for layer in range(self._attn_N):
             if mix_type in 'mixer':
-                self.layers.append(MixerBlock(args.num_agents, action_dim, 
+                self.layers.append(MixerBlock(args, args.num_agents, action_dim, 
                             self._attn_size, 
                             self._dropout))
             elif mix_type in 'hyper':
@@ -93,11 +93,12 @@ class MixerBlock(nn.Module):
     out = X.T + MLP_Layernorm(X.T)     # apply token mixing
     out = out.T + MLP_Layernorm(out.T) # apply channel mixing
     """
-    def __init__(self, num_agents, action_dim, dims, 
+    def __init__(self, args, num_agents, action_dim, dims, 
                  dropout=0):
         super().__init__()
         self.token_layernorm = nn.LayerNorm(dims)
-        self.token_forward = FeedForward(num_agents, 2*dims, dropout)
+        token_dim = args.token_factor*dims if args.token_factor != 0 else 1
+        self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         self.channel_forward = FeedForward(dims, 4*dims, dropout)
