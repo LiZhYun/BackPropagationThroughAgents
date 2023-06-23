@@ -248,7 +248,7 @@ class GoBiggerRunner(Runner):
         return actions, hard_actions[:,:,-1], eval_rnn_states
 
     def insert(self, data):
-        obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
+        obs, share_obs, rewards, dones_env, infos, values, actions, hard_actions, action_log_probs, \
             rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs = data
         
         if np.any(dones_env):

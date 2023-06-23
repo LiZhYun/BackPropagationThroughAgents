@@ -279,7 +279,7 @@ class OvercookedRunner(Runner):
         
         eval_average_episode_rewards = []
         for eval_step in range(self.episode_length):
-            _, hard_actions, eval_rnn_states, neighbors_agents, edges_agents, edges_agents_ts = self.collect_eval(eval_step, eval_obs, eval_rnn_states, eval_masks)
+            _, hard_actions, eval_rnn_states = self.collect_eval(eval_step, eval_obs, eval_rnn_states, eval_masks)
 
             eval_actions = hard_actions
             
