@@ -91,7 +91,6 @@ class GoBiggerRunner(Runner):
                 self.save()
 
             # log information
-            # log information
             if total_num_steps % self.log_interval == 0:
                 end = time.time()
                 print("\n Env {} Algo {} Exp {} updates {}/{} episodes, total num timesteps {}/{}, FPS {}.\n"
@@ -113,7 +112,6 @@ class GoBiggerRunner(Runner):
                 print("average episode rewards for team is {}".format(total_mean))
                 for a in range(self.num_agents):
                     train_infos[a]["average_episode_rewards"] = total_mean
-                self.env_infos["average_episode_rewards"] = total_mean
                 if len(self.env_infos["win_rate"]) > 0:
                     print("Win rate: ", sum(self.env_infos["win_rate"]) / len(self.env_infos["win_rate"]))
                     
