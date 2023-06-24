@@ -34,5 +34,5 @@ python ../../../train/train_overcooked.py \
 --seed 1 --n_training_threads 1 --n_rollout_threads 100 --num_mini_batch 1 --episode_length 400 --num_env_steps 10000000 --reward_shaping_horizon 100000000 \
 --ppo_epoch 15 --max_grad_norm 10.0 \
 --cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" --use_eval --n_eval_rollout_threads 100 --save_interval 25 --log_inerval 10 \
---overcooked_version ${version} \
+--overcooked_version ${version} --skip_connect \
 --wandb_name "zhiyuanli" --user_name "zhiyuanli" 
