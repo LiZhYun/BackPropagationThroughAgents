@@ -144,7 +144,7 @@ class HanabiRunner(Runner):
     def collect(self, step):
         one_hot_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim), dtype=np.float32)
         for current_agent_id in range(self.num_agents):
-            env_actions = np.ones((self.n_rollout_threads, *self.buffer[current_agent_id].actions.shape[2:]), dtype=np.float32)*(-1.0)
+            env_actions = np.ones((self.n_rollout_threads, *self.buffer[current_agent_id].actions.shape[3:]), dtype=np.float32)*(-1.0)
             choose = np.any(self.use_available_actions == 1, axis=1)
             if ~np.any(choose):
                 self.reset_choose = np.ones(self.n_rollout_threads) == 1.0

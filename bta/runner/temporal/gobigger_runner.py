@@ -70,7 +70,7 @@ class GoBiggerRunner(Runner):
                 share_obs, obs, obs_raw, rewards, dones, infos = self.envs.step(env_actions)
                 share_obs = np.stack([default_collate_with_dim(share_obs[env_idx], device=self.device) for env_idx in range(self.n_rollout_threads)])
                 total_num_steps += (self.n_rollout_threads)
-                data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
+                data = obs_raw, obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
                     rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
                 
                 # insert data into buffer
@@ -248,7 +248,7 @@ class GoBiggerRunner(Runner):
         return actions, hard_actions[:,:,-1], eval_rnn_states
 
     def insert(self, data):
-        obs, share_obs, rewards, dones_env, infos, values, actions, hard_actions, action_log_probs, \
+        obs_raw, obs, share_obs, rewards, dones_env, infos, values, actions, hard_actions, action_log_probs, \
             rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs = data
         
         if np.any(dones_env):
@@ -302,7 +302,7 @@ class GoBiggerRunner(Runner):
         
         eval_average_episode_rewards = []
         for eval_step in range(self.episode_length):
-            _, hard_actions, eval_rnn_states = self.collect_eval(step, eval_obs, eval_rnn_states, eval_masks)
+            _, hard_actions, eval_rnn_states = self.collect_eval(eval_step, eval_obs, eval_rnn_states, eval_masks)
 
             env_actions = []
             trans_actions = self.transform_action(hard_actions)
