@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-25T15:04:55.018Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="sG7Z6OQdsZEIVNrobIcO" version="21.5.0" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-25T15:12:51.304Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="UGdMvqWmx355HW5rUC1V" version="21.5.0" type="github">
   <diagram name="Page-1" id="WriZBPEa5ytxyu4HoaKR">
     <mxGraphModel dx="1360" dy="895" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="1" shadow="0">
       <root>
@@ -103,9 +103,9 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GCteRZDLV6OiKR53HESX-65" value="\( \frac{\partial\pi_{\theta _n}}{\partial\theta _1} \)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=25;fontColor=#000000;" vertex="1" connectable="0" parent="GCteRZDLV6OiKR53HESX-20">
+        <mxCell id="GCteRZDLV6OiKR53HESX-65" value="\(\frac{\partial\pi_{\theta _{\color{Red} n}}}{\partial\theta _1} \)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=25;fontColor=#000000;labelBackgroundColor=none;labelBorderColor=none;" vertex="1" connectable="0" parent="GCteRZDLV6OiKR53HESX-20">
           <mxGeometry x="-0.1376" y="-62" relative="1" as="geometry">
-            <mxPoint y="-6" as="offset" />
+            <mxPoint x="-1" y="-6" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-21" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" edge="1" parent="1">
@@ -119,21 +119,21 @@
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="217.5" y="770" as="sourcePoint" />
-            <mxPoint x="317.5" y="770" as="targetPoint" />
+            <mxPoint x="707.5" y="498" as="sourcePoint" />
+            <mxPoint x="807.5" y="498" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-25" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Forward&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=23;" vertex="1" parent="1">
-          <mxGeometry x="227.5" y="780" width="80" height="30" as="geometry" />
+          <mxGeometry x="717.5" y="508" width="80" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;strokeColor=#FF0000;dashed=1;strokeWidth=2;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="477.5" y="770" as="sourcePoint" />
-            <mxPoint x="377.5" y="770" as="targetPoint" />
+            <mxPoint x="810" y="574" as="sourcePoint" />
+            <mxPoint x="710" y="574" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-27" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Backward&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="367.5" y="780" width="115" height="30" as="geometry" />
+          <mxGeometry x="700" y="584" width="115" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-31" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="GCteRZDLV6OiKR53HESX-3" target="GCteRZDLV6OiKR53HESX-18">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -164,17 +164,17 @@
             <mxPoint x="610" y="479" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GCteRZDLV6OiKR53HESX-59" value="\( \frac{\partial\pi_{\theta _1}}{\partial\theta _1} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="50" y="510" width="30" height="30" as="geometry" />
+        <mxCell id="GCteRZDLV6OiKR53HESX-59" value="\( \frac{\partial\pi_{\theta _1}}{\partial\theta _1} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=25;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="48" y="510" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GCteRZDLV6OiKR53HESX-60" value="\( \frac{\partial\pi_{\theta _2}}{\partial\theta _2} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="190" y="510" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="GCteRZDLV6OiKR53HESX-61" value="\( \frac{\partial\pi_{\theta _n}}{\partial\theta _n} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="620" y="510" width="30" height="30" as="geometry" />
+        <mxCell id="GCteRZDLV6OiKR53HESX-61" value="\( \frac{\partial\pi_{\theta _n}}{\partial\theta _n} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=25;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="622" y="510" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="GCteRZDLV6OiKR53HESX-62" value="\( \frac{\partial\pi_{\theta _2}}{\partial\theta _1} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=25;fontColor=#000000;fontStyle=0" vertex="1" parent="1">
-          <mxGeometry x="172" y="642" width="30" height="30" as="geometry" />
+        <mxCell id="GCteRZDLV6OiKR53HESX-62" value="\(\frac{\partial\pi_{\theta _{\color{Red} 2}}}{\partial\theta _1} \)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=25;fontColor=#000000;fontStyle=0;labelBackgroundColor=none;" vertex="1" parent="1">
+          <mxGeometry x="178" y="644" width="30" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
