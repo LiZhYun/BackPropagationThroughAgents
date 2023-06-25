@@ -412,7 +412,7 @@ class Runner(object):
                 logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 kl_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-                action_log_probs_kl_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                action_log_probs_kl_all = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
