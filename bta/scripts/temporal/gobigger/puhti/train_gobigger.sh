@@ -34,6 +34,6 @@ echo "env is ${env}, scenario is ${scenario}, algo is ${algo}"
 apptainer_wrapper exec python ../../../train/train_gobigger.py \
 --env_name ${env} --team_num ${team_num} --player_num_per_team ${player_num_per_team} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed 1 \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
---save_interval 100 --log_interval 2000 --use_eval --eval_interval 50000 --n_eval_rollout_threads 10 --eval_episodes 100 \
+--use_eval --n_eval_rollout_threads 10 --eval_episodes 100 \
 --n_rollout_threads 32 --num_mini_batch 32 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" --skip_connect
