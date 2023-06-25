@@ -91,7 +91,7 @@ class GoBiggerRunner(Runner):
                 self.save()
 
             # log information
-            if total_num_steps % self.log_interval == 0:
+            if episode % self.log_interval == 0:
                 end = time.time()
                 print("\n Env {} Algo {} Exp {} updates {}/{} episodes, total num timesteps {}/{}, FPS {}.\n"
                         .format(self.env_name,
@@ -120,7 +120,7 @@ class GoBiggerRunner(Runner):
                 self.env_infos = defaultdict(list)
 
             # eval
-            if total_num_steps % self.eval_interval == 0 and self.use_eval:
+            if episode % self.eval_interval == 0 and self.use_eval:
                 self.eval(total_num_steps)
 
     def warmup(self):
