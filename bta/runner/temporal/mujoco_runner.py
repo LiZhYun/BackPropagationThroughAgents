@@ -98,6 +98,16 @@ class MujocoRunner(Runner):
                               self.num_env_steps,
                               int(total_num_steps / (end - start))))
 
+                total_mean = 0.0
+                for a in range(self.num_agents):
+                    train_infos[a]["average_episode_rewards_per_agent"] = np.mean(self.buffer[a].rewards) * self.episode_length
+                    total_mean += train_infos[a]["average_episode_rewards_per_agent"]
+                    # print("average episode rewards agent {} is {}".format(a, train_infos[a]["average_episode_rewards_per_agent"]))
+                total_mean /= self.num_agents
+                print("average episode rewards for team is {}".format(total_mean))
+                for a in range(self.num_agents):
+                    train_infos[a]["average_episode_rewards"] = total_mean
+
                 self.log_train(train_infos, total_num_steps)
 
                 if len(done_episodes_rewards) > 0:
