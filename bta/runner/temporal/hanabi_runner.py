@@ -243,7 +243,7 @@ class HanabiRunner(Runner):
         old_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         new_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, action_dim), dtype=np.float32)
-        ordered_vertices = [i for i in range(self.num_agents)] * self.agent_layer
+        ordered_vertices = [i for i in range(self.num_agents)]
 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
@@ -262,29 +262,19 @@ class HanabiRunner(Runner):
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
             
             if self.skip_connect:
-                if idx > (self.agent_layer - 1) * self.num_agents - 1:
-                    execution_masks_batch = torch.stack([torch.ones(self.episode_length*self.n_rollout_threads)] * agent_id +
-                                                    [torch.zeros(self.episode_length*self.n_rollout_threads)] *
-                                                    (self.num_agents - agent_id), -1).to(self.device)
-                else:
-                    execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(list(reversed(ordered_vertices))[idx+1:idx+self.num_agents]), 1.0)\
-                        .unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
+                execution_masks_batch = torch.stack([torch.ones(self.episode_length*self.n_rollout_threads)] * agent_id +
+                                                [torch.zeros(self.episode_length*self.n_rollout_threads)] *
+                                                (self.num_agents - agent_id), -1).to(self.device)
             else:
-                if idx != self.agent_layer * self.num_agents - 1:
+                if idx != self.num_agents - 1:
                     execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(list(reversed(ordered_vertices))[idx+1]), 1.0)\
                         .unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
                 else:
                     execution_masks_batch = torch.stack([torch.zeros(self.episode_length*self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
 
-            if idx > (self.agent_layer - 1) * self.num_agents - 1:
-                one_hot_actions = torch.from_numpy(self.buffer[agent_id].one_hot_actions[:,:,0:self.num_agents].reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])).to(self.device)
-                old_one_hot_actions = self.buffer[agent_id].one_hot_actions[:,:,0:self.num_agents].reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])
-            else:
-                sorted_tuples = sorted(zip(ordered_vertices[((self.agent_layer * self.num_agents - 1)-(idx+self.num_agents-1)):((self.agent_layer * self.num_agents - 1)-(idx-1))], [((self.agent_layer * self.num_agents - 1)-(idx+self.num_agents-1-i)) for i in range(self.num_agents)]), key=lambda x: x[0])
-                _, sorted_index_vector = zip(*sorted_tuples)
-                one_hot_actions = torch.from_numpy(np.stack([self.buffer[agent_id].one_hot_actions[:,:,i] for i in sorted_index_vector], -2).reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])).to(self.device)
-                old_one_hot_actions = np.stack([self.buffer[agent_id].one_hot_actions[:,:,i] for i in sorted_index_vector], -2).reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])
-
+            one_hot_actions = torch.from_numpy(self.buffer[agent_id].one_hot_actions[:,:,0:self.num_agents].reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])).to(self.device)
+            old_one_hot_actions = self.buffer[agent_id].one_hot_actions[:,:,0:self.num_agents].reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])
+            
             one_hot_actions.requires_grad = True
 
             if self.env_name == "GoBigger":
@@ -301,7 +291,7 @@ class HanabiRunner(Runner):
                 for indices in sampler:
                     _, old_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices, idx//self.num_agents],
+                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
                                                                 old_one_hot_actions[indices],
                                                                 execution_masks_batch[indices],
@@ -313,7 +303,7 @@ class HanabiRunner(Runner):
             else:
                 _, old_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[:,idx//self.num_agents],
+                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
                                                             self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
                                                             old_one_hot_actions,
                                                             execution_masks_batch,
@@ -333,7 +323,7 @@ class HanabiRunner(Runner):
                 for indices in sampler:
                     _, new_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch[indices],
                                                                 self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices,idx//self.num_agents],
+                                                                self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[indices],
                                                                 self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:])[indices],
                                                                 one_hot_actions[indices],
                                                                 execution_masks_batch[indices],
@@ -345,7 +335,7 @@ class HanabiRunner(Runner):
             else:
                 _, new_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor.evaluate_actions(obs_batch,
                                                             self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:])[:,idx//self.num_agents],
+                                                            self.buffer[agent_id].actions.reshape(-1, *self.buffer[agent_id].actions.shape[2:]),
                                                             self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
                                                             one_hot_actions,
                                                             execution_masks_batch,

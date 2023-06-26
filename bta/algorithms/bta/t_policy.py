@@ -41,7 +41,6 @@ class T_POLICY():
         self.data_chunk_length = args.data_chunk_length
         self.policy_value_loss_coef = args.policy_value_loss_coef
         self.value_loss_coef = args.value_loss_coef
-        self.agent_layer = args.agent_layer
         self.target_entropy_discount = args.target_entropy_discount
         self.average_threshold = args.average_threshold
         self.standard_deviation_threshold = args.standard_deviation_threshold
@@ -227,30 +226,39 @@ class T_POLICY():
         #     agent_order, ego_exclusive=False).to(
         #         self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
         if self.skip_connect:
-            if train_id > (self.agent_layer - 1) * self.num_agents - 1:
-                execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
-                                                [torch.zeros(actions_batch.shape[0])] *
-                                                (self.num_agents - self.agent_id), -1).to(self.device)
-            else:
-                execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(train_list[train_id+1:train_id+self.num_agents]), 1.0)\
-                    .unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
+            execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
+                                            [torch.zeros(actions_batch.shape[0])] *
+                                            (self.num_agents - self.agent_id), -1).to(self.device)
         else:
-            if train_id != self.agent_layer * self.num_agents - 1:
+            if train_id != self.num_agents - 1:
                 execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(train_list[train_id+1]), 1.0)\
                     .unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
             else:
                 execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * self.num_agents, -1).to(self.device)
         
-        actions = actions_batch[:,(self.agent_layer * self.num_agents - 1 - train_id) // self.num_agents]
-        old_action_log_probs = old_action_log_probs_batch[:,(self.agent_layer * self.num_agents - 1 - train_id) // self.num_agents]
-        if train_id > (self.agent_layer - 1) * self.num_agents - 1:
-            one_hot_actions = one_hot_actions_batch[:,0:self.num_agents]
-        else:
-            ordered_vertices = list(reversed(train_list))
-            sorted_tuples = sorted(zip(ordered_vertices[((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1)):((self.agent_layer * self.num_agents - 1)-(train_id-1))], [((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1-i)) for i in range(self.num_agents)]), key=lambda x: x[0])
-            _, sorted_index_vector = zip(*sorted_tuples)
-            one_hot_actions = np.stack([one_hot_actions_batch[:,i] for i in sorted_index_vector], -2)
-            # one_hot_actions = one_hot_actions_batch[:,((self.agent_layer * self.num_agents - 1)-(train_id+self.num_agents-1)):((self.agent_layer * self.num_agents - 1)-(train_id-1))]
+        actions = actions_batch
+        actions.requires_grad = True
+        old_action_log_probs = old_action_log_probs_batch
+        one_hot_actions = one_hot_actions_batch[:,0:self.num_agents]
+        # Reshape to do in a single forward pass for all steps
+        values, train_actions, action_log_probs, _, dist_entropy, _, _ = self.policy.evaluate_actions(share_obs_batch,
+                                                                            obs_batch, 
+                                                                            rnn_states_batch, 
+                                                                            rnn_states_critic_batch, 
+                                                                            actions, 
+                                                                            masks_batch, 
+                                                                            one_hot_actions,
+                                                                            execution_masks_batch,
+                                                                            available_actions_batch,
+                                                                            active_masks_batch,
+                                                                            tau=tau
+                                                                            )
+        torch.sum(torch.prod(torch.exp(action_log_probs),dim=-1,keepdim=True), dim=-1, keepdim=True).mean().backward()
+        actions_grad = actions.grad.detach().cpu().numpy()
+
+        actions = actions_batch
+        old_action_log_probs = old_action_log_probs_batch
+        one_hot_actions = one_hot_actions_batch[:,0:self.num_agents]
         # Reshape to do in a single forward pass for all steps
         values, train_actions, action_log_probs, _, dist_entropy, _, _ = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
@@ -266,10 +274,10 @@ class T_POLICY():
                                                                             )
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs),dim=-1,keepdim=True)
-
-        surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions) * adv_targ
+        train_actions = torch.exp(train_actions)
+        surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions / actions_grad) * adv_targ
         surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
-                + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad * train_actions) * adv_targ
+                + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad * train_actions / actions_grad) * adv_targ
         # surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * action_grad * train_actions - imp_weights)) * adv_targ
         # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
         #         + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ

@@ -74,10 +74,9 @@ class SeparatedReplayBuffer(object):
         else:
             self.available_actions = None
 
-        self.agent_layer = self.args.agent_layer
-        self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer, self.act_shape))
-        self.one_hot_actions = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer*args.num_agents, self.action_dim), dtype=np.float32)
-        self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.agent_layer, self.act_shape), dtype=np.float32)
+        self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape))
+        self.one_hot_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.action_dim), dtype=np.float32)
+        self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
 
         self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)

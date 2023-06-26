@@ -7,9 +7,9 @@
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=40
-#SBATCH --mem=256G
-#SBATCH --time=72:00:00
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
 #SBATCH --array=0-4
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
@@ -28,4 +28,4 @@ apptainer_wrapper exec python ../../../train/train_hanabi.py --env_name ${env} -
 --hanabi_name ${hanabi} --num_agents ${num_agents} --seed $SLURM_ARRAY_TASK_ID --n_training_threads 1 --n_rollout_threads 1000 --n_eval_rollout_threads 1000 --use_eval \
 --num_mini_batch 1 --episode_length 100 --num_env_steps 10000000000000 --ppo_epoch 15 \
 --gain 0.01 --lr 7e-4 --critic_lr 1e-3 --hidden_size 512 --layer_N 2 --entropy_coef 0.015 --max_grad_norm 10.0 \
---user_name "zhiyuanli" --wandb_name "zhiyuanli" --skip_connect
+--user_name "zhiyuanli" --wandb_name "zhiyuanli"

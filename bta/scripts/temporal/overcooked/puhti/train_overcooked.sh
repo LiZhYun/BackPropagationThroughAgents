@@ -6,9 +6,9 @@
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=40
-#SBATCH --mem=256G
-#SBATCH --time=72:00:00
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
 #SBATCH --array=0-4
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
@@ -37,4 +37,4 @@ apptainer_wrapper exec python ../../../train/train_overcooked.py \
 --ppo_epoch 15 --max_grad_norm 10.0 \
 --cnn_layers_params "32,3,1,1 64,3,1,1 32,3,1,1" --use_eval --n_eval_rollout_threads 100 --save_interval 25 --log_inerval 10 \
 --overcooked_version ${version} \
---wandb_name "zhiyuanli" --user_name "zhiyuanli" --skip_connect
+--wandb_name "zhiyuanli" --user_name "zhiyuanli"

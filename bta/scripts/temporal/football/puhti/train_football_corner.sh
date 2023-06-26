@@ -7,12 +7,10 @@
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=40
-#SBATCH --mem=256G
-#SBATCH --time=72:00:00
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=32G
+#SBATCH --time=24:00:00
 #SBATCH --array=0-4
-
-#--gres=gpu:v100:1
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
 export SING_FLAGS=--nv
@@ -36,4 +34,4 @@ apptainer_wrapper exec python ../../../train/train_football.py \
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
---user_name "zhiyuanli" --wandb_name "zhiyuanli" --skip_connect
+--user_name "zhiyuanli" --wandb_name "zhiyuanli"
