@@ -236,8 +236,7 @@ class T_POLICY():
             else:
                 execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * self.num_agents, -1).to(self.device)
         
-        actions = actions_batch
-        actions.requires_grad = True
+        actions = torch.from_numpy(actions_batch).to(self.device)
         old_action_log_probs = old_action_log_probs_batch
         one_hot_actions = one_hot_actions_batch[:,0:self.num_agents]
         # Reshape to do in a single forward pass for all steps
@@ -253,31 +252,13 @@ class T_POLICY():
                                                                             active_masks_batch,
                                                                             tau=tau
                                                                             )
-        torch.sum(torch.prod(torch.exp(action_log_probs),dim=-1,keepdim=True), dim=-1, keepdim=True).mean().backward()
-        actions_grad = actions.grad.detach().cpu().numpy()
-
-        actions = actions_batch
-        old_action_log_probs = old_action_log_probs_batch
-        one_hot_actions = one_hot_actions_batch[:,0:self.num_agents]
-        # Reshape to do in a single forward pass for all steps
-        values, train_actions, action_log_probs, _, dist_entropy, _, _ = self.policy.evaluate_actions(share_obs_batch,
-                                                                            obs_batch, 
-                                                                            rnn_states_batch, 
-                                                                            rnn_states_critic_batch, 
-                                                                            actions, 
-                                                                            masks_batch, 
-                                                                            one_hot_actions,
-                                                                            execution_masks_batch,
-                                                                            available_actions_batch,
-                                                                            active_masks_batch,
-                                                                            tau=tau
-                                                                            )
+        if self.args.env_name == "mujoco":
+            train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2 + 1e-5)).detach() + 1e-5)
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs),dim=-1,keepdim=True)
-        train_actions = torch.exp(train_actions)
-        surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions / actions_grad) * adv_targ
+        surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions) * adv_targ
         surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
-                + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad * train_actions / actions_grad) * adv_targ
+                + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad * train_actions) * adv_targ
         # surr1 = (imp_weights + self.threshold * (imp_weights * factor_batch + imp_weights.detach() * action_grad * train_actions - imp_weights)) * adv_targ
         # surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) + self.threshold * (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
         #         + torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions - torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param))) * adv_targ

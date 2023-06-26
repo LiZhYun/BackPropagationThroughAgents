@@ -139,7 +139,7 @@ class MujocoRunner(Runner):
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim))
         logits = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
         obs_feats = torch.zeros(self.n_rollout_threads, self.num_agents, self.obs_emb_size).to(self.device)
-        hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
+        hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
@@ -174,9 +174,9 @@ class MujocoRunner(Runner):
                                                             tmp_execution_mask,
                                                             tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(action)
-            actions[:, idx] = _t2n(action)
-            logits[:, idx] = logit.clone()
-            obs_feats[:, idx] = obs_feat.clone()
+            actions[:, agent_idx] = _t2n(action)
+            logits[:, agent_idx] = logit.clone()
+            obs_feats[:, agent_idx] = obs_feat.clone()
             action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
@@ -192,7 +192,7 @@ class MujocoRunner(Runner):
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
-        hard_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
+        hard_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_shape))
 
         ordered_vertices = [i for i in range(self.num_agents)]
         for idx, agent_idx in enumerate(ordered_vertices):
@@ -219,7 +219,7 @@ class MujocoRunner(Runner):
                                                         tmp_execution_mask,
                                                         deterministic=True)
             hard_actions[:, agent_idx] = _t2n(action)
-            actions[:, idx] = _t2n(action)
+            actions[:, agent_idx] = _t2n(action)
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
 
         return actions, hard_actions, eval_rnn_states
