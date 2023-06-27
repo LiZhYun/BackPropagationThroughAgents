@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=mujoco-happo
-#SBATCH --output=./out/mujoco-happo_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/mujoco-happo_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=mujoco-mappo
+#SBATCH --output=./out/mujoco-mappo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/mujoco-mappo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
@@ -21,7 +21,7 @@ scenario=$1
 agent_conf=$2
 agent_obsk=2
 
-algo="happo"
+algo="mappo"
 exp="check"
 
 echo "env is ${env}, scenario is ${scenario}, agent_conf is ${agent_conf}, algo is ${algo}, exp is ${exp}"

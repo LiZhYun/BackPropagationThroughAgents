@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --account=project_2007776
-#SBATCH --job-name=gobigger-gcs
-#SBATCH --output=./out/gobigger-gcs_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/gobigger-gcs_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=gobigger-happo
+#SBATCH --output=./out/gobigger-happo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/gobigger-happo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
@@ -23,7 +23,7 @@ team_num=$1
 player_num_per_team=$2
 scenario="t"${team_num}"p"${player_num_per_team}
 num_agents=$2
-algo="gcs"
+algo="happo"
 exp="check"
 
 # train param

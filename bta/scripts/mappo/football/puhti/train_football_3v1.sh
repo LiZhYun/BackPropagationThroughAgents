@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-3v1-gcs
-#SBATCH --output=./out/football-3v1-gcs_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-3v1-gcs_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-3v1-mappo
+#SBATCH --output=./out/football-3v1-mappo_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-3v1-mappo_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
@@ -20,7 +20,7 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 # exp param
 env="Football"
 scenario="academy_3_vs_1_with_keeper"
-algo="gcs" # "mappo" "ippo"
+algo="mappo" # "mappo" "ippo"
 exp="check"
 
 # football param
