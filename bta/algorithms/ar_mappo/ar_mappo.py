@@ -112,9 +112,14 @@ class AR_MAPPO():
         active_masks_batch = check(active_masks_batch).to(**self.tpdv)
         actions_batch = check(actions_batch).to(**self.tpdv)
 
-        ego_exclusive_action = torch.cat(
-            [actions_batch[:, :self.agent_id], actions_batch[:, self.agent_id + 1:]],
-            -2).squeeze(-1).to(**self.tpdv)
+        if self.args.env_name == "mujoco":
+            ego_exclusive_action = torch.cat(
+                [actions_batch[:, :self.agent_id], actions_batch[:, self.agent_id + 1:]],
+                -2).to(**self.tpdv)
+        else:
+            ego_exclusive_action = torch.cat(
+                [actions_batch[:, :self.agent_id], actions_batch[:, self.agent_id + 1:]],
+                -2).squeeze(-1).to(**self.tpdv)
         agent_order = torch.stack(                     
             [torch.randperm(self.num_agents) for _ in range(actions_batch.shape[0])]).to(self.device)
         # agent_order = agent_order.view(-1, self.args.n_rollout_threads, self.num_agents)
@@ -123,7 +128,10 @@ class AR_MAPPO():
                 self.device).float()  # [bs, n_agents, n_agents]
         execution_mask = torch.cat([all_execution_mask[..., self.agent_id, :self.agent_id], all_execution_mask[..., self.agent_id,
                                     self.agent_id + 1:]], -1)
-        onehot_action = F.one_hot(ego_exclusive_action.long(), self.args.action_dim).float()
+        if self.args.env_name == "mujoco":
+            onehot_action = ego_exclusive_action
+        else:
+            onehot_action = F.one_hot(ego_exclusive_action.long(), self.args.action_dim).float()
         # Reshape to do in a single forward pass for all steps
         values, action_log_probs, dist_entropy, policy_values, pred_shaped_info = self.policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 

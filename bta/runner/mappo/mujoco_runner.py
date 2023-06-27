@@ -46,7 +46,7 @@ class MujocoRunner(Runner):
                         done_episodes_rewards.append(train_episode_rewards[t])
                         train_episode_rewards[t] = 0
 
-                data = obs, rewards, dones, infos, values, actions, action_log_probs, rnn_states, rnn_states_critic 
+                data = share_obs, obs, rewards, dones, infos, values, actions, action_log_probs, rnn_states, rnn_states_critic 
                 
                 # insert data into buffer
                 self.insert(data)
@@ -123,16 +123,13 @@ class MujocoRunner(Runner):
         return values, actions, action_log_probs, rnn_states, rnn_states_critic
 
     def insert(self, data):
-        obs, rewards, dones, infos, values, actions, action_log_probs, rnn_states, rnn_states_critic = data
+        share_obs, obs, rewards, dones, infos, values, actions, action_log_probs, rnn_states, rnn_states_critic = data
         
         # update env_infos if done
         dones_env = np.all(dones, axis=1)
 
-        rnn_states[dones_env == True] = np.zeros(
-            ((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
-        rnn_states_critic[dones_env == True] = np.zeros(
-            ((dones_env == True).sum(), self.num_agents, *self.buffer[0].rnn_states_critic.shape[2:]), dtype=np.float32)
-
+        rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
+        rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
 
@@ -144,7 +141,7 @@ class MujocoRunner(Runner):
             share_obs = obs
 
         self.buffer.insert(
-            share_obs=obs,
+            share_obs=share_obs,
             obs=obs,
             rnn_states=rnn_states,
             rnn_states_critic=rnn_states_critic,

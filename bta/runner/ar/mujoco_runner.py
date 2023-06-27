@@ -4,6 +4,7 @@ from functools import reduce
 import torch
 import wandb
 from bta.runner.ar.base_runner import Runner
+from bta.algorithms.utils.util import check
 
 
 def _t2n(x):
@@ -104,8 +105,8 @@ class MujocoRunner(Runner):
     def collect(self, step):
         # with torch.autograd.set_detect_anomaly(True):
         values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
-        actions = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_shape).to(dtype=torch.int ,device=self.device)
-        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
+        actions = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_shape).to(device=self.device)
+        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         
@@ -114,12 +115,12 @@ class MujocoRunner(Runner):
             # construct ego-exclusive one-hot actions based on current available actions
             ego_exclusive_action = torch.cat(
                 [actions[:, :agent_idx], actions[:, agent_idx + 1:]],
-                -2).squeeze(-1)
+                -2)
             execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
                                             [torch.zeros(self.n_rollout_threads)] *
                                             (self.num_agents - 1 - agent_idx), -1).to(self.device)
 
-            onehot_action = F.one_hot(ego_exclusive_action.long(), self.action_dim).float()
+            onehot_action = ego_exclusive_action
 
             value, action, action_log_prob, rnn_state, rnn_state_critic \
                 = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
@@ -195,17 +196,17 @@ class MujocoRunner(Runner):
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
 
         while True:
-            eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
+            eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_shape))
             for agent_id in range(self.num_agents):
                 self.trainer[agent_id].prep_rollout()
                 ego_exclusive_action = torch.cat(
                 [check(eval_actions[:, :agent_id]), check(eval_actions[:, agent_id + 1:])],
-                -2).squeeze(-1)
+                -2)
                 execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_id +
                                                 [torch.zeros(self.n_eval_rollout_threads)] *
                                                 (self.num_agents - 1 - agent_id), -1).to(self.device)
                 
-                onehot_action = F.one_hot(ego_exclusive_action.long(), self.action_dim).float()
+                onehot_action = ego_exclusive_action
                 eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(eval_obs[:, agent_id],
                                                                                 eval_rnn_states[:, agent_id],
                                                                                 eval_masks[:, agent_id],

@@ -37,9 +37,11 @@ class ACTLayer(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0]
             self.action_out = DiagGaussian(inputs_dim, action_dim, use_orthogonal, gain)
+            self.action_dim = action_dim
         elif action_space.__class__.__name__ == "MultiBinary":
             action_dim = action_space.shape[0]
             self.action_out = Bernoulli(inputs_dim, action_dim, use_orthogonal, gain)
+            self.action_dim = action_dim
         elif action_space.__class__.__name__ == "MultiDiscrete":
             self.multi_discrete = True
             action_dims = action_space.high - action_space.low + 1
