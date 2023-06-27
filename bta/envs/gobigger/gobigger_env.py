@@ -15,13 +15,13 @@ from gobigger.server import Server
 from gobigger.render import EnvRender
 import torch
 import re
-from torch._six import string_classes
 import os
 import sys
 import gym
 from gym.spaces import Dict, Discrete, Box, Tuple
 
 int_classes = int
+string_classes = str
 np_str_obj_array_pattern = re.compile(r'[SaUO]')
 default_collate_err_msg_format = (
     "default_collate: batch must contain tensors, numpy arrays, numbers, "

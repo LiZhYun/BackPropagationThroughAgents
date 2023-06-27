@@ -158,9 +158,6 @@ class SeparatedReplayBuffer(object):
         if self.available_actions is not None:
             self.available_actions[0] = self.available_actions[-1].copy()
         
-        self.adjs = torch.zeros((self.episode_length, self.n_rollout_threads, self.args.num_agents, self.args.num_agents), dtype=torch.float32).to(self.args.device)         
-        self.execution_masks = torch.zeros((self.episode_length, self.n_rollout_threads, self.args.num_agents), dtype=torch.float32).to(self.args.device)
-        
     def chooseafter_update(self):
         self.rnn_states[0] = self.rnn_states[-1].copy()
         self.rnn_states_critic[0] = self.rnn_states_critic[-1].copy()
