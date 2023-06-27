@@ -349,8 +349,8 @@ def get_config():
                         default=1, help='policy value loss coefficient (default: 0.5)')
     parser.add_argument("--entropy_coef", type=float, default=0.01,
                         help='entropy term coefficient (default: 0.01)')
-    parser.add_argument("--kl_coef", type=float, default=1e-5,
-                        help='KL term coefficient (default: 0.00001)')
+    parser.add_argument("--kl_coef", type=float, default=0.01,
+                        help='KL term coefficient (default: 0.01)')
     parser.add_argument("--value_loss_coef", type=float,
                         default=1, help='value loss coefficient (default: 0.5)')
     parser.add_argument("--use_max_grad_norm",
