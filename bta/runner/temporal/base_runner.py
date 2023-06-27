@@ -456,11 +456,12 @@ class Runner(object):
                                                                                         )
                     actions = torch.from_numpy(actions_batch).to(self.device)
                     if self.continuous:
-                        train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2 + 1e-5)).detach() + 1e-5)
+                        train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2 + 1e-6)).detach() + 1e-5)
                     elif self.discrete:
-                        train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + 1e-5)
+                        train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + 1e-6)
                     # actor update
                     imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs_batch),dim=-1,keepdim=True)
+                    factor_batch = torch.prod(factor_batch,dim=0)
                     surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad_batch * train_actions) * adv_targ
                     surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
                             + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad_batch * train_actions) * adv_targ
@@ -647,7 +648,7 @@ class Runner(object):
                 surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(-2)
             
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
-                kl_loss = -action_log_probs_kl_all.sum(-2).mean()- joint_dist_entropy
+                kl_loss = -action_log_probs_kl_all.sum(-2).mean() - joint_dist_entropy
             
                 policy_loss = policy_action_loss
 

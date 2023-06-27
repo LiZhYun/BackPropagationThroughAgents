@@ -341,16 +341,16 @@ def get_config():
                         action='store_false', default=True, help="by default, clip loss value. If set, do not clip loss value.")
     parser.add_argument("--clip_param", type=float, default=0.2,
                         help='ppo clip parameter (default: 0.2)')
-    parser.add_argument("--inner_clip_param", type=float, default=0,
-                        help='ppo clip parameter (default: 0.2)')
+    parser.add_argument("--inner_clip_param", type=float, default=0.05,
+                        help='ppo clip parameter (default: 0.05)')
     parser.add_argument("--num_mini_batch", type=int, default=1,
                         help='number of batches for ppo (default: 1)')
     parser.add_argument("--policy_value_loss_coef", type=float,
                         default=1, help='policy value loss coefficient (default: 0.5)')
     parser.add_argument("--entropy_coef", type=float, default=0.01,
                         help='entropy term coefficient (default: 0.01)')
-    parser.add_argument("--kl_coef", type=float, default=0.01,
-                        help='KL term coefficient (default: 0.01)')
+    parser.add_argument("--kl_coef", type=float, default=0.001,
+                        help='KL term coefficient (default: 0.001)')
     parser.add_argument("--value_loss_coef", type=float,
                         default=1, help='value loss coefficient (default: 0.5)')
     parser.add_argument("--use_max_grad_norm",
