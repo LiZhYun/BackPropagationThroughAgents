@@ -51,6 +51,12 @@ class T_POLICY():
         self.avg_entropy = nn.Parameter(torch.zeros(1), requires_grad=False).to(**self.tpdv)
         self.var_entropy = nn.Parameter(torch.zeros(1), requires_grad=False).to(**self.tpdv)
         self.target_entropy = torch.zeros(1).to(self.device)
+        self.discrete = False
+        self.continuous = False
+        if action_space.__class__.__name__ == "Discrete":
+            self.discrete = True
+        elif action_space.__class__.__name__ == "Box":
+            self.continuous = True
         if self.automatic_entropy_tuning:
             self.log_entropy_coef = torch.tensor(np.log(0.5), requires_grad=True, device=self.device)
             if action_space.__class__.__name__ == "Discrete":
@@ -252,8 +258,10 @@ class T_POLICY():
                                                                             active_masks_batch,
                                                                             tau=tau
                                                                             )
-        if self.args.env_name == "mujoco":
+        if self.continuous:
             train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2 + 1e-5)).detach() + 1e-5)
+        elif self.discrete:
+            train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + 1e-5)
         # actor update
         imp_weights = torch.prod(torch.exp(action_log_probs - old_action_log_probs),dim=-1,keepdim=True)
         surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad * train_actions) * adv_targ
@@ -326,6 +334,20 @@ class T_POLICY():
             advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
         return advantages
 
+    def train_adv(self, buffer):
+        if self._use_popart or self._use_valuenorm:
+            advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
+        else:
+            advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
+        # if self.args.env_name != "matrix":
+        advantages_copy = advantages.copy()
+        advantages_copy[buffer.active_masks[:-1] == 0.0] = np.nan
+        mean_advantages = np.nanmean(advantages_copy)
+        std_advantages = np.nanstd(advantages_copy)
+        advantages = (advantages - mean_advantages) / (std_advantages + 1e-5)
+
+        return advantages
+    
     def train(self, buffer, train_id, train_list, tau=1.0):
         if self._use_popart or self._use_valuenorm:
             advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
