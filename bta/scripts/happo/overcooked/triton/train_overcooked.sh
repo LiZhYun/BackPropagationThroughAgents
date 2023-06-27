@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=overcooked-happo
-#SBATCH --output=./out/overcooked-happo_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/overcooked-happo_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=overcooked-ar
+#SBATCH --output=./out/overcooked-ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/overcooked-ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -23,7 +23,7 @@ if [[ "${layout}" == "multiplayer_schelling" ]]; then
     num_agents=4
 fi
 
-algo="happo"
+algo="ar"
 exp="check"
 
 echo "env is ${env}, layout is ${layout}, algo is ${algo}, exp is ${exp} version is ${version}"

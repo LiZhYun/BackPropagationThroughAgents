@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=gobigger-gcs
-#SBATCH --output=./out/gobigger-gcs_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/gobigger-gcs_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=gobigger-ar
+#SBATCH --output=./out/gobigger-ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/gobigger-ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50
@@ -20,7 +20,7 @@ team_num=$1
 player_num_per_team=$2
 scenario="t"${team_num}"p"${player_num_per_team}
 num_agents=$2
-algo="gcs"
+algo="ar"
 exp="check"
 
 # train param

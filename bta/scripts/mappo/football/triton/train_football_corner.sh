@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-corner-mappo
-#SBATCH --output=./out/football-corner-mappo_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-corner-mappo_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-corner-ar
+#SBATCH --output=./out/football-corner-ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-corner-ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
@@ -13,7 +13,7 @@
 # exp param
 env="Football"
 scenario="academy_corner"
-algo="mappo" # "mappo" "ippo"
+algo="ar" # "mappo" "ippo"
 exp="check"
 
 # football param

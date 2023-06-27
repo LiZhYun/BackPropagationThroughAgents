@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-corner-gcs
-#SBATCH --output=./out/football-corner-gcs_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-corner-gcs_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-corner-ar
+#SBATCH --output=./out/football-corner-ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-corner-ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --account=project_2007776
 #SBATCH --partition=small
 #SBATCH --ntasks=1
@@ -20,7 +20,7 @@ export SING_FLAGS="-B /scratch/project_2007776 $SING_FLAGS"
 # exp param
 env="Football"
 scenario="academy_corner"
-algo="gcs" # "mappo" "ippo"
+algo="ar" # "mappo" "ippo"
 exp="check"
 
 # football param

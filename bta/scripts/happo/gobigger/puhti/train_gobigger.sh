@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --account=project_2007776
-#SBATCH --job-name=gobigger-happo
-#SBATCH --output=./out/gobigger-happo_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/gobigger-happo_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=gobigger-ar
+#SBATCH --output=./out/gobigger-ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/gobigger-ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=40
@@ -21,7 +21,7 @@ team_num=$1
 player_num_per_team=$2
 scenario="t"${team_num}"p"${player_num_per_team}
 num_agents=$2
-algo="happo"
+algo="ar"
 exp="check"
 
 # train param

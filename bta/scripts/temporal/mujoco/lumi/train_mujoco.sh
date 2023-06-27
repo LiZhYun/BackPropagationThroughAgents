@@ -28,4 +28,4 @@ srun singularity exec -B $SCRATCH $SCRATCH/mujo_gfoot_v2.sif /bin/sh -c "export 
 --seed $SLURM_ARRAY_TASK_ID --n_training_threads 8 --n_rollout_threads 32 --num_mini_batch 32 --episode_length 1000 --num_env_steps 10000000 \
 --use_eval --eval_interval 25 --eval_episodes 5 --add_center_xy --use_state_agent --use_value_active_masks --use_policy_active_masks \
 --ppo_epoch 5 --lr 5e-5 --critic_lr 5e-3 --attention_lr 5e-6 --std_x_coef 1 --std_y_coef 5e-1 --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
---use_action_attention --kl_coef 0."
+--use_action_attention"
