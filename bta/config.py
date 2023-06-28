@@ -261,7 +261,7 @@ def get_config():
 
     # attn parameters
     parser.add_argument("--use_attn", action='store_true', default=False, help=" by default False, use attention tactics.")
-    parser.add_argument("--attn_N", type=int, default=1, help="the number of attn layers, by default 1")
+    parser.add_argument("--attn_N", type=int, default=2, help="the number of attn layers, by default 1")
     parser.add_argument("--attn_size", type=int, default=64, help="by default, the hidden size of attn layer")
     parser.add_argument("--attn_heads", type=int, default=1, help="by default, the # of multiply heads")
     parser.add_argument("--dropout", type=float, default=0.0, help="by default 0, the dropout ratio of attn layer.")
@@ -275,7 +275,7 @@ def get_config():
     parser.add_argument("--mix_id", type=int,
                         default=0, help="choose 0 to use mixer, 1 to use hyper, 2 to use attention")
     parser.add_argument("--token_factor", type=int,
-                        default=2, help="default is 2")
+                        default=1, help="default is 1")
     parser.add_argument('--max_edges', type=int, default=10)
     parser.add_argument('--num_layers', type=int, default=1)
     parser.add_argument('--time_channels', type=int, default=100)
