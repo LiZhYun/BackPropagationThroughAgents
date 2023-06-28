@@ -158,13 +158,13 @@ class MujocoRunner(Runner):
                                          values[:, agent_id], rewards[:, agent_id], masks[:, agent_id], None,
                                          active_masks[:, agent_id], None)
 
-    def log_train(self, train_infos, total_num_steps):
-        print("average_step_rewards is {}.".format(np.mean(self.buffer[0].rewards)))
-        for agent_id in range(self.num_agents):
-            train_infos[agent_id]["average_step_rewards"] = np.mean(self.buffer[agent_id].rewards)
-            for k, v in train_infos[agent_id].items():
-                agent_k = "agent%i/" % agent_id + k
-                self.writter.add_scalars(agent_k, {agent_k: v}, total_num_steps)
+    # def log_train(self, train_infos, total_num_steps):
+    #     print("average_step_rewards is {}.".format(np.mean(self.buffer[0].rewards)))
+    #     for agent_id in range(self.num_agents):
+    #         train_infos[agent_id]["average_step_rewards"] = np.mean(self.buffer[agent_id].rewards)
+    #         for k, v in train_infos[agent_id].items():
+    #             agent_k = "agent%i/" % agent_id + k
+    #             self.writter.add_scalars(agent_k, {agent_k: v}, total_num_steps)
 
     @torch.no_grad()
     def eval(self, total_num_steps):

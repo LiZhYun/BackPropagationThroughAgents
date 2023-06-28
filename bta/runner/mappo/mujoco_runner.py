@@ -184,7 +184,7 @@ class MujocoRunner(Runner):
                 np.concatenate(eval_obs),
                 np.concatenate(eval_rnn_states),
                 np.concatenate(eval_masks),
-                deterministic=self.all_args.eval_deterministic
+                deterministic=True
             )
 
             eval_actions = np.array(np.split(_t2n(eval_actions), self.n_eval_rollout_threads))

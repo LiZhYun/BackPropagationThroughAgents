@@ -457,9 +457,9 @@ class Runner(object):
                                                                                         )
                     actions = torch.from_numpy(actions_batch).to(self.device)
                     if self.continuous:
-                        train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2)).detach())
+                        train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2)).detach() + 1e-6)
                     elif self.discrete:
-                        train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach())
+                        train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + 1e-6)
                     # actor update
                     imp_weights = torch.exp(action_log_probs - old_action_log_probs_batch)
                     factor_batch = torch.prod(factor_batch,dim=0)
@@ -684,7 +684,7 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += imp_weights.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                joint_action_log_probs, joint_dist_entropy, joint_logits, joint_dist = self.action_attention.evaluate_actions(logits_all.detach(), obs_feats_all.detach(), joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
+                joint_action_log_probs, joint_dist_entropy, joint_logits, joint_dist = self.action_attention.evaluate_actions(logits_all, obs_feats_all, joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
 
                 # actor update
                 ratio = torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True)

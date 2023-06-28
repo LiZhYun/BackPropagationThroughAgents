@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=mujoco-temporal
-#SBATCH --output=./out/mujoco-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/mujoco-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=mujoco-temporal_ar
+#SBATCH --output=./out/mujoco-temporal_ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/mujoco-temporal_ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
