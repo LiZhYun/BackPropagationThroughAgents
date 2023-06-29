@@ -456,13 +456,13 @@ class Runner(object):
                                                                                         tau=self.temperature
                                                                                         )
                     actions = torch.from_numpy(actions_batch).to(self.device)
-                    if self.continuous:
-                        train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2)).detach())
-                    elif self.discrete:
-                        train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach())
+                    # if self.continuous:
+                    #     train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2)).detach() + torch.finfo(torch.float32).eps)
+                    # elif self.discrete:
+                    #     train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + torch.finfo(torch.float32).eps)
 
-                    is_inf_or_nan = torch.logical_or(torch.isinf(train_actions), torch.isnan(train_actions))
-                    train_actions = torch.where(is_inf_or_nan, torch.zeros_like(train_actions), train_actions)
+                    # is_inf_or_nan = torch.logical_or(torch.isinf(train_actions), torch.isnan(train_actions))
+                    # train_actions = torch.where(is_inf_or_nan, torch.zeros_like(train_actions), train_actions)
 
                     # actor update
                     imp_weights = torch.exp(action_log_probs - old_action_log_probs_batch)
