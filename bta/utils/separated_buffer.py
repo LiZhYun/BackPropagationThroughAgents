@@ -14,7 +14,7 @@ def _cast(x):
         return x.permute(1,0,2).reshape(-1, *x.shape[2:])
 
 class SeparatedReplayBuffer(object):
-    def __init__(self, args, obs_space, share_obs_space, act_space):
+    def __init__(self, args, obs_space, share_obs_space, act_space, agent_id):
         self.args = args
         self.episode_length = args.episode_length
         self.n_rollout_threads = args.n_rollout_threads
@@ -27,7 +27,9 @@ class SeparatedReplayBuffer(object):
         self._use_valuenorm = args.use_valuenorm
         self._use_proper_time_limits = args.use_proper_time_limits
         self.use_graph = args.use_graph
+        self.use_action_attention = args.use_action_attention
         self.args = args
+        self.agent_idx = agent_id
 
         obs_shape = get_shape_from_obs_space(obs_space)
         share_obs_shape = get_shape_from_obs_space(share_obs_space)
@@ -80,7 +82,7 @@ class SeparatedReplayBuffer(object):
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
 
         self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
-        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
+        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)
@@ -194,15 +196,27 @@ class SeparatedReplayBuffer(object):
             if self._use_gae:
                 self.value_preds[-1] = next_value
                 gae = 0
-                for step in reversed(range(self.rewards.shape[0])):
-                    if self._use_popart or self._use_valuenorm:
-                        delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
-                        gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
-                        self.returns[step] = gae + value_normalizer.denormalize(self.value_preds[step])
-                    else:
-                        delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
-                        gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
-                        self.returns[step] = gae + self.value_preds[step]
+                if self.use_action_attention:
+                    for step in reversed(range(self.rewards.shape[0])):
+                        imp_weights = np.exp(self.action_log_probs[step] - self.joint_action_log_probs[step,:,self.agent_idx])
+                        if self._use_popart or self._use_valuenorm:
+                            delta = imp_weights*(self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step]))
+                            gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                            self.returns[step] = gae + imp_weights*value_normalizer.denormalize(self.value_preds[step])
+                        else:
+                            delta = imp_weights*(self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step])
+                            gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                            self.returns[step] = gae + imp_weights*self.value_preds[step]
+                else:
+                    for step in reversed(range(self.rewards.shape[0])):
+                        if self._use_popart or self._use_valuenorm:
+                            delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
+                            gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                            self.returns[step] = gae + value_normalizer.denormalize(self.value_preds[step])
+                        else:
+                            delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
+                            gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                            self.returns[step] = gae + self.value_preds[step]
             else:
                 self.returns[-1] = next_value
                 for step in reversed(range(self.rewards.shape[0])):

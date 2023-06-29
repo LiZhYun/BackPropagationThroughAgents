@@ -173,7 +173,8 @@ class Runner(object):
             bu = SeparatedReplayBuffer(self.all_args,
                                     self.envs.observation_space[agent_id],
                                     share_observation_space,
-                                    self.envs.action_space[agent_id])
+                                    self.envs.action_space[agent_id],
+                                    agent_id)
             self.buffer.append(bu)
             self.trainer.append(tr)
         
@@ -557,12 +558,14 @@ class Runner(object):
     
     def joint_train(self):
         train_infos = []
-        advantages_all = self.advg[:-1]
-        advantages_copy = advantages_all.copy()
-        mean_advantages = np.nanmean(advantages_copy)
-        std_advantages = np.nanstd(advantages_copy)
-        advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
+        # advantages_all = self.advg[:-1]
+        # advantages_copy = advantages_all.copy()
+        # mean_advantages = np.nanmean(advantages_copy)
+        # std_advantages = np.nanstd(advantages_copy)
+        # advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
+        advs = []
         for agent_idx in range(self.num_agents):
+            advs.append(self.trainer[agent_idx].train_adv(self.buffer[agent_idx]))
             train_info = defaultdict(float)
             train_info['value_loss'] = 0
             train_info['policy_loss'] = 0
@@ -588,11 +591,11 @@ class Runner(object):
             rand = torch.randperm(batch_size).numpy()
             sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
             if self._use_recurrent_policy:
-                data_generators = [self.buffer[agent_idx].recurrent_generator(advantages_all, self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
+                data_generators = [self.buffer[agent_idx].recurrent_generator(advs[agent_idx], self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
             elif self._use_naive_recurrent:
-                data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advantages_all, self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
+                data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             else:
-                data_generators = [self.buffer[agent_idx].feed_forward_generator(advantages_all, self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
+                data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
                 available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -637,12 +640,12 @@ class Runner(object):
                     logits_all[:, agent_idx] = logits.clone()
                     obs_feats_all[:, agent_idx] = obs_feat.clone()
                     # individual_dists.append(individual_dist)
-                    # action_log_probs_kl_all[:, agent_idx] = action_log_probs_kl.clone()
+                    action_log_probs_kl_all[:, agent_idx] = action_log_probs_kl.clone()
 
                     # actor update
-                    imp_weights = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
-                    surr1 = imp_weights
-                    surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param)
+                    ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
+                    surr1 = ratio * adv_targ
+                    surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -685,27 +688,20 @@ class Runner(object):
                     train_infos[agent_idx]['policy_loss'] += policy_loss.item()
                     # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                     train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                    train_infos[agent_idx]['ratio'] += imp_weights.mean().item()
+                    train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
                 joint_action_log_probs, joint_dist_entropy, joint_logits, joint_dist = self.action_attention.evaluate_actions(logits_all, obs_feats_all, joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
 
                 # actor update
-                ratio = torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True)
+                ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)
 
                 surr1 = ratio * adv_targ_all.mean(-2)
                 surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(-2)
             
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
-                # kl_loss = 0
-                # for i in range(self.num_agents):
-                #     if self.discrete:
-                #         joint_indi_dist = torch.distributions.Categorical(logits=joint_dist.logits[:,i])
-                #         kl_loss += kl_divergence(joint_indi_dist, individual_dists[i]).mean()
-                #     else:
-                #         joint_indi_dist = torch.distributions.Normal(loc=joint_dist.loc[:,i], scale=joint_dist.scale[:,i])
-                #         kl_loss += kl_divergence(joint_indi_dist, individual_dists[i]).sum(-1).mean()     
-                # # kl_loss = -torch.sum(action_log_probs_kl_all, (1,2)).mean() - joint_dist_entropy
+  
+                # kl_loss = -torch.sum(action_log_probs_kl_all, (1,2)).mean()
             
                 policy_loss = policy_action_loss
 
@@ -713,7 +709,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.attention_optimizer.zero_grad()
 
-                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()/self.num_agents).backward()
+                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.mean()).backward()
                 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
@@ -731,28 +727,11 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
                 self.attention_optimizer.step()
-
-                # if self.automatic_kl_tuning:
-                #     kl_coef_loss = -(self.log_kl_coef * (kl_loss).detach()).mean()
-
-                #     self.kl_coef_optim.zero_grad()
-                #     kl_coef_loss.backward()
-                #     self.kl_coef_optim.step()
-
-                #     self.kl_coef = self.log_kl_coef.exp()
-                #     kl_tlogs = self.kl_coef.item() # For TensorboardX logs
-                # else:
-                #     kl_coef_loss = torch.tensor(0.).to(self.device)
-                #     kl_tlogs = self.kl_coef # For TensorboardX log
                 
                 for agent_idx in range(self.num_agents):
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
-                    # train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
-                    # train_infos[agent_idx]['kl_loss'] += kl_loss.item()
-                    # train_infos[agent_idx]['kl_coef'] += kl_tlogs
-                    # train_infos[agent_idx]['kl_coef_loss'] += kl_coef_loss.item()
 
         num_updates = self.ppo_epoch * self.num_mini_batch
 
