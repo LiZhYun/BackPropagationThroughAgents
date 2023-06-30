@@ -198,7 +198,7 @@ class SeparatedReplayBuffer(object):
                 gae = 0
                 if self.use_action_attention:
                     for step in reversed(range(self.rewards.shape[0])):
-                        imp_weights = np.exp(self.action_log_probs[step] - self.joint_action_log_probs[step,:,self.agent_idx])
+                        imp_weights = np.prod(np.exp(self.action_log_probs[step] - self.joint_action_log_probs[step,:,self.agent_idx]), -1, keepdims=True)
                         if self._use_popart or self._use_valuenorm:
                             delta = imp_weights*(self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step]))
                             gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae

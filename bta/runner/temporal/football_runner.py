@@ -63,10 +63,11 @@ class FootballRunner(Runner):
                 self.insert(data)
 
             # compute return and update network
-            if self.use_action_attention:
-                self.joint_compute()
-            else:
-                self.compute()
+            # if self.use_action_attention:
+            #     self.joint_compute()
+            # else:
+            #     self.compute()
+            self.compute()
             train_infos = self.joint_train() if self.use_action_attention else self.train()
             
             # post process
@@ -175,6 +176,19 @@ class FootballRunner(Runner):
             joint_actions, joint_action_log_probs = self.action_attention(logits, obs_feats, tau=self.temperature)
             joint_actions = _t2n(torch.argmax(joint_actions, -1, keepdim=True).to(torch.int))
             joint_action_log_probs = _t2n(joint_action_log_probs)
+            for agent_idx in range(self.num_agents):
+                ego_exclusive_action = actions[:,0:self.num_agents]
+                tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
+                _, action_log_prob, _, _, _, _ = self.trainer[agent_idx].policy.actor.evaluate_actions(
+                    self.buffer[agent_idx].obs[step],
+                    self.buffer[agent_idx].rnn_states[step],
+                    joint_actions[:,agent_idx],
+                    self.buffer[agent_idx].masks[step],
+                    ego_exclusive_action,
+                    tmp_execution_mask,
+                    tau=self.temperature
+                )
+                action_log_probs[:, agent_idx] = _t2n(action_log_prob)
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
 

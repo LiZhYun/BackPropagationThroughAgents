@@ -52,7 +52,7 @@ def make_eval_env(all_args, env_args):
 
 def parse_args(args, parser):
     parser.add_argument("--scenario_name", type=str,
-                        default="t4p3", 
+                        default="t2p2", 
                         help="which scenario to run on.")
     parser.add_argument("--team_num", type=int,
                         default=2, 
