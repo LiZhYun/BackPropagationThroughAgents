@@ -197,16 +197,20 @@ class SeparatedReplayBuffer(object):
                 self.value_preds[-1] = next_value
                 gae = 0
                 if self.use_action_attention:
+                    imp_weights = np.prod(np.exp(self.action_log_probs[:] - self.joint_action_log_probs[:,:,self.agent_idx]), -1, keepdims=True)
+                    clipped_weights = np.clip(imp_weights, a_max=1.0, a_min=None)
+                    truncated_weights = np.minimum(imp_weights, clipped_weights)
+                    rho_bar = np.cumprod(truncated_weights, axis=0)
                     for step in reversed(range(self.rewards.shape[0])):
-                        imp_weights = np.prod(np.exp(self.action_log_probs[step] - self.joint_action_log_probs[step,:,self.agent_idx]), -1, keepdims=True)
+                        rho = rho_bar[step + 1] if step < self.rewards.shape[0] - 1 else 1
                         if self._use_popart or self._use_valuenorm:
-                            delta = imp_weights*(self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step]))
-                            gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
-                            self.returns[step] = gae + imp_weights*value_normalizer.denormalize(self.value_preds[step])
+                            delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
+                            gae = delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                            self.returns[step] = gae + value_normalizer.denormalize(self.value_preds[step])
                         else:
-                            delta = imp_weights*(self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step])
-                            gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
-                            self.returns[step] = gae + imp_weights*self.value_preds[step]
+                            delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
+                            gae = delta + rho_bar[step + 1] * self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                            self.returns[step] = gae + self.value_preds[step]
                 else:
                     for step in reversed(range(self.rewards.shape[0])):
                         if self._use_popart or self._use_valuenorm:

@@ -53,11 +53,11 @@ class MatrixRunner(Runner):
                     rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
                 # insert data into buffer
                 self.insert(data)
+                
             # compute return and update network
-            # if self.use_action_attention:
-            #     self.joint_compute()
-            # else:
             self.compute()
+            if self.use_action_attention:
+                self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else self.train()
 
             # post process
