@@ -88,6 +88,7 @@ class Runner(object):
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
+        self.dual_clip_coeff = torch.tensor(self.all_args.dual_clip_coeff).to(self.device)
         self.skip_connect = self.all_args.skip_connect
         self.use_action_attention = self.all_args.use_action_attention
         self.mix_actions = False
@@ -646,8 +647,17 @@ class Runner(object):
 
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
+
+                    # dual clip
+                    ratio = torch.min(ratio, self.dual_clip_coeff)
+
                     surr1 = ratio * adv_targ
                     surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+
+                    # # dual clip
+                    # clip1 = torch.min(surr1, surr2)
+                    # clip2 = torch.max(clip1, self._dual_clip * adv_targ)
+                    # clip_loss = -torch.where(adv_targ < 0, clip2, clip1).mean()
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),

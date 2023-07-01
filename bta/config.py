@@ -343,6 +343,8 @@ def get_config():
                         help='ppo clip parameter (default: 0.2)')
     parser.add_argument("--inner_clip_param", type=float, default=0.,
                         help='ppo clip parameter (default: 0.)')
+    parser.add_argument("--dual_clip_coeff", type=float, default=3,
+                        help='ppo dual clip parameter (default: 3.)')
     parser.add_argument("--num_mini_batch", type=int, default=1,
                         help='number of batches for ppo (default: 1)')
     parser.add_argument("--policy_value_loss_coef", type=float,
