@@ -648,11 +648,12 @@ class Runner(object):
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
 
-                    # dual clip
-                    ratio = torch.min(ratio, self.dual_clip_coeff)
+                    # # dual clip
+                    # ratio = torch.min(ratio, self.dual_clip_coeff)
+                    ratio = torch.sigmoid(2 * (ratio - 1)) * 2
                     
                     surr1 = ratio * adv_targ
-                    surr2 = torch.clamp(ratio, 1.0 - 0.05, 1.0 + 0.05) * adv_targ
+                    surr2 = ratio * adv_targ
 
                     # # dual clip
                     # clip1 = torch.min(surr1, surr2)
