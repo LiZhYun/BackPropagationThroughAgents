@@ -33,9 +33,11 @@ class Action_Attention(nn.Module):
             action_dim = action_space.shape[0] 
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
-                                           nn.GELU())
+                                           nn.GELU(),
+                                           nn.LayerNorm(self._attn_size))
         self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
-                                           nn.GELU())
+                                           nn.GELU(),
+                                           nn.LayerNorm(self._attn_size))
         
         self.layers = nn.ModuleList()
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]

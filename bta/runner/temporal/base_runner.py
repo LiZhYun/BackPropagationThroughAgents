@@ -88,7 +88,7 @@ class Runner(object):
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
-        self.dual_clip_coeff = torch.tensor(self.all_args.dual_clip_coeff).to(self.device)
+        self.dual_clip_coeff = torch.tensor(self.clip_param + 1.0).to(self.device)
         self.skip_connect = self.all_args.skip_connect
         self.use_action_attention = self.all_args.use_action_attention
         self.mix_actions = False
