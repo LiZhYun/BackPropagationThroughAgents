@@ -88,7 +88,7 @@ class Runner(object):
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
-        self.dual_clip_coeff = torch.tensor(1.0 + 0.05).to(self.device)
+        self.dual_clip_coeff = torch.tensor(1.0 + 0.005).to(self.device)
         self.skip_connect = self.all_args.skip_connect
         self.use_action_attention = self.all_args.use_action_attention
         self.mix_actions = False
@@ -646,19 +646,14 @@ class Runner(object):
                     action_log_probs_kl_all[:, agent_idx] = action_log_probs_kl.clone()
 
                     # actor update
-                    ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
+                    ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
                     # # dual clip
                     # ratio = torch.min(ratio, self.dual_clip_coeff)
-                    ratio = torch.sigmoid(2 * (ratio - 1)) * 2
-                    
-                    surr1 = ratio * adv_targ
-                    surr2 = ratio * adv_targ
+                    off_factor = torch.exp(old_action_log_probs_batch - old_joint_action_log_probs[:, agent_idx])
 
-                    # # dual clip
-                    # clip1 = torch.min(surr1, surr2)
-                    # clip2 = torch.max(clip1, self._dual_clip * adv_targ)
-                    # clip_loss = -torch.where(adv_targ < 0, clip2, clip1).mean()
+                    surr1 = ratio * adv_targ
+                    surr2 = torch.clamp(ratio, off_factor * (1.0 - self.clip_param), off_factor * (1.0 + self.clip_param)) * adv_targ
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -669,7 +664,7 @@ class Runner(object):
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = (policy_loss - dist_entropy * self.entropy_coef)
+                    individual_loss[agent_idx] = (policy_loss)
 
                     # self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
 

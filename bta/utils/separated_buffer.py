@@ -200,7 +200,6 @@ class SeparatedReplayBuffer(object):
                     imp_weights = np.prod(np.exp(self.action_log_probs[:] - self.joint_action_log_probs[:,:,self.agent_idx]), -1, keepdims=True)
                     clipped_weights = np.clip(imp_weights, a_max=1.0, a_min=None)
                     truncated_weights = np.minimum(imp_weights, clipped_weights)
-                    # rho_bar = np.cumprod(truncated_weights[::-1], axis=0)[::-1]
                     for step in reversed(range(self.rewards.shape[0])):
                         rho = truncated_weights[step + 1] if step < self.rewards.shape[0] - 1 else 1
                         if self._use_popart or self._use_valuenorm:
