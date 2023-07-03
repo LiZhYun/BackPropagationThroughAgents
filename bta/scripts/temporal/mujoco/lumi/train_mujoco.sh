@@ -19,7 +19,7 @@ agent_conf=$2
 agent_obsk=2
 
 algo="temporal"
-exp="check-no-IS-PG"
+exp="check-bc"
 
 echo "env is ${env}, scenario is ${scenario}, agent_conf is ${agent_conf}, algo is ${algo}, exp is ${exp}"
 

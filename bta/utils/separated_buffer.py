@@ -225,6 +225,31 @@ class SeparatedReplayBuffer(object):
                 for step in reversed(range(self.rewards.shape[0])):
                     self.returns[step] = self.returns[step + 1] * self.gamma * self.masks[step + 1] + self.rewards[step]
 
+    def compute_new_returns(self, new_logprobs, value_normalizer=None):
+        gae = 0
+        imp_weights = np.prod(np.exp(new_logprobs - self.joint_action_log_probs[:,:,self.agent_idx]), -1, keepdims=True)
+        clipped_weights = np.clip(imp_weights, a_max=1.0, a_min=None)
+        truncated_weights = np.minimum(imp_weights, clipped_weights)
+        for step in reversed(range(self.rewards.shape[0])):
+            rho = truncated_weights[step + 1] if step < self.rewards.shape[0] - 1 else 1
+            if self._use_popart or self._use_valuenorm:
+                delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
+                gae = delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                self.returns[step] = gae + value_normalizer.denormalize(self.value_preds[step])
+            else:
+                delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
+                gae = delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * gae
+                self.returns[step] = gae + self.value_preds[step]
+        
+        advantages = self.returns[:-1] - value_normalizer.denormalize(self.value_preds[:-1])
+        advantages_copy = advantages.copy()
+        advantages_copy[self.active_masks[:-1] == 0.0] = np.nan
+        mean_advantages = np.nanmean(advantages_copy)
+        std_advantages = np.nanstd(advantages_copy)
+        advantages = (advantages - mean_advantages) / (std_advantages + 1e-5)
+
+        return advantages.reshape(-1, 1), self.returns.reshape(-1, 1)
+            
     def feed_forward_generator(self, advantages, num_mini_batch=None, mini_batch_size=None, sampler=None):
         episode_length, n_rollout_threads = self.rewards.shape[0:2]
         batch_size = n_rollout_threads * episode_length
