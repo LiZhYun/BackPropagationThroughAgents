@@ -243,8 +243,8 @@ class Runner(object):
 
         action_dim=self.buffer[0].one_hot_actions.shape[-1]
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
-        old_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
-        new_actions_probs = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
+        old_actions_probs = np.zeros((self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
+        new_actions_probs = np.zeros((self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
         ordered_vertices = [i for i in range(self.num_agents)]
 
@@ -585,11 +585,6 @@ class Runner(object):
         batch_size = self.n_rollout_threads * self.episode_length
         mini_batch_size = batch_size // self.num_mini_batch
 
-        new_actions_logprobs = np.ones((self.num_agents, batch_size, self.action_shape), dtype=np.float32)
-        new_actions = np.ones((self.num_agents, batch_size, self.action_shape))
-        new_advg = np.ones((self.num_agents, batch_size, 1), dtype=np.float32)
-        new_returns = np.ones((self.num_agents, batch_size, 1), dtype=np.float32)
-
         for epoch in range(self.ppo_epoch):
             advantages_all = advantages_all.reshape(-1, 1)
             rand = torch.randperm(batch_size).numpy()
@@ -623,11 +618,6 @@ class Runner(object):
                     ego_exclusive_action = one_hot_actions_batch[:,0:self.num_agents]
                     execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(self.device)
 
-                    actions_batch = check(new_actions[agent_idx, sampler[batch_idx]]).to(self.device) if epoch != 0
-                    old_action_log_probs_batch = check(new_actions_logprobs[agent_idx, sampler[batch_idx]]).to(self.device) if epoch != 0
-                    adv_targ = check(new_advg[agent_idx, sampler[batch_idx]]).to(self.device) if epoch != 0
-                    return_batch = check(new_returns[agent_idx, sampler[batch_idx]]).to(self.device) if epoch != 0
-
                     values, individual_dist, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
@@ -647,23 +637,17 @@ class Runner(object):
                     obs_feats_all[:, agent_idx] = obs_feat.clone()
 
                     # actor update
-                    if epoch != 0:
-                        ratio = torch.exp(action_log_probs - old_action_log_probs_batch)
+                    ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
-                        # off_factor = torch.exp(old_action_log_probs_batch - old_joint_action_log_probs[:, agent_idx])
+                    # dual clip
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + self.clip_param * (0.9 ** epoch)).to(self.device))
 
-                        # dual clip
-                        # cliped_ratio = torch.min(ratio, off_factor * (1.0 + self.clip_param))
-
-                        surr1 = ratio * adv_targ
-                        surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
-
-                        # clip decay
-                        self.clip_param = self.clip_param * 0.96
-                    else:
-                        ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
-                        surr1 = action_log_probs_kl
-                        surr2 = action_log_probs_kl
+                    surr1 = cliped_ratio * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param * (0.9 ** epoch), 1.0 + self.clip_param * (0.9 ** epoch)) * adv_targ
+                    
+                    # # BC
+                    # surr1 = action_log_probs_kl
+                    # surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -738,36 +722,6 @@ class Runner(object):
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
             
-            if epoch == 0:
-                for agent_id in range(self.num_agents):
-                    if self.env_name == "GoBigger":
-                        obs_batch = flatten(self.buffer[agent_id].obs[:-1])
-                    else:
-                        obs_batch = self.buffer[agent_id].obs[:-1].reshape(-1, *self.buffer[agent_id].obs.shape[2:])
-                    
-                    execution_masks_batch = torch.stack([torch.zeros(self.episode_length*self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
-
-                    one_hot_actions = self.buffer[agent_id].one_hot_actions[:,:,0:self.num_agents].reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])
-
-                    available_actions = None if self.buffer[agent_id].available_actions is None \
-                        else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
-
-                    new_action, new_actions_logprob, _, _, _, _ =self.trainer[agent_id].policy.actor(obs_batch,
-                                                                    self.buffer[agent_id].rnn_states[0:1].reshape(-1, *self.buffer[agent_id].rnn_states.shape[2:]),
-                                                                    self.buffer[agent_id].masks[:-1].reshape(-1, *self.buffer[agent_id].masks.shape[2:]),
-                                                                    one_hot_actions,
-                                                                    execution_masks_batch,
-                                                                    available_actions,
-                                                                    self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
-                                                                    tau=self.temperature)
-                    
-                    new_actions_logprobs[agent_id] = _t2n(new_actions_logprob)
-                    new_actions[agent_id] = _t2n(torch.argmax(new_action, -1, keepdim=True).to(torch.int)) if self.discrete = True else _t2n(new_action)
-
-                    advg, returns = self.buffer[agent_id].compute_returns(self.trainer[agent_id].value_normalizer)
-                    new_advg[agent_id] = advg
-                    new_returns[agent_id] = returns
-                
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
