@@ -639,11 +639,12 @@ class Runner(object):
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
+                    new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
                     # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + self.clip_param * (0.9 ** epoch)).to(self.device))
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + new_clip).to(self.device))
 
                     surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param * (0.9 ** epoch), 1.0 + self.clip_param * (0.9 ** epoch)) * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
                     
                     # # BC
                     # surr1 = action_log_probs_kl
