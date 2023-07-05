@@ -385,13 +385,21 @@ class Runner(object):
         mini_batch_size = batch_size // self.num_mini_batch
 
         for epoch in range(self.ppo_epoch):
-            rand = torch.randperm(batch_size).numpy()
-            sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
             if self._use_recurrent_policy:
+                data_chunks = batch_size // self.data_chunk_length
+                mini_batch_size = data_chunks // self.num_mini_batch
+                rand = torch.randperm(data_chunks).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].recurrent_generator(advs[agent_idx], self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
             elif self._use_naive_recurrent:
+                mini_batch_size = batch_size // self.num_mini_batch
+                rand = torch.randperm(batch_size).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             else:
+                mini_batch_size = batch_size // self.num_mini_batch
+                rand = torch.randperm(batch_size).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
@@ -577,25 +585,48 @@ class Runner(object):
             self.trainer[agent_idx].prep_training()
             
         batch_size = self.n_rollout_threads * self.episode_length
-        mini_batch_size = batch_size // self.num_mini_batch
+
+        if self._use_recurrent_policy:
+            advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
+        else:
+            advantages_all = advantages_all.reshape(-1, 1)
 
         for epoch in range(self.ppo_epoch):
-            advantages_all = advantages_all.reshape(-1, 1)
-            rand = torch.randperm(batch_size).numpy()
-            sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
             if self._use_recurrent_policy:
+                data_chunks = batch_size // self.data_chunk_length
+                mini_batch_size = data_chunks // self.num_mini_batch
+                rand = torch.randperm(data_chunks).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].recurrent_generator(advs[agent_idx], self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
             elif self._use_naive_recurrent:
+                mini_batch_size = batch_size // self.num_mini_batch
+                rand = torch.randperm(batch_size).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             else:
+                mini_batch_size = batch_size // self.num_mini_batch
+                rand = torch.randperm(batch_size).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
-                adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
-                available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-                active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
-                logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-                obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
+                if self._use_recurrent_policy:
+                    adv_targ_all = []
+                    for index in sampler[batch_idx]:
+                        ind = index * self.data_chunk_length
+                        adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
+                    adv_targ_all = np.stack(adv_targ_all)
+                    adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
+                    available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
+                    logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
+                else:
+                    adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
+                    available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                    logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 individual_loss = torch.zeros(self.num_agents).to(self.device)
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
@@ -610,7 +641,10 @@ class Runner(object):
                         available_actions_all[:, agent_idx] = check(available_actions_batch).to(**self.tpdv)
 
                     ego_exclusive_action = one_hot_actions_batch[:,0:self.num_agents]
-                    execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(self.device)
+                    if self._use_recurrent_policy:
+                        execution_mask = torch.stack([torch.zeros(self.data_chunk_length*mini_batch_size)] * self.num_agents, -1).to(self.device)
+                    else:
+                        execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(self.device)
 
                     values, individual_dist, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 

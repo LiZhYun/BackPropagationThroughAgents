@@ -303,78 +303,151 @@ class SeparatedReplayBuffer(object):
 
             yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch
 
-    def graph_feed_forward_generator(self, advantages, num_mini_batch=None, mini_batch_size=None):
+    def recurrent_generator(self, advantages, num_mini_batch, data_chunk_length, sampler=None):
         episode_length, n_rollout_threads = self.rewards.shape[0:2]
         batch_size = n_rollout_threads * episode_length
+        data_chunks = batch_size // data_chunk_length  # [C=r*T/L]
+        mini_batch_size = data_chunks // num_mini_batch
 
-        if mini_batch_size is None:
-            assert batch_size >= num_mini_batch, (
-                "PPO requires the number of processes ({}) "
-                "* number of steps ({}) = {} "
-                "to be greater than or equal to the number of PPO mini batches ({})."
-                "".format(n_rollout_threads, episode_length, n_rollout_threads * episode_length,
-                          num_mini_batch))
-            mini_batch_size = batch_size // num_mini_batch
+        assert episode_length * n_rollout_threads >= data_chunk_length, (
+            "PPO requires the number of processes ({}) * episode length ({}) "
+            "to be greater than or equal to the number of "
+            "data chunk length ({}).".format(n_rollout_threads, episode_length, data_chunk_length))
+        assert data_chunks >= 2, ("need larger batch size")
 
-        rand = torch.randperm(batch_size).numpy()
-        sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
+        if sampler == None:
+            rand = torch.randperm(data_chunks).numpy()
+            sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
+        
+        if len(self.share_obs.shape) > 3:
+            share_obs = self.share_obs[:-1].transpose(1, 0, 2, 3, 4).reshape(-1, *self.share_obs.shape[2:])
+            obs = self.obs[:-1].transpose(1, 0, 2, 3, 4).reshape(-1, *self.obs.shape[2:])
+        else:
+            share_obs = _cast(self.share_obs[:-1])
+            obs = _cast(self.obs[:-1])
 
-        one_hot_actions = self.one_hot_actions.reshape(-1, *self.one_hot_actions.shape[2:])
-        share_obs = self.share_obs[:-1].reshape(-1, *self.share_obs.shape[2:])
-        obs = self.obs[:-1].reshape(-1, *self.obs.shape[2:])
-        execution_masks = self.execution_masks.reshape(-1, *self.execution_masks.shape[2:])
-        adjs = self.adjs.reshape(-1, *self.adjs.shape[2:])
-        rnn_states = self.rnn_states[:-1].reshape(-1, *self.rnn_states.shape[2:])
-        rnn_states_critic = self.rnn_states_critic[:-1].reshape(-1, *self.rnn_states_critic.shape[2:])
-        actions = self.actions.reshape(-1, self.actions.shape[-1])
-        if self.available_actions is not None:
-            available_actions = self.available_actions[:-1].reshape(-1, self.available_actions.shape[-1])
+        one_hot_actions = self.one_hot_actions.transpose(1,0,2,3).reshape(-1, *self.one_hot_actions.shape[2:])
+        actions = _cast(self.actions)
+        action_log_probs = _cast(self.action_log_probs)
+        advantages = _cast(advantages)
         if self.factor is not None:
-            # factor = self.factor.reshape(-1,1)
-            factor = self.factor.reshape(-1, self.factor.shape[-1])
+            factor = _cast(self.factor)
         if self.action_grad is not None:
-            # factor = self.factor.reshape(-1,1)
-            action_grad = self.action_grad.reshape(-1, self.action_grad.shape[-1])
-        value_preds = self.value_preds[:-1].reshape(-1, 1)
-        returns = self.returns[:-1].reshape(-1, 1)
-        masks = self.masks[:-1].reshape(-1, 1)
-        active_masks = self.active_masks[:-1].reshape(-1, 1)
-        action_log_probs = self.action_log_probs.reshape(-1, self.action_log_probs.shape[-1])
-        advantages = advantages.reshape(-1, 1)
+            action_grad = _cast(self.action_grad)
+        value_preds = _cast(self.value_preds[:-1])
+        returns = _cast(self.returns[:-1])
+        masks = _cast(self.masks[:-1])
+        active_masks = _cast(self.active_masks[:-1])
+        rnn_states = self.rnn_states[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states.shape[2:])
+        rnn_states_critic = self.rnn_states_critic[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_critic.shape[2:])
+        joint_actions = self.joint_actions.transpose(1, 0, 2, 3).reshape(-1, *self.joint_actions.shape[2:])
+        joint_action_log_probs = self.joint_action_log_probs.transpose(1, 0, 2, 3).reshape(-1, *self.joint_action_log_probs.shape[2:])
+
+        if self.available_actions is not None:
+            available_actions = _cast(self.available_actions[:-1])
 
         for indices in sampler:
-            # obs size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[index,Dim]
-            share_obs_batch = share_obs[indices]
-            obs_batch = obs[indices]
-            rnn_states_batch = rnn_states[indices]
-            rnn_states_critic_batch = rnn_states_critic[indices]
-            actions_batch = actions[indices]
-            one_hot_actions_batch = one_hot_actions[indices]
-            adjs_batch = adjs[indices]
-            execution_masks_batch = execution_masks[indices]
+            share_obs_batch = []
+            obs_batch = []
+            rnn_states_batch = []
+            rnn_states_critic_batch = []
+            actions_batch = []
+            one_hot_actions_batch = []
+            available_actions_batch = []
+            value_preds_batch = []
+            return_batch = []
+            masks_batch = []
+            active_masks_batch = []
+            old_action_log_probs_batch = []
+            adv_targ = []
+            factor_batch = []
+            action_grad_batch = []
+            joint_actions_batch = []
+            joint_action_log_probs_batch = []
+
+            for index in indices:
+                ind = index * data_chunk_length
+                # size [T+1 N M Dim]-->[T N Dim]-->[N T Dim]-->[T*N,Dim]-->[L,Dim]
+                share_obs_batch.append(share_obs[ind:ind+data_chunk_length])
+                obs_batch.append(obs[ind:ind+data_chunk_length])
+                actions_batch.append(actions[ind:ind+data_chunk_length])
+                one_hot_actions_batch.append(one_hot_actions[ind:ind+data_chunk_length])
+                if self.available_actions is not None:
+                    available_actions_batch.append(available_actions[ind:ind+data_chunk_length])
+                if self.factor is None:
+                    factor_batch = None
+                else:
+                    factor_batch.append(factor[ind:ind+data_chunk_length])
+                if self.action_grad is None:
+                    action_grad_batch = None
+                else:
+                    action_grad_batch.append(action_grad[ind:ind+data_chunk_length])
+                value_preds_batch.append(value_preds[ind:ind+data_chunk_length])
+                return_batch.append(returns[ind:ind+data_chunk_length])
+                masks_batch.append(masks[ind:ind+data_chunk_length])
+                active_masks_batch.append(active_masks[ind:ind+data_chunk_length])
+                old_action_log_probs_batch.append(action_log_probs[ind:ind+data_chunk_length])
+                adv_targ.append(advantages[ind:ind+data_chunk_length])
+                # size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[1,Dim]
+                rnn_states_batch.append(rnn_states[ind])
+                rnn_states_critic_batch.append(rnn_states_critic[ind])
+                joint_actions_batch.append(joint_actions[ind:ind+data_chunk_length])
+                joint_action_log_probs_batch.append(joint_action_log_probs[ind:ind+data_chunk_length])
+
+            L, N = data_chunk_length, mini_batch_size
+
+            # These are all from_numpys of size (N, L, Dim)
+            share_obs_batch = np.stack(share_obs_batch)
+            obs_batch = np.stack(obs_batch)
+
+            actions_batch = np.stack(actions_batch)
+            one_hot_actions_batch = np.stack(one_hot_actions_batch)
             if self.available_actions is not None:
-                available_actions_batch = available_actions[indices]
+                available_actions_batch = np.stack(available_actions_batch)
+            if self.factor is not None:
+                factor_batch = np.stack(factor_batch)
+            if self.action_grad is not None:
+                action_grad_batch = np.stack(action_grad_batch)
+            value_preds_batch = np.stack(value_preds_batch)
+            return_batch = np.stack(return_batch)
+            masks_batch = np.stack(masks_batch)
+            active_masks_batch = np.stack(active_masks_batch)
+            old_action_log_probs_batch = np.stack(old_action_log_probs_batch)
+            adv_targ = np.stack(adv_targ)
+            joint_actions_batch = np.stack(joint_actions_batch)
+            joint_action_log_probs_batch = np.stack(joint_action_log_probs_batch)
+
+            # States is just a (N, -1) from_numpy
+            rnn_states_batch = np.stack(rnn_states_batch).reshape(N, *self.rnn_states.shape[2:])
+            rnn_states_critic_batch = np.stack(rnn_states_critic_batch).reshape(N, *self.rnn_states_critic.shape[2:])
+
+            # Flatten the (L, N, ...) from_numpys to (L * N, ...)
+            share_obs_batch = _flatten(L, N, share_obs_batch)
+            obs_batch = _flatten(L, N, obs_batch)
+            actions_batch = _flatten(L, N, actions_batch)
+            one_hot_actions_batch = _flatten(L, N, one_hot_actions_batch)
+            if self.available_actions is not None:
+                available_actions_batch = _flatten(L, N, available_actions_batch)
             else:
                 available_actions_batch = None
-            value_preds_batch = value_preds[indices]
-            return_batch = returns[indices]
-            masks_batch = masks[indices]
-            active_masks_batch = active_masks[indices]
-            old_action_log_probs_batch = action_log_probs[indices]
-            if advantages is None:
-                adv_targ = None
+            if self.factor is not None:
+                factor_batch = _flatten(L, N, factor_batch)
             else:
-                adv_targ = advantages[indices]
-            if self.factor is None:
                 factor_batch = None
+            if self.action_grad is not None:
+                action_grad_batch = _flatten(L, N, action_grad_batch)
             else:
-                factor_batch = factor[indices]
-            if self.action_grad is None:
                 action_grad_batch = None
-            else:
-                action_grad_batch = action_grad[indices]
+            value_preds_batch = _flatten(L, N, value_preds_batch)
+            return_batch = _flatten(L, N, return_batch)
+            masks_batch = _flatten(L, N, masks_batch)
+            active_masks_batch = _flatten(L, N, active_masks_batch)
+            old_action_log_probs_batch = _flatten(L, N, old_action_log_probs_batch)
+            adv_targ = _flatten(L, N, adv_targ)
+            joint_actions_batch = _flatten(L, N, joint_actions_batch)
+            joint_action_log_probs_batch = _flatten(L, N, joint_action_log_probs_batch)
 
-            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, adjs_batch, factor_batch, action_grad_batch
+            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch
 
     def naive_recurrent_generator(self, advantages, num_mini_batch):
         n_rollout_threads = self.rewards.shape[1]
@@ -449,122 +522,3 @@ class SeparatedReplayBuffer(object):
             adv_targ = _flatten(T, N, adv_targ)
 
             yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch
-
-    def recurrent_generator(self, advantages, num_mini_batch, data_chunk_length):
-        episode_length, n_rollout_threads = self.rewards.shape[0:2]
-        batch_size = n_rollout_threads * episode_length
-        data_chunks = batch_size // data_chunk_length  # [C=r*T/L]
-        mini_batch_size = data_chunks // num_mini_batch
-
-        assert episode_length * n_rollout_threads >= data_chunk_length, (
-            "PPO requires the number of processes ({}) * episode length ({}) "
-            "to be greater than or equal to the number of "
-            "data chunk length ({}).".format(n_rollout_threads, episode_length, data_chunk_length))
-        assert data_chunks >= 2, ("need larger batch size")
-
-        rand = torch.randperm(data_chunks).numpy()
-        sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
-
-        if len(self.share_obs.shape) > 3:
-            share_obs = self.share_obs[:-1].transpose(1, 0, 2, 3, 4).reshape(-1, *self.share_obs.shape[2:])
-            obs = self.obs[:-1].transpose(1, 0, 2, 3, 4).reshape(-1, *self.obs.shape[2:])
-        else:
-            share_obs = _cast(self.share_obs[:-1])
-            obs = _cast(self.obs[:-1])
-
-        one_hot_actions = self.one_hot_actions.permute(1,0,2,3).reshape(-1, *self.one_hot_actions.shape[2:])
-        actions = _cast(self.actions)
-        action_log_probs = _cast(self.action_log_probs)
-        advantages = _cast(advantages)
-        value_preds = _cast(self.value_preds[:-1])
-        returns = _cast(self.returns[:-1])
-        masks = _cast(self.masks[:-1])
-        active_masks = _cast(self.active_masks[:-1])
-        execution_masks = _cast(self.execution_masks)
-        adjs = self.adjs.permute(1, 0, 2, 3).reshape(-1, *self.adjs.shape[2:])
-        rnn_states = self.rnn_states[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states.shape[2:])
-        rnn_states_critic = self.rnn_states_critic[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_critic.shape[2:])
-
-        if self.available_actions is not None:
-            available_actions = _cast(self.available_actions[:-1])
-
-        for indices in sampler:
-            share_obs_batch = []
-            obs_batch = []
-            rnn_states_batch = []
-            rnn_states_critic_batch = []
-            actions_batch = []
-            one_hot_actions_batch = []
-            available_actions_batch = []
-            value_preds_batch = []
-            return_batch = []
-            masks_batch = []
-            execution_masks_batch = []
-            adjs_batch = []
-            active_masks_batch = []
-            old_action_log_probs_batch = []
-            adv_targ = []
-
-            for index in indices:
-                ind = index * data_chunk_length
-                # size [T+1 N M Dim]-->[T N Dim]-->[N T Dim]-->[T*N,Dim]-->[L,Dim]
-                share_obs_batch.append(share_obs[ind:ind+data_chunk_length])
-                obs_batch.append(obs[ind:ind+data_chunk_length])
-                actions_batch.append(actions[ind:ind+data_chunk_length])
-                one_hot_actions_batch.append(one_hot_actions[ind:ind+data_chunk_length])
-                if self.available_actions is not None:
-                    available_actions_batch.append(available_actions[ind:ind+data_chunk_length])
-                value_preds_batch.append(value_preds[ind:ind+data_chunk_length])
-                return_batch.append(returns[ind:ind+data_chunk_length])
-                masks_batch.append(masks[ind:ind+data_chunk_length])
-                execution_masks_batch.append(execution_masks[ind:ind+data_chunk_length])
-                adjs_batch.append(adjs[ind:ind+data_chunk_length])
-                active_masks_batch.append(active_masks[ind:ind+data_chunk_length])
-                old_action_log_probs_batch.append(action_log_probs[ind:ind+data_chunk_length])
-                adv_targ.append(advantages[ind:ind+data_chunk_length])
-                # size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[1,Dim]
-                rnn_states_batch.append(rnn_states[ind])
-                rnn_states_critic_batch.append(rnn_states_critic[ind])
-
-            L, N = data_chunk_length, mini_batch_size
-
-            # These are all from_numpys of size (N, L, Dim)
-            share_obs_batch = np.stack(share_obs_batch)
-            obs_batch = np.stack(obs_batch)
-
-            actions_batch = np.stack(actions_batch)
-            one_hot_actions_batch = torch.stack(one_hot_actions_batch)
-            if self.available_actions is not None:
-                available_actions_batch = np.stack(available_actions_batch)
-            value_preds_batch = np.stack(value_preds_batch)
-            return_batch = np.stack(return_batch)
-            masks_batch = np.stack(masks_batch)
-            execution_masks_batch = torch.stack(execution_masks_batch)
-            adjs_batch = torch.stack(adjs_batch)
-            active_masks_batch = np.stack(active_masks_batch)
-            old_action_log_probs_batch = torch.stack(old_action_log_probs_batch)
-            adv_targ = np.stack(adv_targ)
-
-            # States is just a (N, -1) from_numpy
-            rnn_states_batch = np.stack(rnn_states_batch).reshape(N, *self.rnn_states.shape[2:])
-            rnn_states_critic_batch = np.stack(rnn_states_critic_batch).reshape(N, *self.rnn_states_critic.shape[2:])
-
-            # Flatten the (L, N, ...) from_numpys to (L * N, ...)
-            share_obs_batch = _flatten(L, N, share_obs_batch)
-            obs_batch = _flatten(L, N, obs_batch)
-            actions_batch = _flatten(L, N, actions_batch)
-            one_hot_actions_batch = _flatten(L, N, one_hot_actions_batch)
-            if self.available_actions is not None:
-                available_actions_batch = _flatten(L, N, available_actions_batch)
-            else:
-                available_actions_batch = None
-            value_preds_batch = _flatten(L, N, value_preds_batch)
-            return_batch = _flatten(L, N, return_batch)
-            masks_batch = _flatten(L, N, masks_batch)
-            execution_masks_batch = _flatten(L, N, execution_masks_batch)
-            adjs_batch = _flatten(L, N, adjs_batch)
-            active_masks_batch = _flatten(L, N, active_masks_batch)
-            old_action_log_probs_batch = _flatten(L, N, old_action_log_probs_batch)
-            adv_targ = _flatten(L, N, adv_targ)
-
-            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, execution_masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, adjs_batch
