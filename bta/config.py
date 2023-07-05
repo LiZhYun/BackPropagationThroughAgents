@@ -249,8 +249,8 @@ def get_config():
     # recurrent parameters
     parser.add_argument("--use_naive_recurrent_policy", action='store_true',
                         default=False, help='Whether to use a naive recurrent policy')
-    parser.add_argument("--use_recurrent_policy", action='store_true',
-                        default=False, help='use a recurrent policy')
+    parser.add_argument("--use_recurrent_policy", action='store_false',
+                        default=True, help='use a recurrent policy')
     parser.add_argument("--recurrent_N", type=int, default=1, help="The number of recurrent layers.")
     parser.add_argument("--data_chunk_length", type=int, default=10,
                         help="Time length of chunks used to train a recurrent_policy")
