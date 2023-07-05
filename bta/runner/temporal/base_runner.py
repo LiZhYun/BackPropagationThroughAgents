@@ -458,13 +458,13 @@ class Runner(object):
                                                                                         tau=self.temperature
                                                                                         )
                     actions = torch.from_numpy(actions_batch).to(self.device)
-                    # if self.continuous:
-                    #     train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2)).detach() + torch.finfo(torch.float32).eps)
-                    # elif self.discrete:
-                    #     train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + torch.finfo(torch.float32).eps)
+                    if self.continuous:
+                        train_actions = torch.exp(action_log_probs) / ((-torch.exp(action_log_probs) * (actions - train_actions.mean) / (train_actions.stddev ** 2)).detach() + torch.finfo(torch.float32).eps)
+                    elif self.discrete:
+                        train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + torch.finfo(torch.float32).eps)
 
-                    # is_inf_or_nan = torch.logical_or(torch.isinf(train_actions), torch.isnan(train_actions))
-                    # train_actions = torch.where(is_inf_or_nan, torch.zeros_like(train_actions), train_actions)
+                    is_inf_or_nan = torch.logical_or(torch.isinf(train_actions), torch.isnan(train_actions))
+                    train_actions = torch.where(is_inf_or_nan, torch.zeros_like(train_actions), train_actions)
 
                     # actor update
                     imp_weights = torch.exp(action_log_probs - old_action_log_probs_batch)
@@ -639,16 +639,16 @@ class Runner(object):
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
-                    new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + new_clip).to(self.device))
+                    # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
+                    # # dual clip
+                    # cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + new_clip).to(self.device))
 
-                    surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
+                    # surr1 = cliped_ratio * adv_targ
+                    # surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
                     
-                    # # BC
-                    # surr1 = action_log_probs_kl
-                    # surr2 = action_log_probs_kl
+                    # BC
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),

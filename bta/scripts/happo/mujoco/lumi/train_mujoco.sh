@@ -15,7 +15,7 @@ env="mujoco"
 
 scenario=$1
 agent_conf=$2
-agent_obsk=2
+agent_obsk=0
 
 algo="happo"
 exp="check"
