@@ -240,15 +240,15 @@ class ACTLayer(nn.Module):
                 dist_entropy = action_logits.entropy().mean()
         if rsample:
             if self.continuous_action:
-                # train_actions_soft = action_logits.rsample()
-                # train_actions = action - train_actions_soft.detach() + train_actions_soft
-                train_actions = action_logits
+                train_actions_soft = action_logits.rsample()
+                train_actions = action - train_actions_soft.detach() + train_actions_soft
+                # train_actions = action_logits
             elif self.discrete_action:
-                # train_actions_soft = action_logits.rsample(hard=False, tau=tau)
-                # index = action
-                # train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
-                # train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
-                train_actions = action_logits
+                train_actions_soft = action_logits.rsample(hard=False, tau=tau)
+                index = action
+                train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
+                train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
+                # train_actions = action_logits
             if kl:
                 action_log_probs_kl = action_logits.log_probs(joint_actions)
             else:

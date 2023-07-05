@@ -45,6 +45,10 @@ class TemporalPolicy:
         train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau, kl=kl, joint_actions=joint_actions)
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat
+    
+    def evaluate_actions_logprobs(self, obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0, kl=False, joint_actions=None):
+        train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau, kl=kl, joint_actions=joint_actions)
+        return action_log_probs
 
     def act(self, obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, **kwargs):
         actions, action_log_probs, rnn_states_actor, logits, dist_entropy, obs_feat = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)
