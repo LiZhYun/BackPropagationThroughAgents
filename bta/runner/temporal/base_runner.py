@@ -446,21 +446,6 @@ class Runner(object):
                     
                     # train
                     actions = torch.from_numpy(actions_batch).to(self.device)
-                    if self.continuous:
-                        actions.requires_grad=True
-                        log_probs = self.trainer[agent_idx].policy.evaluate_actions_logprobs(
-                                                                                            obs_batch, 
-                                                                                            rnn_states_batch, 
-                                                                                            actions, 
-                                                                                            masks_batch, 
-                                                                                            one_hot_actions_batch,
-                                                                                            execution_masks_batch,
-                                                                                            available_actions_batch,
-                                                                                            active_masks_batch,
-                                                                                            tau=self.temperature
-                                                                                            )
-                        torch.exp(log_probs).sum(-1).mean().backward()
-                        train_actions_gradients = actions.grad.detach()
                     
                     values, train_actions, action_log_probs, _, dist_entropy, _, _ = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
                                                                                         obs_batch, 
@@ -474,14 +459,6 @@ class Runner(object):
                                                                                         active_masks_batch,
                                                                                         tau=self.temperature
                                                                                         )
-                    
-                    if self.continuous:
-                        mean_train_actions_gradients = torch.mean(train_actions_gradients, 0)
-                        std_train_actions_gradients = torch.std(train_actions_gradients, 0)
-                        train_actions_gradients = (train_actions_gradients - mean_train_actions_gradients) / (std_train_actions_gradients + 1e-5)
-                        train_actions = torch.exp(action_log_probs) / train_actions_gradients
-                        is_inf_or_nan = torch.logical_or(torch.isinf(train_actions), torch.isnan(train_actions))
-                        train_actions = torch.where(is_inf_or_nan, torch.zeros_like(train_actions), train_actions)
 
                     # actor update
                     imp_weights = torch.exp(action_log_probs - old_action_log_probs_batch)
