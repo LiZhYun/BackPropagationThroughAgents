@@ -476,6 +476,9 @@ class Runner(object):
                                                                                         )
                     
                     if self.continuous:
+                        mean_train_actions_gradients = torch.mean(train_actions_gradients, 0)
+                        std_train_actions_gradients = torch.std(train_actions_gradients, 0)
+                        train_actions_gradients = (train_actions_gradients - mean_train_actions_gradients) / (std_train_actions_gradients + 1e-5)
                         train_actions = torch.exp(action_log_probs) / train_actions_gradients
                         is_inf_or_nan = torch.logical_or(torch.isinf(train_actions), torch.isnan(train_actions))
                         train_actions = torch.where(is_inf_or_nan, torch.zeros_like(train_actions), train_actions)
