@@ -24,11 +24,12 @@ class ACTLayer(nn.Module):
     :param gain: (float) gain of the output layer of the network.
     """
 
-    def __init__(self, action_space, inputs_dim, use_orthogonal, gain, device):
+    def __init__(self, action_space, inputs_dim, use_orthogonal, gain, device, num_agents):
         super(ACTLayer, self).__init__()
         self.device = device
         self.mixed_action = False
         self.multi_discrete = False
+        self.n_agents = num_agents
 
         if action_space.__class__.__name__ == "Discrete":
             action_dim = action_space.n
@@ -136,6 +137,7 @@ class ACTLayer(nn.Module):
             actions = torch.cat(actions, -1)
             action_log_probs = torch.cat(action_log_probs, -1)
         else:
+            available_actions = available_actions.reshape(-1, self.n_agents, self.action_dim) if available_actions is not None else None
             actions_outer, action_log_probs_outer, father_action_lst_outer = [], [], []
 
             cur_time = datetime.now() + timedelta(hours=0)
@@ -158,7 +160,8 @@ class ACTLayer(nn.Module):
                         father_action_lst[j] = father_action
 
                         x_ = torch.cat((x[i][j], father_action.to(self.device)))
-                        action_logit = self.action_out(x_)  ## 4.64、 None  --> 4.5
+                        available_actions_ = available_actions[i][j] if available_actions is not None else None
+                        action_logit = self.action_out(x_, available_actions_)  ## 4.64、 None  --> 4.5
                         action = action_logit.mode() if deterministic else action_logit.sample()  # torch.Size([4, 1])
                         action_log_prob = action_logit.log_probs(action)   # torch.Size([4, 1])
                         actions[j], action_log_probs[j] = [action], [action_log_prob]

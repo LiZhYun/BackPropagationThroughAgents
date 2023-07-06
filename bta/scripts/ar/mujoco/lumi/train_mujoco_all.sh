@@ -10,5 +10,4 @@ sbatch train_mujoco.sh Ant-v2 8x1
 sbatch train_mujoco.sh Walker2d-v2 2x3
 sbatch train_mujoco.sh Walker2d-v2 3x2
 sbatch train_mujoco.sh Walker2d-v2 6x1
-sbatch train_mujoco.sh manyagent_swimmer 10x2
 sbatch train_mujoco.sh Humanoid-v2 17x1

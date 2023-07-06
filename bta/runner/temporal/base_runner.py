@@ -410,7 +410,8 @@ class Runner(object):
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
-                ordered_vertices = [i for i in range(self.num_agents)]
+                ordered_vertices = np.arange(self.num_agents)
+                # ordered_vertices = np.random.permutation(np.arange(self.num_agents))
 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
@@ -418,7 +419,7 @@ class Runner(object):
                         action_grad_per_agent = np.zeros((self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
                     else:
                         action_grad_per_agent = np.zeros((mini_batch_size, self.action_shape), dtype=np.float32)
-                    updated_agents_order = list(reversed(ordered_vertices))[0:idx] if idx < self.num_agents else list(reversed(ordered_vertices))[idx-self.num_agents+1:idx]
+                    updated_agents_order = list(reversed(ordered_vertices))[0:idx]
                     for updated_agent in updated_agents_order:
                         multiplier = np.concatenate([factor[:agent_idx], factor[agent_idx+1:]],0)
                         multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
@@ -439,9 +440,11 @@ class Runner(object):
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
 
                     if self.skip_connect:
-                        execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * agent_idx +
-                                                        [torch.zeros(actions_batch.shape[0])] *
-                                                        (self.num_agents - agent_idx), -1).to(self.device)
+                        order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
+                        execution_masks_batch = generate_mask_from_order(order, ego_exclusive=False)[:,agent_idx].to(self.device).float() 
+                        # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * agent_idx +
+                        #                                 [torch.zeros(actions_batch.shape[0])] *
+                        #                                 (self.num_agents - agent_idx), -1).to(self.device)
                     else:
                         if idx != self.num_agents - 1:
                             execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(list(reversed(ordered_vertices))[idx+1]), 1.0)\

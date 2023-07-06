@@ -146,53 +146,6 @@ class R_Actor(nn.Module):
         
         return actions, action_log_probs, rnn_states, logits, dist_entropy, obs_feat
     
-    def get_raw_action(self, obs, rnn_states, masks, available_actions=None, deterministic=False, tau=1.0):        
-        if self._nested_obs:
-            for batch_idx in range(obs.shape[0]):
-                for key in obs[batch_idx].keys():
-                    if 'Dict' in obs[batch_idx][key].__class__.__name__.capitalize():
-                        for sub_key in obs[batch_idx][key].keys():
-                            obs[batch_idx][key][sub_key] = check(obs[batch_idx][key][sub_key]).to(**self.tpdv)
-                    else:
-                        obs[batch_idx][key] = check(obs[batch_idx][key]).to(**self.tpdv)
-        elif self._mixed_obs:
-            for key in obs.keys():
-                obs[key] = check(obs[key]).to(**self.tpdv)
-        else:
-            obs = check(obs).to(**self.tpdv)
-        rnn_states = check(rnn_states).to(**self.tpdv)
-        masks = check(masks).to(**self.tpdv)
-
-        if available_actions is not None:
-            available_actions = check(available_actions).to(**self.tpdv)
-
-        if self._nested_obs:
-            actor_features = torch.stack([self.base(obs[batch_idx]) for batch_idx in range(obs.shape[0])])
-        else:
-            actor_features = self.base(obs)
-
-        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
-            actor_features, rnn_states = self.rnn(actor_features, rnn_states, masks)
-
-        if self._use_influence_policy:
-            mlp_obs = self.mlp(obs)
-            actor_features = torch.cat([actor_features, mlp_obs], dim=1)
-        
-        agent_feat = actor_features.clone()
-
-        masked_actions = torch.zeros((actor_features.shape[0], self.num_agents, self.action_dim)).to(**self.tpdv)
-        masked_actions = masked_actions.view(*masked_actions.shape[:-2], -1)
-        # actor_features = torch.cat([actor_features, masked_actions.view(*masked_actions.shape[:-2], -1)], dim=-1)
-
-        id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
-        actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
-        actor_features = self.feature_norm(actor_features)
-        # actor_features = torch.cat([actor_features, id_feat], dim=1)
-
-        actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
-        
-        return actions, action_log_probs, rnn_states, agent_feat, dist_entropy
-
     def evaluate_actions(self, obs, rnn_states, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0, kl=False, joint_actions=None):
         if self._nested_obs:
             for batch_idx in range(obs.shape[0]):
