@@ -16,7 +16,7 @@ env="mujoco"
 
 scenario=$1
 agent_conf=$2
-agent_obsk=0
+agent_obsk=1
 
 algo="temporal"
 exp="check-off"
