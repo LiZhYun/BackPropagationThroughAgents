@@ -137,12 +137,12 @@ class ACTLayer(nn.Module):
             actions = torch.cat(actions, -1)
             action_log_probs = torch.cat(action_log_probs, -1)
         else:
-            available_actions = available_actions.reshape(-1, self.n_agents, self.action_dim) if available_actions is not None else None
             actions_outer, action_log_probs_outer, father_action_lst_outer = [], [], []
 
             cur_time = datetime.now() + timedelta(hours=0)
             # print("--------------11------start time::", cur_time)
             if "list" in G_s.__class__.__name__ :
+                available_actions = available_actions.reshape(-1, self.n_agents, self.action_dim) if available_actions is not None else None
                 for i in range(len(G_s)):
                     G = G_s[i]
                     ordered_vertices = G.topological_sorting()

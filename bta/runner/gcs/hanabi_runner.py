@@ -162,11 +162,11 @@ class HanabiRunner(Runner):
             self.turn_share_obs[choose, current_agent_id] = self.use_share_obs[choose].copy()
             self.turn_available_actions[choose, current_agent_id] = self.use_available_actions[choose].copy()
             self.turn_values[choose, current_agent_id] = _t2n(value)
-            self.turn_actions[choose, current_agent_id] = action
-            self.turn_father_actions[choose, current_agent_id] = father_actions
-            env_actions[choose] = action
+            self.turn_actions[choose, current_agent_id] = _t2n(action)
+            self.turn_father_actions[choose, current_agent_id] = _t2n(father_actions)
+            env_actions[choose] = _t2n(action)
             one_hot_actions[choose, current_agent_id] = _t2n(F.one_hot(action.long(), self.all_args.n_actions).float().squeeze(1))
-            self.turn_action_log_probs[choose, current_agent_id] = action_log_prob
+            self.turn_action_log_probs[choose, current_agent_id] = _t2n(action_log_prob)
             self.turn_rnn_states[choose, current_agent_id] = _t2n(rnn_state)
             self.turn_rnn_states_critic[choose, current_agent_id] = _t2n(rnn_state_critic)
 
