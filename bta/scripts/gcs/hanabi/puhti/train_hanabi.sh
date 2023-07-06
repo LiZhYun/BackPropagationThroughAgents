@@ -4,13 +4,11 @@
 #SBATCH --job-name=hanabi-gcs
 #SBATCH --output=./out/hanabi-gcs_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/hanabi-gcs_err_%A_%a.txt  # Name of stderr error file
-#SBATCH --account=project_2007776
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:v100:1
+#SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
-#SBATCH --mem=32G
-#SBATCH --time=24:00:00
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
 #SBATCH --array=0-4
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
