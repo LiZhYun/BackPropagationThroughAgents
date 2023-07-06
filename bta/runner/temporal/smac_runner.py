@@ -183,7 +183,8 @@ class SMACRunner(Runner):
 
         joint_actions, joint_action_log_probs = None, None
         if self.use_action_attention:
-            joint_actions, joint_action_log_probs = self.action_attention(logits, obs_feats, tau=self.temperature)
+            available_actions_all = np.stack([self.buffer[agent_idx].available_actions[step] for agent_idx in range(self.num_agents)],1)
+            joint_actions, joint_action_log_probs = self.action_attention(logits, obs_feats, available_actions=available_actions_all, tau=self.temperature)
             joint_actions = _t2n(torch.argmax(joint_actions, -1, keepdim=True).to(torch.int))
             joint_action_log_probs = _t2n(joint_action_log_probs)
             for agent_idx in range(self.num_agents):
