@@ -74,6 +74,7 @@ class Runner(object):
         self._use_gae = self.all_args.use_gae
         self._use_popart = self.all_args.use_popart
         self._use_valuenorm = self.all_args.use_valuenorm
+        self._random_train = self.all_args.random_train
         self._use_proper_time_limits = self.all_args.use_proper_time_limits
         self.automatic_kl_tuning = self.all_args.automatic_kl_tuning
         if self.automatic_kl_tuning:
@@ -410,8 +411,7 @@ class Runner(object):
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
-                ordered_vertices = np.arange(self.num_agents)
-                # ordered_vertices = np.random.permutation(np.arange(self.num_agents))
+                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) if self._random_train else np.arange(self.num_agents)
 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
