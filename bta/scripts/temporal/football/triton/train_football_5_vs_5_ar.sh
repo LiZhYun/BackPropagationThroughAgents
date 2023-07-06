@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=football-5v5-temporal
-#SBATCH --output=./out/football-5v5-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-5v5-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-5v5-temporal_ar
+#SBATCH --output=./out/football-5v5-temporal_ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-5v5-temporal_ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
