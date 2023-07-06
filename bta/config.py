@@ -306,6 +306,8 @@ def get_config():
                         help='tradoff between bpta and mappo')
     parser.add_argument("--agent_layer", type=int, default=1,
                         help='stacked agent layer')
+    parser.add_argument("--random_train", action='store_true', default=False,
+                        help='')
     
     # optimizer parameters
     parser.add_argument("--lr", type=float, default=5e-4,
