@@ -66,7 +66,7 @@ class R_Actor(nn.Module):
             self.action_dim = continous_dim + discrete_dim
 
         input_size += self.args.num_agents * self.action_dim
-        self.act = ACTLayer(action_space, input_size, self._use_orthogonal, self._gain, device)
+        self.act = ACTLayer(action_space, input_size, self._use_orthogonal, self._gain, device, self.args.num_agents)
 
         self.to(device)
 

@@ -252,7 +252,7 @@ def get_config():
     parser.add_argument("--use_recurrent_policy", action='store_false',
                         default=True, help='use a recurrent policy')
     parser.add_argument("--recurrent_N", type=int, default=1, help="The number of recurrent layers.")
-    parser.add_argument("--data_chunk_length", type=int, default=10,
+    parser.add_argument("--data_chunk_length", type=int, default=1,
                         help="Time length of chunks used to train a recurrent_policy")
     parser.add_argument("--use_influence_policy", action='store_true',
                         default=False, help='use a recurrent policy')
@@ -341,8 +341,8 @@ def get_config():
                         action='store_false', default=True, help="by default, clip loss value. If set, do not clip loss value.")
     parser.add_argument("--clip_param", type=float, default=0.2,
                         help='ppo clip parameter (default: 0.2)')
-    parser.add_argument("--inner_clip_param", type=float, default=0.2,
-                        help='inner ppo clip parameter (default: 0.2)')
+    parser.add_argument("--inner_clip_param", type=float, default=0.,
+                        help='inner ppo clip parameter (default: 0.)')
     parser.add_argument("--dual_clip_coeff", type=float, default=3,
                         help='ppo dual clip parameter (default: 3.)')
     parser.add_argument("--num_mini_batch", type=int, default=1,
