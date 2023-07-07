@@ -105,7 +105,7 @@ def make_eval_env(all_args):
         return ShareSubprocVecEnv_smac([get_env_fn(i) for i in range(all_args.n_eval_rollout_threads)])
 
 def parse_args(args, parser):
-    parser.add_argument('--map_name', type=str, default='3m',
+    parser.add_argument('--map_name', type=str, default='10gen_protoss',
                         help="Which smac map to run on")
     parser.add_argument('--units', type=str, default='10v10') # for smac v2
     parser.add_argument("--add_move_state", action='store_true', default=False)
