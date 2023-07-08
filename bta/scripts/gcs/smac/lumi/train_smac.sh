@@ -5,10 +5,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --time=1-00:00:00
-#SBATCH --partition=small-g
-#SBATCH --gpus-per-node=1
+#SBATCH --partition=small
 #SBATCH --account=project_462000277
 #SBATCH --array=0-4
 
@@ -21,7 +20,7 @@ exp="check"
 
 echo "env is ${env}, map is ${map}, algo is ${algo}, exp is ${exp}"
 
-srun singularity exec -B $SCRATCH $SCRATCH/mujo_gfoot_v2.sif python ../../../train/train_smac.py \
+srun singularity exec -B $SCRATCH $SCRATCH/smac_lumi.sif python ../../../train/train_smac.py \
 --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} \
 --map_name ${map} --seed $SLURM_ARRAY_TASK_ID --units ${units} --n_training_threads 1 --n_rollout_threads 8 --num_mini_batch 1 --episode_length 400 \
 --num_env_steps 20000000 --ppo_epoch 5 --use_value_active_masks --use_eval --eval_episodes 32 --use_action_attention
