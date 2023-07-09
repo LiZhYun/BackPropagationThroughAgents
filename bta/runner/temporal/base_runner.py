@@ -496,11 +496,6 @@ class Runner(object):
                 for idx, agent_idx in enumerate(ordered_vertices):
                     # other agents' gradient to agent_id
                     imp_weights = torch.exp(new_actions_logprob_all_batch[:, agent_idx] - old_actions_logprob_all_batch[:, agent_idx])
-                    # if agent_idx == 0:
-                    #     factor_batch = factor_batch_all[:, agent_idx+1:]
-                    # elif agent_idx == self.num_agents - 1:
-                    #     factor_batch = factor_batch_all[:, :agent_idx]
-                    # else:
                     factor_batch = torch.concatenate([factor_batch_all[:, :agent_idx], factor_batch_all[:, agent_idx+1:]], 1)
 
                     factor_batch = torch.prod(factor_batch, dim=1)
