@@ -386,7 +386,7 @@ class Runner(object):
             
         batch_size = self.n_rollout_threads * self.episode_length
         mini_batch_size = batch_size // self.num_mini_batch
-
+        
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
@@ -706,7 +706,7 @@ class Runner(object):
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = (policy_loss)
+                    individual_loss[agent_idx] = (policy_loss - dist_entropy * self.entropy_coef)
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 

@@ -310,7 +310,7 @@ def get_config():
                         help='')
     parser.add_argument("--bc", action='store_false', default=True,
                         help='')
-    parser.add_argument("--bc_epoch", type=int, default=50,
+    parser.add_argument("--bc_epoch", type=int, default=15,
                         help='')
     
     # optimizer parameters
@@ -347,8 +347,8 @@ def get_config():
                         action='store_false', default=True, help="by default, clip loss value. If set, do not clip loss value.")
     parser.add_argument("--clip_param", type=float, default=0.2,
                         help='ppo clip parameter (default: 0.2)')
-    parser.add_argument("--inner_clip_param", type=float, default=0.,
-                        help='inner ppo clip parameter (default: 0.)')
+    parser.add_argument("--inner_clip_param", type=float, default=0.2,
+                        help='inner ppo clip parameter (default: 0.2)')
     parser.add_argument("--dual_clip_coeff", type=float, default=3,
                         help='ppo dual clip parameter (default: 3.)')
     parser.add_argument("--num_mini_batch", type=int, default=1,
