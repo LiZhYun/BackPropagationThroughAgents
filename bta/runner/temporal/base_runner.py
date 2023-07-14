@@ -230,8 +230,8 @@ class Runner(object):
                     norm_next_value = 0
                     norm_value = 0
                     for i in range(self.num_agents):
-                        norm_next_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step + 1])
-                        norm_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step])
+                        norm_next_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step + 1]) * self.buffer[i].active_masks[step + 1] if self._use_policy_active_masks else value_normalizer[i].denormalize(self.buffer[i].value_preds[step + 1])
+                        norm_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step]) * self.buffer[i].active_masks[step] if self._use_policy_active_masks else value_normalizer[i].denormalize(self.buffer[i].value_preds[step])
                     norm_next_value /= self.num_agents
                     norm_value /= self.num_agents
                     delta = rewards[step] + self.gamma * norm_next_value * self.buffer[0].masks[step + 1] - norm_value
@@ -494,24 +494,38 @@ class Runner(object):
                     else:
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
                 
-                imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2)
-                surr1 = imp_weights * adv_targ_all.mean(1)
-                surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(1)
-                
-                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                factor_batch_all = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                loss_all = 0
+                for idx, agent_idx in enumerate(ordered_vertices):
+                    # other agents' gradient to agent_id
+                    imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch[:, agent_idx] - old_actions_logprob_all_batch[:, agent_idx]),dim=-1,keepdim=True)
+                    factor_batch = torch.cat([factor_batch_all[:, :agent_idx], factor_batch_all[:, agent_idx+1:]], 1)
 
-                policy_loss = policy_action_loss
+                    factor_batch = torch.prod(factor_batch, dim=1)
+                    
+                    surr1 = (imp_weights * factor_batch) * adv_targ_all[:, agent_idx]
+                    surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch) * adv_targ_all[:, agent_idx]
+                    
+                    if self._use_policy_active_masks:
+                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                                                        dim=-1,
+                                                        keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
+                    else:
+                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                for agent_idx in range(self.num_agents):
+                    policy_loss = policy_action_loss
+
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
 
-                (policy_loss - dist_entropy_all.sum() * self.entropy_coef).backward()
-
-                for agent_idx in range(self.num_agents):
+                    loss_all += (policy_loss - dist_entropy_all[agent_idx] * self.entropy_coef)
 
                     train_infos[agent_idx]['policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['ratio'] += imp_weights.mean().item()
-                
+                    train_infos[agent_idx]['factor'] += factor_batch.mean().item()
+                    
+                loss_all.backward()
+                for agent_idx in ordered_vertices:
+
                     if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
                     else:
@@ -524,50 +538,6 @@ class Runner(object):
                     else:
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
 
-                # factor_batch_all = torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch)
-                # loss_all = 0
-                # for idx, agent_idx in enumerate(ordered_vertices):
-                #     # other agents' gradient to agent_id
-                #     imp_weights = torch.exp(new_actions_logprob_all_batch[:, agent_idx] - old_actions_logprob_all_batch[:, agent_idx])
-                #     factor_batch = torch.concatenate([factor_batch_all[:, :agent_idx], factor_batch_all[:, agent_idx+1:]], 1)
-
-                #     factor_batch = torch.prod(factor_batch, dim=1)
-                    
-                #     surr1 = (imp_weights * factor_batch) * adv_targ_all[:, agent_idx]
-                #     surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch) * adv_targ_all[:, agent_idx]
-                    
-                #     if self._use_policy_active_masks:
-                #         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
-                #                                         dim=-1,
-                #                                         keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
-                #     else:
-                #         policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
-
-                #     policy_loss = policy_action_loss
-
-                #     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
-
-                #     loss_all += (policy_loss - dist_entropy_all[agent_idx] * self.entropy_coef)
-
-                #     train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                #     train_infos[agent_idx]['ratio'] += imp_weights.mean().item()
-                #     train_infos[agent_idx]['factor'] += factor_batch.mean().item()
-                    
-                # loss_all.backward()
-                # for agent_idx in ordered_vertices:
-
-                #     if self._use_max_grad_norm:
-                #         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                #     else:
-                #         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
-
-                #     self.trainer[agent_idx].policy.actor_optimizer.step()
-                    
-                #     if int(torch.__version__[2]) < 5:
-                #         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                #     else:
-                #         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
-
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
@@ -578,11 +548,11 @@ class Runner(object):
     
     def joint_train(self):
         train_infos = []
-        # advantages_all = self.advg[:-1]
-        # advantages_copy = advantages_all.copy()
-        # mean_advantages = np.nanmean(advantages_copy)
-        # std_advantages = np.nanstd(advantages_copy)
-        # advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
+        advantages_all = self.advg[:-1]
+        advantages_copy = advantages_all.copy()
+        mean_advantages = np.nanmean(advantages_copy)
+        std_advantages = np.nanstd(advantages_copy)
+        advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
         advs = []
         for agent_idx in range(self.num_agents):
             advs.append(self.trainer[agent_idx].train_adv(self.buffer[agent_idx]))
@@ -603,10 +573,10 @@ class Runner(object):
             
         batch_size = self.n_rollout_threads * self.episode_length
 
-        # if self._use_recurrent_policy:
-        #     advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
-        # else:
-        #     advantages_all = advantages_all.reshape(-1, 1)
+        if self._use_recurrent_policy:
+            advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
+        else:
+            advantages_all = advantages_all.reshape(-1, 1)
         
         # self.bc_train(advs)
 
@@ -630,20 +600,20 @@ class Runner(object):
             
             for batch_idx in range(self.num_mini_batch):
                 if self._use_recurrent_policy:
-                    # adv_targ_all = []
-                    # for index in sampler[batch_idx]:
-                    #     ind = index * self.data_chunk_length
-                    #     adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
-                    # adv_targ_all = np.stack(adv_targ_all)
-                    # adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
-                    adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
+                    adv_targ_all = []
+                    for index in sampler[batch_idx]:
+                        ind = index * self.data_chunk_length
+                        adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
+                    adv_targ_all = np.stack(adv_targ_all)
+                    adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
+                    # adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 else:
-                    # adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
-                    adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                    adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
+                    # adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -685,7 +655,7 @@ class Runner(object):
                 
                     logits_all[:, agent_idx] = logits.clone()
                     obs_feats_all[:, agent_idx] = obs_feat.clone()
-                    adv_targ_all[:, agent_idx] = adv_targ * active_masks_batch if self._use_policy_active_masks else adv_targ
+                    # adv_targ_all[:, agent_idx] = adv_targ * active_masks_batch if self._use_policy_active_masks else adv_targ
 
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
@@ -742,8 +712,8 @@ class Runner(object):
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)
 
-                surr1 = ratio * adv_targ_all.mean(1)
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(1)
+                surr1 = ratio * adv_targ_all
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
             
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
               
