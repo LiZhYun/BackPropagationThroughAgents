@@ -4,12 +4,11 @@
 #SBATCH --job-name=hanabi-temporal
 #SBATCH --output=./out/hanabi-temporal_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/hanabi-temporal_err_%A_%a.txt  # Name of stderr error file
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:v100:1
+#SBATCH --partition=longrun
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
-#SBATCH --mem=64G
-#SBATCH --time=72:00:00
+#SBATCH --mem=128G
+#SBATCH --time=240:00:00
 #SBATCH --array=0-4
 
 export SING_IMAGE=/projappl/project_2007776/bpta.sif
