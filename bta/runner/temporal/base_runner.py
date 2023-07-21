@@ -763,8 +763,8 @@ class Runner(object):
               
                 policy_loss = policy_action_loss
 
-                for agent_idx in range(self.num_agents):
-                    self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
+                # for agent_idx in range(self.num_agents):
+                #     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.attention_optimizer.zero_grad()
 
                 (policy_loss - joint_dist_entropy * self.entropy_coef).backward()
@@ -772,18 +772,18 @@ class Runner(object):
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                     for agent_idx in range(self.num_agents): 
-                        actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        # actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
+                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                 else:
                     attention_grad_norm = get_gard_norm(self.action_attention.parameters())
                     for agent_idx in range(self.num_agents): 
-                        actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        # actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
 
-                for agent_idx in range(self.num_agents):
-                    self.trainer[agent_idx].policy.actor_optimizer.step()
+                # for agent_idx in range(self.num_agents):
+                #     self.trainer[agent_idx].policy.actor_optimizer.step()
                 self.attention_optimizer.step()
                 
                 for agent_idx in range(self.num_agents):

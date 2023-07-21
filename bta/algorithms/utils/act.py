@@ -244,7 +244,7 @@ class ACTLayer(nn.Module):
                 # train_actions = action - train_actions_soft.detach() + train_actions_soft
                 train_actions = train_actions_soft
             elif self.discrete_action:
-                train_actions_soft = action_logits.rsample(hard=False, tau=tau)
+                train_actions_soft = action_logits.rsample(hard=True, tau=tau)
                 index = action
                 train_actions_hard = torch.zeros_like(train_actions_soft, memory_format=torch.legacy_contiguous_format).scatter_(-1, index.long(), 1.0)
                 # train_actions = train_actions_hard - train_actions_soft.detach() + train_actions_soft
