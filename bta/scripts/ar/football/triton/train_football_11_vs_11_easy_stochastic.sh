@@ -3,7 +3,8 @@
 #SBATCH --job-name=football-11_vs_11-ar
 #SBATCH --output=./out/football-11_vs_11-ar_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/football-11_vs_11-ar_err_%A_%a.txt  # Name of stderr error file
-#SBATCH --partition=batch
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G

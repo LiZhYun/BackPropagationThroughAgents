@@ -3,7 +3,8 @@
 #SBATCH --job-name=football-11_vs_11-mappo
 #SBATCH --output=./out/football-11_vs_11-mappo_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/football-11_vs_11-mappo_err_%A_%a.txt  # Name of stderr error file
-#SBATCH --partition=batch
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G

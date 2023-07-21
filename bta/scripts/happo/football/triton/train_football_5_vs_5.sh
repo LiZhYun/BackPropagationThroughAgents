@@ -3,7 +3,8 @@
 #SBATCH --job-name=football-5v5-happo
 #SBATCH --output=./out/football-5v5-happo_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/football-5v5-happo_err_%A_%a.txt  # Name of stderr error file
-#SBATCH --partition=batch
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
