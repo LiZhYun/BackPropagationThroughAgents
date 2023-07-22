@@ -444,7 +444,9 @@ class Runner(object):
                     one_hot_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     order = torch.stack(
-                        [torch.randperm(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
+                        [torch.from_numpy(np.arange(self.num_agents)) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
+                    # order = torch.stack(
+                    #     [torch.randperm(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
                 else:
                     # adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
                     old_actions_logprob_all_batch = check(old_actions_logprob_all[sampler[batch_idx]]).to(**self.tpdv)
@@ -452,7 +454,7 @@ class Runner(object):
                     one_hot_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     order = torch.stack(
-                        [torch.randperm(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
+                        [torch.from_numpy(np.arange(self.num_agents)) for _ in range(mini_batch_size)]).to(self.device)
                 dist_entropy_all = torch.zeros(self.num_agents).to(self.device)
                 
                 # order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
@@ -541,8 +543,8 @@ class Runner(object):
 
                 # factor_batch = torch.prod(factor_batch, dim=1)
                 
-                surr1 = (imp_weights) * adv_targ_all.mean()
-                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param)) * adv_targ_all.mean()
+                surr1 = (imp_weights) * adv_targ_all.mean(1)
+                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param)) * adv_targ_all.mean(1)
             
             # if self._use_policy_active_masks:
             #     policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -758,8 +760,8 @@ class Runner(object):
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)
 
-                surr1 = ratio * adv_targ_all.mean()
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean()
+                surr1 = ratio * adv_targ_all.mean(1)
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(1)
             
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
               
