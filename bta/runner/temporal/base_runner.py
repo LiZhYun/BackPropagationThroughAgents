@@ -762,7 +762,7 @@ class Runner(object):
                 joint_action_log_probs, joint_dist_entropy, joint_logits, joint_dist = self.action_attention.evaluate_actions(logits_all, obs_feats_all, joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
 
                 # actor update
-                ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2,keepdim=True)
+                ratio = torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True)
 
                 each_agent_imp_weights = ratio.clone()
                 each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
@@ -790,7 +790,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.attention_optimizer.zero_grad()
 
-                (policy_loss - joint_dist_entropy * self.entropy_coef).backward()
+                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
                 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
