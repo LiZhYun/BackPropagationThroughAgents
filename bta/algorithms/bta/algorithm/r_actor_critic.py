@@ -216,6 +216,7 @@ class R_Critic(nn.Module):
         self._use_popart = args.use_popart
         self._influence_layer_N = args.influence_layer_N
         self._recurrent_N = args.recurrent_N
+        self.num_agents = args.num_agents
         self._num_v_out = getattr(args, "num_v_out", 1)
         self.tpdv = dict(dtype=torch.float32, device=device)
         init_method = [nn.init.xavier_uniform_, nn.init.orthogonal_][self._use_orthogonal]
@@ -250,6 +251,9 @@ class R_Critic(nn.Module):
             self.mlp = MLPLayer(share_obs_shape[0], self.hidden_size,
                               self._influence_layer_N, self._use_orthogonal, self._activation_id)
             input_size += self.hidden_size
+        
+        if args.env_name == "StarCraft2v2":
+            input_size += args.num_agents
 
         def init_(m): 
             return init(m, init_method, lambda x: nn.init.constant_(x, 0))
@@ -261,7 +265,7 @@ class R_Critic(nn.Module):
 
         self.to(device)
 
-    def forward(self, share_obs, rnn_states, masks, task_id=None):
+    def forward(self, share_obs, rnn_states, masks, active_masks=None):
         if self._nested_obs:
             for batch_idx in range(share_obs.shape[0]):
                 for key in share_obs[batch_idx].keys():
@@ -277,6 +281,8 @@ class R_Critic(nn.Module):
             share_obs = check(share_obs).to(**self.tpdv)
         rnn_states = check(rnn_states).to(**self.tpdv)
         masks = check(masks).to(**self.tpdv)
+        if active_masks is not None:
+            active_masks = check(active_masks).to(**self.tpdv)
 
         if self._nested_obs:
             critic_features = torch.stack([self.base(share_obs[batch_idx]) for batch_idx in range(share_obs.shape[0])])
@@ -289,11 +295,10 @@ class R_Critic(nn.Module):
         if self._use_influence_policy:
             mlp_share_obs = self.mlp(share_obs)
             critic_features = torch.cat([critic_features, mlp_share_obs], dim=1)
+
+        if active_masks is not None:
+            critic_features = torch.cat([critic_features, active_masks.reshape(-1, self.num_agents)], dim=1)
         
         values = self.v_out(critic_features)
-
-        if self._num_v_out > 1 and task_id is not None:
-            assert (len(task_id.shape) == len(values.shape) and np.prod(task_id.shape) * self._num_v_out == np.prod(values.shape)), (task_id.shape, values.shape)
-            values = torch.gather(values, -1, task_id.long())
 
         return values, rnn_states
