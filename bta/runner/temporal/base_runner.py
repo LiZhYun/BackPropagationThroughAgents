@@ -763,10 +763,17 @@ class Runner(object):
 
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2,keepdim=True)
-                ratio = torch.repeat_interleave(ratio, self.num_agents,1)
 
-                surr1 = ratio * adv_targ_all
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+                each_agent_imp_weights = ratio.clone()
+                each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
+                each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
+                mask_self = 1 - torch.eye(self.num_agents)
+                mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
+                each_agent_imp_weights[..., mask_self == 0] = 1.0
+                prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+
+                surr1 = ratio * adv_targ_all * prod_imp_weights
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
             
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
