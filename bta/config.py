@@ -310,7 +310,7 @@ def get_config():
                         help='')
     parser.add_argument("--bc", action='store_false', default=True,
                         help='')
-    parser.add_argument("--bc_epoch", type=int, default=15,
+    parser.add_argument("--bc_epoch", type=int, default=5,
                         help='')
     
     # optimizer parameters

@@ -199,6 +199,7 @@ class Runner(object):
     def compute(self):
         for agent_id in range(self.num_agents):
             # self.trainer[agent_id].prep_rollout()
+            
             next_value = self.trainer[agent_id].policy.get_values(self.buffer[agent_id].share_obs[-1], 
                                                                 self.buffer[agent_id].rnn_states_critic[-1],
                                                                 self.buffer[agent_id].masks[-1],
@@ -540,25 +541,25 @@ class Runner(object):
                                 train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
                     imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch[:, agent_id] - old_actions_logprob_all_batch[:, agent_id]),dim=-1,keepdim=True)
-                    each_agent_imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                    each_agent_imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True).clone()
                     # each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
                     # each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
                     mask_self = 1 - torch.eye(self.num_agents)[agent_id]
                     mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
                     each_agent_imp_weights[..., mask_self == 0] = 1.0
-                    prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+                    prod_imp_weights = each_agent_imp_weights.prod(dim=1)
                     
                     surr1 = imp_weights * adv_targ_all[:, agent_id] * prod_imp_weights
                     surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all[:, agent_id]) * prod_imp_weights
         
-                    policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                    policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
                     if self._use_policy_active_masks:
                         policy_action_loss = (
                             (policy_action_loss * active_masks_all_batch[:, agent_id]).sum(dim=0) /
-                            active_masks_all_batch[:, agent_id].sum(dim=0)).sum()
+                            active_masks_all_batch[:, agent_id].sum(dim=0))
                     else:
-                        policy_action_loss = policy_action_loss.mean(dim=0).sum()
+                        policy_action_loss = policy_action_loss.mean(dim=0)
 
                     # for agent_idx in range(self.num_agents):
                     self.trainer[agent_id].policy.actor_optimizer.zero_grad()
@@ -630,6 +631,12 @@ class Runner(object):
         #     advantages_all = advantages_all.reshape(-1, 1)
         
         # self.bc_train(advs)
+        # active_masks_all = np.ones((batch_size, self.num_agents, 1), dtype=np.float32)
+        # for agent_idx in range(self.num_agents):
+        #     if self._use_recurrent_policy:
+        #         active_masks_all[:, agent_idx] = self.buffer[agent_idx].active_masks[:-1].transpose(1,0,2).reshape(-1, *self.buffer[agent_idx].active_masks.shape[2:])
+        #     else:
+        #         active_masks_all[:, agent_idx] = self.buffer[agent_idx].active_masks[:-1].reshape(-1, *self.buffer[agent_idx].active_masks.shape[2:])
 
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
@@ -657,16 +664,23 @@ class Runner(object):
                     #     adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
                     # adv_targ_all = np.stack(adv_targ_all)
                     # adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
+                    # active_masks_all_batch = []
+                    # for index in sampler[batch_idx]:
+                    #     ind = index * self.data_chunk_length
+                    #     active_masks_all_batch.append(active_masks_all[ind:ind+self.data_chunk_length])
+                    # active_masks_all_batch = np.stack(active_masks_all_batch)
+                    # active_masks_all_batch = check(active_masks_all_batch.reshape(self.data_chunk_length*mini_batch_size, self.num_agents, *active_masks_all.shape[2:])).to(**self.tpdv)
                     adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-                    active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
+                    # active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 else:
                     # adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
+                    # active_masks_all_batch = check(active_masks_all[sampler[batch_idx]]).to(**self.tpdv)
                     adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
-                    active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                    # active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 # for bc_epoch in range(self.bc_epoch):
@@ -705,8 +719,8 @@ class Runner(object):
                 
                     logits_all[:, agent_idx] = logits
                     obs_feats_all[:, agent_idx] = obs_feat
-                    adv_targ_all[:, agent_idx] = adv_targ
-                    active_masks_all[:, agent_idx] = active_masks_batch
+                    adv_targ_all[:, agent_idx] = adv_targ * active_masks_batch if self._use_value_active_masks else adv_targ
+                    # active_masks_all[:, agent_idx] = active_masks_batch
 
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
@@ -763,17 +777,16 @@ class Runner(object):
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)
 
-                surr1 = ratio * adv_targ_all
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+                surr1 = ratio * adv_targ_all.mean(1)
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all.mean(1)
             
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                if self._use_policy_active_masks:
-                    policy_action_loss = (
-                        (policy_action_loss * active_masks_all).sum(dim=0) /
-                        active_masks_all.sum(dim=0)).sum()
-                else:
-                    policy_action_loss = policy_action_loss.mean(dim=0).sum()
+                # if self._use_policy_active_masks:
+                #     policy_action_loss = (
+                #         (policy_action_loss * active_masks_all).sum(dim=0) /
+                #         active_masks_all.sum(dim=0)).sum()
+                # else:
               
                 policy_loss = policy_action_loss
 
@@ -804,7 +817,7 @@ class Runner(object):
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
-        self.bc_train(advs)
+            # self.bc_train(advs)
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
@@ -851,10 +864,9 @@ class Runner(object):
                     else:
                         execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(self.device)
 
-                    values, individual_dist, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
+                    action_log_probs_kl = self.trainer[agent_idx].policy.evaluate_actions_logprobs(
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
-                                                                            rnn_states_critic_batch, 
                                                                             actions_batch, 
                                                                             masks_batch, 
                                                                             ego_exclusive_action,
