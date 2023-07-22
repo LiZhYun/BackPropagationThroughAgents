@@ -64,8 +64,8 @@ class FootballRunner(Runner):
 
             # compute return and update network
             self.compute()
-            if self.use_action_attention:
-                self.joint_compute()
+            # if self.use_action_attention:
+            #     self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else self.train()
             
             # post process
@@ -140,16 +140,16 @@ class FootballRunner(Runner):
             if self.use_action_attention:
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
             else:
-                if self.skip_connect:
-                    tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
-                                                    [torch.zeros(self.n_rollout_threads)] *
-                                                    (self.num_agents - agent_idx), -1).to(self.device)
-                else:
-                    if idx != 0:
-                        tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
-                            .unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
-                    else:
-                        tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
+                # if self.skip_connect:
+                tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
+                                                [torch.zeros(self.n_rollout_threads)] *
+                                                (self.num_agents - agent_idx), -1).to(self.device)
+                # else:
+                #     if idx != 0:
+                #         tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
+                #             .unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
+                #     else:
+                #         tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
 
             value, action, action_log_prob, rnn_state, rnn_state_critic, logit, obs_feat \
                 = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
@@ -201,16 +201,16 @@ class FootballRunner(Runner):
             # tmp_execution_mask = execution_masks[:, agent_idx]
             ego_exclusive_action = actions[:,0:self.num_agents]
             # tmp_execution_mask = execution_masks[:, agent_idx]
-            if self.skip_connect:
-                tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_idx +
-                                                [torch.zeros(self.n_eval_rollout_threads)] *
-                                                (self.num_agents - agent_idx), -1).to(self.device)
-            else:
-                if idx != 0:
-                    tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
-                        .unsqueeze(0).repeat(self.n_eval_rollout_threads, 1).to(self.device)
-                else:
-                    tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * self.num_agents, -1).to(self.device)
+            # if self.skip_connect:
+            tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_idx +
+                                            [torch.zeros(self.n_eval_rollout_threads)] *
+                                            (self.num_agents - agent_idx), -1).to(self.device)
+            # else:
+            #     if idx != 0:
+            #         tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
+            #             .unsqueeze(0).repeat(self.n_eval_rollout_threads, 1).to(self.device)
+            #     else:
+            #         tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * self.num_agents, -1).to(self.device)
 
             action, rnn_state \
                 = self.trainer[agent_idx].policy.act(eval_obs[:, agent_idx],
