@@ -8,13 +8,14 @@ import igraph as ig
 from itertools import chain
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.distributions import kl_divergence
 from tensorboardX import SummaryWriter
 from collections import defaultdict
 import pickle
 import math
 from bta.utils.separated_buffer import SeparatedReplayBuffer
-from bta.utils.util import update_linear_schedule, is_acyclic, pruning, get_gard_norm, flatten, generate_mask_from_order
+from bta.utils.util import huber_loss, update_linear_schedule, is_acyclic, pruning, get_gard_norm, flatten, generate_mask_from_order
 from bta.algorithms.utils.util import check
 
 import psutil
@@ -50,6 +51,7 @@ class Runner(object):
         self.recurrent_N = self.all_args.recurrent_N
         self.temperature = self.all_args.temperature
         self.agent_order = None
+        self.huber_delta = self.all_args.huber_delta
         self.clip_param = self.all_args.clip_param
         self.ppo_epoch = self.all_args.ppo_epoch
         self.num_mini_batch = self.all_args.num_mini_batch
@@ -645,7 +647,7 @@ class Runner(object):
                     else:
                         execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(self.device)
 
-                    values, individual_dist, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
+                    values, trains_action, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 
@@ -674,19 +676,20 @@ class Runner(object):
                     # surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
                     
                     # BC
-                    surr1 = action_log_probs_kl
-                    surr2 = action_log_probs_kl
+                    target = F.one_hot(check(joint_actions_batch[:,agent_idx]).to(self.device).long(), self.action_dim).squeeze(1).float()
+                    surr1 = huber_loss(trains_action-target, self.huber_delta)
+                    surr2 = huber_loss(trains_action-target, self.huber_delta)
                     
                     if self._use_policy_active_masks:
-                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                        policy_action_loss = (torch.sum(torch.min(surr1, surr2),
                                                         dim=-1,
                                                         keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
                     else:
-                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                        policy_action_loss = torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = (policy_loss)
+                    individual_loss[agent_idx] = policy_loss
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -704,7 +707,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.critic_optimizer.step()
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
                     # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                     train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
@@ -725,7 +728,7 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.attention_optimizer.zero_grad()
-
+                
                 (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
                 
                 if self._use_max_grad_norm:
