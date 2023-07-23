@@ -64,8 +64,8 @@ class FootballRunner(Runner):
 
             # compute return and update network
             self.compute()
-            # if self.use_action_attention:
-            #     self.joint_compute()
+            if self.use_action_attention:
+                self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else self.train()
             
             # post process
