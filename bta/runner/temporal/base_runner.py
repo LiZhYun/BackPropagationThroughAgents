@@ -631,7 +631,6 @@ class Runner(object):
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
-                # for bc_epoch in range(self.bc_epoch):
                 individual_loss = torch.zeros(self.num_agents).to(self.device)
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
@@ -672,19 +671,16 @@ class Runner(object):
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
-                    # if not self.bc:
-                    #     # off-policy ppo
-                    # new_clip = 0.25
                     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(2).to(self.device))
+                    # # dual clip
+                    # cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + new_clip).to(self.device))
 
-                    surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
-                    # else:
+                    # surr1 = cliped_ratio * adv_targ
+                    # surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
+                    
                     # BC
-                    # surr1 = action_log_probs_kl
-                    # surr2 = action_log_probs_kl
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -731,8 +727,8 @@ class Runner(object):
               
                 policy_loss = policy_action_loss
 
-                # for agent_idx in range(self.num_agents):
-                #     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
+                for agent_idx in range(self.num_agents):
+                    self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.attention_optimizer.zero_grad()
 
                 (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
@@ -758,7 +754,7 @@ class Runner(object):
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
-            # self.bc_train(advs)
+            
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
