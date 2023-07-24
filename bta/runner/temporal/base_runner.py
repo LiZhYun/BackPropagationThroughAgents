@@ -412,7 +412,8 @@ class Runner(object):
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
-                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) if self._random_train else np.arange(self.num_agents)
+                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                # if self._random_train else np.arange(self.num_agents)
 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
@@ -676,16 +677,15 @@ class Runner(object):
                     # surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
                     
                     # BC
-                    target = F.one_hot(check(joint_actions_batch[:,agent_idx]).to(self.device).long(), self.action_dim).squeeze(1).float()
-                    surr1 = huber_loss(trains_action-target, self.huber_delta)
-                    surr2 = huber_loss(trains_action-target, self.huber_delta)
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
-                        policy_action_loss = (torch.sum(torch.min(surr1, surr2),
+                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
                                                         dim=-1,
                                                         keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
                     else:
-                        policy_action_loss = torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
                     policy_loss = policy_action_loss
 
