@@ -227,7 +227,7 @@ class T_POLICY():
         # if agent_order is None:
         # agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(actions_batch.shape[0])]).to(self.device)
         # else:
-        agent_order = torch.stack([ordered_vertices for _ in range(actions_batch.shape[0])]).to(self.device)
+        agent_order = torch.stack([check(ordered_vertices) for _ in range(actions_batch.shape[0])]).to(self.device)
         execution_masks_batch = generate_mask_from_order(
             agent_order, ego_exclusive=False).to(
                 self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
