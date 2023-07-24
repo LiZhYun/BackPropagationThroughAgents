@@ -357,7 +357,11 @@ class Runner(object):
             else:
                 torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1), dim=-1).mean().backward()
             for i in range(self.num_agents):
-                action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
+                if self.discrete:
+                    action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i].gather(1, torch.argmax(one_hot_actions[:,i], -1, keepdim=True).to(torch.int).long())).reshape(self.episode_length,self.n_rollout_threads,self.action_shape)
+                else:
+                    action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_shape)
+                # action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
             if self.inner_clip_param == 0.:
                 factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob),dim=-1).reshape(self.episode_length,self.n_rollout_threads,1))
             else:
@@ -533,7 +537,7 @@ class Runner(object):
                         torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_action_log_probs_batch), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1), dim=-1).mean().backward()
                     for i in range(self.num_agents):
                         if self.discrete:
-                            action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i].gather(1, actions.long()))
+                            action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i].gather(1, torch.argmax(one_hot_actions[:,i], -1, keepdim=True).to(torch.int).long()))
                         else:
                             action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i])
                     if self.inner_clip_param == 0.:
