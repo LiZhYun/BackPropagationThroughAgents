@@ -67,7 +67,8 @@ class Action_Attention(nn.Module):
                                          self._activation_id)]
                             )
             
-        self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+        # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+        self.linear = init_(nn.Linear(self._attn_size, action_dim), activate=True)
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
@@ -79,8 +80,8 @@ class Action_Attention(nn.Module):
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
 
-        actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
-        return actions, action_log_probs
+        # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
+        return self.linear(x)
     
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
@@ -91,9 +92,8 @@ class Action_Attention(nn.Module):
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
 
-        train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
-        
-        return action_log_probs, dist_entropy, logits, train_actions
+        # train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
+        return self.linear(x)
 
 class MixerBlock(nn.Module):
     """

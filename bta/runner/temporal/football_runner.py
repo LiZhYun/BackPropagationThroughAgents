@@ -20,6 +20,7 @@ from typing import Dict
 from icecream import ic
 from scipy.stats import rankdata
 import igraph as ig
+from bta.algorithms.utils.distributions import FixedCategorical, FixedNormal
 from bta.algorithms.utils.util import check
 
 
@@ -171,11 +172,19 @@ class FootballRunner(Runner):
 
         joint_actions, joint_action_log_probs = None, None
         if self.use_action_attention:
-            joint_actions, joint_action_log_probs = self.action_attention(logits, obs_feats, tau=self.temperature)
-            joint_actions = _t2n(torch.argmax(joint_actions, -1, keepdim=True).to(torch.int))
+            bias_ = self.action_attention(logits, obs_feats, tau=self.temperature)
+            if self.discrete:
+                joint_dist = FixedCategorical(logits=logits+bias_)
+            else:
+                action_mean = logits+bias_
+                action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+                joint_dist = FixedNormal(action_mean, action_std)
+            joint_actions = joint_dist.sample()
+            joint_action_log_probs = joint_dist.log_probs_joint(joint_actions)
+            joint_actions = _t2n(joint_actions)
             joint_action_log_probs = _t2n(joint_action_log_probs)
             for agent_idx in range(self.num_agents):
-                ego_exclusive_action = actions[:,0:self.num_agents]
+                ego_exclusive_action = actions
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
                 _, action_log_prob, _, _, _, _ = self.trainer[agent_idx].policy.actor.evaluate_actions(
                     self.buffer[agent_idx].obs[step],

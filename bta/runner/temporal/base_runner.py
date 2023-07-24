@@ -17,6 +17,7 @@ import math
 from bta.utils.separated_buffer import SeparatedReplayBuffer
 from bta.utils.util import huber_loss, update_linear_schedule, is_acyclic, pruning, get_gard_norm, flatten, generate_mask_from_order
 from bta.algorithms.utils.util import check
+from bta.algorithms.utils.distributions import FixedCategorical, FixedNormal
 
 import psutil
 import socket
@@ -105,6 +106,11 @@ class Runner(object):
             self.continuous = True
             self.action_dim = self.envs.action_space[0].shape[0]
             self.action_shape = self.envs.action_space[0].shape[0]
+            if self.use_action_attention:
+                self.std_x_coef = 1.
+                self.std_y_coef = 0.5
+                log_std = torch.ones(self.action_dim) * self.std_x_coef
+                self.log_std = torch.nn.Parameter(log_std)
         else:
             self.mix_actions = True
             self.continous_dim = self.envs.action_space[0][0].shape[0]
@@ -402,11 +408,11 @@ class Runner(object):
             
             for batch_idx in range(self.num_mini_batch):
                 if self._use_recurrent_policy:
-                    factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, 1), dtype=np.float32)
-                    action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_dim), dtype=np.float32)
+                    factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
+                    action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
                 else:
-                    factor = np.ones((self.num_agents, mini_batch_size, 1), dtype=np.float32)
-                    action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_dim), dtype=np.float32)
+                    factor = np.ones((self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
+                    action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
                 ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
                 # ordered_vertices = np.arange(self.num_agents)
                 # if self._random_train else np.arange(self.num_agents)
@@ -414,14 +420,14 @@ class Runner(object):
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
                     if self._use_recurrent_policy:
-                        action_grad_per_agent = np.zeros((self.data_chunk_length*mini_batch_size, self.action_dim), dtype=np.float32)
+                        action_grad_per_agent = np.zeros((self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
                     else:
-                        action_grad_per_agent = np.zeros((mini_batch_size, self.action_dim), dtype=np.float32)
+                        action_grad_per_agent = np.zeros((mini_batch_size, self.action_shape), dtype=np.float32)
                     updated_agents_order = list(reversed(ordered_vertices))[0:idx]
                     for updated_agent in updated_agents_order:
                         multiplier = np.concatenate([factor[:agent_idx], factor[agent_idx+1:]],0)
                         multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
-                        default_multiplier = np.ones((self.data_chunk_length*mini_batch_size, 1), dtype=np.float32) if self._use_recurrent_policy else np.ones((mini_batch_size, self.action_shape), dtype=np.float32)
+                        default_multiplier = np.ones((self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32) if self._use_recurrent_policy else np.ones((mini_batch_size, self.action_shape), dtype=np.float32)
                         multiplier = default_multiplier if multiplier is None else np.prod(multiplier, 0)
                         action_grad_per_agent += action_grad[updated_agent][agent_idx] * multiplier
 
@@ -526,10 +532,10 @@ class Runner(object):
                     else:
                         torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_action_log_probs_batch), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1), dim=-1).mean().backward()
                     for i in range(self.num_agents):
-                        # if self.discrete:
-                        #     action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i].gather(1, actions.long()))
-                        # else:
-                        action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i])
+                        if self.discrete:
+                            action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i].gather(1, actions.long()))
+                        else:
+                            action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i])
                     if self.inner_clip_param == 0.:
                         factor[agent_idx] = _t2n(torch.exp(new_actions_logprob-old_action_log_probs_batch))
                     else:
@@ -666,15 +672,15 @@ class Runner(object):
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
                     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # # dual clip
-                    # cliped_ratio = torch.minimum(ratio, torch.tensor(1.0 + new_clip).to(self.device))
+                    # dual clip
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
 
-                    # surr1 = cliped_ratio * adv_targ
-                    # surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
+                    surr1 = cliped_ratio * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
-                    # BC
-                    surr1 = action_log_probs_kl
-                    surr2 = action_log_probs_kl
+                    # # BC
+                    # surr1 = action_log_probs_kl
+                    # surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -685,7 +691,7 @@ class Runner(object):
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = policy_loss
+                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -709,7 +715,15 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                joint_action_log_probs, joint_dist_entropy, joint_logits, joint_dist = self.action_attention.evaluate_actions(logits_all, obs_feats_all, joint_actions_batch, available_actions=available_actions_all, tau=self.temperature)
+                bias_ = self.action_attention(logits_all, obs_feats_all)
+                if self.discrete:
+                    joint_dist = FixedCategorical(logits=logits_all+bias_)
+                else:
+                    action_mean = logits+bias_
+                    action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+                    joint_dist = FixedNormal(action_mean, action_std)
+                joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv))
+                joint_dist_entropy = joint_dist.entropy().mean()
 
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)
