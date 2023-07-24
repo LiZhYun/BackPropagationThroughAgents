@@ -413,6 +413,7 @@ class Runner(object):
                     factor = np.ones((self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
                 ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                # ordered_vertices = np.arange(self.num_agents)
                 # if self._random_train else np.arange(self.num_agents)
 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
