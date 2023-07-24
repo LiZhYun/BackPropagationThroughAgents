@@ -77,7 +77,7 @@ class Action_Attention(nn.Module):
         x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
         for layer in range(self._attn_N):
-            x = x + self.layers[layer](x, obs_rep)
+            x = self.layers[layer](x, obs_rep)
 
         actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return actions, action_log_probs
@@ -89,7 +89,7 @@ class Action_Attention(nn.Module):
         x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
         for layer in range(self._attn_N):
-            x = x + self.layers[layer](x, obs_rep)
+            x = self.layers[layer](x, obs_rep)
 
         train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         

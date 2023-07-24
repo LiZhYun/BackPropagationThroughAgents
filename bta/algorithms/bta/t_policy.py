@@ -206,7 +206,7 @@ class T_POLICY():
 
         return policy_loss + acyclic_loss
     
-    def ppo_update(self, sample, train_id, train_list, tau=1.0):
+    def ppo_update(self, sample, train_id, ordered_vertices, tau=1.0):
         # with torch.autograd.set_detect_anomaly(True):
         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
         value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
@@ -227,20 +227,13 @@ class T_POLICY():
         # if agent_order is None:
         # agent_order = torch.stack([torch.randperm(self.num_agents) for _ in range(actions_batch.shape[0])]).to(self.device)
         # else:
-        # agent_order = torch.stack([agent_order for _ in range(actions_batch.shape[0])]).to(self.device)
-        # execution_masks_batch = generate_mask_from_order(
-        #     agent_order, ego_exclusive=False).to(
-        #         self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
-        if self.skip_connect:
-            execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
-                                            [torch.zeros(actions_batch.shape[0])] *
-                                            (self.num_agents - self.agent_id), -1).to(self.device)
-        else:
-            if train_id != self.num_agents - 1:
-                execution_masks_batch = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(train_list[train_id+1]), 1.0)\
-                    .unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
-            else:
-                execution_masks_batch = torch.stack([torch.zeros(actions_batch.shape[0])] * self.num_agents, -1).to(self.device)
+        agent_order = torch.stack([ordered_vertices for _ in range(actions_batch.shape[0])]).to(self.device)
+        execution_masks_batch = generate_mask_from_order(
+            agent_order, ego_exclusive=False).to(
+                self.device).float()[:, self.agent_id]  # [bs, n_agents, n_agents]
+        # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * self.agent_id +
+        #                                 [torch.zeros(actions_batch.shape[0])] *
+        #                                 (self.num_agents - self.agent_id), -1).to(self.device)
         
         actions = torch.from_numpy(actions_batch).to(self.device)
         old_action_log_probs = old_action_log_probs_batch

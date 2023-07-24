@@ -245,7 +245,8 @@ class Runner(object):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
-        ordered_vertices = [i for i in range(self.num_agents)]
+        # ordered_vertices = [i for i in range(self.num_agents)]
+        ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
@@ -313,7 +314,7 @@ class Runner(object):
                                                             self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                             tau=self.temperature)
 
-            train_info = self.trainer[agent_id].train(self.buffer[agent_id], idx, list(reversed(ordered_vertices)), tau=self.temperature)
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id], idx, ordered_vertices, tau=self.temperature)
 
             if self.env_name == "GoBigger":
                 new_actions_logprobs = []
