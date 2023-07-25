@@ -68,6 +68,7 @@ class Action_Attention(nn.Module):
                             )
             
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+        self.layer_norm = nn.LayerNorm(self._attn_size)
         self.linear = init_(nn.Linear(self._attn_size, action_dim), activate=True)
         self.to(device)
 
@@ -79,6 +80,7 @@ class Action_Attention(nn.Module):
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
+        x = self.layer_norm(x)
 
         # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
         return self.linear(x)
@@ -104,7 +106,7 @@ class MixerBlock(nn.Module):
                  dropout=0):
         super().__init__()
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(args.token_factor*num_agents) if args.token_factor != 0 else 1
+        token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
