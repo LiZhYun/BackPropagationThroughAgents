@@ -667,7 +667,7 @@ class Runner(object):
                     cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
 
                     surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param//2, 1.0 + self.clip_param//2) * adv_targ
                     
                     # # BC
                     # surr1 = action_log_probs_kl

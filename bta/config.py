@@ -275,7 +275,7 @@ def get_config():
     parser.add_argument("--mix_id", type=int,
                         default=0, help="choose 0 to use mixer, 1 to use hyper, 2 to use attention")
     parser.add_argument("--token_factor", type=float,
-                        default=0.25, help="default is 1")
+                        default=2, help="default is 1")
     parser.add_argument('--max_edges', type=int, default=10)
     parser.add_argument('--num_layers', type=int, default=1)
     parser.add_argument('--time_channels', type=int, default=100)
