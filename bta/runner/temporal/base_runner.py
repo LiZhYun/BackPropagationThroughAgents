@@ -706,9 +706,9 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_ = self.action_attention(logits_all, obs_feats_all.detach())
+                bias_ = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
+                    joint_dist = FixedCategorical(logits=logits_all+bias_)
                 else:
                     action_mean = logits_all+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
