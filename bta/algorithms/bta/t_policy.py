@@ -381,7 +381,7 @@ class T_POLICY():
                 train_info['policy_loss'] += policy_loss.item()
                 train_info['dist_entropy'] += dist_entropy.item()
                 train_info['ratio'] += imp_weights.mean().item()
-                train_info['target_entropy'] += self.target_entropy.item()
+                # train_info['target_entropy'] += self.target_entropy.item()
                 
                 if int(torch.__version__[2]) < 5:
                     train_info['actor_grad_norm'] += actor_grad_norm
