@@ -695,7 +695,7 @@ class Runner(object):
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
+                    individual_loss[agent_idx] = policy_loss
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -723,9 +723,10 @@ class Runner(object):
                 if self.discrete:
                     joint_dist = FixedCategorical(logits=logits_all+bias_)
                 else:
-                    action_mean = logits+bias_
+                    action_mean = logits_all+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
+
                 joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv))
                 joint_dist_entropy = joint_dist.entropy().mean()
 
