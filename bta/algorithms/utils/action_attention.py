@@ -76,7 +76,8 @@ class Action_Attention(nn.Module):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
 
-        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
+        x = self.logit_encoder(x) + obs_rep
+        # x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
