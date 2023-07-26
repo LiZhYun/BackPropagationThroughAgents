@@ -247,7 +247,7 @@ class Runner(object):
         # for agent_id in range(self.num_agents):
         #     self.buffer[agent_id].returns = self.returns.copy()
 
-    def train(self):
+    def train_(self):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
@@ -366,7 +366,7 @@ class Runner(object):
 
         return train_infos
     
-    def train_(self):
+    def train(self):
         advs = []
         train_infos = []
         for agent_idx in range(self.num_agents):
@@ -408,11 +408,11 @@ class Runner(object):
             for batch_idx in range(self.num_mini_batch):
                 if self._use_recurrent_policy:
                     factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, 1), dtype=np.float32)
-                    action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
+                    action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_dim), dtype=np.float32)
                     order = torch.stack([torch.arange(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, 1), dtype=np.float32)
-                    action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
+                    action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_dim), dtype=np.float32)
                     order = torch.stack([torch.arange(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
                 # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
                 ordered_vertices = np.arange(self.num_agents)
@@ -421,9 +421,9 @@ class Runner(object):
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
                     if self._use_recurrent_policy:
-                        action_grad_per_agent = np.zeros((self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
+                        action_grad_per_agent = np.zeros((self.data_chunk_length*mini_batch_size, self.action_dim), dtype=np.float32)
                     else:
-                        action_grad_per_agent = np.zeros((mini_batch_size, self.action_shape), dtype=np.float32)
+                        action_grad_per_agent = np.zeros((mini_batch_size, self.action_dim), dtype=np.float32)
                     updated_agents_order = list(reversed(ordered_vertices))[0:idx]
                     for updated_agent in updated_agents_order:
                         multiplier = np.concatenate([factor[:agent_idx], factor[agent_idx+1:]],0)
