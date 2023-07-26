@@ -43,7 +43,7 @@ class Action_Attention(nn.Module):
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
         for layer in range(self._attn_N):
             if mix_type in 'mixer':
-                self.layers.append(MixerBlock(args, args.num_agents, action_dim, 
+                self.layers.append(MixerBlock(args, args.num_agents, self._attn_heads, 
                             self._attn_size, 
                             self._dropout))
             elif mix_type in 'hyper':
@@ -102,25 +102,35 @@ class MixerBlock(nn.Module):
     out = X.T + MLP_Layernorm(X.T)     # apply token mixing
     out = out.T + MLP_Layernorm(out.T) # apply channel mixing
     """
-    def __init__(self, args, num_agents, action_dim, dims, 
+    def __init__(self, args, num_agents, heads, dims, 
                  dropout=0):
         super().__init__()
+        self.h = heads
+        self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, token_dim, dropout)
+        token_dim = int(args.token_factor*self.dims) if args.token_factor != 0 else 1
+        self.token_forward = nn.ModuleList()
+        for _ in range(self.h):
+            self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(dims, 4*dims, dropout)
+        self.channel_forward = nn.ModuleList()
+        for _ in range(self.h):
+            self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))
         
     def token_mixer(self, x):
         x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
-        x = self.token_forward(x).permute(0, 2, 1)
-        return x
+        out = torch.zeros_like(x).permute(0, 2, 1).to(x)
+        for head in range(self.h):
+            out += self.token_forward[head](x).permute(0, 2, 1)
+        return out
     
     def channel_mixer(self, x):
         x = self.channel_layernorm(x)
-        x = self.channel_forward(x)
-        return x
+        out = torch.zeros_like(x).to(x)
+        for head in range(self.h):
+            out += self.channel_forward[head](x)
+        return out
 
     def forward(self, x, obs_rep):
         x = x + self.token_mixer(x) # (10,2,64)
