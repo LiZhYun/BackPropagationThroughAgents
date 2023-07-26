@@ -247,7 +247,7 @@ class Runner(object):
         # for agent_id in range(self.num_agents):
         #     self.buffer[agent_id].returns = self.returns.copy()
 
-    def train_(self):
+    def train(self):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
@@ -366,7 +366,7 @@ class Runner(object):
 
         return train_infos
     
-    def train(self):
+    def train_(self):
         advs = []
         train_infos = []
         for agent_idx in range(self.num_agents):
