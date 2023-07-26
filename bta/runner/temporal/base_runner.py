@@ -409,13 +409,13 @@ class Runner(object):
                 if self._use_recurrent_policy:
                     factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
-                    order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
+                    order = torch.stack([torch.arange(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
-                    order = torch.stack([torch.randperm(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
-                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-                # ordered_vertices = np.arange(self.num_agents)
+                    order = torch.stack([torch.arange(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
+                # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                ordered_vertices = np.arange(self.num_agents)
                 execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False)
                 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
@@ -526,10 +526,10 @@ class Runner(object):
                     else:
                         torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_action_log_probs_batch.detach()), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
                     for i in range(self.num_agents):
-                        if self.discrete:
-                            action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i].gather(1, torch.argmax(one_hot_actions[:,i], -1, keepdim=True).to(torch.int).long()))
-                        else:
-                            action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i])
+                        # if self.discrete:
+                        #     action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i].gather(1, torch.argmax(one_hot_actions[:,i], -1, keepdim=True).to(torch.int).long()))
+                        # else:
+                        action_grad[agent_idx][i] = _t2n(one_hot_actions.grad[:,i])
                     if self.inner_clip_param == 0.:
                         factor[agent_idx] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_action_log_probs_batch),dim=-1, keepdim=True))
                     else:
