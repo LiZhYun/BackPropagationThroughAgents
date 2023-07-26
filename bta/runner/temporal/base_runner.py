@@ -685,7 +685,7 @@ class Runner(object):
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = policy_loss
+                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -734,7 +734,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.attention_optimizer.zero_grad()
                 
-                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
+                (policy_loss + individual_loss.sum()).backward()
                 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
