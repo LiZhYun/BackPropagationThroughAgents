@@ -247,7 +247,7 @@ class Runner(object):
         # for agent_id in range(self.num_agents):
         #     self.buffer[agent_id].returns = self.returns.copy()
 
-    def train(self):
+    def train_(self):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
@@ -366,7 +366,7 @@ class Runner(object):
 
         return train_infos
     
-    def train_(self):
+    def train(self):
         advs = []
         train_infos = []
         for agent_idx in range(self.num_agents):
@@ -412,8 +412,8 @@ class Runner(object):
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
-                # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-                ordered_vertices = np.arange(self.num_agents)
+                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                # ordered_vertices = np.arange(self.num_agents)
 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
@@ -664,10 +664,10 @@ class Runner(object):
 
                     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
                     # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
 
                     surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param//2, 1.0 + self.clip_param//2) * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
                     # # BC
                     # surr1 = action_log_probs_kl
