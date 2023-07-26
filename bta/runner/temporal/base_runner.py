@@ -409,12 +409,15 @@ class Runner(object):
                 if self._use_recurrent_policy:
                     factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_shape), dtype=np.float32)
+                    order = torch.stack([torch.randperm(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_shape), dtype=np.float32)
+                    order = torch.stack([torch.randperm(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
                 ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
                 # ordered_vertices = np.arange(self.num_agents)
-
+                execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False)
+                
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
                     if self._use_recurrent_policy:
@@ -441,8 +444,8 @@ class Runner(object):
                     return_batch = check(return_batch).to(**self.tpdv)
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
 
-                    order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
-                    execution_masks_batch = generate_mask_from_order(order, ego_exclusive=False)[:,agent_idx].to(self.device).float() 
+                    # order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
+                    execution_masks_batch = execution_masks_batch_all[:,agent_idx].to(self.device).float() 
                     # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * agent_idx +
                     #                                 [torch.zeros(actions_batch.shape[0])] *
                     #                                 (self.num_agents - agent_idx), -1).to(self.device)
@@ -682,7 +685,7 @@ class Runner(object):
 
                     policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
+                    individual_loss[agent_idx] = policy_loss
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
