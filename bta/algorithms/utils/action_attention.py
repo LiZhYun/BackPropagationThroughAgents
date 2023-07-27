@@ -35,9 +35,13 @@ class Action_Attention(nn.Module):
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size))
+                                           nn.LayerNorm(self._attn_size),
+                                        #    init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+                                        #    nn.ReLU(),
+                                        #    nn.LayerNorm(self._attn_size),
+                                           )
         
         self.layers = nn.ModuleList()
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
@@ -76,7 +80,8 @@ class Action_Attention(nn.Module):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
 
-        x = self.logit_encoder(x) + obs_rep
+        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
+        # x = self.logit_encoder(x) + obs_rep
         # x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
         for layer in range(self._attn_N):
