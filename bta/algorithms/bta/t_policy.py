@@ -286,7 +286,7 @@ class T_POLICY():
 
         # critic update
         value_loss = self.cal_value_loss(values, value_preds_batch, return_batch, active_masks_batch)
-        value_loss = value_loss * self.value_loss_coef
+        
         self.policy.critic_optimizer.zero_grad()
 
         (value_loss * self.value_loss_coef).backward()
