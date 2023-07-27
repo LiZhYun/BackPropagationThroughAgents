@@ -92,6 +92,7 @@ class Runner(object):
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
+        self.train_sim_seq = self.all_args.train_sim_seq
         self.dual_clip_coeff = torch.tensor(1.0 + 0.005).to(self.device)
         self.skip_connect = self.all_args.skip_connect
         self.use_action_attention = self.all_args.use_action_attention
@@ -265,6 +266,7 @@ class Runner(object):
                 multiplier = np.concatenate([factor[:agent_id], factor[agent_id+1:]],0)
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
                 multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
+                multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
                 action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
@@ -366,7 +368,7 @@ class Runner(object):
 
         return train_infos
     
-    def train_seq_loop(self):
+    def train_seq_epoch(self):
         advs = []
         train_infos = []
         for agent_idx in range(self.num_agents):
@@ -430,6 +432,7 @@ class Runner(object):
                         multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
                         default_multiplier = np.ones((self.data_chunk_length*mini_batch_size, 1), dtype=np.float32) if self._use_recurrent_policy else np.ones((mini_batch_size, self.action_shape), dtype=np.float32)
                         multiplier = default_multiplier if multiplier is None else np.prod(multiplier, 0)
+                        multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
                         action_grad_per_agent += action_grad[updated_agent][agent_idx] * multiplier
 
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
@@ -471,8 +474,8 @@ class Runner(object):
                     factor_batch = torch.prod(factor_batch,dim=0)
                     factor_batch = torch.clamp(
                         factor_batch,
-                        1.0 - self.clip_param//2,
-                        1.0 + self.clip_param//2,
+                        1.0 - self.clip_param/2,
+                        1.0 + self.clip_param/2,
                     ) 
                     surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad_batch * train_actions) * adv_targ
                     surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
@@ -562,7 +565,7 @@ class Runner(object):
             self.buffer[agent_idx].after_update()
         return train_infos
     
-    def train(self):
+    def train_sim(self):
         advs = []
         train_infos = []
         for agent_idx in range(self.num_agents):
@@ -684,8 +687,8 @@ class Runner(object):
                 prod_imp_weights = each_agent_imp_weights.prod(dim=2)
                 prod_imp_weights = torch.clamp(
                             prod_imp_weights,
-                            1.0 - self.inner_clip_param,
-                            1.0 + self.inner_clip_param,
+                            1.0 - self.clip_param/2,
+                            1.0 + self.clip_param/2,
                         )
                 
                 surr1 = imp_weights * adv_targ_all
@@ -885,14 +888,14 @@ class Runner(object):
 
                 bias_ = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all+bias_)
+                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
                 else:
                     action_mean = logits_all.detach()+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
 
                 joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv)) if self.discrete else joint_dist.log_probs(check(joint_actions_batch).to(**self.tpdv))
-                joint_dist_entropy = joint_dist.entropy().mean()
+                joint_dist_entropy = joint_dist.entropy().mean(0).sum()
 
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)

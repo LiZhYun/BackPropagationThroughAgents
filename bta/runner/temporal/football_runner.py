@@ -67,7 +67,8 @@ class FootballRunner(Runner):
             self.compute()
             if self.use_action_attention:
                 self.joint_compute()
-            train_infos = self.joint_train() if self.use_action_attention else self.train()
+                
+            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent, self.train_seq_epoch, self.train_sim][self.train_sim_seq]()
             
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
