@@ -275,7 +275,7 @@ def get_config():
     parser.add_argument("--mix_id", type=int,
                         default=0, help="choose 0 to use mixer, 1 to use hyper, 2 to use attention")
     parser.add_argument("--token_factor", type=float,
-                        default=4, help="default is 1")
+                        default=1, help="default is 1")
     parser.add_argument('--max_edges', type=int, default=10)
     parser.add_argument('--num_layers', type=int, default=1)
     parser.add_argument('--time_channels', type=int, default=100)
@@ -347,7 +347,7 @@ def get_config():
                         action='store_false', default=True, help="by default, clip loss value. If set, do not clip loss value.")
     parser.add_argument("--clip_param", type=float, default=0.2,
                         help='ppo clip parameter (default: 0.2)')
-    parser.add_argument("--inner_clip_param", type=float, default=0.2,
+    parser.add_argument("--inner_clip_param", type=float, default=0.1,
                         help='inner ppo clip parameter (default: 0.2)')
     parser.add_argument("--dual_clip_coeff", type=float, default=3,
                         help='ppo dual clip parameter (default: 3.)')
