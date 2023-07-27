@@ -110,7 +110,7 @@ class Runner(object):
                 self.std_x_coef = 1.
                 self.std_y_coef = 0.5
                 log_std = torch.ones(self.action_dim) * self.std_x_coef
-                self.log_std = torch.nn.Parameter(log_std)
+                self.log_std = torch.nn.Parameter(log_std).to(**self.tpdv)
         else:
             self.mix_actions = True
             self.continous_dim = self.envs.action_space[0][0].shape[0]
@@ -495,7 +495,7 @@ class Runner(object):
 
                     # critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, value_preds_batch, return_batch, active_masks_batch)
-                    value_loss = value_loss * self.value_loss_coef
+
                     self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
 
                     (value_loss * self.value_loss_coef).backward()
@@ -690,7 +690,7 @@ class Runner(object):
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
                                     check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
-                    value_loss = value_loss * self.value_loss_coef
+
                     self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
 
                     (value_loss * self.value_loss_coef).backward()
@@ -711,13 +711,13 @@ class Runner(object):
 
                 bias_ = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all+bias_)
+                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
                 else:
-                    action_mean = logits_all+bias_
+                    action_mean = logits_all.detach()+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
 
-                joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv))
+                joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv)) if self.discrete else joint_dist.log_probs(check(joint_actions_batch).to(**self.tpdv))
                 joint_dist_entropy = joint_dist.entropy().mean()
 
                 # actor update

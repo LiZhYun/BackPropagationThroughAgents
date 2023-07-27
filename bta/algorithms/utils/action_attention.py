@@ -115,7 +115,7 @@ class MixerBlock(nn.Module):
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, token_dim, dropout)
+        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
         # self.token_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
