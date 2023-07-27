@@ -683,8 +683,8 @@ class Runner(object):
                             1.0 + self.inner_clip_param,
                         )
                 
-                surr1 = imp_weights * adv_targ_all * prod_imp_weights
-                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all) * prod_imp_weights
+                surr1 = imp_weights * adv_targ_all
+                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all)
     
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
@@ -880,7 +880,7 @@ class Runner(object):
 
                 bias_ = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
+                    joint_dist = FixedCategorical(logits=logits_all+bias_)
                 else:
                     action_mean = logits_all.detach()+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
