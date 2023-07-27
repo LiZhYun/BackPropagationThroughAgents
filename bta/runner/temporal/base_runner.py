@@ -469,6 +469,11 @@ class Runner(object):
                     # actor update
                     imp_weights = torch.exp(action_log_probs - old_action_log_probs_batch)
                     factor_batch = torch.prod(factor_batch,dim=0)
+                    factor_batch = torch.clamp(
+                        factor_batch,
+                        1.0 - self.clip_param//2,
+                        1.0 + self.clip_param//2,
+                    ) 
                     surr1 = (imp_weights * factor_batch + (imp_weights.detach()) * action_grad_batch * train_actions) * adv_targ
                     surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * factor_batch \
                             + (torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param)) * action_grad_batch * train_actions) * adv_targ
