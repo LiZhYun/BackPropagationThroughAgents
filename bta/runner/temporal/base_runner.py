@@ -602,7 +602,7 @@ class Runner(object):
                     adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     active_masks_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     order = torch.stack(
-                        [torch.from_numpy(np.arange(self.num_agents)) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
+                        [torch.arange(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
                 else:
                     new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
@@ -610,7 +610,7 @@ class Runner(object):
                     adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     active_masks_all_batch = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     order = torch.stack(
-                        [torch.from_numpy(np.arange(self.num_agents)) for _ in range(mini_batch_size)]).to(self.device)
+                        [torch.arange(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
                 dist_entropy_all = torch.zeros(self.num_agents).to(self.device)
                 
                 execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
@@ -676,12 +676,12 @@ class Runner(object):
                 mask_self = 1 - torch.eye(self.num_agents)
                 mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
                 each_agent_imp_weights[..., mask_self == 0] = 1.0
+                prod_imp_weights = each_agent_imp_weights.prod(dim=2)
                 prod_imp_weights = torch.clamp(
-                            each_agent_imp_weights,
+                            prod_imp_weights,
                             1.0 - self.inner_clip_param,
                             1.0 + self.inner_clip_param,
                         )
-                prod_imp_weights = prod_imp_weights.prod(dim=2)
                 
                 surr1 = imp_weights * adv_targ_all * prod_imp_weights
                 surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all) * prod_imp_weights
