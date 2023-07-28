@@ -25,12 +25,14 @@ class Action_Attention(nn.Module):
         self._attn_heads = args.attn_heads
         self._dropout = args.dropout
         self._use_policy_active_masks = args.use_policy_active_masks
+        self.num_agents = args.num_agents
         self.tpdv = dict(dtype=torch.float32, device=device)
 
         if action_space.__class__.__name__ == "Discrete":
             action_dim = action_space.n
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
+        self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
@@ -70,10 +72,9 @@ class Action_Attention(nn.Module):
                                          self._dropout, self._use_orthogonal, 
                                          self._activation_id)]
                             )
-            
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = init_(nn.Linear(self._attn_size, action_dim), activate=True)
+        self.linear = init_(nn.Linear(self._attn_size, args.num_agents*action_dim), activate=True)
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
@@ -81,27 +82,29 @@ class Action_Attention(nn.Module):
             available_actions = check(available_actions).to(**self.tpdv)
 
         x = self.feat_encoder(torch.cat([x, obs_rep], -1))
-        # x = self.logit_encoder(x) + obs_rep
-        # x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
         for layer in range(self._attn_N):
-            x = x + self.layers[layer](x, obs_rep)
+            x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
+        x = torch.mean(x, dim=1)
 
         # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
-        return self.linear(x)
+        return self.linear(x).view(x.shape[0], self.num_agents, self.action_dim)
     
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
-        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
+
+        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
+        x = self.layer_norm(x)
+        x = torch.mean(x, dim=1)
 
-        # train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
-        return self.linear(x)
+        train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
+        return action_log_probs, dist_entropy, logits, train_actions
 
 class MixerBlock(nn.Module):
     """
@@ -115,7 +118,7 @@ class MixerBlock(nn.Module):
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
+        self.token_forward = FeedForward(num_agents, token_dim, dropout)
         # self.token_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
