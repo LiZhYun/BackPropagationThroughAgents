@@ -252,9 +252,10 @@ class Runner(object):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
-        ordered_vertices = np.arange(self.num_agents)
-        # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-
+        # ordered_vertices = np.arange(self.num_agents)
+        ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+        order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
+        execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
             self.buffer[agent_id].update_factor(np.prod(np.concatenate([factor[:agent_id], factor[agent_id+1:]],0), 0))
@@ -272,11 +273,7 @@ class Runner(object):
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
             
-            # order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
-            # execution_masks_batch = generate_mask_from_order(order, ego_exclusive=False)[:,agent_id].to(self.device).float() 
-            execution_masks_batch = torch.stack([torch.ones(self.episode_length*self.n_rollout_threads)] * agent_id +
-                                            [torch.zeros(self.episode_length*self.n_rollout_threads)] *
-                                            (self.num_agents - agent_id), -1).to(self.device)
+            execution_masks_batch = execution_masks_batch_all[:,agent_id]
             
             one_hot_actions = torch.from_numpy(self.buffer[agent_id].one_hot_actions.reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])).to(self.device)
             old_one_hot_actions = self.buffer[agent_id].one_hot_actions.reshape(-1, self.num_agents, *self.buffer[agent_id].one_hot_actions.shape[3:])
@@ -354,10 +351,6 @@ class Runner(object):
             else:
                 torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
             for i in range(self.num_agents):
-                # if self.discrete:
-                #     action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i].gather(1, torch.argmax(one_hot_actions[:,i], -1, keepdim=True).to(torch.int).long())).reshape(self.episode_length,self.n_rollout_threads,self.action_shape)
-                # else:
-                    # action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_shape)
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
             if self.inner_clip_param == 0.:
                 factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
@@ -408,17 +401,18 @@ class Runner(object):
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
+                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                # ordered_vertices = np.arange(self.num_agents)
                 if self._use_recurrent_policy:
                     factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_dim), dtype=np.float32)
-                    order = torch.stack([torch.arange(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
+                    order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.data_chunk_length*mini_batch_size, 1).to(self.device)
                 else:
                     factor = np.ones((self.num_agents, mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, mini_batch_size, self.action_dim), dtype=np.float32)
-                    order = torch.stack([torch.arange(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
-                # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-                ordered_vertices = np.arange(self.num_agents)
-                execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False)
+                    order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(mini_batch_size, 1).to(self.device)
+                
+                execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float()
                 
                 for idx, agent_idx in enumerate(reversed(ordered_vertices)):
                     # other agents' gradient to agent_id
@@ -448,7 +442,7 @@ class Runner(object):
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
 
                     # order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(actions_batch.shape[0], 1).to(self.device)
-                    execution_masks_batch = execution_masks_batch_all[:,agent_idx].to(self.device).float() 
+                    execution_masks_batch = execution_masks_batch_all[:,agent_idx] 
                     # execution_masks_batch = torch.stack([torch.ones(actions_batch.shape[0])] * agent_idx +
                     #                                 [torch.zeros(actions_batch.shape[0])] *
                     #                                 (self.num_agents - agent_idx), -1).to(self.device)
@@ -602,27 +596,26 @@ class Runner(object):
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
-                
+                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                # ordered_vertices = np.arange(self.num_agents)
                 if self._use_recurrent_policy:
                     new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     one_hot_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     active_masks_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
-                    order = torch.stack(
-                        [torch.arange(self.num_agents) for _ in range(self.data_chunk_length*mini_batch_size)]).to(self.device)
+                    order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(mini_batch_size, 1).to(self.device)
                 else:
                     new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     one_hot_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     active_masks_all_batch = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
-                    order = torch.stack(
-                        [torch.arange(self.num_agents) for _ in range(mini_batch_size)]).to(self.device)
+                    order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(mini_batch_size, 1).to(self.device)
                 dist_entropy_all = torch.zeros(self.num_agents).to(self.device)
                 
                 execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
-                for agent_idx in range(self.num_agents):
+                for agent_idx in ordered_vertices:
 
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
