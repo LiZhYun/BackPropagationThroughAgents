@@ -163,6 +163,7 @@ class MatrixRunner(Runner):
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions)
             joint_actions = _t2n(joint_actions)
             joint_action_log_probs = _t2n(joint_action_log_probs)
+            joint_values = _t2n(joint_values)
             for agent_idx in range(self.num_agents):
                 ego_exclusive_action = actions
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
@@ -177,7 +178,7 @@ class MatrixRunner(Runner):
                 )
                 action_log_probs[:, agent_idx] = _t2n(action_log_prob)
 
-        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, _t2n(joint_values)
+        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
