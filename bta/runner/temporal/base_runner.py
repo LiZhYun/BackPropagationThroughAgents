@@ -691,8 +691,8 @@ class Runner(object):
                             1.0 + self.clip_param/2,
                         )
                 
-                surr1 = imp_weights * adv_targ_all
-                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all)
+                surr1 = imp_weights * adv_targ_all * prod_imp_weights
+                surr2 = (torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all) * prod_imp_weights
     
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
