@@ -258,8 +258,8 @@ class Runner(object):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
-        # ordered_vertices = np.arange(self.num_agents)
-        ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+        ordered_vertices = np.arange(self.num_agents)
+        # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
         order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
         execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
@@ -407,8 +407,8 @@ class Runner(object):
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
-                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-                # ordered_vertices = np.arange(self.num_agents)
+                # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                ordered_vertices = np.arange(self.num_agents)
                 if self._use_recurrent_policy:
                     factor = np.ones((self.num_agents, self.data_chunk_length*mini_batch_size, 1), dtype=np.float32)
                     action_grad = np.zeros((self.num_agents, self.num_agents, self.data_chunk_length*mini_batch_size, self.action_dim), dtype=np.float32)
@@ -602,8 +602,8 @@ class Runner(object):
                 data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
             
             for batch_idx in range(self.num_mini_batch):
-                ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-                # ordered_vertices = np.arange(self.num_agents)
+                # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+                ordered_vertices = np.arange(self.num_agents)
                 if self._use_recurrent_policy:
                     new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
