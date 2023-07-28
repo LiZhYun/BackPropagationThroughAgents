@@ -6,6 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from .util import init, get_clones, check
+from bta.algorithms.utils.popart import PopArt
 from bta.algorithms.utils.act import ACTLayer
 
 def init_(m, gain=0.01, activate=False):
@@ -16,6 +17,8 @@ def init_(m, gain=0.01, activate=False):
 class Action_Attention(nn.Module):
     def __init__(self, args, action_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
+        self._use_popart = args.use_popart
+        self._num_v_out = getattr(args, "num_v_out", 1)
         self._use_orthogonal = args.use_orthogonal
         self._activation_id = args.activation_id
         self._mix_id = args.mix_id
@@ -75,6 +78,10 @@ class Action_Attention(nn.Module):
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
         self.linear = init_(nn.Linear(self._attn_size, args.num_agents*action_dim), activate=True)
+        if self._use_popart:
+            self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
+        else:
+            self.v_out = init_(nn.Linear(self._attn_size, self._num_v_out))
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
@@ -88,23 +95,11 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
         x = torch.mean(x, dim=1)
 
+        bias_ = self.linear(x).view(x.shape[0], self.num_agents, self.action_dim)
+        values = self.v_out(x)
+
         # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
-        return self.linear(x).view(x.shape[0], self.num_agents, self.action_dim)
-    
-    def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
-        action = check(action).to(**self.tpdv)
-        if available_actions is not None:
-            available_actions = check(available_actions).to(**self.tpdv)
-
-        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
-
-        for layer in range(self._attn_N):
-            x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x)
-        x = torch.mean(x, dim=1)
-
-        train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
-        return action_log_probs, dist_entropy, logits, train_actions
+        return bias_, values
 
 class MixerBlock(nn.Module):
     """
@@ -124,7 +119,7 @@ class MixerBlock(nn.Module):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
+        self.channel_forward = FeedForward(self.dims, 8*self.dims, dropout)
         # self.channel_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))
