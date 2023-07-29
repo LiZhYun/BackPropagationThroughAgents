@@ -14,6 +14,25 @@ def init_(m, gain=0.01, activate=False):
         gain = nn.init.calculate_gain('relu')
     return init(m, nn.init.orthogonal_, lambda x: nn.init.constant_(x, 0), gain=gain)
 
+class JointPolicy:
+    def __init__(self, args, action_space, device=torch.device("cpu")):
+
+        self.lr = args.lr
+        self.critic_lr = args.critic_lr
+        self.opti_eps = args.opti_eps
+        self.weight_decay = args.weight_decay
+
+        self.actor = Action_Attention(args, action_space, device)
+        self.critic = Value_Attention(args, action_space, device)
+
+        self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=self.lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+        self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=self.critic_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+    
+    def get_actions(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
+        bias_ = self.actor(x, obs_rep, mask, available_actions, deterministic, tau)
+        values = self.critic(x, obs_rep, mask, available_actions, deterministic, tau)
+        return bias_, values
+
 class Action_Attention(nn.Module):
     def __init__(self, args, action_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
@@ -78,10 +97,10 @@ class Action_Attention(nn.Module):
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
         self.linear = init_(nn.Linear(self._attn_size, args.num_agents*action_dim), activate=True)
-        if self._use_popart:
-            self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
-        else:
-            self.v_out = init_(nn.Linear(self._attn_size, self._num_v_out))
+        # if self._use_popart:
+        #     self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
+        # else:
+        #     self.v_out = init_(nn.Linear(self._attn_size, self._num_v_out))
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
@@ -96,10 +115,95 @@ class Action_Attention(nn.Module):
         x = torch.mean(x, dim=1)
 
         bias_ = self.linear(x).view(x.shape[0], self.num_agents, self.action_dim)
+        # values = self.v_out(x)
+
+        # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
+        return bias_
+    
+class Value_Attention(nn.Module):
+    def __init__(self, args, action_space, device=torch.device("cpu")):
+        super(Value_Attention, self).__init__()
+        self._use_popart = args.use_popart
+        self._num_v_out = getattr(args, "num_v_out", 1)
+        self._use_orthogonal = args.use_orthogonal
+        self._activation_id = args.activation_id
+        self._mix_id = args.mix_id
+        self._attn_N = args.attn_N
+        self._gain = args.gain
+        self._attn_size = args.attn_size
+        self._attn_heads = args.attn_heads
+        self._dropout = args.dropout
+        self._use_policy_active_masks = args.use_policy_active_masks
+        self.num_agents = args.num_agents
+        self.tpdv = dict(dtype=torch.float32, device=device)
+
+        if action_space.__class__.__name__ == "Discrete":
+            action_dim = action_space.n
+        elif action_space.__class__.__name__ == "Box":
+            action_dim = action_space.shape[0] 
+        self.action_dim = action_dim
+
+        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size))
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size),
+                                        #    init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+                                        #    nn.ReLU(),
+                                        #    nn.LayerNorm(self._attn_size),
+                                           )
+        
+        self.layers = nn.ModuleList()
+        mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
+        for layer in range(self._attn_N):
+            if mix_type in 'mixer':
+                self.layers.append(MixerBlock(args, args.num_agents, self._attn_heads, 
+                            self._attn_size, 
+                            self._dropout))
+            elif mix_type in 'hyper':
+                self.layers.append(HyperBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout))
+            elif mix_type in 'attention':
+                self.layers.append(EncoderLayer(self._attn_size, self._attn_heads, self._dropout, 
+                                                self._use_orthogonal, self._activation_id))
+            else:
+                self.layers.extend([MixerBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout),
+
+                            HyperBlock(args.num_agents, action_dim, 
+                            self._attn_size, 
+                            self._dropout),
+
+                            EncoderLayer(self._attn_size, self._attn_heads, 
+                                         self._dropout, self._use_orthogonal, 
+                                         self._activation_id)]
+                            )
+        # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+        self.layer_norm = nn.LayerNorm(self._attn_size)
+        if self._use_popart:
+            self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
+        else:
+            self.v_out = init_(nn.Linear(self._attn_size, self._num_v_out))
+        self.to(device)
+
+    def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
+        if available_actions is not None:
+            available_actions = check(available_actions).to(**self.tpdv)
+
+        # x = self.feat_encoder(torch.cat([x, obs_rep], -1))
+        x = obs_rep.detach()
+        for layer in range(self._attn_N):
+            x = self.layers[layer](x, obs_rep)
+        x = self.layer_norm(x)
+        x = torch.mean(x, dim=1)
+
         values = self.v_out(x)
 
         # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
-        return bias_, values
+        return values
 
 class MixerBlock(nn.Module):
     """
@@ -119,7 +223,7 @@ class MixerBlock(nn.Module):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(self.dims, 8*self.dims, dropout)
+        self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
         # self.channel_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))

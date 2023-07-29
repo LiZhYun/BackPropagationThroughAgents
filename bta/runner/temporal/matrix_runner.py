@@ -152,7 +152,7 @@ class MatrixRunner(Runner):
 
         joint_actions, joint_action_log_probs, joint_values = None, None, None
         if self.use_action_attention:
-            bias_, joint_values = self.action_attention(logits, obs_feats, tau=self.temperature)
+            bias_, joint_values = self.action_attention.get_actions(logits, obs_feats, tau=self.temperature)
             if self.discrete:
                 joint_dist = FixedCategorical(logits=logits+bias_)
             else:
