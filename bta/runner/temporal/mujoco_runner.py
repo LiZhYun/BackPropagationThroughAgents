@@ -53,7 +53,7 @@ class MujocoRunner(Runner):
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
-                    rnn_states_critic, joint_actions, joint_action_log_probs = self.collect(step)
+                    rnn_states_critic, joint_actions, joint_action_log_probs, joint_values = self.collect(step)
 
                 env_actions = joint_actions if joint_actions is not None else hard_actions
                 # Obser reward and next obs
@@ -68,7 +68,7 @@ class MujocoRunner(Runner):
                         train_episode_rewards[t] = 0
 
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
+                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values
 
                 # insert data into buffer
                 self.insert(data)
@@ -77,7 +77,8 @@ class MujocoRunner(Runner):
             self.compute()
             if self.use_action_attention:
                 self.joint_compute()
-            train_infos = self.joint_train() if self.use_action_attention else self.train()
+                
+            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent, self.train_seq_epoch, self.train_sim][self.train_sim_seq]()
 
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -182,9 +183,9 @@ class MujocoRunner(Runner):
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        joint_actions, joint_action_log_probs = None, None
+        joint_actions, joint_action_log_probs, joint_values = None, None, None
         if self.use_action_attention:
-            bias_ = self.action_attention(logits, obs_feats, tau=self.temperature)
+            bias_, joint_values = self.action_attention.get_actions(logits, obs_feats, tau=self.temperature)
             if self.discrete:
                 joint_dist = FixedCategorical(logits=logits+bias_)
             else:
@@ -195,6 +196,7 @@ class MujocoRunner(Runner):
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions) if self.discrete else joint_dist.log_probs(joint_actions)
             joint_actions = _t2n(joint_actions)
             joint_action_log_probs = _t2n(joint_action_log_probs)
+            joint_values = _t2n(joint_values)
             for agent_idx in range(self.num_agents):
                 ego_exclusive_action = actions[:,0:self.num_agents]
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
@@ -209,7 +211,7 @@ class MujocoRunner(Runner):
                 )
                 action_log_probs[:, agent_idx] = _t2n(action_log_prob)
 
-        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs
+        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
@@ -247,7 +249,7 @@ class MujocoRunner(Runner):
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs = data
+            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values = data
 
         dones_env = np.all(dones, axis=1)
 
@@ -278,7 +280,8 @@ class MujocoRunner(Runner):
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
                                         joint_actions=joint_actions,
-                                        joint_action_log_probs=joint_action_log_probs
+                                        joint_action_log_probs=joint_action_log_probs,
+                                        joint_value_preds=joint_values
                                         )
 
     @torch.no_grad()
