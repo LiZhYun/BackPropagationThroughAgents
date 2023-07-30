@@ -21,7 +21,7 @@ exp="check"
 num_agents=10
 
 # train param
-num_env_steps=500000000
+num_env_steps=100000000
 episode_length=1000
 
 CUDA_VISIBLE_DEVICES=0 singularity exec --bind /scratch --nv /scratch/work/liz23/bpta.sif python ../../../train/train_football.py \

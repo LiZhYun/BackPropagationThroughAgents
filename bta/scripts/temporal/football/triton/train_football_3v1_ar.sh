@@ -3,8 +3,7 @@
 #SBATCH --job-name=football-3v1-temporal_ar
 #SBATCH --output=./out/football-3v1-temporal_ar_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/football-3v1-temporal_ar_err_%A_%a.txt  # Name of stderr error file
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
+#SBATCH --partition=batch
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G

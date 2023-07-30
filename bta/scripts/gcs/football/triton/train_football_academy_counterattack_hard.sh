@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
-#SBATCH --time=48:00:00
+#SBATCH --time=100:00:00
 #SBATCH --array=0-4
 
 # exp param
