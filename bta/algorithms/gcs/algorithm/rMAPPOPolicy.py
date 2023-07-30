@@ -37,7 +37,9 @@ class R_MAPPOPolicy:
         else:
             self.act_space = act_space
         self.mix_action = False
+        self.discrete = False
         if act_space.__class__.__name__ == "Discrete":
+            self.discrete = True
             self.n_actions = act_space.n
         elif act_space.__class__.__name__ == "Box":
             self.n_actions = act_space.shape[0]
@@ -139,7 +141,7 @@ class R_MAPPOPolicy:
             if self.mix_action:
                 discrete_ = np.squeeze(np.eye(self.discrete_dim)[last_actions[:, :, self.continous_dim:].astype(np.int32)], 2)
                 last_actions = np.concatenate([last_actions[:, :, :self.continous_dim], discrete_], -1)
-            else:
+            elif self.discrete:
                 # last_actions = np.eye(self.n_actions)[last_actions.astype(np.int32)]
                 last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
             last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)
@@ -264,7 +266,7 @@ class R_MAPPOPolicy:
             if self.mix_action:
                 discrete_ = np.squeeze(np.eye(self.discrete_dim)[last_actions[:, :, self.continous_dim:].astype(np.int32)], 2)
                 last_actions = np.concatenate([last_actions[:, :, :self.continous_dim], discrete_], -1)
-            else:
+            elif self.discrete:
                 # last_actions = np.eye(self.n_actions)[last_actions.astype(np.int32)]
                 last_actions = np.squeeze(np.eye(self.n_actions)[last_actions.astype(np.int32)], 2)
             last_actions_ = check(last_actions).to(**self.tpdv).reshape(self.n_rollout_threads, self.n_agents, -1)

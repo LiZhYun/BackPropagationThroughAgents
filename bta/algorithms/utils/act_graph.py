@@ -29,9 +29,11 @@ class ACTLayer(nn.Module):
         self.device = device
         self.mixed_action = False
         self.multi_discrete = False
+        self.discrete = False
         self.n_agents = num_agents
 
         if action_space.__class__.__name__ == "Discrete":
+            self.discrete = True
             action_dim = action_space.n
             self.action_out = Categorical(inputs_dim, action_dim, use_orthogonal, gain)
             self.action_dim = action_dim
@@ -154,7 +156,10 @@ class ACTLayer(nn.Module):
                         parents = G.neighbors(j, mode=ig.IN)
                         if len(parents) != 0:
                             for k in parents:
-                                father_act = torch.eye(self.action_dim).to(self.device)[actions[k]]
+                                if self.discrete:
+                                    father_act = torch.eye(self.action_dim).to(self.device)[actions[k]]
+                                else:
+                                    father_act = actions[k]
                                 father_action_0[k] = torch.tensor(father_act)
                         father_action = father_action_0.reshape(-1)
                         father_action_lst[j] = father_action

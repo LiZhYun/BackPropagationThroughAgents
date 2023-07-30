@@ -74,8 +74,10 @@ class Runner(object):
 
         share_observation_space = self.envs.share_observation_space[0] if self.use_centralized_V else self.envs.observation_space[0]
 
+        self.all_args.discrete = False
         if self.envs.action_space[0].__class__.__name__ == "Discrete":
             self.all_args.n_actions = self.envs.action_space[0].n
+            self.all_args.discrete = True
         elif self.envs.action_space[0].__class__.__name__ == "Box":
             self.all_args.n_actions = self.envs.action_space[0].shape[0]
         else:

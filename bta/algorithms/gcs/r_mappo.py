@@ -40,6 +40,7 @@ class R_MAPPO():
         self._use_value_active_masks = args.use_value_active_masks
         self._use_policy_active_masks = args.use_policy_active_masks
         self.args = args
+        self.discrete = args.discrete
         
         if self._use_popart:
             self.value_normalizer = PopArt(1, device=self.device)
@@ -187,10 +188,14 @@ class R_MAPPO():
             else:
                 obs_batch_ = check(obs_batch.reshape(epi_roll, self.n_agents, -1)).to(**self.tpdv)
             agent_id_graph_ = torch.eye(self.n_agents).unsqueeze(0).repeat(epi_roll, 1, 1).to(self.device)
-            action_ids = np.repeat(np.expand_dims(np.eye(self.args.n_actions), axis=0), epi_roll*self.n_agents, 0)  # 600.19.19
+            if self.discrete:
+                action_ids = np.repeat(np.expand_dims(np.eye(self.args.n_actions), axis=0), epi_roll*self.n_agents, 0)  # 600.19.19
 
             last_actions_batch = last_actions_batch[:,[0]]
-            last_actions_batch_ =[action_ids[i][last_actions_batch.astype(np.int32)[i]] for i in range(len(action_ids))]  # 600.1.19
+            if self.discrete:
+                last_actions_batch_ =[action_ids[i][last_actions_batch.astype(np.int32)[i]] for i in range(len(action_ids))]  # 600.1.19
+            else:
+                last_actions_batch_ =last_actions_batch  # 600.1.19
             last_actions_batch_ = torch.tensor(last_actions_batch_).reshape(epi_roll, self.n_agents, -1).float().to(self.device)  # 25.4.19
             # if self.args.env_name == "GoBigger":
             #     inputs_graph = {'obs': obs_batch_, 'id_act': torch.cat((agent_id_graph_, last_actions_batch_), -1).float()}
