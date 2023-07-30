@@ -6,7 +6,7 @@ sbatch train_smac.sh 10gen_zerg 20v20
 sbatch train_smac.sh 10gen_zerg 20v23
 sbatch train_smac.sh 10gen_protoss 10v11
 sbatch train_smac.sh 10gen_protoss 20v20
-sbatch train_smac.sh 10gen_protoss 20v23
-sbatch train_smac.sh 10gen_terran 10v11
-sbatch train_smac.sh 10gen_terran 20v20
+sbatch train_smac.sh 10gen_protoss 20v23 
+sbatch train_smac.sh 10gen_terran 10v11 
+sbatch train_smac.sh 10gen_terran 20v20 #TODO
 sbatch train_smac.sh 10gen_terran 20v23
