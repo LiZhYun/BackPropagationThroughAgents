@@ -40,7 +40,7 @@ class R_MAPPO():
         self._use_value_active_masks = args.use_value_active_masks
         self._use_policy_active_masks = args.use_policy_active_masks
         self.args = args
-        self.discrete = args.discrete
+        self.discrete = self.policy.discrete
         
         if self._use_popart:
             self.value_normalizer = PopArt(1, device=self.device)
