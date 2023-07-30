@@ -191,8 +191,8 @@ class R_MAPPO():
             if self.discrete:
                 action_ids = np.repeat(np.expand_dims(np.eye(self.args.n_actions), axis=0), epi_roll*self.n_agents, 0)  # 600.19.19
 
-            last_actions_batch = last_actions_batch[:,[0]]
             if self.discrete:
+                last_actions_batch = last_actions_batch[:,[0]]
                 last_actions_batch_ =[action_ids[i][last_actions_batch.astype(np.int32)[i]] for i in range(len(action_ids))]  # 600.1.19
             else:
                 last_actions_batch_ =last_actions_batch  # 600.1.19

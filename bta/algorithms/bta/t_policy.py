@@ -38,6 +38,7 @@ class T_POLICY():
         self.clip_param = args.clip_param
         self.ppo_epoch = args.ppo_epoch
         self.num_mini_batch = args.num_mini_batch
+        self.gamma = args.gamma
         self.data_chunk_length = args.data_chunk_length
         self.policy_value_loss_coef = args.policy_value_loss_coef
         self.value_loss_coef = args.value_loss_coef
@@ -334,9 +335,11 @@ class T_POLICY():
 
     def train_adv(self, buffer):
         if self._use_popart or self._use_valuenorm:
-            advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
+            advantages = buffer.rewards + self.gamma * buffer.returns[1:] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
+            # advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
         else:
-            advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
+            advantages = buffer.rewards + self.gamma * buffer.returns[1:] - buffer.value_preds[:-1]
+            # advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
         # if self.args.env_name != "matrix":
         advantages_copy = advantages.copy()
         advantages_copy[buffer.active_masks[:-1] == 0.0] = np.nan

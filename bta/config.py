@@ -286,6 +286,8 @@ def get_config():
                         help='gumble softmax temperature')
     parser.add_argument("--use_action_attention",  action='store_true', default=False,
                         help='action attention')
+    parser.add_argument("--use_vtrace",  action='store_false', default=True,
+                        help='use_vtrace')
     parser.add_argument("--skip_connect",  action='store_false', default=True,
                         help='skip connection (default: True)')
     parser.add_argument("--automatic_kl_tuning",  action='store_true', default=False,

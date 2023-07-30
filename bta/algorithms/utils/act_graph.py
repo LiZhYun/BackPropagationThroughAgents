@@ -37,10 +37,12 @@ class ACTLayer(nn.Module):
             action_dim = action_space.n
             self.action_out = Categorical(inputs_dim, action_dim, use_orthogonal, gain)
             self.action_dim = action_dim
+            self.action_shape = 1
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0]
             self.action_out = DiagGaussian(inputs_dim, action_dim, use_orthogonal, gain)
             self.action_dim = action_dim
+            self.action_shape = action_dim
         elif action_space.__class__.__name__ == "MultiBinary":
             action_dim = action_space.shape[0]
             self.action_out = Bernoulli(inputs_dim, action_dim, use_orthogonal, gain)
@@ -149,7 +151,7 @@ class ACTLayer(nn.Module):
                     G = G_s[i]
                     ordered_vertices = G.topological_sorting()
                     self.n_agents = len(ordered_vertices)
-                    actions, action_log_probs = [0] * self.n_agents, [0] * self.n_agents
+                    actions, action_log_probs = [torch.tensor(0).to(self.device)] * self.n_agents, [torch.tensor(0).to(self.device)] * self.n_agents
                     father_action_lst = [0] * self.n_agents
                     for j in ordered_vertices:
                         father_action_0 = torch.zeros(self.n_agents, self.action_dim)
@@ -160,7 +162,7 @@ class ACTLayer(nn.Module):
                                     father_act = torch.eye(self.action_dim).to(self.device)[actions[k]]
                                 else:
                                     father_act = actions[k]
-                                father_action_0[k] = torch.tensor(father_act)
+                                father_action_0[k] = father_act
                         father_action = father_action_0.reshape(-1)
                         father_action_lst[j] = father_action
 
@@ -169,12 +171,15 @@ class ACTLayer(nn.Module):
                         action_logit = self.action_out(x_, available_actions_)  ## 4.64、 None  --> 4.5
                         action = action_logit.mode() if deterministic else action_logit.sample()  # torch.Size([4, 1])
                         action_log_prob = action_logit.log_probs(action)   # torch.Size([4, 1])
-                        actions[j], action_log_probs[j] = [action], [action_log_prob]
-                    actions_outer.append(actions)
-                    action_log_probs_outer.append(action_log_probs)
-                    father_action_tensor = torch.tensor([item.cpu().detach().numpy() for item in father_action_lst]).to(self.device)
+                        # if self.discrete:
+                        #     actions[j], action_log_probs[j] = [action], [action_log_prob]
+                        # else:
+                        actions[j], action_log_probs[j] = action, action_log_prob
+                    actions_outer.append(torch.stack(actions).squeeze(0))
+                    action_log_probs_outer.append(torch.stack(action_log_probs).squeeze(0))
+                    father_action_tensor = torch.from_numpy(np.array([item.cpu().detach().numpy() for item in father_action_lst])).to(self.device)
                     father_action_lst_outer.append(father_action_tensor)
-                father_action_lst_outer = torch.tensor([item.cpu().detach().numpy() for item in father_action_lst_outer]).to(self.device)
+                father_action_lst_outer = torch.from_numpy(np.array([item.cpu().detach().numpy() for item in father_action_lst_outer])).to(self.device)
                 father_action_shape = father_action_lst_outer.shape[-1]
             else:
                 execution_masks = G_s
@@ -191,7 +196,7 @@ class ACTLayer(nn.Module):
             cur_time = datetime.now() + timedelta(hours=0)
             # print("---------------11-----end time::", cur_time)
 
-            return torch.tensor(actions_outer).view(-1,1), torch.tensor(action_log_probs_outer).view(-1,1), father_action_lst_outer.view(-1, father_action_shape) if "list" in G_s.__class__.__name__ else father_action_lst_outer.view(father_action_shape, -1,)
+            return torch.stack(actions_outer).view(-1,self.action_shape), torch.stack(action_log_probs_outer).view(-1,self.action_shape), father_action_lst_outer.view(-1, father_action_shape) if "list" in G_s.__class__.__name__ else father_action_lst_outer.view(father_action_shape, -1,)
 
     def get_probs(self, x, available_actions=None):
         """
@@ -282,7 +287,10 @@ class ACTLayer(nn.Module):
             action_logits = self.action_out(x_, available_actions)
             action_log_probs = action_logits.log_probs(action)
             if active_masks is not None:
-                dist_entropy = (action_logits.entropy() * active_masks.squeeze(-1)).sum() / active_masks.sum()
+                if self.discrete:
+                    dist_entropy = (action_logits.entropy() * active_masks.squeeze(-1)).sum() / active_masks.sum()
+                else:
+                    dist_entropy = (action_logits.entropy() * active_masks).sum() / active_masks.sum()
             else:
                 dist_entropy = action_logits.entropy().mean()
 
