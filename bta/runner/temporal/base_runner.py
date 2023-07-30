@@ -259,8 +259,8 @@ class Runner(object):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
-        ordered_vertices = np.arange(self.num_agents)
-        # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+        # ordered_vertices = np.arange(self.num_agents)
+        ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
         order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
         execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
