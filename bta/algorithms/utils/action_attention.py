@@ -102,13 +102,14 @@ class Action_Attention(nn.Module):
             xs_.append(x_)
 
         x = torch.stack(xs_, 1)
-        id_feat = self.id_encoder(torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device))
-        x = x + id_feat.unsqueeze(1).repeat(1, self.num_agents, 1, 1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
         x = torch.mean(x, dim=2)
+        
+        id_feat = self.id_encoder(torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device))
+        x = x + id_feat
 
         bias_ = self.linear(x)
         # values = self.v_out(x)
