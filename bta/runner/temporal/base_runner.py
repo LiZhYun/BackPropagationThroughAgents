@@ -259,9 +259,9 @@ class Runner(object):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
-        # ordered_vertices = np.arange(self.num_agents)
-        ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
-        order = torch.from_numpy(np.arange(self.num_agents)).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
+        ordered_vertices = np.arange(self.num_agents)
+        # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+        order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
         execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
             self.trainer[agent_id].prep_training()
@@ -274,7 +274,7 @@ class Runner(object):
                 multiplier = np.concatenate([factor[:agent_id], factor[agent_id+1:]],0)
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
                 multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
-                multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
+                # multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
                 action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
@@ -321,7 +321,7 @@ class Runner(object):
                                                             self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                             tau=self.temperature)
 
-            train_info = self.trainer[agent_id].train(self.buffer[agent_id], idx, np.arange(self.num_agents), tau=self.temperature)
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id], idx, ordered_vertices, tau=self.temperature)
 
             if self.env_name == "GoBigger":
                 new_actions_logprobs = []
@@ -354,13 +354,13 @@ class Runner(object):
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
             # if self.inner_clip_param == 0.:
-            #     torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
+            torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
             # else:
-            torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.clip_param, 1.0 + self.clip_param),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
+            # torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.clip_param, 1.0 + self.clip_param),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
             for i in range(self.num_agents):
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
             # if self.inner_clip_param == 0.:
-            factor[agent_id] = _t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.clip_param, 1.0 + self.clip_param),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
+            factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
             # else:
             #     factor[agent_id] = _t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.inner_clip_param, 1.0 + self.inner_clip_param),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
             train_infos.append(train_info)      
@@ -859,15 +859,15 @@ class Runner(object):
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
                     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # # dual clip
-                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
+                    # dual clip
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
 
-                    # surr1 = cliped_ratio * adv_targ
-                    # surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+                    surr1 = cliped_ratio * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
-                    # BC
-                    surr1 = action_log_probs_kl
-                    surr2 = action_log_probs_kl
+                    # # BC
+                    # surr1 = action_log_probs_kl
+                    # surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -902,11 +902,11 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_, joint_values = self.action_attention.get_actions(logits_all, obs_feats_all)
+                bias_, joint_values = self.action_attention.get_actions(logits_all.detach(), obs_feats_all.detach())
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all+bias_)
+                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
                 else:
-                    action_mean = logits_all+bias_
+                    action_mean = logits_all.detach()+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
 
