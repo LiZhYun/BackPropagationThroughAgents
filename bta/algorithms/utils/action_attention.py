@@ -194,7 +194,7 @@ class Value_Attention(nn.Module):
             available_actions = check(available_actions).to(**self.tpdv)
 
         # x = self.feat_encoder(torch.cat([x, obs_rep], -1))
-        x = obs_rep.detach()
+        x = obs_rep
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
@@ -223,7 +223,7 @@ class MixerBlock(nn.Module):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
+        self.channel_forward = FeedForward(self.dims, 8*self.dims, dropout)
         # self.channel_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))

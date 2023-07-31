@@ -256,6 +256,19 @@ class Runner(object):
         #     self.buffer[agent_id].returns = self.returns.copy()
 
     def train_seq_agent(self):
+        advantages_all = []
+        for agent_idx in range(self.num_agents):
+            if self._use_popart or self._use_valuenorm:
+                advantages = self.buffer[agent_idx].returns[:-1] - self.trainer[agent_idx].value_normalizer.denormalize(self.buffer[agent_idx].value_preds[:-1])
+            else:
+                advantages = self.buffer[agent_idx].returns[:-1] - self.buffer[agent_idx].value_preds[:-1]
+            # if self.args.env_name != "matrix":
+            advantages_copy = advantages.copy()
+            advantages_copy[self.buffer[agent_idx].active_masks[:-1] == 0.0] = np.nan
+            mean_advantages = np.nanmean(advantages_copy)
+            std_advantages = np.nanstd(advantages_copy)
+            advantages = (advantages - mean_advantages) / (std_advantages + 1e-5)
+            advantages_all.append(advantages)
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
@@ -275,7 +288,7 @@ class Runner(object):
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
                 multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
                 # multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
-                action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
+                action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier * advantages_all[updated_agent]
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
@@ -859,15 +872,15 @@ class Runner(object):
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
                     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
+                    # # dual clip
+                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
 
-                    surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+                    # surr1 = cliped_ratio * adv_targ
+                    # surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
-                    # # BC
-                    # surr1 = action_log_probs_kl
-                    # surr2 = action_log_probs_kl
+                    # BC
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -902,7 +915,7 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_, joint_values = self.action_attention.get_actions(logits_all.detach(), obs_feats_all.detach())
+                bias_, joint_values = self.action_attention.get_actions(logits_all, obs_feats_all.detach())
                 if self.discrete:
                     joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
                 else:
