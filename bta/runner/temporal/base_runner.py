@@ -354,15 +354,15 @@ class Runner(object):
 
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
             # if self.inner_clip_param == 0.:
-            # torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
+            torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
             # else:
-            torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.clip_param/2, 1.0 + self.clip_param/2),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
+            # torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.clip_param/2, 1.0 + self.clip_param/2),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
             for i in range(self.num_agents):
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
             # if self.inner_clip_param == 0.:
-            # factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
+            factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
             # else:
-            factor[agent_id] = _t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.clip_param/2, 1.0 + self.clip_param/2),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
+            # factor[agent_id] = _t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.clip_param/2, 1.0 + self.clip_param/2),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
             train_infos.append(train_info)      
             self.buffer[agent_id].after_update()
 
