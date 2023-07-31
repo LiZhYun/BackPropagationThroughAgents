@@ -33,17 +33,17 @@ class TemporalPolicy:
         return agent_feat, dist_entropy
 
     def get_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, task_id=None, tau=1.0, **kwargs):
-        actions, action_log_probs, rnn_states_actor, logits, dist_entropy, obs_feat = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic, tau=tau)
-        values, rnn_states_critic = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
+        actions, action_log_probs, rnn_states_actor, logits, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic, tau=tau)
+        values, rnn_states_critic, obs_feat = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, actions, action_log_probs, rnn_states_actor, rnn_states_critic, logits, obs_feat
 
     def get_values(self, share_obs, rnn_states_critic, masks, task_id=None):
-        values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
+        values, _, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values
 
     def evaluate_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, task_id=None, tau=1.0, kl=False, joint_actions=None):
-        train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau, kl=kl, joint_actions=joint_actions)
-        values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
+        train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions, active_masks, tau=tau, kl=kl, joint_actions=joint_actions)
+        values, _, obs_feat = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat
     
     def evaluate_actions_logprobs(self, obs, rnn_states_actor, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0, kl=False, joint_actions=None):
@@ -51,7 +51,7 @@ class TemporalPolicy:
         return action_log_probs
 
     def act(self, obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, **kwargs):
-        actions, action_log_probs, rnn_states_actor, logits, dist_entropy, obs_feat = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)
+        actions, action_log_probs, rnn_states_actor, logits, dist_entropy = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic)
         return actions, rnn_states_actor
 
     def load_checkpoint(self, ckpt_path):
