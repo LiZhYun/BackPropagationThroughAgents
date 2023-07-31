@@ -77,9 +77,9 @@ class Action_Attention(nn.Module):
                             )
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim), activate=True), 
-                                        #    nn.ReLU(),
-                                        #    nn.LayerNorm(action_dim),
+        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim*self.num_agents), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(action_dim*self.num_agents),
                                            )
         # if self._use_popart:
         #     self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
@@ -96,9 +96,9 @@ class Action_Attention(nn.Module):
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
-        # x = torch.mean(x, dim=1)
+        x = torch.mean(x, dim=1)
 
-        bias_ = self.linear(x)
+        bias_ = self.linear(x).view(-1, self.num_agents, self.action_dim)
         # values = self.v_out(x)
 
         # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
