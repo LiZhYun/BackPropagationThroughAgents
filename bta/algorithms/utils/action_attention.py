@@ -40,7 +40,10 @@ class Action_Attention(nn.Module):
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
+        self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size))
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size),
                                         #    init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
@@ -77,9 +80,9 @@ class Action_Attention(nn.Module):
                             )
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim*self.num_agents), activate=True), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(action_dim*self.num_agents),
+        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim), activate=True), 
+                                        #    nn.ReLU(),
+                                        #    nn.LayerNorm(action_dim*self.num_agents),
                                            )
         # if self._use_popart:
         #     self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
@@ -91,14 +94,23 @@ class Action_Attention(nn.Module):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
 
-        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
+        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
+
+        xs_ = []
+        for agent_id in range(self.num_agents):
+            x_ = torch.cat([x[:, agent_id].unsqueeze(1), torch.cat([x[:, :agent_id], x[:, agent_id+1:]],1)],1)
+            xs_.append(x_)
+
+        x = torch.stack(xs_, 1)
+        id_feat = self.id_encoder(torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device))
+        x = x + id_feat.unsqueeze(1).repeat(1, self.num_agents, 1, 1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
-        x = torch.mean(x, dim=1)
+        x = torch.mean(x, dim=2)
 
-        bias_ = self.linear(x).view(-1, self.num_agents, self.action_dim)
+        bias_ = self.linear(x)
         # values = self.v_out(x)
 
         # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
@@ -128,8 +140,8 @@ class MixerBlock(nn.Module):
         #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))
         
     def token_mixer(self, x):
-        x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
-        x = self.token_forward(x).permute(0, 2, 1)
+        x = self.token_layernorm(x).permute(0, 1, 3, 2) # (10,64,2)
+        x = self.token_forward(x).permute(0, 1, 3, 2)
         # out = torch.zeros_like(x).permute(0, 2, 1).to(x)
         # for head in range(self.h):
             # out += self.token_forward[head](x).permute(0, 2, 1)
