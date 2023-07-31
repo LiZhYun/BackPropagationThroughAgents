@@ -154,9 +154,9 @@ class MatrixRunner(Runner):
         if self.use_action_attention:
             bias_ = self.action_attention(logits, obs_feats, tau=self.temperature)
             if self.discrete:
-                joint_dist = FixedCategorical(logits=logits+bias_)
+                joint_dist = FixedCategorical(logits=bias_)
             else:
-                action_mean = logits+bias_
+                action_mean = bias_
                 action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                 joint_dist = FixedNormal(action_mean, action_std)
             joint_actions = joint_dist.sample()
