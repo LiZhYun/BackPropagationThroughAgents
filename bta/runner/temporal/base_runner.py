@@ -259,8 +259,8 @@ class Runner(object):
         train_infos = []
         factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
-        # ordered_vertices = np.arange(self.num_agents)
-        ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
+        ordered_vertices = np.arange(self.num_agents)
+        # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
         order = torch.from_numpy(ordered_vertices).unsqueeze(0).repeat(self.episode_length*self.n_rollout_threads, 1).to(self.device)
         execution_masks_batch_all = generate_mask_from_order(order, ego_exclusive=False).to(self.device).float() 
         for idx, agent_id in enumerate(reversed(ordered_vertices)):
@@ -859,15 +859,15 @@ class Runner(object):
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
                     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
+                    # # dual clip
+                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
 
-                    surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+                    # surr1 = cliped_ratio * adv_targ
+                    # surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
-                    # # BC
-                    # surr1 = action_log_probs_kl
-                    # surr2 = action_log_probs_kl
+                    # BC
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
