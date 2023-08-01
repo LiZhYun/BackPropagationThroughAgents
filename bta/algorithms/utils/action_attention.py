@@ -43,7 +43,7 @@ class Action_Attention(nn.Module):
         self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size),
                                         #    init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
@@ -80,9 +80,10 @@ class Action_Attention(nn.Module):
                             )
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim), activate=True), 
-                                        #    nn.ReLU(),
-                                        #    nn.LayerNorm(action_dim*self.num_agents),
+        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size+self.num_agents, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size),
+                                           init_(nn.Linear(self._attn_size, action_dim), activate=True), 
                                            )
         # if self._use_popart:
         #     self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
@@ -94,7 +95,7 @@ class Action_Attention(nn.Module):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
 
-        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
+        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         xs_ = []
         for agent_id in range(self.num_agents):
@@ -108,8 +109,8 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
         x = torch.mean(x, dim=2)
         
-        id_feat = self.id_encoder(torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device))
-        x = x + id_feat
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
+        x = torch.cat([x, id_feat], -1)
 
         bias_ = self.linear(x)
         # values = self.v_out(x)
