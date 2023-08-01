@@ -34,6 +34,7 @@ class T_POLICY():
         self.opti_eps = args.opti_eps
         self.weight_decay = args.weight_decay
         self.skip_connect = args.skip_connect 
+        self.use_action_attention = args.use_action_attention
 
         self.clip_param = args.clip_param
         self.ppo_epoch = args.ppo_epoch

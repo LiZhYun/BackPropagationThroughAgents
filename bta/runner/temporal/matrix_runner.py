@@ -60,7 +60,7 @@ class MatrixRunner(Runner):
             # if self.use_action_attention:
             #     self.joint_compute()
             
-            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent, self.train_seq_epoch, self.train_sim][self.train_sim_seq]()
+            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
             total_num_steps = (episode + 1) * \
@@ -154,10 +154,10 @@ class MatrixRunner(Runner):
         if self.use_action_attention:
             bias_ = self.action_attention(logits, obs_feats, tau=self.temperature)
             if self.discrete:
-                joint_dist = FixedCategorical(logits=logits + bias_)
+                joint_dist = FixedCategorical(logits=bias_)
                 joint_actions = torch.argmax(joint_dist.rsample(), -1, keepdim=True).to(torch.int)
             else:
-                action_mean = logits + bias_
+                action_mean = bias_
                 action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                 joint_dist = FixedNormal(action_mean, action_std)
                 joint_actions = joint_dist.rsample()

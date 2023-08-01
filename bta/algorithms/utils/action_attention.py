@@ -43,12 +43,9 @@ class Action_Attention(nn.Module):
         self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.action_dim, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.action_dim+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size),
-                                        #    init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
-                                        #    nn.ReLU(),
-                                        #    nn.LayerNorm(self._attn_size),
                                            )
         
         self.layers = nn.ModuleList()
@@ -66,25 +63,15 @@ class Action_Attention(nn.Module):
                 self.layers.append(EncoderLayer(self._attn_size, self._attn_heads, self._dropout, 
                                                 self._use_orthogonal, self._activation_id))
             else:
-                self.layers.extend([MixerBlock(args.num_agents, action_dim, 
-                            self._attn_size, 
-                            self._dropout),
-
-                            HyperBlock(args.num_agents, action_dim, 
-                            self._attn_size, 
-                            self._dropout),
-
-                            EncoderLayer(self._attn_size, self._attn_heads, 
-                                         self._dropout, self._use_orthogonal, 
-                                         self._activation_id)]
-                            )
+                raise NotImplementedError
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size+self.num_agents, self._attn_size), activate=True), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size),
-                                           init_(nn.Linear(self._attn_size, action_dim), activate=True), 
-                                           )
+        self.linear = nn.Sequential(
+            # init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+            # nn.ReLU(),
+            # nn.LayerNorm(self._attn_size),
+            init_(nn.Linear(self._attn_size, action_dim), activate=False), 
+            )
         # if self._use_popart:
         #     self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
         # else:
@@ -95,22 +82,25 @@ class Action_Attention(nn.Module):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
 
-        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
+        x = self.feat_encoder(torch.cat([x, obs_rep, id_feat], -1))
 
-        xs_ = []
-        for agent_id in range(self.num_agents):
-            x_ = torch.cat([x[:, agent_id].unsqueeze(1), torch.cat([x[:, :agent_id], x[:, agent_id+1:]],1)],1)
-            xs_.append(x_)
+        # xs_ = []
+        # for agent_id in range(self.num_agents):
+        #     # x_ = torch.cat([x[:, agent_id].unsqueeze(1), torch.cat([x[:, :agent_id], x[:, agent_id+1:]],1)],1)
+        #     x_ = torch.cat([x[:, :agent_id], x[:, agent_id+1:]],1)
+        #     x_ = torch.cat([x_, id_feat[:, agent_id].unsqueeze(1).repeat(1,self.num_agents-1,1)], -1)
+        #     xs_.append(x_)
 
-        x = torch.stack(xs_, 1)
+        # x = torch.stack(xs_, 1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
-        x = torch.mean(x, dim=2)
+        # x = torch.mean(x, dim=2)
         
-        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
-        x = torch.cat([x, id_feat], -1)
+        # id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
+        # x = torch.cat([x, id_feat], -1)
 
         bias_ = self.linear(x)
         # values = self.v_out(x)
@@ -142,8 +132,8 @@ class MixerBlock(nn.Module):
         #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))
         
     def token_mixer(self, x):
-        x = self.token_layernorm(x).permute(0, 1, 3, 2) # (10,64,2)
-        x = self.token_forward(x).permute(0, 1, 3, 2)
+        x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
+        x = self.token_forward(x).permute(0, 2, 1)
         # out = torch.zeros_like(x).permute(0, 2, 1).to(x)
         # for head in range(self.h):
             # out += self.token_forward[head](x).permute(0, 2, 1)

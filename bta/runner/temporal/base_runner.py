@@ -685,11 +685,11 @@ class Runner(object):
                 mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
                 each_agent_imp_weights[..., mask_self == 0] = 1.0
                 prod_imp_weights = each_agent_imp_weights.prod(dim=2)
-                prod_imp_weights = torch.clamp(
-                            prod_imp_weights,
-                            1.0 - self.clip_param/2,
-                            1.0 + self.clip_param/2,
-                        )
+                # prod_imp_weights = torch.clamp(
+                #             prod_imp_weights,
+                #             1.0 - self.clip_param/2,
+                #             1.0 + self.clip_param/2,
+                #         )
                 
                 surr1 = imp_weights * adv_targ_all * prod_imp_weights
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
@@ -855,14 +855,14 @@ class Runner(object):
                     mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
                     each_agent_imp_weights[..., mask_self == 0] = 1.0
                     prod_imp_weights = each_agent_imp_weights.prod(dim=1)
-                    prod_imp_weights = torch.clamp(
-                                prod_imp_weights,
-                                1.0 - self.clip_param/2,
-                                1.0 + self.clip_param/2,
-                            )
+                    # prod_imp_weights = torch.clamp(
+                    #             prod_imp_weights,
+                    #             1.0 - self.clip_param/2,
+                    #             1.0 + self.clip_param/2,
+                    #         )
                     
-                    surr1 = imp_weights * adv_targ_all[:, agent_idx]
-                    surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all[:, agent_idx]
+                    surr1 = imp_weights * adv_targ_all[:, agent_idx] * prod_imp_weights
+                    surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all[:, agent_idx] * prod_imp_weights
         
                     policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
@@ -877,7 +877,7 @@ class Runner(object):
                     
                     policy_loss = policy_action_loss
 
-                    (policy_loss - dist_entropy_all[:, agent_idx] * self.entropy_coef).backward()
+                    (policy_loss - dist_entropy_all[agent_idx] * self.entropy_coef).backward()
 
                     if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
@@ -1073,9 +1073,10 @@ class Runner(object):
 
                 bias_ = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all + bias_)
+                    bias_[available_actions_all == 0] = -1e10
+                    joint_dist = FixedCategorical(logits=bias_)
                 else:
-                    action_mean = logits_all + bias_
+                    action_mean = bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
 
