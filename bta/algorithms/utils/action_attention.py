@@ -24,6 +24,7 @@ class Action_Attention(nn.Module):
         self._mix_id = args.mix_id
         self._attn_N = args.attn_N
         self._gain = args.gain
+        self.input_size = args.hidden_size
         self._attn_size = args.attn_size
         self._attn_heads = args.attn_heads
         self._dropout = args.dropout
@@ -43,7 +44,7 @@ class Action_Attention(nn.Module):
         self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.action_dim+self.num_agents, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self.input_size+self.action_dim+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size),
                                            )
@@ -96,7 +97,7 @@ class Action_Attention(nn.Module):
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x+obs_rep)
+        x = self.layer_norm(x)
         # x = torch.mean(x, dim=2)
         
         id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
@@ -120,7 +121,7 @@ class MixerBlock(nn.Module):
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, token_dim, dropout)
+        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
         # self.token_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
