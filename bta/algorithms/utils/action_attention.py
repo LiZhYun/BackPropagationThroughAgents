@@ -67,10 +67,10 @@ class Action_Attention(nn.Module):
         # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
         self.layer_norm = nn.LayerNorm(self._attn_size)
         self.linear = nn.Sequential(
-            # init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
-            # nn.ReLU(),
-            # nn.LayerNorm(self._attn_size),
-            init_(nn.Linear(self._attn_size, action_dim), activate=False), 
+            init_(nn.Linear(self._attn_size+self.num_agents, self._attn_size), activate=True), 
+            nn.ReLU(),
+            nn.LayerNorm(self._attn_size),
+            init_(nn.Linear(self._attn_size, action_dim), activate=True), 
             )
         # if self._use_popart:
         #     self.v_out = init_(PopArt(self._attn_size, self._num_v_out, device=device))
@@ -96,11 +96,11 @@ class Action_Attention(nn.Module):
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x)
+        x = self.layer_norm(x+obs_rep)
         # x = torch.mean(x, dim=2)
         
-        # id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
-        # x = torch.cat([x, id_feat], -1)
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device)
+        x = torch.cat([x, id_feat], -1)
 
         bias_ = self.linear(x)
         # values = self.v_out(x)
@@ -126,7 +126,8 @@ class MixerBlock(nn.Module):
         #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
+        channel_dim = int(args.channel_factor*dims) if args.channel_factor != 0 else 1
+        self.channel_forward = FeedForward(self.dims, channel_dim, dropout)
         # self.channel_forward = nn.ModuleList()
         # for _ in range(self.h):
         #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))

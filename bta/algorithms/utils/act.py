@@ -240,7 +240,7 @@ class ACTLayer(nn.Module):
                 dist_entropy = action_logits.entropy().mean()
         if rsample:
             if self.continuous_action:
-                train_actions_soft = action_logits.rsample()
+                train_actions_soft = action_logits.mean
                 train_actions = action - train_actions_soft.detach() + train_actions_soft
                 # train_actions = train_actions_soft
             elif self.discrete_action:

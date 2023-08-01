@@ -278,6 +278,8 @@ def get_config():
                         default=0, help="choose 0 to train seq agent first, 1 to train seq epoch first, 2 to train sim")
     parser.add_argument("--token_factor", type=float,
                         default=2, help="default is 1")
+    parser.add_argument("--channel_factor", type=float,
+                        default=2, help="default is 1")
     parser.add_argument('--max_edges', type=int, default=10)
     parser.add_argument('--num_layers', type=int, default=1)
     parser.add_argument('--time_channels', type=int, default=100)
