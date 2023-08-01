@@ -136,7 +136,7 @@ class R_Actor(nn.Module):
         else:
             actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
         actor_features = self.feature_norm(actor_features)
-        # obs_feat = actor_features.clone()
+        obs_feat = actor_features.clone()
 
         if deterministic:
             logits = None
@@ -144,7 +144,7 @@ class R_Actor(nn.Module):
         else:
             actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
         
-        return actions, action_log_probs, rnn_states, logits, dist_entropy
+        return actions, action_log_probs, rnn_states, logits, dist_entropy, obs_feat
     
     def evaluate_actions(self, obs, rnn_states, action, masks, onehot_action, execution_mask, available_actions=None, active_masks=None, tau=1.0, kl=False, joint_actions=None):
         if self._nested_obs:
@@ -197,12 +197,12 @@ class R_Actor(nn.Module):
         else:
             actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
         actor_features = self.feature_norm(actor_features)
-        # obs_feat = actor_features.clone()
+        obs_feat = actor_features.clone()
 
         # actor_features = torch.cat([actor_features, id_feat], dim=1)
         train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, kl=kl, joint_actions=joint_actions)
         
-        return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits
+        return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat
 
 class R_Critic(nn.Module):
     def __init__(self, args, share_obs_space, action_space, device=torch.device("cpu")):
@@ -290,8 +290,7 @@ class R_Critic(nn.Module):
         if self._use_influence_policy:
             mlp_share_obs = self.mlp(share_obs)
             critic_features = torch.cat([critic_features, mlp_share_obs], dim=1)
-        obs_feat = critic_features.clone()
         
         values = self.v_out(critic_features)
 
-        return values, rnn_states, obs_feat
+        return values, rnn_states

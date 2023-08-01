@@ -338,15 +338,15 @@ class T_POLICY():
 
     def train_adv(self, buffer):
         if self._use_popart or self._use_valuenorm:
-            if self.use_action_attention:
-                advantages = buffer.rewards + self.gamma * buffer.returns[1:] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
-            else:
-                advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
+            # if self.use_action_attention:
+            #     advantages = buffer.rewards + self.gamma * buffer.returns[1:] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
+            # else:
+            advantages = buffer.returns[:-1] - self.value_normalizer.denormalize(buffer.value_preds[:-1])
         else:
-            if self.use_action_attention:
-                advantages = buffer.rewards + self.gamma * buffer.returns[1:] - buffer.value_preds[:-1]
-            else:
-                advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
+            # if self.use_action_attention:
+            #     advantages = buffer.rewards + self.gamma * buffer.returns[1:] - buffer.value_preds[:-1]
+            # else:
+            advantages = buffer.returns[:-1] - buffer.value_preds[:-1]
         # if self.args.env_name != "matrix":
         advantages_copy = advantages.copy()
         advantages_copy[buffer.active_masks[:-1] == 0.0] = np.nan

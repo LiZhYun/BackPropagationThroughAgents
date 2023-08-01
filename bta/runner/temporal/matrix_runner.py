@@ -57,10 +57,9 @@ class MatrixRunner(Runner):
                 
             # compute return and update network
             self.compute()
-            # if self.use_action_attention:
-            #     self.joint_compute()
-            
-            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
+            if self.use_action_attention:
+                self.joint_compute()
+            train_infos = self.joint_train() if self.use_action_attention else self.train()
 
             # post process
             total_num_steps = (episode + 1) * \
@@ -154,21 +153,19 @@ class MatrixRunner(Runner):
         if self.use_action_attention:
             bias_ = self.action_attention(logits, obs_feats, tau=self.temperature)
             if self.discrete:
-                joint_dist = FixedCategorical(logits=bias_)
-                joint_actions = torch.argmax(joint_dist.rsample(), -1, keepdim=True).to(torch.int)
+                joint_dist = FixedCategorical(logits=logits+bias_)
             else:
-                action_mean = bias_
+                action_mean = logits+bias_
                 action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                 joint_dist = FixedNormal(action_mean, action_std)
-                joint_actions = joint_dist.rsample()
+            joint_actions = joint_dist.sample()
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions)
             joint_actions = _t2n(joint_actions)
             joint_action_log_probs = _t2n(joint_action_log_probs)
-            # joint_values = _t2n(joint_values)
             for agent_idx in range(self.num_agents):
                 ego_exclusive_action = actions
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
-                _, action_log_prob, _, _, _ = self.trainer[agent_idx].policy.actor.evaluate_actions(
+                _, action_log_prob, _, _, _, _ = self.trainer[agent_idx].policy.actor.evaluate_actions(
                     self.buffer[agent_idx].obs[step],
                     self.buffer[agent_idx].rnn_states[step],
                     joint_actions[:,agent_idx],
@@ -241,7 +238,7 @@ class MatrixRunner(Runner):
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
                                         joint_actions=joint_actions,
-                                        joint_action_log_probs=joint_action_log_probs,
+                                        joint_action_log_probs=joint_action_log_probs
                                         )
 
     @torch.no_grad()
