@@ -8,6 +8,7 @@ import torch.nn.functional as F
 from .util import init, get_clones, check
 from bta.algorithms.utils.popart import PopArt
 from bta.algorithms.utils.act import ACTLayer
+from bta.algorithms.utils.GPT import GPTConfig, GPT, Block
 
 def init_(m, gain=0.01, activate=False):
     if activate:
@@ -37,16 +38,7 @@ class Action_Attention(nn.Module):
             action_dim = action_space.shape[0] 
         self.action_dim = action_dim
 
-        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size))
-        self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size),
-                                           )
+        self.pos_emb = nn.Parameter(torch.zeros(1, self.num_agents + 1, self._attn_size))
         
         self.layers = nn.ModuleList()
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
@@ -63,45 +55,55 @@ class Action_Attention(nn.Module):
                 self.layers.append(EncoderLayer(self._attn_size, self._attn_heads, self._dropout, 
                                                 self._use_orthogonal, self._activation_id))
             else:
-                self.layers.extend([MixerBlock(args.num_agents, action_dim, 
-                            self._attn_size, 
-                            self._dropout),
-
-                            HyperBlock(args.num_agents, action_dim, 
-                            self._attn_size, 
-                            self._dropout),
-
-                            EncoderLayer(self._attn_size, self._attn_heads, 
-                                         self._dropout, self._use_orthogonal, 
-                                         self._activation_id)]
-                            )
+                config = GPTConfig(self._attn_size, self.action_dim, self.num_agents,
+                        n_layer=self._attn_N, n_head=self._attn_heads, n_embd=self._attn_size)
+                self.layers.append(Block(config))
+                
+                
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim), activate=True)
+        self.head = nn.Linear(self._attn_size, self.action_dim, bias=False)
+
+        self.apply(self._init_weights)
+
+        self.state_encoder = nn.Sequential(nn.Linear(self._attn_size, self._attn_size), 
+                                           nn.ReLU(),
                                            )
+        self.action_embeddings = nn.Sequential(nn.Linear(self.action_dim, self._attn_size), 
+                                           nn.ReLU(),
+                                           )
+        nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
+
         self.to(device)
+    
+    def _init_weights(self, module):
+        if isinstance(module, (nn.Linear, nn.Embedding)):
+            module.weight.data.normal_(mean=0.0, std=0.02)
+            if isinstance(module, nn.Linear) and module.bias is not None:
+                module.bias.data.zero_()
+        elif isinstance(module, nn.LayerNorm):
+            module.bias.data.zero_()
+            module.weight.data.fill_(1.0)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
-        if available_actions is not None:
-            available_actions = check(available_actions).to(**self.tpdv)
 
-        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
+        state_embeddings = self.state_encoder(
+            obs_rep.reshape(-1, self._attn_size).type(torch.float32).contiguous())
+        state_embeddings = state_embeddings.reshape(obs_rep.shape[0], obs_rep.shape[1],
+                                                    self._attn_size)  # (batch, block_size, n_embd)
+        action_embeddings = self.action_embeddings(x)  # (batch, block_size, n_embd)
 
-        xs_ = []
-        for agent_id in range(self.num_agents):
-            x_ = torch.cat([x[:, agent_id].unsqueeze(1), torch.cat([x[:, :agent_id], x[:, agent_id+1:]],1)],1)
-            xs_.append(x_)
+        token_embeddings = obs_rep + action_embeddings
 
-        x = torch.stack(xs_, 1)
+        context_pos_emb = self.pos_emb[:, :token_embeddings.shape[1], :]
+        position_embeddings = context_pos_emb
+
+        x = token_embeddings + position_embeddings
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x)
-        x = torch.mean(x, dim=2)
-        
-        id_feat = self.id_encoder(torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device))
-        x = x + id_feat
 
-        bias_ = self.linear(x)
+        x = self.layer_norm(x)
+        bias_ = self.head(x)
 
         return bias_
 
@@ -123,8 +125,8 @@ class MixerBlock(nn.Module):
         self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
         
     def token_mixer(self, x):
-        x = self.token_layernorm(x).permute(0, 1, 3, 2) # (10,64,2)
-        x = self.token_forward(x).permute(0, 1, 3, 2)
+        x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
+        x = self.token_forward(x).permute(0, 2, 1)
         return x
     
     def channel_mixer(self, x):
