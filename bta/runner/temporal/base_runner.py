@@ -850,16 +850,16 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_ = self.action_attention(logits_all, obs_feats_all)
+                bias_ = self.action_attention(logits_all, obs_feats_all.detach())
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all + bias_)
+                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
                 else:
-                    action_mean = logits_all + bias_
+                    action_mean = logits_all.detach()+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
 
                 joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv)) if self.discrete else joint_dist.log_probs(check(joint_actions_batch).to(**self.tpdv))
-                joint_dist_entropy = joint_dist.entropy().mean()
+                joint_dist_entropy = joint_dist.entropy().mean(0).sum()
 
                 # actor update
                 ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)

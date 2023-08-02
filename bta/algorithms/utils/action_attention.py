@@ -17,6 +17,8 @@ def init_(m, gain=0.01, activate=False):
 class Action_Attention(nn.Module):
     def __init__(self, args, action_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
+        self._use_popart = args.use_popart
+        self._num_v_out = getattr(args, "num_v_out", 1)
         self._use_orthogonal = args.use_orthogonal
         self._activation_id = args.activation_id
         self._mix_id = args.mix_id
@@ -26,20 +28,26 @@ class Action_Attention(nn.Module):
         self._attn_heads = args.attn_heads
         self._dropout = args.dropout
         self._use_policy_active_masks = args.use_policy_active_masks
+        self.num_agents = args.num_agents
         self.tpdv = dict(dtype=torch.float32, device=device)
 
         if action_space.__class__.__name__ == "Discrete":
             action_dim = action_space.n
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
+        self.action_dim = action_dim
 
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
+        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size))
+        self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size))
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size),
                                            )
         
-        self.flaten_forward = FeedForward(args.num_agents*self._attn_size, int(4*args.num_agents*self._attn_size), args.dropout)
-
         self.layers = nn.ModuleList()
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
         for layer in range(self._attn_N):
@@ -67,35 +75,35 @@ class Action_Attention(nn.Module):
                                          self._dropout, self._use_orthogonal, 
                                          self._activation_id)]
                             )
-
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.linear = init_(nn.Linear(self._attn_size, action_dim), activate=True)
+        self.linear = nn.Sequential(init_(nn.Linear(self._attn_size, action_dim), activate=True)
+                                           )
         self.to(device)
 
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
-        bs = x.shape[0]
-        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
+
+        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
+
+        xs_ = []
+        for agent_id in range(self.num_agents):
+            x_ = torch.cat([x[:, agent_id].unsqueeze(1), torch.cat([x[:, :agent_id], x[:, agent_id+1:]],1)],1)
+            xs_.append(x_)
+
+        x = torch.stack(xs_, 1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
+        x = torch.mean(x, dim=2)
+        
+        id_feat = self.id_encoder(torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x.device))
+        x = x + id_feat
 
-        # x = self.flaten_forward(x.view(bs, -1)).view(bs, -1, self._attn_size)
+        bias_ = self.linear(x)
 
-        return self.linear(x)
-
-    def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
-        action = check(action).to(**self.tpdv)
-        if available_actions is not None:
-            available_actions = check(available_actions).to(**self.tpdv)
-        x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
-
-        for layer in range(self._attn_N):
-            x = self.layers[layer](x, obs_rep)
-
-        return self.linear(x)
+        return bias_
 
 class MixerBlock(nn.Module):
     """
@@ -112,33 +120,21 @@ class MixerBlock(nn.Module):
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        channel_dim = int(args.channel_factor*dims) if args.channel_factor != 0 else 1
-        self.channel_forward = FeedForward(self.dims, channel_dim, dropout)
-
-        self.flaten_layernorm = nn.LayerNorm(dims)
-        self.flaten_forward = FeedForward(num_agents*self.dims, int(1*num_agents*self.dims), dropout)
+        self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
         
     def token_mixer(self, x):
-        x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
-        x = self.token_forward(x).permute(0, 2, 1)
+        x = self.token_layernorm(x).permute(0, 1, 3, 2) # (10,64,2)
+        x = self.token_forward(x).permute(0, 1, 3, 2)
         return x
     
     def channel_mixer(self, x):
         x = self.channel_layernorm(x)
         x = self.channel_forward(x)
         return x
-    
-    def flaten_mixer(self, x):
-        bs = x.shape[0]
-        x = self.flaten_layernorm(x).view(bs, -1)
-        x = self.flaten_forward(x).view(bs, -1, self.dims)
-        return x
 
     def forward(self, x, obs_rep):
         x = x + self.token_mixer(x) # (10,2,64)
         x = x + self.channel_mixer(x)
-        # x = x + self.flaten_mixer(x)
-        
         return x
 
 class HyperBlock(nn.Module):
