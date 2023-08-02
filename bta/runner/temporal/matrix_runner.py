@@ -59,7 +59,7 @@ class MatrixRunner(Runner):
             self.compute()
             if self.use_action_attention:
                 self.joint_compute()
-            train_infos = self.joint_train() if self.use_action_attention else self.train()
+            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
             total_num_steps = (episode + 1) * \

@@ -852,7 +852,9 @@ class Runner(object):
 
                 bias_ = self.action_attention(logits_all, obs_feats_all.detach())
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
+                    mixed_ = logits_all.detach()+bias_
+                    mixed_[available_actions_all == 0] = -1e10
+                    joint_dist = FixedCategorical(logits=mixed_)
                 else:
                     action_mean = logits_all.detach()+bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
