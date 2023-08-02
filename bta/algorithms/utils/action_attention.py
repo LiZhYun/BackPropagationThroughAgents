@@ -33,17 +33,13 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
 
-        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size))
         self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size),
-                                        #    init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
-                                        #    nn.ReLU(),
-                                        #    nn.LayerNorm(self._attn_size),
                                            )
         
+        self.flaten_forward = FeedForward(args.num_agents*self._attn_size, int(4*args.num_agents*self._attn_size), args.dropout)
+
         self.layers = nn.ModuleList()
         mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
         for layer in range(self._attn_N):
@@ -71,8 +67,7 @@ class Action_Attention(nn.Module):
                                          self._dropout, self._use_orthogonal, 
                                          self._activation_id)]
                             )
-            
-        # self.act = ACTLayer(action_space, self._attn_size, self._use_orthogonal, self._gain)
+
         self.layer_norm = nn.LayerNorm(self._attn_size)
         self.linear = init_(nn.Linear(self._attn_size, action_dim), activate=True)
         self.to(device)
@@ -80,18 +75,17 @@ class Action_Attention(nn.Module):
     def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
-
+        bs = x.shape[0]
         x = self.feat_encoder(torch.cat([x, obs_rep], -1))
-        # x = self.logit_encoder(x) + obs_rep
-        # x = self.feat_encoder(self.logit_encoder(x) + obs_rep)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
 
-        # actions, action_log_probs, dist_entropy, logits = self.act(x, available_actions, deterministic, tau=tau, joint=True)
+        # x = self.flaten_forward(x.view(bs, -1)).view(bs, -1, self._attn_size)
+
         return self.linear(x)
-    
+
     def evaluate_actions(self, x, obs_rep, action, mask=None, available_actions=None, active_masks=None, tau=1.0):
         action = check(action).to(**self.tpdv)
         if available_actions is not None:
@@ -101,7 +95,6 @@ class Action_Attention(nn.Module):
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
 
-        # train_actions, action_log_probs, _, dist_entropy, logits = self.act.evaluate_actions(x, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None, rsample=True, tau=tau, joint=True)
         return self.linear(x)
 
 class MixerBlock(nn.Module):
@@ -117,36 +110,35 @@ class MixerBlock(nn.Module):
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
-        # self.token_forward = nn.ModuleList()
-        # for _ in range(self.h):
-        #     self.token_forward.append(FeedForward(num_agents, token_dim, dropout))
             
         self.channel_layernorm = nn.LayerNorm(dims)
         channel_dim = int(args.channel_factor*dims) if args.channel_factor != 0 else 1
         self.channel_forward = FeedForward(self.dims, channel_dim, dropout)
-        # self.channel_forward = nn.ModuleList()
-        # for _ in range(self.h):
-        #     self.channel_forward.append(FeedForward(self.dims, 4*self.dims, dropout))
+
+        self.flaten_layernorm = nn.LayerNorm(dims)
+        self.flaten_forward = FeedForward(num_agents*self.dims, int(1*num_agents*self.dims), dropout)
         
     def token_mixer(self, x):
         x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
         x = self.token_forward(x).permute(0, 2, 1)
-        # out = torch.zeros_like(x).permute(0, 2, 1).to(x)
-        # for head in range(self.h):
-            # out += self.token_forward[head](x).permute(0, 2, 1)
         return x
     
     def channel_mixer(self, x):
         x = self.channel_layernorm(x)
         x = self.channel_forward(x)
-        # out = torch.zeros_like(x).to(x)
-        # for head in range(self.h):
-        #     out += self.channel_forward[head](x)
+        return x
+    
+    def flaten_mixer(self, x):
+        bs = x.shape[0]
+        x = self.flaten_layernorm(x).view(bs, -1)
+        x = self.flaten_forward(x).view(bs, -1, self.dims)
         return x
 
     def forward(self, x, obs_rep):
         x = x + self.token_mixer(x) # (10,2,64)
         x = x + self.channel_mixer(x)
+        # x = x + self.flaten_mixer(x)
+        
         return x
 
 class HyperBlock(nn.Module):

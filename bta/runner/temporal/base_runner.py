@@ -844,17 +844,17 @@ class Runner(object):
                     self.trainer[agent_idx].policy.critic_optimizer.step()
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
                     # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                     train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_ = self.action_attention(logits_all, obs_feats_all.detach())
+                bias_ = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    joint_dist = FixedCategorical(logits=logits_all.detach()+bias_)
+                    joint_dist = FixedCategorical(logits=logits_all + bias_)
                 else:
-                    action_mean = logits_all.detach()+bias_
+                    action_mean = logits_all + bias_
                     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                     joint_dist = FixedNormal(action_mean, action_std)
 
@@ -898,7 +898,8 @@ class Runner(object):
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
-            
+
+        # self.bc_train(advs)
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
@@ -907,38 +908,11 @@ class Runner(object):
             self.buffer[agent_idx].after_update()
         return train_infos
     
-    def cal_value_loss(self, value_normalizer, values, value_preds_batch, return_batch):
-        value_pred_clipped = value_preds_batch + (values - value_preds_batch).clamp(-self.clip_param, self.clip_param)
-        
-        if self._use_popart or self._use_valuenorm:
-            value_normalizer.update(return_batch)
-            error_clipped = value_normalizer.normalize(return_batch) - value_pred_clipped
-            error_original = value_normalizer.normalize(return_batch) - values
-        else:
-            error_clipped = return_batch - value_pred_clipped
-            error_original = return_batch - values
-
-        if self._use_huber_loss:
-            value_loss_clipped = huber_loss(error_clipped, self.huber_delta)
-            value_loss_original = huber_loss(error_original, self.huber_delta)
-        else:
-            value_loss_clipped = mse_loss(error_clipped)
-            value_loss_original = mse_loss(error_original)
-
-        if self._use_clipped_value_loss:
-            value_loss = torch.max(value_loss_original, value_loss_clipped)
-        else:
-            value_loss = value_loss_original
-
-        value_loss = value_loss.mean()
-
-        return value_loss
-    
     def bc_train(self, advs):
             
         batch_size = self.n_rollout_threads * self.episode_length
         
-        for epoch in range(self.bc_epoch):
+        for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
                 mini_batch_size = data_chunks // self.num_mini_batch
@@ -994,15 +968,15 @@ class Runner(object):
                     #     # off-policy ppo
                     #     new_clip = 0.25
                     #     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    #     # dual clip
-                    #     cliped_ratio = torch.minimum(ratio, torch.tensor(2).to(self.device))
+                    # dual clip
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(2).to(self.device))
 
-                    #     surr1 = cliped_ratio * adv_targ
-                    #     surr2 = torch.clamp(cliped_ratio, 1.0 - new_clip, 1.0 + new_clip) * adv_targ
+                    surr1 = cliped_ratio * adv_targ
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     # else:
-                    # BC
-                    surr1 = action_log_probs_kl
-                    surr2 = action_log_probs_kl
+                    # # BC
+                    # surr1 = action_log_probs_kl
+                    # surr2 = action_log_probs_kl
                     
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -1015,7 +989,7 @@ class Runner(object):
 
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
 
-                    (policy_loss).backward()
+                    (policy_loss - dist_entropy * self.entropy_coef).backward()
                     
                     if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)

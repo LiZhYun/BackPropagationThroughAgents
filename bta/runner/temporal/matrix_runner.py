@@ -101,6 +101,7 @@ class MatrixRunner(Runner):
             self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
             self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
 
+    @torch.no_grad()
     def collect(self, step):
         values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim))
