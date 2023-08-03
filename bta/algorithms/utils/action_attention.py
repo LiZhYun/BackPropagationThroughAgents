@@ -38,20 +38,24 @@ class Action_Attention(nn.Module):
             action_dim = action_space.shape[0] 
         self.action_dim = action_dim
 
-        self.pos_emb = nn.Parameter(torch.zeros(1, self.num_agents + 1, self._attn_size))
+        self.id_emb = nn.Parameter(torch.zeros(1, self.num_agents, self._attn_size))
         
+        self.obs_mix = MixerBlock(args, args.num_agents, self._attn_heads, 
+                            self._attn_size, 
+                            self._dropout)
+
         self.layers = nn.ModuleList()
-        mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
+        self.mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
         for layer in range(self._attn_N):
-            if mix_type in 'mixer':
+            if self.mix_type in 'mixer':
                 self.layers.append(MixerBlock(args, args.num_agents, self._attn_heads, 
                             self._attn_size, 
                             self._dropout))
-            elif mix_type in 'hyper':
+            elif self.mix_type in 'hyper':
                 self.layers.append(HyperBlock(args.num_agents, action_dim, 
                             self._attn_size, 
                             self._dropout))
-            elif mix_type in 'attention':
+            elif self.mix_type in 'attention':
                 self.layers.append(EncoderLayer(self._attn_size, self._attn_heads, self._dropout, 
                                                 self._use_orthogonal, self._activation_id))
             else:
@@ -67,9 +71,11 @@ class Action_Attention(nn.Module):
 
         self.state_encoder = nn.Sequential(nn.Linear(self._attn_size, self._attn_size), 
                                            nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size)
                                            )
         self.action_embeddings = nn.Sequential(nn.Linear(self.action_dim, self._attn_size), 
                                            nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size)
                                            )
         nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
 
@@ -90,17 +96,18 @@ class Action_Attention(nn.Module):
             obs_rep.reshape(-1, self._attn_size).type(torch.float32).contiguous())
         state_embeddings = state_embeddings.reshape(obs_rep.shape[0], obs_rep.shape[1],
                                                     self._attn_size)  # (batch, block_size, n_embd)
+        state_embeddings = self.obs_mix(state_embeddings)
+
+        position_embeddings = self.id_emb[:, :, :]
+
+        state_embeddings = state_embeddings + position_embeddings
+
         action_embeddings = self.action_embeddings(x)  # (batch, block_size, n_embd)
 
-        token_embeddings = obs_rep + action_embeddings
-
-        context_pos_emb = self.pos_emb[:, :token_embeddings.shape[1], :]
-        position_embeddings = context_pos_emb
-
-        x = token_embeddings + position_embeddings
+        x = action_embeddings
 
         for layer in range(self._attn_N):
-            x = self.layers[layer](x, obs_rep)
+            x = self.layers[layer](x, state_embeddings)
 
         x = self.layer_norm(x)
         bias_ = self.head(x)
@@ -119,7 +126,7 @@ class MixerBlock(nn.Module):
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, token_dim, dropout)
+        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
@@ -134,7 +141,9 @@ class MixerBlock(nn.Module):
         x = self.channel_forward(x)
         return x
 
-    def forward(self, x, obs_rep):
+    def forward(self, x, obs_rep=None):
+        if obs_rep != None:
+            x = x + obs_rep
         x = x + self.token_mixer(x) # (10,2,64)
         x = x + self.channel_mixer(x)
         return x
@@ -271,18 +280,13 @@ class EncoderLayer(nn.Module):
         self.norm_1 = nn.LayerNorm(d_model)
         self.norm_2 = nn.LayerNorm(d_model)
         self.norm_3 = nn.LayerNorm(d_model)
-        self.norm_4 = nn.LayerNorm(d_model)
         self.attn1 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.attn2 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
-        self.attn3 = MultiHeadAttention(heads, d_model, dropout, use_orthogonal)
         self.ff = FeedForward(d_model, d_model, dropout, use_orthogonal, activation_id)
-        self.dropout_1 = nn.Dropout(dropout)
-        self.dropout_2 = nn.Dropout(dropout)
-        self.dropout_3 = nn.Dropout(dropout)
-        self.dropout_4 = nn.Dropout(dropout)
 
     def forward(self, x, obs_rep, mask=None):
-        x = self.norm_1(x + self.dropout_1(self.attn1(x, x, x, mask)))
-        x = self.norm_4(x + self.dropout_4(self.ff(x)))
+        x = self.norm_1(x + self.attn1(x, x, x))
+        x = self.norm_2(obs_rep + self.attn2(key=x, value=x, query=obs_rep))
+        x = self.norm_3(x + self.ff(x))
 
         return x

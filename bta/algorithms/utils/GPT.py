@@ -105,6 +105,28 @@ class Block(nn.Module):
         x = x + self.mlp(self.ln2(x))
         return x
 
+class DecodeBlock(nn.Module):
+    """ an unassuming Transformer block """
+
+    def __init__(self, config):
+        super(DecodeBlock, self).__init__()
+
+        self.ln1 = nn.LayerNorm(config.n_embd)
+        self.ln2 = nn.LayerNorm(config.n_embd)
+        self.ln3 = nn.LayerNorm(config.n_embd)
+        self.attn1 = CausalSelfAttention(config)
+        self.attn2 = CausalSelfAttention(config)
+        self.mlp = nn.Sequential(
+            nn.Linear(config.n_embd, 1 * config.n_embd),
+            nn.GELU(),
+            nn.Linear(1 * config.n_embd, config.n_embd)
+        )
+
+    def forward(self, x, rep_enc):
+        x = self.ln1(x + self.attn1(x, x, x))
+        x = self.ln2(rep_enc + self.attn2(key=x, value=x, query=rep_enc))
+        x = self.ln3(x + self.mlp(x))
+        return x
 
 class GPT(nn.Module):
     """  the full GPT language model, with a context size of block_size """
