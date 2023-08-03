@@ -184,19 +184,19 @@ class HyperBlock(nn.Module):
         bs, n_agents, action_dim = x.shape
         w1 = self.hyper_w1(obs_rep.view(bs, -1)).view(bs, n_agents, -1) # (3,2,1)
         b1 = self.hyper_b1(obs_rep.view(bs, -1)).view(bs, 1, -1)  # (3,1,1)
-        hidden = F.ReLU(torch.bmm(x.view(bs, -1, n_agents), w1) + b1)  # (3,64,1)
+        hidden = F.relu(torch.bmm(x.view(bs, -1, n_agents), w1) + b1)  # (3,64,1)
 
         w12 = self.hyper_w12(obs_rep.view(bs, -1)).view(bs, -1, n_agents) # (3,1,2)
         b12 = self.hyper_b12(obs_rep.view(bs, -1)).view(bs, 1, -1)  # (3,1,1)
-        hidden = F.ReLU(torch.bmm(hidden, w12) + b12).view(bs, n_agents, -1)  # (3,2,64)
+        hidden = F.relu(torch.bmm(hidden, w12) + b12).view(bs, n_agents, -1)  # (3,2,64)
 
         w2 = self.hyper_w2(obs_rep.view(bs, -1)).view(bs, self.dims, 4*self.dims)  # (3,64,4*64)
         b2 = self.hyper_b2(obs_rep.view(bs, -1)).view(bs, 1, 4*self.dims)  # (3,1,4*64)
-        hidden = F.ReLU(torch.bmm(hidden, w2) + b2)  # (3, 2, 4*64)
+        hidden = F.relu(torch.bmm(hidden, w2) + b2)  # (3, 2, 4*64)
 
         w22 = self.hyper_w22(obs_rep.view(bs, -1)).view(bs, self.dims*4, self.dims)  # (3,4*64,64)
         b22 = self.hyper_b22(obs_rep.view(bs, -1)).view(bs, 1, self.dims)  # (3,1,64)
-        x = x + F.ReLU(torch.bmm(hidden, w22) + b22)  # (3, 2, 64)
+        x = x + F.relu(torch.bmm(hidden, w22) + b22)  # (3, 2, 64)
         return x
 
 class FeedForward(nn.Module):
@@ -296,7 +296,7 @@ class EncoderLayer(nn.Module):
 
     def forward(self, x, obs_rep, mask=None):
         x = self.norm_1(x + self.attn1(x, x, x))
-        x = self.norm_2(obs_rep + self.attn2(key=x, value=x, query=obs_rep))
+        x = self.norm_2(obs_rep + self.attn2(k=x, v=x, q=obs_rep))
         x = self.norm_3(x + self.ff(x))
 
         return x
