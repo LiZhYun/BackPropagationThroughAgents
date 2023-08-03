@@ -32,10 +32,16 @@ class Action_Attention(nn.Module):
         self.num_agents = args.num_agents
         self.tpdv = dict(dtype=torch.float32, device=device)
 
+        self.discrete = False
         if action_space.__class__.__name__ == "Discrete":
+            self.discrete = True
             action_dim = action_space.n
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
+            self.std_x_coef = 1.
+            self.std_y_coef = 0.5
+            log_std = torch.ones(action_dim) * self.std_x_coef
+            self.log_std = torch.nn.Parameter(log_std).to(**self.tpdv)
         self.action_dim = action_dim
 
         self.id_emb = nn.Parameter(torch.zeros(1, self.num_agents, self._attn_size))
@@ -112,7 +118,11 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
         bias_ = self.head(x)
 
-        return bias_
+        action_std = None
+        if not self.discrete:
+            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+
+        return bias_, action_std
 
 class MixerBlock(nn.Module):
     """

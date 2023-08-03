@@ -186,14 +186,13 @@ class SMACRunner(Runner):
         if self.use_action_attention:
             available_actions_all = np.stack([self.buffer[agent_idx].available_actions[step] for agent_idx in range(self.num_agents)],1)
             available_actions_all = check(available_actions_all).to(**self.tpdv)
-            bias_ = self.action_attention(logits, obs_feats)
+            bias_, action_std = self.action_attention(logits, obs_feats)
             if self.discrete:
                 mixed_ = logits+bias_
                 mixed_[available_actions_all == 0] = -1e10
                 joint_dist = FixedCategorical(logits=mixed_)
             else:
                 action_mean = logits+bias_
-                action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
                 joint_dist = FixedNormal(action_mean, action_std)
             joint_actions = joint_dist.sample()
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions)
