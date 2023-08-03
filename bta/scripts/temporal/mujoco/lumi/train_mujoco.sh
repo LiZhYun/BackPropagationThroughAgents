@@ -5,10 +5,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
-#SBATCH --gpus=1
-#SBATCH --mem=10G
+#SBATCH --mem=64G
 #SBATCH --time=1-00:00:00
 #SBATCH --partition=small-g
+#SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
 #SBATCH --array=0-4
 
@@ -21,6 +21,10 @@ agent_obsk=0
 algo="temporal"
 exp="check"
 
+# layer=$3
+# token_factor=$4
+# channel_factor=$5
+
 echo "env is ${env}, scenario is ${scenario}, agent_conf is ${agent_conf}, algo is ${algo}, exp is ${exp}"
 
 srun singularity exec -B $SCRATCH $SCRATCH/mujo_gfoot_v2.sif /bin/sh -c "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/users/lizhiyua/.mujoco/mujoco210/bin; python ../../../train/train_mujoco.py \
@@ -29,4 +33,5 @@ srun singularity exec -B $SCRATCH $SCRATCH/mujo_gfoot_v2.sif /bin/sh -c "export 
 --use_eval --eval_interval 25 --eval_episodes 5 --add_center_xy --use_state_agent --use_value_active_masks --use_policy_active_masks \
 --layer_N 2 --ppo_epoch 5 --lr 3e-4 --critic_lr 3e-4 --attention_lr 3e-4 --std_x_coef 1 --std_y_coef 5e-1 --entropy_coef 0 --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
 --use_action_attention"
+# --attn_N ${layer} --token_factor ${token_factor} --channel_factor ${channel_factor}
         

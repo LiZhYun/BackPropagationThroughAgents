@@ -41,7 +41,7 @@ class Action_Attention(nn.Module):
             self.std_x_coef = 1.
             self.std_y_coef = 0.5
             log_std = torch.ones(action_dim) * self.std_x_coef
-            self.log_std = torch.nn.Parameter(log_std).to(**self.tpdv)
+            self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.id_emb = nn.Parameter(torch.zeros(1, self.num_agents, self._attn_size))
