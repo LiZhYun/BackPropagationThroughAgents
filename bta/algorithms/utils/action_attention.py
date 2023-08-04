@@ -46,11 +46,11 @@ class Action_Attention(nn.Module):
 
         self.id_emb = nn.Parameter(torch.zeros(1, self.num_agents, self._attn_size))
         
-        self.obs_mix = MixerBlock(args, args.num_agents, self._attn_heads, 
-                            self._attn_size, 
-                            self._dropout,
-                            token_factor=args.token_factor,
-                            channel_factor=args.channel_factor)
+        # self.obs_mix = MixerBlock(args, args.num_agents, self._attn_heads, 
+        #                     self._attn_size, 
+        #                     self._dropout,
+        #                     token_factor=args.token_factor,
+        #                     channel_factor=args.channel_factor)
 
         self.layers = nn.ModuleList()
         self.mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
@@ -89,11 +89,11 @@ class Action_Attention(nn.Module):
                                            )
         nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
 
-        self.value_norm = nn.LayerNorm(self._attn_size)
-        if self._use_popart:
-            self.v_out = init_(PopArt(self._attn_size, 1, device=device))
-        else:
-            self.v_out = init_(nn.Linear(self._attn_size, 1))
+        # self.value_norm = nn.LayerNorm(self._attn_size)
+        # if self._use_popart:
+        #     self.v_out = init_(PopArt(self._attn_size, 1, device=device))
+        # else:
+        #     self.v_out = init_(nn.Linear(self._attn_size, 1))
 
         self.to(device)
     
@@ -112,17 +112,17 @@ class Action_Attention(nn.Module):
             obs_rep.reshape(-1, self._attn_size).type(torch.float32).contiguous())
         state_embeddings = state_embeddings.reshape(obs_rep.shape[0], obs_rep.shape[1],
                                                     self._attn_size)  # (batch, block_size, n_embd)
-        state_embeddings = self.obs_mix(state_embeddings)
+        # state_embeddings = self.obs_mix(state_embeddings)
 
-        position_embeddings = self.id_emb[:, :, :]
+        id_embeddings = self.id_emb[:, :, :]
 
-        state_embeddings = state_embeddings + position_embeddings
+        state_embeddings = state_embeddings + id_embeddings
 
-        value = self.v_out(self.value_norm(state_embeddings).mean(1))
+        # value = self.v_out(self.value_norm(state_embeddings).mean(1))
 
         action_embeddings = self.action_embeddings(x)  # (batch, block_size, n_embd)
 
-        x = action_embeddings
+        x = action_embeddings + state_embeddings
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, state_embeddings)
@@ -134,7 +134,7 @@ class Action_Attention(nn.Module):
         if not self.discrete:
             action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
-        return bias_, action_std, value
+        return bias_, action_std
 
 class MixerBlock(nn.Module):
     """
@@ -147,7 +147,7 @@ class MixerBlock(nn.Module):
         self.h = heads
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(token_factor*num_agents) if token_factor != 0 else 1
+        token_dim = int(token_factor*dims) if token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
@@ -165,8 +165,8 @@ class MixerBlock(nn.Module):
         return x
 
     def forward(self, x, obs_rep=None):
-        if obs_rep != None:
-            x = x + obs_rep
+        # if obs_rep != None:
+        #     x = x + obs_rep
         x = x + self.token_mixer(x) # (10,2,64)
         x = x + self.channel_mixer(x)
         return x

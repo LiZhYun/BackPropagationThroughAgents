@@ -184,7 +184,7 @@ class MujocoRunner(Runner):
 
         joint_actions, joint_action_log_probs, joint_values = None, None, None
         if self.use_action_attention:
-            bias_, action_std, joint_values = self.action_attention(logits, obs_feats, tau=self.temperature)
+            bias_, action_std = self.action_attention(logits, obs_feats, tau=self.temperature)
             if self.discrete:
                 joint_dist = FixedCategorical(logits=logits+bias_)
             else:
@@ -194,7 +194,7 @@ class MujocoRunner(Runner):
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions) if self.discrete else joint_dist.log_probs(joint_actions)
             joint_actions = _t2n(joint_actions)
             joint_action_log_probs = _t2n(joint_action_log_probs)
-            joint_values = _t2n(joint_values)
+            # joint_values = _t2n(joint_values)
             for agent_idx in range(self.num_agents):
                 ego_exclusive_action = actions[:,0:self.num_agents]
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
