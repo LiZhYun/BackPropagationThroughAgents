@@ -734,7 +734,7 @@ class Runner(object):
             advantages_all = advantages_all.reshape(-1, 1)
             # returns_all = self.returns[:-1].reshape(-1, 1)
             # joint_values_pred_all = self.buffer[0].joint_value_preds[:-1].reshape(-1, 1)
-
+        train_infos = self.bc_train(advs, train_infos)
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
@@ -818,54 +818,54 @@ class Runner(object):
                     logits_all[:, agent_idx] = logits.clone()
                     obs_feats_all[:, agent_idx] = obs_feat.clone()
 
-                    # actor update
-                    ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
+                    # # actor update
+                    # ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
-                    # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
+                    # # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
+                    # # dual clip
+                    # # cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
 
-                    surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+                    # surr1 = ratio * adv_targ
+                    # surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
-                    # # BC
-                    # surr1 = action_log_probs_kl
-                    # surr2 = action_log_probs_kl
+                    # # # BC
+                    # # surr1 = action_log_probs_kl
+                    # # surr2 = action_log_probs_kl
                     
-                    if self._use_policy_active_masks:
-                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
-                                                        dim=-1,
-                                                        keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
-                    else:
-                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                    # if self._use_policy_active_masks:
+                    #     policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                    #                                     dim=-1,
+                    #                                     keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
+                    # else:
+                    #     policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                    policy_loss = policy_action_loss
+                    # policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
+                    # individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
 
-                    #critic update
-                    value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
-                                    check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
+                    # #critic update
+                    # value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
+                    #                 check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
 
-                    self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
+                    # self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
 
-                    (value_loss * self.value_loss_coef).backward()
+                    # (value_loss * self.value_loss_coef).backward()
 
-                    if self._use_max_grad_norm:
-                        critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                    else:
-                        critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+                    # if self._use_max_grad_norm:
+                    #     critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
+                    # else:
+                    #     critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
 
-                    self.trainer[agent_idx].policy.critic_optimizer.step()
+                    # self.trainer[agent_idx].policy.critic_optimizer.step()
 
-                    train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                    # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                    train_infos[agent_idx]['ratio'] += ratio.mean().item()
-                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+                    # train_infos[agent_idx]['value_loss'] += value_loss.item()
+                    # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    # # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                    # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    # train_infos[agent_idx]['ratio'] += ratio.mean().item()
+                    # train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_, action_std = self.action_attention(logits_all.detach(), obs_feats_all.detach())
+                bias_, action_std = self.action_attention(logits_all, obs_feats_all.detach())
                 if self.discrete:
                     mixed_ = logits_all.detach()+bias_
                     mixed_[available_actions_all == 0] = -1e10
@@ -894,22 +894,22 @@ class Runner(object):
                     # self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
                 self.action_attention_optimizer.zero_grad()
                 
-                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
+                (policy_loss - joint_dist_entropy * self.entropy_coef).backward()
                 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                     for agent_idx in range(self.num_agents): 
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
                         # critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                 else:
                     attention_grad_norm = get_gard_norm(self.action_attention.parameters())
                     for agent_idx in range(self.num_agents): 
-                        actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                        # actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                         # critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
 
@@ -924,7 +924,7 @@ class Runner(object):
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
 
-        # self.bc_train(advs)
+        # train_infos = self.bc_train(advs, train_infos)
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
@@ -932,35 +932,8 @@ class Runner(object):
                 train_infos[agent_idx][k] /= num_updates    
             self.buffer[agent_idx].after_update()
         return train_infos
-    
-    def cal_value_loss(self, value_normalizer, values, value_preds_batch, return_batch):
-        value_pred_clipped = value_preds_batch + (values - value_preds_batch).clamp(-self.clip_param, self.clip_param)
-        
-        if self._use_popart or self._use_valuenorm:
-            value_normalizer.update(return_batch)
-            error_clipped = value_normalizer.normalize(return_batch) - value_pred_clipped
-            error_original = value_normalizer.normalize(return_batch) - values
-        else:
-            error_clipped = return_batch - value_pred_clipped
-            error_original = return_batch - values
 
-        if self._use_huber_loss:
-            value_loss_clipped = huber_loss(error_clipped, self.huber_delta)
-            value_loss_original = huber_loss(error_original, self.huber_delta)
-        else:
-            value_loss_clipped = mse_loss(error_clipped)
-            value_loss_original = mse_loss(error_original)
-
-        if self._use_clipped_value_loss:
-            value_loss = torch.max(value_loss_original, value_loss_clipped)
-        else:
-            value_loss = value_loss_original
-
-        value_loss = value_loss.mean()
-
-        return value_loss
-
-    def bc_train(self, advs):
+    def bc_train(self, advs, train_infos):
             
         batch_size = self.n_rollout_threads * self.episode_length
         
@@ -1021,10 +994,10 @@ class Runner(object):
                     #     new_clip = 0.25
                     #     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
                     # dual clip
-                    cliped_ratio = torch.minimum(ratio, torch.tensor(2).to(self.device))
+                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2).to(self.device))
 
-                    surr1 = cliped_ratio * adv_targ
-                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
+                    surr1 = ratio * adv_targ
+                    surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     # else:
                     # # BC
                     # surr1 = action_log_probs_kl
@@ -1049,6 +1022,30 @@ class Runner(object):
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
 
                     self.trainer[agent_idx].policy.actor_optimizer.step()
+
+                    #critic update
+                    value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
+                                    check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
+
+                    self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
+
+                    (value_loss * self.value_loss_coef).backward()
+
+                    if self._use_max_grad_norm:
+                        critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
+                    else:
+                        critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+
+                    self.trainer[agent_idx].policy.critic_optimizer.step()
+
+                    train_infos[agent_idx]['value_loss'] += value_loss.item()
+                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                    train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    train_infos[agent_idx]['ratio'] += ratio.mean().item()
+                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+
+        return train_infos
 
     def save(self, steps=None):
         postfix = f"_{steps}.pt" if steps else ".pt"
