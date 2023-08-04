@@ -166,6 +166,12 @@ class Runner(object):
             from bta.algorithms.utils.action_attention import Action_Attention
             self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], device = self.device)
             self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.attention_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
+            if self._use_popart:
+                self.value_normalizer = self.action_attention.v_out
+            elif self._use_valuenorm:
+                self.value_normalizer = ValueNorm(1, device = self.device)
+            else:
+                self.value_normalizer = None
 
         if self.model_dir is not None:
             self.restore()
@@ -222,7 +228,7 @@ class Runner(object):
             #                                                     )
             # next_value = _t2n(next_value)
             # self.buffer[agent_id].value_preds[-1] = next_value
-        self.compute_returns(self.rewards.mean(0), [self.trainer[i].value_normalizer for i in range(self.num_agents)])
+        self.compute_returns(self.rewards.mean(0), self.value_normalizer)
     
     def compute_returns(self, rewards, value_normalizer=None):
         self.returns = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
@@ -231,19 +237,17 @@ class Runner(object):
             gae = 0
             for step in reversed(range(rewards.shape[0])):
                 if self._use_popart or self._use_valuenorm:
-                    norm_next_value = 0
-                    norm_value = 0
-                    for i in range(self.num_agents):
-                        norm_next_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step + 1])
-                        norm_value += value_normalizer[i].denormalize(self.buffer[i].value_preds[step])
-                    norm_next_value /= self.num_agents
-                    norm_value /= self.num_agents
-                    delta = rewards[step] + self.gamma * norm_next_value * self.buffer[0].masks[step + 1] - norm_value
+                    delta = rewards[step] + self.gamma * value_normalizer.denormalize(self.buffer[0].joint_value_preds[step + 1]) * self.buffer[0].masks[step + 1] - value_normalizer.denormalize(self.buffer[0].joint_value_preds[step])
                     gae = delta + self.gamma * self.gae_lambda * self.buffer[0].masks[step + 1] * gae
                     self.advg[step] = gae
-                    self.returns[step] = gae + norm_value
-        # for agent_id in range(self.num_agents):
-        #     self.buffer[agent_id].returns = self.returns.copy()
+                    self.returns[step] = gae + value_normalizer.denormalize(self.buffer[0].joint_value_preds[step])
+                else:
+                    delta = rewards[step] + self.gamma * self.buffer[0].joint_value_preds[step + 1] * self.buffer[0].masks[step + 1] - self.buffer[0].joint_value_preds[step]
+                    gae = delta + self.gamma * self.gae_lambda * self.buffer[0].masks[step + 1] * gae
+                    self.advg[step] = gae
+                    self.returns[step] = gae + self.buffer[0].joint_value_preds[step]
+        for agent_id in range(self.num_agents):
+            self.buffer[agent_id].returns = self.returns.copy()
 
     def train_seq_agent_m(self):
         train_infos = []
@@ -722,8 +726,12 @@ class Runner(object):
 
         if self._use_recurrent_policy:
             advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
+            returns_all = self.returns[:-1].transpose(1,0,2).reshape(-1, *self.returns.shape[2:])
+            joint_values_pred_all = self.buffer[0].joint_value_preds[:-1].transpose(1,0,2).reshape(-1, *self.buffer[0].joint_value_preds.shape[2:])
         else:
             advantages_all = advantages_all.reshape(-1, 1)
+            returns_all = self.returns[:-1].reshape(-1, 1)
+            joint_values_pred_all = self.buffer[0].joint_value_preds[:-1].reshape(-1, 1)
 
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
@@ -746,17 +754,27 @@ class Runner(object):
             for batch_idx in range(self.num_mini_batch):
                 if self._use_recurrent_policy:
                     adv_targ_all = []
+                    returns_all_batch = []
+                    joint_values_pred_all_batch = []
                     for index in sampler[batch_idx]:
                         ind = index * self.data_chunk_length
                         adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
+                        returns_all_batch.append(returns_all[ind:ind+self.data_chunk_length])
+                        joint_values_pred_all_batch.append(joint_values_pred_all[ind:ind+self.data_chunk_length])
                     adv_targ_all = np.stack(adv_targ_all)
+                    returns_all_batch = np.stack(returns_all_batch)
+                    joint_values_pred_all_batch = np.stack(joint_values_pred_all_batch)
                     adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
+                    returns_all_batch = check(returns_all_batch.reshape(self.data_chunk_length*mini_batch_size, *returns_all_batch.shape[2:])).to(**self.tpdv)
+                    joint_values_pred_all_batch = check(joint_values_pred_all_batch.reshape(self.data_chunk_length*mini_batch_size, *joint_values_pred_all_batch.shape[2:])).to(**self.tpdv)
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                 else:
                     adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
+                    returns_all_batch = check(returns_all[sampler[batch_idx]]).to(**self.tpdv)
+                    joint_values_pred_all_batch = check(joint_values_pred_all[sampler[batch_idx]]).to(**self.tpdv)
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -845,7 +863,7 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_, action_std = self.action_attention(logits_all, obs_feats_all)
+                bias_, action_std, joint_values = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
                     mixed_ = logits_all+bias_
                     mixed_[available_actions_all == 0] = -1e10
@@ -867,11 +885,13 @@ class Runner(object):
               
                 policy_loss = policy_action_loss
 
+                joint_value_loss = self.cal_value_loss(self.value_normalizer, joint_values, joint_values_pred_all_batch, returns_all_batch)
+
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.action_attention_optimizer.zero_grad()
                 
-                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
+                (policy_loss - joint_dist_entropy * self.entropy_coef + joint_value_loss + individual_loss.sum()).backward()
                 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
@@ -892,6 +912,7 @@ class Runner(object):
                 
                 for agent_idx in range(self.num_agents):
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
+                    train_infos[agent_idx]['joint_value_loss'] += joint_value_loss.item()
                     train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
 
@@ -904,6 +925,33 @@ class Runner(object):
             self.buffer[agent_idx].after_update()
         return train_infos
     
+    def cal_value_loss(self, value_normalizer, values, value_preds_batch, return_batch):
+        value_pred_clipped = value_preds_batch + (values - value_preds_batch).clamp(-self.clip_param, self.clip_param)
+        
+        if self._use_popart or self._use_valuenorm:
+            value_normalizer.update(return_batch)
+            error_clipped = value_normalizer.normalize(return_batch) - value_pred_clipped
+            error_original = value_normalizer.normalize(return_batch) - values
+        else:
+            error_clipped = return_batch - value_pred_clipped
+            error_original = return_batch - values
+
+        if self._use_huber_loss:
+            value_loss_clipped = huber_loss(error_clipped, self.huber_delta)
+            value_loss_original = huber_loss(error_original, self.huber_delta)
+        else:
+            value_loss_clipped = mse_loss(error_clipped)
+            value_loss_original = mse_loss(error_original)
+
+        if self._use_clipped_value_loss:
+            value_loss = torch.max(value_loss_original, value_loss_clipped)
+        else:
+            value_loss = value_loss_original
+
+        value_loss = value_loss.mean()
+
+        return value_loss
+
     def bc_train(self, advs):
             
         batch_size = self.n_rollout_threads * self.episode_length

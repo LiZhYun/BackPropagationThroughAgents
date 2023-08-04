@@ -85,6 +85,12 @@ class Action_Attention(nn.Module):
                                            )
         nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
 
+        self.value_norm = nn.LayerNorm(self._attn_size)
+        if self._use_popart:
+            self.v_out = init_(PopArt(self._attn_size, 1, device=device))
+        else:
+            self.v_out = init_(nn.Linear(self._attn_size, 1))
+
         self.to(device)
     
     def _init_weights(self, module):
@@ -108,6 +114,8 @@ class Action_Attention(nn.Module):
 
         state_embeddings = state_embeddings + position_embeddings
 
+        value = self.v_out(self.value_norm(state_embeddings).mean(1))
+
         action_embeddings = self.action_embeddings(x)  # (batch, block_size, n_embd)
 
         x = action_embeddings
@@ -122,7 +130,7 @@ class Action_Attention(nn.Module):
         if not self.discrete:
             action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
-        return bias_, action_std
+        return bias_, action_std, value
 
 class MixerBlock(nn.Module):
     """
