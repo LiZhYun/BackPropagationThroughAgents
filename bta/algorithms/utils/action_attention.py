@@ -48,7 +48,9 @@ class Action_Attention(nn.Module):
         
         self.obs_mix = MixerBlock(args, args.num_agents, self._attn_heads, 
                             self._attn_size, 
-                            self._dropout)
+                            self._dropout,
+                            token_factor=args.token_factor,
+                            channel_factor=args.channel_factor)
 
         self.layers = nn.ModuleList()
         self.mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
@@ -56,7 +58,9 @@ class Action_Attention(nn.Module):
             if self.mix_type in 'mixer':
                 self.layers.append(MixerBlock(args, args.num_agents, self._attn_heads, 
                             self._attn_size, 
-                            self._dropout))
+                            self._dropout,
+                            token_factor=args.token_factor,
+                            channel_factor=args.channel_factor))
             elif self.mix_type in 'hyper':
                 self.layers.append(HyperBlock(args.num_agents, action_dim, 
                             self._attn_size, 
@@ -138,16 +142,16 @@ class MixerBlock(nn.Module):
     out = out.T + MLP_Layernorm(out.T) # apply channel mixing
     """
     def __init__(self, args, num_agents, heads, dims, 
-                 dropout=0):
+                 dropout=0, token_factor=0.5, channel_factor=4):
         super().__init__()
         self.h = heads
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(args.token_factor*num_agents) if args.token_factor != 0 else 1
+        token_dim = int(token_factor*num_agents) if token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        channel_dim = int(args.channel_factor*dims) if args.channel_factor != 0 else 1
+        channel_dim = int(channel_factor*dims) if channel_factor != 0 else 1
         self.channel_forward = FeedForward(self.dims, channel_dim, dropout)
         
     def token_mixer(self, x):
