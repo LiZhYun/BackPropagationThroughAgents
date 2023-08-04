@@ -3,37 +3,15 @@ import time
 import wandb
 import os
 import numpy as np
-import logging
 from itertools import chain
 import torch
 from tensorboardX import SummaryWriter
-from bta.utils.shared_buffer import SharedReplayBuffer
-from bta.utils.util import update_linear_schedule, flatten, generate_mask_from_order
-import socket
-import psutil
-# import slackweb
-import pickle
-# webhook_url = " https://hooks.slack.com/services/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"
+
+from bta.utils.separated_buffer_mappo import SeparatedReplayBuffer
+from bta.utils.util import update_linear_schedule
 
 def _t2n(x):
     return x.detach().cpu().numpy()
-
-def make_trainer_policy_cls(algorithm_name, use_single_network=False):
-    if "mappo" in algorithm_name:
-        from bta.algorithms.r_mappo.r_mappo import R_MAPPO as TrainAlgo
-        from bta.algorithms.r_mappo.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
-    elif "gcs" in algorithm_name:
-        from bta.algorithms.gcs.r_mappo import R_MAPPO as TrainAlgo
-        from bta.algorithms.gcs.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
-    # elif algorithm_name == "mep" or algorithm_name == "adaptive":
-    #     from bta.algorithms.population.mep import MEP_Trainer as TrainAlgo
-    #     from bta.algorithms.population.policy_pool import PolicyPool as Policy
-    # elif algorithm_name == "traj":
-    #     from bta.algorithms.population.traj import Traj_Trainer as TrainAlgo
-    #     from bta.algorithms.population.policy_pool import PolicyPool as Policy
-    else:
-        raise NotImplementedError
-    return TrainAlgo, Policy
 
 class Runner(object):
     def __init__(self, config):
@@ -43,8 +21,6 @@ class Runner(object):
         self.eval_envs = config['eval_envs']
         self.device = config['device']
         self.num_agents = config['num_agents']
-        if config.__contains__("render_envs"):
-            self.render_envs = config['render_envs']       
 
         # parameters
         self.env_name = self.all_args.env_name
@@ -56,11 +32,9 @@ class Runner(object):
         self.episode_length = self.all_args.episode_length
         self.n_rollout_threads = self.all_args.n_rollout_threads
         self.n_eval_rollout_threads = self.all_args.n_eval_rollout_threads
-        self.n_render_rollout_threads = self.all_args.n_render_rollout_threads
         self.use_linear_lr_decay = self.all_args.use_linear_lr_decay
         self.hidden_size = self.all_args.hidden_size
         self.use_wandb = self.all_args.use_wandb
-        self.use_single_network = self.all_args.use_single_network
         self.use_render = self.all_args.use_render
         self.recurrent_N = self.all_args.recurrent_N
 
@@ -73,59 +47,58 @@ class Runner(object):
         # dir
         self.model_dir = self.all_args.model_dir
 
-        # if self.use_render:
-        self.run_dir = config["run_dir"]
-        self.gif_dir = str(self.run_dir / 'gifs')
-        if not os.path.exists(self.gif_dir):
-            os.makedirs(self.gif_dir)
-        # else:
-        if self.use_wandb:
-            self.save_dir = str(wandb.run.dir)
-            self.run_dir = str(wandb.run.dir)
-        else:
+        if self.use_render:
+            import imageio
             self.run_dir = config["run_dir"]
-            self.log_dir = str(self.run_dir / 'logs')
-            if not os.path.exists(self.log_dir):
-                os.makedirs(self.log_dir)
-            self.writter = SummaryWriter(self.log_dir)
-            self.save_dir = str(self.run_dir / 'models')
-            if not os.path.exists(self.save_dir):
-                os.makedirs(self.save_dir)
-        
+            self.gif_dir = str(self.run_dir / 'gifs')
+            if not os.path.exists(self.gif_dir):
+                os.makedirs(self.gif_dir)
+        else:
+            if self.use_wandb:
+                self.save_dir = str(wandb.run.dir)
+            else:
+                self.run_dir = config["run_dir"]
+                self.log_dir = str(self.run_dir / 'logs')
+                if not os.path.exists(self.log_dir):
+                    os.makedirs(self.log_dir)
+                self.writter = SummaryWriter(self.log_dir)
+                self.save_dir = str(self.run_dir / 'models')
+                if not os.path.exists(self.save_dir):
+                    os.makedirs(self.save_dir)
 
-        TrainAlgo, Policy = make_trainer_policy_cls(self.algorithm_name, use_single_network=self.use_single_network)
-        
-        share_observation_space = self.envs.share_observation_space[0] if self.use_centralized_V else self.envs.observation_space[0]
 
-        if "ft" not in self.algorithm_name:
+        from bta.algorithms.r_mappo.r_mappo import R_MAPPO as TrainAlgo
+        from bta.algorithms.r_mappo.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
+
+
+        self.policy = []
+        for agent_id in range(self.num_agents):
+            share_observation_space = self.envs.share_observation_space[agent_id] if self.use_centralized_V else self.envs.observation_space[agent_id]
             # policy network
-            self.policy = Policy(self.all_args,
-                                self.envs.observation_space[0],
-                                share_observation_space,
-                                self.envs.action_space[0],
-                                device = self.device)
-            
-            # # dump policy config to allow loading population in yaml form
-            # self.policy_config = (self.all_args, self.envs.observation_space[0], share_observation_space, self.envs.action_space[0])
-            # policy_config_path = os.path.join(self.run_dir, 'policy_config.pkl')
-            # pickle.dump(self.policy_config, open(policy_config_path, "wb"))
-            # print(f"Pickle dump policy config at {policy_config_path}")
+            po = Policy(self.all_args,
+                        self.envs.observation_space[agent_id],
+                        share_observation_space,
+                        self.envs.action_space[agent_id],
+                        device = self.device)
+            self.policy.append(po)
 
-            if self.model_dir is not None:
-                self.restore()
+        if self.model_dir is not None:
+            self.restore()
 
+        self.trainer = []
+        self.buffer = []
+        for agent_id in range(self.num_agents):
             # algorithm
-            self.trainer = TrainAlgo(self.all_args, self.policy, device = self.device)
-        
+            tr = TrainAlgo(self.all_args, self.policy[agent_id], device = self.device)
             # buffer
-            if self.algorithm_name != "population":
-                # population-based trainer creates buffer inside trainer
-                self.buffer = SharedReplayBuffer(self.all_args,
-                                            self.num_agents,
-                                            self.envs.observation_space[0],
-                                            share_observation_space,
-                                            self.envs.action_space[0])
-
+            share_observation_space = self.envs.share_observation_space[agent_id] if self.use_centralized_V else self.envs.observation_space[agent_id]
+            bu = SeparatedReplayBuffer(self.all_args,
+                                       self.envs.observation_space[agent_id],
+                                       share_observation_space,
+                                       self.envs.action_space[agent_id])
+            self.buffer.append(bu)
+            self.trainer.append(tr)
+            
     def run(self):
         raise NotImplementedError
 
@@ -140,48 +113,52 @@ class Runner(object):
     
     @torch.no_grad()
     def compute(self):
-        self.trainer.prep_rollout()
-        next_values = self.trainer.policy.get_values(np.concatenate(self.buffer.share_obs[-1]),
-                                                np.concatenate(self.buffer.rnn_states_critic[-1]),
-                                                np.concatenate(self.buffer.masks[-1]),
-                                                )
-        next_values = np.array(np.split(_t2n(next_values), self.n_rollout_threads))
-        self.buffer.compute_returns(next_values, self.trainer.value_normalizer)
-    
+        for agent_id in range(self.num_agents):
+            self.trainer[agent_id].prep_rollout()
+            next_value = self.trainer[agent_id].policy.get_values(self.buffer[agent_id].share_obs[-1], 
+                                                                self.buffer[agent_id].rnn_states_critic[-1],
+                                                                self.buffer[agent_id].masks[-1])
+            next_value = _t2n(next_value)
+            self.buffer[agent_id].compute_returns(next_value, self.trainer[agent_id].value_normalizer)
+
     def train(self):
-        self.trainer.prep_training()
-        train_infos = self.trainer.train(self.buffer)      
-        self.buffer.after_update()
-        # self.log_system()
+        train_infos = []
+        for agent_id in range(self.num_agents):
+            self.trainer[agent_id].prep_training()
+            train_info = self.trainer[agent_id].train(self.buffer[agent_id])
+            train_infos.append(train_info)       
+            self.buffer[agent_id].after_update()
+
         return train_infos
 
     def save(self):
-        if self.use_single_network:
-            policy_model = self.trainer.policy.model
-            torch.save(policy_model.state_dict(), str(self.save_dir) + "/model.pt")
-        else:
-            policy_actor = self.trainer.policy.actor
-            torch.save(policy_actor.state_dict(), str(self.save_dir) + "/actor.pt")
-            policy_critic = self.trainer.policy.critic
-            torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic.pt")
+        for agent_id in range(self.num_agents):
+            policy_actor = self.trainer[agent_id].policy.actor
+            torch.save(policy_actor.state_dict(), str(self.save_dir) + "/actor_agent" + str(agent_id) + ".pt")
+            policy_critic = self.trainer[agent_id].policy.critic
+            torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic_agent" + str(agent_id) + ".pt")
+            if self.trainer[agent_id]._use_valuenorm:
+                policy_vnrom = self.trainer[agent_id].value_normalizer
+                torch.save(policy_vnrom.state_dict(), str(self.save_dir) + "/vnrom_agent" + str(agent_id) + ".pt")
 
     def restore(self):
-        if self.use_single_network:
-            policy_model_state_dict = torch.load(str(self.model_dir) + '/model.pt', map_location=self.device)
-            self.policy.model.load_state_dict(policy_model_state_dict)
-        else:
-            policy_actor_state_dict = torch.load(str(self.model_dir) + '/actor.pt', map_location=self.device)
-            self.policy.actor.load_state_dict(policy_actor_state_dict)
-            if not (self.all_args.use_render or self.all_args.use_eval):
-                policy_critic_state_dict = torch.load(str(self.model_dir) + '/critic.pt', map_location=self.device)
-                self.policy.critic.load_state_dict(policy_critic_state_dict)
- 
-    def log_train(self, train_infos, total_num_steps):
-        for k, v in train_infos.items():
-            if self.use_wandb:
-                wandb.log({k: v}, step=total_num_steps)
-            else:
-                self.writter.add_scalars(k, {k: v}, total_num_steps)
+        for agent_id in range(self.num_agents):
+            policy_actor_state_dict = torch.load(str(self.model_dir) + '/actor_agent' + str(agent_id) + '.pt')
+            self.policy[agent_id].actor.load_state_dict(policy_actor_state_dict)
+            policy_critic_state_dict = torch.load(str(self.model_dir) + '/critic_agent' + str(agent_id) + '.pt')
+            self.policy[agent_id].critic.load_state_dict(policy_critic_state_dict)
+            if self.trainer[agent_id]._use_valuenorm:
+                policy_vnrom_state_dict = torch.load(str(self.model_dir) + '/vnrom_agent' + str(agent_id) + '.pt')
+                self.trainer[agent_id].value_normalizer.load_state_dict(policy_vnrom_state_dict)
+
+    def log_train(self, train_infos, total_num_steps): 
+        for agent_id in range(self.num_agents):
+            for k, v in train_infos[agent_id].items():
+                agent_k = "agent%i/" % agent_id + k
+                if self.use_wandb:
+                    wandb.log({agent_k: v}, step=total_num_steps)
+                else:
+                    self.writter.add_scalars(agent_k, {agent_k: v}, total_num_steps)
 
     def log_env(self, env_infos, total_num_steps):
         for k, v in env_infos.items():
@@ -190,13 +167,3 @@ class Runner(object):
                     wandb.log({k: np.mean(v)}, step=total_num_steps)
                 else:
                     self.writter.add_scalars(k, {k: np.mean(v)}, total_num_steps)
-
-    def log_system(self):
-        # RRAM
-        mem = psutil.virtual_memory()
-        total_mem = float(mem.total) / 1024 / 1024 / 1024
-        used_mem = float(mem.used) / 1024 / 1024 / 1024
-        if used_mem/total_mem > 0.95:
-            slack = slackweb.Slack(url=webhook_url)
-            host_name = socket.gethostname()
-            slack.notify(text="Host {}: occupied memory is *{:.2f}*%!".format(host_name, used_mem/total_mem*100))

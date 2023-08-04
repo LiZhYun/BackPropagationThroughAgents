@@ -1,26 +1,23 @@
-from collections import defaultdict, deque
-from itertools import chain
-import os
 import time
-
-import imageio
 import numpy as np
+from functools import reduce
 import torch
 import wandb
-
-from bta.utils.util import update_linear_schedule
 from bta.runner.mappo.base_runner import Runner
 
 
 def _t2n(x):
     return x.detach().cpu().numpy()
 
+
 class MujocoRunner(Runner):
+    """Runner class to perform training, evaluation. and data collection for SMAC. See parent class for details."""
+
     def __init__(self, config):
         super(MujocoRunner, self).__init__(config)
-       
+
     def run(self):
-        self.warmup()   
+        self.warmup()
 
         start = time.time()
         episodes = int(self.num_env_steps) // self.episode_length // self.n_rollout_threads
@@ -30,11 +27,13 @@ class MujocoRunner(Runner):
         for episode in range(episodes):
             if self.use_linear_lr_decay:
                 self.trainer.policy.lr_decay(episode, episodes)
+
             done_episodes_rewards = []
+
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, action_log_probs, rnn_states, rnn_states_critic = self.collect(step)
-                    
+
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, _ = self.envs.step(actions)
 
@@ -46,18 +45,19 @@ class MujocoRunner(Runner):
                         done_episodes_rewards.append(train_episode_rewards[t])
                         train_episode_rewards[t] = 0
 
-                data = share_obs, obs, rewards, dones, infos, values, actions, action_log_probs, rnn_states, rnn_states_critic 
-                
+                data = obs, share_obs, rewards, dones, infos, \
+                       values, actions, action_log_probs, \
+                       rnn_states, rnn_states_critic
+
                 # insert data into buffer
                 self.insert(data)
 
             # compute return and update network
             self.compute()
             train_infos = self.train()
-            
+
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
-            
             # save model
             if (episode % self.save_interval == 0 or episode == episodes - 1):
                 self.save()
@@ -76,6 +76,7 @@ class MujocoRunner(Runner):
                               int(total_num_steps / (end - start))))
 
                 self.log_train(train_infos, total_num_steps)
+
                 if len(done_episodes_rewards) > 0:
                     aver_episode_rewards = np.mean(done_episodes_rewards)
                     print("some episodes done, average rewards: ", aver_episode_rewards)
@@ -96,40 +97,48 @@ class MujocoRunner(Runner):
         if not self.use_centralized_V:
             share_obs = obs
 
-        # insert obs to buffer
-        self.buffer.share_obs[0] = share_obs.copy()
-        self.buffer.obs[0] = obs.copy()
+        for agent_id in range(self.num_agents):
+            self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
+            self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
 
     @torch.no_grad()
     def collect(self, step):
-        self.trainer.prep_rollout()
-
-        # [n_envs, n_agents, ...] -> [n_envs*n_agents, ...]
-        values, actions, action_log_probs, rnn_states, rnn_states_critic = self.trainer.policy.get_actions(
-            np.concatenate(self.buffer.share_obs[step]),
-            np.concatenate(self.buffer.obs[step]),
-            np.concatenate(self.buffer.rnn_states[step]),
-            np.concatenate(self.buffer.rnn_states_critic[step]),
-            np.concatenate(self.buffer.masks[step])
-        )
-
-        # [n_envs*n_agents, ...] -> [n_envs, n_agents, ...]
-        values = np.array(np.split(_t2n(values), self.n_rollout_threads))
-        actions = np.array(np.split(_t2n(actions), self.n_rollout_threads))
-        action_log_probs = np.array(np.split(_t2n(action_log_probs), self.n_rollout_threads))
-        rnn_states = np.array(np.split(_t2n(rnn_states), self.n_rollout_threads))
-        rnn_states_critic = np.array(np.split(_t2n(rnn_states_critic), self.n_rollout_threads))
+        value_collector = []
+        action_collector = []
+        action_log_prob_collector = []
+        rnn_state_collector = []
+        rnn_state_critic_collector = []
+        for agent_id in range(self.num_agents):
+            self.trainer[agent_id].prep_rollout()
+            value, action, action_log_prob, rnn_state, rnn_state_critic \
+                = self.trainer[agent_id].policy.get_actions(self.buffer[agent_id].share_obs[step],
+                                                            self.buffer[agent_id].obs[step],
+                                                            self.buffer[agent_id].rnn_states[step],
+                                                            self.buffer[agent_id].rnn_states_critic[step],
+                                                            self.buffer[agent_id].masks[step])
+            value_collector.append(_t2n(value))
+            action_collector.append(_t2n(action))
+            action_log_prob_collector.append(_t2n(action_log_prob))
+            rnn_state_collector.append(_t2n(rnn_state))
+            rnn_state_critic_collector.append(_t2n(rnn_state_critic))
+        # [self.envs, agents, dim]
+        values = np.array(value_collector).transpose(1, 0, 2)
+        actions = np.array(action_collector).transpose(1, 0, 2)
+        action_log_probs = np.array(action_log_prob_collector).transpose(1, 0, 2)
+        rnn_states = np.array(rnn_state_collector).transpose(1, 0, 2, 3)
+        rnn_states_critic = np.array(rnn_state_critic_collector).transpose(1, 0, 2, 3)
 
         return values, actions, action_log_probs, rnn_states, rnn_states_critic
 
     def insert(self, data):
-        share_obs, obs, rewards, dones, infos, values, actions, action_log_probs, rnn_states, rnn_states_critic = data
-        
-        # update env_infos if done
+        obs, share_obs, rewards, dones, infos, \
+        values, actions, action_log_probs, rnn_states, rnn_states_critic = data
+
         dones_env = np.all(dones, axis=1)
 
         rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
+
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
 
@@ -140,25 +149,20 @@ class MujocoRunner(Runner):
         if not self.use_centralized_V:
             share_obs = obs
 
-        self.buffer.insert(
-            share_obs=share_obs,
-            obs=obs,
-            rnn_states=rnn_states,
-            rnn_states_critic=rnn_states_critic,
-            actions=actions,
-            action_log_probs=action_log_probs,
-            value_preds=values,
-            rewards=rewards,
-            masks=masks
-        )
+        for agent_id in range(self.num_agents):
+            self.buffer[agent_id].insert(share_obs[:, agent_id], obs[:, agent_id], rnn_states[:, agent_id],
+                                         rnn_states_critic[:, agent_id], actions[:, agent_id],
+                                         action_log_probs[:, agent_id],
+                                         values[:, agent_id], rewards[:, agent_id], masks[:, agent_id], None,
+                                         active_masks[:, agent_id], None)
 
-    def log_env(self, env_infos, total_num_steps):
-        for k, v in env_infos.items():
-            if len(v) > 0:
-                if self.use_wandb:
-                    wandb.log({k: np.mean(v)}, step=total_num_steps)
-                else:
-                    self.writter.add_scalars(k, {k: np.mean(v)}, total_num_steps)    
+    # def log_train(self, train_infos, total_num_steps):
+    #     print("average_step_rewards is {}.".format(np.mean(self.buffer[0].rewards)))
+    #     for agent_id in range(self.num_agents):
+    #         train_infos[agent_id]["average_step_rewards"] = np.mean(self.buffer[agent_id].rewards)
+    #         for k, v in train_infos[agent_id].items():
+    #             agent_k = "agent%i/" % agent_id + k
+    #             self.writter.add_scalars(agent_k, {agent_k: v}, total_num_steps)
 
     @torch.no_grad()
     def eval(self, total_num_steps):
@@ -176,19 +180,19 @@ class MujocoRunner(Runner):
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
 
         while True:
-            # get actions
-            self.trainer.prep_rollout()
+            eval_actions_collector = []
+            eval_rnn_states_collector = []
+            for agent_id in range(self.num_agents):
+                self.trainer[agent_id].prep_rollout()
+                eval_actions, temp_rnn_state = \
+                    self.trainer[agent_id].policy.act(eval_obs[:, agent_id],
+                                                      eval_rnn_states[:, agent_id],
+                                                      eval_masks[:, agent_id],
+                                                      deterministic=True)
+                eval_rnn_states[:, agent_id] = _t2n(temp_rnn_state)
+                eval_actions_collector.append(_t2n(eval_actions))
 
-            # [n_envs, n_agents, ...] -> [n_envs*n_agents, ...]
-            eval_actions, eval_rnn_states = self.trainer.policy.act(
-                np.concatenate(eval_obs),
-                np.concatenate(eval_rnn_states),
-                np.concatenate(eval_masks),
-                deterministic=True
-            )
-
-            eval_actions = np.array(np.split(_t2n(eval_actions), self.n_eval_rollout_threads))
-            eval_rnn_states = np.array(np.split(_t2n(eval_rnn_states), self.n_eval_rollout_threads))
+            eval_actions = np.array(eval_actions_collector).transpose(1, 0, 2)
 
             # Obser reward and next obs
             eval_obs, eval_share_obs, eval_rewards, eval_dones, eval_infos, _ = self.eval_envs.step(
@@ -218,59 +222,3 @@ class MujocoRunner(Runner):
                 self.log_env(eval_env_infos, total_num_steps)
                 print("eval_average_episode_rewards is {}.".format(np.mean(eval_episode_rewards)))
                 break
-
-    @torch.no_grad()
-    def render(self):        
-        # reset envs and init rnn and mask
-        render_env = self.envs
-
-        # init goal
-        render_goals = np.zeros(self.all_args.render_episodes)
-        for i_episode in range(self.all_args.render_episodes):
-            render_obs = render_env.reset()
-            render_rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
-            render_masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
-
-            if self.all_args.save_gifs:        
-                frames = []
-                image = self.envs.envs[0].env.unwrapped.observation()[0]["frame"]
-                frames.append(image)
-
-            render_dones = False
-            while not np.any(render_dones):
-                self.trainer.prep_rollout()
-                render_actions, render_rnn_states = self.trainer.policy.act(
-                    np.concatenate(render_obs),
-                    np.concatenate(render_rnn_states),
-                    np.concatenate(render_masks),
-                    deterministic=True
-                )
-
-                # [n_envs*n_agents, ...] -> [n_envs, n_agents, ...]
-                render_actions = np.array(np.split(_t2n(render_actions), self.n_rollout_threads))
-                render_rnn_states = np.array(np.split(_t2n(render_rnn_states), self.n_rollout_threads))
-
-                render_actions_env = [render_actions[idx, :, 0] for idx in range(self.n_rollout_threads)]
-
-                # step
-                render_obs, render_rewards, render_dones, render_infos = render_env.step(render_actions_env)
-
-                # append frame
-                if self.all_args.save_gifs:        
-                    image = render_infos[0]["frame"]
-                    frames.append(image)
-            
-            # print goal
-            render_goals[i_episode] = render_rewards[0, 0]
-            print("goal in episode {}: {}".format(i_episode, render_rewards[0, 0]))
-
-            # save gif
-            if self.all_args.save_gifs:
-                imageio.mimsave(
-                    uri="{}/episode{}.gif".format(str(self.gif_dir), i_episode),
-                    ims=frames,
-                    format="GIF",
-                    duration=self.all_args.ifi,
-                )
-        
-        print("expected goal: {}".format(np.mean(render_goals)))
