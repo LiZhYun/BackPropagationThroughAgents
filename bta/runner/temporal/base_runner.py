@@ -164,14 +164,14 @@ class Runner(object):
         if self.use_action_attention:
             # from bta.algorithms.utils.action_attention import JointPolicy
             from bta.algorithms.utils.action_attention import Action_Attention
-            self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], self.envs.share_observation_space[0], device = self.device)
+            self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], device = self.device)
             self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.attention_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
-            if self._use_popart:
-                self.value_normalizer = self.action_attention.v_out
-            elif self._use_valuenorm:
-                self.value_normalizer = ValueNorm(1, device = self.device)
-            else:
-                self.value_normalizer = None
+            # if self._use_popart:
+            #     self.value_normalizer = self.action_attention.v_out
+            # elif self._use_valuenorm:
+            #     self.value_normalizer = ValueNorm(1, device = self.device)
+            # else:
+            #     self.value_normalizer = None
 
         if self.model_dir is not None:
             self.restore()
@@ -823,7 +823,7 @@ class Runner(object):
                     share_obs_all.append(share_obs_batch)
                     one_hot_actions_all[:, agent_idx] = trains_action
                     masks_all.append(masks_batch)
-                    # obs_feats_all[:, agent_idx] = obs_feat.clone()
+                    obs_feats_all[:, agent_idx] = obs_feat.clone()
 
                     # actor update
                     ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
@@ -872,13 +872,13 @@ class Runner(object):
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_, action_std, rnn_states_joint = self.action_attention(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
+                bias_, action_std = self.action_attention(logits_all, obs_feats_all)
                 if self.discrete:
-                    mixed_ = bias_
+                    mixed_ = logits_all.detach()+bias_
                     mixed_[available_actions_all == 0] = -1e10
                     joint_dist = FixedCategorical(logits=mixed_)
                 else:
-                    action_mean = bias_
+                    action_mean = logits_all.detach()+bias_
                     joint_dist = FixedNormal(action_mean, action_std)
 
                 joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv)) if self.discrete else joint_dist.log_probs(check(joint_actions_batch).to(**self.tpdv))

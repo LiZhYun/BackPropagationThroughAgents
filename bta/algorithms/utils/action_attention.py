@@ -21,7 +21,7 @@ def init_(m, gain=0.01, activate=False):
     return init(m, nn.init.orthogonal_, lambda x: nn.init.constant_(x, 0), gain=gain)
 
 class Action_Attention(nn.Module):
-    def __init__(self, args, action_space, share_obs_space, device=torch.device("cpu")):
+    def __init__(self, args, action_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
         self._use_naive_recurrent_policy = args.use_naive_recurrent_policy
         self._use_recurrent_policy = args.use_recurrent_policy
@@ -43,20 +43,6 @@ class Action_Attention(nn.Module):
         self.num_agents = args.num_agents
         self.tpdv = dict(dtype=torch.float32, device=device)
 
-        share_obs_shape = get_shape_from_obs_space(share_obs_space)
-        self.base = CNNBase(args, share_obs_shape, cnn_layers_params=args.cnn_layers_params) if len(share_obs_shape)==3 \
-                else MLPBase(args, share_obs_shape, use_attn_internal=True, use_cat_self=args.use_cat_self)
-        
-        input_size = self.base.output_size
-        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
-            self.rnn = RNNLayer(input_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)
-            input_size = self.hidden_size
-
-        if self._use_influence_policy:
-            self.mlp = MLPLayer(share_obs_shape[0], self.hidden_size,
-                              self._influence_layer_N, self._use_orthogonal, self._activation_id)
-            input_size += self.hidden_size
-
         self.discrete = False
         if action_space.__class__.__name__ == "Discrete":
             self.discrete = True
@@ -69,7 +55,13 @@ class Action_Attention(nn.Module):
             self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
-        self.id_emb = nn.Parameter(torch.zeros(1, self.num_agents, self._attn_size))
+        self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size))
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size)
+                                           )
 
         self.layers = nn.ModuleList()
         self.mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
@@ -93,64 +85,25 @@ class Action_Attention(nn.Module):
                 self.layers.append(Block(config))
                 
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.head = nn.Linear(self._attn_size, self.action_dim*self.num_agents, bias=False)
-
-        self.apply(self._init_weights)
-
-        self.action_embeddings = nn.Sequential(nn.Linear(self.action_dim, self._attn_size), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size)
-                                           )
-        nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
+        self.head = nn.Linear(self._attn_size, self.action_dim, bias=False)
 
         self.to(device)
-    
-    def _init_weights(self, module):
-        if isinstance(module, (nn.Linear, nn.Embedding)):
-            module.weight.data.normal_(mean=0.0, std=0.02)
-            if isinstance(module, nn.Linear) and module.bias is not None:
-                module.bias.data.zero_()
-        elif isinstance(module, nn.LayerNorm):
-            module.bias.data.zero_()
-            module.weight.data.fill_(1.0)
 
-    def forward(self, x, obs_rep, rnn_states, masks):
+    def forward(self, x, obs_rep):
 
-        obs_rep = check(obs_rep).to(**self.tpdv)
-        rnn_states = check(rnn_states).to(**self.tpdv)
-        masks = check(masks).to(**self.tpdv)
-        x = check(x).to(**self.tpdv)
-
-        obs_features = self.base(obs_rep)
-        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
-            obs_features, rnn_states = self.rnn(obs_features, rnn_states, masks)
-
-        if self._use_influence_policy:
-            mlp_obs_rep = self.mlp(obs_rep)
-            obs_features = torch.cat([obs_features, mlp_obs_rep], dim=1)
-        
-        state_embedding = obs_features.unsqueeze(1)
-        state_embedding = torch.repeat_interleave(state_embedding, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
-
-        id_embeddings = self.id_emb[:, :, :]
-        state_embedding = state_embedding + id_embeddings
-
-        action_embeddings = self.action_embeddings(x)  # (batch, block_size, n_embd)
-
-        x = action_embeddings
+        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
 
         for layer in range(self._attn_N):
-            x = self.layers[layer](x, state_embedding)
-
+            x = self.layers[layer](x, obs_rep)
         x = self.layer_norm(x)
-        x = x.mean(1)
-        bias_ = self.head(x+obs_features).view(-1, self.num_agents, self.action_dim)
+
+        bias_ = self.head(x)
 
         action_std = None
         if not self.discrete:
             action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
-        return bias_, action_std, rnn_states
+        return bias_, action_std
 
 class MixerBlock(nn.Module):
     """
@@ -164,7 +117,7 @@ class MixerBlock(nn.Module):
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(token_factor*dims) if token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, token_dim, dropout)
+        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         channel_dim = int(channel_factor*dims) if channel_factor != 0 else 1

@@ -184,17 +184,17 @@ class MujocoRunner(Runner):
 
         joint_actions, joint_action_log_probs, rnn_states_joint = None, None, None
         if self.use_action_attention:
-            bias_, action_std, rnn_states_joint = self.action_attention(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+            bias_, action_std = self.action_attention(logits, obs_feats)
             if self.discrete:
-                joint_dist = FixedCategorical(logits=bias_)
+                joint_dist = FixedCategorical(logits=logits+bias_)
             else:
-                action_mean = bias_
+                action_mean = logits+bias_
                 joint_dist = FixedNormal(action_mean, action_std)
             joint_actions = joint_dist.sample()
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions) if self.discrete else joint_dist.log_probs(joint_actions)
             joint_actions = _t2n(joint_actions)
             joint_action_log_probs = _t2n(joint_action_log_probs)
-            rnn_states_joint = _t2n(rnn_states_joint)
+            # rnn_states_joint = _t2n(rnn_states_joint)
             for agent_idx in range(self.num_agents):
                 ego_exclusive_action = actions[:,0:self.num_agents]
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
