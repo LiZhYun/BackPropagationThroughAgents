@@ -143,11 +143,12 @@ class MixerBlock(nn.Module):
         self.h = heads
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(args.token_factor*dims) if args.token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
+        token_dim = int(args.token_factor*num_agents) if args.token_factor != 0 else 1
+        self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
-        self.channel_forward = FeedForward(self.dims, 4*self.dims, dropout)
+        channel_dim = int(args.channel_factor*dims) if args.channel_factor != 0 else 1
+        self.channel_forward = FeedForward(self.dims, channel_dim, dropout)
         
     def token_mixer(self, x):
         x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
