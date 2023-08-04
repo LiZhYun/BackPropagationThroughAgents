@@ -9,6 +9,11 @@ from .util import init, get_clones, check
 from bta.algorithms.utils.popart import PopArt
 from bta.algorithms.utils.act import ACTLayer
 from bta.algorithms.utils.GPT import GPTConfig, GPT, Block
+from bta.utils.util import get_shape_from_obs_space
+from bta.algorithms.utils.cnn import CNNBase
+from bta.algorithms.utils.mlp import MLPBase, MLPLayer
+from bta.algorithms.utils.mix import MIXBase
+from bta.algorithms.utils.rnn import RNNLayer
 
 def init_(m, gain=0.01, activate=False):
     if activate:
@@ -16,9 +21,14 @@ def init_(m, gain=0.01, activate=False):
     return init(m, nn.init.orthogonal_, lambda x: nn.init.constant_(x, 0), gain=gain)
 
 class Action_Attention(nn.Module):
-    def __init__(self, args, action_space, device=torch.device("cpu")):
+    def __init__(self, args, action_space, share_obs_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
+        self._use_naive_recurrent_policy = args.use_naive_recurrent_policy
+        self._use_recurrent_policy = args.use_recurrent_policy
+        self._use_influence_policy = args.use_influence_policy
         self._use_popart = args.use_popart
+        self._influence_layer_N = args.influence_layer_N
+        self._recurrent_N = args.recurrent_N
         self._num_v_out = getattr(args, "num_v_out", 1)
         self._use_orthogonal = args.use_orthogonal
         self._activation_id = args.activation_id
@@ -27,10 +37,25 @@ class Action_Attention(nn.Module):
         self._gain = args.gain
         self._attn_size = args.attn_size
         self._attn_heads = args.attn_heads
+        self.hidden_size = args.hidden_size
         self._dropout = args.dropout
         self._use_policy_active_masks = args.use_policy_active_masks
         self.num_agents = args.num_agents
         self.tpdv = dict(dtype=torch.float32, device=device)
+
+        share_obs_shape = get_shape_from_obs_space(share_obs_space)
+        self.base = CNNBase(args, share_obs_shape, cnn_layers_params=args.cnn_layers_params) if len(share_obs_shape)==3 \
+                else MLPBase(args, share_obs_shape, use_attn_internal=True, use_cat_self=args.use_cat_self)
+        
+        input_size = self.base.output_size
+        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
+            self.rnn = RNNLayer(input_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)
+            input_size = self.hidden_size
+
+        if self._use_influence_policy:
+            self.mlp = MLPLayer(share_obs_shape[0], self.hidden_size,
+                              self._influence_layer_N, self._use_orthogonal, self._activation_id)
+            input_size += self.hidden_size
 
         self.discrete = False
         if action_space.__class__.__name__ == "Discrete":
@@ -45,12 +70,6 @@ class Action_Attention(nn.Module):
         self.action_dim = action_dim
 
         self.id_emb = nn.Parameter(torch.zeros(1, self.num_agents, self._attn_size))
-        
-        # self.obs_mix = MixerBlock(args, args.num_agents, self._attn_heads, 
-        #                     self._attn_size, 
-        #                     self._dropout,
-        #                     token_factor=args.token_factor,
-        #                     channel_factor=args.channel_factor)
 
         self.layers = nn.ModuleList()
         self.mix_type = ['mixer', 'hyper', 'attention', 'all'][self._mix_id]
@@ -73,27 +92,16 @@ class Action_Attention(nn.Module):
                         n_layer=self._attn_N, n_head=self._attn_heads, n_embd=self._attn_size)
                 self.layers.append(Block(config))
                 
-                
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.head = nn.Linear(self._attn_size, self.action_dim, bias=False)
+        self.head = nn.Linear(self._attn_size, self.action_dim*self.num_agents, bias=False)
 
         self.apply(self._init_weights)
 
-        self.state_encoder = nn.Sequential(nn.Linear(self._attn_size, self._attn_size), 
-                                           nn.ReLU(),
-                                           nn.LayerNorm(self._attn_size)
-                                           )
         self.action_embeddings = nn.Sequential(nn.Linear(self.action_dim, self._attn_size), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
         nn.init.normal_(self.action_embeddings[0].weight, mean=0.0, std=0.02)
-
-        # self.value_norm = nn.LayerNorm(self._attn_size)
-        # if self._use_popart:
-        #     self.v_out = init_(PopArt(self._attn_size, 1, device=device))
-        # else:
-        #     self.v_out = init_(nn.Linear(self._attn_size, 1))
 
         self.to(device)
     
@@ -106,35 +114,43 @@ class Action_Attention(nn.Module):
             module.bias.data.zero_()
             module.weight.data.fill_(1.0)
 
-    def forward(self, x, obs_rep, mask=None, available_actions=None, deterministic=False, tau=1.0):
+    def forward(self, x, obs_rep, rnn_states, masks):
 
-        state_embeddings = self.state_encoder(
-            obs_rep.reshape(-1, self._attn_size).type(torch.float32).contiguous())
-        state_embeddings = state_embeddings.reshape(obs_rep.shape[0], obs_rep.shape[1],
-                                                    self._attn_size)  # (batch, block_size, n_embd)
-        # state_embeddings = self.obs_mix(state_embeddings)
+        obs_rep = check(obs_rep).to(**self.tpdv)
+        rnn_states = check(rnn_states).to(**self.tpdv)
+        masks = check(masks).to(**self.tpdv)
+        x = check(x).to(**self.tpdv)
+
+        obs_features = self.base(obs_rep)
+        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
+            obs_features, rnn_states = self.rnn(obs_features, rnn_states, masks)
+
+        if self._use_influence_policy:
+            mlp_obs_rep = self.mlp(obs_rep)
+            obs_features = torch.cat([obs_features, mlp_obs_rep], dim=1)
+        
+        state_embedding = obs_features.unsqueeze(1)
+        state_embedding = torch.repeat_interleave(state_embedding, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
 
         id_embeddings = self.id_emb[:, :, :]
-
-        state_embeddings = state_embeddings + id_embeddings
-
-        # value = self.v_out(self.value_norm(state_embeddings).mean(1))
+        state_embedding = state_embedding + id_embeddings
 
         action_embeddings = self.action_embeddings(x)  # (batch, block_size, n_embd)
 
-        x = action_embeddings + state_embeddings
+        x = action_embeddings
 
         for layer in range(self._attn_N):
-            x = self.layers[layer](x, state_embeddings)
+            x = self.layers[layer](x, state_embedding)
 
         x = self.layer_norm(x)
-        bias_ = self.head(x)
+        x = x.mean(1)
+        bias_ = self.head(x+obs_features).view(-1, self.num_agents, self.action_dim)
 
         action_std = None
         if not self.discrete:
             action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
-        return bias_, action_std
+        return bias_, action_std, rnn_states
 
 class MixerBlock(nn.Module):
     """
@@ -147,7 +163,7 @@ class MixerBlock(nn.Module):
         self.h = heads
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(token_factor*num_agents) if token_factor != 0 else 1
+        token_dim = int(token_factor*dims) if token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)

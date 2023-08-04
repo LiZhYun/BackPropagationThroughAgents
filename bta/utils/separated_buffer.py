@@ -53,6 +53,7 @@ class SeparatedReplayBuffer(object):
 
         self.rnn_states = np.zeros((self.episode_length + 1, self.n_rollout_threads, self.recurrent_N, self.rnn_hidden_size), dtype=np.float32)
         self.rnn_states_critic = np.zeros_like(self.rnn_states)
+        self.rnn_states_joint = np.zeros_like(self.rnn_states)
 
         self.value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.joint_value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
@@ -95,7 +96,7 @@ class SeparatedReplayBuffer(object):
         self.step = 0
 
     def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, hard_actions, action_log_probs,
-               value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, joint_actions=None, joint_action_log_probs=None, joint_value_preds=None):
+               value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, joint_actions=None, joint_action_log_probs=None, joint_value_preds=None, rnn_states_joint=None):
         self.share_obs[self.step + 1] = share_obs.copy()
         self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -108,6 +109,8 @@ class SeparatedReplayBuffer(object):
         self.masks[self.step + 1] = masks.copy()
         if joint_value_preds is not None:
             self.joint_value_preds[self.step] = joint_value_preds.copy()
+        if rnn_states_joint is not None:
+            self.rnn_states_joint[self.step + 1] = rnn_states_joint.copy()
         if bad_masks is not None:
             self.bad_masks[self.step + 1] = bad_masks.copy()
         if active_masks is not None:
@@ -341,6 +344,7 @@ class SeparatedReplayBuffer(object):
         returns = _cast(self.returns[:-1])
         masks = _cast(self.masks[:-1])
         active_masks = _cast(self.active_masks[:-1])
+        rnn_states_joint = self.rnn_states_joint[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_joint.shape[2:])
         rnn_states = self.rnn_states[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states.shape[2:])
         rnn_states_critic = self.rnn_states_critic[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_critic.shape[2:])
         joint_actions = self.joint_actions.transpose(1, 0, 2, 3).reshape(-1, *self.joint_actions.shape[2:])
@@ -354,6 +358,7 @@ class SeparatedReplayBuffer(object):
             obs_batch = []
             rnn_states_batch = []
             rnn_states_critic_batch = []
+            rnn_states_joint_batch = []
             actions_batch = []
             one_hot_actions_batch = []
             available_actions_batch = []
@@ -394,6 +399,7 @@ class SeparatedReplayBuffer(object):
                 # size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[1,Dim]
                 rnn_states_batch.append(rnn_states[ind])
                 rnn_states_critic_batch.append(rnn_states_critic[ind])
+                rnn_states_joint_batch.append(rnn_states_joint[ind])
                 joint_actions_batch.append(joint_actions[ind:ind+data_chunk_length])
                 joint_action_log_probs_batch.append(joint_action_log_probs[ind:ind+data_chunk_length])
 
@@ -423,6 +429,7 @@ class SeparatedReplayBuffer(object):
             # States is just a (N, -1) from_numpy
             rnn_states_batch = np.stack(rnn_states_batch).reshape(N, *self.rnn_states.shape[2:])
             rnn_states_critic_batch = np.stack(rnn_states_critic_batch).reshape(N, *self.rnn_states_critic.shape[2:])
+            rnn_states_joint_batch = np.stack(rnn_states_joint_batch).reshape(N, *self.rnn_states_joint.shape[2:])
 
             # Flatten the (L, N, ...) from_numpys to (L * N, ...)
             share_obs_batch = _flatten(L, N, share_obs_batch)
@@ -450,7 +457,7 @@ class SeparatedReplayBuffer(object):
             joint_actions_batch = _flatten(L, N, joint_actions_batch)
             joint_action_log_probs_batch = _flatten(L, N, joint_action_log_probs_batch)
 
-            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch
+            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch
 
     def naive_recurrent_generator(self, advantages, num_mini_batch):
         n_rollout_threads = self.rewards.shape[1]

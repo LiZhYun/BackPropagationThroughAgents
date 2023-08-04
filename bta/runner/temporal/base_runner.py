@@ -164,7 +164,7 @@ class Runner(object):
         if self.use_action_attention:
             # from bta.algorithms.utils.action_attention import JointPolicy
             from bta.algorithms.utils.action_attention import Action_Attention
-            self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], device = self.device)
+            self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], self.envs.share_observation_space[0], device = self.device)
             self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.attention_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
             if self._use_popart:
                 self.value_normalizer = self.action_attention.v_out
@@ -424,7 +424,7 @@ class Runner(object):
 
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                    adv_targ, available_actions_batch, _,_,_,_, = next(data_generators[agent_idx])
+                    adv_targ, available_actions_batch, _,_,_,_,_ = next(data_generators[agent_idx])
 
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     adv_targ = check(adv_targ).to(**self.tpdv)
@@ -593,7 +593,7 @@ class Runner(object):
 
                         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                         value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                        adv_targ, available_actions_batch, _,_,_,_, = next(data_generators[agent_id])
+                        adv_targ, available_actions_batch, _,_,_,_,_ = next(data_generators[agent_id])
 
                         old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                         adv_targ = check(adv_targ).to(**self.tpdv)
@@ -734,7 +734,7 @@ class Runner(object):
             advantages_all = advantages_all.reshape(-1, 1)
             # returns_all = self.returns[:-1].reshape(-1, 1)
             # joint_values_pred_all = self.buffer[0].joint_value_preds[:-1].reshape(-1, 1)
-        train_infos = self.bc_train(advs, train_infos)
+        # train_infos = self.bc_train(advs, train_infos)
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
@@ -773,6 +773,7 @@ class Runner(object):
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
+                    one_hot_actions_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 else:
                     adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
                     # returns_all_batch = check(returns_all[sampler[batch_idx]]).to(**self.tpdv)
@@ -781,16 +782,19 @@ class Runner(object):
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
+                    one_hot_actions_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 individual_loss = torch.zeros(self.num_agents).to(self.device)
+                share_obs_all = []
+                masks_all = []
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch = next(data_generators[agent_idx])
+                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch = next(data_generators[agent_idx])
                     adv_targ = check(adv_targ).to(**self.tpdv)
                     old_joint_action_log_probs = check(joint_action_log_probs_batch).to(**self.tpdv)
-                    old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
+                    # old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
-                    active_masks_all[:, agent_idx] = check(active_masks_batch).to(**self.tpdv)
+                    # active_masks_all[:, agent_idx] = check(active_masks_batch).to(**self.tpdv)
                     if available_actions_batch is not None:
                         available_actions_all[:, agent_idx] = check(available_actions_batch).to(**self.tpdv)
 
@@ -816,62 +820,65 @@ class Runner(object):
                                                                             )
                 
                     logits_all[:, agent_idx] = logits.clone()
-                    obs_feats_all[:, agent_idx] = obs_feat.clone()
+                    share_obs_all.append(share_obs_batch)
+                    one_hot_actions_all[:, agent_idx] = trains_action
+                    masks_all.append(masks_batch)
+                    # obs_feats_all[:, agent_idx] = obs_feat.clone()
 
-                    # # actor update
-                    # ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
+                    # actor update
+                    ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
 
-                    # # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
+                    # # # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
                     # # dual clip
                     # # cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
 
                     # surr1 = ratio * adv_targ
                     # surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
                     
-                    # # # BC
-                    # # surr1 = action_log_probs_kl
-                    # # surr2 = action_log_probs_kl
+                    # BC
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
                     
-                    # if self._use_policy_active_masks:
-                    #     policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
-                    #                                     dim=-1,
-                    #                                     keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
-                    # else:
-                    #     policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                    if self._use_policy_active_masks:
+                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                                                        dim=-1,
+                                                        keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
+                    else:
+                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                    # policy_loss = policy_action_loss
+                    policy_loss = policy_action_loss
 
-                    # individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
+                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
 
-                    # #critic update
-                    # value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
-                    #                 check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
+                    #critic update
+                    value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
+                                    check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
 
-                    # self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
+                    self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
 
-                    # (value_loss * self.value_loss_coef).backward()
+                    (value_loss * self.value_loss_coef).backward()
 
-                    # if self._use_max_grad_norm:
-                    #     critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                    # else:
-                    #     critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+                    if self._use_max_grad_norm:
+                        critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
+                    else:
+                        critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
 
-                    # self.trainer[agent_idx].policy.critic_optimizer.step()
+                    self.trainer[agent_idx].policy.critic_optimizer.step()
 
-                    # train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                    # # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                    # train_infos[agent_idx]['ratio'] += ratio.mean().item()
-                    # train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+                    train_infos[agent_idx]['value_loss'] += value_loss.item()
+                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                    train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    train_infos[agent_idx]['ratio'] += ratio.mean().item()
+                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
 
-                bias_, action_std = self.action_attention(logits_all, obs_feats_all.detach())
+                bias_, action_std, rnn_states_joint = self.action_attention(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
                 if self.discrete:
-                    mixed_ = logits_all.detach()+bias_
+                    mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
                     joint_dist = FixedCategorical(logits=mixed_)
                 else:
-                    action_mean = logits_all.detach()+bias_
+                    action_mean = bias_
                     joint_dist = FixedNormal(action_mean, action_std)
 
                 joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv)) if self.discrete else joint_dist.log_probs(check(joint_actions_batch).to(**self.tpdv))
@@ -894,22 +901,22 @@ class Runner(object):
                     # self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
                 self.action_attention_optimizer.zero_grad()
                 
-                (policy_loss - joint_dist_entropy * self.entropy_coef).backward()
+                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
                 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                     for agent_idx in range(self.num_agents): 
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
                         # critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                 else:
                     attention_grad_norm = get_gard_norm(self.action_attention.parameters())
                     for agent_idx in range(self.num_agents): 
-                        # actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                        actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                         # critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
 
@@ -959,7 +966,7 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch = next(data_generators[agent_idx])
+                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch = next(data_generators[agent_idx])
                     adv_targ = check(adv_targ).to(**self.tpdv)
                     old_joint_action_log_probs = check(joint_action_log_probs_batch).to(**self.tpdv)
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
