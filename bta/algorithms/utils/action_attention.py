@@ -117,7 +117,7 @@ class MixerBlock(nn.Module):
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
         token_dim = int(token_factor*dims) if token_factor != 0 else 1
-        self.token_forward = FeedForward(num_agents, num_agents//2, dropout)
+        self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
         channel_dim = int(channel_factor*dims) if channel_factor != 0 else 1
