@@ -75,6 +75,7 @@ class Runner(object):
         self._use_policy_vhead = self.all_args.use_policy_vhead
         self.threshold = self.all_args.threshold
         self.initial_threshold = self.all_args.threshold
+        self.decay_factor = self.all_args.decay_factor
         self.gamma = self.all_args.gamma
         self.gae_lambda = self.all_args.gae_lambda
         self._use_gae = self.all_args.use_gae

@@ -47,7 +47,7 @@ class MujocoRunner(Runner):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             done_episodes_rewards = []
-            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*2) / float(episodes))), 0.)
+            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             

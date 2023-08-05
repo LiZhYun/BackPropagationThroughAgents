@@ -14,7 +14,6 @@ from bta.algorithms.utils.util import check
 from bta.algorithms.utils.distributions import FixedCategorical, FixedNormal
 import igraph as ig
 
-
 def _t2n(x):
     return x.detach().cpu().numpy()
 
@@ -37,7 +36,7 @@ class MatrixRunner(Runner):
                 for agent_id in range(self.num_agents):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
-            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*2) / float(episodes))), 0.)
+            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
