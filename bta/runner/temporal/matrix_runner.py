@@ -150,18 +150,19 @@ class MatrixRunner(Runner):
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        joint_actions, joint_action_log_probs, rnn_states_joint = None, None, None
+        joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
+        joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
             for agent_idx in range(self.num_agents):
-                bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(logits, obs_feats)
+                bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(actions, obs_feats)
                 if self.discrete:
-                    mix_dist = FixedCategorical(logits=bias_)
+                    mix_dist = FixedCategorical(logits=logits[:, agent_idx]+bias_)
                 else:
-                    action_mean = bias_
+                    action_mean = logits[:, agent_idx]+bias_
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)
-                hard_actions[:, agent_idx] = _t2n(mix_actions)
+                joint_actions[:, agent_idx] = _t2n(mix_actions)
                 action_log_probs[:, agent_idx] = _t2n(mix_action_log_probs)
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
@@ -225,7 +226,7 @@ class MatrixRunner(Runner):
                                         values[:, agent_id],
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
-                                        joint_actions=joint_actions,
+                                        joint_actions=joint_actions[:, agent_id],
                                         joint_action_log_probs=joint_action_log_probs,
                                         rnn_states_joint=rnn_states_joint
                                         )

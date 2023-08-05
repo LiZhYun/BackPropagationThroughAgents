@@ -733,7 +733,8 @@ class Runner(object):
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                     new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
-                    actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    joint_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 else:
                     adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -742,7 +743,8 @@ class Runner(object):
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                     new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
-                    actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    joint_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 dist_entropy_all = torch.zeros(self.num_agents).to(self.device)
                 individual_loss = torch.zeros(self.num_agents).to(self.device)
                 for agent_idx in range(self.num_agents):
@@ -750,7 +752,7 @@ class Runner(object):
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
                     adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch = next(data_generators[agent_idx])
                     adv_targ = check(adv_targ).to(**self.tpdv)
-                    actions_batch = check(actions_batch).to(**self.tpdv)
+                    joint_actions_batch = check(joint_actions_batch).to(**self.tpdv)
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
                     active_masks_all[:, agent_idx] = check(active_masks_batch).to(**self.tpdv)
@@ -774,20 +776,23 @@ class Runner(object):
                                                                             available_actions_batch,
                                                                             active_masks_batch,
                                                                             tau=self.temperature,
+                                                                            kl=True,
+                                                                            joint_actions=joint_actions_batch
                                                                             )
                 
                     logits_all[:, agent_idx] = logits
-                    actions_all_batch[:, agent_idx] = actions_batch
+                    joint_actions_all_batch[:, agent_idx] = joint_actions_batch
                     obs_feats_all[:, agent_idx] = obs_feat
                     old_actions_logprob_all_batch[:, agent_idx] = old_action_log_probs_batch
                     adv_targ_all[:, agent_idx] = adv_targ
+                    train_actions_all_batch[:, agent_idx] = trains_action
 
                     # actor update
-                    ratio = torch.exp(action_log_probs - old_action_log_probs_batch)
+                    ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
 
                     # BC
-                    surr1 = action_log_probs
-                    surr2 = action_log_probs
+                    surr1 = action_log_probs_kl
+                    surr2 = action_log_probs_kl
 
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -822,16 +827,16 @@ class Runner(object):
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
-                    bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(logits_all, obs_feats_all)
+                    bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(train_actions_all_batch, obs_feats_all.detach())
                     if self.discrete:
-                        mixed_ = bias_
+                        mixed_ = logits_all[:, agent_idx].detach()+bias_
                         mixed_[available_actions_all[:, agent_idx] == 0] = -1e10
                         mix_dist = FixedCategorical(logits=mixed_)
                     else:
-                        action_mean = bias_
+                        action_mean = logits_all[:, agent_idx].detach()+bias_
                         mix_dist = FixedNormal(action_mean, action_std)
 
-                    mix_action_log_probs = mix_dist.log_probs(check(actions_all_batch[:, agent_idx]).to(**self.tpdv))
+                    mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch[:, agent_idx]).to(**self.tpdv))
                     mix_dist_entropy = mix_dist.entropy().mean()
                     new_actions_logprob_all_batch[:, agent_idx] = mix_action_log_probs
                     dist_entropy_all[agent_idx] = mix_dist_entropy

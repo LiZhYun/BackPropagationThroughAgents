@@ -83,7 +83,7 @@ class SeparatedReplayBuffer(object):
         self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
 
-        self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
+        self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
         self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
@@ -347,7 +347,7 @@ class SeparatedReplayBuffer(object):
         rnn_states_joint = self.rnn_states_joint[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_joint.shape[2:])
         rnn_states = self.rnn_states[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states.shape[2:])
         rnn_states_critic = self.rnn_states_critic[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_critic.shape[2:])
-        joint_actions = self.joint_actions.transpose(1, 0, 2, 3).reshape(-1, *self.joint_actions.shape[2:])
+        joint_actions = _cast(self.joint_actions)
         joint_action_log_probs = self.joint_action_log_probs.transpose(1, 0, 2, 3).reshape(-1, *self.joint_action_log_probs.shape[2:])
 
         if self.available_actions is not None:

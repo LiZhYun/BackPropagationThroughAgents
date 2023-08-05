@@ -59,7 +59,7 @@ class Action_Attention(nn.Module):
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self._attn_size, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -91,8 +91,9 @@ class Action_Attention(nn.Module):
         self.to(device)
 
     def forward(self, x, obs_rep):
-
-        x = self.feat_encoder(torch.cat([x, obs_rep], -1))
+        x = check(x).to(**self.tpdv)
+        
+        x = self.feat_encoder(torch.cat([self.logit_encoder(x), obs_rep], -1))
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
