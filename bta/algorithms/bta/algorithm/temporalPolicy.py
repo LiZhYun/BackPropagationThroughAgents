@@ -24,7 +24,7 @@ class TemporalPolicy:
         self.critic = R_Critic(args, self.share_obs_space, self.act_space, self.device)
         if self.use_action_attention:
             from bta.algorithms.utils.action_attention import Action_Attention
-            self.action_attention = Action_Attention(args, act_space, self.agent_id, device = self.device)
+            self.action_attention = Action_Attention(args, act_space, self.agent_id, share_obs_space, device = self.device)
             self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.attention_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
 
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=self.lr, eps=self.opti_eps, weight_decay=self.weight_decay)
@@ -34,9 +34,9 @@ class TemporalPolicy:
         update_linear_schedule(self.actor_optimizer, episode, episodes, self.lr)
         update_linear_schedule(self.critic_optimizer, episode, episodes, self.critic_lr)
 
-    def get_mix_actions(self, logits, obs, **kwargs):
-        bias_, action_std = self.action_attention(logits, obs)
-        return bias_, action_std
+    def get_mix_actions(self, logits, obs, rnn_states, masks, **kwargs):
+        bias_, action_std, rnn_states = self.action_attention(logits, obs, rnn_states, masks)
+        return bias_, action_std, rnn_states
 
     def get_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, onehot_action, execution_mask, available_actions=None, deterministic=False, task_id=None, tau=1.0, **kwargs):
         actions, action_log_probs, rnn_states_actor, logits, dist_entropy, obs_feat = self.actor(obs, rnn_states_actor, masks, onehot_action, execution_mask, available_actions, deterministic, tau=tau)

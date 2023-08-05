@@ -57,8 +57,8 @@ class MatrixRunner(Runner):
                 
             # compute return and update network
             self.compute()
-            # if self.use_action_attention:
-            #     self.joint_compute()
+            if self.use_action_attention:
+                self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
@@ -154,18 +154,21 @@ class MatrixRunner(Runner):
         joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
             for agent_idx in range(self.num_agents):
-                bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(actions, obs_feats)
+                bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
-                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    mix_dist = FixedCategorical(logits=logits[:, agent_idx]+self.threshold*bias_)
+                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    mix_dist = FixedCategorical(logits=bias_)
+                    # mix_dist = FixedCategorical(logits=logits[:, agent_idx]+self.threshold*bias_)
                 else:
-                    action_mean = logits[:, agent_idx]+self.threshold*bias_
+                    action_mean = bias_
+                    # action_mean = logits[:, agent_idx]+self.threshold*bias_
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)
                 joint_actions[:, agent_idx] = _t2n(mix_actions)
                 action_log_probs[:, agent_idx] = _t2n(mix_action_log_probs)
+                rnn_states_joint = _t2n(rnn_states_joint)
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
 
