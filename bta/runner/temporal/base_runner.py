@@ -828,15 +828,15 @@ class Runner(object):
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
-                    bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(train_actions_all_batch, obs_feats_all.detach())
+                    bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(train_actions_all_batch, obs_feats_all)
                     if self.discrete:
                         # Normalize
                         bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                        mixed_ = self.threshold * logits_all[:, agent_idx].detach() + (1 - self.threshold) * bias_
+                        mixed_ = self.threshold * logits_all[:, agent_idx] + (1 - self.threshold) * bias_
                         mixed_[available_actions_all[:, agent_idx] == 0] = -1e10
                         mix_dist = FixedCategorical(logits=mixed_)
                     else:
-                        action_mean = self.threshold * logits_all[:, agent_idx].detach() + (1 - self.threshold) * bias_
+                        action_mean = self.threshold * logits_all[:, agent_idx] + (1 - self.threshold) * bias_
                         mix_dist = FixedNormal(action_mean, action_std)
 
                     mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch[:, agent_idx]).to(**self.tpdv))
