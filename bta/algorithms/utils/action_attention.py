@@ -21,7 +21,7 @@ def init_(m, gain=0.01, activate=False):
     return init(m, nn.init.orthogonal_, lambda x: nn.init.constant_(x, 0), gain=gain)
 
 class Action_Attention(nn.Module):
-    def __init__(self, args, action_space, device=torch.device("cpu")):
+    def __init__(self, args, action_space, agent_id, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
         self._use_naive_recurrent_policy = args.use_naive_recurrent_policy
         self._use_recurrent_policy = args.use_recurrent_policy
@@ -41,6 +41,7 @@ class Action_Attention(nn.Module):
         self._dropout = args.dropout
         self._use_policy_active_masks = args.use_policy_active_masks
         self.num_agents = args.num_agents
+        self.agent_id = agent_id
         self.tpdv = dict(dtype=torch.float32, device=device)
 
         self.discrete = False
@@ -95,7 +96,7 @@ class Action_Attention(nn.Module):
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x)
+        x = self.layer_norm(x[:, self.agent_id])
 
         bias_ = self.head(x)
 

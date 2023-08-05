@@ -24,7 +24,7 @@ class TemporalPolicy:
         self.critic = R_Critic(args, self.share_obs_space, self.act_space, self.device)
         if self.use_action_attention:
             from bta.algorithms.utils.action_attention import Action_Attention
-            self.action_attention = Action_Attention(args, act_space, device = self.device)
+            self.action_attention = Action_Attention(args, act_space, self.agent_id, device = self.device)
             self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.attention_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
 
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=self.lr, eps=self.opti_eps, weight_decay=self.weight_decay)

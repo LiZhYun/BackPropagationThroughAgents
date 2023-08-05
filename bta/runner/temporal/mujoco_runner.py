@@ -185,13 +185,12 @@ class MujocoRunner(Runner):
         joint_actions, joint_action_log_probs, rnn_states_joint = None, None, None
         if self.use_action_attention:
             for agent_idx in range(self.num_agents):
-                bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(torch.cat([logit[:, :agent_idx], logit[:, agent_idx+1:]],1), torch.cat([obs_feats[:, :agent_idx], obs_feats[:, agent_idx+1:]],1))
-            bias_, action_std = self.action_attention(logits, obs_feats)
-            if self.discrete:
-                joint_dist = FixedCategorical(logits=logits+bias_)
-            else:
-                action_mean = logits+bias_
-                joint_dist = FixedNormal(action_mean, action_std)
+                bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(logit, obs_feats)
+                if self.discrete:
+                    mix_dist = FixedCategorical(logits=bias_)
+                else:
+                    action_mean = bias_
+                    mix_dist = FixedNormal(action_mean, action_std)
             joint_actions = joint_dist.sample()
             joint_action_log_probs = joint_dist.log_probs_joint(joint_actions) if self.discrete else joint_dist.log_probs(joint_actions)
             joint_actions = _t2n(joint_actions)
