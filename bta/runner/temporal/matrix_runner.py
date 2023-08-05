@@ -157,12 +157,12 @@ class MatrixRunner(Runner):
                 bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
-                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    mix_dist = FixedCategorical(logits=bias_)
-                    # mix_dist = FixedCategorical(logits=logits[:, agent_idx]+self.threshold*bias_)
+                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    # mix_dist = FixedCategorical(logits=bias_)
+                    mix_dist = FixedCategorical(logits=logits[:, agent_idx]+self.threshold*bias_)
                 else:
-                    action_mean = bias_
-                    # action_mean = logits[:, agent_idx]+self.threshold*bias_
+                    # action_mean = bias_
+                    action_mean = logits[:, agent_idx]+self.threshold*bias_
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)
