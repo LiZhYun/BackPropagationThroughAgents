@@ -909,7 +909,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.action_attention_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
-                (policy_loss - dist_entropy_all.sum() * self.entropy_coef + individual_loss.sum()).backward()
+                (policy_loss - dist_entropy_all.sum() * self.entropy_coef).backward()
                 
                 for agent_idx in range(self.num_agents):
                     
