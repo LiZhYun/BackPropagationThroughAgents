@@ -161,18 +161,6 @@ class Runner(object):
             self.policy.append(po)
         self.obs_emb_size = self.policy[0].actor.abs_size
         
-        if self.use_action_attention:
-            # from bta.algorithms.utils.action_attention import JointPolicy
-            from bta.algorithms.utils.action_attention import Action_Attention
-            self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], device = self.device)
-            self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.attention_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
-            # if self._use_popart:
-            #     self.value_normalizer = self.action_attention.v_out
-            # elif self._use_valuenorm:
-            #     self.value_normalizer = ValueNorm(1, device = self.device)
-            # else:
-            #     self.value_normalizer = None
-
         if self.model_dir is not None:
             self.restore()
 
@@ -701,40 +689,23 @@ class Runner(object):
     
     def joint_train(self):
         train_infos = []
-        advantages_all = self.advg[:-1]
-        advantages_copy = advantages_all.copy()
-        mean_advantages = np.nanmean(advantages_copy)
-        std_advantages = np.nanstd(advantages_copy)
-        advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
         advs = []
         for agent_idx in range(self.num_agents):
             advs.append(self.trainer[agent_idx].train_adv(self.buffer[agent_idx]))
             train_info = defaultdict(float)
             train_info['value_loss'] = 0
             train_info['policy_loss'] = 0
-            train_info['joint_policy_loss'] = 0
             train_info['dist_entropy'] = 0
-            train_info['joint_dist_entropy'] = 0
             train_info['actor_grad_norm'] = 0
             train_info['critic_grad_norm'] = 0
             train_info['attention_grad_norm'] = 0
             train_info['ratio'] = 0
-            train_info['joint_ratio'] = 0
             train_infos.append(train_info)
 
             self.trainer[agent_idx].prep_training()
             
         batch_size = self.n_rollout_threads * self.episode_length
 
-        if self._use_recurrent_policy:
-            advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
-            # returns_all = self.returns[:-1].transpose(1,0,2).reshape(-1, *self.returns.shape[2:])
-            # joint_values_pred_all = self.buffer[0].joint_value_preds[:-1].transpose(1,0,2).reshape(-1, *self.buffer[0].joint_value_preds.shape[2:])
-        else:
-            advantages_all = advantages_all.reshape(-1, 1)
-            # returns_all = self.returns[:-1].reshape(-1, 1)
-            # joint_values_pred_all = self.buffer[0].joint_value_preds[:-1].reshape(-1, 1)
-        # train_infos = self.bc_train(advs, train_infos)
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
@@ -755,46 +726,34 @@ class Runner(object):
             
             for batch_idx in range(self.num_mini_batch):
                 if self._use_recurrent_policy:
-                    adv_targ_all = []
-                    # returns_all_batch = []
-                    # joint_values_pred_all_batch = []
-                    for index in sampler[batch_idx]:
-                        ind = index * self.data_chunk_length
-                        adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
-                        # returns_all_batch.append(returns_all[ind:ind+self.data_chunk_length])
-                        # joint_values_pred_all_batch.append(joint_values_pred_all[ind:ind+self.data_chunk_length])
-                    adv_targ_all = np.stack(adv_targ_all)
-                    # returns_all_batch = np.stack(returns_all_batch)
-                    # joint_values_pred_all_batch = np.stack(joint_values_pred_all_batch)
-                    adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
-                    # returns_all_batch = check(returns_all_batch.reshape(self.data_chunk_length*mini_batch_size, *returns_all_batch.shape[2:])).to(**self.tpdv)
-                    # joint_values_pred_all_batch = check(joint_values_pred_all_batch.reshape(self.data_chunk_length*mini_batch_size, *joint_values_pred_all_batch.shape[2:])).to(**self.tpdv)
+                    adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
-                    one_hot_actions_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                 else:
-                    adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
-                    # returns_all_batch = check(returns_all[sampler[batch_idx]]).to(**self.tpdv)
-                    # joint_values_pred_all_batch = check(joint_values_pred_all[sampler[batch_idx]]).to(**self.tpdv)
+                    adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
-                    one_hot_actions_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                    actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
+                dist_entropy_all = torch.zeros(self.num_agents).to(self.device)
                 individual_loss = torch.zeros(self.num_agents).to(self.device)
-                share_obs_all = []
-                masks_all = []
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
                     adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch = next(data_generators[agent_idx])
                     adv_targ = check(adv_targ).to(**self.tpdv)
-                    old_joint_action_log_probs = check(joint_action_log_probs_batch).to(**self.tpdv)
-                    # old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
+                    actions_batch = check(actions_batch).to(**self.tpdv)
+                    old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
-                    # active_masks_all[:, agent_idx] = check(active_masks_batch).to(**self.tpdv)
+                    active_masks_all[:, agent_idx] = check(active_masks_batch).to(**self.tpdv)
                     if available_actions_batch is not None:
                         available_actions_all[:, agent_idx] = check(available_actions_batch).to(**self.tpdv)
 
@@ -815,30 +774,21 @@ class Runner(object):
                                                                             available_actions_batch,
                                                                             active_masks_batch,
                                                                             tau=self.temperature,
-                                                                            kl=True,
-                                                                            joint_actions=joint_actions_batch[:,agent_idx]
                                                                             )
                 
-                    logits_all[:, agent_idx] = logits.clone()
-                    share_obs_all.append(share_obs_batch)
-                    one_hot_actions_all[:, agent_idx] = trains_action
-                    masks_all.append(masks_batch)
-                    obs_feats_all[:, agent_idx] = obs_feat.clone()
+                    logits_all[:, agent_idx] = logits
+                    actions_all_batch[:, agent_idx] = actions_batch
+                    obs_feats_all[:, agent_idx] = obs_feat
+                    old_actions_logprob_all_batch[:, agent_idx] = old_action_log_probs_batch
+                    adv_targ_all[:, agent_idx] = adv_targ
 
                     # actor update
-                    ratio = torch.exp(action_log_probs_kl - old_joint_action_log_probs[:, agent_idx])
+                    ratio = torch.exp(action_log_probs - old_action_log_probs_batch)
 
-                    # # # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
-                    # # dual clip
-                    # # cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
-
-                    # surr1 = ratio * adv_targ
-                    # surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
-                    
                     # BC
-                    surr1 = action_log_probs_kl
-                    surr2 = action_log_probs_kl
-                    
+                    surr1 = action_log_probs
+                    surr2 = action_log_probs
+
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
                                                         dim=-1,
@@ -866,72 +816,82 @@ class Runner(object):
                     self.trainer[agent_idx].policy.critic_optimizer.step()
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                    # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                    train_infos[agent_idx]['ratio'] += ratio.mean().item()
-                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+                    if int(torch.__version__[2]) < 5:
+                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    else:
+                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
-                bias_, action_std = self.action_attention(logits_all, obs_feats_all)
-                if self.discrete:
-                    mixed_ = logits_all.detach()+bias_
-                    mixed_[available_actions_all == 0] = -1e10
-                    joint_dist = FixedCategorical(logits=mixed_)
-                else:
-                    action_mean = logits_all.detach()+bias_
-                    joint_dist = FixedNormal(action_mean, action_std)
+                for agent_idx in range(self.num_agents):
+                    bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(logits_all, obs_feats_all)
+                    if self.discrete:
+                        mixed_ = bias_
+                        mixed_[available_actions_all[:, agent_idx] == 0] = -1e10
+                        mix_dist = FixedCategorical(logits=mixed_)
+                    else:
+                        action_mean = bias_
+                        mix_dist = FixedNormal(action_mean, action_std)
 
-                joint_action_log_probs = joint_dist.log_probs_joint(check(joint_actions_batch).to(**self.tpdv)) if self.discrete else joint_dist.log_probs(check(joint_actions_batch).to(**self.tpdv))
-                joint_dist_entropy = joint_dist.entropy().mean(0).sum()
+                    mix_action_log_probs = mix_dist.log_probs(check(actions_all_batch[:, agent_idx]).to(**self.tpdv))
+                    mix_dist_entropy = mix_dist.entropy().mean()
+                    new_actions_logprob_all_batch[:, agent_idx] = mix_action_log_probs
+                    dist_entropy_all[agent_idx] = mix_dist_entropy
 
-                # actor update
-                ratio = torch.prod(torch.prod(torch.exp(joint_action_log_probs - old_joint_action_log_probs),dim=-1,keepdim=True),dim=-2)
-
-                surr1 = ratio * adv_targ_all
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+                imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                each_agent_imp_weights = imp_weights.detach()
+                each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
+                each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
+                mask_self = 1 - torch.eye(self.num_agents)
+                mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
+                each_agent_imp_weights[..., mask_self == 0] = 1.0
+                prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+                prod_imp_weights = torch.clamp(
+                            prod_imp_weights,
+                            1.0 - self.clip_param/2,
+                            1.0 + self.clip_param/2,
+                        )
             
-                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
-              
-                policy_loss = policy_action_loss
+                surr1 = imp_weights * adv_targ_all * prod_imp_weights
+                surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
+    
+                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
-                # joint_value_loss = self.cal_value_loss(self.value_normalizer, joint_values, joint_values_pred_all_batch, returns_all_batch)
+                if self._use_policy_active_masks:
+                    policy_action_loss = (
+                        (policy_action_loss * active_masks_all).sum(dim=0) /
+                        active_masks_all.sum(dim=0)).sum()
+                else:
+                    policy_action_loss = policy_action_loss.mean(dim=0).sum()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
-                    # self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
-                self.action_attention_optimizer.zero_grad()
+                    self.trainer[agent_idx].policy.action_attention_optimizer.zero_grad()
                 
-                (policy_loss - joint_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
+                policy_loss = policy_action_loss
+                (policy_loss - dist_entropy_all.sum() * self.entropy_coef + individual_loss.sum()).backward()
                 
-                if self._use_max_grad_norm:
-                    attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
-                    for agent_idx in range(self.num_agents): 
+                for agent_idx in range(self.num_agents):
+                    
+                    if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                        # critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                        # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                        train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
-                else:
-                    attention_grad_norm = get_gard_norm(self.action_attention.parameters())
-                    for agent_idx in range(self.num_agents): 
+                        attention_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.action_attention.parameters(), self.max_grad_norm)
+                    else:
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
-                        # critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+                        attention_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.action_attention.parameters())
+                    
+                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    train_infos[agent_idx]['ratio'] += imp_weights[:, agent_idx].mean().item()
+                    train_infos[agent_idx]['dist_entropy'] += dist_entropy_all[agent_idx].item()
+                    if int(torch.__version__[2]) < 5:
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                        # train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
+                    else:
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                        train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
-                    # self.trainer[agent_idx].policy.critic_optimizer.step()
-                self.action_attention_optimizer.step()
-                
-                for agent_idx in range(self.num_agents):
-                    train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
-                    # train_infos[agent_idx]['joint_value_loss'] += joint_value_loss.item()
-                    train_infos[agent_idx]['joint_dist_entropy'] += joint_dist_entropy.item()
-                    train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
-
-        # train_infos = self.bc_train(advs, train_infos)
+                    self.trainer[agent_idx].policy.action_attention_optimizer.step()
+    
         num_updates = self.ppo_epoch * self.num_mini_batch
 
         for agent_idx in range(self.num_agents):
@@ -1056,11 +1016,6 @@ class Runner(object):
 
     def save(self, steps=None):
         postfix = f"_{steps}.pt" if steps else ".pt"
-        if self.use_action_attention:
-            torch.save(self.action_attention.state_dict(), str(self.save_dir) + "/joint_agent_actor" + postfix)
-            torch.save(self.action_attention_optimizer.state_dict(), str(self.save_dir) + "/joint_opti_actor" + postfix)
-            # torch.save(self.action_attention.critic.state_dict(), str(self.save_dir) + "/joint_agent_critic" + postfix)
-            # torch.save(self.action_attention.critic_optimizer.state_dict(), str(self.save_dir) + "/joint_opti_critic" + postfix)
         for agent_id in range(self.num_agents):
             if self.use_single_network:
                 policy_model = self.trainer[agent_id].policy.model
@@ -1072,6 +1027,9 @@ class Runner(object):
                 policy_critic = self.trainer[agent_id].policy.critic
                 torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic_agent" + str(agent_id) + postfix)
                 torch.save(self.trainer[agent_id].policy.critic_optimizer.state_dict(), str(self.save_dir) + "/critic_opti" + str(agent_id) + postfix)
+                if self.use_action_attention:
+                    torch.save(self.trainer[agent_id].policy.action_attention.state_dict(), str(self.save_dir) + "/attention_agent" + str(agent_id) + postfix)
+                    torch.save(self.trainer[agent_id].policy.action_attention_optimizer.state_dict(), str(self.save_dir) + "/attention_opti" + str(agent_id) + postfix)
 
     def restore(self):
         if self.use_action_attention:

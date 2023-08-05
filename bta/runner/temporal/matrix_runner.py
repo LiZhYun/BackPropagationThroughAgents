@@ -57,8 +57,8 @@ class MatrixRunner(Runner):
                 
             # compute return and update network
             self.compute()
-            if self.use_action_attention:
-                self.joint_compute()
+            # if self.use_action_attention:
+            #     self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
@@ -152,30 +152,17 @@ class MatrixRunner(Runner):
 
         joint_actions, joint_action_log_probs, rnn_states_joint = None, None, None
         if self.use_action_attention:
-            bias_, action_std = self.action_attention(logits, obs_feats)
-            if self.discrete:
-                joint_dist = FixedCategorical(logits=logits+bias_)
-            else:
-                action_mean = logits+bias_
-                joint_dist = FixedNormal(action_mean, action_std)
-            joint_actions = joint_dist.sample()
-            joint_action_log_probs = joint_dist.log_probs_joint(joint_actions)
-            joint_actions = _t2n(joint_actions)
-            joint_action_log_probs = _t2n(joint_action_log_probs)
-            # rnn_states_joint = _t2n(rnn_states_joint)
             for agent_idx in range(self.num_agents):
-                ego_exclusive_action = actions
-                tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
-                _, action_log_prob, _, _, _, _ = self.trainer[agent_idx].policy.actor.evaluate_actions(
-                    self.buffer[agent_idx].obs[step],
-                    self.buffer[agent_idx].rnn_states[step],
-                    joint_actions[:,agent_idx],
-                    self.buffer[agent_idx].masks[step],
-                    ego_exclusive_action,
-                    tmp_execution_mask,
-                    tau=self.temperature
-                )
-                action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+                bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(logits, obs_feats)
+                if self.discrete:
+                    mix_dist = FixedCategorical(logits=bias_)
+                else:
+                    action_mean = bias_
+                    mix_dist = FixedNormal(action_mean, action_std)
+                mix_actions = mix_dist.sample()
+                mix_action_log_probs = mix_dist.log_probs(mix_actions)
+                hard_actions[:, agent_idx] = _t2n(mix_actions)
+                action_log_probs[:, agent_idx] = _t2n(mix_action_log_probs)
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
 
