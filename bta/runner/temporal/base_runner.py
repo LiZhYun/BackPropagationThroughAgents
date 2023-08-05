@@ -74,6 +74,7 @@ class Runner(object):
         self._use_policy_active_masks = self.all_args.use_policy_active_masks
         self._use_policy_vhead = self.all_args.use_policy_vhead
         self.threshold = self.all_args.threshold
+        self.initial_threshold = self.all_args.threshold
         self.gamma = self.all_args.gamma
         self.gae_lambda = self.all_args.gae_lambda
         self._use_gae = self.all_args.use_gae
@@ -832,11 +833,11 @@ class Runner(object):
                     if self.discrete:
                         # Normalize
                         bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                        mixed_ = self.threshold * logits_all[:, agent_idx] + (1 - self.threshold) * bias_
+                        mixed_ = logits_all[:, agent_idx] + self.threshold * bias_
                         mixed_[available_actions_all[:, agent_idx] == 0] = -1e10
                         mix_dist = FixedCategorical(logits=mixed_)
                     else:
-                        action_mean = self.threshold * logits_all[:, agent_idx] + (1 - self.threshold) * bias_
+                        action_mean = logits_all[:, agent_idx] + self.threshold * bias_
                         mix_dist = FixedNormal(action_mean, action_std)
 
                     mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch[:, agent_idx]).to(**self.tpdv))
@@ -875,7 +876,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.action_attention_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
-                (policy_loss - dist_entropy_all.sum() * self.entropy_coef + individual_loss.sum()).backward()
+                (policy_loss - dist_entropy_all.sum() * self.entropy_coef).backward()
                 
                 for agent_idx in range(self.num_agents):
                     
