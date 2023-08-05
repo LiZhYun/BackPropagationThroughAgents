@@ -102,9 +102,8 @@ class ACTLayer(nn.Module):
             elif rsample:
                 actions = action_logits.rsample() 
                 if joint:
-                    action_log_probs = action_logits.log_probs(actions)
-                else:
-                    action_log_probs = action_logits.log_probs(actions)
+                    actions = action_logits.mode() 
+                action_log_probs = action_logits.log_probs(actions)
                 dist_entropy = action_logits.entropy()
                 return actions, action_log_probs, dist_entropy, action_logits.mean
             else: 
@@ -121,7 +120,8 @@ class ACTLayer(nn.Module):
             elif rsample:
                 actions = action_logits.rsample(tau=tau) 
                 if joint:
-                    action_log_probs = action_logits.log_probs_joint(torch.argmax(actions, -1))
+                    actions = action_logits.mode() 
+                    action_log_probs = action_logits.log_probs(actions)
                 else:
                     action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
                 dist_entropy = action_logits.entropy()
