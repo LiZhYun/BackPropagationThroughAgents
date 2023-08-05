@@ -97,7 +97,8 @@ class Action_Attention(nn.Module):
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x[:, self.agent_id])
+        x = self.layer_norm(x)
+        x = x.mean(1)
 
         bias_ = self.head(x)
 

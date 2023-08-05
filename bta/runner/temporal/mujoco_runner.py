@@ -188,9 +188,11 @@ class MujocoRunner(Runner):
             for agent_idx in range(self.num_agents):
                 bias_, action_std = self.trainer[agent_idx].policy.get_mix_actions(actions, obs_feats)
                 if self.discrete:
-                    mix_dist = FixedCategorical(logits=logits[:, agent_idx]+bias_)
+                    # Normalize
+                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    mix_dist = FixedCategorical(logits=self.threshold*logits[:, agent_idx]+(1-self.threshold)*bias_)
                 else:
-                    action_mean = logits[:, agent_idx]+bias_
+                    action_mean = self.threshold*logits[:, agent_idx]+(1-self.threshold)*bias_
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)

@@ -131,9 +131,7 @@ class R_Actor(nn.Module):
 
         id_feat = torch.eye(self.args.num_agents)[self.agent_id].unsqueeze(0).repeat(actor_features.shape[0], 1).to(actor_features.device)
         
-        joint = False
         if self.use_action_attention:
-            joint = True
             actor_features = actor_features + self.action_base(id_feat)
         else:
             actor_features = actor_features + self.action_base(torch.cat([masked_actions, id_feat], dim=1))
@@ -144,7 +142,7 @@ class R_Actor(nn.Module):
             logits = None
             actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
         else:
-            actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau, joint=joint)
+            actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
         
         return actions, action_log_probs, rnn_states, logits, dist_entropy, obs_feat
     
