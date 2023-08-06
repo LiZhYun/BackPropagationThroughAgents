@@ -158,7 +158,7 @@ class MatrixRunner(Runner):
         joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
             for agent_idx in range(self.num_agents):
-                bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+                bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
                     bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)

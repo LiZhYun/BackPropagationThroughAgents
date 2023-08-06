@@ -693,11 +693,11 @@ class Runner(object):
     def joint_train(self):
         train_infos = []
         advs = []
-        advantages_all = self.advg[:-1]
-        advantages_copy = advantages_all.copy()
-        mean_advantages = np.nanmean(advantages_copy)
-        std_advantages = np.nanstd(advantages_copy)
-        advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
+        # advantages_all = self.advg[:-1]
+        # advantages_copy = advantages_all.copy()
+        # mean_advantages = np.nanmean(advantages_copy)
+        # std_advantages = np.nanstd(advantages_copy)
+        # advantages_all = (advantages_all - mean_advantages) / (std_advantages + 1e-5)
         for agent_idx in range(self.num_agents):
             advs.append(self.trainer[agent_idx].train_adv(self.buffer[agent_idx]))
             train_info = defaultdict(float)
@@ -717,10 +717,10 @@ class Runner(object):
             
         batch_size = self.n_rollout_threads * self.episode_length
 
-        if self._use_recurrent_policy:
-            advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
-        else:
-            advantages_all = advantages_all.reshape(-1, 1)
+        # if self._use_recurrent_policy:
+        #     advantages_all = advantages_all.transpose(1,0,2).reshape(-1, *advantages_all.shape[2:])
+        # else:
+        #     advantages_all = advantages_all.reshape(-1, 1)
 
         # self.bc_train(advs, train_infos)
         for epoch in range(self.ppo_epoch):
@@ -743,13 +743,13 @@ class Runner(object):
             
             for batch_idx in range(self.num_mini_batch):
                 if self._use_recurrent_policy:
-                    adv_targ_all = []
-                    for index in sampler[batch_idx]:
-                        ind = index * self.data_chunk_length
-                        adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
-                    adv_targ_all = np.stack(adv_targ_all)
-                    adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
-                    # adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
+                    # adv_targ_all = []
+                    # for index in sampler[batch_idx]:
+                    #     ind = index * self.data_chunk_length
+                    #     adv_targ_all.append(advantages_all[ind:ind+self.data_chunk_length])
+                    # adv_targ_all = np.stack(adv_targ_all)
+                    # adv_targ_all = check(adv_targ_all.reshape(self.data_chunk_length*mini_batch_size, *adv_targ_all.shape[2:])).to(**self.tpdv)
+                    adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -761,8 +761,8 @@ class Runner(object):
                     joint_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                 else:
-                    adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
-                    # adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
+                    # adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
+                    adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
@@ -816,7 +816,7 @@ class Runner(object):
                     joint_actions_all_batch[:, agent_idx] = joint_actions_batch
                     obs_feats_all[:, agent_idx] = obs_feat
                     old_actions_logprob_all_batch[:, agent_idx] = old_action_log_probs_batch
-                    # adv_targ_all[:, agent_idx] = adv_targ
+                    adv_targ_all[:, agent_idx] = adv_targ
                     train_actions_all_batch[:, agent_idx] = trains_action
                     share_obs_all.append(share_obs_batch)
                     masks_all.append(masks_batch)
@@ -830,20 +830,20 @@ class Runner(object):
                     # surr1 = ratio * adv_targ
                     # surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
 
-                    # BC
-                    surr1 = action_log_probs_kl
-                    surr2 = action_log_probs_kl
+                    # # BC
+                    # surr1 = action_log_probs_kl
+                    # surr2 = action_log_probs_kl
 
-                    if self._use_policy_active_masks:
-                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
-                                                        dim=-1,
-                                                        keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
-                    else:
-                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                    # if self._use_policy_active_masks:
+                    #     policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                    #                                     dim=-1,
+                    #                                     keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
+                    # else:
+                    #     policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                    policy_loss = policy_action_loss
+                    # policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
+                    # individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -867,7 +867,7 @@ class Runner(object):
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
-                    bias_, _, _ = self.trainer[agent_idx].policy.get_mix_actions(train_actions_all_batch, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
+                    bias_, _, _ = self.trainer[agent_idx].policy.get_mix_actions(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
                     if self.discrete:
                         # Normalize
                         bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
@@ -886,31 +886,31 @@ class Runner(object):
                     new_actions_logprob_all_batch[:, agent_idx] = mix_action_log_probs
                     dist_entropy_all[agent_idx] = mix_dist_entropy
 
-                imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2)
-                # each_agent_imp_weights = imp_weights.detach()
-                # each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
-                # each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
-                # mask_self = 1 - torch.eye(self.num_agents)
-                # mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
-                # each_agent_imp_weights[..., mask_self == 0] = 1.0
-                # prod_imp_weights = each_agent_imp_weights.prod(dim=2)
-                # prod_imp_weights = torch.clamp(
-                #             prod_imp_weights,
-                #             1.0 - self.clip_param/2,
-                #             1.0 + self.clip_param/2,
-                #         )
-            
+                imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                each_agent_imp_weights = imp_weights.detach()
+                each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
+                each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
+                mask_self = 1 - torch.eye(self.num_agents)
+                mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
+                each_agent_imp_weights[..., mask_self == 0] = 1.0
+                prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+                prod_imp_weights = torch.clamp(
+                            prod_imp_weights,
+                            1.0 - self.clip_param/2,
+                            1.0 + self.clip_param/2,
+                        )
+
                 surr1 = imp_weights * adv_targ_all
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
     
-                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
-                # if self._use_policy_active_masks:
-                #     policy_action_loss = (
-                #         (policy_action_loss * active_masks_all).sum(dim=0) /
-                #         active_masks_all.sum(dim=0)).sum()
-                # else:
-                # policy_action_loss = policy_action_loss.mean(dim=0).sum()
+                if self._use_policy_active_masks:
+                    policy_action_loss = (
+                        (policy_action_loss * active_masks_all).sum(dim=0) /
+                        active_masks_all.sum(dim=0)).sum()
+                else:
+                    policy_action_loss = policy_action_loss.mean(dim=0).sum()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
