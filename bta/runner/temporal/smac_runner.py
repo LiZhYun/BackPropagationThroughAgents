@@ -198,7 +198,7 @@ class SMACRunner(Runner):
                     # Normalize
                     # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                     mixed_ = logits[:, agent_idx]+self.threshold*bias_
-                    mixed_[available_actions_all == 0] = -1e10
+                    mixed_[available_actions_all[:, agent_idx] == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
                     # action_mean = bias_
@@ -284,7 +284,7 @@ class SMACRunner(Runner):
                                         bad_masks=bad_masks[:, agent_id],
                                         active_masks=active_masks[:, agent_id],
                                         available_actions=available_actions[:, agent_id],
-                                        joint_actions=joint_actions,
+                                        joint_actions=joint_actions[:, agent_id],
                                         joint_action_log_probs=joint_action_log_probs,
                                         rnn_states_joint=rnn_states_joint
                                         )
