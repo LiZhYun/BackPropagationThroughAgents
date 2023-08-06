@@ -57,8 +57,8 @@ class MatrixRunner(Runner):
                 
             # compute return and update network
             self.compute()
-            if self.use_action_attention:
-                self.joint_compute()
+            # if self.use_action_attention:
+            #     self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
@@ -161,7 +161,7 @@ class MatrixRunner(Runner):
                 bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
-                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                     # mix_dist = FixedCategorical(logits=bias_)
                     mix_dist = FixedCategorical(logits=logits[:, agent_idx]+self.threshold*bias_)
                 else:

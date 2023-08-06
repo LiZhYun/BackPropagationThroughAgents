@@ -870,7 +870,7 @@ class Runner(object):
                     bias_, _, _ = self.trainer[agent_idx].policy.get_mix_actions(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
                     if self.discrete:
                         # Normalize
-                        bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                        # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                         mixed_ = logits_all[:, agent_idx] + self.threshold * bias_
                         # mixed_ = bias_
                         mixed_[available_actions_all[:, agent_idx] == 0] = -1e10

@@ -45,6 +45,7 @@ class SMACRunner(Runner):
                 for agent_id in range(self.num_agents):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
+            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
@@ -64,8 +65,8 @@ class SMACRunner(Runner):
 
             # compute return and update network
             self.compute()
-            if self.use_action_attention:
-                self.joint_compute()
+            # if self.use_action_attention:
+            #     self.joint_compute()
             train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
             
             # post process
@@ -142,6 +143,8 @@ class SMACRunner(Runner):
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        if not self.discrete:
+            stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
   
         ordered_vertices = [i for i in range(self.num_agents)]
         for idx, agent_idx in enumerate(ordered_vertices):
@@ -175,28 +178,32 @@ class SMACRunner(Runner):
                                                             tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
             actions[:, idx] = _t2n(action)
-            logits[:, idx] = logit.clone()
+            logits[:, idx] = logit.clone() if self.discrete else logit.mean.clone()
+            if not self.discrete:
+                stds[:, idx] = logit.stddev.clone()
             obs_feats[:, idx] = obs_feat.clone()
             action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        joint_actions, joint_action_log_probs, rnn_states_joint = None, None, None
+        joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
             available_actions_all = np.stack([self.buffer[agent_idx].available_actions[step] for agent_idx in range(self.num_agents)],1)
             available_actions_all = check(available_actions_all).to(**self.tpdv)
             for agent_idx in range(self.num_agents):
-                bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+                bias_, _, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
-                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                     mixed_ = logits[:, agent_idx]+self.threshold*bias_
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
                     # action_mean = bias_
                     action_mean = logits[:, agent_idx]+self.threshold*bias_
+                    action_std = stds[:, idx]
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)
