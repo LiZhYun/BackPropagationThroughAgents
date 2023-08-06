@@ -308,7 +308,7 @@ def get_config():
                         help='standard deviation threshold')
     parser.add_argument("--average_threshold", type=float, default=0.01,
                         help='average threshold')
-    parser.add_argument("--threshold", type=float, default=0.1,
+    parser.add_argument("--threshold", type=float, default=0.01,
                         help='tradoff between bpta and mappo')
     parser.add_argument("--decay_factor", type=float, default=1.0,
                         help='tradoff between bpta and mappo')
