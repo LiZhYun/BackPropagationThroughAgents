@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=football-5v5-ar
-#SBATCH --output=./out/football-5v5-ar_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-5v5-ar_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-5v5-gcs
+#SBATCH --output=./out/football-5v5-gcs_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-5v5-gcs_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=50

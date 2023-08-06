@@ -47,7 +47,7 @@ class MatrixRunner(Runner):
                     rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = self.collect(step)
                     
                 # Obser reward and next obs
-                env_actions = joint_actions if joint_actions is not None else hard_actions
+                env_actions = joint_actions if self.use_action_attention else hard_actions
                 obs, rewards, dones, infos = self.envs.step(np.squeeze(env_actions, axis=-1))
                 share_obs = obs.copy()
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \

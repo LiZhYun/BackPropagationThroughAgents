@@ -56,7 +56,7 @@ class MujocoRunner(Runner):
                 values, actions, hard_actions, action_log_probs, rnn_states, \
                     rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = self.collect(step)
 
-                env_actions = joint_actions if joint_actions is not None else hard_actions
+                env_actions = joint_actions if self.use_action_attention else hard_actions
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, _ = self.envs.step(env_actions)
 
@@ -187,7 +187,7 @@ class MujocoRunner(Runner):
         joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
             for agent_idx in range(self.num_agents):
-                bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+                bias_, _, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
                     bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
@@ -196,6 +196,7 @@ class MujocoRunner(Runner):
                 else:
                     # action_mean = bias_
                     action_mean = logits[:, agent_idx]+self.threshold*bias_
+                    action_std = torch.sigmoid(self.trainer[agent_idx].policy.log_std / self.trainer[agent_idx].policy.std_x_coef) * self.trainer[agent_idx].policy.std_y_coef
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)

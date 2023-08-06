@@ -30,6 +30,14 @@ class TemporalPolicy:
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=self.lr, eps=self.opti_eps, weight_decay=self.weight_decay)
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=self.critic_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
 
+        if self.act_space.__class__.__name__ == "Box":
+            action_dim = self.act_space.shape[0] 
+            self.std_x_coef = 1.
+            self.std_y_coef = 0.5
+            log_std = torch.ones(action_dim) * self.std_x_coef
+            self.log_std = torch.nn.Parameter(log_std).to(device)
+            self.std_optimizer = torch.optim.Adam([{'params':self.log_std, 'lr':self.lr}])
+
     def lr_decay(self, episode, episodes):
         update_linear_schedule(self.actor_optimizer, episode, episodes, self.lr)
         update_linear_schedule(self.critic_optimizer, episode, episodes, self.critic_lr)
