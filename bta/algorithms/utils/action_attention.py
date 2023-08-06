@@ -100,7 +100,7 @@ class Action_Attention(nn.Module):
                 self.layers.append(Block(config))
                 
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.head = nn.Linear(self._attn_size, self.action_dim, bias=False)
+        self.head = init_(nn.Linear(self._attn_size, self.action_dim))
 
         self.to(device)
 
