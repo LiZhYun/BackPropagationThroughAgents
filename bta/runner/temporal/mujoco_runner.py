@@ -144,6 +144,8 @@ class MujocoRunner(Runner):
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        if not self.discrete:
+            stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
   
         ordered_vertices = [i for i in range(self.num_agents)]
         for idx, agent_idx in enumerate(ordered_vertices):
@@ -176,7 +178,9 @@ class MujocoRunner(Runner):
                                                             tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(action)
             actions[:, agent_idx] = _t2n(action)
-            logits[:, agent_idx] = logit.clone()
+            logits[:, idx] = logit.clone() if self.discrete else logit.mean.clone()
+            if not self.discrete:
+                stds[:, idx] = logit.stddev.clone()
             obs_feats[:, agent_idx] = obs_feat.clone()
             action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
@@ -196,7 +200,7 @@ class MujocoRunner(Runner):
                 else:
                     # action_mean = bias_
                     action_mean = logits[:, agent_idx]+self.threshold*bias_
-                    action_std = torch.sigmoid(self.trainer[agent_idx].policy.log_std / self.trainer[agent_idx].policy.std_x_coef) * self.trainer[agent_idx].policy.std_y_coef
+                    action_std = stds[:, idx]
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)

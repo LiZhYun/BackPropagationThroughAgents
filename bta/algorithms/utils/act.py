@@ -105,7 +105,7 @@ class ACTLayer(nn.Module):
                 #     actions = action_logits.mode() 
                 action_log_probs = action_logits.log_probs(actions)
                 dist_entropy = action_logits.entropy()
-                return actions, action_log_probs, dist_entropy, action_logits.mean
+                return actions, action_log_probs, dist_entropy, action_logits
             else: 
                 actions = action_logits.sample()
             # actions = action_logits.mode() if deterministic else action_logits.rsample() 
@@ -254,7 +254,7 @@ class ACTLayer(nn.Module):
             else:
                 action_log_probs_kl = None
             if self.continuous_action:
-                return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, action_logits.mean
+                return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, action_logits
             elif self.discrete_action:
                 return train_actions, action_log_probs, action_log_probs_kl, dist_entropy, action_logits.logits
             

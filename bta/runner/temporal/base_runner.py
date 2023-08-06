@@ -753,6 +753,8 @@ class Runner(object):
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    if not self.discrete:
+                        stds_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                     new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(self.device)
@@ -764,6 +766,8 @@ class Runner(object):
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(self.device)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
+                    if not self.discrete:
+                        stds_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(self.device)
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(self.device)
                     new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
                     old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(self.device)
@@ -806,7 +810,9 @@ class Runner(object):
                                                                             joint_actions=joint_actions_batch
                                                                             )
                 
-                    logits_all[:, agent_idx] = logits
+                    logits_all[:, agent_idx] = logits if self.discrete else logits.mean.clone()
+                    if not self.discrete:
+                        stds_all[:, agent_idx] = logits.stddev.clone()
                     joint_actions_all_batch[:, agent_idx] = joint_actions_batch
                     obs_feats_all[:, agent_idx] = obs_feat
                     old_actions_logprob_all_batch[:, agent_idx] = old_action_log_probs_batch
@@ -871,7 +877,7 @@ class Runner(object):
                         mix_dist = FixedCategorical(logits=mixed_)
                     else:
                         action_mean = logits_all[:, agent_idx] + self.threshold * bias_
-                        action_std = torch.sigmoid(self.trainer[agent_idx].policy.log_std / self.trainer[agent_idx].policy.std_x_coef) * self.trainer[agent_idx].policy.std_y_coef
+                        action_std = stds_all[:, agent_idx]
                         # action_mean = bias_
                         mix_dist = FixedNormal(action_mean, action_std)
 
@@ -909,7 +915,6 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                     self.trainer[agent_idx].policy.action_attention_optimizer.zero_grad()
-                    self.trainer[agent_idx].policy.std_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
                 (policy_loss - dist_entropy_all.sum() * self.entropy_coef).backward()
@@ -918,30 +923,24 @@ class Runner(object):
                     
                     if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                        # std_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.log_std, self.max_grad_norm)
                         attention_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.action_attention.parameters(), self.max_grad_norm)
                     else:
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
-                        # std_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.log_std)
                         attention_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.action_attention.parameters())
                     
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_ratio'] += imp_weights.mean().item()
                     train_infos[agent_idx]['joint_dist_entropy'] += dist_entropy_all[agent_idx].item()
-                    train_infos[agent_idx]['std'] += self.trainer[agent_idx].policy.log_std.item()
                     if int(torch.__version__[2]) < 5:
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                        # train_infos[agent_idx]['std_grad_norm'] += std_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                     else:
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
-                        # train_infos[agent_idx]['std_grad_norm'] += std_grad_norm.item()
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
                     self.trainer[agent_idx].policy.action_attention_optimizer.step()
-                    self.trainer[agent_idx].policy.std_optimizer.step()
     
         num_updates = self.ppo_epoch * self.num_mini_batch
 

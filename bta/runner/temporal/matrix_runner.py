@@ -106,6 +106,8 @@ class MatrixRunner(Runner):
         values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim))
         logits = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
+        if not self.discrete:
+            stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
         obs_feats = torch.zeros(self.n_rollout_threads, self.num_agents, self.obs_emb_size).to(self.device)
         hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, 1), dtype=np.int32)
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
@@ -143,7 +145,9 @@ class MatrixRunner(Runner):
                                                             tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
             actions[:, idx] = _t2n(action)
-            logits[:, idx] = logit.clone()
+            logits[:, idx] = logit.clone() if self.discrete else logit.mean.clone()
+            if not self.discrete:
+                stds[:, idx] = logit.stddev.clone()
             obs_feats[:, idx] = obs_feat.clone()
             action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
@@ -163,6 +167,7 @@ class MatrixRunner(Runner):
                 else:
                     # action_mean = bias_
                     action_mean = logits[:, agent_idx]+self.threshold*bias_
+                    action_std = stds[:, idx]
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)
