@@ -44,31 +44,32 @@ class FootballRunner(Runner):
                 for agent_id in range(self.num_agents):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
+            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
-                    rnn_states_critic, joint_actions, joint_action_log_probs, joint_values = self.collect(step)
+                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = self.collect(step)
                     
                 # Obser reward and next obs
-                env_actions = joint_actions if joint_actions is not None else hard_actions
+                env_actions = joint_actions if self.use_action_attention else hard_actions
                 obs, rewards, dones, infos = self.envs.step(np.squeeze(env_actions, axis=-1))
                 share_obs = obs.copy()
                 total_num_steps += (self.n_rollout_threads)
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values
+                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
                 
                 # insert data into buffer
                 self.insert(data)
 
             # compute return and update network
             self.compute()
-            if self.use_action_attention:
-                self.joint_compute()
+            # if self.use_action_attention:
+            #     self.joint_compute()
                 
-            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent, self.train_seq_epoch, self.train_sim][self.train_sim_seq]()
+            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
             
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -132,6 +133,8 @@ class FootballRunner(Runner):
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        if not self.discrete:
+            stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
   
         ordered_vertices = [i for i in range(self.num_agents)]
         for idx, agent_idx in enumerate(ordered_vertices):
@@ -164,42 +167,37 @@ class FootballRunner(Runner):
                                                             tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
             actions[:, idx] = _t2n(action)
-            logits[:, idx] = logit.clone()
+            logits[:, idx] = logit.clone() if self.discrete else logit.mean.clone()
+            if not self.discrete:
+                stds[:, idx] = logit.stddev.clone()
             obs_feats[:, idx] = obs_feat.clone()
             action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        joint_actions, joint_action_log_probs, joint_values = None, None, None
+        joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
+        joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
-            bias_, joint_values = self.action_attention.get_actions(logits, obs_feats, tau=self.temperature)
-            if self.discrete:
-                joint_dist = FixedCategorical(logits=logits+bias_)
-            else:
-                action_mean = logits+bias_
-                action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
-                joint_dist = FixedNormal(action_mean, action_std)
-            joint_actions = joint_dist.sample()
-            joint_action_log_probs = joint_dist.log_probs_joint(joint_actions)
-            joint_actions = _t2n(joint_actions)
-            joint_action_log_probs = _t2n(joint_action_log_probs)
-            joint_values = _t2n(joint_values)
             for agent_idx in range(self.num_agents):
-                ego_exclusive_action = actions
-                tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
-                _, action_log_prob, _, _, _, _ = self.trainer[agent_idx].policy.actor.evaluate_actions(
-                    self.buffer[agent_idx].obs[step],
-                    self.buffer[agent_idx].rnn_states[step],
-                    joint_actions[:,agent_idx],
-                    self.buffer[agent_idx].masks[step],
-                    ego_exclusive_action,
-                    tmp_execution_mask,
-                    tau=self.temperature
-                )
-                action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+                bias_, _, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+                if self.discrete:
+                    # Normalize
+                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    mixed_ = logits[:, agent_idx]+self.threshold*bias_
+                    mix_dist = FixedCategorical(logits=mixed_)
+                else:
+                    # action_mean = bias_
+                    action_mean = logits[:, agent_idx]+self.threshold*bias_
+                    action_std = stds[:, idx]
+                    mix_dist = FixedNormal(action_mean, action_std)
+                mix_actions = mix_dist.sample()
+                mix_action_log_probs = mix_dist.log_probs(mix_actions)
+                joint_actions[:, agent_idx] = _t2n(mix_actions)
+                action_log_probs[:, agent_idx] = _t2n(mix_action_log_probs)
+                rnn_states_joint = _t2n(rnn_states_joint)
 
-        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values
+        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
@@ -238,7 +236,7 @@ class FootballRunner(Runner):
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, joint_values = data
+            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = data
         
         dones_env = np.all(dones, axis=-1)
         if np.any(dones_env):
@@ -270,9 +268,9 @@ class FootballRunner(Runner):
                                         values[:, agent_id],
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
-                                        joint_actions=joint_actions,
+                                        joint_actions=joint_actions[:, agent_id],
                                         joint_action_log_probs=joint_action_log_probs,
-                                        joint_value_preds=joint_values
+                                        rnn_states_joint=rnn_states_joint
                                         )
 
     @torch.no_grad()

@@ -187,7 +187,7 @@ class SMACRunner(Runner):
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
         joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
             available_actions_all = np.stack([self.buffer[agent_idx].available_actions[step] for agent_idx in range(self.num_agents)],1)
