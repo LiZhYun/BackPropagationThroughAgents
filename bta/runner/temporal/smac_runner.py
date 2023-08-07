@@ -137,14 +137,14 @@ class SMACRunner(Runner):
     def collect(self, step):
         values = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim))
-        logits = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
-        obs_feats = torch.zeros(self.n_rollout_threads, self.num_agents, self.obs_emb_size).to(self.device)
+        logits = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(**self.tpdv)
+        obs_feats = torch.zeros(self.n_rollout_threads, self.num_agents, self.obs_emb_size).to(**self.tpdv)
         hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, 1), dtype=np.int32)
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         if not self.discrete:
-            stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
+            stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(**self.tpdv)
   
         ordered_vertices = [i for i in range(self.num_agents)]
         for idx, agent_idx in enumerate(ordered_vertices):
@@ -177,11 +177,11 @@ class SMACRunner(Runner):
                                                             available_actions=self.buffer[agent_idx].available_actions[step],
                                                             tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
-            actions[:, idx] = _t2n(action)
-            logits[:, idx] = logit.clone() if self.discrete else logit.mean.clone()
+            actions[:, agent_idx] = _t2n(action)
+            logits[:, agent_idx] = logit if self.discrete else logit.mean
             if not self.discrete:
-                stds[:, idx] = logit.stddev.clone()
-            obs_feats[:, idx] = obs_feat.clone()
+                stds[:, agent_idx] = logit.stddev
+            obs_feats[:, agent_idx] = obs_feat
             action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             values[:, agent_idx] = _t2n(value)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
@@ -193,7 +193,7 @@ class SMACRunner(Runner):
             available_actions_all = np.stack([self.buffer[agent_idx].available_actions[step] for agent_idx in range(self.num_agents)],1)
             available_actions_all = check(available_actions_all).to(**self.tpdv)
             for agent_idx in range(self.num_agents):
-                bias_, _, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(actions, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+                bias_, _, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
                 if self.discrete:
                     # Normalize
                     # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
