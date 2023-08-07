@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
-#SBATCH --time=72:00:00
+#SBATCH --time=120:00:00
 #SBATCH --array=0-4
 
 # exp param
@@ -21,7 +21,7 @@ exp="check"
 num_agents=10
 
 # train param
-num_env_steps=500000000
+num_env_steps=50000000
 episode_length=1000
 
 CUDA_VISIBLE_DEVICES=0 singularity exec --bind /scratch --nv /scratch/work/liz23/bpta.sif python ../../../train/train_football.py \
