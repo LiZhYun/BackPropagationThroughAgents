@@ -23,6 +23,7 @@ import igraph as ig
 from bta.algorithms.utils.util import check
 from bta.algorithms.utils.distributions import FixedCategorical, FixedNormal
 from functools import reduce
+import math
 
 def _t2n(x):
     return x.detach().cpu().numpy()
@@ -45,7 +46,11 @@ class SMACRunner(Runner):
                 for agent_id in range(self.num_agents):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
-            self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
+            if self.linear_decay:
+                self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
+            else:
+                self.threshold = 0. + (self.initial_threshold - 0.) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
@@ -155,17 +160,10 @@ class SMACRunner(Runner):
             if self.use_action_attention:
                 tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
             else:
-                if self.skip_connect:
-                    tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
-                                                    [torch.zeros(self.n_rollout_threads)] *
-                                                    (self.num_agents - agent_idx), -1).to(self.device)
-                else:
-                    if idx != 0:
-                        tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
-                            .unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
-                    else:
-                        tmp_execution_mask = torch.stack([torch.zeros(self.n_rollout_threads)] * self.num_agents, -1).to(self.device)
-
+                tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
+                                                [torch.zeros(self.n_rollout_threads)] *
+                                                (self.num_agents - agent_idx), -1).to(self.device)
+                
             value, action, action_log_prob, rnn_state, rnn_state_critic, logit, obs_feat \
                 = self.trainer[agent_idx].policy.get_actions(self.buffer[agent_idx].share_obs[step],
                                                             self.buffer[agent_idx].obs[step],
@@ -203,7 +201,7 @@ class SMACRunner(Runner):
                 else:
                     # action_mean = bias_
                     action_mean = logits[:, agent_idx]+self.threshold*bias_
-                    action_std = stds[:, idx]
+                    action_std = stds[:, agent_idx]
                     mix_dist = FixedNormal(action_mean, action_std)
                 mix_actions = mix_dist.sample()
                 mix_action_log_probs = mix_dist.log_probs(mix_actions)
@@ -224,16 +222,12 @@ class SMACRunner(Runner):
             # tmp_execution_mask = execution_masks[:, agent_idx]
             ego_exclusive_action = actions[:,0:self.num_agents]
             # tmp_execution_mask = execution_masks[:, agent_idx]
-            if self.skip_connect:
+            if self.use_action_attention:
+                tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * self.num_agents, -1).to(self.device)
+            else:
                 tmp_execution_mask = torch.stack([torch.ones(self.n_eval_rollout_threads)] * agent_idx +
                                                 [torch.zeros(self.n_eval_rollout_threads)] *
                                                 (self.num_agents - agent_idx), -1).to(self.device)
-            else:
-                if idx != 0:
-                    tmp_execution_mask = torch.zeros(self.num_agents).scatter_(-1, torch.tensor(ordered_vertices[idx-1]), 1.0)\
-                        .unsqueeze(0).repeat(self.n_eval_rollout_threads, 1).to(self.device)
-                else:
-                    tmp_execution_mask = torch.stack([torch.zeros(self.n_eval_rollout_threads)] * self.num_agents, -1).to(self.device)
 
             action, rnn_state \
                 = self.trainer[agent_idx].policy.act(eval_obs[:, agent_idx],
@@ -244,7 +238,7 @@ class SMACRunner(Runner):
                                                             available_actions=available_actions[:, agent_idx],
                                                             deterministic=True)
             hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
-            actions[:, idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
+            actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
 
         return actions, hard_actions, eval_rnn_states
