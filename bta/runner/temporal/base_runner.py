@@ -96,6 +96,7 @@ class Runner(object):
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
+        self.linear_decay = self.all_args.linear_decay
         self.train_sim_seq = self.all_args.train_sim_seq
         self.dual_clip_coeff = torch.tensor(1.0 + 0.005).to(**self.tpdv)
         self.skip_connect = self.all_args.skip_connect

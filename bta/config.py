@@ -1,5 +1,5 @@
 import argparse
-
+from bta.utils.util import args_str2bool
 
 def get_config():
     """
@@ -316,7 +316,7 @@ def get_config():
                         help='stacked agent layer')
     parser.add_argument("--random_train", action='store_true', default=False,
                         help='')
-    parser.add_argument("--linear_decay", action='store_true', default=False,
+    parser.add_argument("--linear_decay", type=args_str2bool, default=True, 
                         help='')
     parser.add_argument("--bc", action='store_false', default=True,
                         help='')

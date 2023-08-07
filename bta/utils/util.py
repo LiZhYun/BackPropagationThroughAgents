@@ -331,3 +331,10 @@ def generate_mask_from_order(agent_order, ego_exclusive):
                                                                    i + 1:]
             ], -1)
         return execution_mask.view(*shape[:-1], n_agents, n_agents - 1)
+
+def args_str2bool(flag: str):
+    assert flag == "True" or flag == "False"
+    if flag == "True":
+        return True
+    else:
+        return False
