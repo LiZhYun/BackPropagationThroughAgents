@@ -949,7 +949,7 @@ class Runner(object):
                 self.action_attention_optimizer.step()
                 
                 if self.decay_id == 3:
-                    threshold_loss = individual_loss.sum()
+                    threshold_loss = individual_loss.sum() - mix_dist_entropy
                     threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
                     self.threshold_optim.zero_grad()
                     threshold_loss.backward()
