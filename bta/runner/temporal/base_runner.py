@@ -955,16 +955,25 @@ class Runner(object):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
                     self.trainer[agent_idx].policy.action_attention_optimizer.step()
                 
+                if self.decay_id == 3:
+                    threshold_loss = individual_loss.sum()
+                    threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
+                    self.threshold_optim.zero_grad()
+                    threshold_loss.backward()
+                    self.threshold_optim.step()
+                    self.threshold_ = self.log_threshold.exp()
+                    self.threshold = self.threshold_.item()
+                
         num_updates = self.ppo_epoch * self.num_mini_batch
 
-        if self.decay_id == 3:
-            threshold_loss = (individual_loss/num_updates).mean()
-            threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
-            self.threshold_optim.zero_grad()
-            threshold_loss.backward()
-            self.threshold_optim.step()
-            self.threshold_ = self.log_threshold.exp()
-            self.threshold = self.threshold_.item()
+        # if self.decay_id == 3:
+        #     threshold_loss = (individual_loss/num_updates).mean()
+        #     threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
+        #     self.threshold_optim.zero_grad()
+        #     threshold_loss.backward()
+        #     self.threshold_optim.step()
+        #     self.threshold_ = self.log_threshold.exp()
+        #     self.threshold = self.threshold_.item()
 
         for agent_idx in range(self.num_agents):
             for k in train_infos[agent_idx].keys():
