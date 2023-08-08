@@ -54,7 +54,7 @@ class MujocoRunner(Runner):
                 self.threshold = 0. + (self.initial_threshold - 0.) * \
                     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
             elif self.decay_id == 2:
-                self.threshold = self.initial_threshold * math.pow(0.96,math.floor((episode)/10))
+                self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
             else:
                 self.threshold = max(self.initial_threshold - self.initial_threshold * (self.avg_act_grad_norm / (self.avg_att_grad_norm + 1e-6))*0.01, 0.)
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
