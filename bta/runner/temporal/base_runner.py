@@ -188,6 +188,10 @@ class Runner(object):
             self.trainer.append(tr)
         
         if self.use_action_attention:
+            from bta.algorithms.utils.action_attention import Action_Attention
+            self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], self.envs.share_observation_space[0], device = self.device)
+            self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.attention_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
+
             if self.decay_id == 3:
                 self.log_threshold = torch.tensor(np.log(self.initial_threshold), requires_grad=True, device=self.device)
                 self.threshold_ = self.log_threshold.exp()
@@ -879,42 +883,28 @@ class Runner(object):
                     else:
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
-                for agent_idx in range(self.num_agents):
-                    bias_, _, _ = self.trainer[agent_idx].policy.get_mix_actions(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
-                    if self.discrete:
-                        # Normalize
-                        # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                        mixed_ = logits_all[:, agent_idx] + self.threshold * bias_
-                        # mixed_ = bias_
-                        mixed_[available_actions_all[:, agent_idx] == 0] = -1e10
-                        mix_dist = FixedCategorical(logits=mixed_)
-                    else:
-                        action_mean = logits_all[:, agent_idx] + self.threshold * bias_
-                        action_std = stds_all[:, agent_idx]
-                        # action_mean = bias_
-                        mix_dist = FixedNormal(action_mean, action_std)
+                bias_, _, _ = self.action_attention(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
+                if self.discrete:
+                    # Normalize
+                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    mixed_ = logits_all + self.threshold * bias_
+                    # mixed_ = bias_
+                    mixed_[available_actions_all == 0] = -1e10
+                    mix_dist = FixedCategorical(logits=mixed_)
+                else:
+                    action_mean = logits_all + self.threshold * bias_
+                    action_std = stds_all
+                    # action_mean = bias_
+                    mix_dist = FixedNormal(action_mean, action_std)
 
-                    mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch[:, agent_idx]).to(**self.tpdv))
-                    mix_dist_entropy = mix_dist.entropy().mean()
-                    new_actions_logprob_all_batch[:, agent_idx] = mix_action_log_probs
-                    dist_entropy_all[agent_idx] = mix_dist_entropy
+                mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
+                mix_dist_entropy = mix_dist.entropy().mean(0).sum()
+                new_actions_logprob_all_batch = mix_action_log_probs
+                dist_entropy_all = mix_dist_entropy
 
-                imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
-                each_agent_imp_weights = imp_weights.detach()
-                each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
-                each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
-                mask_self = 1 - torch.eye(self.num_agents)
-                mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
-                each_agent_imp_weights[..., mask_self == 0] = 1.0
-                prod_imp_weights = each_agent_imp_weights.prod(dim=2)
-                prod_imp_weights = torch.clamp(
-                            prod_imp_weights,
-                            1.0 - self.clip_param/2,
-                            1.0 + self.clip_param/2,
-                        )
-
-                surr1 = imp_weights * adv_targ_all * prod_imp_weights
-                surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
+                imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
+                surr1 = imp_weights * adv_targ_all
+                surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
     
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
@@ -927,23 +917,26 @@ class Runner(object):
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
-                    self.trainer[agent_idx].policy.action_attention_optimizer.zero_grad()
+                self.action_attention_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
-                (policy_loss - dist_entropy_all.sum() * self.entropy_coef).backward()
-                
+                (policy_loss - dist_entropy_all * self.entropy_coef).backward()
+
+                if self._use_max_grad_norm:
+                    attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
+                else:
+                    attention_grad_norm = get_gard_norm(self.action_attention.parameters())
+                    
                 for agent_idx in range(self.num_agents):
                     
                     if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                        attention_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.action_attention.parameters(), self.max_grad_norm)
                     else:
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
-                        attention_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.action_attention.parameters())
                     
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_ratio'] += imp_weights.mean().item()
-                    train_infos[agent_idx]['joint_dist_entropy'] += dist_entropy_all[agent_idx].item()
+                    train_infos[agent_idx]['joint_dist_entropy'] += dist_entropy_all.item()
                     if int(torch.__version__[2]) < 5:
                         train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
@@ -953,7 +946,7 @@ class Runner(object):
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
-                    self.trainer[agent_idx].policy.action_attention_optimizer.step()
+                self.action_attention_optimizer.step()
                 
                 if self.decay_id == 3:
                     threshold_loss = individual_loss.sum()
@@ -1112,9 +1105,9 @@ class Runner(object):
                 policy_critic = self.trainer[agent_id].policy.critic
                 torch.save(policy_critic.state_dict(), str(self.save_dir) + "/critic_agent" + str(agent_id) + postfix)
                 torch.save(self.trainer[agent_id].policy.critic_optimizer.state_dict(), str(self.save_dir) + "/critic_opti" + str(agent_id) + postfix)
-                if self.use_action_attention:
-                    torch.save(self.trainer[agent_id].policy.action_attention.state_dict(), str(self.save_dir) + "/attention_agent" + str(agent_id) + postfix)
-                    torch.save(self.trainer[agent_id].policy.action_attention_optimizer.state_dict(), str(self.save_dir) + "/attention_opti" + str(agent_id) + postfix)
+        if self.use_action_attention:
+            torch.save(self.action_attention.state_dict(), str(self.save_dir) + "/attention_agent" + postfix)
+            torch.save(self.action_attention_optimizer.state_dict(), str(self.save_dir) + "/attention_opti" + postfix)
 
     def restore(self):
         if self.use_action_attention:

@@ -161,23 +161,22 @@ class MatrixRunner(Runner):
         joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
         joint_action_log_probs, rnn_states_joint = None, None
         if self.use_action_attention:
-            for agent_idx in range(self.num_agents):
-                bias_, action_std, rnn_states_joint = self.trainer[agent_idx].policy.get_mix_actions(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
-                if self.discrete:
-                    # Normalize
-                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    # mix_dist = FixedCategorical(logits=bias_)
-                    mix_dist = FixedCategorical(logits=logits[:, agent_idx]+self.threshold*bias_)
-                else:
-                    # action_mean = bias_
-                    action_mean = logits[:, agent_idx]+self.threshold*bias_
-                    action_std = stds[:, agent_idx]
-                    mix_dist = FixedNormal(action_mean, action_std)
-                mix_actions = mix_dist.sample()
-                mix_action_log_probs = mix_dist.log_probs(mix_actions)
-                joint_actions[:, agent_idx] = _t2n(mix_actions)
-                action_log_probs[:, agent_idx] = _t2n(mix_action_log_probs)
-                rnn_states_joint = _t2n(rnn_states_joint)
+            bias_, _, rnn_states_joint = self.action_attention(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+            rnn_states_joint = _t2n(rnn_states_joint)
+            if self.discrete:
+                # Normalize
+                # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                # mix_dist = FixedCategorical(logits=bias_)
+                mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)
+            else:
+                # action_mean = bias_
+                action_mean = logits+self.threshold*bias_
+                action_std = stds
+                mix_dist = FixedNormal(action_mean, action_std)
+            mix_actions = mix_dist.sample()
+            mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+            joint_actions = _t2n(mix_actions)
+            action_log_probs = _t2n(mix_action_log_probs)  
 
         return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
 

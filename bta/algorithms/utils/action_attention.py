@@ -21,7 +21,7 @@ def init_(m, gain=0.01, activate=False):
     return init(m, nn.init.orthogonal_, lambda x: nn.init.constant_(x, 0), gain=gain)
 
 class Action_Attention(nn.Module):
-    def __init__(self, args, action_space, agent_id, share_obs_space, device=torch.device("cpu")):
+    def __init__(self, args, action_space, share_obs_space, device=torch.device("cpu")):
         super(Action_Attention, self).__init__()
         self._use_naive_recurrent_policy = args.use_naive_recurrent_policy
         self._use_recurrent_policy = args.use_recurrent_policy
@@ -41,7 +41,6 @@ class Action_Attention(nn.Module):
         self._dropout = args.dropout
         self._use_policy_active_masks = args.use_policy_active_masks
         self.num_agents = args.num_agents
-        self.agent_id = agent_id
         self.tpdv = dict(dtype=torch.float32, device=device)
 
         share_obs_shape = get_shape_from_obs_space(share_obs_space)
@@ -64,16 +63,16 @@ class Action_Attention(nn.Module):
             action_dim = action_space.n
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
-            self.std_x_coef = 1.
-            self.std_y_coef = 0.5
-            log_std = torch.ones(action_dim) * self.std_x_coef
-            self.log_std = torch.nn.Parameter(log_std)
+            # self.std_x_coef = 1.
+            # self.std_y_coef = 0.5
+            # log_std = torch.ones(action_dim) * self.std_x_coef
+            # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -118,20 +117,21 @@ class Action_Attention(nn.Module):
             mlp_obs_rep = self.mlp(obs_rep)
             obs_features = torch.cat([obs_features, mlp_obs_rep], dim=1)
         
-        obs_features = obs_features.unsqueeze(1)
+        obs_features = obs_features.unsqueeze(1).repeat(1, self.num_agents, 1)
 
-        x = self.feat_encoder(self.logit_encoder(x)+obs_features)
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x)
+
+        x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1))
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
-        x = self.layer_norm(x)[:, self.agent_id]
-        # x = x.mean(1)
-
+        x = self.layer_norm(x)
+        
         bias_ = self.head(x)
 
         action_std = None
-        if not self.discrete:
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+        # if not self.discrete:
+        #     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states
 
@@ -146,7 +146,7 @@ class MixerBlock(nn.Module):
         self.h = heads
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(token_factor*num_agents) if token_factor != 0 else 1
+        token_dim = int(token_factor*dims) if token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
