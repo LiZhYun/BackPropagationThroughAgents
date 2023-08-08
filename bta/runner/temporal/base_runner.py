@@ -99,6 +99,7 @@ class Runner(object):
         self.decay_id = self.all_args.decay_id
         self.avg_act_grad_norm = 0
         self.avg_att_grad_norm = 0
+        self.avg_ratio = 0
         self.train_sim_seq = self.all_args.train_sim_seq
         self.dual_clip_coeff = torch.tensor(1.0 + 0.005).to(**self.tpdv)
         self.skip_connect = self.all_args.skip_connect
@@ -185,6 +186,13 @@ class Runner(object):
                                     agent_id)
             self.buffer.append(bu)
             self.trainer.append(tr)
+        
+        if self.use_action_attention:
+            if self.decay_id == 3:
+                self.log_threshold = torch.tensor(np.log(self.initial_threshold), requires_grad=True, device=self.device)
+                self.threshold_ = self.log_threshold.exp()
+                self.threshold = self.threshold_.item()
+                self.threshold_optim = torch.optim.Adam([self.log_threshold], lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
         
             
     def run(self):
@@ -726,6 +734,7 @@ class Runner(object):
         #     advantages_all = advantages_all.reshape(-1, 1)
 
         # self.bc_train(advs, train_infos)
+        individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
@@ -778,7 +787,7 @@ class Runner(object):
                     joint_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
                     train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                 dist_entropy_all = torch.zeros(self.num_agents).to(**self.tpdv)
-                individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
+                # individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
                 share_obs_all = []
                 masks_all = []
                 for agent_idx in range(self.num_agents):
@@ -826,7 +835,6 @@ class Runner(object):
                     masks_all.append(masks_batch)
 
                     # # actor update
-                    # ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
 
                     # # # dual clip
                     # # cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
@@ -847,7 +855,7 @@ class Runner(object):
 
                     # policy_loss = policy_action_loss
 
-                    # individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
+                    individual_loss[agent_idx] += -torch.sum(action_log_probs_kl, dim=-1, keepdim=True).mean()
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -865,6 +873,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.critic_optimizer.step()
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
+                    # train_infos[agent_idx]['ratio'] += ratio.item()
                     if int(torch.__version__[2]) < 5:
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                     else:
@@ -945,8 +954,17 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
                     self.trainer[agent_idx].policy.action_attention_optimizer.step()
-    
+                
         num_updates = self.ppo_epoch * self.num_mini_batch
+
+        if self.decay_id == 3:
+            threshold_loss = (individual_loss/num_updates).mean()
+            threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
+            self.threshold_optim.zero_grad()
+            threshold_loss.backward()
+            self.threshold_optim.step()
+            self.threshold_ = self.log_threshold.exp()
+            self.threshold = self.threshold_.item()
 
         for agent_idx in range(self.num_agents):
             for k in train_infos[agent_idx].keys():
