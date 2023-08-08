@@ -96,7 +96,9 @@ class Runner(object):
         self.tpdv = dict(dtype=torch.float32, device=self.device)
 
         self.inner_clip_param = self.all_args.inner_clip_param
-        self.linear_decay = self.all_args.linear_decay
+        self.decay_id = self.all_args.decay_id
+        self.avg_act_grad_norm = 0
+        self.avg_att_grad_norm = 0
         self.train_sim_seq = self.all_args.train_sim_seq
         self.dual_clip_coeff = torch.tensor(1.0 + 0.005).to(**self.tpdv)
         self.skip_connect = self.all_args.skip_connect
@@ -950,6 +952,10 @@ class Runner(object):
             for k in train_infos[agent_idx].keys():
                 train_infos[agent_idx][k] /= num_updates    
             self.buffer[agent_idx].after_update()
+            self.avg_act_grad_norm += train_infos[agent_idx]['actor_grad_norm'].item()
+            self.avg_att_grad_norm += train_infos[agent_idx]['attention_grad_norm'].item()
+        self.avg_act_grad_norm /= self.num_agents
+        self.avg_att_grad_norm /= self.num_agents
         return train_infos
 
     def bc_train(self, advs, train_infos):

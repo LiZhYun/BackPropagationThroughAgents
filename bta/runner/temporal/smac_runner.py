@@ -46,11 +46,15 @@ class SMACRunner(Runner):
                 for agent_id in range(self.num_agents):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
-            if self.linear_decay:
+            if self.decay_id == 0:
                 self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-            else:
+            elif self.decay_id == 1:
                 self.threshold = 0. + (self.initial_threshold - 0.) * \
                     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
+            elif self.decay_id == 2:
+                self.threshold = self.initial_threshold * math.pow(0.96,math.floor((episode)/10))
+            else:
+                self.threshold = max(self.initial_threshold - self.initial_threshold * (self.avg_act_grad_norm / (self.avg_att_grad_norm + 1e-6))*0.01, 0.)
             self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
@@ -120,6 +124,7 @@ class SMACRunner(Runner):
                 
                 for i in range(self.num_agents):
                     train_infos[i]['dead_ratio'] = 1 - self.buffer[i].active_masks.sum() / reduce(lambda x, y: x*y, list(self.buffer[i].active_masks.shape)) 
+                    train_infos[i]["threshold"] = self.threshold
                     
                 self.log_train(train_infos, total_num_steps)
 
