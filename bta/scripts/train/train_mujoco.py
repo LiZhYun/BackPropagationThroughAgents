@@ -136,7 +136,7 @@ def main(args):
                          dir=str(run_dir),
                          job_type="training",
                          reinit=True,
-                         tags=all_args.wandb_tags,
+                         tags=["exp"],
                          )
     else:
         if not run_dir.exists():

@@ -159,6 +159,7 @@ def main(args):
                          dir=str(run_dir),
                          job_type="training",
                          reinit=True,
+                         tags=["exp"],
                          )
         all_args = wandb.config # for wandb sweep
     else:
