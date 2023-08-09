@@ -366,7 +366,7 @@ class Runner(object):
             action_loss.backward()
 
             if self._use_max_grad_norm:
-                action_grad_norm = nn.utils.clip_grad_norm_(one_hot_actions, 0.05)
+                action_grad_norm = nn.utils.clip_grad_norm_(one_hot_actions, self.max_grad_norm)
             else:
                 action_grad_norm = get_gard_norm(one_hot_actions)
 
