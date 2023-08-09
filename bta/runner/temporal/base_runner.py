@@ -259,7 +259,7 @@ class Runner(object):
 
     def train_seq_agent_m(self):
         train_infos = []
-        factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
         ordered_vertices = np.arange(self.num_agents)
         # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
@@ -275,7 +275,7 @@ class Runner(object):
             for updated_agent in updated_agents_order:
                 multiplier = np.concatenate([factor[:agent_id], factor[agent_id+1:]],0)
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
-                multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
+                multiplier = np.ones((self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
                 # multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
                 action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
@@ -354,17 +354,26 @@ class Runner(object):
                                                             self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                             tau=self.temperature)
 
+            action_loss = torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True)
+            if self._use_policy_active_masks:
+                active_masks_batch = check(self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])).to(**self.tpdv)
+                action_loss = (action_loss * active_masks_batch).sum() / active_masks_batch.sum()
+            else:
+                action_loss = action_loss.mean()
+
             self.trainer[agent_id].policy.actor_optimizer.zero_grad()
-            # if self.inner_clip_param == 0.:
-            torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
-            # else:
-            # torch.sum(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob.detach()), 1.0 - self.clip_param/2, 1.0 + self.clip_param/2),dim=-1, keepdim=True), dim=-1, keepdim=True).mean().backward()
+
+            action_loss.backward()
+
+            if self._use_max_grad_norm:
+                action_grad_norm = nn.utils.clip_grad_norm_(one_hot_actions, 0.5)
+            else:
+                action_grad_norm = get_gard_norm(one_hot_actions)
+
             for i in range(self.num_agents):
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
-            # if self.inner_clip_param == 0.:
-            factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
-            # else:
-            # factor[agent_id] = _t2n(torch.prod(torch.clamp(torch.exp(new_actions_logprob-old_actions_logprob), 1.0 - self.clip_param/2, 1.0 + self.clip_param/2),dim=-1, keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
+
+            factor[agent_id] = _t2n(torch.exp(new_actions_logprob-old_actions_logprob.detach()).reshape(self.episode_length,self.n_rollout_threads,self.action_shape))
             train_infos.append(train_info)      
             self.buffer[agent_id].after_update()
 
