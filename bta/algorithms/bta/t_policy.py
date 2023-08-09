@@ -259,14 +259,14 @@ class T_POLICY():
         #     train_actions = torch.exp(action_log_probs) / ((torch.exp(action_log_probs)*(1-torch.exp(action_log_probs))).detach() + 1e-5)
         # actor update
         imp_weights = torch.exp(action_log_probs - old_action_log_probs)
-        # factor_batch = torch.clamp(
-        #                 factor_batch,
-        #                 1.0 - self.clip_param/2,
-        #                 1.0 + self.clip_param/2,
-        #             ) 
-        surr1 = imp_weights * adv_targ+ \
+        factor_batch = torch.clamp(
+                        factor_batch,
+                        1.0 - self.clip_param/2,
+                        1.0 + self.clip_param/2,
+                    ) 
+        surr1 = imp_weights * adv_targ * factor_batch+ \
             imp_weights.detach() * action_grad * train_actions
-        surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ + \
+        surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ * factor_batch + \
             torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions
 
         if self._use_policy_active_masks:

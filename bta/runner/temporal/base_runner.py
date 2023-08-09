@@ -276,8 +276,8 @@ class Runner(object):
                 multiplier = np.concatenate([factor[:agent_id], factor[agent_id+1:]],0)
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
                 multiplier = np.ones((self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
-                # multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
-                action_grad_per_agent += action_grad[updated_agent][agent_id]
+                multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
+                action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
@@ -354,7 +354,8 @@ class Runner(object):
                                                             self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                             tau=self.temperature)
 
-            action_loss = torch.sum(torch.exp(new_actions_logprob-old_actions_logprob.detach()) * check(self.buffer[agent_id].advg.reshape(-1, *self.buffer[agent_id].advg.shape[2:])).to(**self.tpdv), dim=-1, keepdim=True)
+            advg_batch = check(self.buffer[agent_id].advg.reshape(-1, *self.buffer[agent_id].advg.shape[2:])).to(**self.tpdv)
+            action_loss = torch.sum(torch.exp(new_actions_logprob-old_actions_logprob.detach()) * torch.clamp(advg_batch, min=0.), dim=-1, keepdim=True)
             if self._use_policy_active_masks:
                 active_masks_batch = check(self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])).to(**self.tpdv)
                 action_loss = (action_loss * active_masks_batch).sum() / active_masks_batch.sum()
