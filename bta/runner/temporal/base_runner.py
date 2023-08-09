@@ -277,7 +277,7 @@ class Runner(object):
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
                 multiplier = np.ones((self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
                 # multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
-                action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
+                action_grad_per_agent += action_grad[updated_agent][agent_id]
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
             available_actions = None if self.buffer[agent_id].available_actions is None \
                 else self.buffer[agent_id].available_actions[:-1].reshape(-1, *self.buffer[agent_id].available_actions.shape[2:])
