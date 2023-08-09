@@ -23,7 +23,7 @@ exp="check"
 num_agents=3
 
 # train param
-num_env_steps=25000000
+num_env_steps=20000000
 episode_length=200
 # train_sim_seq=$1
 
@@ -32,5 +32,4 @@ srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../
 --num_agents ${num_agents} --num_env_steps ${num_env_steps} --episode_length ${episode_length} \
 --save_interval 200000 --log_interval 200000 --use_eval --eval_interval 400000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --representation "simple115v2" --rewards "scoring,checkpoints" --n_rollout_threads 50 --num_mini_batch 2 \
---user_name "zhiyuanli" --wandb_name "zhiyuanli" --attn_N 2
-# --train_sim_seq ${train_sim_seq}
+--user_name "zhiyuanli" --wandb_name "zhiyuanli"

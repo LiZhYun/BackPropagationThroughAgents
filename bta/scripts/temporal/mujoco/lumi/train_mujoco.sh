@@ -25,8 +25,9 @@ exp="check"
 # mix_id=$3
 # token_factor=$3
 # channel_factor=$4
-# threshold=$3
-decay_factor=$3
+threshold=$3
+decay_factor=$4
+decay_id=$5
 
 echo "env is ${env}, scenario is ${scenario}, agent_conf is ${agent_conf}, algo is ${algo}, exp is ${exp}"
 
@@ -35,6 +36,6 @@ srun singularity exec -B $SCRATCH $SCRATCH/mujo_gfoot_v2.sif /bin/sh -c "export 
 --seed $SLURM_ARRAY_TASK_ID --n_rollout_threads 40 --num_mini_batch 1 --episode_length 100 --num_env_steps 10000000 \
 --use_eval --eval_interval 25 --eval_episodes 5 --add_center_xy --use_state_agent --use_value_active_masks --use_policy_active_masks \
 --layer_N 2 --ppo_epoch 5 --lr 3e-4 --critic_lr 3e-4 --attention_lr 3e-4 --std_x_coef 1 --std_y_coef 5e-1 --entropy_coef 0 --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
---use_action_attention --decay_factor ${decay_factor}"
-# --attn_N ${layer} --token_factor ${token_factor} --channel_factor ${channel_factor} --threshold ${threshold} --decay_factor ${decay_factor}
+--use_action_attention --threshold ${threshold} --decay_factor ${decay_factor} --decay_id ${decay_id}"
+#--threshold ${threshold} --decay_factor ${decay_factor} --decay_id ${decay_id}
         

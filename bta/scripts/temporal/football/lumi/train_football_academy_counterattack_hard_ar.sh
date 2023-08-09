@@ -22,8 +22,8 @@ exp="check"
 num_agents=4
 
 # train param
-num_env_steps=50000000
-episode_length=1000
+num_env_steps=20000000
+episode_length=200
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
 --env_name ${env} --scenario_name ${scenario} --algorithm_name ${algo} --experiment_name ${exp} --seed $SLURM_ARRAY_TASK_ID \

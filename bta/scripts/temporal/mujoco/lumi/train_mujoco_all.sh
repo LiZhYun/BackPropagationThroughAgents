@@ -12,5 +12,6 @@ sbatch train_mujoco.sh Walker2d-v2 2x3
 sbatch train_mujoco.sh Walker2d-v2 3x2
 sbatch train_mujoco.sh Walker2d-v2 6x1
 sbatch train_mujoco.sh Humanoid-v2 17x1
+sbatch train_mujoco.sh HumanoidStandup-v2 17x1
 sbatch train_mujoco.sh Hopper-v2 3x1
 sbatch train_mujoco.sh Reacher-v2 2x1
