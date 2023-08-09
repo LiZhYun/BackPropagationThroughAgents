@@ -265,9 +265,9 @@ class T_POLICY():
         #                 1.0 + self.clip_param/2,
         #             ) 
         surr1 = imp_weights * adv_targ * factor_batch+ \
-            imp_weights.detach() * action_grad * train_actions * adv_targ
+            imp_weights.detach() * action_grad * train_actions
         surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ * factor_batch + \
-            imp_weights.detach() * action_grad * train_actions * adv_targ
+            torch.clamp(imp_weights.detach(), 1.0 - self.clip_param, 1.0 + self.clip_param) * action_grad * train_actions
 
         if self._use_policy_active_masks:
             policy_action_loss = (-torch.sum(torch.min(surr1, surr2),

@@ -259,7 +259,7 @@ class Runner(object):
 
     def train_seq_agent_m(self):
         train_infos = []
-        factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
+        factor = np.ones((self.num_agents, self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32)
         action_grad = np.zeros((self.num_agents, self.num_agents, self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
         ordered_vertices = np.arange(self.num_agents)
         # ordered_vertices = np.random.permutation(np.arange(self.num_agents)) 
@@ -275,7 +275,7 @@ class Runner(object):
             for updated_agent in updated_agents_order:
                 multiplier = np.concatenate([factor[:agent_id], factor[agent_id+1:]],0)
                 multiplier = np.concatenate([multiplier[:updated_agent], multiplier[updated_agent+1:]],0)
-                multiplier = np.ones((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
+                multiplier = np.ones((self.episode_length, self.n_rollout_threads, self.action_shape), dtype=np.float32) if multiplier is None else np.prod(multiplier, 0)
                 # multiplier = np.clip(multiplier, 1 - self.clip_param/2, 1 + self.clip_param/2)
                 action_grad_per_agent += action_grad[updated_agent][agent_id] * multiplier
             self.buffer[agent_id].update_action_grad(action_grad_per_agent)
@@ -354,7 +354,7 @@ class Runner(object):
                                                             self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:]),
                                                             tau=self.temperature)
 
-            action_loss = torch.sum(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),dim=-1, keepdim=True), dim=-1, keepdim=True)
+            action_loss = torch.sum(torch.exp(new_actions_logprob-old_actions_logprob.detach()) * check(self.buffer[agent_id].advg.reshape(-1, *self.buffer[agent_id].advg.shape[2:])).to(**self.tpdv), dim=-1, keepdim=True)
             if self._use_policy_active_masks:
                 active_masks_batch = check(self.buffer[agent_id].active_masks[:-1].reshape(-1, *self.buffer[agent_id].active_masks.shape[2:])).to(**self.tpdv)
                 action_loss = (action_loss * active_masks_batch).sum() / active_masks_batch.sum()
@@ -373,7 +373,7 @@ class Runner(object):
             for i in range(self.num_agents):
                 action_grad[agent_id][i] = _t2n(one_hot_actions.grad[:,i]).reshape(self.episode_length,self.n_rollout_threads,self.action_dim)
 
-            factor[agent_id] = _t2n(torch.prod(torch.exp(new_actions_logprob-old_actions_logprob.detach()),-1,keepdim=True).reshape(self.episode_length,self.n_rollout_threads,1))
+            factor[agent_id] = _t2n(torch.exp(new_actions_logprob-old_actions_logprob.detach()).reshape(self.episode_length,self.n_rollout_threads,self.action_shape))
             train_infos.append(train_info)      
             self.buffer[agent_id].after_update()
 
@@ -752,8 +752,7 @@ class Runner(object):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
                 mini_batch_size = data_chunks // self.num_mini_batch
-                # rand = torch.randperm(data_chunks).numpy()
-                rand = torch.arange(data_chunks).numpy()
+                rand = torch.randperm(data_chunks).numpy()
                 sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
                 data_generators = [self.buffer[agent_idx].recurrent_generator(advs[agent_idx], self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
             elif self._use_naive_recurrent:

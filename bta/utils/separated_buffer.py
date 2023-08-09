@@ -247,7 +247,7 @@ class SeparatedReplayBuffer(object):
         if sampler == None:
             rand = torch.randperm(batch_size).numpy()
             sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
-
+        self.advg = advantages
         one_hot_actions = self.one_hot_actions.reshape(-1, *self.one_hot_actions.shape[2:])
         if self.args.env_name == "GoBigger":
             share_obs = flatten(self.share_obs[:-1])
@@ -320,7 +320,7 @@ class SeparatedReplayBuffer(object):
             "to be greater than or equal to the number of "
             "data chunk length ({}).".format(n_rollout_threads, episode_length, data_chunk_length))
         assert data_chunks >= 2, ("need larger batch size")
-
+        self.advg = advantages
         if sampler == None:
             rand = torch.randperm(data_chunks).numpy()
             sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(num_mini_batch)]
