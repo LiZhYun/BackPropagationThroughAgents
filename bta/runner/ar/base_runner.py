@@ -141,7 +141,7 @@ class Runner(object):
         self.buffer = []
         for agent_id in range(self.num_agents):
             # algorithm
-            tr = TrainAlgo(self.all_args, self.policy[agent_id], agent_id, device = self.device)
+            tr = TrainAlgo(self.all_args, self.policy[agent_id], agent_id, self.envs.action_space[agent_id], device = self.device)
             # buffer
             share_observation_space = self.envs.share_observation_space[agent_id] if self.use_centralized_V else self.envs.observation_space[agent_id]
             #print("Base runner", agent_id, share_observation_space)
