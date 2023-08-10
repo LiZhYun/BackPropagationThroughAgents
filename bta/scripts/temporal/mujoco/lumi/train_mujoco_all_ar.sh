@@ -15,3 +15,10 @@ sbatch train_mujoco_ar.sh Humanoid-v2 17x1
 sbatch train_mujoco_ar.sh HumanoidStandup-v2 17x1
 sbatch train_mujoco_ar.sh Hopper-v2 3x1
 sbatch train_mujoco_ar.sh Reacher-v2 2x1
+sbatch train_mujoco_ar.sh coupled_half_cheetah 1p1
+sbatch train_mujoco_ar.sh manyagent_swimmer 10x2
+sbatch train_mujoco_ar.sh manyagent_swimmer 20x1
+sbatch train_mujoco_ar.sh manyagent_swimmer 5x4
+sbatch train_mujoco_ar.sh manyagent_ant 2x3
+sbatch train_mujoco_ar.sh manyagent_ant 3x2
+sbatch train_mujoco_ar.sh manyagent_ant 6x1

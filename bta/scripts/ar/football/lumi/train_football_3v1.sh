@@ -6,8 +6,9 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
-#SBATCH --time=1-00:00:00
-#SBATCH --partition=small
+#SBATCH --time=3-00:00:00
+#SBATCH --partition=small-g
+#SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
 #SBATCH --array=0-4
 
@@ -21,7 +22,7 @@ exp="check"
 num_agents=3
 
 # train param
-num_env_steps=25000000
+num_env_steps=20000000
 episode_length=200
 
 srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../../train/train_football.py \
