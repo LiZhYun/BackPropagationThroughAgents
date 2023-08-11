@@ -226,7 +226,8 @@ class FootballRunner(Runner):
                                                             eval_masks[:, agent_idx],
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
-                                                            deterministic=True)
+                                                            deterministic=True,
+                                                            tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
             actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
