@@ -14,5 +14,5 @@ sbatch train_smac_ar.sh 10gen_protoss 20v23
 sbatch train_smac_ar.sh 10gen_terran 5v5
 sbatch train_smac_ar.sh 10gen_terran 10v10
 sbatch train_smac_ar.sh 10gen_terran 10v11
-sbatch train_smac_ar.sh 10gen_terran 20v20
-sbatch train_smac_ar.sh 10gen_terran 20v23
+sbatch train_smac_ar.sh 10gen_terran 20v20 
+sbatch train_smac_ar.sh 10gen_terran 20v23 #todo

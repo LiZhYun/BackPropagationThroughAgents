@@ -53,18 +53,18 @@ class R_MAPPO():
         else:
             self.value_normalizer = None
         
-        self.automatic_target_entropy_tuning = args.automatic_target_entropy_tuning
-        self.log_entropy_coef = torch.tensor(np.log(0.1), requires_grad=True, device=self.device)
-        if action_space.__class__.__name__ == "Discrete":
-            if self.automatic_target_entropy_tuning:
-                self.log_entropy_coef = torch.tensor(np.log(np.e), requires_grad=True, device=self.device)
-                self.target_entropy = (torch.log(torch.tensor(action_space.n))).to(self.device)
-            else:
-                self.target_entropy = (torch.log(torch.tensor(action_space.n))*0.2).to(self.device)
-        elif action_space.__class__.__name__ == "Box":
-            self.target_entropy = -torch.prod(torch.tensor(action_space.shape[0]).to(self.device)).item()
-        self.entropy_coef = self.log_entropy_coef.exp()
-        self.entropy_coef_optim = torch.optim.Adam([self.log_entropy_coef], lr=self.entropy_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+        # self.automatic_target_entropy_tuning = args.automatic_target_entropy_tuning
+        # self.log_entropy_coef = torch.tensor(np.log(0.1), requires_grad=True, device=self.device)
+        # if action_space.__class__.__name__ == "Discrete":
+        #     if self.automatic_target_entropy_tuning:
+        #         self.log_entropy_coef = torch.tensor(np.log(np.e), requires_grad=True, device=self.device)
+        #         self.target_entropy = (torch.log(torch.tensor(action_space.n))).to(self.device)
+        #     else:
+        #         self.target_entropy = (torch.log(torch.tensor(action_space.n))*0.2).to(self.device)
+        # elif action_space.__class__.__name__ == "Box":
+        #     self.target_entropy = -torch.prod(torch.tensor(action_space.shape[0]).to(self.device)).item()
+        # self.entropy_coef = self.log_entropy_coef.exp()
+        # self.entropy_coef_optim = torch.optim.Adam([self.log_entropy_coef], lr=self.entropy_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
 
 
     def cal_value_loss(self, values, value_preds_batch, return_batch, active_masks_batch):
@@ -179,13 +179,13 @@ class R_MAPPO():
 
         self.policy.critic_optimizer.step()
 
-        entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()
+        # entropy_loss = -(self.log_entropy_coef * (action_log_probs + self.target_entropy).detach()).mean()
 
-        self.entropy_coef_optim.zero_grad()
-        entropy_loss.backward()
-        self.entropy_coef_optim.step()
+        # self.entropy_coef_optim.zero_grad()
+        # entropy_loss.backward()
+        # self.entropy_coef_optim.step()
 
-        self.entropy_coef = self.log_entropy_coef.exp()
+        # self.entropy_coef = self.log_entropy_coef.exp()
 
         return value_loss, critic_grad_norm, policy_loss, dist_entropy, actor_grad_norm, imp_weights
 
