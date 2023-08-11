@@ -54,7 +54,7 @@ class FootballRunner(Runner):
                 self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
-            self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 1.0)
+            self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 0.05)
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
             for step in range(self.episode_length):
