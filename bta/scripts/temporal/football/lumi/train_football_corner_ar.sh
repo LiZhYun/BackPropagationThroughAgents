@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=football-corner-temporal
-#SBATCH --output=./out/football-corner-temporal_%A_%a.out # Name of stdout output file
-#SBATCH --error=./out/football-corner-temporal_err_%A_%a.txt  # Name of stderr error file
+#SBATCH --job-name=football-corner-temporal_ar
+#SBATCH --output=./out/football-corner-temporal_ar_%A_%a.out # Name of stdout output file
+#SBATCH --error=./out/football-corner-temporal_ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=20
@@ -10,7 +10,7 @@
 #SBATCH --partition=small-g
 #SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
-#SBATCH --array=0-9
+#SBATCH --array=0-4
 
 # exp param
 env="Football"

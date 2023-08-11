@@ -10,7 +10,7 @@
 #SBATCH --partition=small-g
 #SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
-#SBATCH --array=0-9
+#SBATCH --array=0-4
 
 #--gpus-per-node=1
 # exp param

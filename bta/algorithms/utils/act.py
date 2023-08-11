@@ -115,7 +115,11 @@ class ACTLayer(nn.Module):
         elif self.discrete_action:
             action_logits = self.action_out(x, available_actions)
             if deterministic:
-                actions = action_logits.mode()
+                if rsample:
+                    actions = action_logits.rsample(tau=tau) 
+                    actions = torch.argmax(actions, -1, keepdim=True).to(torch.int)
+                else:
+                    actions = action_logits.mode()
                 action_log_probs = action_logits.log_probs(actions)
             elif rsample:
                 actions = action_logits.rsample(tau=tau) 

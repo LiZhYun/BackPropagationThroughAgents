@@ -52,7 +52,7 @@ class SMACRunner(Runner):
             elif self.decay_id == 1:
                 self.threshold = 0. + (self.initial_threshold - 0.) * \
                     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
-                self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
+                self.temperature = 0.01 + (self.all_args.temperature - 0.01) * \
                     (1 + math.cos(math.pi * (episode) / (episodes-1))) / 2
             elif self.decay_id == 2:
                 self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
@@ -244,7 +244,8 @@ class SMACRunner(Runner):
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
                                                             available_actions=available_actions[:, agent_idx],
-                                                            deterministic=True)
+                                                            deterministic=True,
+                                                            tau=self.temperature)
             hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
             actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
