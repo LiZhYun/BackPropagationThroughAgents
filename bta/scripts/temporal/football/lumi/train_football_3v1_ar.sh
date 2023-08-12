@@ -4,15 +4,14 @@
 #SBATCH --error=./out/football-3v1-temporal_ar_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=20
-#SBATCH --mem=64G
-#SBATCH --time=3-00:00:00
-#SBATCH --partition=small-g
-#SBATCH --gpus-per-node=1
+#SBATCH --time=2-00:00:00
+#SBATCH --partition=standard
 #SBATCH --account=project_462000277
-#SBATCH --array=0-4
+#SBATCH --array=0-7
 
 #--gpus-per-node=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=64G
 # exp param
 env="Football"
 scenario="academy_3_vs_1_with_keeper"
