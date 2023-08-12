@@ -9,7 +9,7 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
 #SBATCH --time=72:00:00
-#SBATCH --array=0-4
+#SBATCH --array=0-7
 
 # exp param
 env="Football"
