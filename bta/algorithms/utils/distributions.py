@@ -1,10 +1,12 @@
 import math
+import numpy as np
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 from bta.algorithms.utils.util import init, relaxed_softmax
+from bta.utils.util import get_weights, set_weights
 
 """
 Modify standard PyTorch distributions so they are compatible with this code.
@@ -130,6 +132,40 @@ class DiagGaussian(nn.Module):
         action_mean = self.fc_mean(x)
         action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
         return FixedNormal(action_mean, action_std)
+    
+class GaussianTorch(nn.Module):
+    def __init__(self, mu, std, train=True, device=torch.device("cpu")):
+        super(GaussianTorch, self).__init__()
+
+        self.device = device
+        self.tpdv = dict(dtype=torch.float32, device=device)
+        self.std_x_coef = 1
+        self.std_y_coef = 0.5
+        self._mu = nn.Parameter(torch.as_tensor(mu), requires_grad=train)
+        self.log_std = torch.nn.Parameter(torch.as_tensor(std) * self.std_x_coef, requires_grad=train) 
+
+        self.to(device)
+
+    def forward(self):
+        action_mean = self._mu
+        action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+        return FixedNormal(action_mean, action_std)
+    
+    def set_weights(self, weights):
+        set_weights([self._mu], weights[0], self.device)
+        set_weights([self.log_std], weights[1], self.device)
+
+    @staticmethod
+    def from_weights(weights, device=torch.device("cpu")):
+        mu = weights[0]
+        log_std = weights[1]
+        return GaussianTorch(mu, log_std, train=True, device=device)
+
+    def get_weights(self):
+        mu_weights = get_weights([self._mu])
+        log_std = get_weights([self.log_std])
+
+        return np.concatenate([mu_weights, log_std])
 
 
 class Bernoulli(nn.Module):

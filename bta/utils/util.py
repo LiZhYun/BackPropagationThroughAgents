@@ -338,3 +338,60 @@ def args_str2bool(flag: str):
         return True
     else:
         return False
+    
+def get_weights(parameters):
+    """
+    Function used to get the value of a set of torch parameters as
+    a single vector of values.
+
+    Args:
+        parameters (list): list of parameters to be considered.
+
+    Returns:
+        A numpy vector consisting of all the values of the vectors.
+
+    """
+    weights = list()
+
+    for p in parameters:
+        w = p.data.detach().cpu().numpy()
+        weights.append(w.flatten())
+
+    weights = np.concatenate(weights, 0)
+
+    return weights
+
+def set_weights(parameters, weights, device):
+    """
+    Function used to set the value of a set of torch parameters given a
+    vector of values.
+
+    Args:
+        parameters (list): list of parameters to be considered;
+        weights (numpy.ndarray): array of the new values for
+            the parameters;
+        use_cuda (bool): whether the parameters are cuda tensors or not;
+
+    """
+    idx = 0
+    for p in parameters:
+        shape = p.data.shape
+
+        c = 1
+        for s in shape:
+            c *= s
+
+        if type(weights) == np.ndarray:
+            w = np.reshape(weights[idx:idx + c], shape)
+        else:
+            w = np.array(weights)
+
+        # if not use_cuda:
+        #     w_tensor = torch.from_numpy(w).type(p.data.dtype)
+        # else:
+        w_tensor = torch.from_numpy(w).type(p.data.dtype).to(device)
+
+        p.data = w_tensor
+        idx += c
+
+    assert idx == weights.size

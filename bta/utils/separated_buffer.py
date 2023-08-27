@@ -58,6 +58,7 @@ class SeparatedReplayBuffer(object):
         self.value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.joint_value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.returns = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
+        self.ce_gaes = np.zeros_like(self.returns)
         
         self.mix_action = False
         self.act_shape = get_shape_from_act_space(act_space)
@@ -84,7 +85,8 @@ class SeparatedReplayBuffer(object):
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
 
         self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
-        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, self.act_shape), dtype=np.float32)
+        self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
+        self.thresholds = np.zeros((self.episode_length, self.n_rollout_threads, 1, 1), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)
@@ -96,7 +98,9 @@ class SeparatedReplayBuffer(object):
         self.step = 0
 
     def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, hard_actions, action_log_probs,
-               value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, joint_actions=None, joint_action_log_probs=None, joint_value_preds=None, rnn_states_joint=None):
+               value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, 
+               joint_actions=None, joint_action_log_probs=None, joint_value_preds=None, rnn_states_joint=None,
+               thresholds=None):
         self.share_obs[self.step + 1] = share_obs.copy()
         self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -121,6 +125,8 @@ class SeparatedReplayBuffer(object):
             self.joint_actions[self.step] = joint_actions.copy()
         if joint_action_log_probs is not None:
             self.joint_action_log_probs[self.step] = joint_action_log_probs.copy()
+        if thresholds is not None:
+            self.thresholds[self.step] = thresholds if type(thresholds)==float else thresholds.copy()
         
         self.step = (self.step + 1) % self.episode_length
         
@@ -201,22 +207,23 @@ class SeparatedReplayBuffer(object):
         else:
             if self._use_gae:
                 self.value_preds[-1] = next_value
-                gae = 0
-                # if self.use_action_attention:
-                #     imp_weights = np.prod(np.exp(self.action_log_probs[:] - self.joint_action_log_probs[:,:,self.agent_idx]), -1, keepdims=True)
-                #     clipped_weights = np.clip(imp_weights, a_max=1.0, a_min=None)
-                #     truncated_weights = np.minimum(imp_weights, clipped_weights)
-                #     for step in reversed(range(self.rewards.shape[0])):
-                #         rho = truncated_weights[step + 1] if step < self.rewards.shape[0] - 1 else 1
-                #         if self._use_popart or self._use_valuenorm:
-                #             delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
-                #             gae = delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * gae
-                #             self.returns[step] = gae + value_normalizer.denormalize(self.value_preds[step])
-                #         else:
-                #             delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
-                #             gae = delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * gae
-                #             self.returns[step] = gae + self.value_preds[step]
+                ce_gae = 0
+                if self.use_action_attention:
+                    imp_weights = np.prod(np.exp(self.action_log_probs[:] - self.joint_action_log_probs[:]), -1, keepdims=True)
+                    clipped_weights = np.clip(imp_weights, a_max=1.0, a_min=None)
+                    truncated_weights = np.minimum(imp_weights, clipped_weights)
+                    for step in reversed(range(self.rewards.shape[0])):
+                        rho = truncated_weights[step + 1] if step < self.rewards.shape[0] - 1 else 1
+                        if self._use_popart or self._use_valuenorm:
+                            ce_delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
+                            ce_gae = ce_delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * ce_gae
+                            self.ce_gaes[step] = ce_gae + rho * value_normalizer.denormalize(self.value_preds[step])
+                        else:
+                            ce_delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
+                            ce_gae = ce_delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * ce_gae
+                            self.ce_gaes[step] = ce_gae + rho * self.value_preds[step]
                 # else:
+                gae = 0
                 for step in reversed(range(self.rewards.shape[0])):
                     if self._use_popart or self._use_valuenorm:
                         delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
@@ -268,12 +275,14 @@ class SeparatedReplayBuffer(object):
             action_grad = self.action_grad.reshape(-1, self.action_grad.shape[-1])
         value_preds = self.value_preds[:-1].reshape(-1, 1)
         returns = self.returns[:-1].reshape(-1, 1)
+        ce_gaes = self.ce_gaes[:-1].reshape(-1, 1)
         masks = self.masks[:-1].reshape(-1, 1)
         active_masks = self.active_masks[:-1].reshape(-1, 1)
         action_log_probs = self.action_log_probs.reshape(-1, *self.action_log_probs.shape[2:])
         advantages = advantages.reshape(-1, 1)
         joint_actions = self.joint_actions.reshape(-1, *self.joint_actions.shape[2:])
         joint_action_log_probs = self.joint_action_log_probs.reshape(-1, *self.joint_action_log_probs.shape[2:])
+        thresholds = self.thresholds.reshape(-1, *self.thresholds.shape[2:])
 
         for indices in sampler:
             # obs size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[index,Dim]
@@ -289,11 +298,13 @@ class SeparatedReplayBuffer(object):
                 available_actions_batch = None
             value_preds_batch = value_preds[indices]
             return_batch = returns[indices]
+            ce_gaes_batch = ce_gaes[indices]
             masks_batch = masks[indices]
             active_masks_batch = active_masks[indices]
             old_action_log_probs_batch = action_log_probs[indices]
             joint_actions_batch = joint_actions[indices]
             joint_action_log_probs_batch = joint_action_log_probs[indices]
+            thresholds_batch = thresholds[indices]
             if advantages is None:
                 adv_targ = None
             else:
@@ -307,7 +318,11 @@ class SeparatedReplayBuffer(object):
             else:
                 action_grad_batch = action_grad[indices]
 
-            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch
+            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, \
+                actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, \
+                masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, \
+                available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, \
+                joint_action_log_probs_batch, thresholds_batch, ce_gaes_batch
 
     def recurrent_generator(self, advantages, num_mini_batch, data_chunk_length, sampler=None):
         episode_length, n_rollout_threads = self.rewards.shape[0:2]
@@ -342,13 +357,15 @@ class SeparatedReplayBuffer(object):
             action_grad = _cast(self.action_grad)
         value_preds = _cast(self.value_preds[:-1])
         returns = _cast(self.returns[:-1])
+        ce_gaes = _cast(self.ce_gaes[:-1])
         masks = _cast(self.masks[:-1])
         active_masks = _cast(self.active_masks[:-1])
         rnn_states_joint = self.rnn_states_joint[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_joint.shape[2:])
         rnn_states = self.rnn_states[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states.shape[2:])
         rnn_states_critic = self.rnn_states_critic[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_critic.shape[2:])
         joint_actions = _cast(self.joint_actions)
-        joint_action_log_probs = self.joint_action_log_probs.transpose(1, 0, 2, 3).reshape(-1, *self.joint_action_log_probs.shape[2:])
+        joint_action_log_probs = _cast(self.joint_action_log_probs)
+        thresholds = self.thresholds.transpose(1, 0, 2, 3).reshape(-1, *self.thresholds.shape[2:])
 
         if self.available_actions is not None:
             available_actions = _cast(self.available_actions[:-1])
@@ -364,6 +381,7 @@ class SeparatedReplayBuffer(object):
             available_actions_batch = []
             value_preds_batch = []
             return_batch = []
+            ce_gae_batch = []
             masks_batch = []
             active_masks_batch = []
             old_action_log_probs_batch = []
@@ -372,6 +390,7 @@ class SeparatedReplayBuffer(object):
             action_grad_batch = []
             joint_actions_batch = []
             joint_action_log_probs_batch = []
+            thresholds_batch = []
 
             for index in indices:
                 ind = index * data_chunk_length
@@ -392,6 +411,7 @@ class SeparatedReplayBuffer(object):
                     action_grad_batch.append(action_grad[ind:ind+data_chunk_length])
                 value_preds_batch.append(value_preds[ind:ind+data_chunk_length])
                 return_batch.append(returns[ind:ind+data_chunk_length])
+                ce_gae_batch.append(ce_gaes[ind:ind+data_chunk_length])
                 masks_batch.append(masks[ind:ind+data_chunk_length])
                 active_masks_batch.append(active_masks[ind:ind+data_chunk_length])
                 old_action_log_probs_batch.append(action_log_probs[ind:ind+data_chunk_length])
@@ -402,6 +422,7 @@ class SeparatedReplayBuffer(object):
                 rnn_states_joint_batch.append(rnn_states_joint[ind])
                 joint_actions_batch.append(joint_actions[ind:ind+data_chunk_length])
                 joint_action_log_probs_batch.append(joint_action_log_probs[ind:ind+data_chunk_length])
+                thresholds_batch.append(thresholds[ind:ind+data_chunk_length])
 
             L, N = data_chunk_length, mini_batch_size
 
@@ -419,12 +440,14 @@ class SeparatedReplayBuffer(object):
                 action_grad_batch = np.stack(action_grad_batch)
             value_preds_batch = np.stack(value_preds_batch)
             return_batch = np.stack(return_batch)
+            ce_gae_batch = np.stack(ce_gae_batch)
             masks_batch = np.stack(masks_batch)
             active_masks_batch = np.stack(active_masks_batch)
             old_action_log_probs_batch = np.stack(old_action_log_probs_batch)
             adv_targ = np.stack(adv_targ)
             joint_actions_batch = np.stack(joint_actions_batch)
             joint_action_log_probs_batch = np.stack(joint_action_log_probs_batch)
+            thresholds_batch = np.stack(thresholds_batch)
 
             # States is just a (N, -1) from_numpy
             rnn_states_batch = np.stack(rnn_states_batch).reshape(N, *self.rnn_states.shape[2:])
@@ -450,14 +473,19 @@ class SeparatedReplayBuffer(object):
                 action_grad_batch = None
             value_preds_batch = _flatten(L, N, value_preds_batch)
             return_batch = _flatten(L, N, return_batch)
+            ce_gae_batch = _flatten(L, N, ce_gae_batch)
             masks_batch = _flatten(L, N, masks_batch)
             active_masks_batch = _flatten(L, N, active_masks_batch)
             old_action_log_probs_batch = _flatten(L, N, old_action_log_probs_batch)
             adv_targ = _flatten(L, N, adv_targ)
             joint_actions_batch = _flatten(L, N, joint_actions_batch)
             joint_action_log_probs_batch = _flatten(L, N, joint_action_log_probs_batch)
+            thresholds_batch = _flatten(L, N, thresholds_batch)
 
-            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch
+            yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, \
+                one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, \
+                old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, \
+                joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch
 
     def naive_recurrent_generator(self, advantages, num_mini_batch):
         n_rollout_threads = self.rewards.shape[1]

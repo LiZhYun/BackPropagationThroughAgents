@@ -26,7 +26,10 @@ import math
 
 
 def _t2n(x):
-    return x.detach().cpu().numpy()
+    if type(x) == float:
+        return x
+    else:
+        return x.detach().cpu().numpy()
 
 class MujocoRunner(Runner):
     """Runner class to perform training, evaluation. and data collection for SMAC. See parent class for details."""
@@ -66,7 +69,7 @@ class MujocoRunner(Runner):
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
-                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = self.collect(step)
+                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds = self.collect(step)
 
                 env_actions = joint_actions if self.use_action_attention else hard_actions
                 # Obser reward and next obs
@@ -81,7 +84,7 @@ class MujocoRunner(Runner):
                         train_episode_rewards[t] = 0
 
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
+                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds
 
                 # insert data into buffer
                 self.insert(data)
@@ -90,7 +93,7 @@ class MujocoRunner(Runner):
             self.compute()
             # if self.use_action_attention:
             #     self.joint_compute()
-            train_infos = self.joint_train() if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
+            train_infos = self.joint_train(episode) if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -120,8 +123,8 @@ class MujocoRunner(Runner):
                 print("average episode rewards for team is {}".format(total_mean))
                 for a in range(self.num_agents):
                     train_infos[a]["average_episode_rewards"] = total_mean
-                    train_infos[a]["threshold"] = self.threshold
-
+                    train_infos[a]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
+                print("threshold is {}".format(train_infos[0]["threshold"]))
                 self.log_train(train_infos, total_num_steps)
 
                 if len(done_episodes_rewards) > 0:
@@ -194,26 +197,33 @@ class MujocoRunner(Runner):
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
         joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
-        joint_action_log_probs, rnn_states_joint = None, None
+        joint_action_log_probs, rnn_states_joint = np.zeros((self.n_rollout_threads, self.num_agents, 1)), np.zeros((self.n_rollout_threads, self.recurrent_N, self.hidden_size))
         if self.use_action_attention:
             bias_, _, rnn_states_joint = self.action_attention(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
             rnn_states_joint = _t2n(rnn_states_joint)
+            if self.decay_id == 3:
+                self.threshold = self.threshold_dist().sample([self.n_rollout_threads]).view(self.n_rollout_threads, -1, 1)
+                self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
                 # Normalize
                 # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
+                ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)
             else:
                 # action_mean = bias_
                 action_mean = logits+self.threshold*bias_
                 action_std = stds
+                ind_dist = FixedNormal(logits, action_std)
                 mix_dist = FixedNormal(action_mean, action_std)
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+            ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
             joint_actions = _t2n(mix_actions)
-            action_log_probs = _t2n(mix_action_log_probs)  
+            action_log_probs = _t2n(ind_action_log_probs)  
+            joint_action_log_probs = _t2n(mix_action_log_probs)  
 
-        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint
+        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold)
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
@@ -246,7 +256,7 @@ class MujocoRunner(Runner):
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = data
+            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds = data
 
         dones_env = np.all(dones, axis=1)
 
@@ -277,8 +287,9 @@ class MujocoRunner(Runner):
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
                                         joint_actions=joint_actions[:, agent_id],
-                                        joint_action_log_probs=joint_action_log_probs,
-                                        rnn_states_joint=rnn_states_joint
+                                        joint_action_log_probs=joint_action_log_probs[:, agent_id],
+                                        rnn_states_joint=rnn_states_joint,
+                                        thresholds=thresholds
                                         )
 
     @torch.no_grad()
