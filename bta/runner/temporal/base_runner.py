@@ -202,9 +202,9 @@ class Runner(object):
                 # self.threshold_optim = torch.optim.Adam([self.log_threshold], lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
                 self.threshold_dist = GaussianTorch(self.initial_threshold, 5., device=self.device)
                 self.threshold_target_dist = GaussianTorch(0, -5., train=False, device=self.device)
-                self.max_kl = 1e-6
+                self.max_kl = 1e-5
                 self.threshold_optimizer = torch.optim.Adam(self.threshold_dist.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
-            self.lambda1 = torch.tensor(0.5, requires_grad=True, device=self.device).float()
+            self.lambda1 = torch.tensor(0.1, requires_grad=True, device=self.device).float()
             self.lambda1_optim = torch.optim.Adam([self.lambda1], lr=self.all_args.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
         
             
@@ -1073,7 +1073,7 @@ class Runner(object):
                                 kl_div = torch.distributions.kl.kl_divergence(dist(), self.threshold_target_dist())
                                 mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
 
-                                return _t2n(kl_div), \
+                                return _t2n(kl_div*0) if step<=100 else _t2n(kl_div), \
                                     np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
                                         np.float64)
 
