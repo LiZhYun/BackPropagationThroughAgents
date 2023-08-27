@@ -204,7 +204,7 @@ class Runner(object):
                 self.threshold_target_dist = GaussianTorch(0, -5., train=False, device=self.device)
                 self.max_kl = 1e-6
                 self.threshold_optimizer = torch.optim.Adam(self.threshold_dist.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
-            self.lambda1 = torch.tensor(0.01, requires_grad=True, device=self.device).float()
+            self.lambda1 = torch.tensor(0.5, requires_grad=True, device=self.device).float()
             self.lambda1_optim = torch.optim.Adam([self.lambda1], lr=self.all_args.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
         
             
