@@ -104,6 +104,7 @@ class Action_Attention(nn.Module):
         self.to(device)
 
     def forward(self, x, obs_rep, rnn_states, masks):
+        N = x.shape[0] // self.num_agents
         x = check(x).to(**self.tpdv)
         obs_rep = check(obs_rep).to(**self.tpdv)
         rnn_states = check(rnn_states).to(**self.tpdv)
@@ -117,11 +118,9 @@ class Action_Attention(nn.Module):
             mlp_obs_rep = self.mlp(obs_rep)
             obs_features = torch.cat([obs_features, mlp_obs_rep], dim=1)
         
-        obs_features = obs_features.unsqueeze(1).repeat(1, self.num_agents, 1)
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(x.shape[0], 1, 1).to(x)
-
-        x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1))
+        x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep)
@@ -133,7 +132,7 @@ class Action_Attention(nn.Module):
         # if not self.discrete:
         #     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
-        return bias_, action_std, rnn_states
+        return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 
 class MixerBlock(nn.Module):
     """

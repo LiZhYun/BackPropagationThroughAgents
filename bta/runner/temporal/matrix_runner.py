@@ -165,9 +165,12 @@ class MatrixRunner(Runner):
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
         joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape), dtype=np.int32)
-        joint_action_log_probs, rnn_states_joint = np.zeros((self.n_rollout_threads, self.num_agents, 1)), np.zeros((self.n_rollout_threads, self.recurrent_N, self.hidden_size))
+        joint_action_log_probs, rnn_states_joint = np.zeros((self.n_rollout_threads, self.num_agents, 1)), np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         if self.use_action_attention:
-            bias_, _, rnn_states_joint = self.action_attention(logits, self.buffer[0].share_obs[step], self.buffer[0].rnn_states_joint[step], self.buffer[0].masks[step])
+            share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
+            rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
+            masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
+            bias_, _, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads]).view(self.n_rollout_threads, -1, 1)
@@ -180,7 +183,7 @@ class MatrixRunner(Runner):
                 mix_dist = FixedCategorical(logits=logits+bias_)
             else:
                 # action_mean = bias_
-                action_mean = logits+bias_
+                action_mean = (logits+bias_)/2
                 action_std = stds
                 ind_dist = FixedNormal(logits, action_std)
                 mix_dist = FixedNormal(action_mean, action_std)
@@ -251,7 +254,7 @@ class MatrixRunner(Runner):
                                         masks[:, agent_id],
                                         joint_actions=joint_actions[:, agent_id],
                                         joint_action_log_probs=joint_action_log_probs[:, agent_id],
-                                        rnn_states_joint=rnn_states_joint,
+                                        rnn_states_joint=rnn_states_joint[:, agent_id],
                                         thresholds=thresholds
                                         )
 
