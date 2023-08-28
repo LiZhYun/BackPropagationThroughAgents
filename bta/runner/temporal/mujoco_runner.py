@@ -205,7 +205,7 @@ class MujocoRunner(Runner):
             bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
-                self.threshold = self.threshold_dist().sample([self.n_rollout_threads]).view(self.n_rollout_threads, -1, 1)
+                self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
                 # Normalize
