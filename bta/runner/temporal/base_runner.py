@@ -815,6 +815,7 @@ class Runner(object):
                 share_obs_all = []
                 rnn_states_joint_all = []
                 masks_all = []
+                individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
@@ -867,32 +868,32 @@ class Runner(object):
                     ce_gae_batch_all[:, agent_idx] = ce_gae_batch
                     return_batch_all[:, agent_idx] = return_batch
 
-                    # ce_adv_copy = ce_gae_batch.clone()
-                    # ce_adv_copy[active_masks_batch == 0.0] = torch.nan
-                    # mean_ce_adv = torch.nanmean(ce_adv_copy)
-                    # std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
-                    # ce_adv = (ce_gae_batch - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
+                    ce_adv_copy = ce_gae_batch.clone()
+                    ce_adv_copy[active_masks_batch == 0.0] = torch.nan
+                    mean_ce_adv = torch.nanmean(ce_adv_copy)
+                    std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
+                    ce_adv = (ce_gae_batch - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
 
-                    # # actor update
-                    # ratio = torch.prod(torch.exp(action_log_probs_kl - old_joint_action_log_probs_batch),dim=-1,keepdim=True)
-                    # # dual clip
-                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
+                    # actor update
+                    ratio = torch.prod(torch.exp(action_log_probs_kl - old_joint_action_log_probs_batch),dim=-1,keepdim=True)
+                    # dual clip
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
 
-                    # surr1 = cliped_ratio * ce_adv
-                    # surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param/2, 1.0 + self.clip_param/2) * ce_adv
+                    surr1 = cliped_ratio * ce_adv
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * ce_adv
 
-                    # # # BC
-                    # # surr1 = action_log_probs_kl
-                    # # surr2 = action_log_probs_kl
+                    # # BC
+                    # surr1 = action_log_probs_kl
+                    # surr2 = action_log_probs_kl
 
-                    # if self._use_policy_active_masks:
-                    #     policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
-                    #                                     dim=-1,
-                    #                                     keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
-                    # else:
-                    #     policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
+                    if self._use_policy_active_masks:
+                        policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
+                                                        dim=-1,
+                                                        keepdim=True) * active_masks_batch).sum() / active_masks_batch.sum()
+                    else:
+                        policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                    # policy_loss = policy_action_loss
+                    policy_loss = policy_action_loss
 
                     # self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
 
@@ -905,7 +906,7 @@ class Runner(object):
                     
                     # self.trainer[agent_idx].policy.actor_optimizer.step()
 
-                    # individual_loss[agent_idx] += -torch.sum(action_log_probs_kl, dim=-1, keepdim=True).mean()
+                    individual_loss[agent_idx] = policy_loss - dist_entropy * self.entropy_coef
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -1003,13 +1004,13 @@ class Runner(object):
                 # else:
                 #     ce_constrain_loss = ce_constrain_loss.mean(dim=0).sum()
 
-                # for agent_idx in range(self.num_agents):
-                #     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
+                for agent_idx in range(self.num_agents):
+                    self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.action_attention_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
 
-                (policy_loss - mix_dist_entropy * self.entropy_coef).backward()
+                (policy_loss - mix_dist_entropy * self.entropy_coef + individual_loss.sum()).backward()
 
                 # lambda1 = softplus(self.lambda1).item()
 
@@ -1019,29 +1020,28 @@ class Runner(object):
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                 else:
-                    attention_grad_norm = get_gard_norm(self.action_attention.parameters())
-                
-                self.action_attention_optimizer.step()
+                    attention_grad_norm = get_gard_norm(self.action_attention.parameters())   
                     
                 for agent_idx in range(self.num_agents):
                     
-                    # if self._use_max_grad_norm:
-                    #     actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                    # else:
-                    #     actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                    if self._use_max_grad_norm:
+                        actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
+                    else:
+                        actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                     
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_ratio'] += imp_weights.mean().item()
                     train_infos[agent_idx]['joint_dist_entropy'] += mix_dist_entropy.item()
                     if int(torch.__version__[2]) < 5:
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                     else:
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm.item()
 
-                # for agent_idx in range(self.num_agents):
-                #     self.trainer[agent_idx].policy.actor_optimizer.step()
+                for agent_idx in range(self.num_agents):
+                    self.trainer[agent_idx].policy.actor_optimizer.step()
+                self.action_attention_optimizer.step()
                 
 
                 # if epoch == 0:
@@ -1157,7 +1157,8 @@ class Runner(object):
                 #             else:
                 #                 print(
                 #                     "Warning! Context optimihation unsuccessful - will keep old values. Message: %s" % res.message)
-        # self.bc_train(advs, train_infos)
+        # if step % 10 == 0:
+        # self.bc_train(advs, train_infos) 
 
         num_updates = self.ppo_epoch * self.num_mini_batch
 

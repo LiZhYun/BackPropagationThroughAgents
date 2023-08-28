@@ -197,7 +197,7 @@ class MujocoRunner(Runner):
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
         joint_actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
-        joint_action_log_probs, rnn_states_joint = np.zeros((self.n_rollout_threads, self.num_agents, 1)), np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        joint_action_log_probs, rnn_states_joint = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape)), np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         if self.use_action_attention:
             share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
