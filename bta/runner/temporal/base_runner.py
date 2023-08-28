@@ -934,12 +934,12 @@ class Runner(object):
                 if self.discrete:
                     # Normalize
                     bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    mixed_ = logits_all.detach() + thresholds_batch * bias_
+                    mixed_ = logits_all.detach() + bias_
                     # mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
-                    action_mean = logits_all.detach() + thresholds_batch * bias_
+                    action_mean = (logits_all.detach() + bias_)/2
                     action_std = stds_all.detach()
                     # action_mean = bias_
                     mix_dist = FixedNormal(action_mean, action_std)

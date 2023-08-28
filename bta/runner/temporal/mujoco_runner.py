@@ -209,10 +209,10 @@ class MujocoRunner(Runner):
                 bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
                 ind_dist = FixedCategorical(logits=logits)
-                mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)
+                mix_dist = FixedCategorical(logits=logits+bias_)
             else:
                 # action_mean = bias_
-                action_mean = logits+self.threshold*bias_
+                action_mean = (logits+bias_)/2
                 action_std = stds
                 ind_dist = FixedNormal(logits, action_std)
                 mix_dist = FixedNormal(action_mean, action_std)
