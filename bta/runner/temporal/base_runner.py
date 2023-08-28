@@ -199,7 +199,7 @@ class Runner(object):
                 # self.threshold_optim = torch.optim.Adam([self.log_threshold], lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
                 self.threshold_dist = GaussianTorch(self.initial_threshold, 5., device=self.device)
                 self.threshold_target_dist = GaussianTorch(0, -5., train=False, device=self.device)
-                self.max_kl = 1e-4
+                self.max_kl = 1e-6
                 self.threshold_optimizer = torch.optim.Adam(self.threshold_dist.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
             self.lambda1 = torch.tensor(0.1, requires_grad=True, device=self.device).float()
             self.lambda1_optim = torch.optim.Adam([self.lambda1], lr=self.all_args.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
@@ -981,9 +981,9 @@ class Runner(object):
                 if self._use_policy_active_masks:
                     policy_action_loss = (
                         (policy_action_loss * active_masks_all).sum(dim=0) /
-                        active_masks_all.sum(dim=0)).sum()
+                        active_masks_all.sum(dim=0)).mean()
                 else:
-                    policy_action_loss = policy_action_loss.mean(dim=0).sum()
+                    policy_action_loss = policy_action_loss.mean(dim=0).mean()
                 # policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
                 # ce_adv = ce_return_batch_all - return_batch_all
