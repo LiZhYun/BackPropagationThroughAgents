@@ -277,7 +277,7 @@ def get_config():
     parser.add_argument("--train_sim_seq", type=int,
                         default=0, help="choose 0 to train seq agent first, 1 to train seq epoch first, 2 to train sim")
     parser.add_argument("--token_factor", type=float,
-                        default=4, help="default is 1")
+                        default=0.5, help="default is 1")
     parser.add_argument("--channel_factor", type=float,
                         default=4, help="default is 1")
     parser.add_argument('--max_edges', type=int, default=10)
@@ -310,14 +310,14 @@ def get_config():
                         help='average threshold')
     parser.add_argument("--threshold", type=float, default=1.,
                         help='tradoff between bpta and mappo')
-    parser.add_argument("--decay_factor", type=float, default=2.0,
+    parser.add_argument("--decay_factor", type=float, default=0.,
                         help='tradoff between bpta and mappo')
     parser.add_argument("--agent_layer", type=int, default=1,
                         help='stacked agent layer')
     parser.add_argument("--random_train", action='store_true', default=False,
                         help='')
     parser.add_argument("--decay_id", type=int,
-                        default=1, help="choose 0 to use linear_decay, 1 to use cos_decay, 2 to use step_decay")
+                        default=0, help="choose 0 to use linear_decay, 1 to use cos_decay, 2 to use step_decay")
     # parser.add_argument("--linear_decay", type=args_str2bool, default=False, 
     #                     help='')
     # parser.add_argument("--cos_decay", type=args_str2bool, default=True, 

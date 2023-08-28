@@ -217,11 +217,11 @@ class SeparatedReplayBuffer(object):
                         if self._use_popart or self._use_valuenorm:
                             ce_delta = self.rewards[step] + self.gamma * value_normalizer.denormalize(self.value_preds[step + 1]) * self.masks[step + 1] - value_normalizer.denormalize(self.value_preds[step])
                             ce_gae = ce_delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * ce_gae
-                            self.ce_gaes[step] = ce_gae + truncated_weights[step] * value_normalizer.denormalize(self.value_preds[step])
+                            self.ce_gaes[step] = ce_gae
                         else:
                             ce_delta = self.rewards[step] + self.gamma * self.value_preds[step + 1] * self.masks[step + 1] - self.value_preds[step]
                             ce_gae = ce_delta + rho * self.gamma * self.gae_lambda * self.masks[step + 1] * ce_gae
-                            self.ce_gaes[step] = ce_gae + truncated_weights[step] * self.value_preds[step]
+                            self.ce_gaes[step] = ce_gae
                 # else:
                 gae = 0
                 for step in reversed(range(self.rewards.shape[0])):

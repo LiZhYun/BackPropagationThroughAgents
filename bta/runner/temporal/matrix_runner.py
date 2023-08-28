@@ -96,8 +96,8 @@ class MatrixRunner(Runner):
                               int(total_num_steps / (end - start))))
                 for agent_id in range(self.num_agents):
                     train_infos[agent_id].update({"average_episode_rewards_by_eplength": np.mean(self.buffer[agent_id].rewards) * self.episode_length})
-                    train_infos[agent_id]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
-                print("threshold is {}".format(train_infos[0]["threshold"]))
+                    # train_infos[agent_id]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
+                # print("threshold is {}".format(train_infos[0]["threshold"]))
                 print("average episode rewards of agent 0 is {}".format(train_infos[0]["average_episode_rewards_by_eplength"]))
                 self.log_train(train_infos, total_num_steps)
                 self.log_env(self.env_infos, total_num_steps=total_num_steps)
@@ -174,7 +174,7 @@ class MatrixRunner(Runner):
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
                 # Normalize
-                # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)

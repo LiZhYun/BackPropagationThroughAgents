@@ -23,7 +23,7 @@ from bta.algorithms.utils.distributions import FixedCategorical, FixedNormal, Ga
 
 import psutil
 import socket
-from scipy.optimize import minimize, NonlinearConstraint, Bounds
+# from scipy.optimize import minimize, NonlinearConstraint, Bounds
 
 def _t2n(x):
     return x.detach().cpu().numpy()
@@ -100,9 +100,6 @@ class Runner(object):
         self.inner_clip_param = self.all_args.inner_clip_param
         self.eval_step_rewards = 0
         self.decay_id = self.all_args.decay_id
-        self.avg_act_grad_norm = 0
-        self.avg_att_grad_norm = 0
-        self.avg_ratio = 0
         self.train_sim_seq = self.all_args.train_sim_seq
         self.dual_clip_coeff = torch.tensor(1.0 + 0.005).to(**self.tpdv)
         self.skip_connect = self.all_args.skip_connect
@@ -761,7 +758,6 @@ class Runner(object):
         #     advantages_all = advantages_all.reshape(-1, 1)
 
         # self.bc_train(advs, train_infos)
-        individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
         for epoch in range(self.ppo_epoch):
             if self._use_recurrent_policy:
                 data_chunks = batch_size // self.data_chunk_length
@@ -799,7 +795,7 @@ class Runner(object):
                     old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
                     joint_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
                     train_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
-                    ce_return_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    ce_gae_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                     return_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                 else:
                     # adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
@@ -814,10 +810,8 @@ class Runner(object):
                     old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
                     joint_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
                     train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
-                    ce_return_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    ce_gae_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                     return_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
-                dist_entropy_all = torch.zeros(self.num_agents).to(**self.tpdv)
-                # individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
                 share_obs_all = []
                 masks_all = []
                 for agent_idx in range(self.num_agents):
@@ -868,20 +862,26 @@ class Runner(object):
                     train_actions_all_batch[:, agent_idx] = trains_action
                     share_obs_all.append(share_obs_batch)
                     masks_all.append(masks_batch)
-                    ce_return_batch_all[:, agent_idx] = ce_gae_batch
+                    ce_gae_batch_all[:, agent_idx] = ce_gae_batch
                     return_batch_all[:, agent_idx] = return_batch
 
+                    # ce_adv_copy = ce_gae_batch.clone()
+                    # ce_adv_copy[active_masks_batch == 0.0] = torch.nan
+                    # mean_ce_adv = torch.nanmean(ce_adv_copy)
+                    # std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
+                    # ce_adv = (ce_gae_batch - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
+
                     # # actor update
+                    # ratio = torch.prod(torch.exp(action_log_probs_kl - old_joint_action_log_probs_batch),dim=-1,keepdim=True)
+                    # # dual clip
+                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2.0).to(self.device))
 
-                    # # # dual clip
-                    # # cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
+                    # surr1 = cliped_ratio * ce_adv
+                    # surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param/2, 1.0 + self.clip_param/2) * ce_adv
 
-                    # surr1 = ratio * adv_targ
-                    # surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
-
-                    # # BC
-                    # surr1 = action_log_probs_kl
-                    # surr2 = action_log_probs_kl
+                    # # # BC
+                    # # surr1 = action_log_probs_kl
+                    # # surr2 = action_log_probs_kl
 
                     # if self._use_policy_active_masks:
                     #     policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
@@ -892,54 +892,84 @@ class Runner(object):
 
                     # policy_loss = policy_action_loss
 
-                    individual_loss[agent_idx] += -torch.sum(action_log_probs_kl, dim=-1, keepdim=True).mean()
+                    # self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
 
-                    #critic update
-                    value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
-                                    check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
+                    # (policy_loss - dist_entropy * self.entropy_coef).backward()
 
-                    self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
+                    # if self._use_max_grad_norm:
+                    #     actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
+                    # else:
+                    #     actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                    
+                    # self.trainer[agent_idx].policy.actor_optimizer.step()
 
-                    (value_loss * self.value_loss_coef).backward()
+                    # individual_loss[agent_idx] += -torch.sum(action_log_probs_kl, dim=-1, keepdim=True).mean()
 
-                    if self._use_max_grad_norm:
-                        critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                    else:
-                        critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+                    # #critic update
+                    # value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
+                    #                 check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
 
-                    self.trainer[agent_idx].policy.critic_optimizer.step()
+                    # self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
 
-                    train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    # train_infos[agent_idx]['ratio'] += ratio.item()
-                    if int(torch.__version__[2]) < 5:
-                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                    else:
-                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
+                    # (value_loss * self.value_loss_coef).backward()
 
-                bias_, _, _ = self.action_attention(logits_all, share_obs_all[0], rnn_states_joint_batch, masks_all[0])
+                    # if self._use_max_grad_norm:
+                    #     critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
+                    # else:
+                    #     critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+
+                    # self.trainer[agent_idx].policy.critic_optimizer.step()
+
+                    # train_infos[agent_idx]['value_loss'] += value_loss.item()
+                    # # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    # # train_infos[agent_idx]['ratio'] += ratio.mean().item()
+                    # if int(torch.__version__[2]) < 5:
+                    #     train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    #     # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                    # else:
+                    #     train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
+                    #     # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+
+                bias_, _, _ = self.action_attention(logits_all.detach(), share_obs_all[0], rnn_states_joint_batch, masks_all[0])
                 if self.discrete:
                     # Normalize
-                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    mixed_ = logits_all + thresholds_batch * bias_
+                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    mixed_ = logits_all.detach() + thresholds_batch * bias_
                     # mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
-                    action_mean = logits_all + thresholds_batch * bias_
-                    action_std = stds_all
+                    action_mean = logits_all.detach() + thresholds_batch * bias_
+                    action_std = stds_all.detach()
                     # action_mean = bias_
                     mix_dist = FixedNormal(action_mean, action_std)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
-                mix_dist_entropy = mix_dist.entropy().mean(0).sum()
+                mix_dist_entropy = mix_dist.entropy().sum(1).mean()
                 new_actions_logprob_all_batch = mix_action_log_probs
-                dist_entropy_all = mix_dist_entropy
 
                 imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
                 surr1 = imp_weights * adv_targ_all
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+
+                # imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                # each_agent_imp_weights = imp_weights.detach()
+                # each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
+                # each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
+                # mask_self = 1 - torch.eye(self.num_agents)
+                # mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
+                # each_agent_imp_weights[..., mask_self == 0] = 1.0
+                # prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+                # prod_imp_weights = torch.clamp(
+                #             prod_imp_weights,
+                #             1.0 - self.clip_param/2,
+                #             1.0 + self.clip_param/2,
+                #         )
+                
+                # surr1 = imp_weights * adv_targ_all * prod_imp_weights
+                # surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
     
-                policy_action_loss = torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
+                policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
                 if self._use_policy_active_masks:
                     policy_action_loss = (
@@ -947,196 +977,189 @@ class Runner(object):
                         active_masks_all.sum(dim=0)).sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
+                # policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
-                ce_adv = ce_return_batch_all - return_batch_all
-                ce_adv_copy = ce_adv.clone()
-                ce_adv_copy[active_masks_all == 0.0] = torch.nan
-                mean_ce_adv = torch.nanmean(ce_adv_copy)
-                std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
-                ce_adv = (ce_adv - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
-                ce_surr1 = imp_weights * ce_adv
-                ce_surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * ce_adv
+                # ce_adv = ce_return_batch_all - return_batch_all
+                # ce_adv_copy = ce_adv.clone()
+                # ce_adv_copy[active_masks_all == 0.0] = torch.nan
+                # mean_ce_adv = torch.nanmean(ce_adv_copy)
+                # std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
+                # ce_adv = (ce_adv - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
+                # ce_surr1 = imp_weights * ce_adv
+                # ce_surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * ce_adv
     
-                ce_constrain_loss = torch.sum(torch.min(ce_surr1, ce_surr2), dim=-1, keepdim=True)
-                dist_constrain_loss = ce_constrain_loss.clone()
+                # ce_constrain_loss = torch.sum(torch.min(ce_surr1, ce_surr2), dim=-1, keepdim=True)
+                # dist_constrain_loss = ce_constrain_loss.clone()
 
-                if self._use_policy_active_masks:
-                    ce_constrain_loss = (
-                        (ce_constrain_loss * active_masks_all).sum(dim=0) /
-                        active_masks_all.sum(dim=0)).sum()
-                else:
-                    ce_constrain_loss = ce_constrain_loss.mean(dim=0).sum()
+                # if self._use_policy_active_masks:
+                #     ce_constrain_loss = (
+                #         (ce_constrain_loss * active_masks_all).sum(dim=0) /
+                #         active_masks_all.sum(dim=0)).sum()
+                # else:
+                #     ce_constrain_loss = ce_constrain_loss.mean(dim=0).sum()
 
-                for agent_idx in range(self.num_agents):
-                    self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
+                # for agent_idx in range(self.num_agents):
+                #     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.action_attention_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
 
+                (policy_loss - mix_dist_entropy * self.entropy_coef).backward()
+
                 # lambda1 = softplus(self.lambda1).item()
 
-                lagrangian_loss = -(policy_loss + dist_entropy_all * self.entropy_coef - self.lambda1 * (ce_constrain_loss))
-                lagrangian_loss.backward()
+                # lagrangian_loss = -(policy_loss + dist_entropy_all * self.entropy_coef - self.lambda1 * (ce_constrain_loss))
+                # lagrangian_loss.backward()
 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                 else:
                     attention_grad_norm = get_gard_norm(self.action_attention.parameters())
+                
+                self.action_attention_optimizer.step()
                     
                 for agent_idx in range(self.num_agents):
                     
-                    if self._use_max_grad_norm:
-                        actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                    else:
-                        actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                    # if self._use_max_grad_norm:
+                    #     actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
+                    # else:
+                    #     actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                     
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_ratio'] += imp_weights.mean().item()
-                    train_infos[agent_idx]['joint_dist_entropy'] += dist_entropy_all.item()
+                    train_infos[agent_idx]['joint_dist_entropy'] += mix_dist_entropy.item()
                     if int(torch.__version__[2]) < 5:
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                     else:
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm.item()
 
-                for agent_idx in range(self.num_agents):
-                    self.trainer[agent_idx].policy.actor_optimizer.step()
-                self.action_attention_optimizer.step()
-
-                if epoch == 0:
-                    self.lambda1_optim.zero_grad()
-                    lambda_loss = -(self.lambda1 * (ce_constrain_loss.detach()))
-                    lambda_loss.backward()
-                    if self._use_max_grad_norm:
-                        _ = nn.utils.clip_grad_norm_([self.lambda1], self.max_grad_norm)
-                    else:
-                        _ = get_gard_norm([self.lambda1])
-                    self.lambda1_optim.step()
-                    print("lambda is: ", self.lambda1.item())
+                # for agent_idx in range(self.num_agents):
+                #     self.trainer[agent_idx].policy.actor_optimizer.step()
                 
-                    if self.decay_id == 3:
-                        # threshold_loss = individual_loss.sum() - mix_dist_entropy
-                        # threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
-                        # self.threshold_optim.zero_grad()
-                        # threshold_loss.backward()
-                        # self.threshold_optim.step()
-                        # self.threshold_ = self.log_threshold.exp()
-                        # self.threshold = self.threshold_.item()
 
-                        old_threshold_dist = GaussianTorch.from_weights(self.threshold_dist.get_weights(),
-                                                                        device=self.device)
+                # if epoch == 0:
+                #     self.lambda1_optim.zero_grad()
+                #     lambda_loss = -(self.lambda1 * (ce_constrain_loss.detach()))
+                #     lambda_loss.backward()
+                #     if self._use_max_grad_norm:
+                #         _ = nn.utils.clip_grad_norm_([self.lambda1], self.max_grad_norm)
+                #     else:
+                #         _ = get_gard_norm([self.lambda1])
+                #     self.lambda1_optim.step()
+                #     print("lambda is: ", self.lambda1.item())
+                
+                #     if self.decay_id == 3:
+                #         # threshold_loss = individual_loss.sum() - mix_dist_entropy
+                #         # threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
+                #         # self.threshold_optim.zero_grad()
+                #         # threshold_loss.backward()
+                #         # self.threshold_optim.step()
+                #         # self.threshold_ = self.log_threshold.exp()
+                #         # self.threshold = self.threshold_.item()
 
-                        def kl_con_fn(x):
-                            dist = GaussianTorch.from_weights(x, device=self.device)
-                            kl_div = torch.distributions.kl.kl_divergence(old_threshold_dist(), dist())
-                            return _t2n(kl_div)
+                #         old_threshold_dist = GaussianTorch.from_weights(self.threshold_dist.get_weights(),
+                #                                                         device=self.device)
 
-                        def kl_con_grad_fn(x):
-                            dist = GaussianTorch.from_weights(x, device=self.device)
-                            kl_div = torch.distributions.kl.kl_divergence(old_threshold_dist(), dist())
-                            mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
-                            return np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]])
+                #         def kl_con_fn(x):
+                #             dist = GaussianTorch.from_weights(x, device=self.device)
+                #             kl_div = torch.distributions.kl.kl_divergence(old_threshold_dist(), dist())
+                #             return _t2n(kl_div)
 
-                        kl_constraint = NonlinearConstraint(kl_con_fn, -np.inf, self.max_kl, jac=kl_con_grad_fn, keep_feasible=True)
+                #         def kl_con_grad_fn(x):
+                #             dist = GaussianTorch.from_weights(x, device=self.device)
+                #             kl_div = torch.distributions.kl.kl_divergence(old_threshold_dist(), dist())
+                #             mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
+                #             return np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]])
 
-                        # # Define the performance constraint
-                        # def perf_con_fn(x):
-                        #     dist = GaussianTorch.from_weights(x, device=self.device)
-                        #     perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * dist_constrain_loss.sum(1))
-                        #     return _t2n(perf)
+                #         kl_constraint = NonlinearConstraint(kl_con_fn, -np.inf, self.max_kl, jac=kl_con_grad_fn, keep_feasible=True)
 
-                        # def perf_con_grad_fn(x):
-                        #     dist = GaussianTorch.from_weights(x, device=self.device)
-                        #     perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * dist_constrain_loss.sum(1))
-                        #     mu_grad, log_std_grad = torch.autograd.grad(perf, dist.parameters())
-                        #     return np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]])
+                #         # # Define the performance constraint
+                #         # def perf_con_fn(x):
+                #         #     dist = GaussianTorch.from_weights(x, device=self.device)
+                #         #     perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * dist_constrain_loss.sum(1))
+                #         #     return _t2n(perf)
 
-                        # perf_constraint = NonlinearConstraint(perf_con_fn, -np.inf, 0.05, jac=perf_con_grad_fn,
-                        #                                     keep_feasible=True)
+                #         # def perf_con_grad_fn(x):
+                #         #     dist = GaussianTorch.from_weights(x, device=self.device)
+                #         #     perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * dist_constrain_loss.sum(1))
+                #         #     mu_grad, log_std_grad = torch.autograd.grad(perf, dist.parameters())
+                #         #     return np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]])
 
-                        x0 = self.threshold_dist.get_weights().copy()
-                        bounds = None
+                #         # perf_constraint = NonlinearConstraint(perf_con_fn, -np.inf, 0.05, jac=perf_con_grad_fn,
+                #         #                                     keep_feasible=True)
+
+                #         x0 = self.threshold_dist.get_weights().copy()
+                #         bounds = None
                         
-                        try:
-                            res = None
-                            if kl_con_fn(x0) >= self.max_kl:
-                                print("Warning! KL-Bound of x0 violates constraint already")
+                #         try:
+                #             res = None
+                #             if kl_con_fn(x0) >= self.max_kl:
+                #                 print("Warning! KL-Bound of x0 violates constraint already")
 
-                            # if perf_con_fn(x0) <= 0.05:
-                            # print("Optimizing KL")
-                            constraints = [kl_constraint]
+                #             # if perf_con_fn(x0) <= 0.05:
+                #             # print("Optimizing KL")
+                #             constraints = [kl_constraint]
 
-                            # Define the objective plus Jacobian
-                            def objective(x):
-                                dist = GaussianTorch.from_weights(x, device=self.device)
-                                kl_div = torch.distributions.kl.kl_divergence(dist(), self.threshold_target_dist())
-                                mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
+                #             # Define the objective plus Jacobian
+                #             def objective(x):
+                #                 dist = GaussianTorch.from_weights(x, device=self.device)
+                #                 kl_div = torch.distributions.kl.kl_divergence(dist(), self.threshold_target_dist())
+                #                 mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
 
-                                return _t2n(kl_div*0) if step<=100 else _t2n(kl_div), \
-                                    np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
-                                        np.float64)
+                #                 return _t2n(kl_div*0) if step<=100 else _t2n(kl_div), \
+                #                     np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
+                #                         np.float64)
 
-                            res = minimize(objective, x0, method="trust-constr", jac=True, bounds=bounds,
-                                        constraints=constraints, options={"gtol": 1e-4, "xtol": 1e-6})
+                #             res = minimize(objective, x0, method="trust-constr", jac=True, bounds=bounds,
+                #                         constraints=constraints, options={"gtol": 1e-4, "xtol": 1e-6})
                             
-                            # else:
-                            #     print("Optimizing performance")
-                            #     constraints = [kl_constraint]
+                #             # else:
+                #             #     print("Optimizing performance")
+                #             #     constraints = [kl_constraint]
 
-                            #     # Define the objective plus Jacobian
-                            #     def objective(x):
-                            #         dist = GaussianTorch.from_weights(x, device=self.device)
-                            #         perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * return_batch_all.mean(1))
-                            #         mu_grad, log_std_grad = torch.autograd.grad(perf, dist.parameters())
+                #             #     # Define the objective plus Jacobian
+                #             #     def objective(x):
+                #             #         dist = GaussianTorch.from_weights(x, device=self.device)
+                #             #         perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * return_batch_all.mean(1))
+                #             #         mu_grad, log_std_grad = torch.autograd.grad(perf, dist.parameters())
 
-                            #         return _t2n(perf), \
-                            #             np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
-                            #                 np.float64)
+                #             #         return _t2n(perf), \
+                #             #             np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
+                #             #                 np.float64)
 
-                            #     res = minimize(objective, x0, method="trust-constr", jac=True, bounds=bounds,
-                            #                 constraints=constraints, options={"gtol": 1e-4, "xtol": 1e-6})
+                #             #     res = minimize(objective, x0, method="trust-constr", jac=True, bounds=bounds,
+                #             #                 constraints=constraints, options={"gtol": 1e-4, "xtol": 1e-6})
 
-                        except Exception as e:
-                            print("Exception occurred during optimization! Storing state and re-raising!")
-                            raise e
+                #         except Exception as e:
+                #             print("Exception occurred during optimization! Storing state and re-raising!")
+                #             raise e
                         
-                        if res is not None and res.success:
-                            self.threshold_dist.set_weights(res.x)
-                        elif res is not None:
-                            # If it was not a success, but the objective value was improved and the bounds are still valid, we still
-                            # use the result
-                            old_f = objective(self.threshold_dist.get_weights())[0]
-                            cons_ok = True
-                            for con in constraints:
-                                cons_ok = cons_ok and con.lb <= con.fun(res.x) <= con.ub
+                #         if res is not None and res.success:
+                #             self.threshold_dist.set_weights(res.x)
+                #         elif res is not None:
+                #             # If it was not a success, but the objective value was improved and the bounds are still valid, we still
+                #             # use the result
+                #             old_f = objective(self.threshold_dist.get_weights())[0]
+                #             cons_ok = True
+                #             for con in constraints:
+                #                 cons_ok = cons_ok and con.lb <= con.fun(res.x) <= con.ub
 
-                            std_ok = bounds is None or (np.all(bounds.lb <= res.x) and np.all(res.x <= bounds.ub))
-                            if cons_ok and std_ok and res.fun < old_f:
-                                self.threshold_dist.set_weights(res.x)
-                            else:
-                                print(
-                                    "Warning! Context optimihation unsuccessful - will keep old values. Message: %s" % res.message)
-                
+                #             std_ok = bounds is None or (np.all(bounds.lb <= res.x) and np.all(res.x <= bounds.ub))
+                #             if cons_ok and std_ok and res.fun < old_f:
+                #                 self.threshold_dist.set_weights(res.x)
+                #             else:
+                #                 print(
+                #                     "Warning! Context optimihation unsuccessful - will keep old values. Message: %s" % res.message)
+        self.bc_train(advs, train_infos)
+
         num_updates = self.ppo_epoch * self.num_mini_batch
-
-        # if self.decay_id == 3:
-        #     threshold_loss = (individual_loss/num_updates).mean()
-        #     threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
-        #     self.threshold_optim.zero_grad()
-        #     threshold_loss.backward()
-        #     self.threshold_optim.step()
-        #     self.threshold_ = self.log_threshold.exp()
-        #     self.threshold = self.threshold_.item()
 
         for agent_idx in range(self.num_agents):
             for k in train_infos[agent_idx].keys():
                 train_infos[agent_idx][k] /= num_updates    
             self.buffer[agent_idx].after_update()
-            self.avg_act_grad_norm += train_infos[agent_idx]['actor_grad_norm'].item()
-            self.avg_att_grad_norm += train_infos[agent_idx]['attention_grad_norm'].item()
-        self.avg_act_grad_norm /= self.num_agents
-        self.avg_att_grad_norm /= self.num_agents
         return train_infos
 
     def bc_train(self, advs, train_infos):
@@ -1165,11 +1188,12 @@ class Runner(object):
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch = next(data_generators[agent_idx])
-                    adv_targ = check(adv_targ).to(**self.tpdv)
-                    old_joint_action_log_probs = check(joint_action_log_probs_batch).to(**self.tpdv)
+                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, \
+                    old_joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch = next(data_generators[agent_idx])
+                    old_joint_action_log_probs_batch = check(old_joint_action_log_probs_batch).to(**self.tpdv)
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     active_masks_batch = check(active_masks_batch).to(**self.tpdv)
+                    ce_gae_batch = check(ce_gae_batch).to(**self.tpdv)
 
                     ego_exclusive_action = one_hot_actions_batch[:,0:self.num_agents]
                     if self._use_recurrent_policy:
@@ -1177,7 +1201,7 @@ class Runner(object):
                     else:
                         execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(**self.tpdv)
 
-                    values, individual_dist, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
+                    values, trains_action, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
                                                                             obs_batch, 
                                                                             rnn_states_batch, 
                                                                             rnn_states_critic_batch, 
@@ -1192,23 +1216,24 @@ class Runner(object):
                                                                             joint_actions=joint_actions_batch
                                                                             )
 
+                    ce_adv_copy = ce_gae_batch.clone()
+                    ce_adv_copy[active_masks_batch == 0.0] = torch.nan
+                    mean_ce_adv = torch.nanmean(ce_adv_copy)
+                    std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
+                    ce_adv = (ce_gae_batch - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
+
                     # actor update
-                    ratio = torch.exp(action_log_probs_kl - old_action_log_probs_batch)
-
-                    # if not self.bc:
-                    #     # off-policy ppo
-                    #     new_clip = 0.25
-                    #     # new_clip = self.clip_param - (self.clip_param * (epoch / float(self.ppo_epoch)))
+                    ratio = torch.prod(torch.exp(action_log_probs_kl - old_joint_action_log_probs_batch),dim=-1,keepdim=True)
                     # dual clip
-                    # cliped_ratio = torch.minimum(ratio, torch.tensor(2).to(self.device))
+                    cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
 
-                    surr1 = ratio * adv_targ
-                    surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ
-                    # else:
+                    surr1 = cliped_ratio * ce_adv
+                    surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * ce_adv
+
                     # # BC
                     # surr1 = action_log_probs_kl
                     # surr2 = action_log_probs_kl
-                    
+
                     if self._use_policy_active_masks:
                         policy_action_loss = (-torch.sum(torch.min(surr1, surr2),
                                                         dim=-1,
@@ -1221,12 +1246,12 @@ class Runner(object):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
 
                     (policy_loss - dist_entropy * self.entropy_coef).backward()
-                    
+
                     if self._use_max_grad_norm:
                         actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
                     else:
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
-
+                    
                     self.trainer[agent_idx].policy.actor_optimizer.step()
 
                     #critic update
@@ -1246,10 +1271,14 @@ class Runner(object):
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
                     train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                    train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                     train_infos[agent_idx]['ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+                    if int(torch.__version__[2]) < 5:
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    else:
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
 
         return train_infos
 

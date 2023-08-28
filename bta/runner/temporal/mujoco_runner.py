@@ -123,8 +123,8 @@ class MujocoRunner(Runner):
                 print("average episode rewards for team is {}".format(total_mean))
                 for a in range(self.num_agents):
                     train_infos[a]["average_episode_rewards"] = total_mean
-                    train_infos[a]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
-                print("threshold is {}".format(train_infos[0]["threshold"]))
+                #     train_infos[a]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
+                # print("threshold is {}".format(train_infos[0]["threshold"]))
                 self.log_train(train_infos, total_num_steps)
 
                 if len(done_episodes_rewards) > 0:
@@ -206,7 +206,7 @@ class MujocoRunner(Runner):
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
                 # Normalize
-                # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)
