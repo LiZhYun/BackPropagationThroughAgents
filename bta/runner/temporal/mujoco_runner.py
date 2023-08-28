@@ -123,8 +123,8 @@ class MujocoRunner(Runner):
                 print("average episode rewards for team is {}".format(total_mean))
                 for a in range(self.num_agents):
                     train_infos[a]["average_episode_rewards"] = total_mean
-                #     train_infos[a]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
-                # print("threshold is {}".format(train_infos[0]["threshold"]))
+                    train_infos[a]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
+                print("threshold is {}".format(train_infos[0]["threshold"]))
                 self.log_train(train_infos, total_num_steps)
 
                 if len(done_episodes_rewards) > 0:
@@ -202,7 +202,7 @@ class MujocoRunner(Runner):
             share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
-            bias_, _, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
+            bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads]).view(self.n_rollout_threads, -1, 1)
@@ -212,12 +212,12 @@ class MujocoRunner(Runner):
                 bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
                 ind_dist = FixedCategorical(logits=logits)
-                mix_dist = FixedCategorical(logits=logits+bias_)
+                mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)
             else:
                 # action_mean = bias_
-                action_mean = (logits+bias_)/2
-                action_std = stds
-                ind_dist = FixedNormal(logits, action_std)
+                action_mean = logits+self.threshold*bias_
+                # action_std = stds
+                ind_dist = FixedNormal(logits, stds)
                 mix_dist = FixedNormal(action_mean, action_std)
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
