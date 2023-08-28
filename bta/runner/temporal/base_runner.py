@@ -924,8 +924,9 @@ class Runner(object):
                     self.trainer[agent_idx].policy.critic_optimizer.step()
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                    # train_infos[agent_idx]['ratio'] += ratio.mean().item()
+                    train_infos[agent_idx]['policy_loss'] += policy_loss.item()
+                    train_infos[agent_idx]['ratio'] += ratio.mean().item()
+                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
                     if int(torch.__version__[2]) < 5:
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                         # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
@@ -954,26 +955,26 @@ class Runner(object):
                 mix_dist_entropy = mix_dist.entropy().sum(1).mean()
                 new_actions_logprob_all_batch = mix_action_log_probs
 
-                imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
-                surr1 = imp_weights * adv_targ_all
-                surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+                # imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
+                # surr1 = imp_weights * adv_targ_all
+                # surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
 
-                # imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
-                # each_agent_imp_weights = imp_weights.detach()
-                # each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
-                # each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
-                # mask_self = 1 - torch.eye(self.num_agents)
-                # mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
-                # each_agent_imp_weights[..., mask_self == 0] = 1.0
-                # prod_imp_weights = each_agent_imp_weights.prod(dim=2)
-                # prod_imp_weights = torch.clamp(
-                #             prod_imp_weights,
-                #             1.0 - self.clip_param/2,
-                #             1.0 + self.clip_param/2,
-                #         )
+                imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                each_agent_imp_weights = imp_weights.detach()
+                each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
+                each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
+                mask_self = 1 - torch.eye(self.num_agents)
+                mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
+                each_agent_imp_weights[..., mask_self == 0] = 1.0
+                prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+                prod_imp_weights = torch.clamp(
+                            prod_imp_weights,
+                            1.0 - self.clip_param/2,
+                            1.0 + self.clip_param/2,
+                        )
                 
-                # surr1 = imp_weights * adv_targ_all * prod_imp_weights
-                # surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
+                surr1 = imp_weights * adv_targ_all * prod_imp_weights
+                surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
     
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
