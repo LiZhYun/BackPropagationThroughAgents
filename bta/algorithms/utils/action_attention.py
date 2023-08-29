@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import copy
 
 import torch
 import torch.nn as nn
@@ -14,6 +15,7 @@ from bta.algorithms.utils.cnn import CNNBase
 from bta.algorithms.utils.mlp import MLPBase, MLPLayer
 from bta.algorithms.utils.mix import MIXBase
 from bta.algorithms.utils.rnn import RNNLayer
+from bta.algorithms.utils.distributions import DiagGaussian
 
 def init_(m, gain=0.01, activate=False):
     if activate:
@@ -99,7 +101,11 @@ class Action_Attention(nn.Module):
                 self.layers.append(Block(config))
                 
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        self.head = init_(nn.Linear(self._attn_size, self.action_dim))
+        # self.head = init_(nn.Linear(self._attn_size, self.action_dim))
+        act_args = copy.copy(args)
+        act_args.std_x_coef = 1
+        act_args.std_y_coef = 0.2
+        self.head = DiagGaussian(self._attn_size, self.action_dim, self._use_orthogonal, self._gain, act_args)
 
         self.to(device)
 
@@ -123,10 +129,46 @@ class Action_Attention(nn.Module):
         x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
-            x = self.layers[layer](x, obs_rep)
+            x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
         
-        bias_ = self.head(x)
+        bias_ = self.head(x).rsample() 
+
+        # action_std = None
+        if self.discrete:
+            action_std = torch.sigmoid(bias_)
+            # action_std = -torch.exp(-bias_).log()
+            action_std = -torch.log(-torch.log(action_std))
+        else:
+            log_std = bias_ * self.std_x_coef
+            action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+
+        return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
+    
+    def evaluation(self, x, bias, obs_rep, rnn_states, masks):
+        N = x.shape[0] // self.num_agents
+        x = check(x).to(**self.tpdv)
+        obs_rep = check(obs_rep).to(**self.tpdv)
+        rnn_states = check(rnn_states).to(**self.tpdv)
+        masks = check(masks).to(**self.tpdv)
+
+        obs_features = self.base(obs_rep)
+        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
+            obs_features, rnn_states = self.rnn(obs_features, rnn_states, masks)
+
+        if self._use_influence_policy:
+            mlp_obs_rep = self.mlp(obs_rep)
+            obs_features = torch.cat([obs_features, mlp_obs_rep], dim=1)
+        
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
+
+        x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1)).view(N, self.num_agents, -1)
+
+        for layer in range(self._attn_N):
+            x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
+        x = self.layer_norm(x)
+        
+        bias_ = bias + self.head(x).mean.detach() - self.head(x).mean
 
         # action_std = None
         if self.discrete:

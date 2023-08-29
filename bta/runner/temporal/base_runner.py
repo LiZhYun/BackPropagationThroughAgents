@@ -450,7 +450,7 @@ class Runner(object):
 
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                    adv_targ, available_actions_batch, _,_,_,_,_,_,_ = next(data_generators[agent_idx])
+                    adv_targ, available_actions_batch, _,_,_,_,_,_,_,_ = next(data_generators[agent_idx])
 
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     adv_targ = check(adv_targ).to(**self.tpdv)
@@ -619,7 +619,7 @@ class Runner(object):
 
                         share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                         value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
-                        adv_targ, available_actions_batch, _,_,_,_,_,_,_ = next(data_generators[agent_id])
+                        adv_targ, available_actions_batch, _,_,_,_,_,_,_,_ = next(data_generators[agent_id])
 
                         old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                         adv_targ = check(adv_targ).to(**self.tpdv)
@@ -797,6 +797,7 @@ class Runner(object):
                     train_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     ce_gae_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                     return_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    bias_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                 else:
                     # adv_targ_all = check(advantages_all[sampler[batch_idx]]).to(**self.tpdv)
                     adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
@@ -812,6 +813,7 @@ class Runner(object):
                     train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     ce_gae_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                     return_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    bias_batch_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                 share_obs_all = []
                 rnn_states_joint_all = []
                 masks_all = []
@@ -820,11 +822,12 @@ class Runner(object):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
                     adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, \
-                    old_joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch = next(data_generators[agent_idx])
+                    old_joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch, bias_batch = next(data_generators[agent_idx])
                     adv_targ = check(adv_targ).to(**self.tpdv)
                     return_batch = check(return_batch).to(**self.tpdv)
                     ce_gae_batch = check(ce_gae_batch).to(**self.tpdv)
                     joint_actions_batch = check(joint_actions_batch).to(**self.tpdv)
+                    bias_batch = check(bias_batch).to(**self.tpdv)
                     thresholds_batch = check(thresholds_batch).to(**self.tpdv)
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     old_joint_action_log_probs_batch = check(old_joint_action_log_probs_batch).to(**self.tpdv)
@@ -867,6 +870,7 @@ class Runner(object):
                     rnn_states_joint_all.append(rnn_states_joint_batch)
                     ce_gae_batch_all[:, agent_idx] = ce_gae_batch
                     return_batch_all[:, agent_idx] = return_batch
+                    bias_batch_all[:, agent_idx] = bias_batch
 
                     # ce_adv_copy = ce_gae_batch.clone()
                     # ce_adv_copy[active_masks_batch == 0.0] = torch.nan
@@ -937,7 +941,7 @@ class Runner(object):
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
                 masks = np.concatenate(np.stack(masks_all, 1))
-                bias_, action_std, _ = self.action_attention(logits_all.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
+                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks)
                 if self.discrete:
                     # Normalize
                     # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
@@ -954,7 +958,7 @@ class Runner(object):
                     mix_dist = FixedNormal(logits_all, action_std)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
-                mix_dist_entropy = mix_dist.entropy().mean(0).sum()
+                mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
                 new_actions_logprob_all_batch = mix_action_log_probs
 
                 imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
@@ -984,8 +988,10 @@ class Runner(object):
                     policy_action_loss = (
                         (policy_action_loss * active_masks_all).sum(dim=0) /
                         active_masks_all.sum(dim=0)).sum()
+                    mix_dist_entropy = ((mix_dist_entropy*active_masks_all).sum(dim=0)/active_masks_all.sum(dim=0)).sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
+                    mix_dist_entropy = mix_dist_entropy.sum(1).mean()
                 # policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
                 # ce_adv = ce_return_batch_all - return_batch_all

@@ -87,6 +87,7 @@ class SeparatedReplayBuffer(object):
         self.joint_actions = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
         self.joint_action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.act_shape), dtype=np.float32)
         self.thresholds = np.zeros((self.episode_length, self.n_rollout_threads, args.num_agents, 1), dtype=np.float32)
+        self.bias = np.zeros((self.episode_length, self.n_rollout_threads, self.action_dim), dtype=np.float32)
     
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.bad_masks = np.ones_like(self.masks)
@@ -100,7 +101,7 @@ class SeparatedReplayBuffer(object):
     def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, hard_actions, action_log_probs,
                value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None, 
                joint_actions=None, joint_action_log_probs=None, joint_value_preds=None, rnn_states_joint=None,
-               thresholds=None):
+               thresholds=None, bias=None):
         self.share_obs[self.step + 1] = share_obs.copy()
         self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -127,6 +128,8 @@ class SeparatedReplayBuffer(object):
             self.joint_action_log_probs[self.step] = joint_action_log_probs.copy()
         if thresholds is not None:
             self.thresholds[self.step] = thresholds if type(thresholds)==float else thresholds.copy()
+        if bias is not None:
+            self.bias[self.step] = bias.copy()
         
         self.step = (self.step + 1) % self.episode_length
         
@@ -283,6 +286,7 @@ class SeparatedReplayBuffer(object):
         joint_actions = self.joint_actions.reshape(-1, *self.joint_actions.shape[2:])
         joint_action_log_probs = self.joint_action_log_probs.reshape(-1, *self.joint_action_log_probs.shape[2:])
         thresholds = self.thresholds.reshape(-1, *self.thresholds.shape[2:])
+        bias = self.bias.reshape(-1, *self.bias.shape[2:])
 
         for indices in sampler:
             # obs size [T+1 N Dim]-->[T N Dim]-->[T*N,Dim]-->[index,Dim]
@@ -305,6 +309,7 @@ class SeparatedReplayBuffer(object):
             joint_actions_batch = joint_actions[indices]
             joint_action_log_probs_batch = joint_action_log_probs[indices]
             thresholds_batch = thresholds[indices]
+            bias_batch = bias[indices]
             if advantages is None:
                 adv_targ = None
             else:
@@ -322,7 +327,7 @@ class SeparatedReplayBuffer(object):
                 actions_batch, one_hot_actions_batch, value_preds_batch, return_batch, \
                 masks_batch, active_masks_batch, old_action_log_probs_batch, adv_targ, \
                 available_actions_batch, factor_batch, action_grad_batch, joint_actions_batch, \
-                joint_action_log_probs_batch, thresholds_batch, ce_gaes_batch
+                joint_action_log_probs_batch, thresholds_batch, ce_gaes_batch, bias_batch
 
     def recurrent_generator(self, advantages, num_mini_batch, data_chunk_length, sampler=None):
         episode_length, n_rollout_threads = self.rewards.shape[0:2]
@@ -366,6 +371,7 @@ class SeparatedReplayBuffer(object):
         joint_actions = _cast(self.joint_actions)
         joint_action_log_probs = _cast(self.joint_action_log_probs)
         thresholds = self.thresholds.transpose(1, 0, 2, 3).reshape(-1, *self.thresholds.shape[2:])
+        bias = _cast(self.bias)
 
         if self.available_actions is not None:
             available_actions = _cast(self.available_actions[:-1])
@@ -391,6 +397,7 @@ class SeparatedReplayBuffer(object):
             joint_actions_batch = []
             joint_action_log_probs_batch = []
             thresholds_batch = []
+            bias_batch = []
 
             for index in indices:
                 ind = index * data_chunk_length
@@ -423,6 +430,7 @@ class SeparatedReplayBuffer(object):
                 joint_actions_batch.append(joint_actions[ind:ind+data_chunk_length])
                 joint_action_log_probs_batch.append(joint_action_log_probs[ind:ind+data_chunk_length])
                 thresholds_batch.append(thresholds[ind:ind+data_chunk_length])
+                bias_batch.append(bias[ind:ind+data_chunk_length])
 
             L, N = data_chunk_length, mini_batch_size
 
@@ -448,6 +456,7 @@ class SeparatedReplayBuffer(object):
             joint_actions_batch = np.stack(joint_actions_batch)
             joint_action_log_probs_batch = np.stack(joint_action_log_probs_batch)
             thresholds_batch = np.stack(thresholds_batch)
+            bias_batch = np.stack(bias_batch)
 
             # States is just a (N, -1) from_numpy
             rnn_states_batch = np.stack(rnn_states_batch).reshape(N, *self.rnn_states.shape[2:])
@@ -481,11 +490,12 @@ class SeparatedReplayBuffer(object):
             joint_actions_batch = _flatten(L, N, joint_actions_batch)
             joint_action_log_probs_batch = _flatten(L, N, joint_action_log_probs_batch)
             thresholds_batch = _flatten(L, N, thresholds_batch)
+            bias_batch = _flatten(L, N, bias_batch)
 
             yield share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, \
                 one_hot_actions_batch, value_preds_batch, return_batch, masks_batch, active_masks_batch, \
                 old_action_log_probs_batch, adv_targ, available_actions_batch, factor_batch, action_grad_batch, \
-                joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch
+                joint_actions_batch, joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch, bias_batch
 
     def naive_recurrent_generator(self, advantages, num_mini_batch):
         n_rollout_threads = self.rewards.shape[1]

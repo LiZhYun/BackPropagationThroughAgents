@@ -59,14 +59,14 @@ class MatrixRunner(Runner):
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
-                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds = self.collect(step)
+                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds, bias = self.collect(step)
                     
                 # Obser reward and next obs
                 env_actions = joint_actions if self.use_action_attention else hard_actions
                 obs, rewards, dones, infos = self.envs.step(np.squeeze(env_actions, axis=-1))
                 share_obs = obs.copy()
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds
+                    rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds, bias
                 # insert data into buffer
                 self.insert(data)
                 
@@ -196,7 +196,7 @@ class MatrixRunner(Runner):
             action_log_probs = _t2n(ind_action_log_probs)  
             joint_action_log_probs = _t2n(mix_action_log_probs)  
 
-        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold)
+        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold), _t2n(bias_)
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
@@ -232,7 +232,7 @@ class MatrixRunner(Runner):
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
-            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds = data
+            rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds, bias = data
         
         dones_env = np.all(dones, axis=-1)
         
@@ -257,7 +257,8 @@ class MatrixRunner(Runner):
                                         joint_actions=joint_actions[:, agent_id],
                                         joint_action_log_probs=joint_action_log_probs[:, agent_id],
                                         rnn_states_joint=rnn_states_joint[:, agent_id],
-                                        thresholds=thresholds
+                                        thresholds=thresholds,
+                                        bias=bias[:, agent_id]
                                         )
 
     @torch.no_grad()
