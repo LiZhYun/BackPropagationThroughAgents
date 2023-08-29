@@ -42,12 +42,12 @@ class MatrixRunner(Runner):
 
             if self.decay_id == 0:
                 self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 0.05)
+                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
             elif self.decay_id == 1:
                 self.threshold = 0. + (self.initial_threshold - 0.) * \
                     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
                 self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
-                    (1 + math.cos(math.pi * (episode) / (episodes-1))) / 2
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
             elif self.decay_id == 2:
                 self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
@@ -96,8 +96,8 @@ class MatrixRunner(Runner):
                               int(total_num_steps / (end - start))))
                 for agent_id in range(self.num_agents):
                     train_infos[agent_id].update({"average_episode_rewards_by_eplength": np.mean(self.buffer[agent_id].rewards) * self.episode_length})
-                    train_infos[agent_id]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
-                print("threshold is {}".format(train_infos[0]["threshold"]))
+                #     train_infos[agent_id]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
+                # print("threshold is {}".format(train_infos[0]["threshold"]))
                 print("average episode rewards of agent 0 is {}".format(train_infos[0]["average_episode_rewards_by_eplength"]))
                 self.log_train(train_infos, total_num_steps)
                 self.log_env(self.env_infos, total_num_steps=total_num_steps)
@@ -177,16 +177,18 @@ class MatrixRunner(Runner):
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
                 # Normalize
-                bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
+                gumbels = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                 ind_dist = FixedCategorical(logits=logits)
-                mix_dist = FixedCategorical(logits=logits+self.threshold*bias_)
+                mix_dist = FixedCategorical(logits=mixed_)
             else:
                 # action_mean = bias_
-                action_mean = logits+self.threshold*bias_
+                # action_mean = logits+self.threshold*bias_
                 # action_std = stds
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(action_mean, action_std)
+                mix_dist = FixedNormal(logits, action_std)
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)

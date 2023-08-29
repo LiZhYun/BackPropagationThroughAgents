@@ -65,8 +65,8 @@ class Action_Attention(nn.Module):
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
             self.std_y_coef = 0.5
-            log_std = torch.ones(action_dim) * self.std_x_coef
-            self.log_std = torch.nn.Parameter(log_std)
+            # log_std = torch.ones(action_dim) * self.std_x_coef
+            # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
@@ -128,9 +128,14 @@ class Action_Attention(nn.Module):
         
         bias_ = self.head(x)
 
-        action_std = None
-        if not self.discrete:
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+        # action_std = None
+        if self.discrete:
+            action_std = torch.sigmoid(bias_)
+            # action_std = -torch.exp(-bias_).log()
+            action_std = -torch.log(-torch.log(action_std))
+        else:
+            log_std = bias_ * self.std_x_coef
+            action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 

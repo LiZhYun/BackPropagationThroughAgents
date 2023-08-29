@@ -940,19 +940,21 @@ class Runner(object):
                 bias_, action_std, _ = self.action_attention(logits_all.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
                 if self.discrete:
                     # Normalize
-                    bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    mixed_ = logits_all + thresholds_batch * bias_
+                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+                    # mixed_ = logits_all + thresholds_batch * bias_
                     # mixed_ = bias_
+                    gumbels = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                    mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
-                    action_mean = logits_all + thresholds_batch * bias_
+                    # action_mean = logits_all + thresholds_batch * bias_
                     # action_std = stds_all
                     # action_mean = bias_
-                    mix_dist = FixedNormal(action_mean, action_std)
+                    mix_dist = FixedNormal(logits_all, action_std)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
-                mix_dist_entropy = mix_dist.entropy().mean()
+                mix_dist_entropy = mix_dist.entropy().mean(0).sum()
                 new_actions_logprob_all_batch = mix_action_log_probs
 
                 imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
