@@ -66,7 +66,7 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 0.75
+            self.std_y_coef = 0.5
             # log_std = torch.ones(action_dim) * self.std_x_coef
             # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
