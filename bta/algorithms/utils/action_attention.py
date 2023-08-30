@@ -104,7 +104,7 @@ class Action_Attention(nn.Module):
         # self.head = init_(nn.Linear(self._attn_size, self.action_dim))
         act_args = copy.copy(args)
         act_args.std_x_coef = 1
-        act_args.std_y_coef = 0.2
+        act_args.std_y_coef = 0.5
         self.head = DiagGaussian(self._attn_size, self.action_dim, self._use_orthogonal, self._gain, act_args)
 
         self.to(device)
