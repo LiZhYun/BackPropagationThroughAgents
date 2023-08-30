@@ -1027,7 +1027,7 @@ class Runner(object):
                 # lagrangian_loss.backward()
 
                 if self._use_max_grad_norm:
-                    attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), 0.5)
+                    attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
                 else:
                     attention_grad_norm = get_gard_norm(self.action_attention.parameters())   
                     
