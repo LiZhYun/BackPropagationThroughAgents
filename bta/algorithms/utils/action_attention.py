@@ -66,7 +66,7 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 0.5
+            self.std_y_coef = 0.75
             # log_std = torch.ones(action_dim) * self.std_x_coef
             # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
@@ -103,8 +103,8 @@ class Action_Attention(nn.Module):
         self.layer_norm = nn.LayerNorm(self._attn_size)
         # self.head = init_(nn.Linear(self._attn_size, self.action_dim))
         act_args = copy.copy(args)
-        act_args.std_x_coef = 1
-        act_args.std_y_coef = 0.5
+        act_args.std_x_coef = args.mix_std_x_coef
+        act_args.std_y_coef = args.mix_std_y_coef
         self.head = DiagGaussian(self._attn_size, self.action_dim, self._use_orthogonal, self._gain, act_args)
 
         self.to(device)
@@ -168,7 +168,8 @@ class Action_Attention(nn.Module):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
         
-        bias_ = bias + self.head(x).mean.detach() - self.head(x).mean
+        soft_ = self.head(x).rsample()
+        bias_ = bias + soft_.detach() - soft_
 
         # action_std = None
         if self.discrete:
