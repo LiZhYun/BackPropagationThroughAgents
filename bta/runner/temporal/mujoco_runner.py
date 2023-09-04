@@ -221,6 +221,7 @@ class MujocoRunner(Runner):
                 # action_std = stds
                 ind_dist = FixedNormal(logits, stds)
                 mix_dist = FixedNormal(logits, action_std)
+                # mix_dist = FixedNormal(logits, torch.sqrt(stds**2 + action_std**2))
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)

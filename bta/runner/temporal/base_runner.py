@@ -956,6 +956,7 @@ class Runner(object):
                     # action_std = stds_all
                     # action_mean = bias_
                     mix_dist = FixedNormal(logits_all, action_std)
+                    # mix_dist = FixedNormal(logits_all, torch.sqrt(stds_all**2 + action_std**2))
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
@@ -1050,6 +1051,8 @@ class Runner(object):
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
+                
+                # if (step+1) % 2 == 0:
                 self.action_attention_optimizer.step()
                 
                 if epoch == 0:

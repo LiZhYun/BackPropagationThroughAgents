@@ -5,9 +5,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --time=2-00:00:00
-#SBATCH --partition=standard
+#SBATCH --partition=standard-g
+#SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277
-#SBATCH --array=0-7
+#SBATCH --array=0-4
 
 #--gpus-per-node=1
 #SBATCH --cpus-per-task=10

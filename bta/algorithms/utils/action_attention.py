@@ -66,7 +66,7 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 1.
+            self.std_y_coef = 0.75
             # log_std = torch.ones(action_dim) * self.std_x_coef
             # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
@@ -141,7 +141,9 @@ class Action_Attention(nn.Module):
             action_std = -torch.log(-torch.log(action_std))
         else:
             log_std = bias_ * self.std_x_coef
-            action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            # action_std = torch.clamp((log_std / self.std_x_coef), 1e-5, 1) * self.std_y_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -178,7 +180,9 @@ class Action_Attention(nn.Module):
             action_std = -torch.log(-torch.log(action_std))
         else:
             log_std = bias_ * self.std_x_coef
-            action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            # action_std = torch.clamp((log_std / self.std_x_coef), 1e-5, 1) * self.std_y_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 
@@ -199,6 +203,9 @@ class MixerBlock(nn.Module):
         self.channel_layernorm = nn.LayerNorm(dims)
         channel_dim = int(channel_factor*dims) if channel_factor != 0 else 1
         self.channel_forward = FeedForward(self.dims, channel_dim, dropout)
+
+        self.dropout_1 = nn.Dropout(0.)
+        self.dropout_2 = nn.Dropout(0.)
         
     def token_mixer(self, x):
         x = self.token_layernorm(x).permute(0, 2, 1) # (10,64,2)
@@ -213,8 +220,8 @@ class MixerBlock(nn.Module):
     def forward(self, x, obs_rep=None):
         # if obs_rep != None:
         #     x = x + obs_rep
-        x = x + self.token_mixer(x) # (10,2,64)
-        x = x + self.channel_mixer(x)
+        x = x + self.dropout_1(self.token_mixer(x)) # (10,2,64)
+        x = x + self.dropout_2(self.channel_mixer(x))
         return x
 
 class HyperBlock(nn.Module):
