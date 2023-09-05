@@ -98,6 +98,8 @@ class MatrixRunner(Runner):
                     train_infos[agent_id].update({"average_episode_rewards_by_eplength": np.mean(self.buffer[agent_id].rewards) * self.episode_length})
                 #     train_infos[agent_id]["threshold"] = _t2n(self.threshold_dist().mean) if self.decay_id == 3 else self.threshold
                 # print("threshold is {}".format(train_infos[0]["threshold"]))
+                # print("grad norm is {}".format(train_infos[0]["actor_grad_norm"]))
+                # print("attention grad norm is {}".format(train_infos[0]["attention_grad_norm"]))
                 print("average episode rewards of agent 0 is {}".format(train_infos[0]["average_episode_rewards_by_eplength"]))
                 self.log_train(train_infos, total_num_steps)
                 self.log_env(self.env_infos, total_num_steps=total_num_steps)
@@ -171,6 +173,12 @@ class MatrixRunner(Runner):
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
             bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
+            assert torch.isnan(action_std).any().item() == False, 'action_std is NaN!!'
+            # assert torch.isinf(action_std).any().item() == False, 'action_std is inf!!'
+            if torch.isinf(action_std).any().item() == True:
+                print('logits:', logits)
+            assert torch.isnan(logits).any().item() == False, 'logits is NaN!!'
+            assert torch.isinf(logits).any().item() == False, 'logits is inf!!'
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
@@ -180,7 +188,10 @@ class MatrixRunner(Runner):
                 # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
                 gumbels = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                assert torch.isnan(gumbels).any().item() == False, 'gumbels is NaN!!'
+                assert torch.isinf(gumbels).any().item() == False, 'gumbels is inf!!'
                 mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
+                assert torch.isnan(mixed_).any().item() == False, 'mixed_ is NaN!!'
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
