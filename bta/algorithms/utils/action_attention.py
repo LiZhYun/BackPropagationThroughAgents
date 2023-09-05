@@ -141,11 +141,12 @@ class Action_Attention(nn.Module):
             log_action_std = action_std.clone()
             # assert torch.isinf(action_std).any().item() == False, 'sigmoid action_std is inf!!'
             # action_std = -torch.exp(-bias_).log()
-            action_std = -torch.log(-torch.log(action_std))
+            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
             if torch.isinf(action_std).any().item() == True:
                 print('mean,std:', self.head(x).mean, self.head(x).stddev)
                 print('bias_:', bias_)
                 print('sigmoid_action_std:', log_action_std)
+                print('action_std:', action_std)
             # assert torch.isinf(action_std).any().item() == False, 'loglog action_std is inf!!'
         else:
             bias_ = self.head(x)
@@ -185,7 +186,7 @@ class Action_Attention(nn.Module):
             bias_ = bias + soft_.detach() - soft_
             action_std = torch.sigmoid(bias_)
             # action_std = -torch.exp(-bias_).log()
-            action_std = -torch.log(-torch.log(action_std))
+            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
             bias_ = self.head(x)
             log_std = bias_ * self.std_x_coef

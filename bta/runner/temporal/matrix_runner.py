@@ -175,8 +175,6 @@ class MatrixRunner(Runner):
             bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
             assert torch.isnan(action_std).any().item() == False, 'action_std is NaN!!'
             # assert torch.isinf(action_std).any().item() == False, 'action_std is inf!!'
-            if torch.isinf(action_std).any().item() == True:
-                print('logits:', logits)
             assert torch.isnan(logits).any().item() == False, 'logits is NaN!!'
             assert torch.isinf(logits).any().item() == False, 'logits is inf!!'
             rnn_states_joint = _t2n(rnn_states_joint)
@@ -188,6 +186,9 @@ class MatrixRunner(Runner):
                 # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
                 # mix_dist = FixedCategorical(logits=bias_)
                 gumbels = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                if torch.isinf(action_std).any().item() == True:
+                    print('logits:', logits)
+                    print('gumbels:', gumbels)
                 assert torch.isnan(gumbels).any().item() == False, 'gumbels is NaN!!'
                 assert torch.isinf(gumbels).any().item() == False, 'gumbels is inf!!'
                 mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
