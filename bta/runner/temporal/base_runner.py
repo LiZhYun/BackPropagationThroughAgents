@@ -992,7 +992,7 @@ class Runner(object):
                     mix_dist_entropy = ((mix_dist_entropy*active_masks_all).sum(dim=0)/active_masks_all.sum(dim=0)).sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
-                    mix_dist_entropy = mix_dist_entropy.sum(1).mean()
+                    mix_dist_entropy = mix_dist_entropy.mean(dim=0).sum()
                 # policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
                 # ce_adv = ce_return_batch_all - return_batch_all
