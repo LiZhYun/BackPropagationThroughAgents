@@ -137,13 +137,14 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
         
         if self.discrete:
-            bias_ = self.head(x).mean
+            bias_ = self.head(x).rsample()
             assert torch.isinf(bias_).any().item() == False, 'bias_ is inf!!'
-            action_std = torch.sigmoid(bias_)
+            # action_std = torch.clamp(bias_, 0, 1)
+            action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
             log_action_std = action_std.clone()
             # assert torch.isinf(action_std).any().item() == False, 'sigmoid action_std is inf!!'
             # action_std = -torch.exp(-bias_).log()
-            action_std = -torch.log(-torch.log(action_std))
+            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
             if torch.isinf(action_std).any().item() == True:
                 print('mean,std:', self.head(x).mean, self.head(x).stddev)
                 print('bias_:', bias_)
@@ -184,12 +185,12 @@ class Action_Attention(nn.Module):
 
         # action_std = None
         if self.discrete:
-            soft_ = self.head(x).mean
+            soft_ = self.head(x).rsample()
             bias_ = bias + soft_.detach() - soft_
             # bias_ = self.head(x)
-            action_std = torch.sigmoid(bias_)
+            action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
             # action_std = -torch.exp(-bias_).log()
-            action_std = -torch.log(-torch.log(action_std))
+            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
             bias_ = self.head(x)
             log_std = bias_ * self.std_x_coef
