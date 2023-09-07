@@ -64,7 +64,7 @@ class Action_Attention(nn.Module):
             self.discrete = True
             action_dim = action_space.n
             self.std_x_coef = 1.
-            self.std_y_coef = 1.
+            self.std_y_coef = 0.9999
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
@@ -140,16 +140,18 @@ class Action_Attention(nn.Module):
             bias_ = self.head(x).rsample()
             assert torch.isinf(bias_).any().item() == False, 'bias_ is inf!!'
             # action_std = torch.clamp(bias_, 0, 1)
-            action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
+            # action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
+            log_std = bias_ * self.std_x_coef
+            action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
             log_action_std = action_std.clone()
             # assert torch.isinf(action_std).any().item() == False, 'sigmoid action_std is inf!!'
             # action_std = -torch.exp(-bias_).log()
             action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
-            if torch.isinf(action_std).any().item() == True:
-                print('mean,std:', self.head(x).mean, self.head(x).stddev)
-                print('bias_:', bias_)
-                print('sigmoid_action_std:', log_action_std)
-                print('action_std:', action_std)
+            # if torch.isinf(action_std).any().item() == True:
+            #     print('mean,std:', self.head(x).mean, self.head(x).stddev)
+            #     print('bias_:', bias_)
+            #     print('sigmoid_action_std:', log_action_std)
+            #     print('action_std:', action_std)
             # assert torch.isinf(action_std).any().item() == False, 'loglog action_std is inf!!'
         else:
             bias_ = self.head(x)
@@ -188,7 +190,9 @@ class Action_Attention(nn.Module):
             soft_ = self.head(x).rsample()
             bias_ = bias + soft_.detach() - soft_
             # bias_ = self.head(x)
-            action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
+            # action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
+            log_std = bias_ * self.std_x_coef
+            action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
             # action_std = -torch.exp(-bias_).log()
             action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
