@@ -24,6 +24,8 @@ class ClimbingEnv(gym.Env):
             self.reward_array = np.array([[self.k, 0, 10], [0, 2, 0], [10, 0, self.k]])
         elif self.scenario_name=='permutation':
             self.num_agents = args.num_agents
+        elif self.scenario_name=='nonmonotonic':
+            self.reward_array = np.array([[-12, 0, 0], [-12, 0, 0], [8, -12, -12]])
 
         self._step = 0
         self.highlight = (0, 0)
