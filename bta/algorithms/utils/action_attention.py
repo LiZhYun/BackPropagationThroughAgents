@@ -64,7 +64,7 @@ class Action_Attention(nn.Module):
             self.discrete = True
             action_dim = action_space.n
             self.std_x_coef = 1.
-            self.std_y_coef = 0.9999
+            self.std_y_coef = 1.
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
@@ -103,13 +103,13 @@ class Action_Attention(nn.Module):
                 self.layers.append(Block(config))
                 
         self.layer_norm = nn.LayerNorm(self._attn_size)
-        if self.discrete:
-            act_args = copy.copy(args)
-            act_args.std_x_coef = args.mix_std_x_coef
-            act_args.std_y_coef = args.mix_std_y_coef
-            self.head = DiagGaussian(self._attn_size, self.action_dim, self._use_orthogonal, self._gain, act_args)
-        else:
-            self.head = init_(nn.Linear(self._attn_size, self.action_dim))
+        # if self.discrete:
+        #     act_args = copy.copy(args)
+        #     act_args.std_x_coef = args.mix_std_x_coef
+        #     act_args.std_y_coef = args.mix_std_y_coef
+        #     self.head = DiagGaussian(self._attn_size, self.action_dim, self._use_orthogonal, self._gain, act_args)
+        # else:
+        self.head = init_(nn.Linear(self._attn_size, self.action_dim))
 
         self.to(device)
 
@@ -137,7 +137,7 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
         
         if self.discrete:
-            bias_ = self.head(x).rsample()
+            bias_ = self.head(x)
             assert torch.isinf(bias_).any().item() == False, 'bias_ is inf!!'
             # action_std = torch.clamp(bias_, 0, 1)
             # action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
@@ -187,9 +187,9 @@ class Action_Attention(nn.Module):
 
         # action_std = None
         if self.discrete:
-            soft_ = self.head(x).rsample()
-            bias_ = bias + soft_.detach() - soft_
-            # bias_ = self.head(x)
+            # soft_ = self.head(x).rsample()
+            # bias_ = bias + soft_.detach() - soft_
+            bias_ = self.head(x)
             # action_std = torch.clamp(torch.sigmoid(bias_), 0, 1 - 1e-20)
             log_std = bias_ * self.std_x_coef
             action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef

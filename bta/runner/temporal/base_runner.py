@@ -788,6 +788,7 @@ class Runner(object):
                     available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                     logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    logits_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     if not self.discrete:
                         stds_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(**self.tpdv)
@@ -804,6 +805,7 @@ class Runner(object):
                     available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
                     logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    logits_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     if not self.discrete:
                         stds_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
                     obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(**self.tpdv)
@@ -822,12 +824,13 @@ class Runner(object):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
                     adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, \
-                    old_joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch, bias_batch = next(data_generators[agent_idx])
+                    old_joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch, bias_batch, logits_batch = next(data_generators[agent_idx])
                     adv_targ = check(adv_targ).to(**self.tpdv)
                     return_batch = check(return_batch).to(**self.tpdv)
                     ce_gae_batch = check(ce_gae_batch).to(**self.tpdv)
                     joint_actions_batch = check(joint_actions_batch).to(**self.tpdv)
                     bias_batch = check(bias_batch).to(**self.tpdv)
+                    logits_batch = check(logits_batch).to(**self.tpdv)
                     thresholds_batch = check(thresholds_batch).to(**self.tpdv)
                     old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
                     old_joint_action_log_probs_batch = check(old_joint_action_log_probs_batch).to(**self.tpdv)
@@ -857,6 +860,7 @@ class Runner(object):
                                                                             joint_actions=joint_actions_batch
                                                                             )
                 
+                    logits_all_batch[:, agent_idx] = logits_batch
                     logits_all[:, agent_idx] = logits if self.discrete else logits.mean
                     if not self.discrete:
                         stds_all[:, agent_idx] = logits.stddev
@@ -941,7 +945,7 @@ class Runner(object):
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
                 masks = np.concatenate(np.stack(masks_all, 1))
-                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks)
+                bias_, action_std, _ = self.action_attention.evaluation(logits_all_batch.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks)
                 if self.discrete:
                     # Normalize
                     # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
