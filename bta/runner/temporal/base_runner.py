@@ -952,7 +952,7 @@ class Runner(object):
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
-                    mix_dist = FixedNormal(logits_all + thresholds_batch * bias_, torch.sqrt(stds_all**2 + thresholds_batch * action_std**2))
+                    mix_dist = FixedNormal(logits_all, torch.sqrt(stds_all**2 + thresholds_batch * bias_**2))
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)

@@ -144,9 +144,9 @@ class Action_Attention(nn.Module):
             # action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
             bias_ = bias_mean
-            # log_std = bias_ * self.std_x_coef
+            log_std = bias_ * self.std_x_coef
             # action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            # action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -185,9 +185,9 @@ class Action_Attention(nn.Module):
             # action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
             bias_ = bias_mean
-            # log_std = bias_ * self.std_x_coef
+            log_std = bias_ * self.std_x_coef
             # action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            # action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 
