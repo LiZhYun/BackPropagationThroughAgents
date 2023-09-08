@@ -68,7 +68,7 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 0.5
+            self.std_y_coef = 0.75
             # log_std = torch.ones(action_dim) * self.std_x_coef
             # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
@@ -138,10 +138,9 @@ class Action_Attention(nn.Module):
         # bias_ = FixedNormal(bias_mean, bias_std).rsample()
         
         if self.discrete:
-            bias_ = bias_mean - bias_mean.logsumexp(dim=-1, keepdim=True)
-            # log_std = bias_ * self.std_x_coef
-            # action_std = torch.softmax(log_std / self.std_x_coef, -1) * self.std_y_coef
-            # action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
+            # bias_ = bias_mean - bias_mean.logsumexp(dim=-1, keepdim=True)
+            bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
+            bias_ = -torch.log(-torch.log(bias_ + 1e-20) + 1e-20)
         else:
             bias_ = bias_mean
             log_std = bias_ * self.std_x_coef
@@ -179,7 +178,9 @@ class Action_Attention(nn.Module):
         # bias_ = bias + soft_.detach() - soft_
 
         if self.discrete:
-            bias_ = bias_mean - bias_mean.logsumexp(dim=-1, keepdim=True)
+            # bias_ = bias_mean - bias_mean.logsumexp(dim=-1, keepdim=True)
+            bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
+            bias_ = -torch.log(-torch.log(bias_ + 1e-20) + 1e-20)
             # log_std = bias_ * self.std_x_coef
             # action_std = torch.softmax(log_std / self.std_x_coef, -1) * self.std_y_coef
             # action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)

@@ -947,12 +947,12 @@ class Runner(object):
                 masks = np.concatenate(np.stack(masks_all, 1))
                 bias_, action_std, _ = self.action_attention.evaluation(obs_feats_all.view(-1, self.obs_emb_size), bias_batch_all, share_obs, rnn_states_joint, masks)
                 if self.discrete:
-                    gumbels = (logits_all + thresholds_batch * bias_) / self.temperature  # ~Gumbel(logits,tau)
+                    gumbels = (logits_all + bias_) / self.temperature  # ~Gumbel(logits,tau)
                     mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
-                    mix_dist = FixedNormal(logits_all, torch.sqrt(stds_all**2 + thresholds_batch * bias_**2))
+                    mix_dist = FixedNormal(logits_all, bias_)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
