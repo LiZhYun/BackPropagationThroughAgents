@@ -172,33 +172,17 @@ class MatrixRunner(Runner):
             share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
-            bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
-            assert torch.isnan(action_std).any().item() == False, 'action_std is NaN!!'
-            # assert torch.isinf(action_std).any().item() == False, 'action_std is inf!!'
-            assert torch.isnan(logits).any().item() == False, 'logits is NaN!!'
-            assert torch.isinf(logits).any().item() == False, 'logits is inf!!'
+            bias_, action_std, rnn_states_joint = self.action_attention(obs_feats.view(-1, self.obs_emb_size), share_obs, rnn_states_joint, masks)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                # Normalize
-                # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                # mix_dist = FixedCategorical(logits=bias_)
                 gumbels = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                if torch.isinf(action_std).any().item() == True:
-                    print('logits:', logits)
-                    print('gumbels:', gumbels)
-                assert torch.isnan(gumbels).any().item() == False, 'gumbels is NaN!!'
-                assert torch.isinf(gumbels).any().item() == False, 'gumbels is inf!!'
                 mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
-                assert torch.isnan(mixed_).any().item() == False, 'mixed_ is NaN!!'
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
-                # action_mean = bias_
-                # action_mean = logits+self.threshold*bias_
-                # action_std = stds
                 ind_dist = FixedNormal(logits, stds)
                 mix_dist = FixedNormal(logits, action_std)
             mix_actions = mix_dist.sample()

@@ -945,22 +945,14 @@ class Runner(object):
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
                 masks = np.concatenate(np.stack(masks_all, 1))
-                bias_, action_std, _ = self.action_attention.evaluation(logits_all_batch.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks)
+                bias_, action_std, _ = self.action_attention.evaluation(obs_feats_all.view(-1, self.obs_emb_size), bias_batch_all, share_obs, rnn_states_joint, masks)
                 if self.discrete:
-                    # Normalize
-                    # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                    # mixed_ = logits_all + thresholds_batch * bias_
-                    # mixed_ = bias_
                     gumbels = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
                     mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                     mixed_[available_actions_all == 0] = -1e10
                     mix_dist = FixedCategorical(logits=mixed_)
                 else:
-                    # action_mean = logits_all + thresholds_batch * bias_
-                    # action_std = stds_all
-                    # action_mean = bias_
                     mix_dist = FixedNormal(logits_all, action_std)
-                    # mix_dist = FixedNormal(logits_all, torch.sqrt(stds_all**2 + action_std**2))
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)

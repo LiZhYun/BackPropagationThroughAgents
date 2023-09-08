@@ -202,26 +202,19 @@ class MujocoRunner(Runner):
             share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
-            bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
+            bias_, action_std, rnn_states_joint = self.action_attention(obs_feats.view(-1, self.obs_emb_size), share_obs, rnn_states_joint, masks)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                # Normalize
-                # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-                # mix_dist = FixedCategorical(logits=bias_)
                 gumbels = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
                 mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
-                # action_mean = bias_
-                # action_mean = logits+self.threshold*bias_
-                # action_std = stds
                 ind_dist = FixedNormal(logits, stds)
                 mix_dist = FixedNormal(logits, action_std)
-                # mix_dist = FixedNormal(logits, torch.sqrt(stds**2 + action_std**2))
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)

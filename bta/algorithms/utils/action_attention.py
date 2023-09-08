@@ -64,7 +64,7 @@ class Action_Attention(nn.Module):
             self.discrete = True
             action_dim = action_space.n
             self.std_x_coef = 1.
-            self.std_y_coef = 1.
+            self.std_y_coef = 0.9999
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
@@ -76,7 +76,7 @@ class Action_Attention(nn.Module):
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+action_dim+self.num_agents, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.hidden_size+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -147,12 +147,11 @@ class Action_Attention(nn.Module):
         bias_ = FixedNormal(bias_mean, bias_std).rsample()
         
         if self.discrete:
-            # bias_ = self.head(x)
             log_std = bias_ * self.std_x_coef
             action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
             action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
-            # bias_ = self.head(x)
+            bias_ = bias_mean
             log_std = bias_ * self.std_x_coef
             # action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
             action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
@@ -188,16 +187,12 @@ class Action_Attention(nn.Module):
         bias_ = bias + soft_.detach() - soft_
 
         if self.discrete:
-            # soft_ = self.head(x).rsample()
-            # bias_ = bias + soft_.detach() - soft_
-            # bias_ = self.head(x)
             log_std = bias_ * self.std_x_coef
             action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
             action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
         else:
-            # bias_ = self.head(x)
+            bias_ = bias_mean
             log_std = bias_ * self.std_x_coef
-            # action_std = torch.clamp((log_std / self.std_x_coef), 1e-5, 1) * self.std_y_coef
             # action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
             action_std = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
