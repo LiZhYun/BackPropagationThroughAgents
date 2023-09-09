@@ -64,7 +64,7 @@ class Action_Attention(nn.Module):
             self.discrete = True
             action_dim = action_space.n
             self.std_x_coef = 1.
-            self.std_y_coef = 0.5
+            self.std_y_coef = 0.75
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
@@ -133,19 +133,19 @@ class Action_Attention(nn.Module):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
-        bias_mean = self.head_mean(x)
-        action_std = torch.sigmoid(self.head_log_std / self.std_x_coef) * self.std_y_coef
+        bias_ = self.head_mean(x)
+        bias_std = torch.sigmoid(self.head_log_std / self.std_x_coef) * self.std_y_coef
         # bias_ = FixedNormal(bias_mean, bias_std).rsample()
         
         if self.discrete:
-            # bias_ = bias_mean - bias_mean.logsumexp(dim=-1, keepdim=True)
-            bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
-            bias_ = -torch.log(-torch.log(bias_ + 1e-20) + 1e-20)
-        else:
-            bias_ = bias_mean
             log_std = bias_ * self.std_x_coef
-            # action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
+            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
+        else:
+            log_std = bias_ * self.std_x_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -172,23 +172,20 @@ class Action_Attention(nn.Module):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
-        bias_mean = self.head_mean(x)
-        action_std = torch.sigmoid(self.head_log_std / self.std_x_coef) * self.std_y_coef
+        bias_ = self.head_mean(x)
+        bias_std = torch.sigmoid(self.head_log_std / self.std_x_coef) * self.std_y_coef
         # soft_ = FixedNormal(bias_mean, bias_std).rsample()
         # bias_ = bias + soft_.detach() - soft_
 
         if self.discrete:
-            # bias_ = bias_mean - bias_mean.logsumexp(dim=-1, keepdim=True)
-            bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
-            bias_ = -torch.log(-torch.log(bias_ + 1e-20) + 1e-20)
-            # log_std = bias_ * self.std_x_coef
-            # action_std = torch.softmax(log_std / self.std_x_coef, -1) * self.std_y_coef
-            # action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
-        else:
-            bias_ = bias_mean
             log_std = bias_ * self.std_x_coef
-            # action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
+            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
+        else:
+            log_std = bias_ * self.std_x_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 

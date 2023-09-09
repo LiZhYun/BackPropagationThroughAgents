@@ -22,7 +22,7 @@ exp="check"
 num_env_steps=1000000
 episode_length=200
 # num_agents=50
-mix_std_y_coef=$1
+# mix_std_y_coef=$1
 # layer=$1
 # token_factor=$2
 # channel_factor=$3
@@ -33,5 +33,6 @@ srun singularity exec -B"$SCRATCH:$SCRATCH" $SCRATCH/bpta_lumi.sif python ../../
 --save_interval 100000 --log_interval 10000 --use_eval --eval_interval 10000 --n_eval_rollout_threads 100 --eval_episodes 100 \
 --n_rollout_threads 50 --num_mini_batch 1 \
 --user_name "zhiyuanli" --wandb_name "zhiyuanli" \
---use_action_attention --mix_std_y_coef ${mix_std_y_coef}
+--use_action_attention 
+# --mix_std_y_coef ${mix_std_y_coef}
 # --use_action_attention --attn_N ${layer} --token_factor ${token_factor} --channel_factor ${channel_factor}
