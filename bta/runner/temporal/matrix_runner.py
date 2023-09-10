@@ -128,7 +128,7 @@ class MatrixRunner(Runner):
         if not self.discrete:
             stds = torch.zeros(self.n_rollout_threads, self.num_agents, self.action_dim).to(self.device)
         obs_feats = torch.zeros(self.n_rollout_threads, self.num_agents, self.obs_emb_size).to(self.device)
-        hard_actions = np.zeros((self.n_rollout_threads, self.num_agents, 1), dtype=np.int32)
+        hard_actions = torch.zeros(self.n_rollout_threads, self.num_agents, 1, dtype=torch.int32).to(self.device)
         action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, 1))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
@@ -154,8 +154,9 @@ class MatrixRunner(Runner):
                                                             self.buffer[agent_idx].masks[step],
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
+                                                            deterministic=True,
                                                             tau=self.temperature)
-            hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
+            hard_actions[:, agent_idx] = torch.argmax(action, -1, keepdim=True).to(torch.int)
             actions[:, agent_idx] = _t2n(action)
             logits[:, agent_idx] = logit if self.discrete else logit.mean
             if not self.discrete:
@@ -172,19 +173,19 @@ class MatrixRunner(Runner):
             share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
-            bias_, action_std, rnn_states_joint = self.action_attention(obs_feats.view(-1, self.obs_emb_size), share_obs, rnn_states_joint, masks)
+            bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                gumbels = (logits + bias_) / self.temperature  # ~Gumbel(logits,tau)
-                mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
+                # gumbels = (logits + bias_) / self.temperature  # ~Gumbel(logits,tau)
+                # mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                 ind_dist = FixedCategorical(logits=logits)
-                mix_dist = FixedCategorical(logits=mixed_)
+                mix_dist = FixedCategorical(logits=bias_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(logits, bias_)
+                mix_dist = FixedNormal(bias_, action_std)
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
@@ -192,7 +193,7 @@ class MatrixRunner(Runner):
             action_log_probs = _t2n(ind_action_log_probs)  
             joint_action_log_probs = _t2n(mix_action_log_probs)  
 
-        return values, actions, hard_actions, action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold), _t2n(bias_), _t2n(logits)
+        return values, actions, _t2n(hard_actions), action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold), _t2n(bias_), _t2n(logits)
 
     def collect_eval(self, step, eval_obs, eval_rnn_states, eval_masks):
         actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.action_dim))
@@ -220,8 +221,8 @@ class MatrixRunner(Runner):
                                                             tmp_execution_mask,
                                                             deterministic=True,
                                                             tau=self.temperature)
-            hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
-            actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
+            hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
+            actions[:, agent_idx] = _t2n(action)
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
 
         return actions, hard_actions, eval_rnn_states

@@ -215,7 +215,7 @@ class SeparatedReplayBuffer(object):
                 self.value_preds[-1] = next_value
                 ce_gae = 0
                 if self.use_action_attention:
-                    imp_weights = np.prod(np.exp(self.action_log_probs[:] - self.joint_action_log_probs[:]), -1, keepdims=True)
+                    imp_weights = np.prod(np.exp(self.action_log_probs - self.joint_action_log_probs), -1, keepdims=True)
                     clipped_weights = np.clip(imp_weights, a_max=1.0, a_min=None)
                     truncated_weights = np.minimum(imp_weights, clipped_weights)
                     for step in reversed(range(self.rewards.shape[0])):

@@ -340,7 +340,7 @@ def get_config():
                         help='soft update polyak (default: 0.995)')
     parser.add_argument("--critic_lr", type=float, default=5e-4,
                         help='critic learning rate (default: 5e-4)')
-    parser.add_argument("--attention_lr", type=float, default=5e-5,
+    parser.add_argument("--attention_lr", type=float, default=5e-4,
                         help='attention learning rate (default: 5e-4)')
     parser.add_argument("--entropy_lr", type=float, default=5e-4,
                         help='entropy learning rate (default: 5e-4)')

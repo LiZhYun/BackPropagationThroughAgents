@@ -63,20 +63,18 @@ class Action_Attention(nn.Module):
         if action_space.__class__.__name__ == "Discrete":
             self.discrete = True
             action_dim = action_space.n
-            self.std_x_coef = 1.
-            self.std_y_coef = 0.75
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 0.75
-            # log_std = torch.ones(action_dim) * self.std_x_coef
-            # self.log_std = torch.nn.Parameter(log_std)
+            self.std_y_coef = 0.5
+            log_std = torch.ones(self.num_agents, action_dim) * self.std_x_coef
+            self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.hidden_size+self.num_agents, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.action_dim+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -104,9 +102,7 @@ class Action_Attention(nn.Module):
                 
         self.layer_norm = nn.LayerNorm(self._attn_size)
 
-        self.head_mean = init_(nn.Linear(self._attn_size, self.action_dim))
-        log_std = torch.ones(self.action_dim) * self.std_x_coef
-        self.head_log_std = torch.nn.Parameter(log_std)
+        self.head = init_(nn.Linear(self._attn_size, self.action_dim))
 
         self.to(device)
 
@@ -133,19 +129,12 @@ class Action_Attention(nn.Module):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
-        bias_ = self.head_mean(x)
-        bias_std = torch.sigmoid(self.head_log_std / self.std_x_coef) * self.std_y_coef
-        # bias_ = FixedNormal(bias_mean, bias_std).rsample()
+        bias_ = self.head(x)
         
         if self.discrete:
-            log_std = bias_ * self.std_x_coef
-            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            # bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
-            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
+            action_std = None
         else:
-            log_std = bias_ * self.std_x_coef
-            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            # bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -172,20 +161,12 @@ class Action_Attention(nn.Module):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
-        bias_ = self.head_mean(x)
-        bias_std = torch.sigmoid(self.head_log_std / self.std_x_coef) * self.std_y_coef
-        # soft_ = FixedNormal(bias_mean, bias_std).rsample()
-        # bias_ = bias + soft_.detach() - soft_
-
+        bias_ = self.head(x)
+        
         if self.discrete:
-            log_std = bias_ * self.std_x_coef
-            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            # bias_ = torch.sigmoid(bias_mean) * self.std_y_coef
-            action_std = -torch.log(-torch.log(action_std + 1e-20) + 1e-20)
+            action_std = None
         else:
-            log_std = bias_ * self.std_x_coef
-            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
-            # bias_ = torch.sigmoid(log_std / self.std_x_coef) * self.std_y_coef
+            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 

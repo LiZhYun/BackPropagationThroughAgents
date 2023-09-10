@@ -39,6 +39,7 @@ class ACTLayer(nn.Module):
             discrete_dim = action_space[1].n
             self.action_outs = nn.ModuleList([DiagGaussian(inputs_dim, continous_dim, use_orthogonal, gain), SoftCategorical(
                 inputs_dim, discrete_dim, use_orthogonal, gain)])
+        self.action_dim = action_dim
     
     def forward(self, x, available_actions=None, deterministic=False, rsample=True, tau=1.0, joint=False):
         if self.mixed_action :
@@ -97,42 +98,47 @@ class ACTLayer(nn.Module):
         
         elif self.continuous_action:
             action_logits = self.action_out(x)
-            if deterministic:
-                actions = action_logits.mode()
-            elif rsample:
-                actions = action_logits.rsample() 
+            if rsample:
+                if deterministic:
+                    actions = action_logits.mode() 
+                else:
+                    actions = action_logits.rsample() 
                 # if joint:
                 #     actions = action_logits.mode() 
                 action_log_probs = action_logits.log_probs(actions)
                 dist_entropy = action_logits.entropy()
                 return actions, action_log_probs, dist_entropy, action_logits
-            else: 
-                actions = action_logits.sample()
+            else:
+                if deterministic:
+                    actions = action_logits.mode()
+                else: 
+                    actions = action_logits.sample()
             # actions = action_logits.mode() if deterministic else action_logits.rsample() 
             action_log_probs = action_logits.log_probs(actions)
             dist_entropy = action_logits.entropy()
         
         elif self.discrete_action:
             action_logits = self.action_out(x, available_actions)
-            if deterministic:
-                # if rsample:
-                #     actions = action_logits.rsample(tau=tau) 
-                #     actions = torch.argmax(actions, -1, keepdim=True).to(torch.int)
-                # else:
-                actions = action_logits.mode()
-                action_log_probs = action_logits.log_probs(actions)
-            elif rsample:
-                actions = action_logits.rsample(tau=tau) 
-                # if joint:
-                #     actions = action_logits.mode() 
-                #     action_log_probs = action_logits.log_probs(actions)
-                # else:
+            if rsample:
+                if deterministic:
+                    actions = action_logits.mode()
+                    actions = F.one_hot(actions.long(), self.action_dim).float().squeeze(1)
+                else:
+                    actions = action_logits.rsample(tau=tau) 
+                    # if joint:
+                    #     actions = action_logits.mode() 
+                    #     action_log_probs = action_logits.log_probs(actions)
+                    # else:
                 action_log_probs = action_logits.log_probs(torch.argmax(actions, -1))
                 dist_entropy = action_logits.entropy()
                 return actions, action_log_probs, dist_entropy, action_logits.logits
-            else: 
-                actions = action_logits.sample()
-                action_log_probs = action_logits.log_probs(actions)
+            else:
+                if deterministic:
+                    actions = action_logits.mode()
+                    action_log_probs = action_logits.log_probs(actions)
+                else: 
+                    actions = action_logits.sample()
+                    action_log_probs = action_logits.log_probs(actions)
             dist_entropy = action_logits.entropy()
 
         else:

@@ -138,11 +138,7 @@ class R_Actor(nn.Module):
         actor_features = self.feature_norm(actor_features)
         obs_feat = actor_features.clone()
 
-        if deterministic:
-            logits = None
-            actions, action_log_probs, dist_entropy = self.act(actor_features, available_actions, deterministic, tau=tau)
-        else:
-            actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
+        actions, action_log_probs, dist_entropy, logits = self.act(actor_features, available_actions, deterministic, tau=tau)
         
         return actions, action_log_probs, rnn_states, logits, dist_entropy, obs_feat
     
