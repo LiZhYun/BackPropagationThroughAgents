@@ -971,10 +971,11 @@ class Runner(object):
                 surr1 = imp_weights * adv_targ_all
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
 
-                mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
-                mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
+                mode_actions_mix = mix_dist.mode()
+                mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
+                mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
 
-                IGM_loss = -torch.sum(mode_action_log_probs_mix.detach() * mode_action_log_probs_ind, dim=-1, keepdim=True)
+                IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
 
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
@@ -983,11 +984,11 @@ class Runner(object):
                         (policy_action_loss * active_masks_all).sum(dim=0) /
                         active_masks_all.sum(dim=0)).sum()
                     mix_dist_entropy = ((mix_dist_entropy*active_masks_all).sum(dim=0)/active_masks_all.sum(dim=0)).sum()
-                    IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum() - individual_loss.sum()
+                    IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
                     mix_dist_entropy = mix_dist_entropy.mean(dim=0).sum()
-                    IGM_loss = IGM_loss.mean(dim=0).sum() - individual_loss.sum()
+                    IGM_loss = IGM_loss.mean(dim=0).sum()
                 # policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
 
                 for agent_idx in range(self.num_agents):

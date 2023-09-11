@@ -255,8 +255,8 @@ class SMACRunner(Runner):
                                                             available_actions=available_actions[:, agent_idx],
                                                             deterministic=True,
                                                             tau=self.temperature)
-            hard_actions[:, agent_idx] = _t2n(action.to(torch.int))
-            actions[:, agent_idx] = _t2n(F.one_hot(action.long(), self.action_dim).squeeze(1))
+            hard_actions[:, agent_idx] = _t2n(torch.argmax(action, -1, keepdim=True).to(torch.int))
+            actions[:, agent_idx] = _t2n(action)
             eval_rnn_states[:, agent_idx] = _t2n(rnn_state)
 
         return actions, hard_actions, eval_rnn_states
