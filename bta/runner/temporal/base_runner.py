@@ -203,6 +203,7 @@ class Runner(object):
                 self.threshold_optimizer = torch.optim.Adam(self.threshold_dist.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
             self.lambda1 = torch.tensor(0.1, requires_grad=True, device=self.device).float()
             self.lambda1_optim = torch.optim.Adam([self.lambda1], lr=self.all_args.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+            self.IGM_coef = self.all_args.IGM_coef
         
             
     def run(self):
@@ -918,7 +919,7 @@ class Runner(object):
                     
                     # self.trainer[agent_idx].policy.actor_optimizer.step()
 
-                    # individual_loss[agent_idx] = policy_loss
+                    individual_loss[agent_idx] = dist_entropy
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -954,8 +955,10 @@ class Runner(object):
                     # gumbels = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
                     # mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                     bias_[available_actions_all == 0] = -1e10
+                    ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=bias_)
                 else:
+                    ind_dist = FixedNormal(logits_all, stds_all)
                     mix_dist = FixedNormal(bias_, action_std)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
@@ -968,26 +971,11 @@ class Runner(object):
                 surr1 = imp_weights * adv_targ_all
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
 
-                IGM_log = -torch.sum(mix_dist.log_probs(check(actions_all_batch).to(**self.tpdv)), dim=-1, keepdim=True) if not self.discrete \
-                    else -torch.sum(mix_dist.log_probs_joint(check(actions_all_batch).to(**self.tpdv)), dim=-1, keepdim=True)
+                mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
+                mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
 
-                # imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
-                # each_agent_imp_weights = imp_weights.detach()
-                # each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
-                # each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
-                # mask_self = 1 - torch.eye(self.num_agents)
-                # mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
-                # each_agent_imp_weights[..., mask_self == 0] = 1.0
-                # prod_imp_weights = each_agent_imp_weights.prod(dim=2)
-                # prod_imp_weights = torch.clamp(
-                #             prod_imp_weights,
-                #             1.0 - self.clip_param/2,
-                #             1.0 + self.clip_param/2,
-                #         )
-                
-                # surr1 = imp_weights * adv_targ_all * prod_imp_weights
-                # surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * prod_imp_weights
-    
+                IGM_loss = -torch.sum(mode_action_log_probs_mix.detach() * mode_action_log_probs_ind, dim=-1, keepdim=True)
+
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
                 if self._use_policy_active_masks:
@@ -995,31 +983,12 @@ class Runner(object):
                         (policy_action_loss * active_masks_all).sum(dim=0) /
                         active_masks_all.sum(dim=0)).sum()
                     mix_dist_entropy = ((mix_dist_entropy*active_masks_all).sum(dim=0)/active_masks_all.sum(dim=0)).sum()
-                    IGM_loss = ((IGM_log * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
+                    IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum() - individual_loss.sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
                     mix_dist_entropy = mix_dist_entropy.mean(dim=0).sum()
-                    IGM_loss = IGM_log.mean(dim=0).sum()
+                    IGM_loss = IGM_loss.mean(dim=0).sum() - individual_loss.sum()
                 # policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True).mean()
-
-                # ce_adv = ce_return_batch_all - return_batch_all
-                # ce_adv_copy = ce_adv.clone()
-                # ce_adv_copy[active_masks_all == 0.0] = torch.nan
-                # mean_ce_adv = torch.nanmean(ce_adv_copy)
-                # std_ce_adv = np.nanstd(_t2n(ce_adv_copy))
-                # ce_adv = (ce_adv - mean_ce_adv) / (torch.tensor(std_ce_adv).to(**self.tpdv) + 1e-5)
-                # ce_surr1 = imp_weights * ce_adv
-                # ce_surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * ce_adv
-    
-                # ce_constrain_loss = torch.sum(torch.min(ce_surr1, ce_surr2), dim=-1, keepdim=True)
-                # dist_constrain_loss = ce_constrain_loss.clone()
-
-                # if self._use_policy_active_masks:
-                #     ce_constrain_loss = (
-                #         (ce_constrain_loss * active_masks_all).sum(dim=0) /
-                #         active_masks_all.sum(dim=0)).sum()
-                # else:
-                #     ce_constrain_loss = ce_constrain_loss.mean(dim=0).sum()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
@@ -1027,12 +996,7 @@ class Runner(object):
                 
                 policy_loss = policy_action_loss
 
-                (policy_loss - mix_dist_entropy * self.entropy_coef + 0*IGM_loss).backward()
-
-                # lambda1 = softplus(self.lambda1).item()
-
-                # lagrangian_loss = -(policy_loss + dist_entropy_all * self.entropy_coef - self.lambda1 * (ce_constrain_loss))
-                # lagrangian_loss.backward()
+                (policy_loss - mix_dist_entropy * self.entropy_coef + self.IGM_coef * IGM_loss).backward()
 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
