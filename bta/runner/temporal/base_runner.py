@@ -966,13 +966,13 @@ class Runner(object):
                     ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=mixed_)
 
-                    IGM_ = (logits_all.detach() + bias_) / self.temperature
+                    IGM_ = (logits_all + bias_.detach()) / self.temperature
                     IGM_[available_actions_all == 0] = -1e10
                     IGM_dist = FixedCategorical(logits=IGM_)
-                    # mode_actions_mix = mix_dist.mode()
-                    mode_action_log_probs_mix = torch.sum(IGM_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(IGM_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
-                    mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
-                    IGM_loss = -torch.sum(mode_action_log_probs_mix, dim=-1, keepdim=True)
+                    mode_actions_mix = mix_dist.mode()
+                    mode_action_log_probs_mix = torch.sum(IGM_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(IGM_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
+                    mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
+                    IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all)
                     mix_dist = FixedNormal(logits_all, action_std)
