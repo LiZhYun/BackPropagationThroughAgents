@@ -205,20 +205,19 @@ class SMACRunner(Runner):
             share_obs = np.concatenate(np.stack([self.buffer[i].share_obs[step] for i in range(self.num_agents)], 1))
             rnn_states_joint = np.concatenate(np.stack([self.buffer[i].rnn_states_joint[step] for i in range(self.num_agents)], 1))
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
-            bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks)
+            bias_, action_std, rnn_states_joint = self.action_attention(logits.view(-1, self.action_dim), share_obs, rnn_states_joint, masks, hard_actions)
             rnn_states_joint = _t2n(rnn_states_joint)
             if self.decay_id == 3:
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                # gumbels = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                # mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
-                bias_[available_actions_all == 0] = -1e10
+                mixed_ = (logits + bias_) / self.temperature  # ~Gumbel(logits,tau)
+                mixed_[available_actions_all == 0] = -1e10
                 ind_dist = FixedCategorical(logits=logits)
-                mix_dist = FixedCategorical(logits=bias_)
+                mix_dist = FixedCategorical(logits=mixed_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(bias_, action_std)
+                mix_dist = FixedNormal(logits, action_std)
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)

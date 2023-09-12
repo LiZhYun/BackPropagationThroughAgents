@@ -66,9 +66,9 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 0.5
-            log_std = torch.ones(self.num_agents, action_dim) * self.std_x_coef
-            self.log_std = torch.nn.Parameter(log_std)
+            self.std_y_coef = 0.75
+            # log_std = torch.ones(self.num_agents, action_dim) * self.std_x_coef
+            # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
@@ -106,12 +106,13 @@ class Action_Attention(nn.Module):
 
         self.to(device)
 
-    def forward(self, x, obs_rep, rnn_states, masks):
+    def forward(self, x, obs_rep, rnn_states, masks, actions):
         N = x.shape[0] // self.num_agents
         x = check(x).to(**self.tpdv)
         obs_rep = check(obs_rep).to(**self.tpdv)
         rnn_states = check(rnn_states).to(**self.tpdv)
         masks = check(masks).to(**self.tpdv)
+        actions = check(actions).to(**self.tpdv)
 
         obs_features = self.base(obs_rep)
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
@@ -132,18 +133,26 @@ class Action_Attention(nn.Module):
         bias_ = self.head(x)
         
         if self.discrete:
+            bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+            # max_values, _ = bias_.max(dim=-1, keepdim=True)
+            # gathered_values = torch.gather(bias_, -1, actions.long())
+            # max_mode_diff = max_values - gathered_values
+            # result = gathered_values + max_mode_diff.detach() + 1e-4
+            # bias_.scatter_(dim=-1, index=actions.long(), src=result)
             action_std = None
         else:
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+            log_std = bias_ * self.std_x_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
-    def evaluation(self, x, bias, obs_rep, rnn_states, masks):
+    def evaluation(self, x, bias, obs_rep, rnn_states, masks, actions):
         N = x.shape[0] // self.num_agents
         x = check(x).to(**self.tpdv)
         obs_rep = check(obs_rep).to(**self.tpdv)
         rnn_states = check(rnn_states).to(**self.tpdv)
         masks = check(masks).to(**self.tpdv)
+        actions = check(actions).to(**self.tpdv)
 
         obs_features = self.base(obs_rep)
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
@@ -164,9 +173,16 @@ class Action_Attention(nn.Module):
         bias_ = self.head(x)
         
         if self.discrete:
+            bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+            # max_values, _ = bias_.max(dim=-1, keepdim=True)
+            # gathered_values = torch.gather(bias_, -1, actions.long())
+            # max_mode_diff = max_values - gathered_values
+            # result = gathered_values + max_mode_diff.detach() + 1e-4
+            # bias_.scatter_(dim=-1, index=actions.long(), src=result)
             action_std = None
         else:
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+            log_std = bias_ * self.std_x_coef
+            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 

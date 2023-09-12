@@ -822,7 +822,7 @@ class Runner(object):
                 share_obs_all = []
                 rnn_states_joint_all = []
                 masks_all = []
-                individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
+                # individual_loss = torch.zeros(self.num_agents).to(**self.tpdv)
                 for agent_idx in range(self.num_agents):
                     share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
                     value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
@@ -919,7 +919,7 @@ class Runner(object):
                     
                     # self.trainer[agent_idx].policy.actor_optimizer.step()
 
-                    individual_loss[agent_idx] = dist_entropy
+                    # individual_loss[agent_idx] = dist_entropy
 
                     #critic update
                     value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
@@ -946,20 +946,36 @@ class Runner(object):
                     else:
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
                         # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
-
+                
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
                 masks = np.concatenate(np.stack(masks_all, 1))
-                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks)
+                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks, actions_all_batch)
+                IGM_loss = torch.zeros(1).to(**self.tpdv)
                 if self.discrete:
-                    # gumbels = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                    mixed_ = (logits_all + bias_) / self.temperature  # ~Gumbel(logits,tau)
                     # mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
-                    bias_[available_actions_all == 0] = -1e10
+                    # mode_item = torch.gather(mixed_, -1, actions_all_batch.long())
+                    # mixed_ = torch.clamp(mixed_, max=mode_item)
+                    # max_values, _ = mixed_.max(dim=-1, keepdim=True)
+                    # gathered_values = torch.gather(mixed_.clone(), -1, actions_all_batch.long())
+                    # max_mode_diff = max_values - gathered_values
+                    # result = gathered_values + max_mode_diff.detach()
+                    # mixed_.scatter_(dim=-1, index=actions_all_batch.long(), src=result)
+                    mixed_[available_actions_all == 0] = -1e10
                     ind_dist = FixedCategorical(logits=logits_all)
-                    mix_dist = FixedCategorical(logits=bias_)
+                    mix_dist = FixedCategorical(logits=mixed_)
+
+                    IGM_ = (logits_all.detach() + bias_) / self.temperature
+                    IGM_[available_actions_all == 0] = -1e10
+                    IGM_dist = FixedCategorical(logits=IGM_)
+                    # mode_actions_mix = mix_dist.mode()
+                    mode_action_log_probs_mix = torch.sum(IGM_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(IGM_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
+                    mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(actions_all_batch), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(actions_all_batch), dim=(-1, -2), keepdim=True)
+                    IGM_loss = -torch.sum(mode_action_log_probs_mix, dim=-1, keepdim=True)
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all)
-                    mix_dist = FixedNormal(bias_, action_std)
+                    mix_dist = FixedNormal(logits_all, action_std)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
@@ -970,12 +986,6 @@ class Runner(object):
                 # imp_weights = torch.minimum(imp_weights, torch.tensor(3.0).to(self.device))
                 surr1 = imp_weights * adv_targ_all
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
-
-                mode_actions_mix = mix_dist.mode()
-                mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
-                mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
-
-                IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
 
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
