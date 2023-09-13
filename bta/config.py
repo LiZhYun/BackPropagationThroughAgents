@@ -241,6 +241,8 @@ def get_config():
                         help="Whether to use Orthogonal initialization for weights and 0 initialization for biases")
     parser.add_argument("--gain", type=float, default=0.01,
                         help="The gain # of last action layer")
+    parser.add_argument("--sigmoid_gain", type=float, default=1.,
+                        help="The gain # of sigmoid")
     parser.add_argument("--cnn_layers_params", type=str, default=None,
                         help="The parameters of cnn layer")
     parser.add_argument("--use_maxpool2d", action='store_true',

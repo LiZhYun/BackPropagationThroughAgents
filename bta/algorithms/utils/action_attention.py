@@ -66,9 +66,10 @@ class Action_Attention(nn.Module):
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
             self.std_x_coef = 1.
-            self.std_y_coef = 0.75
-            # log_std = torch.ones(self.num_agents, action_dim) * self.std_x_coef
-            # self.log_std = torch.nn.Parameter(log_std)
+            self.std_y_coef = 0.5
+            self.sigmoid_gain = args.sigmoid_gain
+            log_std = torch.ones(self.num_agents, action_dim) * self.std_x_coef
+            self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
@@ -141,8 +142,9 @@ class Action_Attention(nn.Module):
             # bias_.scatter_(dim=-1, index=actions.long(), src=result)
             action_std = None
         else:
-            log_std = bias_ * self.std_x_coef
-            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # log_std = bias_ * self.std_x_coef
+            # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -181,8 +183,9 @@ class Action_Attention(nn.Module):
             # bias_.scatter_(dim=-1, index=actions.long(), src=result)
             action_std = None
         else:
-            log_std = bias_ * self.std_x_coef
-            action_std = 1 / (1 + torch.exp(-0.3 * (log_std / self.std_x_coef))) * self.std_y_coef
+            # log_std = bias_ * self.std_x_coef
+            # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 

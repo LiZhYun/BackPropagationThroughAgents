@@ -953,7 +953,7 @@ class Runner(object):
                 bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks, actions_all_batch)
                 IGM_loss = torch.zeros(1).to(**self.tpdv)
                 if self.discrete:
-                    mixed_ = (logits_all + bias_) / self.temperature  # ~Gumbel(logits,tau)
+                    mixed_ = (bias_) / self.temperature  # ~Gumbel(logits,tau)
                     # mixed_ = gumbels - gumbels.logsumexp(dim=-1, keepdim=True)
                     # mode_item = torch.gather(mixed_, -1, actions_all_batch.long())
                     # mixed_ = torch.clamp(mixed_, max=mode_item)
@@ -966,16 +966,20 @@ class Runner(object):
                     ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=mixed_)
 
-                    IGM_ = (logits_all + bias_.detach()) / self.temperature
-                    IGM_[available_actions_all == 0] = -1e10
-                    IGM_dist = FixedCategorical(logits=IGM_)
-                    mode_actions_mix = mix_dist.mode()
-                    mode_action_log_probs_mix = torch.sum(IGM_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(IGM_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
-                    mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
-                    IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
+                    # IGM_ = (logits_all + bias_.detach()) / self.temperature
+                    # IGM_[available_actions_all == 0] = -1e10
+                    # IGM_dist = FixedCategorical(logits=IGM_)
+                    # mode_actions_mix = mix_dist.mode()
+                    # mode_action_log_probs_mix = torch.sum(IGM_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(IGM_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
+                    # mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
+                    # IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all)
-                    mix_dist = FixedNormal(logits_all, action_std)
+                    mix_dist = FixedNormal(bias_, action_std)
+
+                mode_actions_mix = mix_dist.mode()
+                mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
+                IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
