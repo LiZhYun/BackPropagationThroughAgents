@@ -211,13 +211,13 @@ class SMACRunner(Runner):
                 self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
                 self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                mixed_ = (logits + bias_) / self.temperature  # ~Gumbel(logits,tau)
+                mixed_ = (bias_) / self.temperature  # ~Gumbel(logits,tau)
                 mixed_[available_actions_all == 0] = -1e10
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(logits, action_std)
+                mix_dist = FixedNormal(bias_, action_std)
             mix_actions = mix_dist.sample()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)

@@ -978,6 +978,7 @@ class Runner(object):
                     mix_dist = FixedNormal(bias_, action_std)
 
                 mode_actions_mix = mix_dist.mode()
+                mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
 
