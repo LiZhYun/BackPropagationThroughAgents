@@ -76,8 +76,7 @@ class Runner(object):
             share_observation_space = self.envs.share_observation_space[agent_id] if self.use_centralized_V else self.envs.observation_space[agent_id]
             # policy network
             po = Policy(self.all_args,
-                        share_observation_space,
-                        # self.envs.observation_space[agent_id],
+                        self.envs.observation_space[agent_id],
                         share_observation_space,
                         self.envs.action_space[agent_id],
                         device = self.device)
@@ -94,8 +93,7 @@ class Runner(object):
             # buffer
             share_observation_space = self.envs.share_observation_space[agent_id] if self.use_centralized_V else self.envs.observation_space[agent_id]
             bu = SeparatedReplayBuffer(self.all_args,
-                                       share_observation_space,
-                                    #    self.envs.observation_space[agent_id],
+                                       self.envs.observation_space[agent_id],
                                        share_observation_space,
                                        self.envs.action_space[agent_id])
             self.buffer.append(bu)

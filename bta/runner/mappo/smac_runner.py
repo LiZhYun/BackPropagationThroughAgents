@@ -123,8 +123,7 @@ class SMACRunner(Runner):
 
         for agent_id in range(self.num_agents):
             self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
-            self.buffer[agent_id].obs[0] = share_obs[:, agent_id].copy()
-            # self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
+            self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
             self.buffer[agent_id].available_actions[0] = available_actions[:, agent_id].copy()
 
     @torch.no_grad()
@@ -180,8 +179,7 @@ class SMACRunner(Runner):
                 share_obs = obs
 
             self.buffer[agent_id].insert(share_obs[:, agent_id],
-                                        share_obs[:, agent_id],
-                                        # obs[:, agent_id],
+                                        obs[:, agent_id],
                                         rnn_states[:, agent_id],
                                         rnn_states_critic[:, agent_id],
                                         actions[:, agent_id],
@@ -211,9 +209,7 @@ class SMACRunner(Runner):
             eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
             for agent_id in range(self.num_agents):
                 self.trainer[agent_id].prep_rollout()
-                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(
-                                                                                eval_share_obs[:, agent_id],
-                                                                                # eval_obs[:, agent_id],
+                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(eval_obs[:, agent_id],
                                                                                 eval_rnn_states[:, agent_id],
                                                                                 eval_masks[:, agent_id],
                                                                                 available_actions=eval_available_actions[:, agent_id],
