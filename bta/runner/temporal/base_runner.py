@@ -986,7 +986,7 @@ class Runner(object):
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
                 new_actions_logprob_all_batch = mix_action_log_probs
 
-                imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
                 # imp_weights = torch.prod(torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
                 # # dual clip
                 # imp_weights = torch.minimum(imp_weights, torch.tensor(3.0).to(self.device))
