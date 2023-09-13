@@ -27,8 +27,9 @@ exp="check"
 # threshold=$3
 # decay_factor=$4
 # decay_id=$5
-sigmoid_gain=$3
-attention_lr=$4
+# sigmoid_gain=$3
+# attention_lr=$3
+IGM_coef=$3
 
 echo "env is ${env}, scenario is ${scenario}, agent_conf is ${agent_conf}, algo is ${algo}, exp is ${exp}"
 
@@ -36,7 +37,7 @@ srun singularity exec -B $SCRATCH $SCRATCH/mujo_gfoot_v2.sif /bin/sh -c "export 
 --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} --scenario ${scenario} --agent_conf ${agent_conf} --agent_obsk ${agent_obsk} \
 --seed $SLURM_ARRAY_TASK_ID --n_rollout_threads 40 --num_mini_batch 1 --episode_length 100 --num_env_steps 10000000 \
 --use_eval --eval_interval 25 --eval_episodes 5 --add_center_xy --use_state_agent --use_value_active_masks --use_policy_active_masks \
---layer_N 2 --ppo_epoch 5 --lr 3e-4 --critic_lr 3e-4 --attention_lr ${attention_lr} --std_x_coef 1 --std_y_coef 5e-1 --entropy_coef 0 --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
---use_action_attention --sigmoid_gain ${sigmoid_gain}" 
+--layer_N 2 --ppo_epoch 5 --lr 3e-4 --critic_lr 3e-4 --attention_lr 3e-4 --std_x_coef 1 --std_y_coef 5e-1 --entropy_coef 0 --wandb_name "zhiyuanli" --user_name "zhiyuanli" \
+--use_action_attention --IGM_coef ${IGM_coef}" 
 #--threshold ${threshold} --decay_factor ${decay_factor} --decay_id ${decay_id}
         
