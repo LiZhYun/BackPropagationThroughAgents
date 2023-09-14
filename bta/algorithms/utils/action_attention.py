@@ -75,7 +75,12 @@ class Action_Attention(nn.Module):
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.action_dim+self.num_agents, self._attn_size), activate=True), 
+        self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           nn.LayerNorm(self._attn_size))
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size, 2*self._attn_size), activate=True), 
+                                           nn.ReLU(),
+                                           init_(nn.Linear(2*self._attn_size, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -125,7 +130,7 @@ class Action_Attention(nn.Module):
         
         id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1)).view(N, self.num_agents, -1)
+        x = self.feat_encoder(self.logit_encoder(x) + obs_features + self.id_encoder(id_feat)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
@@ -166,7 +171,7 @@ class Action_Attention(nn.Module):
         
         id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        x = self.feat_encoder(torch.cat([x, obs_features, id_feat], -1)).view(N, self.num_agents, -1)
+        x = self.feat_encoder(self.logit_encoder(x) + obs_features + self.id_encoder(id_feat)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_features.view(N, self.num_agents, -1))
@@ -200,7 +205,7 @@ class MixerBlock(nn.Module):
         self.h = heads
         self.dims = dims
         self.token_layernorm = nn.LayerNorm(dims)
-        token_dim = int(token_factor*num_agents) if token_factor != 0 else 1
+        token_dim = int(token_factor*dims) if token_factor != 0 else 1
         self.token_forward = FeedForward(num_agents, token_dim, dropout)
             
         self.channel_layernorm = nn.LayerNorm(dims)
