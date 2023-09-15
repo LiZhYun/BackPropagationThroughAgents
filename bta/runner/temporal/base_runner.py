@@ -952,27 +952,28 @@ class Runner(object):
                 masks = np.concatenate(np.stack(masks_all, 1))
                 bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, obs_feats_all.view(-1, self.hidden_size).detach(), share_obs, rnn_states_joint, masks, actions_all_batch)
                 if self.discrete:
-                    mixed_ = bias_
+                    mixed_ = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                    mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
                     mixed_[available_actions_all == 0] = -1e10
                     ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=mixed_)
 
-                    mode_actions_mix = mix_dist.mode()
-                    target_logits = mix_dist.log_probs_joint(mode_actions_mix).repeat(1, 1, self.action_dim)
-                    mode_mask = F.one_hot(mode_actions_mix.long(), self.action_dim).float().squeeze(-2)
-                    target_logits[mode_mask == 0] = -1e1
-                    target_dist = FixedCategorical(logits=target_logits.detach())
+                    # mode_actions_mix = mix_dist.mode()
+                    # target_logits = mix_dist.log_probs_joint(mode_actions_mix).repeat(1, 1, self.action_dim)
+                    # mode_mask = F.one_hot(mode_actions_mix.long(), self.action_dim).float().squeeze(-2)
+                    # target_logits[mode_mask == 0] = -1e1
+                    # target_dist = FixedCategorical(logits=target_logits.detach())
                 else:
-                    ind_dist = FixedNormal(logits_all, stds_all.detach())
-                    mix_dist = FixedNormal(bias_, action_std)
+                    ind_dist = FixedNormal(logits_all, stds_all)
+                    mix_dist = FixedNormal(logits_all, action_std)
 
-                    target_dist = FixedNormal(bias_.detach(), stds_all.detach())
+                    # target_dist = FixedNormal(bias_.detach(), stds_all.detach())
 
                 # mode_actions_mix = mix_dist.mode()
                 # mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 # mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 # IGM_loss = -torch.sum(kl_divergence(target_dist, ind_dist), dim=-1, keepdim=True)
-                IGM_loss = kl_divergence(ind_dist, target_dist).unsqueeze(-1) if self.discrete else kl_divergence(target_dist, ind_dist).sum(-1, keepdim=True)
+                # IGM_loss = kl_divergence(ind_dist, target_dist).unsqueeze(-1) if self.discrete else kl_divergence(target_dist, ind_dist).sum(-1, keepdim=True)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
@@ -1006,11 +1007,11 @@ class Runner(object):
                         (policy_action_loss * active_masks_all).sum(dim=0) /
                         active_masks_all.sum(dim=0)).sum()
                     mix_dist_entropy = ((mix_dist_entropy*active_masks_all).sum(dim=0)/active_masks_all.sum(dim=0)).sum()
-                    IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
+                    # IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
                     mix_dist_entropy = mix_dist_entropy.mean(dim=0).sum()
-                    IGM_loss = IGM_loss.mean(dim=0).sum()
+                    # IGM_loss = IGM_loss.mean(dim=0).sum()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
@@ -1018,7 +1019,7 @@ class Runner(object):
                 
                 policy_loss = policy_action_loss
 
-                (policy_loss - mix_dist_entropy * self.entropy_coef + self.IGM_coef * IGM_loss).backward()
+                (policy_loss - mix_dist_entropy * self.entropy_coef).backward()
 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)

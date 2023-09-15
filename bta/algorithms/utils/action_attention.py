@@ -65,7 +65,7 @@ class Action_Attention(nn.Module):
             self.discrete = True
             action_dim = action_space.n
             self.std_x_coef = 1.0
-            self.std_y_coef = 1.0
+            self.std_y_coef = 0.5
             self.std_all = self.num_agents
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
@@ -82,7 +82,7 @@ class Action_Attention(nn.Module):
         self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self.action_dim+self.hidden_size+self.num_agents, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self._attn_size+self.hidden_size+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -136,24 +136,27 @@ class Action_Attention(nn.Module):
 
         id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        x = self.feat_encoder(torch.cat([x, obs_rep, id_feat], -1)).view(N, self.num_agents, -1)
+        x = self.feat_encoder(torch.cat([self.logit_encoder(x), obs_rep, id_feat], -1)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
         bias_ = self.head(x)
+        log_std = bias_ * self.std_x_coef
+        action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
 
         if self.discrete:
-            bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-            action_std = None
+            # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+            # action_std = None
             # log_std = bias_ * self.std_x_coef
             # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+            action_std = -torch.log(-torch.log(action_std))
             # action_std = torch.softmax(action_std, 1) * self.std_all
-        else:
-            # log_std = bias_ * self.std_x_coef
-            # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+        # else:
+        #     # log_std = bias_ * self.std_x_coef
+        #     # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+        #     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -176,24 +179,27 @@ class Action_Attention(nn.Module):
 
         id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        x = self.feat_encoder(torch.cat([x, obs_rep, id_feat], -1)).view(N, self.num_agents, -1)
+        x = self.feat_encoder(torch.cat([self.logit_encoder(x), obs_rep, id_feat], -1)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
             x = self.layers[layer](x, obs_rep.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
         bias_ = self.head(x)
+        log_std = bias_ * self.std_x_coef
+        action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
 
         if self.discrete:
-            bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-            action_std = None
+            # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+            # action_std = None
             # log_std = bias_ * self.std_x_coef
             # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+            action_std = -torch.log(-torch.log(action_std))
             # action_std = torch.softmax(action_std, 1) * self.std_all
-        else:
-            # log_std = bias_ * self.std_x_coef
-            # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+        # else:
+        #     # log_std = bias_ * self.std_x_coef
+        #     # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+        #     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 
