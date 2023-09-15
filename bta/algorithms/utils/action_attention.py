@@ -110,10 +110,10 @@ class Action_Attention(nn.Module):
                 
         self.layer_norm = nn.LayerNorm(self._attn_size)
 
-        # if self.discrete:
-        #     self.head = init_(nn.Linear(self._attn_size, 1))
-        # else:
-        self.head = init_(nn.Linear(self._attn_size, self.action_dim))
+        if self.discrete:
+            self.head = init_(nn.Linear(self._attn_size, 1))
+        else:
+            self.head = init_(nn.Linear(self._attn_size, self.action_dim))
 
         self.to(device)
 
@@ -144,7 +144,11 @@ class Action_Attention(nn.Module):
         bias_ = self.head(x)
 
         log_std = bias_ * self.std_x_coef
-        action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+
+        if self.discrete:
+            action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * (self.std_y_coef - 1) + 1
+        else:
+            action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
             
         # if self.discrete:
         #     # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
@@ -189,8 +193,12 @@ class Action_Attention(nn.Module):
         bias_ = self.head(x)
 
         log_std = bias_ * self.std_x_coef
-        action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
         
+        if self.discrete:
+            action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * (self.std_y_coef - 1) + 1
+        else:
+            action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+  
         # if self.discrete:
         #     # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
         #     # max_values, _ = bias_.max(dim=-1, keepdim=True)
