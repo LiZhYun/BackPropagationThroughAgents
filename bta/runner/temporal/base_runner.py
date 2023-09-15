@@ -958,8 +958,10 @@ class Runner(object):
                     mix_dist = FixedCategorical(logits=mixed_)
 
                     mode_actions_mix = mix_dist.mode()
-                    target_probs = F.one_hot(mode_actions_mix.long(), self.action_dim).float().squeeze(-2)
-                    target_dist = FixedCategorical(probs=target_probs.detach())
+                    target_logits = mix_dist.log_probs_joint(mode_actions_mix).repeat(1, 1, self.action_dim)
+                    mode_mask = F.one_hot(mode_actions_mix.long(), self.action_dim).float().squeeze(-2)
+                    target_logits[mode_mask == 0] = -1e1
+                    target_dist = FixedCategorical(logits=target_logits.detach())
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all.detach())
                     mix_dist = FixedNormal(bias_, action_std)
@@ -970,7 +972,7 @@ class Runner(object):
                 # mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 # mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 # IGM_loss = -torch.sum(kl_divergence(target_dist, ind_dist), dim=-1, keepdim=True)
-                IGM_loss = kl_divergence(target_dist, ind_dist).unsqueeze(-1) if self.discrete else kl_divergence(target_dist, ind_dist).sum(-1, keepdim=True)
+                IGM_loss = kl_divergence(ind_dist, target_dist).unsqueeze(-1) if self.discrete else kl_divergence(target_dist, ind_dist).sum(-1, keepdim=True)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
