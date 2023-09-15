@@ -950,20 +950,27 @@ class Runner(object):
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
                 masks = np.concatenate(np.stack(masks_all, 1))
-                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, share_obs, rnn_states_joint, masks, actions_all_batch)
+                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, obs_feats_all.view(-1, self.hidden_size), share_obs, rnn_states_joint, masks, actions_all_batch)
                 if self.discrete:
-                    mixed_ = logits_all / action_std
+                    mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
                     ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=mixed_)
+
+                    mode_actions_mix = mix_dist.mode()
+                    target_probs = F.one_hot(mode_actions_mix.long(), self.action_dim).float().squeeze(-2)
+                    target_dist = FixedCategorical(probs=target_probs.detach())
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all)
-                    mix_dist = FixedNormal(logits_all, action_std)
+                    mix_dist = FixedNormal(bias_, action_std)
+
+                    target_dist = FixedNormal(bias_.detach(), stds_all.detach())
 
                 # mode_actions_mix = mix_dist.mode()
                 # mode_action_log_probs_mix = torch.sum(mix_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(mix_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
                 # mode_action_log_probs_ind = torch.sum(ind_dist.log_probs(mode_actions_mix), dim=(-1, -2), keepdim=True) if not self.discrete else torch.sum(ind_dist.log_probs_joint(mode_actions_mix), dim=(-1, -2), keepdim=True)
-                # IGM_loss = -torch.sum(mode_action_log_probs_ind, dim=-1, keepdim=True)
+                # IGM_loss = -torch.sum(kl_divergence(target_dist, ind_dist), dim=-1, keepdim=True)
+                IGM_loss = kl_divergence(target_dist, ind_dist).unsqueeze(-1) if self.discrete else kl_divergence(target_dist, ind_dist).sum(-1, keepdim=True)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
@@ -973,6 +980,23 @@ class Runner(object):
                 surr1 = imp_weights * adv_targ_all
                 surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
 
+                # imp_weights = torch.prod(torch.exp(new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True)
+                # each_agent_imp_weights = imp_weights.detach()
+                # each_agent_imp_weights = each_agent_imp_weights.unsqueeze(1)
+                # each_agent_imp_weights = torch.repeat_interleave(each_agent_imp_weights, self.num_agents,1)  # shape: (len*thread, agent, agent, feature)
+                # mask_self = 1 - torch.eye(self.num_agents)
+                # mask_self = mask_self.unsqueeze(-1)  # shape: agent * agent * 1
+                # each_agent_imp_weights[..., mask_self == 0] = 1.0
+                # prod_imp_weights = each_agent_imp_weights.prod(dim=2)
+                # prod_imp_weights = torch.clamp(
+                #             prod_imp_weights,
+                #             1.0 - self.clip_param/2,
+                #             1.0 + self.clip_param/2,
+                #         )
+                
+                # surr1 = imp_weights * adv_targ_all
+                # surr2 = torch.clamp(imp_weights, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
                 if self._use_policy_active_masks:
@@ -980,11 +1004,11 @@ class Runner(object):
                         (policy_action_loss * active_masks_all).sum(dim=0) /
                         active_masks_all.sum(dim=0)).sum()
                     mix_dist_entropy = ((mix_dist_entropy*active_masks_all).sum(dim=0)/active_masks_all.sum(dim=0)).sum()
-                    # IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
+                    IGM_loss = ((IGM_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
                 else:
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
                     mix_dist_entropy = mix_dist_entropy.mean(dim=0).sum()
-                    # IGM_loss = IGM_loss.mean(dim=0).sum()
+                    IGM_loss = IGM_loss.mean(dim=0).sum()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
@@ -992,7 +1016,7 @@ class Runner(object):
                 
                 policy_loss = policy_action_loss
 
-                (policy_loss - mix_dist_entropy * self.entropy_coef).backward()
+                (policy_loss - mix_dist_entropy * self.entropy_coef + self.IGM_coef * IGM_loss).backward()
 
                 if self._use_max_grad_norm:
                     attention_grad_norm = nn.utils.clip_grad_norm_(self.action_attention.parameters(), self.max_grad_norm)
