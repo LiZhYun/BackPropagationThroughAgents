@@ -166,7 +166,7 @@ class Runner(object):
                         agent_id,
                         device = self.device)
             self.policy.append(po)
-        self.obs_emb_size = self.policy[0].actor.abs_size
+        self.obs_emb_size = self.policy[0].critic.abs_size
         
         if self.model_dir is not None:
             self.restore()

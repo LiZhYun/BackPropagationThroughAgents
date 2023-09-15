@@ -82,7 +82,7 @@ class Action_Attention(nn.Module):
         self.id_encoder = nn.Sequential(init_(nn.Linear(self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size))
-        self.feat_encoder = nn.Sequential(init_(nn.Linear(self.hidden_size+self.hidden_size+self._attn_size, self._attn_size), activate=True), 
+        self.feat_encoder = nn.Sequential(init_(nn.Linear(self.action_dim+self.hidden_size+self.num_agents, self._attn_size), activate=True), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self._attn_size)
                                            )
@@ -126,20 +126,20 @@ class Action_Attention(nn.Module):
         masks = check(masks).to(**self.tpdv)
         actions = check(actions).to(**self.tpdv)
 
-        state_features = self.base(state)
-        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
-            state_features, rnn_states = self.rnn(state_features, rnn_states, masks)
+        # state_features = self.base(state)
+        # if self._use_naive_recurrent_policy or self._use_recurrent_policy:
+        #     state_features, rnn_states = self.rnn(state_features, rnn_states, masks)
 
-        if self._use_influence_policy:
-            mlp_state = self.mlp(state)
-            state_features = torch.cat([state_features, mlp_state], dim=1)
+        # if self._use_influence_policy:
+        #     mlp_state = self.mlp(state)
+        #     state_features = torch.cat([state_features, mlp_state], dim=1)
 
-        # id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        x = self.feat_encoder(torch.cat([state_features, obs_rep, self.logit_encoder(x)], -1)).view(N, self.num_agents, -1)
+        x = self.feat_encoder(torch.cat([x, obs_rep, id_feat], -1)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
-            x = self.layers[layer](x, state_features.view(N, self.num_agents, -1))
+            x = self.layers[layer](x, obs_rep.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
         bias_ = self.head(x)
@@ -166,20 +166,20 @@ class Action_Attention(nn.Module):
         masks = check(masks).to(**self.tpdv)
         actions = check(actions).to(**self.tpdv)
 
-        state_features = self.base(state)
-        if self._use_naive_recurrent_policy or self._use_recurrent_policy:
-            state_features, rnn_states = self.rnn(state_features, rnn_states, masks)
+        # state_features = self.base(state)
+        # if self._use_naive_recurrent_policy or self._use_recurrent_policy:
+        #     state_features, rnn_states = self.rnn(state_features, rnn_states, masks)
 
-        if self._use_influence_policy:
-            mlp_state = self.mlp(state)
-            state_features = torch.cat([state_features, mlp_state], dim=1)
+        # if self._use_influence_policy:
+        #     mlp_state = self.mlp(state)
+        #     state_features = torch.cat([state_features, mlp_state], dim=1)
 
-        # id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
+        id_feat = torch.eye(self.num_agents).unsqueeze(0).repeat(N, 1, 1).view(-1, self.num_agents).to(x)
 
-        x = self.feat_encoder(torch.cat([state_features, obs_rep, self.logit_encoder(x)], -1)).view(N, self.num_agents, -1)
+        x = self.feat_encoder(torch.cat([x, obs_rep, id_feat], -1)).view(N, self.num_agents, -1)
 
         for layer in range(self._attn_N):
-            x = self.layers[layer](x, state_features.view(N, self.num_agents, -1))
+            x = self.layers[layer](x, obs_rep.view(N, self.num_agents, -1))
         x = self.layer_norm(x)
 
         bias_ = self.head(x)

@@ -250,7 +250,7 @@ class R_Critic(nn.Module):
 
         def init_(m): 
             return init(m, init_method, lambda x: nn.init.constant_(x, 0))
-
+        self.abs_size = input_size
         if self._use_popart:
             self.v_out = init_(PopArt(input_size, self._num_v_out, device=device))
         else:
@@ -286,8 +286,8 @@ class R_Critic(nn.Module):
         if self._use_influence_policy:
             mlp_share_obs = self.mlp(share_obs)
             critic_features = torch.cat([critic_features, mlp_share_obs], dim=1)
-        # state_feat = critic_features
+        state_feat = critic_features
         
         values = self.v_out(critic_features)
 
-        return values, rnn_states
+        return values, rnn_states, state_feat
