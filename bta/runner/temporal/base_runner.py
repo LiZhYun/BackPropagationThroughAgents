@@ -950,7 +950,7 @@ class Runner(object):
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
                 masks = np.concatenate(np.stack(masks_all, 1))
-                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, obs_feats_all.view(-1, self.hidden_size), share_obs, rnn_states_joint, masks, actions_all_batch)
+                bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, obs_feats_all.view(-1, self.hidden_size).detach(), share_obs, rnn_states_joint, masks, actions_all_batch)
                 if self.discrete:
                     mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
@@ -961,7 +961,7 @@ class Runner(object):
                     target_probs = F.one_hot(mode_actions_mix.long(), self.action_dim).float().squeeze(-2)
                     target_dist = FixedCategorical(probs=target_probs.detach())
                 else:
-                    ind_dist = FixedNormal(logits_all, stds_all)
+                    ind_dist = FixedNormal(logits_all, stds_all.detach())
                     mix_dist = FixedNormal(bias_, action_std)
 
                     target_dist = FixedNormal(bias_.detach(), stds_all.detach())
