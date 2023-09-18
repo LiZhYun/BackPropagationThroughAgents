@@ -61,19 +61,13 @@ class Action_Attention(nn.Module):
             input_size += self.hidden_size
 
         self.discrete = False
+        self.std_x_coef = args.mix_std_x_coef
+        self.std_y_coef = args.mix_std_y_coef
         if action_space.__class__.__name__ == "Discrete":
             self.discrete = True
             action_dim = action_space.n
-            self.std_x_coef = 1.0
-            self.std_y_coef = 0.5
-            self.std_all = self.num_agents
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] 
-            self.std_x_coef = 1.0
-            self.std_y_coef = 0.5
-            # self.std_all = 2.
-            log_std = torch.ones(self.num_agents, action_dim) * self.std_x_coef
-            self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
