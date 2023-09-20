@@ -328,7 +328,7 @@ def get_config():
     #                     help='')
     parser.add_argument("--bc", action='store_false', default=True,
                         help='')
-    parser.add_argument("--bc_epoch", type=int, default=5,
+    parser.add_argument("--bc_epoch", type=int, default=1,
                         help='')
     parser.add_argument("--mix_std_x_coef", type=float, default=1.0,
                         help='')

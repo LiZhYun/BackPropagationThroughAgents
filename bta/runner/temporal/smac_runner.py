@@ -81,8 +81,8 @@ class SMACRunner(Runner):
 
             # compute return and update network
             self.compute()
-            # if self.use_action_attention:
-            #     self.joint_compute()
+            if self.use_action_attention:
+                self.joint_compute()
             train_infos = self.joint_train(episode) if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
@@ -217,15 +217,17 @@ class SMACRunner(Runner):
             #     self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
             #     self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                # mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                # mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                mixed_ = bias_
                 mixed_[available_actions_all == 0] = -1e10
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(logits, action_std)
-            mix_actions = mix_dist.sample()
+                mix_dist = FixedNormal(bias_, action_std)
+            # mix_actions = mix_dist.sample()
+            mix_actions = hard_actions.clone()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
             joint_actions = _t2n(mix_actions)

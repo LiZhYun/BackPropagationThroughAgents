@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import math
 
 # def mysoftmax(values, gain=1.0):
  
@@ -26,6 +27,14 @@ import numpy as np
 # temp_logits = exp_values/exp_values_sum
 # print(probs, temp_logits)
 
-my_dict = {0:'0', 1:'1', 2:'2'}
-for _ in range(10):
-    print(my_dict.items())
+# my_dict = {0:'0', 1:'1', 2:'2'}
+# for _ in range(10):
+#     print(my_dict.items())
+
+episodes = 100
+
+for episode in range(episodes):
+    # temperature = 0.05 + (1.0 - 0.05) * \
+    #                     (1 + math.cos(math.pi * (episode) / (episodes) + math.pi)) / 2
+    temperature = 0.1 + ((1.0 - 0.1) * (episode / float(episodes)))
+    print(temperature)

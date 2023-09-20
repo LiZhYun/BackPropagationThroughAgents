@@ -6,6 +6,7 @@ import itertools
 from itertools import chain
 import torch
 import torch.nn.functional as F
+from torch.distributions.bernoulli import Bernoulli
 import imageio
 import warnings
 import functools
@@ -60,7 +61,9 @@ class MujocoRunner(Runner):
                 self.temperature = 0.01 + (self.all_args.temperature - 0.01) * \
                     (1 + math.cos(math.pi * (episode) / (episodes-1))) / 2
             elif self.decay_id == 2:
-                self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
+                self.threshold *= 0.8
+                if self.threshold < 0.001:
+                    self.threshold = 0.0
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
@@ -91,8 +94,8 @@ class MujocoRunner(Runner):
 
             # compute return and update network
             self.compute()
-            # if self.use_action_attention:
-            #     self.joint_compute()
+            if self.use_action_attention:
+                self.joint_compute()
             train_infos = self.joint_train(episode) if self.use_action_attention else [self.train_seq_agent_m, self.train_seq_agent_a, self.train_sim_a][self.train_sim_seq]()
 
             # post process
@@ -205,18 +208,25 @@ class MujocoRunner(Runner):
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
             bias_, action_std, rnn_states_joint = self.action_attention(logits.reshape(-1, self.action_dim), obs_feats.reshape(-1, self.obs_emb_size), share_obs, rnn_states_joint, masks, hard_actions)
             rnn_states_joint = _t2n(rnn_states_joint)
-            if self.decay_id == 3:
-                self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
-                self.threshold = torch.clamp(self.threshold, 0, 1)
+            # if self.decay_id == 3:
+            #     self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
+            #     self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                # mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                # mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                mixed_ = bias_
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(logits, action_std)
-            mix_actions = mix_dist.sample()
+                mix_dist = FixedNormal(bias_, action_std)
+            # threshold = Bernoulli(self.threshold).sample()
+            # if not threshold:
+            #     mix_actions = ind_dist.sample()
+            # else:
+            #     mix_actions = mix_dist.sample()
+            # mix_actions = mix_dist.sample()
+            mix_actions = hard_actions.clone()
             mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
             ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
             joint_actions = _t2n(mix_actions)
