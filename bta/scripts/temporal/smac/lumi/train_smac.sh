@@ -14,7 +14,12 @@
 env="StarCraft2v2"
 map=$1 # zerg_20_vs_20 zerg_10_vs_11 zerg_20_vs_23 protoss_20_vs_20 protoss_10_vs_11 protoss_20_vs_23 terran_20_vs_20 terran_10_vs_11 terran_20_vs_23
 units=$2
-IGM_coef=$3
+# IGM_coef=$3
+sigmoid_gain=$3
+mix_std_y_coef=$4
+temperature=$5
+decay_id=$6
+decay_factor=$7
 
 algo="temporal"
 exp="check"
@@ -25,5 +30,7 @@ srun singularity exec -B $SCRATCH $SCRATCH/smac_lumi.sif python ../../../train/t
 --env_name ${env} --algorithm_name ${algo} --experiment_name ${exp} \
 --map_name ${map} --seed $SLURM_ARRAY_TASK_ID --units ${units} --n_training_threads 1 --n_rollout_threads 25 --num_mini_batch 1 --episode_length 400 \
 --num_env_steps 10000000 --ppo_epoch 5 --use_value_active_masks --use_eval --eval_episodes 32 --use_action_attention \
---IGM_coef ${IGM_coef}
+--sigmoid_gain ${sigmoid_gain} --attention_lr 5e-5 --mix_std_y_coef ${mix_std_y_coef} \
+--temperature ${temperature} --decay_id ${decay_id} --decay_factor ${decay_factor}
+# --IGM_coef ${IGM_coef} 
 

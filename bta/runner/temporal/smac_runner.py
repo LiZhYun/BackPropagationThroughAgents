@@ -50,15 +50,16 @@ class SMACRunner(Runner):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             if self.decay_id == 0:
-                self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
+                # self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
+                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
+                self.temperature = min(0.1 + ((self.all_args.temperature - 0.1) * (episode*self.decay_factor / float(episodes))), self.all_args.temperature)
             elif self.decay_id == 1:
-                self.threshold = 0. + (self.initial_threshold - 0.) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
-                self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
+                # self.threshold = 0. + (self.initial_threshold - 0.) * \
+                #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
+                self.temperature = 0.1 + (self.all_args.temperature - 0.1) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1) + math.pi)) / 2 if episode*self.decay_factor <= episodes else self.all_args.temperature
             elif self.decay_id == 2:
-                self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
+                # self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
@@ -119,18 +120,23 @@ class SMACRunner(Runner):
                             incre_battles_game.append(info[0]['battles_game']-last_battles_game[i])
 
                     incre_win_rate = np.sum(incre_battles_won)/np.sum(incre_battles_game) if np.sum(incre_battles_game)>0 else 0.0
+                    train_win_rate = np.sum(battles_won)/np.sum(battles_game) if np.sum(battles_won)>0 else 0.0
                     print("incre win rate is {}.".format(incre_win_rate))
+                    print("train win rate is {}.".format(train_win_rate))
                     if self.use_wandb:
                         wandb.log({"incre_win_rate": incre_win_rate}, step=total_num_steps)
+                        wandb.log({"train_win_rate": train_win_rate}, step=total_num_steps)
                     else:
                         self.writter.add_scalars("incre_win_rate", {"incre_win_rate": incre_win_rate}, total_num_steps)
+                        self.writter.add_scalars("train_win_rate", {"train_win_rate": train_win_rate}, total_num_steps)
                     
                     last_battles_game = battles_game
                     last_battles_won = battles_won
                 
                 for i in range(self.num_agents):
                     train_infos[i]['dead_ratio'] = 1 - self.buffer[i].active_masks.sum() / reduce(lambda x, y: x*y, list(self.buffer[i].active_masks.shape)) 
-                    train_infos[i]["threshold"] = self.threshold
+                    # train_infos[i]["threshold"] = self.threshold
+                    train_infos[i]["temperature"] = self.temperature
                     
                 self.log_train(train_infos, total_num_steps)
 
@@ -207,9 +213,9 @@ class SMACRunner(Runner):
             masks = np.concatenate(np.stack([self.buffer[i].masks[step] for i in range(self.num_agents)], 1))
             bias_, action_std, rnn_states_joint = self.action_attention(logits.reshape(-1, self.action_dim), obs_feats.reshape(-1, self.obs_emb_size), share_obs, rnn_states_joint, masks, hard_actions)
             rnn_states_joint = _t2n(rnn_states_joint)
-            if self.decay_id == 3:
-                self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
-                self.threshold = torch.clamp(self.threshold, 0, 1)
+            # if self.decay_id == 3:
+            #     self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
+            #     self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
                 mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
                 mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)

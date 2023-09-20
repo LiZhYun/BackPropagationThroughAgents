@@ -192,17 +192,17 @@ class Runner(object):
             self.action_attention = Action_Attention(self.all_args, self.envs.action_space[0], self.envs.share_observation_space[0], device = self.device)
             self.action_attention_optimizer = torch.optim.Adam(self.action_attention.parameters(), lr=self.all_args.attention_lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
 
-            if self.decay_id == 3:
-                # self.log_threshold = torch.tensor(np.log(self.initial_threshold), requires_grad=True, device=self.device)
-                # self.threshold_ = self.log_threshold.exp()
-                # self.threshold = self.threshold_.item()
-                # self.threshold_optim = torch.optim.Adam([self.log_threshold], lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
-                self.threshold_dist = GaussianTorch(self.initial_threshold, 5., device=self.device)
-                self.threshold_target_dist = GaussianTorch(0, -5., train=False, device=self.device)
-                self.max_kl = 1e-7
-                self.threshold_optimizer = torch.optim.Adam(self.threshold_dist.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
-            self.lambda1 = torch.tensor(0.1, requires_grad=True, device=self.device).float()
-            self.lambda1_optim = torch.optim.Adam([self.lambda1], lr=self.all_args.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
+            # if self.decay_id == 3:
+            #     # self.log_threshold = torch.tensor(np.log(self.initial_threshold), requires_grad=True, device=self.device)
+            #     # self.threshold_ = self.log_threshold.exp()
+            #     # self.threshold = self.threshold_.item()
+            #     # self.threshold_optim = torch.optim.Adam([self.log_threshold], lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
+            #     self.threshold_dist = GaussianTorch(self.initial_threshold, 5., device=self.device)
+            #     self.threshold_target_dist = GaussianTorch(0, -5., train=False, device=self.device)
+            #     self.max_kl = 1e-7
+            #     self.threshold_optimizer = torch.optim.Adam(self.threshold_dist.parameters(), lr=self.all_args.lr, eps=self.all_args.opti_eps, weight_decay=self.all_args.weight_decay)
+            # self.lambda1 = torch.tensor(0.1, requires_grad=True, device=self.device).float()
+            # self.lambda1_optim = torch.optim.Adam([self.lambda1], lr=self.all_args.kl_lr, eps=self.opti_eps, weight_decay=self.weight_decay)
             self.IGM_coef = self.all_args.IGM_coef
         
             
@@ -1045,124 +1045,7 @@ class Runner(object):
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
-                
                 self.action_attention_optimizer.step()
-                
-                if epoch == 0:
-                #     self.lambda1_optim.zero_grad()
-                #     lambda_loss = -(self.lambda1 * (ce_constrain_loss.detach()))
-                #     lambda_loss.backward()
-                #     if self._use_max_grad_norm:
-                #         _ = nn.utils.clip_grad_norm_([self.lambda1], self.max_grad_norm)
-                #     else:
-                #         _ = get_gard_norm([self.lambda1])
-                #     self.lambda1_optim.step()
-                #     print("lambda is: ", self.lambda1.item())
-                
-                    if self.decay_id == 3:
-                        # threshold_loss = individual_loss.sum() - mix_dist_entropy
-                        # threshold_loss = (self.log_threshold * (threshold_loss).detach()).mean()
-                        # self.threshold_optim.zero_grad()
-                        # threshold_loss.backward()
-                        # self.threshold_optim.step()
-                        # self.threshold_ = self.log_threshold.exp()
-                        # self.threshold = self.threshold_.item()
-
-                        old_threshold_dist = GaussianTorch.from_weights(self.threshold_dist.get_weights(),
-                                                                        device=self.device)
-
-                        def kl_con_fn(x):
-                            dist = GaussianTorch.from_weights(x, device=self.device)
-                            kl_div = torch.distributions.kl.kl_divergence(old_threshold_dist(), dist())
-                            return _t2n(kl_div)
-
-                        def kl_con_grad_fn(x):
-                            dist = GaussianTorch.from_weights(x, device=self.device)
-                            kl_div = torch.distributions.kl.kl_divergence(old_threshold_dist(), dist())
-                            mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
-                            return np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]])
-
-                        kl_constraint = NonlinearConstraint(kl_con_fn, -np.inf, self.max_kl, jac=kl_con_grad_fn, keep_feasible=True)
-
-                        # # Define the performance constraint
-                        # def perf_con_fn(x):
-                        #     dist = GaussianTorch.from_weights(x, device=self.device)
-                        #     perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * dist_constrain_loss.sum(1))
-                        #     return _t2n(perf)
-
-                        # def perf_con_grad_fn(x):
-                        #     dist = GaussianTorch.from_weights(x, device=self.device)
-                        #     perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * dist_constrain_loss.sum(1))
-                        #     mu_grad, log_std_grad = torch.autograd.grad(perf, dist.parameters())
-                        #     return np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]])
-
-                        # perf_constraint = NonlinearConstraint(perf_con_fn, -np.inf, 0.05, jac=perf_con_grad_fn,
-                        #                                     keep_feasible=True)
-
-                        x0 = self.threshold_dist.get_weights().copy()
-                        bounds = None
-                        
-                        try:
-                            res = None
-                            if kl_con_fn(x0) >= self.max_kl:
-                                print("Warning! KL-Bound of x0 violates constraint already")
-
-                            # if perf_con_fn(x0) <= 0.05:
-                            # print("Optimizing KL")
-                            constraints = [kl_constraint]
-
-                            # Define the objective plus Jacobian
-                            def objective(x):
-                                dist = GaussianTorch.from_weights(x, device=self.device)
-                                kl_div = torch.distributions.kl.kl_divergence(dist(), self.threshold_target_dist())
-                                mu_grad, log_std_grad = torch.autograd.grad(kl_div, dist.parameters())
-
-                                return _t2n(kl_div), \
-                                    np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
-                                        np.float64)
-
-                            res = minimize(objective, x0, method="trust-constr", jac=True, bounds=bounds,
-                                        constraints=constraints, options={"gtol": 1e-4, "xtol": 1e-6})
-                            
-                            # else:
-                            #     print("Optimizing performance")
-                            #     constraints = [kl_constraint]
-
-                            #     # Define the objective plus Jacobian
-                            #     def objective(x):
-                            #         dist = GaussianTorch.from_weights(x, device=self.device)
-                            #         perf = torch.mean(torch.exp(dist().log_probs(thresholds_batch) - old_threshold_dist().log_probs(thresholds_batch)) * return_batch_all.mean(1))
-                            #         mu_grad, log_std_grad = torch.autograd.grad(perf, dist.parameters())
-
-                            #         return _t2n(perf), \
-                            #             np.concatenate([[_t2n(mu_grad)], [_t2n(log_std_grad)]]).astype(
-                            #                 np.float64)
-
-                            #     res = minimize(objective, x0, method="trust-constr", jac=True, bounds=bounds,
-                            #                 constraints=constraints, options={"gtol": 1e-4, "xtol": 1e-6})
-
-                        except Exception as e:
-                            print("Exception occurred during optimization! Storing state and re-raising!")
-                            raise e
-                        
-                        if res is not None and res.success:
-                            self.threshold_dist.set_weights(res.x)
-                        elif res is not None:
-                            # If it was not a success, but the objective value was improved and the bounds are still valid, we still
-                            # use the result
-                            old_f = objective(self.threshold_dist.get_weights())[0]
-                            cons_ok = True
-                            for con in constraints:
-                                cons_ok = cons_ok and con.lb <= con.fun(res.x) <= con.ub
-
-                            std_ok = bounds is None or (np.all(bounds.lb <= res.x) and np.all(res.x <= bounds.ub))
-                            if cons_ok and std_ok and res.fun < old_f:
-                                self.threshold_dist.set_weights(res.x)
-                            else:
-                                print(
-                                    "Warning! Context optimihation unsuccessful - will keep old values. Message: %s" % res.message)
-        # if step % 10 == 0:
-        # self.bc_train(advs, train_infos) 
 
         num_updates = self.ppo_epoch * self.num_mini_batch
 
