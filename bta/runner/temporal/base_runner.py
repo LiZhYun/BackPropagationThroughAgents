@@ -880,32 +880,6 @@ class Runner(object):
                     ce_gae_batch_all[:, agent_idx] = ce_gae_batch
                     return_batch_all[:, agent_idx] = return_batch
                     bias_batch_all[:, agent_idx] = bias_batch
-
-                    #critic update
-                    value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
-                                    check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
-
-                    self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
-
-                    (value_loss * self.value_loss_coef).backward()
-
-                    if self._use_max_grad_norm:
-                        critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
-                    else:
-                        critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
-
-                    self.trainer[agent_idx].policy.critic_optimizer.step()
-
-                    train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    # train_infos[agent_idx]['policy_loss'] += policy_loss.item()
-                    # train_infos[agent_idx]['ratio'] += ratio.mean().item()
-                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
-                    if int(torch.__version__[2]) < 5:
-                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    else:
-                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
                 
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
@@ -979,7 +953,9 @@ class Runner(object):
                 #     self.trainer[agent_idx].policy.actor_optimizer.step()
                 self.action_attention_optimizer.step()
         
-        train_infos = self.projection_(train_infos, advs)
+        train_infos = self.critic_(train_infos, advs)
+        if step > 10:
+            train_infos = self.projection_(train_infos, advs)
 
         num_updates = self.ppo_epoch * self.num_mini_batch
         projection_updates = self.bc_epoch * self.num_mini_batch
@@ -990,6 +966,153 @@ class Runner(object):
                 else:
                     train_infos[agent_idx][k] /= num_updates    
             self.buffer[agent_idx].after_update()
+        return train_infos
+    
+    def critic_(self, train_infos, advs):
+            
+        batch_size = self.n_rollout_threads * self.episode_length
+
+        for epoch in range(self.ppo_epoch):
+            if self._use_recurrent_policy:
+                data_chunks = batch_size // self.data_chunk_length
+                mini_batch_size = data_chunks // self.num_mini_batch
+                rand = torch.randperm(data_chunks).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
+                data_generators = [self.buffer[agent_idx].recurrent_generator(advs[agent_idx], self.num_mini_batch, self.data_chunk_length, sampler=sampler) for agent_idx in range(self.num_agents)]
+            elif self._use_naive_recurrent:
+                mini_batch_size = batch_size // self.num_mini_batch
+                rand = torch.randperm(batch_size).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
+                data_generators = [self.buffer[agent_idx].naive_recurrent_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
+            else:
+                mini_batch_size = batch_size // self.num_mini_batch
+                rand = torch.randperm(batch_size).numpy()
+                sampler = [rand[i*mini_batch_size:(i+1)*mini_batch_size] for i in range(self.num_mini_batch)]
+                data_generators = [self.buffer[agent_idx].feed_forward_generator(advs[agent_idx], self.num_mini_batch, sampler=sampler) for agent_idx in range(self.num_agents)]
+            
+            for batch_idx in range(self.num_mini_batch):
+                if self._use_recurrent_policy:
+                    adv_targ_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    available_actions_all = torch.ones(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    active_masks_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    logits_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    logits_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    if not self.discrete:
+                        stds_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    obs_feats_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.obs_emb_size).to(**self.tpdv)
+                    new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    joint_new_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    joint_old_actions_logprob_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    joint_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    train_actions_all_batch = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    ce_gae_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    return_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    bias_batch_all = torch.zeros(self.data_chunk_length*mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                else:
+                    adv_targ_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    available_actions_all = torch.ones(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    active_masks_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    logits_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    logits_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    if not self.discrete:
+                        stds_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    obs_feats_all = torch.zeros(mini_batch_size, self.num_agents, self.obs_emb_size).to(**self.tpdv)
+                    new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    joint_new_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    joint_old_actions_logprob_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    joint_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_shape).to(**self.tpdv)
+                    train_actions_all_batch = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                    ce_gae_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    return_batch_all = torch.zeros(mini_batch_size, self.num_agents, 1).to(**self.tpdv)
+                    bias_batch_all = torch.zeros(mini_batch_size, self.num_agents, self.action_dim).to(**self.tpdv)
+                share_obs_all = []
+                rnn_states_joint_all = []
+                masks_all = []
+                for agent_idx in range(self.num_agents):
+                    share_obs_batch, obs_batch, rnn_states_batch, rnn_states_critic_batch, actions_batch, one_hot_actions_batch, \
+                    value_preds_batch, return_batch, masks_batch, active_masks_batch, old_action_log_probs_batch, \
+                    adv_targ, available_actions_batch, factor_batch, action_grad, joint_actions_batch, \
+                    old_joint_action_log_probs_batch, rnn_states_joint_batch, thresholds_batch, ce_gae_batch, bias_batch, logits_batch = next(data_generators[agent_idx])
+                    adv_targ = check(adv_targ).to(**self.tpdv)
+                    return_batch = check(return_batch).to(**self.tpdv)
+                    ce_gae_batch = check(ce_gae_batch).to(**self.tpdv)
+                    actions_batch = check(actions_batch).to(**self.tpdv)
+                    joint_actions_batch = check(joint_actions_batch).to(**self.tpdv)
+                    bias_batch = check(bias_batch).to(**self.tpdv)
+                    logits_batch = check(logits_batch).to(**self.tpdv)
+                    thresholds_batch = check(thresholds_batch).to(**self.tpdv)
+                    old_action_log_probs_batch = check(old_action_log_probs_batch).to(**self.tpdv)
+                    old_joint_action_log_probs_batch = check(old_joint_action_log_probs_batch).to(**self.tpdv)
+                    active_masks_batch = check(active_masks_batch).to(**self.tpdv)
+                    active_masks_all[:, agent_idx] = check(active_masks_batch).to(**self.tpdv)
+                    if available_actions_batch is not None:
+                        available_actions_all[:, agent_idx] = check(available_actions_batch).to(**self.tpdv)
+
+                    ego_exclusive_action = one_hot_actions_batch[:,0:self.num_agents]
+                    if self._use_recurrent_policy:
+                        execution_mask = torch.stack([torch.zeros(self.data_chunk_length*mini_batch_size)] * self.num_agents, -1).to(**self.tpdv)
+                    else:
+                        execution_mask = torch.stack([torch.zeros(mini_batch_size)] * self.num_agents, -1).to(**self.tpdv)
+
+                    values, trains_action, action_log_probs, action_log_probs_kl, dist_entropy, logits, obs_feat = self.trainer[agent_idx].policy.evaluate_actions(share_obs_batch,
+                                                                            obs_batch, 
+                                                                            rnn_states_batch, 
+                                                                            rnn_states_critic_batch, 
+                                                                            actions_batch, 
+                                                                            masks_batch, 
+                                                                            ego_exclusive_action,
+                                                                            execution_mask,
+                                                                            available_actions_batch,
+                                                                            active_masks_batch,
+                                                                            tau=self.temperature,
+                                                                            kl=True,
+                                                                            joint_actions=joint_actions_batch
+                                                                            )
+                
+                    logits_all_batch[:, agent_idx] = logits_batch
+                    logits_all[:, agent_idx] = logits if self.discrete else logits.mean
+                    if not self.discrete:
+                        stds_all[:, agent_idx] = logits.stddev
+                    joint_actions_all_batch[:, agent_idx] = joint_actions_batch
+                    actions_all_batch[:, agent_idx] = actions_batch
+                    obs_feats_all[:, agent_idx] = obs_feat
+                    old_actions_logprob_all_batch[:, agent_idx] = old_action_log_probs_batch
+                    joint_old_actions_logprob_all_batch[:, agent_idx] = old_joint_action_log_probs_batch
+                    adv_targ_all[:, agent_idx] = adv_targ
+                    train_actions_all_batch[:, agent_idx] = trains_action
+                    share_obs_all.append(share_obs_batch)
+                    masks_all.append(masks_batch)
+                    rnn_states_joint_all.append(rnn_states_joint_batch)
+                    ce_gae_batch_all[:, agent_idx] = ce_gae_batch
+                    return_batch_all[:, agent_idx] = return_batch
+                    bias_batch_all[:, agent_idx] = bias_batch
+
+                    #critic update
+                    value_loss = self.trainer[agent_idx].cal_value_loss(values, check(value_preds_batch).to(**self.tpdv), 
+                                    check(return_batch).to(**self.tpdv), check(active_masks_batch).to(**self.tpdv))
+
+                    self.trainer[agent_idx].policy.critic_optimizer.zero_grad()
+
+                    (value_loss * self.value_loss_coef).backward()
+
+                    if self._use_max_grad_norm:
+                        critic_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.critic.parameters(), self.max_grad_norm)
+                    else:
+                        critic_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.critic.parameters())
+
+                    self.trainer[agent_idx].policy.critic_optimizer.step()
+
+                    train_infos[agent_idx]['value_loss'] += value_loss.item()
+                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+                    if int(torch.__version__[2]) < 5:
+                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
+                    else:
+                        train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm.item()
+                
         return train_infos
     
     def projection_(self, train_infos, advs):
