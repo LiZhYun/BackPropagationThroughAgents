@@ -954,8 +954,8 @@ class Runner(object):
                 self.action_attention_optimizer.step()
         
         train_infos = self.critic_(train_infos, advs)
-        if step > 10:
-            train_infos = self.projection_(train_infos, advs)
+        # if step > 10:
+        train_infos = self.projection_(train_infos, advs)
 
         num_updates = self.ppo_epoch * self.num_mini_batch
         projection_updates = self.bc_epoch * self.num_mini_batch

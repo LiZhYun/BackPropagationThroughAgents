@@ -61,7 +61,8 @@ class MujocoRunner(Runner):
                 self.temperature = 0.01 + (self.all_args.temperature - 0.01) * \
                     (1 + math.cos(math.pi * (episode) / (episodes-1))) / 2
             elif self.decay_id == 2:
-                self.threshold *= 0.8
+                if episode > 0:
+                    self.threshold *= 0.996 
                 if self.threshold < 0.001:
                     self.threshold = 0.0
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
@@ -220,18 +221,28 @@ class MujocoRunner(Runner):
             else:
                 ind_dist = FixedNormal(logits, stds)
                 mix_dist = FixedNormal(bias_, action_std)
-            # threshold = Bernoulli(self.threshold).sample()
-            # if not threshold:
-            #     mix_actions = ind_dist.sample()
-            # else:
-            #     mix_actions = mix_dist.sample()
+            if self.threshold >= torch.rand(1):
+                mix_actions = mix_dist.sample()
+            else:
+                mix_actions = ind_dist.sample()
+            if (self.threshold > 0.) and (self.threshold < 1.):
+                mix_action_log_probs = (mix_dist.log_probs(mix_actions) + torch.tensor(self.threshold, device=self.device).log()) if not self.discrete else (mix_dist.log_probs_joint(mix_actions) + torch.tensor(self.threshold, device=self.device).log())
+                ind_action_log_probs = (ind_dist.log_probs(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log()) if not self.discrete else (ind_dist.log_probs_joint(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log())
+                log_probs = torch.stack([ind_action_log_probs, mix_action_log_probs],dim=-1)
+                action_log_probs = _t2n(torch.logsumexp(log_probs,-1))
+            elif self.threshold == 0.:
+                ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
+                action_log_probs = _t2n(ind_action_log_probs)
+            elif self.threshold == 1.:
+                mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+                action_log_probs = _t2n(mix_action_log_probs)  
             # mix_actions = mix_dist.sample()
-            mix_actions = hard_actions.clone()
-            mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
-            ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
+            # mix_actions = hard_actions.clone()
+            # mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+            # ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
             joint_actions = _t2n(mix_actions)
-            action_log_probs = _t2n(ind_action_log_probs)  
-            joint_action_log_probs = _t2n(mix_action_log_probs)  
+            # action_log_probs = _t2n(ind_action_log_probs)  
+            # joint_action_log_probs = _t2n(mix_action_log_probs)  
 
         return values, actions, _t2n(hard_actions), action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold), _t2n(bias_), _t2n(logits)
 
