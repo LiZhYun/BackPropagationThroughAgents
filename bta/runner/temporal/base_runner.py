@@ -927,12 +927,12 @@ class Runner(object):
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
                 joint_new_actions_logprob_all_batch = mix_action_log_probs
 
-                ratio = torch.prod(torch.prod(torch.exp(joint_new_actions_logprob_all_batch - joint_old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
-                imp_weights = torch.prod(torch.prod(torch.exp(joint_old_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
-                # # dual clip
-                # cliped_imp_weights = torch.minimum(imp_weights, torch.tensor(3.0).to(self.device))
-                surr1 = ratio * adv_targ_all * imp_weights
-                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all * imp_weights
+                ratio = torch.prod(torch.prod(torch.exp(joint_new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
+                # imp_weights = torch.prod(torch.prod(torch.exp(joint_old_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
+                # dual clip
+                cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
+                surr1 = cliped_ratio * adv_targ_all
+                surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
 
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
@@ -1126,7 +1126,7 @@ class Runner(object):
                     ind_dist = FixedNormal(logits_all, stds_all)
                     mix_dist = FixedNormal(bias_.detach(), action_std.detach())
 
-                projection_loss = kl_divergence(mix_dist, ind_dist).unsqueeze(-1) if self.discrete else kl_divergence(mix_dist, ind_dist).sum(-1, keepdim=True)
+                projection_loss = kl_divergence(ind_dist, mix_dist).unsqueeze(-1) if self.discrete else kl_divergence(ind_dist, mix_dist).sum(-1, keepdim=True)
 
                 if self._use_policy_active_masks:
                     projection_loss = ((projection_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
