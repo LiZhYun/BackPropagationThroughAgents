@@ -328,11 +328,11 @@ def get_config():
     #                     help='')
     parser.add_argument("--bc", action='store_false', default=True,
                         help='')
-    parser.add_argument("--bc_epoch", type=int, default=1,
+    parser.add_argument("--bc_epoch", type=int, default=30,
                         help='')
     parser.add_argument("--mix_std_x_coef", type=float, default=1.0,
                         help='')
-    parser.add_argument("--mix_std_y_coef", type=float, default=1.0,
+    parser.add_argument("--mix_std_y_coef", type=float, default=0.5,
                         help='')
     
     # optimizer parameters
