@@ -310,16 +310,16 @@ def get_config():
                         help='standard deviation threshold')
     parser.add_argument("--average_threshold", type=float, default=0.01,
                         help='average threshold')
-    parser.add_argument("--threshold", type=float, default=1.0,
+    parser.add_argument("--threshold", type=float, default=0.0,
                         help='tradoff between bpta and mappo')
-    parser.add_argument("--decay_factor", type=float, default=0.,
+    parser.add_argument("--decay_factor", type=float, default=1.5,
                         help='tradoff between bpta and mappo')
     parser.add_argument("--agent_layer", type=int, default=1,
                         help='stacked agent layer')
     parser.add_argument("--random_train", action='store_true', default=False,
                         help='')
     parser.add_argument("--decay_id", type=int,
-                        default=2, help="choose 0 to use linear_decay, 1 to use cos_decay, 2 to use step_decay")
+                        default=3, help="choose 0 to use linear_decay, 1 to use cos_decay, 2 to use step_decay")
     # parser.add_argument("--linear_decay", type=args_str2bool, default=False, 
     #                     help='')
     # parser.add_argument("--cos_decay", type=args_str2bool, default=True, 
@@ -328,11 +328,11 @@ def get_config():
     #                     help='')
     parser.add_argument("--bc", action='store_false', default=True,
                         help='')
-    parser.add_argument("--bc_epoch", type=int, default=30,
+    parser.add_argument("--bc_epoch", type=int, default=15,
                         help='')
     parser.add_argument("--mix_std_x_coef", type=float, default=1.0,
                         help='')
-    parser.add_argument("--mix_std_y_coef", type=float, default=0.5,
+    parser.add_argument("--mix_std_y_coef", type=float, default=0.95,
                         help='')
     
     # optimizer parameters

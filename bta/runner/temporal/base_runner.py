@@ -886,16 +886,16 @@ class Runner(object):
                 masks = np.concatenate(np.stack(masks_all, 1))
                 bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, obs_feats_all.view(-1, self.hidden_size).detach(), share_obs, rnn_states_joint, masks, actions_all_batch)
                 if self.discrete:
-                    # mixed_ = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                    # mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
-                    mixed_ = bias_
+                    mixed_ = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                    mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                    # mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
                     ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=mixed_)
 
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all)
-                    mix_dist = FixedNormal(bias_, action_std)
+                    mix_dist = FixedNormal(logits_all, action_std)
 
                 mix_action_log_probs = mix_dist.log_probs(check(joint_actions_all_batch).to(**self.tpdv)) if not self.discrete else mix_dist.log_probs_joint(check(joint_actions_all_batch).to(**self.tpdv))
                 mix_dist_entropy = mix_dist.entropy().unsqueeze(-1) if self.discrete else mix_dist.entropy().mean(-1, keepdim=True)
@@ -954,8 +954,8 @@ class Runner(object):
                 self.action_attention_optimizer.step()
         
         train_infos = self.critic_(train_infos, advs)
-        if self.threshold == 0.0:
-            train_infos = self.projection_(train_infos, advs)
+        # if self.threshold == 0.0:
+        train_infos = self.projection_(train_infos, advs)
 
         num_updates = self.ppo_epoch * self.num_mini_batch
         projection_updates = self.bc_epoch * self.num_mini_batch
@@ -1238,16 +1238,16 @@ class Runner(object):
                 masks = np.concatenate(np.stack(masks_all, 1))
                 bias_, action_std, _ = self.action_attention.evaluation(logits_all.view(-1, self.action_dim), bias_batch_all, obs_feats_all.view(-1, self.hidden_size).detach(), share_obs, rnn_states_joint, masks, actions_all_batch)
                 if self.discrete:
-                    # mixed_ = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                    # mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
-                    mixed_ = bias_
+                    mixed_ = (logits_all + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                    mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                    # mixed_ = bias_
                     mixed_[available_actions_all == 0] = -1e10
                     ind_dist = FixedCategorical(logits=logits_all)
                     mix_dist = FixedCategorical(logits=mixed_.detach())
 
                 else:
                     ind_dist = FixedNormal(logits_all, stds_all)
-                    mix_dist = FixedNormal(bias_.detach(), action_std.detach())
+                    mix_dist = FixedNormal(logits_all.detach(), action_std.detach())
 
                 projection_loss = kl_divergence(ind_dist, mix_dist).unsqueeze(-1) if self.discrete else kl_divergence(ind_dist, mix_dist).sum(-1, keepdim=True)
 

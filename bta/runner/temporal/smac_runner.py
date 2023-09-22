@@ -50,16 +50,15 @@ class SMACRunner(Runner):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             if self.decay_id == 0:
-                # self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
-                self.temperature = min(0.1 + ((self.all_args.temperature - 0.1) * (episode*self.decay_factor / float(episodes))), self.all_args.temperature)
+                self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
+                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
             elif self.decay_id == 1:
-                # self.threshold = 0. + (self.initial_threshold - 0.) * \
-                #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
-                self.temperature = 0.1 + (self.all_args.temperature - 0.1) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1) + math.pi)) / 2 if episode*self.decay_factor <= episodes else self.all_args.temperature
+                self.threshold = 0. + (self.initial_threshold - 0.) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
+                self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
             elif self.decay_id == 2:
-                # self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
+                self.threshold = self.all_args.threshold * math.pow(0.99,math.floor((episode)/10))
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
@@ -217,22 +216,37 @@ class SMACRunner(Runner):
             #     self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
             #     self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                # mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                # mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
-                mixed_ = bias_
+                mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                # mixed_ = bias_
                 mixed_[available_actions_all == 0] = -1e10
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(bias_, action_std)
+                mix_dist = FixedNormal(logits, action_std)
+            if self.threshold >= torch.rand(1):
+                mix_actions = mix_dist.sample()
+            else:
+                mix_actions = hard_actions.clone()
+            if (self.threshold > 0.) and (self.threshold < 1.):
+                mix_action_log_probs = (mix_dist.log_probs(mix_actions) + torch.tensor(self.threshold, device=self.device).log()) if not self.discrete else (mix_dist.log_probs_joint(mix_actions) + torch.tensor(self.threshold, device=self.device).log())
+                ind_action_log_probs = (ind_dist.log_probs(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log()) if not self.discrete else (ind_dist.log_probs_joint(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log())
+                log_probs = torch.stack([ind_action_log_probs, mix_action_log_probs],dim=-1)
+                action_log_probs = _t2n(torch.logsumexp(log_probs,-1))
+            elif self.threshold == 0.:
+                ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
+                action_log_probs = _t2n(ind_action_log_probs)
+            elif self.threshold == 1.:
+                mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+                action_log_probs = _t2n(mix_action_log_probs)  
             # mix_actions = mix_dist.sample()
-            mix_actions = hard_actions.clone()
-            mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
-            ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
+            # mix_actions = hard_actions.clone()
+            # mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+            # ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
             joint_actions = _t2n(mix_actions)
-            action_log_probs = _t2n(ind_action_log_probs)  
-            joint_action_log_probs = _t2n(mix_action_log_probs)  
+            # action_log_probs = _t2n(ind_action_log_probs)  
+            # joint_action_log_probs = _t2n(mix_action_log_probs)  
 
         return values, actions, _t2n(hard_actions), action_log_probs, rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, _t2n(self.threshold), _t2n(bias_), _t2n(logits)
 
