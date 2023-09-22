@@ -332,7 +332,7 @@ def get_config():
                         help='')
     parser.add_argument("--mix_std_x_coef", type=float, default=1.0,
                         help='')
-    parser.add_argument("--mix_std_y_coef", type=float, default=0.95,
+    parser.add_argument("--mix_std_y_coef", type=float, default=0.5,
                         help='')
     
     # optimizer parameters
