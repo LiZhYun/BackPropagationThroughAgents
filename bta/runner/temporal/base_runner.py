@@ -880,6 +880,8 @@ class Runner(object):
                     ce_gae_batch_all[:, agent_idx] = ce_gae_batch
                     return_batch_all[:, agent_idx] = return_batch
                     bias_batch_all[:, agent_idx] = bias_batch
+
+                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
                 
                 share_obs = np.concatenate(np.stack(share_obs_all, 1))
                 rnn_states_joint = np.concatenate(np.stack(rnn_states_joint_all, 1))
@@ -955,16 +957,16 @@ class Runner(object):
         
         train_infos = self.critic_(train_infos, advs)
         # if self.threshold == 0.0:
-        # train_infos = self.projection_(train_infos, advs)
+        train_infos = self.projection_(train_infos, advs)
 
         num_updates = self.ppo_epoch * self.num_mini_batch
         projection_updates = self.bc_epoch * self.num_mini_batch
         for agent_idx in range(self.num_agents):
             for k in train_infos[agent_idx].keys():
-                # if k in ['projection_loss', 'actor_grad_norm']:
-                #     train_infos[agent_idx][k] /= projection_updates
-                # else:
-                train_infos[agent_idx][k] /= num_updates    
+                if k in ['projection_loss']:
+                    train_infos[agent_idx][k] /= projection_updates
+                else:
+                    train_infos[agent_idx][k] /= num_updates    
             self.buffer[agent_idx].after_update()
         return train_infos
     
@@ -1107,7 +1109,7 @@ class Runner(object):
                     self.trainer[agent_idx].policy.critic_optimizer.step()
 
                     train_infos[agent_idx]['value_loss'] += value_loss.item()
-                    train_infos[agent_idx]['dist_entropy'] += dist_entropy.item()
+                    
                     if int(torch.__version__[2]) < 5:
                         train_infos[agent_idx]['critic_grad_norm'] += critic_grad_norm
                     else:
@@ -1269,10 +1271,10 @@ class Runner(object):
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                     
                     train_infos[agent_idx]['projection_loss'] += projection_loss.item()
-                    if int(torch.__version__[2]) < 5:
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    else:
-                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                    # if int(torch.__version__[2]) < 5:
+                    #     train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                    # else:
+                    #     train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
