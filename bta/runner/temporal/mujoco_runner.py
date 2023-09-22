@@ -61,10 +61,10 @@ class MujocoRunner(Runner):
                 self.temperature = 0.01 + (self.all_args.temperature - 0.01) * \
                     (1 + math.cos(math.pi * (episode) / (episodes-1))) / 2
             elif self.decay_id == 2:
-                if episode > 0:
-                    self.threshold *= 0.996 
-                if self.threshold < 0.001:
-                    self.threshold = 0.0
+                # if episode > episodes//2:
+                self.threshold = 0.0
+                # if self.threshold < 0.001:
+                #     self.threshold = 0.0
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass

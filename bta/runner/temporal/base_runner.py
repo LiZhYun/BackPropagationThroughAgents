@@ -903,10 +903,10 @@ class Runner(object):
 
                 ratio = torch.prod(torch.prod(torch.exp(joint_new_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
                 # imp_weights = torch.prod(torch.prod(torch.exp(joint_old_actions_logprob_all_batch - old_actions_logprob_all_batch),dim=-1,keepdim=True),dim=-2,keepdim=True)
-                # dual clip
-                cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
-                surr1 = cliped_ratio * adv_targ_all
-                surr2 = torch.clamp(cliped_ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
+                # # dual clip
+                # cliped_ratio = torch.minimum(ratio, torch.tensor(3.0).to(self.device))
+                surr1 = ratio * adv_targ_all
+                surr2 = torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param) * adv_targ_all
 
                 policy_action_loss = -torch.sum(torch.min(surr1, surr2), dim=-1, keepdim=True)
 
@@ -954,8 +954,8 @@ class Runner(object):
                 self.action_attention_optimizer.step()
         
         train_infos = self.critic_(train_infos, advs)
-        # if step > 10:
-        train_infos = self.projection_(train_infos, advs)
+        if self.threshold == 0.0:
+            train_infos = self.projection_(train_infos, advs)
 
         num_updates = self.ppo_epoch * self.num_mini_batch
         projection_updates = self.bc_epoch * self.num_mini_batch
