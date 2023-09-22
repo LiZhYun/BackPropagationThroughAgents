@@ -155,7 +155,8 @@ class MatrixRunner(Runner):
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
                                                             # deterministic=True,
-                                                            tau=self.temperature)
+                                                            # tau=self.temperature
+                                                            )
             hard_actions[:, agent_idx] = torch.argmax(action, -1, keepdim=True).to(torch.int)
             actions[:, agent_idx] = _t2n(action)
             logits[:, agent_idx] = logit if self.discrete else logit.mean

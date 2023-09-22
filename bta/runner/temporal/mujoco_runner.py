@@ -186,7 +186,8 @@ class MujocoRunner(Runner):
                                                             ego_exclusive_action,
                                                             tmp_execution_mask,
                                                             # deterministic=True,
-                                                            tau=self.temperature)
+                                                            # tau=self.temperature
+                                                            )
             hard_actions[:, agent_idx] = action
             actions[:, agent_idx] = _t2n(action)
             logits[:, agent_idx] = logits if self.discrete else logit.mean

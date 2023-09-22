@@ -858,7 +858,7 @@ class Runner(object):
                                                                             execution_mask,
                                                                             available_actions_batch,
                                                                             active_masks_batch,
-                                                                            tau=self.temperature,
+                                                                            # tau=self.temperature,
                                                                             kl=True,
                                                                             joint_actions=joint_actions_batch
                                                                             )
@@ -919,8 +919,8 @@ class Runner(object):
                     policy_action_loss = policy_action_loss.mean(dim=0).sum()
                     mix_dist_entropy = mix_dist_entropy.mean(dim=0).sum()
 
-                # for agent_idx in range(self.num_agents):
-                #     self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
+                for agent_idx in range(self.num_agents):
+                    self.trainer[agent_idx].policy.actor_optimizer.zero_grad()
                 self.action_attention_optimizer.zero_grad()
                 
                 policy_loss = policy_action_loss
@@ -934,37 +934,37 @@ class Runner(object):
                     
                 for agent_idx in range(self.num_agents):
                     
-                    # if self._use_max_grad_norm:
-                    #     actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
-                    # else:
-                    #     actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
+                    if self._use_max_grad_norm:
+                        actor_grad_norm = nn.utils.clip_grad_norm_(self.trainer[agent_idx].policy.actor.parameters(), self.max_grad_norm)
+                    else:
+                        actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                     
                     train_infos[agent_idx]['joint_policy_loss'] += policy_loss.item()
                     train_infos[agent_idx]['joint_ratio'] += ratio.mean().item()
                     train_infos[agent_idx]['joint_dist_entropy'] += mix_dist_entropy.item()
                     if int(torch.__version__[2]) < 5:
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm
                     else:
-                        # train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
                         train_infos[agent_idx]['attention_grad_norm'] += attention_grad_norm.item()
 
-                # for agent_idx in range(self.num_agents):
-                #     self.trainer[agent_idx].policy.actor_optimizer.step()
+                for agent_idx in range(self.num_agents):
+                    self.trainer[agent_idx].policy.actor_optimizer.step()
                 self.action_attention_optimizer.step()
         
         train_infos = self.critic_(train_infos, advs)
         # if self.threshold == 0.0:
-        train_infos = self.projection_(train_infos, advs)
+        # train_infos = self.projection_(train_infos, advs)
 
         num_updates = self.ppo_epoch * self.num_mini_batch
         projection_updates = self.bc_epoch * self.num_mini_batch
         for agent_idx in range(self.num_agents):
             for k in train_infos[agent_idx].keys():
-                if k in ['projection_loss', 'actor_grad_norm']:
-                    train_infos[agent_idx][k] /= projection_updates
-                else:
-                    train_infos[agent_idx][k] /= num_updates    
+                # if k in ['projection_loss', 'actor_grad_norm']:
+                #     train_infos[agent_idx][k] /= projection_updates
+                # else:
+                train_infos[agent_idx][k] /= num_updates    
             self.buffer[agent_idx].after_update()
         return train_infos
     
@@ -1068,7 +1068,7 @@ class Runner(object):
                                                                             execution_mask,
                                                                             available_actions_batch,
                                                                             active_masks_batch,
-                                                                            tau=self.temperature,
+                                                                            # tau=self.temperature,
                                                                             kl=True,
                                                                             joint_actions=joint_actions_batch
                                                                             )
@@ -1211,7 +1211,7 @@ class Runner(object):
                                                                             execution_mask,
                                                                             available_actions_batch,
                                                                             active_masks_batch,
-                                                                            tau=self.temperature,
+                                                                            # tau=self.temperature,
                                                                             kl=True,
                                                                             joint_actions=joint_actions_batch
                                                                             )
