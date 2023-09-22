@@ -1251,7 +1251,7 @@ class Runner(object):
                     ind_dist = FixedNormal(logits_all, stds_all)
                     mix_dist = FixedNormal(bias_.detach(), action_std.detach())
 
-                projection_loss = kl_divergence(mix_dist, ind_dist).unsqueeze(-1) if self.discrete else kl_divergence(mix_dist, ind_dist).sum(-1, keepdim=True)
+                projection_loss = kl_divergence(ind_dist, mix_dist).unsqueeze(-1) if self.discrete else kl_divergence(ind_dist, mix_dist).sum(-1, keepdim=True)
 
                 if self._use_policy_active_masks:
                     projection_loss = ((projection_loss * active_masks_all).sum(dim=0) / active_masks_all.sum(dim=0)).sum()
@@ -1271,10 +1271,10 @@ class Runner(object):
                         actor_grad_norm = get_gard_norm(self.trainer[agent_idx].policy.actor.parameters())
                     
                     train_infos[agent_idx]['projection_loss'] += projection_loss.item()
-                    # if int(torch.__version__[2]) < 5:
-                    #     train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
-                    # else:
-                    #     train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
+                    if int(torch.__version__[2]) < 5:
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm
+                    else:
+                        train_infos[agent_idx]['actor_grad_norm'] += actor_grad_norm.item()
 
                 for agent_idx in range(self.num_agents):
                     self.trainer[agent_idx].policy.actor_optimizer.step()
