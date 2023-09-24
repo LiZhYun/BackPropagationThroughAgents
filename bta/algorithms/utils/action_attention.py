@@ -68,8 +68,8 @@ class Action_Attention(nn.Module):
             action_dim = action_space.n
         elif action_space.__class__.__name__ == "Box":
             action_dim = action_space.shape[0] # 1 0.75
-            log_std = torch.ones(action_dim) * self.std_x_coef
-            self.log_std = torch.nn.Parameter(log_std)
+            # log_std = torch.ones(action_dim) * self.std_x_coef
+            # self.log_std = torch.nn.Parameter(log_std)
         self.action_dim = action_dim
 
         self.logit_encoder = nn.Sequential(init_(nn.Linear(action_dim, self._attn_size), activate=True), 
@@ -139,15 +139,15 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
 
         bias_ = self.head(x)
-        # log_std = bias_ * self.std_x_coef
-        # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+        log_std = bias_ * self.std_x_coef
+        action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
 
         if self.discrete:
-            bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-            action_std = None
-            # action_std = -torch.log(-torch.log(action_std))
-        else:
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+            # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+            # action_std = None
+            action_std = -torch.log(-torch.log(action_std))
+        # else:
+        #     action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
     
@@ -177,15 +177,15 @@ class Action_Attention(nn.Module):
         x = self.layer_norm(x)
 
         bias_ = self.head(x)
-        # log_std = bias_ * self.std_x_coef
-        # action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
+        log_std = bias_ * self.std_x_coef
+        action_std = 1 / (1 + torch.exp(-self.sigmoid_gain * (log_std / self.std_x_coef))) * self.std_y_coef
 
         if self.discrete:
-            bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
-            action_std = None
-            # action_std = -torch.log(-torch.log(action_std))
-        else:
-            action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
+            # bias_ = bias_ - bias_.logsumexp(dim=-1, keepdim=True)
+            # action_std = None
+            action_std = -torch.log(-torch.log(action_std))
+        # else:
+            # action_std = torch.sigmoid(self.log_std / self.std_x_coef) * self.std_y_coef
 
         return bias_, action_std, rnn_states.view(N, self.num_agents, self._recurrent_N, -1)
 

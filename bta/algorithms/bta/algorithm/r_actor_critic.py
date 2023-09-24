@@ -88,7 +88,7 @@ class R_Actor(nn.Module):
 
         self.num_agents = args.num_agents
 
-        self.act = ACTLayer(action_space, input_size, self._use_orthogonal, self._gain)
+        self.act = ACTLayer(action_space, input_size, self._use_orthogonal, self._gain, self.use_action_attention)
 
         self.to(device)
 

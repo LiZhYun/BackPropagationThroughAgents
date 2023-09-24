@@ -8,12 +8,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class ACTLayer(nn.Module):
-    def __init__(self, action_space, inputs_dim, use_orthogonal, gain):
+    def __init__(self, action_space, inputs_dim, use_orthogonal, gain, use_attention_action=False):
         super(ACTLayer, self).__init__()
         self.multidiscrete_action = False
         self.continuous_action = False
         self.mixed_action = False
         self.discrete_action = False
+        self.use_attention_action = use_attention_action
         self.action_type = action_space.__class__.__name__
         if action_space.__class__.__name__ == "Discrete":
             self.discrete_action = True

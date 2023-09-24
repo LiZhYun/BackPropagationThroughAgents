@@ -53,15 +53,18 @@ class MujocoRunner(Runner):
 
             done_episodes_rewards = []
             if self.decay_id == 0:
-                self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
+                # self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
+                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
+                self.temperature = min(0.1 + ((self.all_args.temperature - 0.1) * (episode*self.decay_factor / float(episodes))), self.all_args.temperature)
             elif self.decay_id == 1:
-                self.threshold = 0. + (self.initial_threshold - 0.) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
-                self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
+                # self.threshold = 0. + (self.initial_threshold - 0.) * \
+                    # (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
+                # self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
+                #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
+                self.temperature = 0.1 + (self.all_args.temperature - 0.1) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1) + math.pi)) / 2 if episode*self.decay_factor <= episodes else self.all_args.temperature
             elif self.decay_id == 2:
-                self.threshold = self.all_args.threshold * math.pow(0.99,math.floor((episode)/10))
+                # self.threshold = 0.1 + self.all_args.threshold * math.pow(1.01,math.floor((episode)/10))
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
@@ -211,14 +214,14 @@ class MujocoRunner(Runner):
             #     self.threshold = self.threshold_dist().sample([self.n_rollout_threads*self.num_agents]).view(self.n_rollout_threads, self.num_agents, 1)
             #     self.threshold = torch.clamp(self.threshold, 0, 1)
             if self.discrete:
-                # mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
-                # mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
-                mixed_ = bias_
+                mixed_ = (logits + action_std) / self.temperature  # ~Gumbel(logits,tau)
+                mixed_ = mixed_ - mixed_.logsumexp(dim=-1, keepdim=True)
+                # mixed_ = bias_
                 ind_dist = FixedCategorical(logits=logits)
                 mix_dist = FixedCategorical(logits=mixed_)
             else:
                 ind_dist = FixedNormal(logits, stds)
-                mix_dist = FixedNormal(bias_, action_std)
+                mix_dist = FixedNormal(logits, action_std)
             if self.threshold >= torch.rand(1):
                 mix_actions = mix_dist.sample()
             else:
