@@ -180,6 +180,8 @@ def main(args):
         from bta.runner.temporal.matrix_runner import MatrixRunner as Runner
     elif "mat" in all_args.algorithm_name:
         from bta.runner.mat.matrix_runner import MatrixRunner as Runner
+    elif "maven" in all_args.algorithm_name:
+        from bta.runner.maven.matrix_runner import MatrixRunner as Runner
     else: # mappo
         from bta.runner.mappo.matrix_runner import MatrixRunner as Runner
 

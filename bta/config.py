@@ -452,4 +452,10 @@ def get_config():
     parser.add_argument("--dec_actor", action='store_true', default=False)
     parser.add_argument("--share_actor", action='store_false', default=True)
 
+    # add for maven
+    parser.add_argument("--noise_dim", type=int, default=2)
+    parser.add_argument("--epsilon_start", type=float, default=1.0)
+    parser.add_argument("--epsilon_finish", type=float, default=0.05)
+    parser.add_argument("--target_update_interval", type=int, default=200)
+
     return parser
