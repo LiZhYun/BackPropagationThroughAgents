@@ -184,7 +184,7 @@ def get_config():
 
     # prepare parameters
     parser.add_argument("--algorithm_name", type=str,
-                        default='temporal', choices=["mappo", "gcs", "ar", "happo", "hatrpo", "temporal"])
+                        default='temporal', choices=["mappo", "gcs", "ar", "happo", "hatrpo", "temporal", "mat", "mat_dec", "maven"])
 
     parser.add_argument("--experiment_name", type=str, default="check", help="an identifier to distinguish different experiment.")
     parser.add_argument("--seed", type=int, default=1, help="Random seed for numpy/torch")
@@ -443,5 +443,13 @@ def get_config():
 
     # wandb
     parser.add_argument("--wandb_tags", nargs='+', help="wandb tags to your experiment", default=[])
+
+    # add for transformer
+    parser.add_argument("--encode_state", action='store_false', default=True)
+    parser.add_argument("--n_block", type=int, default=1)
+    parser.add_argument("--n_embd", type=int, default=64)
+    parser.add_argument("--n_head", type=int, default=1)
+    parser.add_argument("--dec_actor", action='store_true', default=False)
+    parser.add_argument("--share_actor", action='store_false', default=True)
 
     return parser

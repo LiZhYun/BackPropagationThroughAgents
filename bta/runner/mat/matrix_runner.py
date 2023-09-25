@@ -7,7 +7,7 @@ from functools import reduce
 import torch
 import wandb
 import imageio
-from bta.runner.happo.base_runner import Runner
+from bta.runner.mat.base_runner import Runner
 
 
 def _t2n(x):
@@ -30,8 +30,7 @@ class MatrixRunner(Runner):
 
         for episode in range(episodes):
             if self.use_linear_lr_decay:
-                for agent_id in range(self.num_agents):
-                    self.trainer[agent_id].policy.lr_decay(episode, episodes)
+                self.trainer.policy.lr_decay(episode, episodes)
 
             for step in range(self.episode_length):
                 # Sample actions
@@ -66,17 +65,11 @@ class MatrixRunner(Runner):
                               total_num_steps,
                               self.num_env_steps,
                               int(total_num_steps / (end - start))))
-                for agent_id in range(self.num_agents):
-                    train_infos[agent_id].update({"average_episode_rewards_by_eplength": np.mean(self.buffer[agent_id].rewards) * self.episode_length})
-                print("average episode rewards of agent 0 is {}".format(train_infos[0]["average_episode_rewards_by_eplength"]))
+                train_infos["average_episode_rewards_by_eplength"] = np.mean(self.buffer.rewards) * self.episode_length
+                print("average episode rewards is {}".format(train_infos["average_episode_rewards_by_eplength"]))
                 self.log_train(train_infos, total_num_steps)
                 self.log_env(self.env_infos, total_num_steps=total_num_steps)
                 self.env_infos = defaultdict(list)
-                if self.use_wandb:
-                    wandb.log({"average_episode_rewards_by_eplength": train_infos[0]["average_episode_rewards_by_eplength"]}, step=total_num_steps)
-                else:
-                    self.writter.add_scalars("average_episode_rewards_by_eplength", {"aver_rewards": train_infos[0]["average_episode_rewards_by_eplength"]},
-                                            total_num_steps)
 
             # eval
             if total_num_steps % self.eval_interval == 0 and self.use_eval:
@@ -89,40 +82,30 @@ class MatrixRunner(Runner):
         # in GRF, we have full observation, so mappo is just ippo
         share_obs = obs
 
-        for agent_id in range(self.num_agents):
-            self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
-            self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
+        self.buffer.share_obs[0] = share_obs.copy()
+        self.buffer.obs[0] = obs.copy()
 
     @torch.no_grad()
     def collect(self, step):
-        value_collector = []
-        action_collector = []
-        action_log_prob_collector = []
-        rnn_state_collector = []
-        rnn_state_critic_collector = []
-        for agent_id in range(self.num_agents):
-            self.trainer[agent_id].prep_rollout()
-            value, action, action_log_prob, rnn_state, rnn_state_critic \
-                = self.trainer[agent_id].policy.get_actions(self.buffer[agent_id].share_obs[step],
-                                                            self.buffer[agent_id].obs[step],
-                                                            self.buffer[agent_id].rnn_states[step],
-                                                            self.buffer[agent_id].rnn_states_critic[step],
-                                                            self.buffer[agent_id].masks[step])
-            value_collector.append(_t2n(value))
-            action_collector.append(_t2n(action))
-            action_log_prob_collector.append(_t2n(action_log_prob))
-            rnn_state_collector.append(_t2n(rnn_state))
-            rnn_state_critic_collector.append(_t2n(rnn_state_critic))
-        # [self.envs, agents, dim]
-        values = np.array(value_collector).transpose(1, 0, 2)
-        actions = np.array(action_collector).transpose(1, 0, 2)
-        action_log_probs = np.array(
-            action_log_prob_collector).transpose(1, 0, 2)
-        rnn_states = np.array(rnn_state_collector).transpose(1, 0, 2, 3)
-        rnn_states_critic = np.array(
-            rnn_state_critic_collector).transpose(1, 0, 2, 3)
-        actions_env = [actions[idx, :, 0]
-                       for idx in range(self.n_rollout_threads)]
+        self.trainer.prep_rollout()
+
+        # [n_envs, n_agents, ...] -> [n_envs*n_agents, ...]
+        values, actions, action_log_probs, rnn_states, rnn_states_critic = self.trainer.policy.get_actions(
+            np.concatenate(self.buffer.share_obs[step]),
+            np.concatenate(self.buffer.obs[step]),
+            np.concatenate(self.buffer.rnn_states[step]),
+            np.concatenate(self.buffer.rnn_states_critic[step]),
+            np.concatenate(self.buffer.masks[step])
+        )
+
+        # [n_envs*n_agents, ...] -> [n_envs, n_agents, ...]
+        values = np.array(np.split(_t2n(values), self.n_rollout_threads))
+        actions = np.array(np.split(_t2n(actions), self.n_rollout_threads))
+        action_log_probs = np.array(np.split(_t2n(action_log_probs), self.n_rollout_threads))
+        rnn_states = np.array(np.split(_t2n(rnn_states), self.n_rollout_threads))
+        rnn_states_critic = np.array(np.split(_t2n(rnn_states_critic), self.n_rollout_threads))
+
+        actions_env = [actions[idx, :, 0] for idx in range(self.n_rollout_threads)]
 
         return values, actions, action_log_probs, rnn_states, rnn_states_critic, actions_env
 
@@ -139,16 +122,17 @@ class MatrixRunner(Runner):
 
         share_obs = obs
 
-        for agent_id in range(self.num_agents):
-            self.buffer[agent_id].insert(share_obs=share_obs[:, agent_id], 
-                                         obs=obs[:, agent_id], 
-                                         rnn_states=rnn_states[:, agent_id],
-                                         rnn_states_critic=rnn_states_critic[:,agent_id], 
-                                         actions=actions[:, agent_id],
-                                         action_log_probs=action_log_probs[:, agent_id],
-                                         value_preds=values[:, agent_id], 
-                                         rewards=rewards[:,agent_id], 
-                                         masks=masks[:, agent_id])
+        self.buffer.insert(
+            share_obs=share_obs,
+            obs=obs,
+            rnn_states_actor=rnn_states,
+            rnn_states_critic=rnn_states_critic,
+            actions=actions,
+            action_log_probs=action_log_probs,
+            value_preds=values,
+            rewards=rewards,
+            masks=masks        
+            )
 
     @torch.no_grad()
     def eval(self, total_num_steps):
@@ -161,25 +145,18 @@ class MatrixRunner(Runner):
 
         for eval_step in range(self.episode_length):
             eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
-            for agent_id in range(self.num_agents):
-                self.trainer[agent_id].prep_rollout()
-                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(np.array(list(eval_obs[:, agent_id])),
-                                                                                eval_rnn_states[:, agent_id],
-                                                                                eval_masks[:, agent_id],
-                                                                                deterministic=True)
+            self.trainer.prep_rollout()
+            eval_actions, eval_rnn_states = self.trainer.policy.act(
+                np.concatenate(eval_obs),
+                np.concatenate(eval_obs),
+                np.concatenate(eval_rnn_states),
+                np.concatenate(eval_masks),
+                deterministic=self.all_args.eval_deterministic
+            )
+            eval_actions = np.array(np.split(_t2n(eval_actions), self.n_eval_rollout_threads))
+            eval_rnn_states = np.array(np.split(_t2n(eval_rnn_states), self.n_eval_rollout_threads))
 
-                eval_action = eval_action.detach().cpu().numpy()
-                # rearrange action
-                eval_actions[:, agent_id] = eval_action
-                eval_rnn_states[:, agent_id] = _t2n(eval_rnn_state)
-            eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)] 
-            # # [envs, agents, dim]
-            # eval_actions_env = []
-            # for i in range(self.n_eval_rollout_threads):
-            #     eval_one_hot_action_env = []
-            #     for eval_temp_action_env in eval_temp_actions_env:
-            #         eval_one_hot_action_env.append(eval_temp_action_env[i])
-            #     eval_actions_env.append(eval_one_hot_action_env)
+            eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)]
 
             # Obser reward and next obs
             eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(eval_actions_env)
@@ -191,20 +168,14 @@ class MatrixRunner(Runner):
 
         eval_episode_rewards = np.array(eval_episode_rewards)
         
-        eval_train_infos = []
-        for agent_id in range(self.num_agents):
-            eval_average_episode_rewards = np.mean(np.sum(eval_episode_rewards[:, :, agent_id], axis=0))
-            eval_average_episode_rewards=eval_average_episode_rewards/self.episode_length*self.envs.observation_space[0].high[0]
-            eval_train_infos.append({'eval_average_episode_rewards': eval_average_episode_rewards})
-            print("eval average episode rewards of agent%i: " % agent_id + str(eval_average_episode_rewards))
+        eval_train_infos = defaultdict(float)
+        eval_train_infos['eval_average_episode_rewards'] = 0
+        eval_average_episode_rewards = np.mean(np.sum(eval_episode_rewards[:, :, 0], axis=0))
+        eval_average_episode_rewards=eval_average_episode_rewards/self.episode_length*self.envs.observation_space[0].high[0]
+        eval_train_infos['eval_average_episode_rewards'] = eval_average_episode_rewards
+        print("eval average episode rewards: " + str(eval_average_episode_rewards))
 
         self.log_train(eval_train_infos, total_num_steps)  
-
-        if self.use_wandb:
-            wandb.log({"eval_average_episode_rewards": eval_average_episode_rewards}, step=total_num_steps)
-        else:
-            self.writter.add_scalars("eval_average_episode_rewards", {"aver_rewards": eval_average_episode_rewards},
-                                    total_num_steps)
 
     @torch.no_grad()
     def render(self):

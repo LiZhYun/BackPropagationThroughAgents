@@ -73,6 +73,11 @@ class MatrixRunner(Runner):
                 self.log_train(train_infos, total_num_steps)
                 self.log_env(self.env_infos, total_num_steps=total_num_steps)
                 self.env_infos = defaultdict(list)
+                if self.use_wandb:
+                    wandb.log({"average_episode_rewards_by_eplength": train_infos[0]["average_episode_rewards_by_eplength"]}, step=total_num_steps)
+                else:
+                    self.writter.add_scalars("average_episode_rewards_by_eplength", {"aver_rewards": train_infos[0]["average_episode_rewards_by_eplength"]},
+                                            total_num_steps)
 
             # eval
             if total_num_steps % self.eval_interval == 0 and self.use_eval:
@@ -213,6 +218,12 @@ class MatrixRunner(Runner):
             print("eval average episode rewards of agent%i: " % agent_id + str(eval_average_episode_rewards))
 
         self.log_train(eval_train_infos, total_num_steps)  
+
+        if self.use_wandb:
+            wandb.log({"eval_average_episode_rewards": eval_average_episode_rewards}, step=total_num_steps)
+        else:
+            self.writter.add_scalars("eval_average_episode_rewards", {"aver_rewards": eval_average_episode_rewards},
+                                    total_num_steps)
 
     @torch.no_grad()
     def render(self):

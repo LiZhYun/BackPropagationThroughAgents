@@ -128,6 +128,14 @@ def main(args):
     parser = get_config()
     all_args = parse_args(args, parser)
 
+    if all_args.algorithm_name == "mat" or all_args.algorithm_name == "mat_dec":
+        all_args.use_recurrent_policy = False 
+        all_args.use_naive_recurrent_policy = False
+    
+    if all_args.algorithm_name == "mat_dec":
+        all_args.dec_actor = True
+        all_args.share_actor = False
+
     # cuda
     if all_args.cuda and torch.cuda.is_available():
         print("choose to use gpu...")
@@ -227,6 +235,8 @@ def main(args):
         from bta.runner.happo.smac_runner import SMACRunner as Runner
     elif "temporal" in all_args.algorithm_name:
         from bta.runner.temporal.smac_runner import SMACRunner as Runner
+    elif "mat" in all_args.algorithm_name:
+        from bta.runner.mat.smac_runner import SMACRunner as Runner
     else: # mappo
         from bta.runner.mappo.smac_runner import SMACRunner as Runner
 
