@@ -144,7 +144,7 @@ def main(args):
                          dir=str(run_dir),
                          job_type="training",
                          reinit=True,
-                         tags=["exp"],
+                         tags=["iclr24"],
                          )
     else:
         if not run_dir.exists():

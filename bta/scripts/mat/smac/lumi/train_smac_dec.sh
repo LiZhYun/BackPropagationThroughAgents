@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=smac-mat_dec_dec
+#SBATCH --job-name=smac-mat_dec
 #SBATCH --output=./out/smac-mat_dec_%A_%a.out # Name of stdout output file
 #SBATCH --error=./out/smac-mat_dec_err_%A_%a.txt  # Name of stderr error file
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
-#SBATCH --time=3-00:00:00
+#SBATCH --time=1-00:00:00
 #SBATCH --partition=small-g
 #SBATCH --gpus-per-node=1
 #SBATCH --account=project_462000277

@@ -445,7 +445,7 @@ def get_config():
     parser.add_argument("--wandb_tags", nargs='+', help="wandb tags to your experiment", default=[])
 
     # add for transformer
-    parser.add_argument("--encode_state", action='store_false', default=True)
+    parser.add_argument("--encode_state", action='store_true', default=False)
     parser.add_argument("--n_block", type=int, default=1)
     parser.add_argument("--n_embd", type=int, default=64)
     parser.add_argument("--n_head", type=int, default=1)
