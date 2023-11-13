@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
-from bta.utils.util import get_gard_norm, huber_loss, mse_loss
+from bta.utils.util import get_gard_norm, huber_loss, mse_loss, generate_mask_from_order
 from bta.utils.valuenorm import ValueNorm
 from bta.algorithms.utils.util import check
 
@@ -45,6 +45,7 @@ class MacpfTrainer:
         self._use_valuenorm = args.use_valuenorm
         self._use_value_active_masks = args.use_value_active_masks
         self._use_policy_active_masks = args.use_policy_active_masks
+        self.gamma = args.gamma
         self.alpha = 0.001
 
         self.discrim_loss = nn.CrossEntropyLoss(reduction="none")
@@ -109,21 +110,21 @@ class MacpfTrainer:
         :return actor_grad_norm: (torch.Tensor) gradient norm from actor update.
         :return imp_weights: (torch.Tensor) importance sampling weights.
         """
-        share_obs_batch, target_share_obs_batch, obs_batch, target_obs_batch, rnn_states_batch, target_rnn_states_batch, actions_batch, \
-        masks_batch, active_masks_batch, \
-        available_actions_batch, target_available_actions_batch, rewards_batch, noise_batch, target_noise_batch = sample
+        share_obs_batch, target_share_obs_batch, obs_batch, target_obs_batch, rnn_states_batch, target_rnn_states_batch, \
+            rnn_states_critic_batch, target_rnn_states_critic_batch, actions_batch, masks_batch, active_masks_batch, \
+                available_actions_batch, target_available_actions_batch, rewards_batch = sample
 
         share_obs_batch = check(share_obs_batch).to(**self.tpdv)
         active_masks_batch = check(active_masks_batch).to(**self.tpdv)
         masks_batch = check(masks_batch).to(**self.tpdv)
         actions_batch = check(actions_batch).to(**self.tpdv)
         rewards_batch = check(rewards_batch).to(**self.tpdv)
-        noise_batch = check(noise_batch).to(**self.tpdv)
-        target_noise_batch = check(target_noise_batch).to(**self.tpdv)
+        # noise_batch = check(noise_batch).to(**self.tpdv)
+        # target_noise_batch = check(target_noise_batch).to(**self.tpdv)
 
         bs = share_obs_batch.shape[0]
 
-        agent_order = torch.stack([check(np.range(self.num_agents)) for _ in range(actions_batch.shape[0])]).to(self.device)
+        agent_order = torch.stack([check(np.arange(self.num_agents)) for _ in range(actions_batch.shape[0])]).to(self.device)
         execution_masks_batch = generate_mask_from_order(
             agent_order, ego_exclusive=False).to(
                 self.device).float()  # [bs, n_agents, n_agents]
@@ -131,12 +132,13 @@ class MacpfTrainer:
         values, action_log_probs, dist_entropy = self.policy.evaluate_actions(
                                                 obs_batch.reshape(bs*self.num_agents,-1), 
                                                 rnn_states_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
+                                                rnn_states_critic_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
                                                 actions_batch.reshape(bs*self.num_agents,-1), 
                                                 masks_batch.reshape(bs*self.num_agents,-1), 
-                                                actions_batch.reshape(bs*self.num_agents,-1), 
-                                                execution_masks_batch, 
+                                                actions_batch.unsqueeze(1).repeat(1,self.num_agents,1,1).reshape(bs*self.num_agents,self.num_agents,-1), 
+                                                execution_masks_batch.reshape(bs*self.num_agents,-1),
                                                 dep_mode,
-                                                available_actions_batch.reshape(bs*self.num_agents,-1),
+                                                available_actions_batch.reshape(bs*self.num_agents,-1) if available_actions_batch is not None else None,
                                                 )
         # chosen_action_qvals = torch.gather(values, dim=-1, index=actions_batch.reshape(bs*self.num_agents,-1).long())  # Remove the last dim
 
@@ -161,60 +163,68 @@ class MacpfTrainer:
         :return actor_grad_norm: (torch.Tensor) gradient norm from actor update.
         :return imp_weights: (torch.Tensor) importance sampling weights.
         """
-        share_obs_batch, target_share_obs_batch, obs_batch, target_obs_batch, rnn_states_batch, target_rnn_states_batch, actions_batch, \
-        masks_batch, active_masks_batch, \
-        available_actions_batch, target_available_actions_batch, rewards_batch, noise_batch, target_noise_batch = sample
+        share_obs_batch, target_share_obs_batch, obs_batch, target_obs_batch, rnn_states_batch, target_rnn_states_batch, \
+            rnn_states_critic_batch, target_rnn_states_critic_batch, actions_batch, masks_batch, active_masks_batch, \
+                available_actions_batch, target_available_actions_batch, rewards_batch = sample
 
         share_obs_batch = check(share_obs_batch).to(**self.tpdv)
         active_masks_batch = check(active_masks_batch).to(**self.tpdv)
         masks_batch = check(masks_batch).to(**self.tpdv)
         actions_batch = check(actions_batch).to(**self.tpdv)
         rewards_batch = check(rewards_batch).to(**self.tpdv)
-        noise_batch = check(noise_batch).to(**self.tpdv)
-        target_noise_batch = check(target_noise_batch).to(**self.tpdv)
+        # noise_batch = check(noise_batch).to(**self.tpdv)
+        # target_noise_batch = check(target_noise_batch).to(**self.tpdv)
 
         bs = share_obs_batch.shape[0]
 
-        agent_order = torch.stack([check(np.range(self.num_agents)) for _ in range(actions_batch.shape[0])]).to(self.device)
+        agent_order = torch.stack([check(np.arange(self.num_agents)) for _ in range(actions_batch.shape[0])]).to(self.device)
         execution_masks_batch = generate_mask_from_order(
             agent_order, ego_exclusive=False).to(
                 self.device).float()  # [bs, n_agents, n_agents]
+        
+        target_actions_batch = actions_batch.clone()
+        for agent_idx in range(self.num_agents):
+            next_actions, action_log_probs, rnn_states = self.policy.actor(
+                target_obs_batch[:, agent_idx], 
+                target_rnn_states_batch[:, agent_idx], 
+                masks_batch[:, agent_idx], 
+                target_actions_batch, 
+                execution_masks_batch[:, agent_idx],
+                dep_mode,
+                target_available_actions_batch[:, agent_idx] if target_available_actions_batch is not None else None,
+            )
+            target_actions_batch[:, agent_idx] = next_actions.clone()
 
-        next_actions, action_log_probs, rnn_states_actor = self.policy.actor(
-            target_obs_batch.reshape(bs*self.num_agents,-1), 
-            target_rnn_states_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
-            masks_batch.reshape(bs*self.num_agents,-1), 
-            target_actions_batch.reshape(bs*self.num_agents,-1), 
-            execution_masks_batch,
-            dep_mode,
-            target_available_actions_batch.reshape(bs*self.num_agents,-1),
-        )
+        values, _ = self.policy.critic(
+                                        obs_batch.reshape(bs*self.num_agents,-1), 
+                                        # rnn_states_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
+                                        rnn_states_critic_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
+                                        actions_batch.reshape(bs*self.num_agents,-1), 
+                                        masks_batch.reshape(bs*self.num_agents,-1), 
+                                        actions_batch.unsqueeze(1).repeat(1,self.num_agents,1,1).reshape(bs*self.num_agents,self.num_agents,-1), 
+                                        execution_masks_batch.reshape(bs*self.num_agents,-1),
+                                        dep_mode,
+                                        # available_actions_batch.reshape(bs*self.num_agents,-1), 
+                                        )
+        values = self.policy.mixer(values, share_obs_batch[:,0])
 
-        values, _ = self.policy.evaluate_actions(
-                                                obs_batch.reshape(bs*self.num_agents,-1), 
-                                                rnn_states_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
-                                                actions_batch.reshape(bs*self.num_agents,-1), 
-                                                masks_batch.reshape(bs*self.num_agents,-1), 
-                                                actions_batch.reshape(bs*self.num_agents,-1), 
-                                                execution_masks_batch, 
-                                                dep_mode,
-                                                )
-        values = self.policy.mixer(values, share_obs_batch)
-
-        next_values, _ = self.policy.evaluate_actions(
-                                                target_obs_batch.reshape(bs*self.num_agents,-1), 
-                                                target_rnn_states_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
-                                                next_actions.reshape(bs*self.num_agents,-1), 
-                                                masks_batch.reshape(bs*self.num_agents,-1), 
-                                                target_actions_batch.reshape(bs*self.num_agents,-1), 
-                                                execution_masks_batch, 
-                                                dep_mode,
-                                                )
-        next_values = self.policy.mixer(next_values, target_share_obs_batch)
-        next_q_value = rewards_batch + masks_batch * self.gamma * (next_values-self.alpha*action_log_probs)
+        next_values, next_action_log_probs, _ = self.policy.evaluate_actions(
+                                            target_obs_batch.reshape(bs*self.num_agents,-1), 
+                                            target_rnn_states_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
+                                            target_rnn_states_critic_batch.reshape(bs*self.num_agents,self._recurrent_N,-1), 
+                                            target_actions_batch.reshape(bs*self.num_agents,-1), 
+                                            masks_batch.reshape(bs*self.num_agents,-1), 
+                                            target_actions_batch.unsqueeze(1).repeat(1,self.num_agents,1,1).reshape(bs*self.num_agents,self.num_agents,-1), 
+                                            execution_masks_batch.reshape(bs*self.num_agents,-1),
+                                            dep_mode,
+                                            target_available_actions_batch.reshape(bs*self.num_agents,-1) if target_available_actions_batch is not None else None,
+                                            )
+        next_values = self.policy.mixer(next_values, target_share_obs_batch[:,0])
+        next_action_log_probs = next_action_log_probs.reshape(bs, self.num_agents, -1).sum((1,2), keepdim=True)
+        next_q_value = rewards_batch[:,0].squeeze() + masks_batch[:,0].squeeze() * self.gamma * (next_values.squeeze()-self.alpha*next_action_log_probs.squeeze())
 
         # Td-error
-        td_error = (values - next_q_value.detach())
+        td_error = (values.squeeze() - next_q_value.detach())
 
         # Normal L2 loss, take mean over actual data
         loss = (td_error ** 2).mean()
@@ -263,17 +273,19 @@ class MacpfTrainer:
 
         for sample in data_generator:
 
-            loss, grad_norm \
+            policy_loss, actor_grad_norm \
                 = self.train_actor(sample, True)
             loss, grad_norm \
                 = self.train_actor(sample, False)
-            loss, grad_norm \
+            value_loss, critic_grad_norm \
                 = self.train_critic(sample, True)
             loss, grad_norm \
                 = self.train_critic(sample, False)
 
-            # train_info['value_loss'] += loss.item()
-            # train_info['actor_grad_norm'] += grad_norm
+            train_info['value_loss'] += value_loss.item()
+            train_info['policy_loss'] += policy_loss.item()
+            train_info['actor_grad_norm'] += actor_grad_norm
+            train_info['critic_grad_norm'] += critic_grad_norm
 
         num_updates = self.num_mini_batch
 

@@ -11,7 +11,7 @@ import imageio
 import warnings
 import functools
 from bta.utils.util import update_linear_schedule, is_acyclic, pruning, generate_mask_from_order
-from bta.runner.maven.base_runner import Runner
+from bta.runner.macpf.base_runner import Runner
 from pathlib import Path
 from collections import defaultdict, deque
 from tqdm import tqdm
@@ -43,23 +43,23 @@ class SMACRunner(Runner):
         for episode in range(episodes):
             if self.use_linear_lr_decay:
                 self.trainer.policy.lr_decay(episode, episodes)
-            self.trainer.policy.epsilon_decay(episode, episodes)
+            # self.trainer.policy.epsilon_decay(episode, episodes)
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states = self.collect(step)
+                actions, rnn_states, rnn_states_critic = self.collect(step)
                     
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, available_actions = self.envs.step(actions)
 
                 data = obs, share_obs, rewards, dones, infos, available_actions, \
                        actions, \
-                       rnn_states
+                       rnn_states, rnn_states_critic
                 
                 # insert data into buffer
                 self.insert(data)
 
-            train_infos = self.train()
+            train_infos = self.train(episode)
             
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -121,36 +121,53 @@ class SMACRunner(Runner):
         if not self.use_centralized_V:
             share_obs = obs
         
-        self.noise = _t2n(self.policy.noise_distrib.sample((self.n_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        # self.noise = _t2n(self.policy.noise_distrib.sample((self.n_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         self.buffer.share_obs[0] = share_obs.copy()
         self.buffer.obs[0] = obs.copy()
         self.buffer.available_actions[0] = available_actions.copy()
-        self.buffer.noise[:] = self.noise.copy()
+        # self.buffer.noise[:] = self.noise.copy()
 
     @torch.no_grad()
     def collect(self, step):
         self.trainer.prep_rollout()
-        actions, rnn_states \
-            = self.trainer.policy.get_actions(
-                                            np.concatenate(self.buffer.obs[step]),
-                                            np.concatenate(self.buffer.rnn_states[step]),
-                                            np.concatenate(self.buffer.masks[step]),
-                                            self.buffer.noise[step],
-                                            np.concatenate(self.buffer.available_actions[step]))
-        # [self.envs, agents, dim]
-        actions = np.array(np.split(_t2n(actions), self.n_rollout_threads))
-        rnn_states = np.array(np.split(_t2n(rnn_states), self.n_rollout_threads))
+        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
 
-        return actions, rnn_states
+        for agent_idx in range(self.num_agents):
+            ego_exclusive_action = actions[:,0:self.num_agents]
+            tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
+                                                [torch.zeros(self.n_rollout_threads)] *
+                                                (self.num_agents - agent_idx), -1).to(self.device)
+            action, rnn_state, rnn_state_critic \
+                = self.trainer.policy.get_actions(
+                                                self.buffer.obs[step, :, agent_idx],
+                                                self.buffer.rnn_states[step, :, agent_idx],
+                                                self.buffer.rnn_states_critic[step, :, agent_idx],
+                                                self.buffer.masks[step, :, agent_idx],
+                                                ego_exclusive_action,
+                                                tmp_execution_mask,
+                                                dep_mode=True,
+                                                available_actions=self.buffer.available_actions[step, :, agent_idx]
+                                                # tau=self.temperature
+                                                )
+            actions[:, agent_idx] = _t2n(action)
+            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            rnn_states[:, agent_idx] = _t2n(rnn_state)
+            rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
+
+        return actions, rnn_states, rnn_states_critic
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, available_actions, \
-        actions, rnn_states = data
+        actions, rnn_states, rnn_states_critic = data
 
         dones_env = np.all(dones, axis=1)
 
         rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
+        rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
 
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
@@ -160,13 +177,13 @@ class SMACRunner(Runner):
         active_masks[dones_env == True] = np.ones(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
 
         bad_masks = np.array([[[0.0] if info[agent_id]['bad_transition'] else [1.0] for agent_id in range(self.num_agents)] for info in infos])
-        self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        # self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         if not self.use_centralized_V:
             share_obs = obs
 
-        self.buffer.insert(share_obs, obs, rnn_states,
-                           actions, rewards, masks, self.noise, bad_masks, active_masks, available_actions)
+        self.buffer.insert(share_obs, obs, rnn_states, rnn_states_critic,
+                           actions, rewards, masks, bad_masks, active_masks, available_actions)
 
     def log_train(self, train_infos, total_num_steps):
         train_infos["average_step_rewards"] = np.mean(self.buffer.rewards)
@@ -188,7 +205,7 @@ class SMACRunner(Runner):
 
         eval_rnn_states = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
-        noise = _t2n(self.policy.noise_distrib.sample((self.n_eval_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        # noise = _t2n(self.policy.noise_distrib.sample((self.n_eval_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         while True:
             self.trainer.prep_rollout()
@@ -196,7 +213,9 @@ class SMACRunner(Runner):
                 np.concatenate(eval_obs),
                 np.concatenate(eval_rnn_states),
                 np.concatenate(eval_masks),
-                noise,
+                None,
+                None,
+                False,
                 np.concatenate(eval_available_actions),
             )
             

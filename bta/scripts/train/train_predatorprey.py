@@ -10,15 +10,15 @@ import torch
 
 from bta.config import get_config
 
-from bta.envs.matrix.matrix_env import ClimbingEnv
-from bta.envs.env_wrappers import SubprocVecEnv, DummyVecEnv
+from bta.envs.predator_prey.predatorprey_wrapper import PredatorPreyWrapper
+from bta.envs.env_wrappers import ShareSubprocVecEnv_Mujoco, ShareDummyVecEnv
 from datetime import datetime
 
 def make_train_env(all_args):
     def get_env_fn(rank):
         def init_env():
-            if all_args.env_name == "matrix":
-                env = ClimbingEnv(all_args)
+            if all_args.env_name == "predator_prey":
+                env = PredatorPreyWrapper(num_agents=all_args.num_agents, n_preys=all_args.num_preys, penalty=all_args.penalty)
             else:
                 print("Can not support the " +
                       all_args.env_name + " environment.")
@@ -27,17 +27,17 @@ def make_train_env(all_args):
             return env
         return init_env
     if all_args.n_rollout_threads == 1:
-        return DummyVecEnv([get_env_fn(0)])
+        return ShareDummyVecEnv([get_env_fn(0)])
     else:
-        return SubprocVecEnv([get_env_fn(i) for i in range(
+        return ShareSubprocVecEnv_Mujoco([get_env_fn(i) for i in range(
             all_args.n_rollout_threads)])
 
 
 def make_eval_env(all_args):
     def get_env_fn(rank):
         def init_env():
-            if all_args.env_name == "matrix":
-                env = ClimbingEnv(all_args)
+            if all_args.env_name == "predator_prey":
+                env = PredatorPreyWrapper(num_agents=all_args.num_agents, n_preys=all_args.num_preys, penalty=all_args.penalty)
             else:
                 print("Can not support the " +
                       all_args.env_name + " environment.")
@@ -46,29 +46,19 @@ def make_eval_env(all_args):
             return env
         return init_env
     if all_args.n_eval_rollout_threads == 1:
-        return DummyVecEnv([get_env_fn(0)])
+        return ShareDummyVecEnv([get_env_fn(0)])
     else:
-        return SubprocVecEnv([get_env_fn(i) for i in range(
+        return ShareSubprocVecEnv_Mujoco([get_env_fn(i) for i in range(
             all_args.n_eval_rollout_threads)])
 
 
 def parse_args(args, parser):
-    parser.add_argument("--scenario_name", type=str,
-                        default="climbing", 
-                        help="one of climbing, penalty_100, penalty_75, penalty_50, penalty_25, penalty_0 ")
     parser.add_argument("--num_agents", type=int, default=2,
                         help="number of controlled players.")
-    parser.add_argument("--eval_deterministic", action="store_false", 
-                        default=True, 
+    parser.add_argument("--num_preys", type=int, default=1,
+                        help="number of preys.")
+    parser.add_argument("--penalty", type=float, default=-0.5,
                         help="by default True. If False, sample action according to probability")
-    parser.add_argument("--share_reward", action='store_false', 
-                        default=True, 
-                        help="by default true. If false, use different reward for each agent.")
-
-    parser.add_argument("--save_videos", action="store_true", default=False, 
-                        help="by default, do not save render video. If set, save video.")
-    parser.add_argument("--video_dir", type=str, default="", 
-                        help="directory to save videos.")
                         
     all_args = parser.parse_known_args(args)[0]
 
@@ -102,7 +92,7 @@ def main(args):
 
     # run dir
     run_dir = Path(os.path.split(os.path.dirname(os.path.abspath(__file__)))[
-                   0] + "/results") / all_args.env_name / all_args.scenario_name / all_args.algorithm_name / all_args.experiment_name
+                   0] + "/results") / all_args.env_name / all_args.algorithm_name / all_args.experiment_name
     if not run_dir.exists():
         os.makedirs(str(run_dir))
 
@@ -115,11 +105,11 @@ def main(args):
                          name=str(all_args.algorithm_name) + "_" +
                          str(all_args.experiment_name) +
                          "_seed" + str(all_args.seed),
-                         group=all_args.scenario_name,
+                        #  group=all_args.penalty,
                          dir=str(run_dir),
                          job_type="training",
                          reinit=True,
-                         tags=["exp"],
+                         tags=["iclr24"],
                          )
     else:
         if not run_dir.exists():
@@ -136,7 +126,7 @@ def main(args):
 
     setproctitle.setproctitle("-".join([
         all_args.env_name, 
-        all_args.scenario_name, 
+        # all_args.penalty, 
         all_args.algorithm_name, 
         all_args.experiment_name
     ]) + "@" + all_args.user_name)
@@ -171,23 +161,21 @@ def main(args):
 
     # run experiments
     if "gcs" in all_args.algorithm_name:
-        from bta.runner.gcs.matrix_runner import MatrixRunner as Runner
+        from bta.runner.gcs.predator_runner import PredatorRunner as Runner
     elif "ar" in all_args.algorithm_name:
-        from bta.runner.ar.matrix_runner import MatrixRunner as Runner
+        from bta.runner.ar.predator_runner import PredatorRunner as Runner
     elif "ha" in all_args.algorithm_name:
-        from bta.runner.happo.matrix_runner import MatrixRunner as Runner
+        from bta.runner.happo.predator_runner import PredatorRunner as Runner
     elif "temporal" in all_args.algorithm_name:
-        from bta.runner.temporal.matrix_runner import MatrixRunner as Runner
+        from bta.runner.temporal.predator_runner import PredatorRunner as Runner
     elif "mat" in all_args.algorithm_name:
-        from bta.runner.mat.matrix_runner import MatrixRunner as Runner
+        from bta.runner.mat.predator_runner import PredatorRunner as Runner
     elif "maven" in all_args.algorithm_name:
-        from bta.runner.maven.matrix_runner import MatrixRunner as Runner
+        from bta.runner.maven.predator_runner import PredatorRunner as Runner
     elif "macpf" in all_args.algorithm_name:
-        from bta.runner.macpf.matrix_runner import MatrixRunner as Runner
+        from bta.runner.macpf.predator_runner import PredatorRunner as Runner
     elif "mappo" in all_args.algorithm_name:
-        from bta.runner.mappo.matrix_runner import MatrixRunner as Runner
-    elif "single" in all_args.algorithm_name:
-        from bta.runner.single.matrix_runner import MatrixRunner as Runner
+        from bta.runner.mappo.predator_runner import PredatorRunner as Runner
     else:
         raise NotImplementedError
 

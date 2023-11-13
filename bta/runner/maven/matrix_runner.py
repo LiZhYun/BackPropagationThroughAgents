@@ -117,7 +117,8 @@ class MatrixRunner(Runner):
         rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
-        self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        if (dones_env == True).sum() > 0:
+            self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         share_obs = obs
 

@@ -7,18 +7,18 @@ from functools import reduce
 import torch
 import wandb
 import imageio
-from bta.runner.macpf.base_runner import Runner
+from bta.runner.mat.base_runner import Runner
 
 
 def _t2n(x):
     return x.detach().cpu().numpy()
 
 
-class MatrixRunner(Runner):
+class PredatorRunner(Runner):
     """Runner class to perform training, evaluation. and data collection for SMAC. See parent class for details."""
 
     def __init__(self, config):
-        super(MatrixRunner, self).__init__(config)
+        super(PredatorRunner, self).__init__(config)
         self.env_infos = defaultdict(list)
 
     def run(self):
@@ -31,20 +31,21 @@ class MatrixRunner(Runner):
         for episode in range(episodes):
             if self.use_linear_lr_decay:
                 self.trainer.policy.lr_decay(episode, episodes)
-            # self.trainer.policy.epsilon_decay(episode, episodes)
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states, rnn_states_critic, actions_env = self.collect(
+                values, actions, action_log_probs, rnn_states, rnn_states_critic, actions_env = self.collect(
                     step)
                 # Obser reward and next obs
-                obs, rewards, dones, infos = self.envs.step(actions_env)
-                data = obs, rewards, dones, infos, \
-                    actions,\
+                obs, share_obs, rewards, dones, infos, _ = self.envs.step(actions_env)
+                data = obs, share_obs, rewards, dones, infos, \
+                    values, actions, action_log_probs, \
                     rnn_states, rnn_states_critic
                 # insert data into buffer
                 self.insert(data)
-            train_infos = self.train(episode)
+            # compute return and update network
+            self.compute()
+            train_infos = self.train()
 
             # post process
             total_num_steps = (episode + 1) * \
@@ -76,55 +77,42 @@ class MatrixRunner(Runner):
 
     def warmup(self):
         # reset env
-        obs = self.envs.reset()
+        obs, share_obs, _ = self.envs.reset()
         # replay buffer
         # in GRF, we have full observation, so mappo is just ippo
-        share_obs = obs
-
-        # self.noise = _t2n(self.policy.noise_distrib.sample((self.n_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        if not self.use_centralized_V:
+            share_obs = obs
 
         self.buffer.share_obs[0] = share_obs.copy()
         self.buffer.obs[0] = obs.copy()
-        # self.buffer.noise[:] = self.noise.copy()
 
     @torch.no_grad()
     def collect(self, step):
         self.trainer.prep_rollout()
 
-        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape),dtype=np.int32)
-        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
-        rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
-        rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
+        # [n_envs, n_agents, ...] -> [n_envs*n_agents, ...]
+        values, actions, action_log_probs, rnn_states, rnn_states_critic = self.trainer.policy.get_actions(
+            np.concatenate(self.buffer.share_obs[step]),
+            np.concatenate(self.buffer.obs[step]),
+            np.concatenate(self.buffer.rnn_states[step]),
+            np.concatenate(self.buffer.rnn_states_critic[step]),
+            np.concatenate(self.buffer.masks[step])
+        )
 
-        for agent_idx in range(self.num_agents):
-            ego_exclusive_action = actions[:,0:self.num_agents]
-            tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
-                                                [torch.zeros(self.n_rollout_threads)] *
-                                                (self.num_agents - agent_idx), -1).to(self.device)
-            action, rnn_state, rnn_state_critic \
-                = self.trainer.policy.get_actions(
-                                                self.buffer.obs[step, :, agent_idx],
-                                                self.buffer.rnn_states[step, :, agent_idx],
-                                                self.buffer.rnn_states_critic[step, :, agent_idx],
-                                                self.buffer.masks[step, :, agent_idx],
-                                                ego_exclusive_action,
-                                                tmp_execution_mask,
-                                                dep_mode=True,
-                                                # tau=self.temperature
-                                                )
-            actions[:, agent_idx] = _t2n(action)
-            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
-            rnn_states[:, agent_idx] = _t2n(rnn_state)
-            rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
+        # [n_envs*n_agents, ...] -> [n_envs, n_agents, ...]
+        values = np.array(np.split(_t2n(values), self.n_rollout_threads))
+        actions = np.array(np.split(_t2n(actions), self.n_rollout_threads))
+        action_log_probs = np.array(np.split(_t2n(action_log_probs), self.n_rollout_threads))
+        rnn_states = np.array(np.split(_t2n(rnn_states), self.n_rollout_threads))
+        rnn_states_critic = np.array(np.split(_t2n(rnn_states_critic), self.n_rollout_threads))
 
-        actions_env = [actions[idx, :, 0]
-                       for idx in range(self.n_rollout_threads)]
+        actions_env = [actions[idx, :, 0] for idx in range(self.n_rollout_threads)]
 
-        return actions, rnn_states, rnn_states_critic, actions_env
+        return values, actions, action_log_probs, rnn_states, rnn_states_critic, actions_env
 
     def insert(self, data):
-        obs, rewards, dones, infos, \
-            actions, rnn_states, rnn_states_critic = data
+        obs, share_obs, rewards, dones, infos, \
+            values, actions, action_log_probs, rnn_states, rnn_states_critic = data
 
         dones_env = np.all(dones, axis=-1)
         
@@ -132,41 +120,40 @@ class MatrixRunner(Runner):
         rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
-        # self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
         self.buffer.insert(
             share_obs=share_obs,
             obs=obs,
-            rnn_states=rnn_states,
+            rnn_states_actor=rnn_states,
             rnn_states_critic=rnn_states_critic,
             actions=actions,
+            action_log_probs=action_log_probs,
+            value_preds=values,
             rewards=rewards,
-            masks=masks,      
+            masks=masks        
             )
 
     @torch.no_grad()
     def eval(self, total_num_steps):
         # reset envs and init rnn and mask
         eval_episode_rewards = []
-        eval_obs = self.eval_envs.reset()
+        eval_obs, eval_share_obs, _ = self.eval_envs.reset()
 
         eval_rnn_states = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
-        # noise = _t2n(self.policy.noise_distrib.sample((self.n_eval_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         for eval_step in range(self.episode_length):
             eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
             self.trainer.prep_rollout()
             eval_actions, eval_rnn_states = self.trainer.policy.act(
+                np.concatenate(eval_share_obs),
                 np.concatenate(eval_obs),
                 np.concatenate(eval_rnn_states),
                 np.concatenate(eval_masks),
-                None,
-                None,
-                False,
-                deterministic=True,
+                deterministic=True
             )
             eval_actions = np.array(np.split(_t2n(eval_actions), self.n_eval_rollout_threads))
             eval_rnn_states = np.array(np.split(_t2n(eval_rnn_states), self.n_eval_rollout_threads))
@@ -174,7 +161,7 @@ class MatrixRunner(Runner):
             eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)]
 
             # Obser reward and next obs
-            eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(eval_actions_env)
+            eval_obs, eval_share_obs, eval_rewards, eval_dones, eval_infos, _ = self.eval_envs.step(eval_actions_env)
             eval_episode_rewards.append(eval_rewards)
 
             eval_rnn_states[eval_dones == True] = np.zeros(((eval_dones == True).sum(), self.recurrent_N, self.hidden_size), dtype=np.float32)

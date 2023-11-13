@@ -202,8 +202,16 @@ def main(args):
         from bta.runner.temporal.mujoco_runner import MujocoRunner as Runner
     elif "mat" in all_args.algorithm_name:
         from bta.runner.mat.mujoco_runner import MujocoRunner as Runner
-    else: # mappo
+    elif "macpf" in all_args.algorithm_name:
+        from bta.runner.macpf.mujoco_runner import MujocoRunner as Runner
+    elif "mappo" in all_args.algorithm_name:
         from bta.runner.mappo.mujoco_runner import MujocoRunner as Runner
+    elif "full" in all_args.algorithm_name:
+        from bta.runner.mappo_full.mujoco_runner import MujocoRunner as Runner
+    elif "single" in all_args.algorithm_name:
+        from bta.runner.single.mujoco_runner import MujocoRunner as Runner
+    else:
+        raise NotImplementedError
 
     # # sweep
     # def train(wconfig=None):

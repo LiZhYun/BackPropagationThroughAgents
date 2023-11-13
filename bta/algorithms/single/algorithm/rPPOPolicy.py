@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from bta.algorithms.r_mappo.algorithm.r_actor_critic import R_Actor, R_Critic
+from bta.algorithms.single.algorithm.r_actor_critic import R_Actor, R_Critic
 from bta.utils.util import update_linear_schedule
 
 
@@ -36,7 +36,7 @@ class R_PPOPolicy:
         update_linear_schedule(self.critic_optimizer, episode, episodes, self.critic_lr)
 
     def get_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, masks, available_actions=None, deterministic=False, task_id=None, **kwargs):
-        actions, action_log_probs, rnn_states_actor = self.actor(obs, rnn_states_actor, masks, available_actions, deterministic)
+        actions, action_log_probs, rnn_states_actor = self.actor(share_obs, rnn_states_actor, masks, available_actions, deterministic)
         values, rnn_states_critic = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, actions, action_log_probs, rnn_states_actor, rnn_states_critic
 
@@ -45,7 +45,7 @@ class R_PPOPolicy:
         return values
 
     def evaluate_actions(self, share_obs, obs, rnn_states_actor, rnn_states_critic, action, masks, available_actions=None, active_masks=None, task_id=None):
-        action_log_probs, dist_entropy, policy_values, pred_shaped_info = self.actor.evaluate_actions(obs, rnn_states_actor, action, masks, available_actions, active_masks)
+        action_log_probs, dist_entropy, policy_values, pred_shaped_info = self.actor.evaluate_actions(share_obs, rnn_states_actor, action, masks, available_actions, active_masks)
         values, _ = self.critic(share_obs, rnn_states_critic, masks, task_id=task_id)
         return values, action_log_probs, dist_entropy, policy_values, pred_shaped_info
 

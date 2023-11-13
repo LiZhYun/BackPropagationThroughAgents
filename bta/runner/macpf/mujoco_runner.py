@@ -3,7 +3,7 @@ import numpy as np
 from functools import reduce
 import torch
 import wandb
-from bta.runner.maven.base_runner import Runner
+from bta.runner.macpf.base_runner import Runner
 
 
 def _t2n(x):
@@ -27,13 +27,13 @@ class MujocoRunner(Runner):
         for episode in range(episodes):
             if self.use_linear_lr_decay:
                 self.trainer.policy.lr_decay(episode, episodes)
-            self.trainer.policy.epsilon_decay(episode, episodes)
+            # self.trainer.policy.epsilon_decay(episode, episodes)
 
             done_episodes_rewards = []
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states = self.collect(step)
+                actions, rnn_states, rnn_states_critic = self.collect(step)
 
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, _ = self.envs.step(actions)
@@ -48,12 +48,12 @@ class MujocoRunner(Runner):
 
                 data = obs, share_obs, rewards, dones, infos, \
                        actions, \
-                       rnn_states
+                       rnn_states, rnn_states_critic
 
                 # insert data into buffer
                 self.insert(data)
 
-            train_infos = self.train()
+            train_infos = self.train(episode)
 
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -106,52 +106,42 @@ class MujocoRunner(Runner):
     def collect(self, step):
         self.trainer.prep_rollout()
 
-        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_dim))
-        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
 
-        for agent in range(self.num_agents):
+        for agent_idx in range(self.num_agents):
             ego_exclusive_action = actions[:,0:self.num_agents]
             tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
                                                 [torch.zeros(self.n_rollout_threads)] *
                                                 (self.num_agents - agent_idx), -1).to(self.device)
-            action, rnn_states_actor, rnn_states_critic \
-                = self.trainer.policy.get_actions(self.buffer.obs[step],
-                                                            self.buffer.obs[step],
-                                                            self.buffer.rnn_states[step],
-                                                            self.buffer.rnn_states_critic[step],
-                                                            self.buffer.masks[step],
-                                                            ego_exclusive_action,
-                                                            tmp_execution_mask,
-                                                            dep_mode=True,
-                                                            # tau=self.temperature
-                                                            )
+            action, rnn_state, rnn_state_critic \
+                = self.trainer.policy.get_actions(
+                                                self.buffer.obs[step, :, agent_idx],
+                                                self.buffer.rnn_states[step, :, agent_idx],
+                                                self.buffer.rnn_states_critic[step, :, agent_idx],
+                                                self.buffer.masks[step, :, agent_idx],
+                                                ego_exclusive_action,
+                                                tmp_execution_mask,
+                                                dep_mode=True,
+                                                # tau=self.temperature
+                                                )
             actions[:, agent_idx] = _t2n(action)
-            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
-        # # [n_envs, n_agents, ...] -> [n_envs*n_agents, ...]
-        # actions, rnn_states = self.trainer.policy.get_actions(
-        #     np.concatenate(self.buffer.obs[step]),
-        #     np.concatenate(self.buffer.rnn_states[step]),
-        #     np.concatenate(self.buffer.masks[step]),
-        #     # self.buffer.noise[step],
-        # )
 
-        # # [n_envs*n_agents, ...] -> [n_envs, n_agents, ...]
-        # actions = np.array(np.split(_t2n(actions), self.n_rollout_threads))
-        # rnn_states = np.array(np.split(_t2n(rnn_states), self.n_rollout_threads))
-
-        return actions, action_log_probs, rnn_states, rnn_states_critic
+        return actions, rnn_states, rnn_states_critic
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, \
-        actions, rnn_states = data
+        actions, rnn_states, rnn_states_critic = data
 
         dones_env = np.all(dones, axis=1)
 
         rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
+        rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
 
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
@@ -159,7 +149,7 @@ class MujocoRunner(Runner):
         active_masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         active_masks[dones == True] = np.zeros(((dones == True).sum(), 1), dtype=np.float32)
         active_masks[dones_env == True] = np.ones(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
-        self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        # self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         if not self.use_centralized_V:
             share_obs = obs
@@ -168,10 +158,11 @@ class MujocoRunner(Runner):
             share_obs=share_obs,
             obs=obs,
             rnn_states=rnn_states,
+            rnn_states_critic=rnn_states_critic,
             actions=actions,
             rewards=rewards,
             masks=masks,
-            noise=self.noise,    
+            # noise=self.noise,    
         )
 
     def log_env(self, env_infos, total_num_steps):
@@ -196,7 +187,7 @@ class MujocoRunner(Runner):
         eval_rnn_states = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size),
                                    dtype=np.float32)
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
-        noise = _t2n(self.policy.noise_distrib.sample((self.n_eval_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        # noise = _t2n(self.policy.noise_distrib.sample((self.n_eval_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         while True:
             self.trainer.prep_rollout()
@@ -206,7 +197,9 @@ class MujocoRunner(Runner):
                 np.concatenate(eval_obs),
                 np.concatenate(eval_rnn_states),
                 np.concatenate(eval_masks),
-                noise,
+                None,
+                None,
+                False,
             )
             eval_actions = np.array(np.split(_t2n(eval_actions), self.n_eval_rollout_threads))
             eval_rnn_states = np.array(np.split(_t2n(eval_rnn_states), self.n_eval_rollout_threads))

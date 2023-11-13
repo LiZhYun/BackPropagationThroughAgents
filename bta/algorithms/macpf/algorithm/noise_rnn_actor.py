@@ -14,6 +14,7 @@ from bta.algorithms.utils.rnn import RNNLayer
 from bta.algorithms.utils.act import ACTLayer
 from bta.algorithms.utils.popart import PopArt
 from bta.algorithms.utils.gobigger.encoder import Encoder
+from bta.algorithms.utils.distributions import DiagGaussian, Categorical, FixedCategorical, FixedNormal
 from bta.utils.util import get_shape_from_obs_space, read_config, deep_merge_dicts
 
 class R_Actor(nn.Module):
@@ -66,12 +67,16 @@ class R_Actor(nn.Module):
                               self._influence_layer_N, self._use_orthogonal, self._activation_id)
             input_size += self.hidden_size
         
+        self.discrete = False
         if action_space.__class__.__name__ == "Discrete":
-            self.action_dim = 1
+            self.discrete = True
+            self.action_dim = action_space.n
+            self.action_shape = 1
             self.act = Categorical(input_size, self.action_dim, self._use_orthogonal, self._gain)
             self.dep_act = Categorical(input_size+self.hidden_size, self.action_dim, self._use_orthogonal, self._gain)
         elif action_space.__class__.__name__ == "Box":
             self.action_dim = action_space.shape[0]
+            self.action_shape = action_space.shape[0]
             self.act = DiagGaussian(input_size, self.action_dim, self._use_orthogonal, self._gain)
             self.dep_act = DiagGaussian(input_size+self.hidden_size, self.action_dim, self._use_orthogonal, self._gain)
 
@@ -86,7 +91,7 @@ class R_Actor(nn.Module):
             else:
                 self.v_out = init_(nn.Linear(input_size, 1))
         
-        self.dep_fc = nn.Sequential(init_(nn.Linear(args.num_agents * self.action_dim, self.hidden_size)), 
+        self.dep_fc = nn.Sequential(init_(nn.Linear(args.num_agents * self.action_shape, self.hidden_size)), 
                                            nn.ReLU(),
                                            nn.LayerNorm(self.hidden_size))
         # self.dep_act = ACTLayer(action_space, input_size, self._use_orthogonal, self._gain)
@@ -115,8 +120,11 @@ class R_Actor(nn.Module):
             obs = check(obs).to(**self.tpdv)
         rnn_states = check(rnn_states).to(**self.tpdv)
         masks = check(masks).to(**self.tpdv)
-        parents_actions = check(parents_actions).to(**self.tpdv)
-        execution_mask = check(execution_mask).to(**self.tpdv)
+
+        if parents_actions is not None:
+            parents_actions = check(parents_actions).to(**self.tpdv)
+        if execution_mask is not None:
+            execution_mask = check(execution_mask).to(**self.tpdv)
 
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
@@ -128,20 +136,29 @@ class R_Actor(nn.Module):
 
         if self._use_naive_recurrent_policy or self._use_recurrent_policy:
             actor_features, rnn_states = self.rnn(actor_features, rnn_states, masks)
-
+        # actor_features = actor_features.reshape(bs, num_agents, -1)
+        # rnn_states = rnn_states.reshape(bs, num_agents, self._recurrent_N, -1)
         if self._use_influence_policy:
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
         
-        dep_in = self.dep_fc(parents_actions * execution_mask.unsqueeze(-1))
+        if parents_actions is not None:
+            dep_in = self.dep_fc((parents_actions * execution_mask.unsqueeze(-1)).view(*parents_actions.shape[:-2], -1))
 
         action_logits = self.act(actor_features, available_actions)
         if dep_mode:
-            dep_final = torch.cat([actor_features, dep_in.view(*dep_in.shape[:-2], -1)], dim=-1)
+            dep_final = torch.cat([actor_features, dep_in], dim=-1)
             dep_logit = self.dep_act(dep_final, available_actions)
-            action_logits = action_logits.detach() + dep_logit
-            if available_actions is not None:
-                action_logits[available_actions == 0] = -1e10
+            if self.discrete == True:
+                x = action_logits.logits.detach() + dep_logit.logits
+                if available_actions is not None:
+                    x[available_actions == 0] = -1e10
+                action_logits = FixedCategorical(logits=x)
+            else:
+                action_mean = action_logits.mean.detach() + dep_logit.mean
+                action_std = torch.sqrt(action_logits.variance.detach() + dep_logit.variance)
+                action_logits = FixedNormal(action_mean, action_std)          
+            
         if deterministic:
             actions = action_logits.mode()
         else:
@@ -169,8 +186,10 @@ class R_Actor(nn.Module):
         rnn_states = check(rnn_states).to(**self.tpdv)
         action = check(action).to(**self.tpdv)
         masks = check(masks).to(**self.tpdv)
-        parents_actions = check(parents_actions).to(**self.tpdv)
-        execution_mask = check(execution_mask).to(**self.tpdv)
+        if parents_actions is not None:
+            parents_actions = check(parents_actions).to(**self.tpdv)
+        if execution_mask is not None:
+            execution_mask = check(execution_mask).to(**self.tpdv)
 
         if available_actions is not None:
             available_actions = check(available_actions).to(**self.tpdv)
@@ -190,15 +209,23 @@ class R_Actor(nn.Module):
             mlp_obs = self.mlp(obs)
             actor_features = torch.cat([actor_features, mlp_obs], dim=1)
         
-        dep_in = self.dep_fc(parents_actions * execution_mask.unsqueeze(-1))
+        if parents_actions is not None:
+            dep_in = self.dep_fc((parents_actions * execution_mask.unsqueeze(-1)).view(*parents_actions.shape[:-2], -1))
 
         action_logits = self.act(actor_features, available_actions)
         if dep_mode:
-            dep_final = torch.cat([actor_features, dep_in.view(*dep_in.shape[:-2], -1)], dim=-1)
+            dep_final = torch.cat([actor_features, dep_in], dim=-1)
             dep_logit = self.dep_act(dep_final, available_actions)
-            action_logits = action_logits.detach() + dep_logit
-            if available_actions is not None:
-                action_logits[available_actions == 0] = -1e10
+            if self.discrete == True:
+                x = action_logits.logits.detach() + dep_logit.logits
+                if available_actions is not None:
+                    x[available_actions == 0] = -1e10
+                action_logits = FixedCategorical(logits=x)
+            else:
+                action_mean = action_logits.mean.detach() + dep_logit.mean
+                action_std = torch.sqrt(action_logits.variance.detach() + dep_logit.variance)
+                action_logits = FixedNormal(action_mean, action_std)  
+                
         action_log_probs = action_logits.log_probs(action)
         dist_entropy = action_logits.entropy().mean()   
         # action_log_probs, dist_entropy = self.act.evaluate_actions(actor_features, action, available_actions, active_masks = active_masks if self._use_policy_active_masks else None)

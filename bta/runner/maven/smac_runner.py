@@ -59,7 +59,7 @@ class SMACRunner(Runner):
                 # insert data into buffer
                 self.insert(data)
 
-            train_infos = self.train()
+            train_infos = self.train(episode)
             
             # post process
             total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads
@@ -160,7 +160,8 @@ class SMACRunner(Runner):
         active_masks[dones_env == True] = np.ones(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
 
         bad_masks = np.array([[[0.0] if info[agent_id]['bad_transition'] else [1.0] for agent_id in range(self.num_agents)] for info in infos])
-        self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
+        if (dones_env == True).sum() > 0:
+            self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         if not self.use_centralized_V:
             share_obs = obs

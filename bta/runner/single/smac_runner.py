@@ -11,7 +11,7 @@ import imageio
 import warnings
 import functools
 from bta.utils.util import update_linear_schedule, is_acyclic, pruning, generate_mask_from_order
-from bta.runner.mappo.base_runner import Runner
+from bta.runner.single.base_runner import Runner
 from pathlib import Path
 from collections import defaultdict, deque
 from tqdm import tqdm
@@ -47,12 +47,12 @@ class SMACRunner(Runner):
 
             for step in range(self.episode_length):
                 # Sample actions
-                values, actions, action_log_probs, rnn_states, rnn_states_critic = self.collect(step)
-                    
+                values, actions, action_log_probs, single_rnn_states, single_rnn_states_critic, rnn_states = self.collect(step)
+    
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, available_actions = self.envs.step(actions)
                 data = obs, share_obs, rewards, dones, infos, available_actions, values, actions, action_log_probs, \
-                    rnn_states, rnn_states_critic
+                    rnn_states, single_rnn_states, single_rnn_states_critic
                 
                 # insert data into buffer
                 self.insert(data)
@@ -121,6 +121,8 @@ class SMACRunner(Runner):
         if not self.use_centralized_V:  
             share_obs = obs      
 
+        self.single_buffer.share_obs[0] = share_obs[:, 0].copy()
+        self.single_buffer.available_actions[0] = available_actions.copy()
         for agent_id in range(self.num_agents):
             self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
             self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
@@ -128,11 +130,22 @@ class SMACRunner(Runner):
 
     @torch.no_grad()
     def collect(self, step):
-        value_collector = []
-        action_collector = []
-        action_log_prob_collector = []
+
+        value, action, action_log_prob, rnn_state, rnn_state_critic \
+                = self.single_trainer.policy.get_actions(self.single_buffer.share_obs[step],
+                                                            self.single_buffer.share_obs[step],
+                                                            self.single_buffer.rnn_states[step],
+                                                            self.single_buffer.rnn_states_critic[step],
+                                                            self.single_buffer.masks[step],
+                                                            self.single_buffer.available_actions[step],
+                                                            )
+        values = _t2n(value)
+        actions = np.array(np.split(_t2n(action), self.num_agents, -1)).transpose(1, 0, 2)
+        action_log_probs = _t2n(action_log_prob)
+        single_rnn_states = _t2n(rnn_state)
+        single_rnn_states_critic = _t2n(rnn_state_critic)
+
         rnn_state_collector = []
-        rnn_state_critic_collector = []
         for agent_id in range(self.num_agents):
             self.trainer[agent_id].prep_rollout()
             value, action, action_log_prob, rnn_state, rnn_state_critic \
@@ -142,28 +155,21 @@ class SMACRunner(Runner):
                                                             self.buffer[agent_id].rnn_states_critic[step],
                                                             self.buffer[agent_id].masks[step],
                                                             self.buffer[agent_id].available_actions[step],)
-            value_collector.append(_t2n(value))
-            action_collector.append(_t2n(action))
-            action_log_prob_collector.append(_t2n(action_log_prob))
             rnn_state_collector.append(_t2n(rnn_state))
-            rnn_state_critic_collector.append(_t2n(rnn_state_critic))
         # [self.envs, agents, dim]
-        values = np.array(value_collector).transpose(1, 0, 2)
-        actions = np.array(action_collector).transpose(1, 0, 2)
-        action_log_probs = np.array(action_log_prob_collector).transpose(1, 0, 2)
         rnn_states = np.array(rnn_state_collector).transpose(1, 0, 2, 3)
-        rnn_states_critic = np.array(rnn_state_critic_collector).transpose(1, 0, 2, 3)
 
-        return values, actions, action_log_probs, rnn_states, rnn_states_critic
+        return values, actions, action_log_probs, single_rnn_states, single_rnn_states_critic, rnn_states
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, available_actions, values, actions, action_log_probs, \
-            rnn_states, rnn_states_critic = data
+            rnn_states, single_rnn_states, single_rnn_states_critic = data
         
         dones_env = np.all(dones, axis=-1)
 
         rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
-        rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
+        single_rnn_states[dones_env == True] = np.zeros(((dones_env == True).sum(), self.recurrent_N, self.hidden_size), dtype=np.float32)
+        single_rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.recurrent_N, self.hidden_size), dtype=np.float32)
 
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
@@ -174,17 +180,25 @@ class SMACRunner(Runner):
 
         bad_masks = np.array([[[0.0] if info[agent_id]['bad_transition'] else [1.0] for agent_id in range(self.num_agents)] for info in infos])
 
-        for agent_id in range(self.num_agents):
-            if not self.use_centralized_V:
+        if not self.use_centralized_V:
                 share_obs = obs
 
+        self.single_buffer.insert(share_obs[:, 0], single_rnn_states[:],
+                                         single_rnn_states_critic[:], actions[:],
+                                         action_log_probs[:],
+                                         values[:], rewards[:, 0], masks[:, 0], None,
+                                         active_masks[:, 0], 
+                                         available_actions=available_actions)
+        
+        for agent_id in range(self.num_agents):
+            
             self.buffer[agent_id].insert(share_obs[:, agent_id],
                                         obs[:, agent_id],
                                         rnn_states[:, agent_id],
-                                        rnn_states_critic[:, agent_id],
+                                        single_rnn_states_critic[:],
                                         actions[:, agent_id],
-                                        action_log_probs[:, agent_id],
-                                        values[:, agent_id],
+                                        action_log_probs[:],
+                                        values[:],
                                         rewards[:, agent_id],
                                         masks[:, agent_id],
                                         bad_masks=bad_masks[:, agent_id],

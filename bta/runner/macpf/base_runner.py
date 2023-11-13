@@ -66,7 +66,7 @@ class Runner(object):
                 os.makedirs(self.save_dir)
 
 
-        if self.algorithm_name == "maven":
+        if self.algorithm_name == "macpf":
             from bta.algorithms.macpf.macpf_trainer import MacpfTrainer as TrainAlgo
             from bta.algorithms.macpf.algorithm.macpf_policy import MacpfPolicy as Policy
         else:
@@ -77,6 +77,19 @@ class Runner(object):
         print("share_observation_space: ", self.envs.share_observation_space)
         print("observation_space: ", self.envs.observation_space)
         print("action_space: ", self.envs.action_space)
+
+        if self.envs.action_space[0].__class__.__name__ == "Discrete":
+            self.action_dim = self.envs.action_space[0].n
+            self.action_shape = 1
+        elif self.envs.action_space[0].__class__.__name__ == "Box":
+            self.action_dim = self.envs.action_space[0].shape[0]
+            self.action_shape = self.action_dim
+        else:
+            self.mix_actions = True
+            self.continous_dim = self.envs.action_space[0][0].shape[0]
+            self.discrete_dim = self.envs.action_space[0][1].n
+            self.action_dim = self.continous_dim + self.discrete_dim
+            self.action_shape = self.continous_dim + 1
 
         # policy network
         self.policy = Policy(self.all_args,

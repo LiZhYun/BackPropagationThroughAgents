@@ -3,14 +3,15 @@ import logging
 import random
 
 import gym
+from gym.spaces import Discrete, Box
 import numpy as np
 from PIL import ImageColor
 from gym import spaces
 from gym.utils import seeding
 
-from ..utils.action_space import MultiAgentActionSpace
-from ..utils.observation_space import MultiAgentObservationSpace
-from ..utils.draw import draw_grid, fill_cell, draw_circle, write_cell_text
+# from ..utils.action_space import MultiAgentActionSpace
+# from ..utils.observation_space import MultiAgentObservationSpace
+from .draw import draw_grid, fill_cell, draw_circle, write_cell_text
 
 logger = logging.getLogger(__name__)
 
@@ -38,10 +39,11 @@ class PredatorPrey(gym.Env):
     """
     metadata = {'render.modes': ['human', 'rgb_array']}
 
-    def __init__(self, grid_shape=(5, 5), n_agents=2, n_preys=1, prey_move_probs=(0.175, 0.175, 0.175, 0.175, 0.3),
-                 full_observable=False, penalty=-0.5, step_cost=-0.01, prey_capture_reward=5, max_steps=100):
+    def __init__(self, grid_shape=(5, 5), num_agents=2, n_preys=1, prey_move_probs=(0.175, 0.175, 0.175, 0.175, 0.3),
+                 full_observable=False, penalty=-0.5, step_cost=-0.01, prey_capture_reward=10, max_steps=128):
         self._grid_shape = grid_shape
-        self.n_agents = n_agents
+        self.n_agents = num_agents
+        self.n_actions = 5
         self.n_preys = n_preys
         self._max_steps = max_steps
         self._step_count = None
@@ -50,7 +52,16 @@ class PredatorPrey(gym.Env):
         self._prey_capture_reward = prey_capture_reward
         self._agent_view_mask = (5, 5)
 
-        self.action_space = MultiAgentActionSpace([spaces.Discrete(5) for _ in range(self.n_agents)])
+        self.action_space = []
+        self.observation_space = []
+        self.share_observation_space = []
+        
+        for i in range(self.n_agents):
+            self.action_space.append(Discrete(self.n_actions))
+            # self.observation_space.append([self.env.get_obs_size()])
+            # self.share_observation_space.append([self.env.get_state_size()])
+
+        # self.action_space = MultiAgentActionSpace([spaces.Discrete(5) for _ in range(self.n_agents)])
         self.agent_pos = {_: None for _ in range(self.n_agents)}
         self.prey_pos = {_: None for _ in range(self.n_preys)}
         self._prey_alive = None
@@ -69,7 +80,17 @@ class PredatorPrey(gym.Env):
         if self.full_observable:
             self._obs_high = np.tile(self._obs_high, self.n_agents)
             self._obs_low = np.tile(self._obs_low, self.n_agents)
-        self.observation_space = MultiAgentObservationSpace([spaces.Box(self._obs_low, self._obs_high) for _ in range(self.n_agents)])
+
+        self.observation_space = [
+            Box(low=self._obs_low, high=self._obs_high)
+            for _ in range(self.n_agents)
+        ]
+        self.share_observation_space = [
+            Box(low=np.array(list(self._obs_low) * self.n_agents), 
+                high=np.array(list(self._obs_high) * self.n_agents))
+            for _ in range(self.n_agents)
+        ]
+        # self.observation_space = MultiAgentObservationSpace([spaces.Box(self._obs_low, self._obs_high) for _ in range(self.n_agents)])
 
         self._total_episode_reward = None
 
@@ -247,7 +268,7 @@ class PredatorPrey(gym.Env):
 
     def step(self, agents_action):
         self._step_count += 1
-        rewards = [self._step_cost for _ in range(self.n_agents)]
+        rewards = [[self._step_cost] for _ in range(self.n_agents)]
 
         for agent_i, action in enumerate(agents_action):
             if not (self._agent_dones[agent_i]):
@@ -262,7 +283,7 @@ class PredatorPrey(gym.Env):
                     self._prey_alive[prey_i] = (predator_neighbour_count == 1)
 
                     for agent_i in range(self.n_agents):
-                        rewards[agent_i] += _reward
+                        rewards[agent_i][0] += _reward
 
                 prey_move = None
                 if self._prey_alive[prey_i]:
@@ -281,7 +302,7 @@ class PredatorPrey(gym.Env):
                 self._agent_dones[i] = True
 
         for i in range(self.n_agents):
-            self._total_episode_reward[i] += rewards[i]
+            self._total_episode_reward[i] += rewards[i][0]
 
         return self.get_agent_obs(), rewards, self._agent_dones, {'prey_alive': self._prey_alive}
 

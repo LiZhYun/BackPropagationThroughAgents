@@ -14,6 +14,8 @@ class ACTLayer(nn.Module):
         self.continuous_action = False
         self.mixed_action = False
         self.discrete_action = False
+        self.single_discrete_action = False
+        self.single_continuous_action = False
         self.use_attention_action = use_attention_action
         self.action_type = action_space.__class__.__name__
         if action_space.__class__.__name__ == "Discrete":
@@ -34,18 +36,20 @@ class ACTLayer(nn.Module):
             for action_dim in action_dims:
                 self.action_outs.append(Categorical(inputs_dim, action_dim, use_orthogonal, gain))
             self.action_outs = nn.ModuleList(self.action_outs)
-        elif action_space.__class__.__name__ == "List":
+        elif action_space.__class__.__name__ == "list":
             self.single_discrete_action = True
             self.action_outs = []
             action_dim = action_space[0].n
             for act_space in action_space:
                 self.action_outs.append(Categorical(inputs_dim, act_space.n, use_orthogonal, gain))
             self.action_outs = nn.ModuleList(self.action_outs)
-        elif action_space.__class__.__name__ == "Tuple":
+        elif action_space.__class__.__name__ == "tuple":
             self.single_continuous_action = True
             self.action_outs = []
+            action_dim = 0
             for act_space in action_space:
-                self.action_outs.append(DiagGaussian(inputs_dim, act_space..shape[0], use_orthogonal, gain))
+                action_dim += act_space.shape[0]
+                self.action_outs.append(DiagGaussian(inputs_dim, act_space.shape[0], use_orthogonal, gain))
             self.action_outs = nn.ModuleList(self.action_outs)
         else:  # discrete + continous
             self.mixed_action = True
@@ -115,7 +119,7 @@ class ACTLayer(nn.Module):
             action_log_probs = []
             dist_entropy = []
             for idx, action_out in enumerate(self.action_outs):
-                action_logit = action_out(x, available_actions[idx])
+                action_logit = action_out(x, available_actions[:, idx])
                 if rsample:
                     if deterministic:
                         action = action_logit.mode()
@@ -132,17 +136,17 @@ class ACTLayer(nn.Module):
                 else:
                     if deterministic:
                         action = action_logit.mode()
-                        action_log_prob = action_logit.log_probs(actions)
+                        action_log_prob = action_logit.log_probs(action)
                     else: 
                         action = action_logit.sample()
-                        action_log_prob = action_logit.log_probs(actions)
+                        action_log_prob = action_logit.log_probs(action)
                 # dist_entropy = action_logit.entropy()
                 actions.append(action.int())
                 action_log_probs.append(action_log_prob)
                 dist_entropy.append(action_logit.entropy().mean())
             actions = torch.cat(actions, -1)
             action_log_probs = torch.sum(torch.cat(action_log_probs, -1), -1, keepdim=True)
-            dist_entropy = dist_entropy[0].sum()
+            dist_entropy = sum(dist_entropy)/len(dist_entropy)
 
         elif self.single_continuous_action:
             actions = []
@@ -165,17 +169,17 @@ class ACTLayer(nn.Module):
                 else:
                     if deterministic:
                         action = action_logit.mode()
-                        # action_log_prob = action_logit.log_probs(actions)
+                        # action_log_prob = action_logit.log_probs(action)
                     else: 
                         action = action_logit.sample()
-                action_log_prob = action_logit.log_probs(actions)
+                action_log_prob = action_logit.log_probs(action)
                 # dist_entropy = action_logit.entropy()
-                actions.append(action.int())
+                actions.append(action)
                 action_log_probs.append(action_log_prob)
                 dist_entropy.append(action_logit.entropy().mean())
             actions = torch.cat(actions, -1)
             action_log_probs = torch.sum(torch.cat(action_log_probs, -1), -1, keepdim=True)
-            dist_entropy = dist_entropy[0].sum()
+            dist_entropy = sum(dist_entropy)/len(dist_entropy)
         
         elif self.continuous_action:
             action_logits = self.action_out(x)
@@ -300,6 +304,28 @@ class ACTLayer(nn.Module):
                     dist_entropy.append(action_logit.entropy().mean())
 
             action_log_probs = torch.cat(action_log_probs, -1) # ! could be wrong
+            dist_entropy = sum(dist_entropy)/len(dist_entropy)
+        
+        elif self.single_discrete_action:
+            action_log_probs = []
+            dist_entropy = []
+            for idx, action_out in enumerate(self.action_outs):
+                action_logit = action_out(x, available_actions[:, idx])
+                action_log_prob = action_logit.log_probs(action[:, idx])
+                action_log_probs.append(action_log_prob)
+                dist_entropy.append(action_logit.entropy().mean())
+            action_log_probs = torch.sum(torch.cat(action_log_probs, -1), -1, keepdim=True)
+            dist_entropy = sum(dist_entropy)/len(dist_entropy)
+
+        elif self.single_continuous_action:
+            action_log_probs = []
+            dist_entropy = []
+            for idx, action_out in enumerate(self.action_outs):
+                action_logit = action_out(x)
+                action_log_prob = action_logit.log_probs(action[:, idx])
+                action_log_probs.append(action_log_prob)
+                dist_entropy.append(action_logit.entropy().mean())
+            action_log_probs = torch.sum(torch.cat(action_log_probs, -1), -1, keepdim=True)
             dist_entropy = sum(dist_entropy)/len(dist_entropy)
 
         elif self.continuous_action:

@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from bta.algorithms.r_mappo.algorithm.r_actor_critic import R_Actor, R_Critic
+from bta.algorithms.r_mappo_full.algorithm.r_actor_critic import R_Actor, R_Critic
 from bta.utils.util import update_linear_schedule
 
 

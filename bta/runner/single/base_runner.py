@@ -8,6 +8,7 @@ import torch
 from tensorboardX import SummaryWriter
 
 from bta.utils.separated_buffer_mappo import SeparatedReplayBuffer
+from bta.utils.separated_buffer_single import SeparatedReplayBuffer as S_SeparatedReplayBuffer
 from bta.utils.util import update_linear_schedule
 
 def _t2n(x):
@@ -67,10 +68,9 @@ class Runner(object):
                     os.makedirs(self.save_dir)
 
 
-        from bta.algorithms.r_mappo.r_mappo import R_MAPPO as TrainAlgo
-        from bta.algorithms.r_mappo.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
-        from bta.algorithms.r_mappo.algorithm.rMAPPOPolicy import R_PPOPolicy as S_Policy
-
+        from bta.algorithms.single.r_mappo import R_MAPPO as TrainAlgo
+        from bta.algorithms.single.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
+        from bta.algorithms.single.algorithm.rPPOPolicy import R_PPOPolicy as S_Policy
 
         self.policy = []
         for agent_id in range(self.num_agents):
@@ -82,6 +82,7 @@ class Runner(object):
                         self.envs.action_space[agent_id],
                         device = self.device)
             self.policy.append(po)
+        
         self.single_policy = S_Policy(self.all_args,
                         self.envs.observation_space,
                         share_observation_space,
@@ -104,7 +105,7 @@ class Runner(object):
                                        self.envs.action_space[agent_id])
             self.buffer.append(bu)
             self.trainer.append(tr)
-        self.single_buffer = SeparatedReplayBuffer(self.all_args,
+        self.single_buffer = S_SeparatedReplayBuffer(self.all_args,
                                        self.envs.observation_space[0],
                                        share_observation_space,
                                        self.envs.action_space)
@@ -124,18 +125,25 @@ class Runner(object):
     
     @torch.no_grad()
     def compute(self):
-        for agent_id in range(self.num_agents):
-            self.trainer[agent_id].prep_rollout()
-            next_value = self.trainer[agent_id].policy.get_values(self.buffer[agent_id].share_obs[-1], 
-                                                                self.buffer[agent_id].rnn_states_critic[-1],
-                                                                self.buffer[agent_id].masks[-1])
-            next_value = _t2n(next_value)
-            self.buffer[agent_id].compute_returns(next_value, self.trainer[agent_id].value_normalizer)
+        self.single_trainer.prep_rollout()
+        next_value = self.single_trainer.policy.get_values(self.single_buffer.share_obs[-1], 
+                                                                self.single_buffer.rnn_states_critic[-1],
+                                                                self.single_buffer.masks[-1])
+        next_value = _t2n(next_value)
+        self.single_buffer.compute_returns(next_value, self.single_trainer.value_normalizer)
+        # for agent_id in range(self.num_agents):
+        #     self.trainer[agent_id].prep_rollout()
+        #     next_value = self.trainer[agent_id].policy.get_values(self.single_buffer.share_obs[-1], 
+        #                                                         self.single_buffer.rnn_states_critic[-1],
+        #                                                         self.single_buffer.masks[-1])
+        #     next_value = _t2n(next_value)
+        #     self.single_buffer.compute_returns(next_value, self.trainer[agent_id].value_normalizer)
 
     def train(self):
         train_infos = []
         self.single_trainer.prep_training()
         self.single_trainer.train(self.single_buffer)
+        self.single_buffer.after_update()
         for agent_id in range(self.num_agents):
             self.trainer[agent_id].prep_training()
             train_info = self.trainer[agent_id].imitate(self.buffer[agent_id])

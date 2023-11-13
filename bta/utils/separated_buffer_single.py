@@ -44,18 +44,18 @@ class SeparatedReplayBuffer(object):
         self.num_agents = args.num_agents
         if act_space.__class__.__name__ == 'Discrete':
             self.available_actions = np.ones((self.episode_length + 1, self.n_rollout_threads, act_space.n), dtype=np.float32)
-        # elif act_space.__class__.__name__ == 'List':
-        #     self.available_actions = np.ones((self.episode_length + 1, self.n_rollout_threads, self.num_agents, act_space.n), dtype=np.float32)
+        elif act_space.__class__.__name__ == 'list':
+            self.available_actions = np.ones((self.episode_length + 1, self.n_rollout_threads, self.num_agents, act_space[0].n), dtype=np.float32)
         else:
             self.available_actions = None
 
-        # if act_space.__class__.__name__ in ['List', 'Tuple']:
-        #     act_shape = get_shape_from_act_space(act_space[0])
-        #     self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, act_shape), dtype=np.float32)
-        #     self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, act_shape), dtype=np.float32)
-        # else:
-        act_shape = get_shape_from_act_space(act_space)
-        self.actions = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
+        if act_space.__class__.__name__ in ['list', 'tuple']:
+            act_shape = get_shape_from_act_space(act_space[0])
+            self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, act_shape), dtype=np.float32)
+            # self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, act_shape), dtype=np.float32)
+        else:
+            act_shape = get_shape_from_act_space(act_space)
+            self.actions = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
         self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         
@@ -65,10 +65,10 @@ class SeparatedReplayBuffer(object):
 
         self.step = 0
 
-    def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions, action_log_probs,
+    def insert(self, share_obs, rnn_states, rnn_states_critic, actions, action_log_probs,
                value_preds, rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
         self.share_obs[self.step + 1] = share_obs.copy()
-        self.obs[self.step + 1] = obs.copy()
+        # self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
         self.rnn_states_critic[self.step + 1] = rnn_states_critic.copy()
         self.actions[self.step] = actions.copy()

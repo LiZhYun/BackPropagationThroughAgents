@@ -237,8 +237,18 @@ def main(args):
         from bta.runner.temporal.smac_runner import SMACRunner as Runner
     elif "mat" in all_args.algorithm_name:
         from bta.runner.mat.smac_runner import SMACRunner as Runner
-    else: # mappo
+    elif "maven" in all_args.algorithm_name:
+        from bta.runner.maven.smac_runner import SMACRunner as Runner
+    elif "macpf" in all_args.algorithm_name:
+        from bta.runner.macpf.smac_runner import SMACRunner as Runner
+    elif "mappo" in all_args.algorithm_name:
         from bta.runner.mappo.smac_runner import SMACRunner as Runner
+    elif "full" in all_args.algorithm_name:
+        from bta.runner.mappo_full.smac_runner import SMACRunner as Runner
+    elif "single" in all_args.algorithm_name:
+        from bta.runner.single.smac_runner import SMACRunner as Runner
+    else:
+        raise NotImplementedError
 
     runner = Runner(config)
     runner.run()

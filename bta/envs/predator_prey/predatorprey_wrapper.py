@@ -5,13 +5,14 @@ current_file_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_file_path + '/../../')
 
 
-from envs.ma_gym.envs.predator_prey import PredatorPrey
+from .predator_prey import PredatorPrey
 import gym
+from gym.spaces import Discrete
 import torch
 import numpy as np
 from PIL import Image, ImageDraw, ImageColor
 
-from .utils import standard_eval
+# from .utils import standard_eval
 
 PRE_IDS = {
     'agent': 'A',
@@ -22,66 +23,51 @@ PRE_IDS = {
 
 class PredatorPreyWrapper(PredatorPrey):
 
-    def __init__(self, centralized, other_agent_visible=False, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._agent_visible = other_agent_visible
-        self.action_space = self.action_space[0]
-        if self._agent_visible:
-            mask_size = np.prod(self._agent_view_mask)
-            self._obs_low = np.array([0., 0.] + [0.] * mask_size * 2 + [0.0])
-            self._obs_high = np.array([1., 1.] + [1.] * mask_size * 2 + [1.0])
-            self.observation_space = gym.spaces.Box(self._obs_low, self._obs_high)
-        else:
-            self.observation_space = self.observation_space[0]
-        self.centralized = centralized
-        if centralized:
-            self.observation_space = gym.spaces.Box(
-                low=np.array(list(self.observation_space.low) * self.n_agents),
-                high=np.array(list(self.observation_space.high) * self.n_agents)
-            )
+    def __init__(self, **args):
+        super().__init__(**args)
+        # self._agent_visible = other_agent_visible
+        # self.action_space = self.action_space[0]
+        # if self._agent_visible:
+        #     mask_size = np.prod(self._agent_view_mask)
+        #     self._obs_low = np.array([0., 0.] + [0.] * mask_size * 2 + [0.0])
+        #     self._obs_high = np.array([1., 1.] + [1.] * mask_size * 2 + [1.0])
+        #     self.observation_space = gym.spaces.Box(self._obs_low, self._obs_high)
+        # else:
+            # self.observation_space = self.observation_space[0]
         self.pickleable = True
 
     def get_avail_actions(self):
-        avail_actions = [[1] * self.action_space.n for _ in range(self.n_agents)]
-        if not self.centralized:
-            return avail_actions
-        else:
-            return np.concatenate(avail_actions)
-
+        avail_actions = [[1] * self.action_space[0].n for _ in range(self.n_agents)]
+        return avail_actions
+        
     def get_agent_obs(self):
         obs = super().get_agent_obs()
-        if self._agent_visible:
-            for i_agent in range(self.n_agents):
-                pos = self.agent_pos[i_agent]
-                # check if other agents are in the view area
-                _agent_pos = np.zeros(self._agent_view_mask)
-                for row in range(max(0, pos[0] - 2), min(pos[0] + 2 + 1, self._grid_shape[0])):
-                    for col in range(max(0, pos[1] - 2), min(pos[1] + 2 + 1, self._grid_shape[1])):
-                        if PRE_IDS['agent'] in self._full_obs[row][col]:
-                            # get relative position for the prey loc:
-                            _agent_pos[row - (pos[0] - 2), col - (pos[1] - 2)] = 1
+        # if self._agent_visible:
+        #     for i_agent in range(self.n_agents):
+        #         pos = self.agent_pos[i_agent]
+        #         # check if other agents are in the view area
+        #         _agent_pos = np.zeros(self._agent_view_mask)
+        #         for row in range(max(0, pos[0] - 2), min(pos[0] + 2 + 1, self._grid_shape[0])):
+        #             for col in range(max(0, pos[1] - 2), min(pos[1] + 2 + 1, self._grid_shape[1])):
+        #                 if PRE_IDS['agent'] in self._full_obs[row][col]:
+        #                     # get relative position for the prey loc:
+        #                     _agent_pos[row - (pos[0] - 2), col - (pos[1] - 2)] = 1
 
-                obs[i_agent].extend(_agent_pos.flatten().tolist())
+        #         obs[i_agent].extend(_agent_pos.flatten().tolist())
         return obs
 
     def step(self, actions):
         obses, rewards, dones, infos = super().step(actions)
-        if not self.centralized:
-            return obses, rewards, dones, infos
-        else:
-            return np.concatenate(obses), np.mean(rewards), np.all(dones), infos
+        return obses, [np.concatenate(obses) for _ in range(self.n_agents)], rewards, dones, infos, self.get_avail_actions()
 
     def reset(self):
         obses = super().reset()
-        if not self.centralized:
-            return obses
-        else:
-            return np.concatenate(obses)
+        return obses, [np.concatenate(obses) for _ in range(self.n_agents)], self.get_avail_actions()
 
-    def eval(self, policy, n_episodes=20, greedy=True, load_from_file=False, 
-             render=False):
-        standard_eval(self, policy, n_episodes=n_episodes, greedy=greedy, 
-            load_from_file=load_from_file, render=render)
+    # def eval(self, policy, n_episodes=20, greedy=True, load_from_file=False, 
+    #          render=False):
+    #     standard_eval(self, policy, n_episodes=n_episodes, greedy=greedy, 
+    #         load_from_file=load_from_file, render=render)
 
     def my_render(self, attention_weights=None, cell_size=35):
         if attention_weights is not None:
@@ -184,6 +170,6 @@ def draw_circle(image, pos, cell_size=50, fill='white', outline='black',
 
 
 if __name__ == '__main__':
-    env = PredatorPreyWrapper(centralized=True)
+    env = PredatorPreyWrapper()
     print(env.action_space)
     print(env.observation_space)

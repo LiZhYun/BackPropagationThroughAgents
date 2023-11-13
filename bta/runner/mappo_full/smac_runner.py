@@ -11,7 +11,7 @@ import imageio
 import warnings
 import functools
 from bta.utils.util import update_linear_schedule, is_acyclic, pruning, generate_mask_from_order
-from bta.runner.mappo.base_runner import Runner
+from bta.runner.mappo_full.base_runner import Runner
 from pathlib import Path
 from collections import defaultdict, deque
 from tqdm import tqdm
@@ -137,7 +137,7 @@ class SMACRunner(Runner):
             self.trainer[agent_id].prep_rollout()
             value, action, action_log_prob, rnn_state, rnn_state_critic \
                 = self.trainer[agent_id].policy.get_actions(self.buffer[agent_id].share_obs[step],
-                                                            self.buffer[agent_id].obs[step],
+                                                            self.buffer[agent_id].share_obs[step],
                                                             self.buffer[agent_id].rnn_states[step],
                                                             self.buffer[agent_id].rnn_states_critic[step],
                                                             self.buffer[agent_id].masks[step],
@@ -209,7 +209,7 @@ class SMACRunner(Runner):
             eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
             for agent_id in range(self.num_agents):
                 self.trainer[agent_id].prep_rollout()
-                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(eval_obs[:, agent_id],
+                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(eval_share_obs[:, agent_id],
                                                                                 eval_rnn_states[:, agent_id],
                                                                                 eval_masks[:, agent_id],
                                                                                 available_actions=eval_available_actions[:, agent_id],

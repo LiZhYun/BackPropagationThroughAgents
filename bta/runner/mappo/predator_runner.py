@@ -6,19 +6,19 @@ import numpy as np
 from functools import reduce
 import torch
 import wandb
-import imageio
-from bta.runner.macpf.base_runner import Runner
+from bta.runner.mappo.base_runner import Runner
+from bta.utils.util import update_linear_schedule
 
 
 def _t2n(x):
     return x.detach().cpu().numpy()
 
 
-class MatrixRunner(Runner):
+class PredatorRunner(Runner):
     """Runner class to perform training, evaluation. and data collection for SMAC. See parent class for details."""
 
     def __init__(self, config):
-        super(MatrixRunner, self).__init__(config)
+        super(PredatorRunner, self).__init__(config)
         self.env_infos = defaultdict(list)
 
     def run(self):
@@ -30,21 +30,23 @@ class MatrixRunner(Runner):
 
         for episode in range(episodes):
             if self.use_linear_lr_decay:
-                self.trainer.policy.lr_decay(episode, episodes)
-            # self.trainer.policy.epsilon_decay(episode, episodes)
+                for agent_id in range(self.num_agents):
+                    self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states, rnn_states_critic, actions_env = self.collect(
+                values, actions, action_log_probs, rnn_states, rnn_states_critic, actions_env = self.collect(
                     step)
                 # Obser reward and next obs
-                obs, rewards, dones, infos = self.envs.step(actions_env)
-                data = obs, rewards, dones, infos, \
-                    actions,\
+                obs, share_obs, rewards, dones, infos, _ = self.envs.step(actions_env)
+                data = obs, share_obs, rewards, dones, infos, \
+                    values, actions, action_log_probs, \
                     rnn_states, rnn_states_critic
                 # insert data into buffer
                 self.insert(data)
-            train_infos = self.train(episode)
+            # compute return and update network
+            self.compute()
+            train_infos = self.train()
 
             # post process
             total_num_steps = (episode + 1) * \
@@ -64,11 +66,17 @@ class MatrixRunner(Runner):
                               total_num_steps,
                               self.num_env_steps,
                               int(total_num_steps / (end - start))))
-                train_infos["average_episode_rewards_by_eplength"] = np.mean(self.buffer.rewards) * self.episode_length
-                print("average episode rewards is {}".format(train_infos["average_episode_rewards_by_eplength"]))
+                for agent_id in range(self.num_agents):
+                    train_infos[agent_id].update({"average_episode_rewards_by_eplength": np.mean(self.buffer[agent_id].rewards) * self.episode_length})
+                print("average episode rewards of agent 0 is {}".format(train_infos[0]["average_episode_rewards_by_eplength"]))
                 self.log_train(train_infos, total_num_steps)
                 self.log_env(self.env_infos, total_num_steps=total_num_steps)
                 self.env_infos = defaultdict(list)
+                if self.use_wandb:
+                    wandb.log({"average_episode_rewards_by_eplength": train_infos[0]["average_episode_rewards_by_eplength"]}, step=total_num_steps)
+                else:
+                    self.writter.add_scalars("average_episode_rewards_by_eplength", {"aver_rewards": train_infos[0]["average_episode_rewards_by_eplength"]},
+                                            total_num_steps)
 
             # eval
             if total_num_steps % self.eval_interval == 0 and self.use_eval:
@@ -76,55 +84,52 @@ class MatrixRunner(Runner):
 
     def warmup(self):
         # reset env
-        obs = self.envs.reset()
+        obs, share_obs, _ = self.envs.reset()
         # replay buffer
         # in GRF, we have full observation, so mappo is just ippo
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
-        # self.noise = _t2n(self.policy.noise_distrib.sample((self.n_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
-
-        self.buffer.share_obs[0] = share_obs.copy()
-        self.buffer.obs[0] = obs.copy()
-        # self.buffer.noise[:] = self.noise.copy()
-
+        for agent_id in range(self.num_agents):
+            self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
+            self.buffer[agent_id].obs[0] = obs[:, agent_id].copy()
+    
     @torch.no_grad()
     def collect(self, step):
-        self.trainer.prep_rollout()
-
-        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape),dtype=np.int32)
-        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
-        rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
-        rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
-
-        for agent_idx in range(self.num_agents):
-            ego_exclusive_action = actions[:,0:self.num_agents]
-            tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
-                                                [torch.zeros(self.n_rollout_threads)] *
-                                                (self.num_agents - agent_idx), -1).to(self.device)
-            action, rnn_state, rnn_state_critic \
-                = self.trainer.policy.get_actions(
-                                                self.buffer.obs[step, :, agent_idx],
-                                                self.buffer.rnn_states[step, :, agent_idx],
-                                                self.buffer.rnn_states_critic[step, :, agent_idx],
-                                                self.buffer.masks[step, :, agent_idx],
-                                                ego_exclusive_action,
-                                                tmp_execution_mask,
-                                                dep_mode=True,
-                                                # tau=self.temperature
-                                                )
-            actions[:, agent_idx] = _t2n(action)
-            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
-            rnn_states[:, agent_idx] = _t2n(rnn_state)
-            rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
-
+        value_collector = []
+        action_collector = []
+        action_log_prob_collector = []
+        rnn_state_collector = []
+        rnn_state_critic_collector = []
+        for agent_id in range(self.num_agents):
+            self.trainer[agent_id].prep_rollout()
+            value, action, action_log_prob, rnn_state, rnn_state_critic \
+                = self.trainer[agent_id].policy.get_actions(self.buffer[agent_id].share_obs[step],
+                                                            self.buffer[agent_id].obs[step],
+                                                            self.buffer[agent_id].rnn_states[step],
+                                                            self.buffer[agent_id].rnn_states_critic[step],
+                                                            self.buffer[agent_id].masks[step])
+            value_collector.append(_t2n(value))
+            action_collector.append(_t2n(action))
+            action_log_prob_collector.append(_t2n(action_log_prob))
+            rnn_state_collector.append(_t2n(rnn_state))
+            rnn_state_critic_collector.append(_t2n(rnn_state_critic))
+        # [self.envs, agents, dim]
+        values = np.array(value_collector).transpose(1, 0, 2)
+        actions = np.array(action_collector).transpose(1, 0, 2)
+        action_log_probs = np.array(
+            action_log_prob_collector).transpose(1, 0, 2)
+        rnn_states = np.array(rnn_state_collector).transpose(1, 0, 2, 3)
+        rnn_states_critic = np.array(
+            rnn_state_critic_collector).transpose(1, 0, 2, 3)
         actions_env = [actions[idx, :, 0]
                        for idx in range(self.n_rollout_threads)]
 
-        return actions, rnn_states, rnn_states_critic, actions_env
+        return values, actions, action_log_probs, rnn_states, rnn_states_critic, actions_env
 
     def insert(self, data):
-        obs, rewards, dones, infos, \
-            actions, rnn_states, rnn_states_critic = data
+        obs, share_obs, rewards, dones, infos, \
+            values, actions, action_log_probs, rnn_states, rnn_states_critic = data
 
         dones_env = np.all(dones, axis=-1)
         
@@ -132,49 +137,54 @@ class MatrixRunner(Runner):
         rnn_states_critic[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
-        # self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
-        self.buffer.insert(
-            share_obs=share_obs,
-            obs=obs,
-            rnn_states=rnn_states,
-            rnn_states_critic=rnn_states_critic,
-            actions=actions,
-            rewards=rewards,
-            masks=masks,      
-            )
+        for agent_id in range(self.num_agents):
+            self.buffer[agent_id].insert(share_obs=share_obs[:, agent_id], 
+                                         obs=obs[:, agent_id], 
+                                         rnn_states=rnn_states[:, agent_id],
+                                         rnn_states_critic=rnn_states_critic[:,agent_id], 
+                                         actions=actions[:, agent_id],
+                                         action_log_probs=action_log_probs[:, agent_id],
+                                         value_preds=values[:, agent_id], 
+                                         rewards=rewards[:,agent_id], 
+                                         masks=masks[:, agent_id])
 
     @torch.no_grad()
     def eval(self, total_num_steps):
         # reset envs and init rnn and mask
         eval_episode_rewards = []
-        eval_obs = self.eval_envs.reset()
+        eval_obs, eval_share_obs, _ = self.eval_envs.reset()
 
         eval_rnn_states = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
-        # noise = _t2n(self.policy.noise_distrib.sample((self.n_eval_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
         for eval_step in range(self.episode_length):
             eval_actions = np.zeros((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.int32)
-            self.trainer.prep_rollout()
-            eval_actions, eval_rnn_states = self.trainer.policy.act(
-                np.concatenate(eval_obs),
-                np.concatenate(eval_rnn_states),
-                np.concatenate(eval_masks),
-                None,
-                None,
-                False,
-                deterministic=True,
-            )
-            eval_actions = np.array(np.split(_t2n(eval_actions), self.n_eval_rollout_threads))
-            eval_rnn_states = np.array(np.split(_t2n(eval_rnn_states), self.n_eval_rollout_threads))
+            for agent_id in range(self.num_agents):
+                self.trainer[agent_id].prep_rollout()
+                eval_action, eval_rnn_state = self.trainer[agent_id].policy.act(np.array(list(eval_obs[:, agent_id])),
+                                                                                eval_rnn_states[:, agent_id],
+                                                                                eval_masks[:, agent_id],
+                                                                                deterministic=True)
 
-            eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)]
+                eval_action = eval_action.detach().cpu().numpy()
+                # rearrange action
+                eval_actions[:, agent_id] = eval_action
+                eval_rnn_states[:, agent_id] = _t2n(eval_rnn_state)
+            eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)] 
+            # # [envs, agents, dim]
+            # eval_actions_env = []
+            # for i in range(self.n_eval_rollout_threads):
+            #     eval_one_hot_action_env = []
+            #     for eval_temp_action_env in eval_temp_actions_env:
+            #         eval_one_hot_action_env.append(eval_temp_action_env[i])
+            #     eval_actions_env.append(eval_one_hot_action_env)
 
             # Obser reward and next obs
-            eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(eval_actions_env)
+            eval_obs, eval_share_obs, eval_rewards, eval_dones, eval_infos, _ = self.eval_envs.step(eval_actions_env)
             eval_episode_rewards.append(eval_rewards)
 
             eval_rnn_states[eval_dones == True] = np.zeros(((eval_dones == True).sum(), self.recurrent_N, self.hidden_size), dtype=np.float32)
@@ -183,14 +193,20 @@ class MatrixRunner(Runner):
 
         eval_episode_rewards = np.array(eval_episode_rewards)
         
-        eval_train_infos = defaultdict(float)
-        eval_train_infos['eval_average_episode_rewards'] = 0
-        eval_average_episode_rewards = np.mean(np.sum(eval_episode_rewards[:, :, 0], axis=0))
-        eval_average_episode_rewards=eval_average_episode_rewards/self.episode_length*self.envs.observation_space[0].high[0]
-        eval_train_infos['eval_average_episode_rewards'] = eval_average_episode_rewards
-        print("eval average episode rewards: " + str(eval_average_episode_rewards))
+        eval_train_infos = []
+        for agent_id in range(self.num_agents):
+            eval_average_episode_rewards = np.mean(np.sum(eval_episode_rewards[:, :, agent_id], axis=0))
+            eval_average_episode_rewards=eval_average_episode_rewards/self.episode_length*self.envs.observation_space[0].high[0]
+            eval_train_infos.append({'eval_average_episode_rewards': eval_average_episode_rewards})
+            print("eval average episode rewards of agent%i: " % agent_id + str(eval_average_episode_rewards))
 
         self.log_train(eval_train_infos, total_num_steps)  
+
+        if self.use_wandb:
+            wandb.log({"eval_average_episode_rewards": eval_average_episode_rewards}, step=total_num_steps)
+        else:
+            self.writter.add_scalars("eval_average_episode_rewards", {"aver_rewards": eval_average_episode_rewards},
+                                    total_num_steps)
 
     @torch.no_grad()
     def render(self):

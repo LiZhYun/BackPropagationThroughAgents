@@ -14,11 +14,11 @@ def _t2n(x):
     return x.detach().cpu().numpy()
 
 
-class MatrixRunner(Runner):
+class PredatorRunner(Runner):
     """Runner class to perform training, evaluation. and data collection for SMAC. See parent class for details."""
 
     def __init__(self, config):
-        super(MatrixRunner, self).__init__(config)
+        super(PredatorRunner, self).__init__(config)
         self.env_infos = defaultdict(list)
 
     def run(self):
@@ -38,8 +38,8 @@ class MatrixRunner(Runner):
                 actions, rnn_states, rnn_states_critic, actions_env = self.collect(
                     step)
                 # Obser reward and next obs
-                obs, rewards, dones, infos = self.envs.step(actions_env)
-                data = obs, rewards, dones, infos, \
+                obs, share_obs, rewards, dones, infos, _ = self.envs.step(actions_env)
+                data = obs, share_obs, rewards, dones, infos, \
                     actions,\
                     rnn_states, rnn_states_critic
                 # insert data into buffer
@@ -76,10 +76,11 @@ class MatrixRunner(Runner):
 
     def warmup(self):
         # reset env
-        obs = self.envs.reset()
+        obs, share_obs, _ = self.envs.reset()
         # replay buffer
         # in GRF, we have full observation, so mappo is just ippo
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
         # self.noise = _t2n(self.policy.noise_distrib.sample((self.n_rollout_threads,)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
@@ -91,7 +92,7 @@ class MatrixRunner(Runner):
     def collect(self, step):
         self.trainer.prep_rollout()
 
-        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape),dtype=np.int32)
+        actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
@@ -123,7 +124,7 @@ class MatrixRunner(Runner):
         return actions, rnn_states, rnn_states_critic, actions_env
 
     def insert(self, data):
-        obs, rewards, dones, infos, \
+        obs, share_obs, rewards, dones, infos, \
             actions, rnn_states, rnn_states_critic = data
 
         dones_env = np.all(dones, axis=-1)
@@ -134,7 +135,8 @@ class MatrixRunner(Runner):
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
         # self.noise[dones_env == True] = _t2n(self.policy.noise_distrib.sample(((dones_env == True).sum(),)).unsqueeze(-2).repeat(1, self.num_agents, 1))
 
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
         self.buffer.insert(
             share_obs=share_obs,
@@ -150,7 +152,7 @@ class MatrixRunner(Runner):
     def eval(self, total_num_steps):
         # reset envs and init rnn and mask
         eval_episode_rewards = []
-        eval_obs = self.eval_envs.reset()
+        eval_obs, eval_share_obs, _ = self.eval_envs.reset()
 
         eval_rnn_states = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
@@ -174,7 +176,7 @@ class MatrixRunner(Runner):
             eval_actions_env = [eval_actions[idx, :, 0] for idx in range(self.n_eval_rollout_threads)]
 
             # Obser reward and next obs
-            eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(eval_actions_env)
+            eval_obs, eval_share_obs, eval_rewards, eval_dones, eval_infos, _ = self.eval_envs.step(eval_actions_env)
             eval_episode_rewards.append(eval_rewards)
 
             eval_rnn_states[eval_dones == True] = np.zeros(((eval_dones == True).sum(), self.recurrent_N, self.hidden_size), dtype=np.float32)

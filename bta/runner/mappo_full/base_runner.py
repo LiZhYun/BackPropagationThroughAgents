@@ -67,8 +67,8 @@ class Runner(object):
                     os.makedirs(self.save_dir)
 
 
-        from bta.algorithms.r_mappo.r_mappo import R_MAPPO as TrainAlgo
-        from bta.algorithms.r_mappo.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
+        from bta.algorithms.r_mappo_full.r_mappo import R_MAPPO as TrainAlgo
+        from bta.algorithms.r_mappo_full.algorithm.rMAPPOPolicy import R_MAPPOPolicy as Policy
 
 
         self.policy = []

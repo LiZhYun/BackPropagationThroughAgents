@@ -21,11 +21,11 @@ def _t2n(x):
     else:
         return x.detach().cpu().numpy()
 
-class MatrixRunner(Runner):
+class PredatorRunner(Runner):
     """Runner class to perform training, evaluation. and data collection for SMAC. See parent class for details."""
 
     def __init__(self, config):
-        super(MatrixRunner, self).__init__(config)
+        super(PredatorRunner, self).__init__(config)
         self.env_infos = defaultdict(list)
 
     def run(self):
@@ -63,8 +63,8 @@ class MatrixRunner(Runner):
                     
                 # Obser reward and next obs
                 env_actions = joint_actions if self.use_action_attention else hard_actions
-                obs, rewards, dones, infos = self.envs.step(np.squeeze(env_actions, axis=-1))
-                share_obs = obs.copy()
+                obs, share_obs, rewards, dones, infos, _ = self.envs.step(np.squeeze(env_actions, axis=-1))
+                # share_obs = obs.copy()
                 data = obs, share_obs, rewards, dones, infos, values, actions, hard_actions, action_log_probs, \
                     rnn_states, rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds, bias, logits
                 # insert data into buffer
@@ -116,10 +116,11 @@ class MatrixRunner(Runner):
 
     def warmup(self):
         # reset env
-        obs = self.envs.reset()
+        obs, share_obs, _ = self.envs.reset()
         # replay buffer
         # in GRF, we have full observation, so mappo is just ippo
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
         for agent_id in range(self.num_agents):
             self.buffer[agent_id].share_obs[0] = share_obs[:, agent_id].copy()
@@ -261,7 +262,8 @@ class MatrixRunner(Runner):
         masks = np.ones((self.n_rollout_threads, self.num_agents, 1), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents, 1), dtype=np.float32)
 
-        share_obs = obs
+        if not self.use_centralized_V:
+            share_obs = obs
 
         for agent_id in range(self.num_agents):
             self.buffer[agent_id].insert(share_obs[:, agent_id],
@@ -286,7 +288,7 @@ class MatrixRunner(Runner):
     def eval(self, total_num_steps):
         # reset envs and init rnn and mask
         eval_episode_rewards = []
-        eval_obs = self.eval_envs.reset()
+        eval_obs, eval_share_obs, _ = self.eval_envs.reset()
 
         eval_rnn_states = np.zeros((self.n_eval_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size), dtype=np.float32)
         eval_masks = np.ones((self.n_eval_rollout_threads, self.num_agents, 1), dtype=np.float32)
@@ -295,7 +297,7 @@ class MatrixRunner(Runner):
             _, hard_actions, eval_rnn_states = self.collect_eval(eval_step, eval_obs, eval_rnn_states, eval_masks)
             eval_actions = hard_actions
             # Obser reward and next obs
-            eval_obs, eval_rewards, eval_dones, eval_infos = self.eval_envs.step(np.squeeze(eval_actions, axis=-1))
+            eval_obs, eval_share_obs, eval_rewards, eval_dones, eval_infos, _ = self.eval_envs.step(np.squeeze(eval_actions, axis=-1))
             eval_episode_rewards.append(eval_rewards)
 
             eval_rnn_states[eval_dones == True] = np.zeros(((eval_dones == True).sum(), self.recurrent_N, self.hidden_size), dtype=np.float32)
