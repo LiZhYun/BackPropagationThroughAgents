@@ -34,6 +34,19 @@ class ACTLayer(nn.Module):
             for action_dim in action_dims:
                 self.action_outs.append(Categorical(inputs_dim, action_dim, use_orthogonal, gain))
             self.action_outs = nn.ModuleList(self.action_outs)
+        elif action_space.__class__.__name__ == "List":
+            self.single_discrete_action = True
+            self.action_outs = []
+            action_dim = action_space[0].n
+            for act_space in action_space:
+                self.action_outs.append(Categorical(inputs_dim, act_space.n, use_orthogonal, gain))
+            self.action_outs = nn.ModuleList(self.action_outs)
+        elif action_space.__class__.__name__ == "Tuple":
+            self.single_continuous_action = True
+            self.action_outs = []
+            for act_space in action_space:
+                self.action_outs.append(DiagGaussian(inputs_dim, act_space..shape[0], use_orthogonal, gain))
+            self.action_outs = nn.ModuleList(self.action_outs)
         else:  # discrete + continous
             self.mixed_action = True
             continous_dim = action_space[0].shape[0]
@@ -96,6 +109,73 @@ class ACTLayer(nn.Module):
 
             actions = torch.cat(actions, -1)
             action_log_probs = torch.cat(action_log_probs, -1)
+        
+        elif self.single_discrete_action:
+            actions = []
+            action_log_probs = []
+            dist_entropy = []
+            for idx, action_out in enumerate(self.action_outs):
+                action_logit = action_out(x, available_actions[idx])
+                if rsample:
+                    if deterministic:
+                        action = action_logit.mode()
+                        action = F.one_hot(action.long(), self.action_dim).float().squeeze(1)
+                    else:
+                        action = action_logit.rsample(tau=tau) 
+                        # if joint:
+                        #     actions = action_logits.mode() 
+                        #     action_log_probs = action_logits.log_probs(actions)
+                        # else:
+                    action_log_prob = action_logit.log_probs(torch.argmax(action, -1))
+                    # dist_entropy = action_logit.entropy()
+                    # return actions, action_log_probs, dist_entropy, action_logits.logits
+                else:
+                    if deterministic:
+                        action = action_logit.mode()
+                        action_log_prob = action_logit.log_probs(actions)
+                    else: 
+                        action = action_logit.sample()
+                        action_log_prob = action_logit.log_probs(actions)
+                # dist_entropy = action_logit.entropy()
+                actions.append(action.int())
+                action_log_probs.append(action_log_prob)
+                dist_entropy.append(action_logit.entropy().mean())
+            actions = torch.cat(actions, -1)
+            action_log_probs = torch.sum(torch.cat(action_log_probs, -1), -1, keepdim=True)
+            dist_entropy = dist_entropy[0].sum()
+
+        elif self.single_continuous_action:
+            actions = []
+            action_log_probs = []
+            dist_entropy = []
+            for idx, action_out in enumerate(self.action_outs):
+                action_logit = action_out(x)
+                if rsample:
+                    if deterministic:
+                        action = action_logit.mode()
+                    else:
+                        action = action_logit.rsample(tau=tau) 
+                        # if joint:
+                        #     actions = action_logits.mode() 
+                        #     action_log_probs = action_logits.log_probs(actions)
+                        # else:
+                    # action_log_prob = action_logit.log_probs(torch.argmax(action, -1))
+                    # dist_entropy = action_logit.entropy()
+                    # return actions, action_log_probs, dist_entropy, action_logits.logits
+                else:
+                    if deterministic:
+                        action = action_logit.mode()
+                        # action_log_prob = action_logit.log_probs(actions)
+                    else: 
+                        action = action_logit.sample()
+                action_log_prob = action_logit.log_probs(actions)
+                # dist_entropy = action_logit.entropy()
+                actions.append(action.int())
+                action_log_probs.append(action_log_prob)
+                dist_entropy.append(action_logit.entropy().mean())
+            actions = torch.cat(actions, -1)
+            action_log_probs = torch.sum(torch.cat(action_log_probs, -1), -1, keepdim=True)
+            dist_entropy = dist_entropy[0].sum()
         
         elif self.continuous_action:
             action_logits = self.action_out(x)

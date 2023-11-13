@@ -41,15 +41,22 @@ class SeparatedReplayBuffer(object):
         self.value_preds = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         self.returns = np.zeros((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
         
+        self.num_agents = args.num_agents
         if act_space.__class__.__name__ == 'Discrete':
             self.available_actions = np.ones((self.episode_length + 1, self.n_rollout_threads, act_space.n), dtype=np.float32)
+        elif act_space.__class__.__name__ == 'List':
+            self.available_actions = np.ones((self.episode_length + 1, self.n_rollout_threads, self.num_agents, act_space.n), dtype=np.float32)
         else:
             self.available_actions = None
 
-        act_shape = get_shape_from_act_space(act_space)
-
-        self.actions = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
-        self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
+        if act_space.__class__.__name__ in ['List', 'Tuple']:
+            act_shape = get_shape_from_act_space(act_space[0])
+            self.actions = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, act_shape), dtype=np.float32)
+            self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, self.num_agents, act_shape), dtype=np.float32)
+        else:
+            act_shape = get_shape_from_act_space(act_space)
+            self.actions = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
+            self.action_log_probs = np.zeros((self.episode_length, self.n_rollout_threads, act_shape), dtype=np.float32)
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, 1), dtype=np.float32)
         
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, 1), dtype=np.float32)
@@ -308,8 +315,8 @@ class SeparatedReplayBuffer(object):
             share_obs = _cast(self.share_obs[:-1])
             obs = _cast(self.obs[:-1])
 
-        actions = _cast(self.actions)
-        action_log_probs = _cast(self.action_log_probs)
+        actions = _cast(self.actions) len(self.actions.shape) == 3 else self.actions.transpose(1, 0, 2, 3).reshape(-1, *self.actions.shape[2:])
+        action_log_probs = _cast(self.action_log_probs) len(self.action_log_probs.shape) == 3 else self.action_log_probs.transpose(1, 0, 2, 3).reshape(-1, *self.action_log_probs.shape[2:])
         advantages = _cast(advantages)
         value_preds = _cast(self.value_preds[:-1])
         returns = _cast(self.returns[:-1])
@@ -321,7 +328,7 @@ class SeparatedReplayBuffer(object):
         rnn_states_critic = self.rnn_states_critic[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.rnn_states_critic.shape[2:])
 
         if self.available_actions is not None:
-            available_actions = _cast(self.available_actions[:-1])
+            available_actions = _cast(self.available_actions[:-1]) len(self.available_actions.shape) == 3 else self.available_actions[:-1].transpose(1, 0, 2, 3).reshape(-1, *self.available_actions.shape[2:])
 
         for indices in sampler:
             share_obs_batch = []
