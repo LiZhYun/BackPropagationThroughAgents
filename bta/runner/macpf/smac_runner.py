@@ -47,14 +47,14 @@ class SMACRunner(Runner):
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states, rnn_states_critic = self.collect(step)
+                actions, rnn_states, rnn_states_critic, action_log_probs = self.collect(step)
                     
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, available_actions = self.envs.step(actions)
 
                 data = obs, share_obs, rewards, dones, infos, available_actions, \
                        actions, \
-                       rnn_states, rnn_states_critic
+                       rnn_states, rnn_states_critic, action_log_probs
                 
                 # insert data into buffer
                 self.insert(data)
@@ -132,7 +132,7 @@ class SMACRunner(Runner):
     def collect(self, step):
         self.trainer.prep_rollout()
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
-        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
 
@@ -141,7 +141,7 @@ class SMACRunner(Runner):
             tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
                                                 [torch.zeros(self.n_rollout_threads)] *
                                                 (self.num_agents - agent_idx), -1).to(self.device)
-            action, rnn_state, rnn_state_critic \
+            action, rnn_state, rnn_state_critic, action_log_prob \
                 = self.trainer.policy.get_actions(
                                                 self.buffer.obs[step, :, agent_idx],
                                                 self.buffer.rnn_states[step, :, agent_idx],
@@ -154,15 +154,15 @@ class SMACRunner(Runner):
                                                 # tau=self.temperature
                                                 )
             actions[:, agent_idx] = _t2n(action)
-            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        return actions, rnn_states, rnn_states_critic
+        return actions, rnn_states, rnn_states_critic, action_log_probs
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, available_actions, \
-        actions, rnn_states, rnn_states_critic = data
+        actions, rnn_states, rnn_states_critic, action_log_probs = data
 
         dones_env = np.all(dones, axis=1)
 
@@ -183,7 +183,7 @@ class SMACRunner(Runner):
             share_obs = obs
 
         self.buffer.insert(share_obs, obs, rnn_states, rnn_states_critic,
-                           actions, rewards, masks, bad_masks, active_masks, available_actions)
+                           actions, rewards, masks, action_log_probs, bad_masks, active_masks, available_actions)
 
     def log_train(self, train_infos, total_num_steps):
         train_infos["average_step_rewards"] = np.mean(self.buffer.rewards)

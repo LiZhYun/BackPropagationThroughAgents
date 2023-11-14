@@ -33,7 +33,7 @@ class MujocoRunner(Runner):
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states, rnn_states_critic = self.collect(step)
+                actions, rnn_states, rnn_states_critic, action_log_probs = self.collect(step)
 
                 # Obser reward and next obs
                 obs, share_obs, rewards, dones, infos, _ = self.envs.step(actions)
@@ -48,7 +48,7 @@ class MujocoRunner(Runner):
 
                 data = obs, share_obs, rewards, dones, infos, \
                        actions, \
-                       rnn_states, rnn_states_critic
+                       rnn_states, rnn_states_critic, action_log_probs
 
                 # insert data into buffer
                 self.insert(data)
@@ -107,7 +107,7 @@ class MujocoRunner(Runner):
         self.trainer.prep_rollout()
 
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
-        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
 
@@ -116,7 +116,7 @@ class MujocoRunner(Runner):
             tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
                                                 [torch.zeros(self.n_rollout_threads)] *
                                                 (self.num_agents - agent_idx), -1).to(self.device)
-            action, rnn_state, rnn_state_critic \
+            action, rnn_state, rnn_state_critic, action_log_prob \
                 = self.trainer.policy.get_actions(
                                                 self.buffer.obs[step, :, agent_idx],
                                                 self.buffer.rnn_states[step, :, agent_idx],
@@ -128,15 +128,15 @@ class MujocoRunner(Runner):
                                                 # tau=self.temperature
                                                 )
             actions[:, agent_idx] = _t2n(action)
-            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
-        return actions, rnn_states, rnn_states_critic
+        return actions, rnn_states, rnn_states_critic, action_log_probs
 
     def insert(self, data):
         obs, share_obs, rewards, dones, infos, \
-        actions, rnn_states, rnn_states_critic = data
+        actions, rnn_states, rnn_states_critic, action_log_probs = data
 
         dones_env = np.all(dones, axis=1)
 
@@ -162,6 +162,7 @@ class MujocoRunner(Runner):
             actions=actions,
             rewards=rewards,
             masks=masks,
+            action_log_probs=action_log_probs, 
             # noise=self.noise,    
         )
 

@@ -35,13 +35,13 @@ class MatrixRunner(Runner):
 
             for step in range(self.episode_length):
                 # Sample actions
-                actions, rnn_states, rnn_states_critic, actions_env = self.collect(
+                actions, rnn_states, rnn_states_critic, actions_env, action_log_probs = self.collect(
                     step)
                 # Obser reward and next obs
                 obs, rewards, dones, infos = self.envs.step(actions_env)
                 data = obs, rewards, dones, infos, \
                     actions,\
-                    rnn_states, rnn_states_critic
+                    rnn_states, rnn_states_critic, action_log_probs
                 # insert data into buffer
                 self.insert(data)
             train_infos = self.train(episode)
@@ -92,7 +92,7 @@ class MatrixRunner(Runner):
         self.trainer.prep_rollout()
 
         actions = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape),dtype=np.int32)
-        # action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
+        action_log_probs = np.zeros((self.n_rollout_threads, self.num_agents, self.action_shape))
         rnn_states = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
         rnn_states_critic = np.zeros((self.n_rollout_threads, self.num_agents, self.recurrent_N, self.hidden_size))
 
@@ -101,7 +101,7 @@ class MatrixRunner(Runner):
             tmp_execution_mask = torch.stack([torch.ones(self.n_rollout_threads)] * agent_idx +
                                                 [torch.zeros(self.n_rollout_threads)] *
                                                 (self.num_agents - agent_idx), -1).to(self.device)
-            action, rnn_state, rnn_state_critic \
+            action, rnn_state, rnn_state_critic, action_log_prob \
                 = self.trainer.policy.get_actions(
                                                 self.buffer.obs[step, :, agent_idx],
                                                 self.buffer.rnn_states[step, :, agent_idx],
@@ -113,18 +113,18 @@ class MatrixRunner(Runner):
                                                 # tau=self.temperature
                                                 )
             actions[:, agent_idx] = _t2n(action)
-            # action_log_probs[:, agent_idx] = _t2n(action_log_prob)
+            action_log_probs[:, agent_idx] = _t2n(action_log_prob)
             rnn_states[:, agent_idx] = _t2n(rnn_state)
             rnn_states_critic[:, agent_idx] = _t2n(rnn_state_critic)
 
         actions_env = [actions[idx, :, 0]
                        for idx in range(self.n_rollout_threads)]
 
-        return actions, rnn_states, rnn_states_critic, actions_env
+        return actions, rnn_states, rnn_states_critic, actions_env, action_log_probs
 
     def insert(self, data):
         obs, rewards, dones, infos, \
-            actions, rnn_states, rnn_states_critic = data
+            actions, rnn_states, rnn_states_critic, action_log_probs = data
 
         dones_env = np.all(dones, axis=-1)
         
@@ -143,7 +143,8 @@ class MatrixRunner(Runner):
             rnn_states_critic=rnn_states_critic,
             actions=actions,
             rewards=rewards,
-            masks=masks,      
+            masks=masks,     
+            action_log_probs=action_log_probs, 
             )
 
     @torch.no_grad()

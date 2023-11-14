@@ -80,7 +80,7 @@ class MacpfPolicy:
     def get_actions(self, obs, rnn_states, rnn_states_critic, masks, parents_actions, execution_mask, dep_mode, available_actions=None, deterministic=False, task_id=None, **kwargs):
         actions, action_log_probs, rnn_states = self.actor(obs, rnn_states, masks, parents_actions, execution_mask, dep_mode, available_actions, deterministic)
         values, rnn_states_critic = self.critic(obs, rnn_states_critic, actions, masks, parents_actions, execution_mask, dep_mode)
-        return actions, rnn_states, rnn_states_critic
+        return actions, rnn_states, rnn_states_critic, action_log_probs
 
     def evaluate_actions(self, obs, rnn_states, rnn_states_critic, action, masks, parents_actions, execution_mask, dep_mode, available_actions=None, deterministic=False, active_masks=None, **kwargs):
         action_log_probs, dist_entropy, policy_values, pred_shaped_info = self.actor.evaluate_actions(obs, rnn_states, action, masks, parents_actions, execution_mask, dep_mode, available_actions, active_masks)

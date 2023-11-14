@@ -41,7 +41,7 @@ class R_Critic(nn.Module):
             self.rnn = RNNLayer(self.hidden_size, self.hidden_size, self._recurrent_N, self._use_orthogonal)
         self.fc2 = nn.Linear(args.hidden_size+self.action_dim, 1)
         self.dep_fc1 = nn.Linear(self.action_dim * args.num_agents, self.hidden_size)
-        self.dep_fc2 = nn.Linear(self.hidden_size + args.hidden_size, 1)
+        self.dep_fc2 = nn.Linear(self.hidden_size + args.hidden_size + self.action_dim, 1)
 
         self.to(device)
 
@@ -60,7 +60,7 @@ class R_Critic(nn.Module):
 
         dep_in = self.dep_fc1((parents_actions * execution_mask.unsqueeze(-1)).view(*parents_actions.shape[:-2], -1))
 
-        dep_final = torch.cat([x, dep_in], dim=-1)
+        dep_final = torch.cat([x, dep_in, action], dim=-1)
 
         if dep_mode:
             dep = self.dep_fc2(dep_final)

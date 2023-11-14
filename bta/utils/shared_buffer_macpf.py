@@ -85,7 +85,7 @@ class SharedReplayBuffer(object):
         self.step = 0
 
     def insert(self, share_obs, obs, rnn_states, rnn_states_critic, actions,
-               rewards, masks, bad_masks=None, active_masks=None, available_actions=None):
+               rewards, masks, action_log_probs, bad_masks=None, active_masks=None, available_actions=None):
         """
         Insert data into the buffer.
         :param share_obs: (argparse.Namespace) arguments containing relevant model, policy, and env information.
@@ -101,6 +101,7 @@ class SharedReplayBuffer(object):
         :param active_masks: (np.ndarray) denotes whether an agent is active or dead in the env.
         :param available_actions: (np.ndarray) actions available to each agent. If None, all actions are available.
         """
+        self.action_log_probs[self.step] = action_log_probs.copy()
         self.share_obs[self.step + 1] = share_obs.copy()
         self.obs[self.step + 1] = obs.copy()
         self.rnn_states[self.step + 1] = rnn_states.copy()
@@ -500,7 +501,8 @@ class SharedReplayBuffer(object):
         data_chunks = batch_size // data_chunk_length  # [C=r*T*M/L]
         mini_batch_size = data_chunks // num_mini_batch
 
-        rand = torch.randperm(data_chunks).numpy()
+        # rand = torch.randperm(data_chunks).numpy()
+        rand = torch.arange(data_chunks).numpy()
         sampler = [rand[i * mini_batch_size:(i + 1) * mini_batch_size] for i in range(num_mini_batch)]
 
         if len(self.share_obs.shape) > 4:
@@ -514,8 +516,10 @@ class SharedReplayBuffer(object):
             obs = _cast(self.obs[:-1])
             target_obs = _cast(self.obs[1:])
 
+        action_log_probs = _cast(self.action_log_probs)
         actions = _cast(self.actions)
         masks = _cast(self.masks[:-1])
+        target_masks = _cast(self.masks[1:])
         active_masks = _cast(self.active_masks[:-1])
         noise = _cast(self.noise[:-1])
         target_noise = _cast(self.noise[1:])
@@ -544,10 +548,12 @@ class SharedReplayBuffer(object):
             available_actions_batch = []
             target_available_actions_batch = []
             masks_batch = []
+            target_masks_batch = []
             active_masks_batch = []
             noise_batch = []
             target_noise_batch = []
             rewards_batch = []
+            action_log_probs_batch = []
 
             for index in indices:
 
@@ -562,6 +568,7 @@ class SharedReplayBuffer(object):
                     available_actions_batch.append(available_actions[ind:ind + data_chunk_length])
                     target_available_actions_batch.append(target_available_actions[ind:ind + data_chunk_length])
                 masks_batch.append(masks[ind:ind + data_chunk_length])
+                target_masks_batch.append(target_masks[ind:ind + data_chunk_length])
                 active_masks_batch.append(active_masks[ind:ind + data_chunk_length])
                 noise_batch.append(noise[ind:ind + data_chunk_length])
                 target_noise_batch.append(target_noise[ind:ind + data_chunk_length])
@@ -571,6 +578,7 @@ class SharedReplayBuffer(object):
                 rnn_states_critic_batch.append(rnn_states_critic[ind])
                 target_rnn_states_batch.append(target_rnn_states[ind])
                 target_rnn_states_critic_batch.append(target_rnn_states_critic[ind])
+                action_log_probs_batch.append(action_log_probs[ind:ind + data_chunk_length])
 
             L, N = data_chunk_length, mini_batch_size
 
@@ -581,10 +589,12 @@ class SharedReplayBuffer(object):
             target_obs_batch = np.stack(target_obs_batch, axis=1)
 
             actions_batch = np.stack(actions_batch, axis=1)
+            action_log_probs_batch = np.stack(action_log_probs_batch, axis=1)
             if self.available_actions is not None:
                 available_actions_batch = np.stack(available_actions_batch, axis=1)
                 target_available_actions_batch = np.stack(target_available_actions_batch, axis=1)
             masks_batch = np.stack(masks_batch, axis=1)
+            target_masks_batch = np.stack(target_masks_batch, axis=1)
             active_masks_batch = np.stack(active_masks_batch, axis=1)
             noise_batch = np.stack(noise_batch, axis=1)
             target_noise_batch = np.stack(target_noise_batch, axis=1)
@@ -602,6 +612,7 @@ class SharedReplayBuffer(object):
             obs_batch = _flatten(L, N, obs_batch)
             target_obs_batch = _flatten(L, N, target_obs_batch)
             actions_batch = _flatten(L, N, actions_batch)
+            action_log_probs_batch = _flatten(L, N, action_log_probs_batch)
             if self.available_actions is not None:
                 available_actions_batch = _flatten(L, N, available_actions_batch)
                 target_available_actions_batch = _flatten(L, N, target_available_actions_batch)
@@ -609,11 +620,12 @@ class SharedReplayBuffer(object):
                 available_actions_batch = None
                 target_available_actions_batch = None
             masks_batch = _flatten(L, N, masks_batch)
+            target_masks_batch = _flatten(L, N, target_masks_batch)
             active_masks_batch = _flatten(L, N, active_masks_batch)
             noise_batch = _flatten(L, N, noise_batch)
             target_noise_batch = _flatten(L, N, target_noise_batch)
             rewards_batch = _flatten(L, N, rewards_batch)
 
             yield share_obs_batch, target_share_obs_batch, obs_batch, target_obs_batch, rnn_states_batch, target_rnn_states_batch, \
-                rnn_states_critic_batch, target_rnn_states_critic_batch, actions_batch, masks_batch, active_masks_batch, \
-                    available_actions_batch, target_available_actions_batch, rewards_batch
+                rnn_states_critic_batch, target_rnn_states_critic_batch, actions_batch, masks_batch, target_masks, active_masks_batch, \
+                    available_actions_batch, target_available_actions_batch, rewards_batch, action_log_probs_batch
