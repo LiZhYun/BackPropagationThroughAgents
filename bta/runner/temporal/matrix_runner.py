@@ -193,21 +193,21 @@ class MatrixRunner(Runner):
             else:
                 ind_dist = FixedNormal(logits, stds)
                 mix_dist = FixedNormal(logits, action_std)
-            if self.threshold >= torch.rand(1):
-                mix_actions = mix_dist.sample()
-            else:
-                mix_actions = hard_actions.clone()
-            if (self.threshold > 0.) and (self.threshold < 1.):
-                mix_action_log_probs = (mix_dist.log_probs(mix_actions) + torch.tensor(self.threshold, device=self.device).log()) if not self.discrete else (mix_dist.log_probs_joint(mix_actions) + torch.tensor(self.threshold, device=self.device).log())
-                ind_action_log_probs = (ind_dist.log_probs(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log()) if not self.discrete else (ind_dist.log_probs_joint(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log())
-                log_probs = torch.stack([ind_action_log_probs, mix_action_log_probs],dim=-1)
-                action_log_probs = _t2n(torch.logsumexp(log_probs,-1))
-            elif self.threshold == 0.:
-                ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
-                action_log_probs = _t2n(ind_action_log_probs)
-            elif self.threshold == 1.:
-                mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
-                action_log_probs = _t2n(mix_action_log_probs)  
+            # if self.threshold >= torch.rand(1):
+            mix_actions = mix_dist.sample()
+            # else:
+            #     mix_actions = hard_actions.clone()
+            # if (self.threshold > 0.) and (self.threshold < 1.):
+            #     mix_action_log_probs = (mix_dist.log_probs(mix_actions) + torch.tensor(self.threshold, device=self.device).log()) if not self.discrete else (mix_dist.log_probs_joint(mix_actions) + torch.tensor(self.threshold, device=self.device).log())
+            #     ind_action_log_probs = (ind_dist.log_probs(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log()) if not self.discrete else (ind_dist.log_probs_joint(mix_actions) + torch.tensor(1-self.threshold, device=self.device).log())
+            #     log_probs = torch.stack([ind_action_log_probs, mix_action_log_probs],dim=-1)
+            #     action_log_probs = _t2n(torch.logsumexp(log_probs,-1))
+            # elif self.threshold == 0.:
+            #     ind_action_log_probs = ind_dist.log_probs(mix_actions) if not self.discrete else ind_dist.log_probs_joint(mix_actions)
+            #     action_log_probs = _t2n(ind_action_log_probs)
+            # elif self.threshold == 1.:
+            mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
+            action_log_probs = _t2n(mix_action_log_probs)  
             # mix_actions = mix_dist.sample()
             # mix_actions = hard_actions.clone()
             # mix_action_log_probs = mix_dist.log_probs(mix_actions) if not self.discrete else mix_dist.log_probs_joint(mix_actions)
