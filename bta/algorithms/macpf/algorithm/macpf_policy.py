@@ -38,11 +38,19 @@ class MacpfPolicy:
 
         self.actor = Actor(args, self.obs_space, self.act_space, self.device)
         self.critic = Critic(args, self.obs_space, self.act_space, self.device)
-        self.target_critic = copy.deepcopy(self.critic)
+
+        self.target_critic = Critic(args, self.obs_space, self.act_space, self.device)
+        self.target_critic.load_state_dict(self.critic.state_dict())
+
         self.mixer = NoiseQMixer(args, self.share_obs_space, self.device)
-        self.target_mixer = copy.deepcopy(self.mixer)
+
+        self.target_mixer = NoiseQMixer(args, self.share_obs_space, self.device)
+        self.target_mixer.load_state_dict(self.mixer.state_dict())
+
         self.dep_mixer = NoiseQMixer(args, self.share_obs_space, self.device)
-        self.dep_target_mixer = copy.deepcopy(self.dep_mixer)
+
+        self.dep_target_mixer = NoiseQMixer(args, self.share_obs_space, self.device)
+        self.dep_target_mixer.load_state_dict(self.dep_target_mixer.state_dict())
 
         if act_space.__class__.__name__ == "Discrete":
             self.discrete_action = True

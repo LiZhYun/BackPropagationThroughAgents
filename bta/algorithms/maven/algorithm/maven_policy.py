@@ -36,9 +36,12 @@ class MavenPolicy:
         self.act_space = act_space
 
         self.actor = Agent(args, self.obs_space, self.act_space, self.device)
-        self.target_actor = copy.deepcopy(self.actor)
+        self.target_actor = Agent(args, self.obs_space, self.act_space, self.device)
+        self.target_actor.load_state_dict(self.actor.state_dict())
+
         self.mixer = NoiseQMixer(args, self.share_obs_space, self.device)
-        self.target_mixer = copy.deepcopy(self.mixer)
+        self.target_mixer = NoiseQMixer(args, self.share_obs_space, self.device)
+        self.target_mixer.load_state_dict(self.mixer.state_dict())
 
         if act_space.__class__.__name__ == "Discrete":
             self.discrete_action = True
