@@ -46,11 +46,13 @@ class PredatorRunner(Runner):
             elif self.decay_id == 1:
                 # self.threshold = 0. + (self.initial_threshold - 0.) * \
                 #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
-                self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
+                self.temperature = 0.1 + (self.all_args.temperature - 0.1) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1) + math.pi)) / 2 if episode*self.decay_factor <= episodes else self.all_args.temperature
             elif self.decay_id == 2:
                 # self.threshold = self.all_args.threshold * math.pow(0.99,math.floor((episode)/10))
-                self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
+                self.temperature *= 1.1
+                self.temperature = min(self.temperature, 1.0)
+                # self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
             # self.agent_order = torch.randperm(self.num_agents).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
