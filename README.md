@@ -1,8 +1,8 @@
-# BPTA
+# Backpropagation Through Agents
 
 Zhiyuan Li*. 
 
-This repository implements Back-Propagatioin Through Agents(BPTA). The implementation in this repositorory is used in the paper "Back-Propagatioin Through Agents" (https://arxiv.org/abs/). This repository is heavily based on https://github.com/marlbenchmark/on-policy.
+This repository implements Back-Propagatioin Through Agents(BPTA). The implementation in this repositorory is used in the paper "Back-Propagatioin Through Agents" (https://browse.arxiv.org/abs/2401.12574). This repository is heavily based on https://github.com/marlbenchmark/on-policy.
 
 <font color="red"> All hyperparameters and training curves are reported in appendix, we would strongly suggest to double check the important factors before runing the code, such as the rollout threads, episode length, ppo epoch, mini-batches, clip term and so on.
  
