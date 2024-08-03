@@ -41,13 +41,16 @@ RUN apt-get update && apt-get --no-install-recommends install -yq git cmake buil
   libdirectfb-dev libst-dev mesa-utils xvfb x11vnc \
   python3-pip 
 
-RUN ln -snf /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /opt/conda/bin/../lib/libstdc++.so.6
+# RUN ln -snf /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /opt/conda/bin/../lib/libstdc++.so.6
+# RUN ln -snf /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /opt/conda/lib/python3.10/site-packages/torch/lib/../../../../libstdc++.so.6
 
 RUN python3 -m pip install --upgrade pip 
-RUN python3 -m pip install psutil
+RUN python3 -m pip install psutil wandb igraph tensorboardX imageio icecream easydict scipy python-dateutil
 RUN python3 -m pip install setuptools==66
 RUN python3 -m pip install wheel==0.38.4
 RUN python3 -m pip install importlib-metadata==4.13.0
+RUN conda install -y anaconda::py-boost
+RUN conda install -c conda-forge libstdcxx-ng
 
 # RUN echo "export LD_LIBRARY_PATH=/opt/hpcx/ucx/lib:$LD_LIBRARY_PATH" > ~/.bashrc
 
