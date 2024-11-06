@@ -2,7 +2,7 @@
 
 Zhiyuan Li*. 
 
-This repository implements Back-Propagatioin Through Agents(BPTA). The implementation in this repositorory is used in the paper "Back-Propagatioin Through Agents" (https://browse.arxiv.org/abs/2401.12574). This repository is heavily based on https://github.com/marlbenchmark/on-policy.
+This repository implements Back-Propagatioin Through Agents(BPTA). The implementation in this repositorory is used in the paper "Back-Propagatioin Through Agents" (https://arxiv.org/abs/2401.12574). This repository is heavily based on https://github.com/marlbenchmark/on-policy.
 
 <font color="red"> All hyperparameters and training curves are reported in appendix, we would strongly suggest to double check the important factors before runing the code, such as the rollout threads, episode length, ppo epoch, mini-batches, clip term and so on.
  
@@ -107,14 +107,16 @@ Local results are stored in subfold scripts/results. Note that we use Weights & 
 
 ## 4. Publication
 
-If you find this repository useful, please cite our [paper](https://arxiv.org/abs/):
+If you find this repository useful, please cite our [paper](https://arxiv.org/abs/2401.12574):
 ```
-@inproceedings{
-Back-Propagatioin,
-title={Back-Propagatioin Through Agents},
-author={Zhiyuan Li},
-booktitle={},
-year={2024}
+@misc{li2024backpropagationagents,
+      title={Backpropagation Through Agents}, 
+      author={Zhiyuan Li and Wenshuai Zhao and Lijun Wu and Joni Pajarinen},
+      year={2024},
+      eprint={2401.12574},
+      archivePrefix={arXiv},
+      primaryClass={cs.MA},
+      url={https://arxiv.org/abs/2401.12574}, 
 }
 ```
 
