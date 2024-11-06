@@ -61,7 +61,8 @@ def make_eval_env(all_args):
 def parse_args(args, parser):
     parser.add_argument('--scenario', type=str, default='Hopper-v2', help="Which mujoco task to run on")
     parser.add_argument('--agent_conf', type=str, default='3x1')
-    parser.add_argument('--agent_obsk', type=int, default=0)
+    # parser.add_argument('--agent_obsk', type=int, default=0)
+    parser.add_argument('--agent_obsk', type=int, default=None)
     parser.add_argument("--add_move_state", action='store_true', default=False)
     parser.add_argument("--add_local_obs", action='store_true', default=False)
     parser.add_argument("--add_distance_state", action='store_true', default=False)

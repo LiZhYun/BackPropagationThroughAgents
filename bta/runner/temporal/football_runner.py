@@ -46,15 +46,16 @@ class FootballRunner(Runner):
                     self.trainer[agent_id].policy.lr_decay(episode, episodes)
 
             if self.decay_id == 0:
-                self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 0.05)
+                # self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
+                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode / float(episodes))), 0.05)
+                self.temperature = min(0.1 + ((self.all_args.temperature - 0.1) * (episode*self.decay_factor / float(episodes))), self.all_args.temperature)
             elif self.decay_id == 1:
-                self.threshold = 0. + (self.initial_threshold - 0.) * \
-                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
-                self.temperature = 0.01 + (self.all_args.temperature - 0.01) * \
-                    (1 + math.cos(math.pi * (episode) / (episodes-1))) / 2
+                # self.threshold = 0. + (self.initial_threshold - 0.) * \
+                #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
+                 self.temperature = 0.1 + (self.all_args.temperature - 0.1) * \
+                    (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1) + math.pi)) / 2 if episode*self.decay_factor <= episodes else self.all_args.temperature
             elif self.decay_id == 2:
-                self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
+                # self.threshold = self.initial_threshold * math.pow(0.99,math.floor((episode)/10))
                 self.temperature = self.all_args.temperature * math.pow(0.99,math.floor((episode)/10))
             else:
                 pass
@@ -63,7 +64,7 @@ class FootballRunner(Runner):
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, hard_actions, action_log_probs, rnn_states, \
-                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint = self.collect(step)
+                    rnn_states_critic, joint_actions, joint_action_log_probs, rnn_states_joint, thresholds, bias, logits = self.collect(step)
                     
                 # Obser reward and next obs
                 env_actions = joint_actions if self.use_action_attention else hard_actions

@@ -5,6 +5,7 @@ import wandb
 import socket
 import setproctitle
 import numpy as np
+np.bool = np.bool_
 from pathlib import Path
 import torch
 from bta.config import get_config
@@ -167,7 +168,7 @@ def main(args):
                          dir=str(run_dir),
                          job_type="training",
                          reinit=True,
-                         tags=["iclr24"],
+                         tags=["aaai25"],
                          )
         all_args = wandb.config # for wandb sweep
     else:
@@ -183,7 +184,7 @@ def main(args):
         run_dir = run_dir / curr_run
         if not run_dir.exists():
             os.makedirs(str(run_dir))
-
+    # print(all_args)
     setproctitle.setproctitle(
         str(all_args.algorithm_name) + "-" + str(all_args.env_name) + "-" + str(all_args.experiment_name) + "@" + str(
             all_args.user_name))
@@ -192,11 +193,12 @@ def main(args):
     torch.manual_seed(all_args.seed)
     torch.cuda.manual_seed_all(all_args.seed)
     np.random.seed(all_args.seed)
-
+    # print(all_args)
     # env
     envs = make_train_env(all_args)
+    # print(all_args)
     eval_envs = make_eval_env(all_args) if all_args.use_eval else None
-
+    
     if all_args.env_name == "SMAC":
         from smac.env.starcraft2.maps import get_map_params
         num_agents = get_map_params(all_args.map_name)["n_agents"]

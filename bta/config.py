@@ -319,7 +319,7 @@ def get_config():
     parser.add_argument("--random_train", action='store_true', default=False,
                         help='')
     parser.add_argument("--decay_id", type=int,
-                        default=0, help="choose 0 to use linear_decay, 1 to use cos_decay, 2 to use step_decay")
+                        default=1, help="choose 0 to use linear_decay, 1 to use cos_decay, 2 to use step_decay")
     # parser.add_argument("--linear_decay", type=args_str2bool, default=False, 
     #                     help='')
     # parser.add_argument("--cos_decay", type=args_str2bool, default=True, 

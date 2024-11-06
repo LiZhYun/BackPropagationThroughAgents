@@ -51,22 +51,34 @@ class SMACRunner(Runner):
 
             if self.decay_id == 0:
                 # self.threshold = max(self.initial_threshold - (self.initial_threshold * ((episode*self.decay_factor) / float(episodes))), 0.)
-                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.05)
-                self.temperature = min(0.1 + ((self.all_args.temperature - 0.1) * (episode*self.decay_factor / float(episodes))), self.all_args.temperature)
+                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.1)
+                self.temperature = min(0.05 + ((self.all_args.temperature - 0.05) * (episode*self.decay_factor / float(episodes))), self.all_args.temperature)
             elif self.decay_id == 1:
                 # self.threshold = 0. + (self.initial_threshold - 0.) * \
                     # (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.
                 # self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
                 #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2
-                self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.1)
-                # self.temperature = 0.1 + (self.all_args.temperature - 0.1) * \
-                #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1) + math.pi)) / 2 if episode*self.decay_factor <= episodes else self.all_args.temperature
+                # self.temperature = max(self.all_args.temperature - (self.all_args.temperature * (episode*self.decay_factor / float(episodes))), 0.1)
+                progress = episode / (episodes-1)
+                factor = (1 + math.cos(math.pi * progress + math.pi)) / 2
+                self.temperature = 1 + (self.all_args.temperature - 1) * factor if episode*self.decay_factor <= episodes else self.all_args.temperature
             elif self.decay_id == 2:
+                progress = episode / (episodes-1)
+                factor = (math.exp(self.lambda_value*progress) - 1) / (math.exp(self.lambda_value)-1) # 1-e 0-1
+                # factor = 1 - math.exp(-self.lambda_value*progress)
+                self.temperature = 1 + (self.all_args.temperature - 1) * factor
+            elif self.decay_id == 3:
+                progress = episode / (episodes-1)
+                # factor = (math.exp(self.lambda_value*progress) - 1) / (math.exp(self.lambda_value)-1) # 1-e 0-1
+                factor = 1 - math.exp(-self.lambda_value*progress)
+                self.temperature = 1 + (self.all_args.temperature - 1) * factor
                 # self.threshold = 0.1 + self.all_args.threshold * math.pow(1.01,math.floor((episode)/10))
-                if episode == 0:
-                    self.temperature = 0.1
-                if (episode+1) % (episodes//10) == 0: 
-                    self.temperature = 0.1 + (self.all_args.temperature - 0.1)/9*((episode+1)//(episodes//10))
+                # self.temperature = 0.05 + (self.all_args.temperature - 0.05) * \
+                #     (1 + math.cos(math.pi * (episode*self.decay_factor) / (episodes-1))) / 2 if episode*self.decay_factor <= episodes else 0.05
+                # if episode == 0:
+                #     self.temperature = 0.1
+                # if (episode+1) % (episodes//10) == 0: 
+                #     self.temperature = 0.1 + (self.all_args.temperature - 0.1)/9*((episode+1)//(episodes//10))
             else:
                 pass
             self.agent_order = torch.tensor([i for i in range(self.num_agents)]).unsqueeze(0).repeat(self.n_rollout_threads, 1).to(self.device)
