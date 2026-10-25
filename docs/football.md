@@ -90,6 +90,12 @@ Native build/replay jobs and all-method integration jobs are recorded in
 a compiler; the private compiler fixed it. The first replay check exposed the
 duration/step distinction above. Both failures remain recorded.
 
+A separate installation in `.venv-football-verify` now passes all package pins,
+imports, dependency checks and native replay. Its four complete trace hashes
+match the original build exactly, including5v5. The original prefix also passes
+imports on the login node after adding the private OpenGL runtime. Verification
+artifacts are under `.native/football-build/.venv-football-verify/`.
+
 The controlled-backend tests verify all four shapes, shared rewards, native
 seed propagation, RNG isolation, final-score win metrics, action copying,
 termination precedence, validation and cleanup. All four algorithms also pass

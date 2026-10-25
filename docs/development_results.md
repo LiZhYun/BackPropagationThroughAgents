@@ -74,3 +74,27 @@ SMAC learning starts with20k-step terran5v5 pilots to measure throughput and
 stability before increasing the budget. Matrix results and their unsuccessful
 controls remain in [matrix development](matrix_development.md) and the
 [joint-modifier diagnosis](joint_modifier_diagnosis.md).
+
+## Completed coordination follow-up
+
+At300k, all six Prey controls still fail to learn reliable capture with penalty−1:
+the projected AR-PPO evaluation captures1/20 episodes and the other controls0/20.
+The default AgentMixer variants settle on avoiding the penalty, with−0.01 reward
+per step. Faster actor updates and predecessor-action projection do not solve
+this setting. Without the penalty, projected AR-PPO/BPPO reach fixed-window
+rates2.1975/2.185, factorized AgentMixer1.9875, and joint AgentMixer1.76. These
+use20 windows and one training seed, not the released100-window final protocol.
+
+The next1M controls compare8×64 and the released50×200 rollout batch size,
+retaining the redesigned feedforward model. Additional entropy and distribution
+precision conditions are separately named. Every condition uses both penalties
+and100 fixed200-step evaluation windows, plus separate completed episodes.
+
+For the matrix precision control at200k, float64 joint distributions with the
+faster actor rate solve Climbing2/3 and Penalty2/3 development seeds. The matched
+float32 condition solved Climbing3/3 and Penalty0/3. With the slower actor rate,
+float64 solves neither game in any seed. Thus precision affects optimization
+but does not supply a robust solution. Some greedy-optimal policies still have
+negative expected return when sampling their independent local policies; both
+metrics remain reported. Mode consistency concerns greedy execution and does
+not imply matching stochastic distributions or an equilibrium theorem.

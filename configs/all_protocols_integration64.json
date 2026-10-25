@@ -1,0 +1,873 @@
+{
+  "label": "all_protocols_integration64",
+  "scope": "64-step method integration across all15 unique paper MuJoCo task/observation variants and nine SMACv2 scenarios; four algorithms each,96 runs. MuJoCo diagnostic horizon16. This is shape/gradient/native-runtime coverage,not performance evidence.",
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "steps": 64,
+    "num_envs": 1,
+    "rollout_steps": 32,
+    "epochs": 1,
+    "eval_episodes": 1,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "checkpoint_every_updates": 0,
+    "threads": 1
+  },
+  "variants": {
+    "mujoco_HalfCheetah_v2_2x3_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_HalfCheetah_v2_2x3_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_HalfCheetah_v2_2x3_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_HalfCheetah_v2_2x3_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_HalfCheetah_v2_3x2_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_HalfCheetah_v2_3x2_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_HalfCheetah_v2_3x2_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_HalfCheetah_v2_3x2_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_HalfCheetah_v2_6x1_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_HalfCheetah_v2_6x1_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_HalfCheetah_v2_6x1_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_HalfCheetah_v2_6x1_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_2x4_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_2x4_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_2x4_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_2x4_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_2x4d_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_2x4d_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_2x4d_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_2x4d_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_4x2_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_4x2_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_4x2_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_4x2_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_8x1_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_8x1_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_8x1_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_8x1_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Walker2d_v2_2x3_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Walker2d_v2_2x3_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Walker2d_v2_2x3_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Walker2d_v2_2x3_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Walker2d_v2_3x2_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Walker2d_v2_3x2_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Walker2d_v2_3x2_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Walker2d_v2_3x2_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Walker2d_v2_6x1_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Walker2d_v2_6x1_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Walker2d_v2_6x1_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Walker2d_v2_6x1_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Humanoid_v2_17x1_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Humanoid_v2_17x1_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Humanoid_v2_17x1_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Humanoid_v2_17x1_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_HumanoidStandup_v2_17x1_local_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_HumanoidStandup_v2_17x1_local_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_HumanoidStandup_v2_17x1_local_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_HumanoidStandup_v2_17x1_local_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_2x4_global_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_2x4_global_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_2x4_global_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_2x4_global_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_4x2_global_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_4x2_global_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_4x2_global_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_4x2_global_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "mujoco_Ant_v2_8x1_global_mappo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "mappo"
+    },
+    "mujoco_Ant_v2_8x1_global_arppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "arppo"
+    },
+    "mujoco_Ant_v2_8x1_global_bppo": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "bppo"
+    },
+    "mujoco_Ant_v2_8x1_global_agentmixer": {
+      "environment": "mujoco",
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 16
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_protoss_5v5_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_5v5"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_protoss_5v5_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_5v5"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_protoss_5v5_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_5v5"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_protoss_5v5_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_5v5"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_protoss_10v10_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v10"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_protoss_10v10_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v10"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_protoss_10v10_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v10"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_protoss_10v10_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v10"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_protoss_10v11_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v11"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_protoss_10v11_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v11"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_protoss_10v11_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v11"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_protoss_10v11_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "protoss_10v11"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_terran_5v5_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_5v5"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_terran_5v5_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_5v5"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_terran_5v5_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_5v5"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_terran_5v5_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_5v5"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_terran_10v10_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v10"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_terran_10v10_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v10"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_terran_10v10_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v10"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_terran_10v10_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v10"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_terran_10v11_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v11"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_terran_10v11_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v11"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_terran_10v11_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v11"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_terran_10v11_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "terran_10v11"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_zerg_5v5_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_5v5"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_zerg_5v5_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_5v5"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_zerg_5v5_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_5v5"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_zerg_5v5_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_5v5"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_zerg_10v10_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v10"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_zerg_10v10_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v10"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_zerg_10v10_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v10"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_zerg_10v10_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v10"
+      },
+      "algorithm": "agentmixer"
+    },
+    "smac_zerg_10v11_mappo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v11"
+      },
+      "algorithm": "mappo"
+    },
+    "smac_zerg_10v11_arppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v11"
+      },
+      "algorithm": "arppo"
+    },
+    "smac_zerg_10v11_bppo": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v11"
+      },
+      "algorithm": "bppo"
+    },
+    "smac_zerg_10v11_agentmixer": {
+      "environment": "smac",
+      "env_config": {
+        "scenario": "zerg_10v11"
+      },
+      "algorithm": "agentmixer"
+    }
+  }
+}

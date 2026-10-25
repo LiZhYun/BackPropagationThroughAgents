@@ -41,6 +41,18 @@ The [shared simulator guide](docs/simulator_training.md) connects these policies
 optimization controls and their limits. Current jobs and remaining acceptance
 requirements are recorded in [STATUS.md](STATUS.md).
 
+Two read-only reports need only Python's standard library:
+
+```bash
+python scripts/report_progress.py
+python scripts/check_paper_targets.py
+```
+
+The first reports all declared runs in recent manifests, including unfinished
+and failed runs. The second checks that all45 benchmark targets have either an
+explicit source value or a linked curve estimate; it does not certify achieved
+performance.
+
 BPPO executes autoregressively and requires predecessor actions. AgentMixer executes using each local policy alone. The evaluator preserves this distinction.
 
 ## What counts as reproduced

@@ -25,7 +25,7 @@
       "sha256": "ea64cd02174240d4ad51f823e8d0a23c378c75990ba6ee6d5d60a63bf30456d8"
     }
   ],
-  "numeric_target_policy": "Only explicit numeric measured results populate published_value. Curves stay null until documented digitization or original data. Derived ceilings are separate.",
+  "numeric_target_policy": "Only explicit numeric measured source results populate published_value. All39 primary plotted targets link to separate digitized records with reading uncertainty; they do not become exact measurements or achieved reproduction results.",
   "configurations": {
     "bpta_common": {
       "values": {
@@ -70,6 +70,12 @@
           536
         ],
         "status": "active_tex"
+      },
+      "released_implementation_interpretation": {
+        "environment_episode_decisions": 1,
+        "episode_length_table_field": "rollout/evaluation-window length in pinned release; historical figure association remains qualified",
+        "source_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "audit": "docs/other_curve_targets.md"
       }
     },
     "bpta_smacv2": {
@@ -162,6 +168,12 @@
           1236
         ],
         "status": "commented_appendix"
+      },
+      "released_implementation_interpretation": {
+        "environment_episode_decisions": 1,
+        "episode_length_table_field": "rollout/evaluation-window length in pinned release; historical figure association remains qualified",
+        "source_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "audit": "docs/other_curve_targets.md"
       }
     },
     "agentmixer_smacv2": {
@@ -309,20 +321,22 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Matrix.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 2200,
-          "unit": "sum of 200 matrix decisions",
+          "unit": "plotted return units; inferred200x one-decision reward scale",
           "achieved_value": null,
-          "reproduction_status": "not_run"
+          "reproduction_status": "not_run",
+          "upper_bound_scope": "plot-scale equivalent conditional on the inferred200 multiplier; raw per-decision bound is recorded separately",
+          "raw_decision_reward_upper_bound": 11
         }
       ],
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Qualitatively claims Pareto-optimal convergence. Ceiling is derived from payoff and horizon, not a measured result.",
+      "notes": "The pinned released environment terminates after each decision. The200 factor belongs to a training-log reduction, not a200-step environment episode. Its link to the historical figure is inferred; mathematical ceilings and digitized plot values are separate.",
       "payoff_matrix": [
         [
           11,
@@ -348,7 +362,16 @@
         ]
       },
       "per_step_payoff_ceiling": 11,
-      "saturation_policy": "Match optimal return and improve convergence speed or reliability; a larger return is impossible."
+      "saturation_policy": "Match optimal return and improve convergence speed or reliability; a larger return is impossible.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "climbing"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:penalty",
@@ -367,20 +390,22 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Matrix.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 2000,
-          "unit": "sum of 200 matrix decisions",
+          "unit": "plotted return units; inferred200x one-decision reward scale",
           "achieved_value": null,
-          "reproduction_status": "not_run"
+          "reproduction_status": "not_run",
+          "upper_bound_scope": "plot-scale equivalent conditional on the inferred200 multiplier; raw per-decision bound is recorded separately",
+          "raw_decision_reward_upper_bound": 10
         }
       ],
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Qualitatively claims Pareto-optimal convergence. Ceiling is derived from payoff and horizon, not a measured result.",
+      "notes": "The pinned released environment terminates after each decision. The200 factor belongs to a training-log reduction, not a200-step environment episode. Its link to the historical figure is inferred; mathematical ceilings and digitized plot values are separate.",
       "payoff_matrix": [
         [
           -100,
@@ -406,7 +431,16 @@
         ]
       },
       "per_step_payoff_ceiling": 10,
-      "saturation_policy": "Match optimal return and improve convergence speed or reliability; a larger return is impossible."
+      "saturation_policy": "Match optimal return and improve convergence speed or reliability; a larger return is impossible.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "penalty"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_protoss_5v5",
@@ -425,10 +459,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -443,10 +477,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -456,7 +490,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_protoss_5v5"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_protoss_10v10",
@@ -475,10 +518,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -493,10 +536,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -506,7 +549,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_protoss_10v10"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_protoss_10v11",
@@ -525,10 +577,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -543,10 +595,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -556,7 +608,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_protoss_10v11"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_zerg_5v5",
@@ -575,10 +636,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -593,10 +654,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -606,7 +667,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_zerg_5v5"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_zerg_10v10",
@@ -625,10 +695,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -643,10 +713,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -656,7 +726,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_zerg_10v10"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_zerg_10v11",
@@ -675,10 +754,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -693,10 +772,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -706,7 +785,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_zerg_10v11"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_terran_5v5",
@@ -725,10 +813,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -743,10 +831,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -756,7 +844,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_terran_5v5"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_terran_10v10",
@@ -775,10 +872,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -793,10 +890,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -806,7 +903,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_terran_10v10"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:10gen_terran_10v11",
@@ -825,10 +931,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC_incre.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -843,10 +949,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/SMAC.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -856,7 +962,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "10gen_terran_10v11"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:Ant-v2_2x4",
@@ -875,10 +990,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -888,7 +1003,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "Ant-v2_2x4"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:Ant-v2_4x2",
@@ -907,10 +1031,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -920,7 +1044,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "Ant-v2_4x2"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:Ant-v2_8x1",
@@ -939,10 +1072,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -952,7 +1085,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "Ant-v2_8x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:HalfCheetah-v2_2x3",
@@ -971,10 +1113,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -984,7 +1126,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "HalfCheetah-v2_2x3"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:HalfCheetah-v2_3x2",
@@ -1003,10 +1154,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1016,7 +1167,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "HalfCheetah-v2_3x2"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:HalfCheetah-v2_6x1",
@@ -1035,10 +1195,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1048,7 +1208,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "HalfCheetah-v2_6x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:Walker2d-v2_2x3",
@@ -1067,10 +1236,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1080,7 +1249,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "Walker2d-v2_2x3"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:Walker2d-v2_3x2",
@@ -1099,10 +1277,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1112,7 +1290,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "Walker2d-v2_3x2"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:Walker2d-v2_6x1",
@@ -1131,10 +1318,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/MuJoCo.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1144,7 +1331,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "Walker2d-v2_6x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:academy_3_vs_1_with_keeper",
@@ -1163,10 +1359,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football_train.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -1181,10 +1377,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -1194,7 +1390,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings."
+      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "academy_3_vs_1_with_keeper"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:academy_counterattack_hard",
@@ -1213,10 +1418,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football_train.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -1231,10 +1436,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -1244,7 +1449,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings."
+      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "academy_counterattack_hard"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:academy_corner",
@@ -1263,10 +1477,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football_train.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -1281,10 +1495,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": 1,
           "unit": "fraction",
           "achieved_value": null,
@@ -1294,7 +1508,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings."
+      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "academy_corner"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "bpta:5_vs_5",
@@ -1313,10 +1536,10 @@
           "uncertainty": "standard_deviation",
           "source": {
             "path": "references/bpta/Football_5v5.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1326,7 +1549,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Exact engine identifier, difficulty and rewards unspecified. Return is not win rate; paper says all methods remain negative."
+      "notes": "Exact engine identifier, difficulty and rewards unspecified. Return is not win rate; paper says all methods remain negative.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "bpta",
+          "task": "5_vs_5"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:climbing",
@@ -1345,10 +1577,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/Matrix.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "unresolved normalization",
           "achieved_value": null,
@@ -1382,7 +1614,16 @@
         "status": "supplied_figure"
       },
       "per_step_payoff_ceiling": 11,
-      "saturation_policy": "Match optimal per-step payoff and improve efficiency or reliability after resolving normalization."
+      "saturation_policy": "Match optimal per-step payoff and improve efficiency or reliability after resolving normalization.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "climbing"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Ant-v2_2x4",
@@ -1401,10 +1642,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1414,7 +1655,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Ant-v2_2x4"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Ant-v2_4x2",
@@ -1433,10 +1683,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1446,7 +1696,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Ant-v2_4x2"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Ant-v2_8x1",
@@ -1465,10 +1724,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1478,7 +1737,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Ant-v2_8x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Ant-v2_2x4d",
@@ -1497,10 +1765,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1510,7 +1778,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Ant-v2_2x4d"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:HalfCheetah-v2_6x1",
@@ -1529,10 +1806,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1542,7 +1819,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "HalfCheetah-v2_6x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Humanoid-v2_17x1",
@@ -1561,10 +1847,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1574,7 +1860,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Humanoid-v2_17x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:HalfCheetah-v2_2x3",
@@ -1593,10 +1888,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_app.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1606,7 +1901,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "HalfCheetah-v2_2x3"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:HalfCheetah-v2_3x2",
@@ -1625,10 +1929,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_app.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1638,7 +1942,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "HalfCheetah-v2_3x2"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Walker2d-v2_2x3",
@@ -1657,10 +1970,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_app.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1670,7 +1983,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Walker2d-v2_2x3"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Walker2d-v2_3x2",
@@ -1689,10 +2011,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_app.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1702,7 +2024,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Walker2d-v2_3x2"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:Walker2d-v2_6x1",
@@ -1721,10 +2052,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_app.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1734,7 +2065,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "Walker2d-v2_6x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:HumanoidStandup-v2_17x1",
@@ -1753,10 +2093,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/MuJoCo_app.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "environment episode return",
           "achieved_value": null,
@@ -1766,7 +2106,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_mujoco.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "HumanoidStandup-v2_17x1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:predator_prey_penalty_0",
@@ -1785,10 +2134,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/Prey_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "unresolved return normalization",
           "achieved_value": null,
@@ -1798,7 +2147,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M."
+      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "predator_prey_penalty_0"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:predator_prey_penalty_-1",
@@ -1817,10 +2175,10 @@
           "uncertainty": null,
           "source": {
             "path": "references/agentmixer/figs/Prey_main.pdf",
-            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "locator": "page 1; figure labels extracted with pypdf; digitized estimate linked separately",
             "status": "supplied_figure"
           },
-          "target_status": "plot_only_not_digitized",
+          "target_status": "digitized_estimate_available_separately",
           "mathematical_upper_bound": null,
           "unit": "unresolved return normalization",
           "achieved_value": null,
@@ -1830,7 +2188,16 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M."
+      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M.",
+      "digitized_target": {
+        "file": "configs/curve_estimates_other.json",
+        "selector": {
+          "paper": "agentmixer",
+          "task": "predator_prey_penalty_-1"
+        },
+        "status": "estimate_not_original_measurement",
+        "reading_uncertainty_is_statistical": false
+      }
     },
     {
       "id": "agentmixer:10gen_protoss_5v5",

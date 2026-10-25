@@ -28,9 +28,14 @@
 
 | R024 | Setup | Native Football engine | Four scenarios, complete matches and seed replay | PASS | Build21195904; replay21196022;5v5 takes3001 API steps. Source2.10.2 checksum pinned |
 | R025 | M0 | Football training integration | Four algorithms × four scenarios ×128steps | PASS | All16 runs in job21196049 completed; complete-match evaluations, no performance claim |
-| R026 | Setup | Fresh portable Football installation |130 native packages,23 Python versions | RETRY QUEUED |21196106 compiled engine but shell was interrupted by a live script edit;21196130 retries unchanged recipe after21196038_1. Added private libopengl after login-node import exposed reliance on system library |
+| R026 | Setup | Fresh portable Football installation |130 native packages,23 Python versions | PASS |21196130 completes package/import checks and allfour native replays; traces match originalbuild exactly. Earlier live-script interruption21196106 retained; private libopengl fixes login-node imports |
 | R027 | M0 | Prey fixed-window metric and joint runner | Reward denominator, partial episodes, local execution, float64 likelihoods | PASS | Fixed-window tests plus shared-runner integration; joint event scored once, partial rewards retained |
-| R028 | M2 | Prey coordination controls | Six variants × two penalties,300k,seed0 | RUNNING |21196038;20 fixed200-step windows plus20 complete evaluation episodes. Zero-penalty projectedAR/BPPO rates2.1975/2.185; factorizedAM1.9875,jointAM1.76 |
+| R028 | M2 | Prey coordination controls | Six variants × two penalties,300k,seed0 | COMPLETED |21196038; zero-penalty projectedAR/BPPO rates2.1975/2.185; factorizedAM1.9875,jointAM1.76. Penalty−1 captures0–5% across allsix controls |
 | R029 | M2 | SMACv2 learning pilot | Five methods,terran5v5,20k,seed0 | COMPLETED |21196113; allfive methods completed with0/8 final wins; roughlyfour minutes/run |
-| R030 | M2 | Longer normalized-critic MuJoCo follow-up | Five matched HC2x3 controls,3M,seed0 | QUEUED |21196118; dependencies21196038 and21196130;2workers,4h cap based on500k timings |
-| R031 | M1 | Joint-distribution precision control | Two actor rates,both games,three seeds,200k | QUEUED/RUNNING |21196198/21196199;float64 joint distribution only,networks remainfloat32; matched existingfloat32 controls retained |
+| R030 | M2 | Longer normalized-critic MuJoCo follow-up | Five matched HC2x3 controls,3M,seed0 | RUNNING |21196118; dependencies21196038 and21196130;2workers,4h cap based on500k timings |
+| R031 | M1 | Joint-distribution precision control | Two actor rates,both games,three seeds,200k | COMPLETED mixed |21196198 fast:Climbing2/3,Penalty2/3;21196199 slow:0/3both. Networks remainfloat32. Float32 fastcontrol3/3Climbing,0/3Penalty; no robust convergence |
+| R032 | Targets | Target inventory linkage |45 source targets | PASS coverage | Six original numeric values unchanged;39 digitized selectors resolve uniquely; stale matrix episode interpretation qualified. scripts/check_paper_targets.py |
+| R033 | M2 | Longer SMAC learning check | Five controls,terran5v5,200k,seed0 | RUNNING |21196276; follows stable20k checks;32 evaluation episodes |
+| R034 | M0 | Complete method/observation coverage |15 MuJoCo variants+nine SMAC scenarios×four methods | QUEUED |21196515;96 runs×64steps,diagnostic MuJoCo horizon16; not performance evidence |
+| R035 | M2 | Prey rollout-batch controls | Eight variants×two penalties,1M,seed0 | QUEUED |21196495; compare8×64/50×200 batches plus named entropy/precision controls;100 fixed200-step evaluation windows |
+| R036 | M2 | Football learning pilot | Five methods,3v1,100k,seed0 | QUEUED |21196497; full-match score/evaluation, no early-cap zeros |
