@@ -12,14 +12,15 @@ from bta_repro.agentmixer_continuous import (
 )
 
 
-def _example(seed=12):
+def _example(seed=12, initial_std=1.0):
     torch.manual_seed(seed)
-    policy = ContinuousAgentMixerPolicy(4, 7, 3, 2, hidden_dim=16)
+    policy = ContinuousAgentMixerPolicy(4, 7, 3, 2, hidden_dim=16, initial_std=initial_std)
     return policy, torch.randn(11, 3, 4), torch.randn(11, 7)
 
 
-def test_initial_identity_and_exact_mean_consistency_after_modifier_changes():
-    policy, obs, state = _example()
+@pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
+def test_initial_identity_and_exact_mean_consistency_after_modifier_changes(initial_std):
+    policy, obs, state = _example(initial_std=initial_std)
     local_mean, local_std = policy.local_parameters(obs)
     mean, std = policy.joint_parameters(obs, state)
     assert torch.equal(mean, local_mean)
@@ -73,8 +74,9 @@ def test_local_and_joint_standard_deviations_are_finite_positive_and_bounded(bia
     assert torch.isfinite(logp).all() and torch.isfinite(entropy).all()
 
 
-def test_log_probabilities_and_entropies_sum_action_coordinates():
-    policy, obs, state = _example(5)
+@pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
+def test_log_probabilities_and_entropies_sum_action_coordinates(initial_std):
+    policy, obs, state = _example(5, initial_std=initial_std)
     nn.init.normal_(policy.modifier.log_std_head.weight, std=0.1)
     mean, std = policy.joint_parameters(obs, state)
     raw_actions = mean.detach() + torch.randn_like(mean) * std.detach()
@@ -105,8 +107,9 @@ def test_raw_actions_are_not_squashed_or_clipped_and_deterministic_actions_are_m
     assert not torch.allclose(raw_logp, clipped_logp)
 
 
-def test_gradients_reach_local_means_local_uncertainty_and_modifier():
-    policy, obs, state = _example(7)
+@pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
+def test_gradients_reach_local_means_local_uncertainty_and_modifier(initial_std):
+    policy, obs, state = _example(7, initial_std=initial_std)
     nn.init.normal_(policy.modifier.log_std_head.weight, std=0.1)
     actions, _ = policy.sample(obs, state)
     logp, entropy = policy.evaluate_actions(obs, state, actions)
@@ -153,3 +156,34 @@ def test_reject_malformed_inputs():
         policy.evaluate_actions(obs, state, torch.zeros(11, 3))
     with pytest.raises(ValueError, match="finite"):
         policy.evaluate_actions(obs, state, torch.full((11, 3, 2), torch.inf))
+
+
+@pytest.mark.parametrize("initial_std", [math.exp(-5), 0.36552928931500245, 1.0, math.exp(2)])
+def test_initial_std_preserves_mean_initialization_and_modifier_identity(initial_std):
+    torch.manual_seed(23)
+    reference = ContinuousAgentMixerPolicy(4, 7, 3, 2, 8)
+    torch.manual_seed(23)
+    policy = ContinuousAgentMixerPolicy(4, 7, 3, 2, 8, initial_std=initial_std)
+    obs, state = torch.randn(7, 3, 4), torch.randn(7, 7)
+    local_mean, local_std = policy.local_parameters(obs)
+    mean, std = policy.joint_parameters(obs, state)
+    torch.testing.assert_close(local_std, torch.full_like(local_std, initial_std))
+    assert torch.equal(local_std, std)
+    assert torch.equal(local_mean, mean)
+    assert torch.equal(mean, reference.local_actions(obs))
+    actions, sampled_logp = policy.sample(obs, state)
+    logp, _ = policy.evaluate_actions(obs, state, actions)
+    assert torch.equal(sampled_logp, logp)
+    for decentralized in (False, True):
+        modes, _ = policy.sample(obs, state, deterministic=True, decentralized=decentralized)
+        assert torch.equal(modes, mean)
+    for name, value in reference.state_dict().items():
+        if not (name.startswith("local_actors.") and name.endswith("log_std_head.bias")) or initial_std == 1.0:
+            assert torch.equal(value, policy.state_dict()[name])
+
+
+@pytest.mark.parametrize("initial_std", [0, -1, math.nan, math.inf, -math.inf,
+                                         math.exp(-5) * 0.99, math.exp(2) * 1.01, True, None])
+def test_invalid_initial_std_is_rejected(initial_std):
+    with pytest.raises(ValueError, match="initial_std"):
+        ContinuousAgentMixerPolicy(4, 7, 3, 2, 8, initial_std=initial_std)

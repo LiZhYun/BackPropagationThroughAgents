@@ -1,6 +1,7 @@
 from dataclasses import replace
 from types import SimpleNamespace
 import json
+import math
 import random
 
 import numpy as np
@@ -103,11 +104,35 @@ def _config(**overrides):
     return training.Config(**arguments)
 
 
+@pytest.mark.parametrize("algorithm", ["mappo", "arppo", "bppo", "agentmixer"])
+def test_continuous_policy_factory_passes_initial_standard_deviation(algorithm):
+    config = _config(environment="mujoco", algorithm=algorithm, initial_std=.3)
+    config.validate()
+    env = FakeEnvironment(config, 7)
+    policy = training.make_policy(config, env)
+    obs, state = torch.zeros(4, 2, 3), torch.zeros(4, 4)
+    arguments = (obs, state) if algorithm == "agentmixer" else (obs,)
+    actions, log_probs = policy.sample(*arguments, deterministic=True)
+    expected = -env.action_dim * math.log(config.initial_std * math.sqrt(2 * math.pi))
+    torch.testing.assert_close(log_probs, torch.full((4, 2), expected), atol=1e-6, rtol=1e-6)
+    assert actions.shape == (4, 2, 2)
+
+
+def test_discrete_policy_factory_rejects_gaussian_scale_control():
+    config = _config(initial_std=.3)
+    with pytest.raises(ValueError, match="continuous environment"):
+        training.make_policy(config, FakeEnvironment(config, 7))
+
+
 @pytest.mark.parametrize("environment", ["smac", "mujoco"])
 @pytest.mark.parametrize("algorithm", ["mappo", "arppo", "bppo", "agentmixer"])
 @pytest.mark.parametrize("normalize_observations", [False, True])
-def test_real_runner_updates_all_policy_families_and_preserves_exact_budget(tmp_path, environments, environment, algorithm, normalize_observations):
-    config = _config(environment=environment, algorithm=algorithm, normalize_observations=normalize_observations)
+@pytest.mark.parametrize("normalize_value_targets", [False, True])
+def test_real_runner_updates_all_policy_families_and_preserves_exact_budget(tmp_path, environments, environment, algorithm, normalize_observations, normalize_value_targets):
+    config = _config(environment=environment, algorithm=algorithm, normalize_observations=normalize_observations,
+                     normalize_value_targets=normalize_value_targets,
+                     value_clip_coef=.2 if normalize_value_targets else None,
+                     value_huber_delta=10. if normalize_value_targets else None)
     output = tmp_path / f"{environment}_{algorithm}"
     summary = training.train(config, output)
     assert summary["status"] == "completed"
@@ -135,11 +160,19 @@ def test_real_runner_updates_all_policy_families_and_preserves_exact_budget(tmp_
     assert metadata["training_environment_seed_scheme"] == training.ENVIRONMENT_SEED_SCHEME
     assert metadata["evaluation_environment_seed"] == config.eval_seed
     assert metadata["observation_normalization"]["enabled"] is normalize_observations
+    assert metadata["value_regression"]["normalize_targets"] is normalize_value_targets
     assert metadata["environment_versions"] == {"fake_simulator": "1"}
     assert "runner.py" in metadata["source_sha256"] and "simulator_train.py" in metadata["source_sha256"]
     checkpoint = torch.load(output / "checkpoint.pt", weights_only=True)
     assert checkpoint["step"] == 8 and not (output / "checkpoint.pt.tmp").exists()
     assert all(torch.isfinite(value).all() for value in checkpoint["policy"].values())
+    if normalize_value_targets:
+        restored_critic = training.make_critic(config, environments[0])
+        restored_critic.load_state_dict(checkpoint["critic"])
+        assert restored_critic.normalizer.count == 8 and restored_critic.normalizer.updates == 2
+        for name, value in checkpoint["critic"].items():
+            torch.testing.assert_close(restored_critic.state_dict()[name], value, atol=0, rtol=0)
+        assert restored_critic.normalizer.mean.dtype == torch.float64
     if normalize_observations:
         from bta_repro.normalization import ObservationNormalizer
         state = checkpoint["extra_state"]["observation_normalizer"]
@@ -162,7 +195,8 @@ def test_real_runner_updates_all_policy_families_and_preserves_exact_budget(tmp_
 @pytest.mark.parametrize("environment", ["smac", "mujoco"])
 @pytest.mark.parametrize("algorithm", ["mappo", "arppo", "bppo", "agentmixer"])
 def test_periodic_evaluation_does_not_change_training_weights_rng_or_normalization(tmp_path, environments, environment, algorithm):
-    config = _config(algorithm=algorithm, environment=environment, steps=12, normalize_observations=True)
+    config = _config(algorithm=algorithm, environment=environment, steps=12, normalize_observations=True,
+                     normalize_value_targets=True, value_clip_coef=.2, value_huber_delta=10.)
     first = tmp_path / "initial_final_only"
     second = tmp_path / "with_periodic_eval"
     training.train(config, first)
@@ -176,6 +210,8 @@ def test_periodic_evaluation_does_not_change_training_weights_rng_or_normalizati
     assert baseline["rng"]["python"] == periodic["rng"]["python"]
     assert baseline["rng"]["numpy"] == periodic["rng"]["numpy"]
     assert baseline["extra_state"]["observation_normalizer"] == periodic["extra_state"]["observation_normalizer"]
+    assert baseline["critic"]["normalizer.count"] == periodic["critic"]["normalizer.count"] == 12
+    assert baseline["critic"]["normalizer.updates"] == periodic["critic"]["normalizer.updates"] == 2
     baseline_summary = json.loads((first / "summary.json").read_text())
     periodic_summary = json.loads((second / "summary.json").read_text())
     assert periodic_summary["evaluation_environment_steps"] > baseline_summary["evaluation_environment_steps"]
@@ -213,6 +249,21 @@ def test_critic_diagnostics_use_rollout_predictions_and_leave_targets_unchanged(
     assert training.critic_diagnostics(batch)["explained_variance"] == 0.0
     batch.returns = torch.ones(4)
     assert training.critic_diagnostics(batch)["explained_variance"] is None
+
+
+def test_default_critic_factory_preserves_raw_network_initialization_and_rng():
+    config = _config()
+    env = FakeEnvironment(config, 0)
+    assert config.normalize_value_targets is False
+    assert config.value_clip_coef is config.value_huber_delta is None
+    torch.manual_seed(87)
+    expected = training.mlp(env.state_dim, 1, config.hidden_dim)
+    rng = torch.get_rng_state().clone()
+    torch.manual_seed(87)
+    actual = training.make_critic(config, env)
+    assert torch.equal(torch.get_rng_state(), rng)
+    for name, value in expected.state_dict().items():
+        torch.testing.assert_close(actual.state_dict()[name], value, atol=0, rtol=0)
 
 
 def test_normalized_evaluation_requires_training_statistics_before_creating_env(environments):
@@ -264,6 +315,13 @@ def test_simulator_failure_closes_all_environments_and_records_failure(tmp_path,
     {"gamma": float("nan")}, {"learning_rate": float("inf")}, {"num_envs": 0},
     {"observation_clip": 0}, {"normalize_observations": 1},
     {"modifier_enabled": 0}, {"algorithm": "mappo", "modifier_enabled": False},
+    {"normalize_value_targets": 1}, {"value_clip_coef": 0}, {"value_clip_coef": float("nan")},
+    {"value_huber_delta": -1}, {"value_huber_delta": float("inf")}, {"value_huber_delta": True},
+    {"initial_std": .3}, {"environment": "mujoco", "initial_std": 0},
+    {"environment": "mujoco", "initial_std": float("nan")},
+    {"environment": "mujoco", "initial_std": True},
+    {"environment": "mujoco", "initial_std": math.exp(2) + .01},
+    {"environment": "mujoco", "initial_std": math.exp(-5) / 2},
 ])
 def test_invalid_configuration_is_rejected_before_output_creation(tmp_path, environments, arguments):
     output = tmp_path / "invalid"

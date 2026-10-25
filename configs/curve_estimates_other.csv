@@ -1,0 +1,33 @@
+paper,algorithm,task,metric,primary_target,last_plotted_steps,endpoint_estimate,reading_lower,reading_upper,source_scope
+bpta,BPPO,climbing,episode_return,True,1000000,2200,2180,2220,active_main
+bpta,BPPO,penalty,episode_return,True,1000000,2000,1960,2040,active_main
+bpta,ARMAPPO w/ PROJ,climbing,episode_return,False,1000000,2200,2180,2220,active_appendix_ablation
+bpta,ARMAPPO w/ PROJ,penalty,episode_return,False,1000000,1990,1950,2030,active_appendix_ablation
+bpta,BPPO,10gen_protoss_5v5,test_win_rate,True,9760000,0.502,0.498,0.505,active_appendix
+bpta,BPPO,10gen_protoss_10v10,test_win_rate,True,9759999,0.444,0.441,0.447,active_appendix
+bpta,BPPO,10gen_protoss_10v11,test_win_rate,True,9760000,0.09,0.089,0.091,active_appendix
+bpta,BPPO,10gen_zerg_5v5,test_win_rate,True,9760000,0.469,0.466,0.472,active_appendix
+bpta,BPPO,10gen_zerg_10v10,test_win_rate,True,9759999,0.425,0.422,0.427,active_appendix
+bpta,BPPO,10gen_zerg_10v11,test_win_rate,True,9760000,0.238,0.236,0.24,active_appendix
+bpta,BPPO,10gen_terran_5v5,test_win_rate,True,9760000,0.504,0.501,0.507,active_appendix
+bpta,BPPO,10gen_terran_10v10,test_win_rate,True,9759999,0.349,0.347,0.351,active_appendix
+bpta,BPPO,10gen_terran_10v11,test_win_rate,True,9760000,0.124,0.123,0.125,active_appendix
+bpta,BPPO,10gen_protoss_5v5,train_win_rate,False,9760000,0.465,0.461,0.468,active_main
+bpta,BPPO,10gen_protoss_10v10,train_win_rate,False,9760000,0.395,0.392,0.398,active_main
+bpta,BPPO,10gen_protoss_10v11,train_win_rate,False,9760000,0.085,0.084,0.087,active_main
+bpta,BPPO,10gen_zerg_5v5,train_win_rate,False,9760000,0.412,0.409,0.415,active_main
+bpta,BPPO,10gen_zerg_10v10,train_win_rate,False,9760000,0.384,0.381,0.386,active_main
+bpta,BPPO,10gen_zerg_10v11,train_win_rate,False,9760000,0.219,0.217,0.221,active_main
+bpta,BPPO,10gen_terran_5v5,train_win_rate,False,9760000,0.466,0.463,0.469,active_main
+bpta,BPPO,10gen_terran_10v10,train_win_rate,False,9760000,0.352,0.349,0.355,active_main
+bpta,BPPO,10gen_terran_10v11,train_win_rate,False,9760000,0.125,0.123,0.126,active_main
+bpta,BPPO,academy_3_vs_1_with_keeper,test_win_rate,True,20000000,0.754,0.749,0.759,active_appendix
+bpta,BPPO,academy_counterattack_hard,test_win_rate,True,20000001,0.612,0.607,0.617,active_appendix
+bpta,BPPO,academy_corner,test_win_rate,True,20000000,0.644,0.639,0.649,active_appendix
+bpta,BPPO,academy_3_vs_1_with_keeper,train_win_rate,False,20000000,0.796,0.79,0.801,active_main
+bpta,BPPO,academy_counterattack_hard,train_win_rate,False,19999999,0.638,0.633,0.643,active_main
+bpta,BPPO,academy_corner,train_win_rate,False,20000000,0.69,0.685,0.695,active_main
+bpta,BPPO,5_vs_5,episode_return,True,20000000,-0.29,-0.3,-0.28,active_main
+agentmixer,AgentMixer,climbing,episode_return,True,200000,11.0,10.81,11.19,commented_appendix_asset
+agentmixer,AgentMixer,predator_prey_penalty_0,average_test_episode_return,True,1000000,2.21,2.19,2.23,commented_appendix_asset
+agentmixer,AgentMixer,predator_prey_penalty_-1,average_test_episode_return,True,1000000,0.36,0.35,0.36,commented_appendix_asset

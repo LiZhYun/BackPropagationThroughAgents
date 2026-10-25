@@ -22,7 +22,7 @@ python -m bta_repro.train --algorithm agentmixer --game climbing --steps 100000 
 
 Algorithms: `mappo`, `arppo`, `bppo`, `agentmixer`. Games: `climbing`, `penalty`. Every run creates a fresh result directory with configuration, source hashes, raw metrics, an exact matrix-game evaluation, and a checkpoint containing optimizer and random-number-generator states. `--output` must name a directory that does not already exist.
 
-Matrix training uses one-step episodes and reports reward per joint environment step. These are development experiments. BPTA's plotted matrix episode returns use a different scale; do not compare the numbers without resolving the episode/normalization convention.
+Matrix training uses one-step episodes and reports reward per joint environment step, matching the pinned legacy environment's termination convention. Legacy training logs multiply mean reward by 200, while evaluation reports reward per decision. The exact connection to historical plot files is unverified; see the [protocol audit](docs/other_curve_targets.md).
 
 ## Reading the code
 

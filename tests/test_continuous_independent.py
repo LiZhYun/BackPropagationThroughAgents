@@ -1,4 +1,7 @@
 """The continuous baseline scores vector events and uses only local inputs."""
+import math
+
+import pytest
 import torch
 from bta_repro.core import ContinuousIndependentPolicy
 
@@ -38,3 +41,30 @@ def test_deterministic_action_is_gaussian_mode():
     obs = torch.randn(5, 3, 4)
     actions, _ = policy.sample(obs, deterministic=True)
     torch.testing.assert_close(actions, policy.local_actions(obs))
+
+
+@pytest.mark.parametrize("initial_std", [math.exp(-5), 0.36552928931500245, 1.0, math.exp(2)])
+def test_initial_std_sets_scale_without_changing_means(initial_std):
+    torch.manual_seed(19)
+    reference = ContinuousIndependentPolicy(4, 3, 2, 8)
+    torch.manual_seed(19)
+    policy = ContinuousIndependentPolicy(4, 3, 2, 8, initial_std=initial_std)
+    obs = torch.randn(7, 3, 4)
+    dist = policy.distribution(obs)
+    torch.testing.assert_close(dist.base_dist.scale, torch.full_like(dist.mean, initial_std))
+    assert torch.equal(dist.mean, reference.distribution(obs).mean)
+    actions, sampled_logp = policy.sample(obs)
+    logp, _ = policy.evaluate_actions(obs, actions)
+    assert torch.equal(sampled_logp, logp)
+    modes, _ = policy.sample(obs, deterministic=True)
+    assert torch.equal(modes, dist.mean)
+    for name, value in reference.state_dict().items():
+        if name != "log_std" or initial_std == 1.0:
+            assert torch.equal(value, policy.state_dict()[name])
+
+
+@pytest.mark.parametrize("initial_std", [0, -1, math.nan, math.inf, -math.inf,
+                                         math.exp(-5) * 0.99, math.exp(2) * 1.01, True, None])
+def test_invalid_initial_std_is_rejected(initial_std):
+    with pytest.raises(ValueError, match="initial_std"):
+        ContinuousIndependentPolicy(4, 3, 2, 8, initial_std=initial_std)

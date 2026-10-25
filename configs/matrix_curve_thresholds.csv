@@ -1,0 +1,16 @@
+paper,algorithm,task,fraction,threshold_plotted_units,first_observed_steps,previous_observed_steps,sustained_observed_steps,first_certain_steps,sustained_certain_steps
+bpta,BPPO,climbing,0.9,1980.0,190000,180000,190000,200000,200000
+bpta,BPPO,climbing,0.95,2090.0,230000,220000,230000,240000,240000
+bpta,BPPO,climbing,0.99,2178.0,340000,330000,340000,560000,560000
+bpta,BPPO,penalty,0.9,1800.0,170000,160000,170000,180000,180000
+bpta,BPPO,penalty,0.95,1900.0,200000,190000,200000,220000,220000
+bpta,BPPO,penalty,0.99,1980.0,340000,330000,340000,,
+bpta,ARMAPPO w/ PROJ,climbing,0.9,1980.0,200000,190000,200000,200000,200000
+bpta,ARMAPPO w/ PROJ,climbing,0.95,2090.0,230000,220000,230000,240000,240000
+bpta,ARMAPPO w/ PROJ,climbing,0.99,2178.0,400000,390000,740000,530000,740000
+bpta,ARMAPPO w/ PROJ,penalty,0.9,1800.0,180000,170000,920000,190000,930000
+bpta,ARMAPPO w/ PROJ,penalty,0.95,1900.0,220000,210000,940000,230000,940000
+bpta,ARMAPPO w/ PROJ,penalty,0.99,1980.0,470000,460000,960000,,
+agentmixer,AgentMixer,climbing,0.9,9.9,80000,70000,80000,80000,80000
+agentmixer,AgentMixer,climbing,0.95,10.45,80000,70000,80000,80000,80000
+agentmixer,AgentMixer,climbing,0.99,10.89,80000,70000,80000,,

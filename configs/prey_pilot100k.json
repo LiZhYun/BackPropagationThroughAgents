@@ -1,0 +1,101 @@
+{
+  "label": "prey_pilot100k",
+  "scope": "100k-step development integration/learning pilot; episodic and completed-episode mean-step metrics are not the historical fixed-window figure metric",
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "prey",
+    "steps": 100000,
+    "num_envs": 8,
+    "rollout_steps": 64,
+    "hidden_dim": 64,
+    "epochs": 5,
+    "learning_rate": 0.0005,
+    "modifier_learning_rate": 5e-05,
+    "critic_learning_rate": 0.0005,
+    "entropy_coef": 0.01,
+    "max_grad_norm": 10.0,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "eval_episodes": 20,
+    "eval_every_steps": 20000,
+    "checkpoint_every_updates": 100,
+    "threads": 1
+  },
+  "variants": {
+    "mappo_zero": {
+      "algorithm": "mappo",
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "arppo_zero": {
+      "algorithm": "arppo",
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "bppo_zero": {
+      "algorithm": "bppo",
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_identity_zero": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      },
+      "modifier_enabled": false
+    },
+    "agentmixer_zero": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "mappo_minus1": {
+      "algorithm": "mappo",
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    },
+    "arppo_minus1": {
+      "algorithm": "arppo",
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    },
+    "bppo_minus1": {
+      "algorithm": "bppo",
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_identity_minus1": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      },
+      "modifier_enabled": false
+    },
+    "agentmixer_minus1": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    }
+  }
+}

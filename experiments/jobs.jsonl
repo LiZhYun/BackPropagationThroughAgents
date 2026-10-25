@@ -17,3 +17,11 @@
 {"job_id":"21192705","purpose":"joint modifier slow learning rate,scales0.1to10,6runs","manifest":"results/matrix_joint_slow_bounded_20261024T233315Z/manifest.json","dependency":"afterany:21192700"}
 {"job_id":"21192712","purpose":"joint modifier fast learning rate,scales0.1to10,6runs","manifest":"results/matrix_joint_fast_bounded_20261024T233317Z/manifest.json","dependency":"afterany:21192705"}
 {"job_id":"21192732","purpose":"100k-step HalfCheetah2x3 pilot,five algorithms/controls,seed0,two serial CPUworkers","manifest":"results/mujoco_hc2x3_pilot_20261024T233938Z/manifest.json","dependency":"afterany:21192712"}
+{"job_id": "21192905", "purpose": "1M-step matched HalfCheetah2x3 development check,fivecontrols,seed0,two CPUworkers", "manifest": "results/mujoco_hc2x3_1m_20261025T001849Z/manifest.json"}
+{"job_id": "21192929", "purpose": "matrix_joint_lr_base:200k-stepjointmodifieractorLRcontrol,two games,three seeds,two CPUworkers", "manifest": "results/matrix_joint_lr_base_20261025T002320Z/manifest.json"}
+{"job_id": "21192931", "purpose": "matrix_joint_lr_fast:200k-stepjointmodifieractorLRcontrol,two games,three seeds,two CPUworkers", "manifest": "results/matrix_joint_lr_fast_20261025T002333Z/manifest.json", "dependency": "afterany:21192929"}
+{"job_id": "21192932", "purpose": "matrix_joint_lr_late:200k-stepjointmodifieractorLRcontrol,two games,three seeds,two CPUworkers", "manifest": "results/matrix_joint_lr_late_20261025T002344Z/manifest.json", "dependency": "afterany:21192931"}
+{"job_id": "21193031", "purpose": "matrix_factorized_lr_fast:matched200kdevelopmentcontrol,two games,three seeds,two CPUworkers", "manifest": "results/matrix_factorized_lr_fast_20261025T005157Z/manifest.json"}
+{"job_id": "21193032", "purpose": "matrix_joint_lr_fast_entropy0:matched200kdevelopmentcontrol,two games,three seeds,two CPUworkers", "manifest": "results/matrix_joint_lr_fast_entropy0_20261025T005208Z/manifest.json", "dependency": "afterany:21193031"}
+{"job_id": "21195730", "purpose": "mujoco_hc2x3_protocol500k:bounded development learning controls,two CPUworkers", "manifest": "results/mujoco_hc2x3_protocol500k_20261025T075442Z/manifest.json"}
+{"job_id": "21195734", "purpose": "prey_pilot100k:bounded development learning controls,two CPUworkers", "manifest": "results/prey_pilot100k_20261025T075454Z/manifest.json"}

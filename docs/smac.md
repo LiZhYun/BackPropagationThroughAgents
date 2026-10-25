@@ -2,10 +2,10 @@
 
 [`src/bta_repro/smac_env.py`](../src/bta_repro/smac_env.py) provides an optional simulator adapter. Importing it requires NumPy only; constructing a real environment imports SMACv2. Matrix tests and algorithm tests do not require StarCraft II.
 
-The backend API is pinned to official SMACv2 commit `577ab5a2cff2391f8df582da5731ea9cd6adf3c6`, using `StarCraftCapabilityEnvWrapper` from `smacv2.env.starcraft2.wrapper`. Install this dependency separately in the reproduction environment:
+The backend API is pinned to official SMACv2 commit `577ab5a2cff2391f8df582da5731ea9cd6adf3c6`, using `StarCraftCapabilityEnvWrapper` from `smacv2.env.starcraft2.wrapper`. Create its private pinned environment using the [verified setup recipe](environment_versions.md):
 
 ```bash
-.venv/bin/python -m pip install 'smacv2 @ git+https://github.com/oxwhirl/smacv2.git@577ab5a2cff2391f8df582da5731ea9cd6adf3c6'
+bash scripts/setup_smac.sh
 ```
 
 StarCraft II is a separate prerequisite. Set `SC2PATH` to an existing installation containing `Versions` and `Maps`; the local shared installation is `/scratch/work/liz23/3rdparty/StarCraftII`, with version 4.10.0 / Base75689. The adapter defaults to `game_version="4.10"`. It does not install software, copy maps, save replays, or modify that installation. A `sc2_path` configuration value can select a path for backend calls while restoring the caller's environment afterwards. Startup failures remain errors; no synthetic episodes replace them.

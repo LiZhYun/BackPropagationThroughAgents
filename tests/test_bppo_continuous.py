@@ -17,16 +17,17 @@ def seed():
     torch.manual_seed(211)
 
 
-def make_batch(agents=2, dimensions=3, batch=9):
-    policy = ContinuousAutoregressivePolicy(2, agents, dimensions, hidden_dim=8)
+def make_batch(agents=2, dimensions=3, batch=9, initial_std=1.0):
+    policy = ContinuousAutoregressivePolicy(2, agents, dimensions, hidden_dim=8, initial_std=initial_std)
     obs = torch.randn(batch, agents, 2)
     actions, log_probs = policy.sample(obs)
     return policy, obs, actions, log_probs
 
 
 @pytest.mark.parametrize("deterministic", [False, True])
-def test_sample_and_evaluation_likelihoods_agree(deterministic):
-    policy, obs, _, _ = make_batch()
+@pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
+def test_sample_and_evaluation_likelihoods_agree(deterministic, initial_std):
+    policy, obs, _, _ = make_batch(initial_std=initial_std)
     actions, sampled_log_probs = policy.sample(obs, deterministic)
     log_probs, entropy = policy.evaluate_actions(obs, actions)
     assert actions.shape == (9, 2, 3)
@@ -162,8 +163,9 @@ def test_multisuccessor_ratio_derivative_matches_finite_differences():
     torch.testing.assert_close(coefficients, numerical, atol=1e-8, rtol=1e-5)
 
 
-def test_gaussian_peer_path_reaches_only_current_actor():
-    policy, obs, actions, _ = make_batch(dimensions=2)
+@pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
+def test_gaussian_peer_path_reaches_only_current_actor(initial_std):
+    policy, obs, actions, _ = make_batch(dimensions=2, initial_std=initial_std)
     behavior = deepcopy(policy).requires_grad_(False)
     with torch.no_grad():
         policy.actors[1].mean[-1].weight.add_(torch.randn_like(policy.actors[1].mean[-1].weight))
@@ -220,8 +222,9 @@ def test_peer_dot_sums_coordinates_and_own_loss_is_scalar():
         torch.testing.assert_close(vector[key], repeated[key])
 
 
-def test_two_agent_update_is_finite_and_reverse_ordered():
-    policy, obs, actions, old_log_probs = make_batch()
+@pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
+def test_two_agent_update_is_finite_and_reverse_ordered(initial_std):
+    policy, obs, actions, old_log_probs = make_batch(initial_std=initial_std)
     calls = []
 
     class RecordingSGD(torch.optim.SGD):
@@ -261,3 +264,29 @@ def test_empty_or_nonfinite_raw_action_inputs_fail_explicitly():
     actions[0, 0, 0] = torch.inf
     with pytest.raises(ValueError, match="finite floating-point raw actions"):
         policy.evaluate_actions(obs, actions)
+
+
+@pytest.mark.parametrize("initial_std", [math.exp(-5), 0.36552928931500245, 1.0, math.exp(2)])
+def test_initial_std_preserves_conditional_means_and_default_parameters(initial_std):
+    torch.manual_seed(31)
+    reference = ContinuousAutoregressivePolicy(2, 2, 3, 8)
+    torch.manual_seed(31)
+    policy = ContinuousAutoregressivePolicy(2, 2, 3, 8, initial_std=initial_std)
+    obs = torch.randn(7, 2, 2)
+    actions, _ = policy.sample(obs, deterministic=True)
+    reference_actions, _ = reference.sample(obs, deterministic=True)
+    assert torch.equal(actions, reference_actions)
+    for i in range(2):
+        dist = policy._distribution(obs, actions, i)
+        torch.testing.assert_close(dist.base_dist.scale, torch.full_like(dist.mean, initial_std))
+        assert torch.equal(actions[:, i], dist.mean)
+    for name, value in reference.state_dict().items():
+        if not name.endswith("log_std") or initial_std == 1.0:
+            assert torch.equal(value, policy.state_dict()[name])
+
+
+@pytest.mark.parametrize("initial_std", [0, -1, math.nan, math.inf, -math.inf,
+                                         math.exp(-5) * 0.99, math.exp(2) * 1.01, True, None])
+def test_invalid_initial_std_is_rejected(initial_std):
+    with pytest.raises(ValueError, match="initial_std"):
+        ContinuousAutoregressivePolicy(2, 2, 3, 8, initial_std=initial_std)

@@ -23,6 +23,7 @@ import torch
 from .checkpoint import save_checkpoint
 from .core import mlp
 from .runner import collect_rollout, update_rollout
+from .value_normalization import DEFAULT_VARIANCE_FLOOR, ValueNormalizedCritic, validate_value_loss_options
 
 
 ENVIRONMENT_SEED_SCHEME = "numpy_seed_sequence_bta_sim_v1"
@@ -49,6 +50,7 @@ class Config:
     num_envs: int = 1
     rollout_steps: int = 128
     hidden_dim: int = 64
+    initial_std: float = 1.0
     modifier_enabled: bool = True
     learning_rate: float = 5e-4
     modifier_learning_rate: float = 5e-5
@@ -57,6 +59,9 @@ class Config:
     clip_coef: float = 0.2
     entropy_coef: float = 0.01
     value_coef: float = 0.5
+    normalize_value_targets: bool = False
+    value_clip_coef: float | None = None
+    value_huber_delta: float | None = None
     max_grad_norm: float = 0.5
     gamma: float = 0.99
     gae_lambda: float = 0.95
@@ -73,8 +78,8 @@ class Config:
     threads: int = 1
 
     def validate(self):
-        if self.environment not in ("smac", "mujoco"):
-            raise ValueError("environment must be smac or mujoco")
+        if self.environment not in ("smac", "mujoco", "prey"):
+            raise ValueError("environment must be smac, mujoco, or prey")
         if self.algorithm not in ("mappo", "arppo", "bppo", "agentmixer"):
             raise ValueError("unknown algorithm")
         if not isinstance(self.env_config, dict) or "seed" in self.env_config:
@@ -108,9 +113,16 @@ class Config:
                 raise ValueError(f"{name} must be finite and nonnegative")
         if not 0 <= self.clip_coef < 1 or not 0 <= self.gamma <= 1 or not 0 <= self.gae_lambda <= 1:
             raise ValueError("invalid PPO clipping, discount, or GAE coefficient")
-        for name in ("normalize_advantages", "normalize_observations", "modifier_enabled"):
+        for name in ("normalize_advantages", "normalize_observations", "normalize_value_targets", "modifier_enabled"):
             if not isinstance(getattr(self, name), bool):
                 raise ValueError(f"{name} must be boolean")
+        validate_value_loss_options(self.value_clip_coef, self.value_huber_delta)
+        if (isinstance(self.initial_std, bool) or not isinstance(self.initial_std, (int, float))
+                or not math.isfinite(self.initial_std)
+                or not math.exp(-5) <= self.initial_std <= math.exp(2)):
+            raise ValueError("initial_std must be finite and within [exp(-5), exp(2)]")
+        if self.environment != "mujoco" and self.initial_std != 1.0:
+            raise ValueError("nondefault initial_std requires a continuous environment")
         if self.algorithm != "agentmixer" and not self.modifier_enabled:
             raise ValueError("modifier_enabled=False requires algorithm=agentmixer")
         device = torch.device(self.device)
@@ -127,6 +139,9 @@ def make_env(config: Config, seed: int):
     if config.environment == "smac":
         from .smac_env import SmacEnv
         return SmacEnv(arguments)
+    if config.environment == "prey":
+        from .prey_env import PreyEnv
+        return PreyEnv(arguments)
     from .mujoco_env import MujocoEnv
     return MujocoEnv(arguments)
 
@@ -140,13 +155,17 @@ def environment_spec(env) -> dict:
 
 
 def make_policy(config: Config, env):
+    if env.is_discrete and config.initial_std != 1.0:
+        raise ValueError("nondefault initial_std requires a continuous environment")
     dimensions = (env.obs_dim, env.num_agents, env.num_actions if env.is_discrete else env.action_dim)
+    scale_arguments = {} if env.is_discrete else {"initial_std": config.initial_std}
     if config.algorithm == "agentmixer":
         if env.is_discrete:
             from .agentmixer import AgentMixerPolicy as Policy
         else:
             from .agentmixer_continuous import ContinuousAgentMixerPolicy as Policy
-        policy = Policy(env.obs_dim, env.state_dim, env.num_agents, dimensions[-1], config.hidden_dim)
+        policy = Policy(env.obs_dim, env.state_dim, env.num_agents, dimensions[-1], config.hidden_dim,
+                        **scale_arguments)
         if not config.modifier_enabled:
             policy.modifier.requires_grad_(False)
         return policy
@@ -159,7 +178,12 @@ def make_policy(config: Config, env):
         from .core import IndependentPolicy as Policy
     else:
         from .core import ContinuousIndependentPolicy as Policy
-    return Policy(*dimensions, hidden_dim=config.hidden_dim)
+    return Policy(*dimensions, hidden_dim=config.hidden_dim, **scale_arguments)
+
+
+def make_critic(config: Config, env):
+    critic = mlp(env.state_dim, 1, config.hidden_dim)
+    return ValueNormalizedCritic(critic) if config.normalize_value_targets else critic
 
 
 def make_optimizers(config: Config, policy, critic) -> dict:
@@ -208,6 +232,8 @@ class EpisodeStatistics:
     truncated: int = 0
     wins: int = 0
     win_records: int = 0
+    captures: int = 0
+    capture_records: int = 0
 
     def add(self, records):
         for record in records:
@@ -221,6 +247,9 @@ class EpisodeStatistics:
             if "battle_won" in record["info"]:
                 self.win_records += 1
                 self.wins += int(bool(record["info"]["battle_won"]))
+            if "capture_success" in record["info"]:
+                self.capture_records += 1
+                self.captures += int(bool(record["info"]["capture_success"]))
 
     def summary(self):
         return {
@@ -230,6 +259,10 @@ class EpisodeStatistics:
             "terminated": self.terminated, "truncated": self.truncated,
             "win_rate": self.wins / self.win_records if self.win_records else None,
             "win_records": self.win_records,
+            "capture_rate": self.captures / self.capture_records if self.capture_records else None,
+            "capture_records": self.capture_records,
+            "reward_per_environment_step": self.return_mean * self.count / self.steps if self.steps else None,
+            "reward_per_step_scope": "completed_episodes_only",
         }
 
 
@@ -375,7 +408,16 @@ def train(config: Config, output: Path) -> dict:
             "convention": "running_per_agent_observation_feature_and_global_state_feature",
             "clip": config.observation_clip, "training_statistics_only": True,
             "evaluation_statistics": "frozen_training_snapshot",
-            "reward_normalization": False, "value_target_normalization": False,
+            "reward_normalization": False, "value_target_normalization": config.normalize_value_targets,
+        },
+        "value_regression": {
+            "normalize_targets": config.normalize_value_targets,
+            "normalizer_estimator": "cumulative_float64_population_moments",
+            "variance_floor": DEFAULT_VARIANCE_FLOOR, "statistics_scope": "shared_team_critic",
+            "statistics_update": "once_per_training_rollout", "popart": False,
+            "clip_coef": config.value_clip_coef, "huber_delta": config.value_huber_delta,
+            "loss_units": "standardized" if config.normalize_value_targets else "raw",
+            "raw_values_for_gae": True,
         },
         "checkpoint_resume": "model/optimizer/RNG saved; simulator state is not saved and exact simulator resume is unsupported",
     }
@@ -398,7 +440,7 @@ def train(config: Config, output: Path) -> dict:
         metadata["environment_versions"] = deepcopy(getattr(envs[0], "versions", {}))
         _write_json(output / "config.json", metadata)
         policy = make_policy(config, envs[0]).to(config.device)
-        critic = mlp(envs[0].state_dim, 1, config.hidden_dim).to(config.device)
+        critic = make_critic(config, envs[0]).to(config.device)
         optimizers = make_optimizers(config, policy, critic)
         observations = None
         episode_statistics = EpisodeStatistics()
@@ -434,6 +476,7 @@ def train(config: Config, output: Path) -> dict:
                     policy, critic, optimizers, batch, config.algorithm, spec["is_discrete"],
                     epochs=config.epochs, clip_coef=config.clip_coef, entropy_coef=config.entropy_coef,
                     value_coef=config.value_coef, max_grad_norm=config.max_grad_norm,
+                    value_clip_coef=config.value_clip_coef, value_huber_delta=config.value_huber_delta,
                     normalize_advantages=config.normalize_advantages, temperature=config.temperature,
                 )
                 rollout_statistics = EpisodeStatistics()

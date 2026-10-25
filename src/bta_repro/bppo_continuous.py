@@ -15,13 +15,17 @@ from torch import Tensor, nn
 from torch.distributions import Independent, Normal
 
 from .bppo import _actor_objective, _successor_feedback
+from .core import LOG_STD_MAX, LOG_STD_MIN, initial_log_std
 
 
 class _GaussianActor(nn.Module):
     """Tanh mean network and independent, bounded, state-independent scales."""
 
-    def __init__(self, input_dim: int, action_dim: int, hidden_dim: int) -> None:
+    def __init__(
+        self, input_dim: int, action_dim: int, hidden_dim: int, *, initial_std: float = 1.0
+    ) -> None:
         super().__init__()
+        log_std = initial_log_std(initial_std)
         self.mean = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
             nn.Tanh(),
@@ -34,11 +38,11 @@ class _GaussianActor(nn.Module):
                 nn.init.orthogonal_(layer.weight, gain=math.sqrt(2))
                 nn.init.zeros_(layer.bias)
         nn.init.orthogonal_(self.mean[-1].weight, gain=0.01)
-        self.log_std = nn.Parameter(torch.zeros(action_dim))
+        self.log_std = nn.Parameter(torch.full((action_dim,), log_std))
 
     def forward(self, inputs: Tensor) -> Independent:
         mean = self.mean(inputs)
-        std = self.log_std.clamp(-5.0, 2.0).exp().expand_as(mean)
+        std = self.log_std.clamp(LOG_STD_MIN, LOG_STD_MAX).exp().expand_as(mean)
         # Reinterpret the final coordinate axis as one action event. Every
         # likelihood and entropy used below consequently has shape [batch].
         return Independent(Normal(mean, std), 1)
@@ -48,7 +52,8 @@ class ContinuousAutoregressivePolicy(nn.Module):
     """Separate Gaussian actors conditioned on the raw predecessor actions."""
 
     def __init__(
-        self, obs_dim: int, num_agents: int, action_dim: int, hidden_dim: int = 64
+        self, obs_dim: int, num_agents: int, action_dim: int, hidden_dim: int = 64,
+        *, initial_std: float = 1.0,
     ) -> None:
         super().__init__()
         if min(obs_dim, num_agents, action_dim, hidden_dim) < 1:
@@ -57,7 +62,7 @@ class ContinuousAutoregressivePolicy(nn.Module):
         self.num_agents = num_agents
         self.action_dim = action_dim
         self.actors = nn.ModuleList(
-            _GaussianActor(obs_dim + i * action_dim, action_dim, hidden_dim)
+            _GaussianActor(obs_dim + i * action_dim, action_dim, hidden_dim, initial_std=initial_std)
             for i in range(num_agents)
         )
 

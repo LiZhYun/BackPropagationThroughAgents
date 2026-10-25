@@ -13,17 +13,17 @@ from torch import Tensor, nn
 from torch.distributions import Normal
 
 from bta_repro.agentmixer import _MixerBlock
-
-
-LOG_STD_MIN = -5.0
-LOG_STD_MAX = 2.0
+from bta_repro.core import LOG_STD_MAX, LOG_STD_MIN, initial_log_std
 
 
 class _GaussianActor(nn.Module):
     """One agent's observation-conditioned mean and diagonal uncertainty."""
 
-    def __init__(self, obs_dim: int, action_dim: int, hidden_dim: int) -> None:
+    def __init__(
+        self, obs_dim: int, action_dim: int, hidden_dim: int, *, initial_std: float = 1.0
+    ) -> None:
         super().__init__()
+        log_std = initial_log_std(initial_std)
         self.features = nn.Sequential(
             nn.Linear(obs_dim, hidden_dim), nn.Tanh(),
             nn.Linear(hidden_dim, hidden_dim), nn.Tanh(),
@@ -37,7 +37,7 @@ class _GaussianActor(nn.Module):
         nn.init.orthogonal_(self.mean_head.weight, gain=0.01)
         nn.init.zeros_(self.mean_head.bias)
         nn.init.zeros_(self.log_std_head.weight)
-        nn.init.zeros_(self.log_std_head.bias)
+        nn.init.constant_(self.log_std_head.bias, log_std)
 
     def forward(self, obs: Tensor) -> tuple[Tensor, Tensor]:
         features = self.features(obs)
@@ -86,6 +86,8 @@ class ContinuousAgentMixerPolicy(nn.Module):
         num_agents: int,
         action_dim: int,
         hidden_dim: int = 64,
+        *,
+        initial_std: float = 1.0,
     ) -> None:
         super().__init__()
         if min(obs_dim, state_dim, num_agents, action_dim, hidden_dim) < 1:
@@ -95,7 +97,8 @@ class ContinuousAgentMixerPolicy(nn.Module):
         self.num_agents = num_agents
         self.action_dim = action_dim
         self.local_actors = nn.ModuleList([
-            _GaussianActor(obs_dim, action_dim, hidden_dim) for _ in range(num_agents)
+            _GaussianActor(obs_dim, action_dim, hidden_dim, initial_std=initial_std)
+            for _ in range(num_agents)
         ])
         self.modifier = ContinuousPolicyModifier(state_dim, num_agents, action_dim, hidden_dim)
 

@@ -37,6 +37,8 @@ For MA-MuJoCo, use `"environment": "mujoco"` and an adapter configuration such a
 
 See the adapter setup documents for simulator installation, supported partitions, versions, and deviations from the original releases. Unsupported tasks fail instead of silently substituting another benchmark.
 
+For continuous policies, `initial_std` sets the initial diagonal Gaussian standard deviation in policy action units. It defaults to `1.0` and must lie in `[exp(-5), exp(2)]`. For example, `0.3` reduces initial exploration while preserving the policy family and identity modifier. SMAC configurations reject nondefault values because their actions are categorical. The selected value is saved in the run configuration.
+
 ## Training and evaluation
 
 The run `seed` controls model initialization and sampling. Simulator seeds are derived with NumPy `SeedSequence([0x425441, 0x53494D, 1, seed]).spawn(num_envs)`, taking one uint32 value from each child. The fixed BTA/SIM/version namespace avoids the overlapping consecutive simulator streams that `seed + env_index` creates for adjacent run seeds. Increasing `num_envs` preserves the earlier environments' derived seeds. The scheme name and actual simulator seeds are recorded in `config.json`.
@@ -65,7 +67,7 @@ normalizer.load_state_dict(checkpoint["extra_state"]["observation_normalizer"])
 env = NormalizedEnv(env, normalizer.frozen_copy(), training=False)
 ```
 
-Every update records `critic_diagnostics`: the mean and population standard deviation of the raw GAE return targets and rollout-time value predictions, plus explained variance before optimization. Explained variance is `null` when the targets are constant. These diagnostics help expose poorly fitted critics or large target scales. Value-target normalization, PopArt, and reward normalization are not implemented; observation normalization alone does not address large value targets.
+Every update records `critic_diagnostics`: the mean and population standard deviation of the raw GAE return targets and rollout-time value predictions, plus explained variance before optimization. Explained variance is `null` when the targets are constant. Optional `normalize_value_targets`, `value_clip_coef`, and `value_huber_delta` control critic training while preserving raw values for GAE. Defaults retain raw MSE. See [critic target normalization](value_normalization.md) for the cumulative estimator, clipping reference, loss scaling, diagnostics, and checkpoint contract. PopArt and reward normalization are not implemented.
 
 ## Modifier ablation
 
@@ -78,7 +80,7 @@ Each output directory contains:
 - `config.json`: all training parameters, resolved adapter configurations, environment dimensions, seeds, installed package versions, adapter version information, and SHA-256 hashes of the Python sources.
 - `metrics.jsonl`: initial/periodic/final evaluation records and one loss/rollout summary with critic diagnostics per update.
 - `episodes.jsonl`: raw completed training episode returns, lengths, ending flags, and environment info.
-- `checkpoint.pt`: policy, critic, optimizers, configuration, step count, shared checkpoint RNG fields, and observation-normalizer state when enabled. Writes replace a temporary file atomically; the final model is saved before final evaluation.
+- `checkpoint.pt`: policy, critic (including value-target moments when enabled), optimizers, configuration, step count, shared checkpoint RNG fields, and observation-normalizer state when enabled. Writes replace a temporary file atomically; the final model is saved before final evaluation.
 - `summary.json`: completion status, exact successful training budget, separate evaluation interaction count, episode statistics, and initial/final evaluation. Exceptions produce a failed summary and are re-raised.
 
 `checkpoint_every_updates` controls intermediate checkpoint replacement; zero retains only the final checkpoint. Simulator states and unfinished rollouts are not serialized. The CLI therefore does not claim exact simulator continuation or offer a resume flag. The shared checkpoint currently stores CPU/Python/NumPy RNG state; complete CUDA continuation is also outside that checkpoint contract.

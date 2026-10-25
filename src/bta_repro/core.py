@@ -1,8 +1,25 @@
 """Shared numerical primitives. Algorithm-specific objectives live elsewhere."""
 from dataclasses import dataclass
+import math
 import torch
 from torch import Tensor, nn
 from torch.distributions import Categorical, Independent, Normal
+
+
+LOG_STD_MIN = -5.0
+LOG_STD_MAX = 2.0
+
+
+def initial_log_std(initial_std: float) -> float:
+    """Validate an initial Gaussian scale against the existing log-scale bounds."""
+    try:
+        value = float(initial_std)
+    except (TypeError, ValueError):
+        raise ValueError("initial_std must be finite and within [exp(-5), exp(2)]") from None
+    if (isinstance(initial_std, bool) or not math.isfinite(value)
+            or not math.exp(LOG_STD_MIN) <= value <= math.exp(LOG_STD_MAX)):
+        raise ValueError("initial_std must be finite and within [exp(-5), exp(2)]")
+    return math.log(value)
 
 
 def mlp(input_dim: int, output_dim: int, hidden_dim: int = 64) -> nn.Sequential:
@@ -54,20 +71,21 @@ class ContinuousIndependentPolicy(nn.Module):
     Each agent's action vector is one probability event. Actions remain raw
     Gaussian samples in the buffer; actuator clipping is the adapter's job.
     """
-    def __init__(self, obs_dim, num_agents, action_dim, hidden_dim=64):
+    def __init__(self, obs_dim, num_agents, action_dim, hidden_dim=64, *, initial_std: float = 1.0):
         super().__init__()
         if min(obs_dim, num_agents, action_dim, hidden_dim) < 1:
             raise ValueError("policy dimensions must be positive")
+        log_std = initial_log_std(initial_std)
         self.obs_dim, self.num_agents, self.action_dim = obs_dim, num_agents, action_dim
         self.actors = nn.ModuleList([mlp(obs_dim, action_dim, hidden_dim)
                                      for _ in range(num_agents)])
-        self.log_std = nn.Parameter(torch.zeros(num_agents, action_dim))
+        self.log_std = nn.Parameter(torch.full((num_agents, action_dim), log_std))
 
     def distribution(self, obs):
         if obs.ndim != 3 or obs.shape[1:] != (self.num_agents, self.obs_dim):
             raise ValueError("obs must have shape [batch, agents, obs_dim]")
         mean = torch.stack([actor(obs[:, i]) for i, actor in enumerate(self.actors)], dim=1)
-        std = self.log_std.clamp(-5., 2.).exp().expand_as(mean)
+        std = self.log_std.clamp(LOG_STD_MIN, LOG_STD_MAX).exp().expand_as(mean)
         return Independent(Normal(mean, std), 1)
 
     @torch.no_grad()

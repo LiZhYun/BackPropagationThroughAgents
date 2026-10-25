@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 from pathlib import Path
 import platform
 import random
@@ -30,6 +31,8 @@ class Config:
     batch_size: int = 1024
     hidden_dim: int = 64
     learning_rate: float = 5e-4
+    late_actor_lr_multiplier: float = 1.
+    actor_lr_change_fraction: float = .5
     modifier_learning_rate: float = 5e-5
     critic_learning_rate: float = 5e-4
     epochs: int = 4
@@ -67,6 +70,19 @@ class Config:
             raise ValueError("modifier_log_scale_bound must be in (0, 8]")
         if self.agentmixer_correlation not in ("factorized", "joint"):
             raise ValueError("agentmixer_correlation must be factorized or joint")
+        if (isinstance(self.late_actor_lr_multiplier, bool)
+                or not isinstance(self.late_actor_lr_multiplier, (int, float))
+                or not math.isfinite(self.late_actor_lr_multiplier)
+                or self.late_actor_lr_multiplier <= 0):
+            raise ValueError("late_actor_lr_multiplier must be finite and positive")
+        if (isinstance(self.actor_lr_change_fraction, bool)
+                or not isinstance(self.actor_lr_change_fraction, (int, float))
+                or not math.isfinite(self.actor_lr_change_fraction)
+                or not 0 <= self.actor_lr_change_fraction < 1):
+            raise ValueError("actor_lr_change_fraction must be finite and in [0, 1)")
+        scheduled_rate = self.learning_rate * self.late_actor_lr_multiplier
+        if not math.isfinite(scheduled_rate) or scheduled_rate <= 0:
+            raise ValueError("scheduled actor learning rate must be finite and positive")
 
 
 def entropy_coefficient(config, steps):
@@ -87,6 +103,41 @@ def make_policy(config):
     else:
         from .agentmixer import AgentMixerPolicy
     return AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound)
+
+
+def make_optimizers(config, policy, critic):
+    optimizers = {"critic": torch.optim.Adam(critic.parameters(), lr=config.critic_learning_rate, eps=1e-5)}
+    if config.algorithm == "bppo":
+        for i, actor in enumerate(policy.actors):
+            optimizers[f"actor_{i}"] = torch.optim.Adam(actor.parameters(), lr=config.learning_rate, eps=1e-5)
+    elif config.algorithm == "agentmixer":
+        optimizers["policy"] = torch.optim.Adam([
+            {"params": policy.local_actors.parameters(), "lr": config.learning_rate},
+            {"params": policy.modifier.parameters(), "lr": config.modifier_learning_rate}], eps=1e-5)
+    else:
+        optimizers["policy"] = torch.optim.Adam(policy.parameters(), lr=config.learning_rate, eps=1e-5)
+    return optimizers
+
+
+def actor_learning_rate(config, steps):
+    """Rate for a rollout starting after ``steps`` completed environment steps."""
+    multiplier = config.late_actor_lr_multiplier if steps >= config.steps * config.actor_lr_change_fraction else 1.
+    return config.learning_rate * multiplier
+
+
+def set_actor_learning_rate(config, optimizers, steps):
+    """Change actor rates only; AgentMixer group 0 owns its local actors."""
+    learning_rate = actor_learning_rate(config, steps)
+    if config.algorithm == "bppo":
+        groups = [group for name, optimizer in optimizers.items() if name.startswith("actor_")
+                  for group in optimizer.param_groups]
+    elif config.algorithm == "agentmixer":
+        groups = optimizers["policy"].param_groups[:1]
+    else:
+        groups = optimizers["policy"].param_groups
+    for group in groups:
+        group["lr"] = learning_rate
+    return learning_rate
 
 
 def likelihood(policy, algorithm, obs, state, actions):
@@ -145,19 +196,7 @@ def train(config: Config, output: Path):
     game = MatrixGame(config.game)
     policy = make_policy(config)
     critic = mlp(1, 1, config.hidden_dim)
-    optimizers = {"critic": torch.optim.Adam(critic.parameters(), lr=config.critic_learning_rate, eps=1e-5)}
-    if config.algorithm == "bppo":
-        for i, actor in enumerate(policy.actors):
-            optimizers[f"actor_{i}"] = torch.optim.Adam(actor.parameters(), lr=config.learning_rate, eps=1e-5)
-    elif config.algorithm == "agentmixer":
-        actor_parameters = list(policy.local_actors.parameters())
-        actor_ids = {id(p) for p in actor_parameters}
-        modifier_parameters = [p for p in policy.parameters() if id(p) not in actor_ids]
-        optimizers["policy"] = torch.optim.Adam([
-            {"params": actor_parameters, "lr": config.learning_rate},
-            {"params": modifier_parameters, "lr": config.modifier_learning_rate}], eps=1e-5)
-    else:
-        optimizers["policy"] = torch.optim.Adam(policy.parameters(), lr=config.learning_rate, eps=1e-5)
+    optimizers = make_optimizers(config, policy, critic)
     metadata = {"config": asdict(config), "python": platform.python_version(), "torch": str(torch.__version__),
                 "numpy": np.__version__, "source_sha256": source_hashes(),
                 "task_scope": "one-step matrix development experiment; not full paper reproduction",
@@ -169,10 +208,16 @@ def train(config: Config, output: Path):
     (output / "config.json").write_text(json.dumps(metadata, indent=2) + '\n')
     started = time.monotonic()
     steps, update = 0, 0
-    initial = {"steps": 0, "update": 0, **evaluate(policy, config, game)}
+    previous_actor_lr = actor_learning_rate(config, 0)
+    initial = {"steps": 0, "update": 0, "actor_lr": actor_learning_rate(config, 0),
+               "actor_lr_schedule_steps": 0, **evaluate(policy, config, game)}
     with (output / "metrics.jsonl").open('w') as log:
         log.write(json.dumps(initial) + '\n'); log.flush()
         while steps < config.steps:
+            actor_lr_schedule_steps = steps
+            actor_lr = set_actor_learning_rate(config, optimizers, steps)
+            actor_lr_changed = actor_lr != previous_actor_lr
+            previous_actor_lr = actor_lr
             count = min(config.batch_size, config.steps - steps)
             entropy_coef = entropy_coefficient(config, steps)
             obs, state = game.observations(count)
@@ -208,10 +253,12 @@ def train(config: Config, output: Path):
                 nn.utils.clip_grad_norm_(critic.parameters(), config.max_grad_norm)
                 optimizers["critic"].step()
             steps += count; update += 1
-            if update % config.eval_every == 0 or steps == config.steps:
+            if actor_lr_changed or update % config.eval_every == 0 or steps == config.steps:
                 record = {"steps": steps, "update": update, "elapsed_seconds": time.monotonic() - started,
                           "rollout_return": rewards.mean().item(), "value_loss": value_loss.item(),
                           "entropy_coefficient": entropy_coef,
+                          "actor_lr": actor_lr, "actor_lr_schedule_steps": actor_lr_schedule_steps,
+                          "actor_lr_changed": actor_lr_changed,
                           **stats, **evaluate(policy, config, game)}
                 if not all(np.isfinite(v) for v in record.values() if isinstance(v, (int, float))):
                     raise FloatingPointError("Non-finite training metric")

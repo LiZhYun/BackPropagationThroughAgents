@@ -17,6 +17,7 @@ import torch
 from torch import Tensor, nn
 
 from .core import Batch, generalized_advantage, normalize_advantages as normalize_team_advantages, ppo_objective
+from .value_normalization import ValueNormalizedCritic, validate_value_loss_options, value_regression_loss
 
 
 @dataclass
@@ -249,6 +250,8 @@ def update_rollout(
     clip_coef: float = 0.2,
     entropy_coef: float = 0.01,
     value_coef: float = 0.5,
+    value_clip_coef: float | None = None,
+    value_huber_delta: float | None = None,
     max_grad_norm: float = 0.5,
     normalize_advantages: bool = True,
     temperature: float = 1.0,
@@ -256,9 +259,12 @@ def update_rollout(
     """Update actors, then a centralized scalar critic, on the full rollout.
 
     Optimizer keys are ``critic`` plus ``actor_0``, ... for BPPO, or ``policy``
-    for other methods. Value loss is exactly value_coef * mean_squared_error.
+    for other methods. Defaults preserve value_coef * raw mean_squared_error.
+    A ValueNormalizedCritic updates its moments once from this rollout's raw
+    returns; clipping then transforms old raw predictions with those moments.
     """
     _algorithm(algorithm)
+    validate_value_loss_options(value_clip_coef, value_huber_delta)
     if not isinstance(epochs, int) or isinstance(epochs, bool) or epochs < 1:
         raise ValueError("epochs must be a positive integer.")
     if not math.isfinite(clip_coef) or not 0 <= clip_coef < 1:
@@ -278,6 +284,13 @@ def update_rollout(
         raise ValueError("advantages and returns must have shape [batch].")
     if not torch.isfinite(batch.advantages).all() or not torch.isfinite(batch.returns).all():
         raise ValueError("advantages and returns must be finite.")
+    old_values = None
+    if value_clip_coef is not None:
+        old_values = getattr(batch, "values", None)
+        if (old_values is None or old_values.numel() != count
+                or not torch.isfinite(old_values).all()):
+            raise ValueError("value clipping requires finite old raw rollout values")
+        old_values = old_values.detach().flatten()
     active = getattr(batch, "active_agents", None)
     if active is None:
         active = torch.ones((count, agents), dtype=torch.bool, device=batch.obs.device)
@@ -339,11 +352,28 @@ def update_rollout(
         else:
             stats = dict.fromkeys(("policy_loss", "entropy", "approx_kl", "clip_fraction", "grad_norm", "num_updates"), 0.0)
 
-    value_totals = {"value_loss": 0.0, "value_mse": 0.0, "critic_grad_norm": 0.0}
+    raw_returns = batch.returns.detach()
+    normalized = isinstance(critic, ValueNormalizedCritic)
+    if normalized:
+        critic.update_statistics(raw_returns)
+        targets = critic.normalizer.normalize(raw_returns)
+        old_predictions = critic.normalizer.normalize(old_values) if old_values is not None else None
+    else:
+        targets, old_predictions = raw_returns, old_values
+
+    def regression():
+        prediction = _values(critic.normalized_forward if normalized else critic, batch.state.detach())
+        raw_prediction = critic.normalizer.denormalize(prediction) if normalized else prediction
+        raw_mse = (raw_prediction - raw_returns).square().mean()
+        regression_loss = value_regression_loss(prediction, targets, old_prediction=old_predictions,
+                                                clip_coef=value_clip_coef, huber_delta=value_huber_delta)
+        return regression_loss, raw_mse
+
+    value_totals = {"value_loss": 0.0, "value_mse": 0.0, "value_regression_loss": 0.0, "critic_grad_norm": 0.0}
     if value_coef > 0:
         for _ in range(epochs):
-            mse = (_values(critic, batch.state.detach()) - batch.returns.detach()).square().mean()
-            value_loss = value_coef * mse
+            regression_loss, mse = regression()
+            value_loss = value_coef * regression_loss
             if not torch.isfinite(value_loss):
                 raise FloatingPointError("Non-finite value loss.")
             optimizers["critic"].zero_grad(set_to_none=True)
@@ -352,11 +382,19 @@ def update_rollout(
             optimizers["critic"].step()
             value_totals["value_loss"] += float(value_loss.detach()) / epochs
             value_totals["value_mse"] += float(mse.detach()) / epochs
+            value_totals["value_regression_loss"] += float(regression_loss.detach()) / epochs
             value_totals["critic_grad_norm"] += float(grad_norm) / epochs
     else:
         with torch.no_grad():
-            value_totals["value_mse"] = float(
-                (_values(critic, batch.state) - batch.returns).square().mean()
-            )
+            regression_loss, mse = regression()
+            value_totals["value_mse"] = float(mse)
+            value_totals["value_regression_loss"] = float(regression_loss)
+    value_totals.update(
+        raw_value_mse=value_totals["value_mse"], value_targets_normalized=float(normalized),
+        value_target_mean=float(critic.normalizer.mean) if normalized else 0.0,
+        value_target_scale=float(critic.normalizer.scale) if normalized else 1.0,
+        value_target_count=float(critic.normalizer.count) if normalized else 0.0,
+        value_normalizer_updates=float(critic.normalizer.updates) if normalized else 0.0,
+    )
     return {**stats, **value_totals, "value_coef": float(value_coef),
             "critic_updates": float(epochs if value_coef > 0 else 0), "active_fraction": float(active.float().mean())}

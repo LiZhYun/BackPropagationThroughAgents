@@ -12,8 +12,8 @@ environment = os.environ.copy()
 environment['PYTHONNOUSERSITE'] = '1'
 if entry['environment'] == 'smac':
     interpreter = root / '.venv-smac' / 'bin' / 'python'
-    environment['SC2PATH'] = '/scratch/work/liz23/3rdparty/StarCraftII'
-else:
+    environment.setdefault('SC2PATH', '/scratch/work/liz23/3rdparty/StarCraftII')
+elif entry['environment'] == 'mujoco':
     prefix = root / '.venv-mujoco'
     engine = root / '.simulators' / 'mujoco210'
     interpreter = prefix / 'bin' / 'python'
@@ -24,6 +24,10 @@ else:
         environment[key] = str(value) + os.pathsep + environment.get(key, '')
     environment['LD_LIBRARY_PATH'] = (str(engine / 'bin') + os.pathsep + str(prefix / 'lib')
                                        + os.pathsep + environment.get('LD_LIBRARY_PATH', ''))
+elif entry['environment'] == 'prey':
+    interpreter = root / '.venv' / 'bin' / 'python'
+else:
+    raise ValueError('No private interpreter configured for this environment')
 subprocess.run([str(interpreter), '-m', 'bta_repro.simulator_train',
                 '--config', entry['config_path'], '--output', entry['output_path']],
                check=True, env=environment)
