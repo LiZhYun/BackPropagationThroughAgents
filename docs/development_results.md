@@ -101,14 +101,14 @@ not imply matching stochastic distributions or an equilibrium theorem.
 
 ## Longer runs and native-clock correction
 
-The normalized-critic HalfCheetah experiment has completed three of its five
+The normalized-critic HalfCheetah experiment has completed four of its five
 3M-step runs in development seed0. Final evaluation returns over ten episodes
-are3045.06 for MAPPO,3599.84 for AR-PPO and599.40 for BPPO. BPPO's curve remains
+are3045.06 for MAPPO,3599.84 for AR-PPO,599.40 for BPPO and2607.24 for AgentMixer. BPPO's curve remains
 poor throughout: its largest recorded evaluation mean is825.37 at1M. Median
 approximate KL stays below0.002 in each of the three inspected training periods,
 and the median gradient norm stays below1. These diagnostics do not support an
 explanation based on exploding updates. They also do not establish the cause
-of poor learning from a single seed. AgentMixer and its identity control are
+of poor learning from a single seed. AgentMixer's identity control is
 still running. Evidence: job21196118 and
 `results/mujoco_hc2x3_valuenorm3m_20261025T083844Z`.
 
@@ -124,7 +124,8 @@ their remaining three controls were not started. The adapter rejected an
 unexpected native restart, preserving the error instead of training on a false
 terminal transition. This is consistent with StarCraft II's cumulative clock
 limit. The [SMAC lifecycle correction](smac.md) restarts at episode boundaries
-before expiry, with native validation21198088 and fresh matched retry21198089.
+before expiry. Native validation21198088 passed512 transitions and12 planned
+restarts; fresh matched retry21198089 has been released into the available slot.
 The original failed runs remain in
 `results/smac_terran5_learning200k_20261025T085510Z`.
 

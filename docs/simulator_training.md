@@ -107,6 +107,38 @@ Each output directory contains:
 
 `checkpoint_every_updates` controls intermediate checkpoint replacement; zero retains only the final checkpoint. Simulator states and unfinished rollouts are not serialized. The CLI therefore does not claim exact simulator continuation or offer a resume flag. The shared checkpoint currently stores CPU/Python/NumPy RNG state; complete CUDA continuation is also outside that checkpoint contract.
 
+### Evaluate a saved policy
+
+Use the appropriate simulator's Python environment and native-library setup:
+
+```bash
+python scripts/evaluate_simulator.py results/my_run --output results/my_run_replay.json
+```
+
+This restores the policy and its saved observation moments, then uses the
+recorded evaluation seed, episode count, fixed-window settings and execution
+rule. It creates no optimizer and does not modify the checkpoint. The JSON
+includes checkpoint/source/evaluator hashes, package versions, training status,
+checkpoint step and per-episode results. A checkpoint from a failed or unfinished
+run remains labeled as such. New evaluation episodes do not supply independent
+training seeds.
+
+`--eval-seed 2000000 --episodes 100` requests a separately recorded evaluation;
+`--device cpu` changes only the inference device. By default, the imported
+package must match the training source hashes. For a plan prepared by this
+repository, its frozen source can be selected directly:
+
+```bash
+PYTHONPATH=results/experiment/source python scripts/evaluate_simulator.py \
+  results/experiment/agentmixer_seed0 --output results/replayed_evaluation.json
+```
+
+Use `--allow-source-change` only for an explicitly labeled compatibility check
+with revised code. Source and package-version matches are separate report
+fields. The evaluator requires saved normalization moments when training used
+normalization; it never substitutes fresh statistics. Evaluation outputs must
+use new paths, preserving earlier results.
+
 All created environments are closed on success or failure. No jobs, simulator downloads, external logging accounts, or automatic retries are created by this CLI. Collection failures invalidate the run; failed-summary step counts include only successfully returned rollouts, since a backend failure can occur partway through collection.
 
 The fake integration tests execute the actual rollout collector, PPO/BPPO updates, optimizer grouping, evaluation, and checkpoint code for every algorithm in both action spaces, with raw and normalized inputs. They check budgets, raw episode returns, episode endings, evaluation RNG/statistics isolation, restored normalization moments, the frozen modifier control, local AgentMixer evaluation, and cleanup. Passing these tests establishes integration behavior; comparable multi-seed simulator results are still required for a reproduction claim.

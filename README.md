@@ -41,6 +41,11 @@ The [shared simulator guide](docs/simulator_training.md) connects these policies
 optimization controls and their limits. Current jobs and remaining acceptance
 requirements are recorded in [STATUS.md](STATUS.md).
 
+Saved simulator policies can be evaluated with
+`python scripts/evaluate_simulator.py RUN_DIRECTORY --output NEW_EVALUATION.json`.
+The command restores observation preprocessing and checks source hashes; see
+the [checkpoint replay instructions](docs/simulator_training.md#evaluate-a-saved-policy).
+
 Two read-only reports need only Python's standard library:
 
 ```bash

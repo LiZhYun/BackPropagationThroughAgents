@@ -3,6 +3,8 @@ from types import SimpleNamespace
 import json
 import math
 import random
+import importlib.util
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -142,6 +144,52 @@ def test_behavior_peer_noise_reaches_continuous_trainer(tmp_path, environments):
 def test_rejects_unsupported_continuous_peer_noise(options):
     with pytest.raises(ValueError, match='peer noise|peer_noise'):
         _config(**options).validate()
+
+
+def _checkpoint_evaluator():
+    path = Path(__file__).resolve().parents[1] / 'scripts/evaluate_simulator.py'
+    spec = importlib.util.spec_from_file_location('evaluate_simulator_script', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.evaluate_saved
+
+
+@pytest.mark.parametrize('environment', ['smac', 'mujoco'])
+@pytest.mark.parametrize('algorithm', ['mappo', 'arppo', 'bppo', 'agentmixer'])
+def test_checkpoint_evaluation_replays_final_result(tmp_path, environments, environment, algorithm):
+    config = _config(environment=environment, algorithm=algorithm, normalize_observations=True,
+                     normalize_value_targets=True)
+    run = tmp_path / 'original'
+    summary = training.train(config, run)
+    checkpoint_bytes = (run / 'checkpoint.pt').read_bytes()
+    rng = torch.get_rng_state().clone()
+    report = _checkpoint_evaluator()(run)
+    assert report['evaluation'] == summary['final_evaluation']
+    assert report['source_matches_training'] and report['versions_match_training']
+    assert report['checkpoint_step'] == config.steps
+    assert report['training_run_status'] == 'completed' and report['checkpoint_is_final']
+    assert (run / 'checkpoint.pt').read_bytes() == checkpoint_bytes
+    assert torch.equal(rng, torch.get_rng_state())
+
+
+def test_checkpoint_evaluation_reports_source_override_and_rejects_missing_moments(tmp_path, environments):
+    run = tmp_path / 'original'
+    training.train(_config(normalize_observations=True), run)
+    evaluate_saved = _checkpoint_evaluator()
+    path = run / 'config.json'
+    metadata = json.loads(path.read_text())
+    metadata['source_sha256']['core.py'] = 'different source'
+    path.write_text(json.dumps(metadata))
+    with pytest.raises(ValueError, match='Source differs'):
+        evaluate_saved(run)
+    report = evaluate_saved(run, allow_source_change=True, eval_seed=123, episodes=3)
+    assert not report['source_matches_training']
+    assert report['evaluation']['seed'] == 123 and report['evaluation']['count'] == 3
+    checkpoint = torch.load(run / 'checkpoint.pt', weights_only=True)
+    checkpoint.pop('extra_state')
+    torch.save(checkpoint, run / 'checkpoint.pt')
+    with pytest.raises(ValueError, match='missing observation moments'):
+        evaluate_saved(run, allow_source_change=True)
 
 
 @pytest.mark.parametrize("environment", ["smac", "mujoco"])

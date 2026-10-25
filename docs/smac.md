@@ -57,6 +57,12 @@ PYTHONNOUSERSITE=1 .venv-smac/bin/python scripts/smoke_smac.py \
 The512-step check is runtime validation, not benchmark evidence. Long-run
 training must also pass beyond the previous failure point.
 
+On2026-10-25 this native check passed512 transitions and12 planned restarts;
+each new process reset the observed clock to4 ticks before the next episode.
+Job21198088 completed with exit0. Evidence is retained in
+`results/smac_restart_validation_20261025/report.json`, alongside source hashes
+and native logs. The refreshed200k learning runs use the normal480000 threshold.
+
 ## Seeding
 
 The constructor seed reaches the SC2 launch. Upstream capability distributions additionally create unseeded NumPy generators, including nested position generators; the adapter replaces them with independent child streams derived from that seed. It preserves per-environment Python and legacy NumPy random states around backend calls and restores the caller's states. This addresses the separate randomness sources visible in [distributions.py](https://github.com/oxwhirl/smacv2/blob/577ab5a2cff2391f8df582da5731ea9cd6adf3c6/smacv2/env/starcraft2/distributions.py).
