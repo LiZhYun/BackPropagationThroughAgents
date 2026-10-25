@@ -1,0 +1,66 @@
+{
+  "label": "mujoco_hc2x3_peer_noise500k",
+  "scope": "500k-step continuous BPPO estimator control: fresh independent versus reconstructed behavior Gaussian noise under two existing optimization settings. Three development seeds each; no final reproduction claim.",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "base_config": {
+    "environment": "mujoco",
+    "env_config": {
+      "scenario": "HalfCheetah-v2",
+      "agent_conf": "2x3",
+      "agent_obsk": 0,
+      "episode_limit": 1000,
+      "action_units": "normalized"
+    },
+    "steps": 500000,
+    "num_envs": 8,
+    "rollout_steps": 100,
+    "hidden_dim": 64,
+    "learning_rate": 0.0003,
+    "modifier_learning_rate": 3e-05,
+    "critic_learning_rate": 0.0003,
+    "entropy_coef": 0.0,
+    "epochs": 5,
+    "max_grad_norm": 10.0,
+    "normalize_observations": true,
+    "eval_seed": 1000000,
+    "eval_episodes": 5,
+    "eval_every_steps": 100000,
+    "checkpoint_every_updates": 125,
+    "threads": 1,
+    "algorithm": "bppo",
+    "normalize_value_targets": true
+  },
+  "variants": {
+    "normalization_fresh": {
+      "algorithm": "bppo",
+      "continuous_peer_noise": "fresh"
+    },
+    "normalization_behavior": {
+      "algorithm": "bppo",
+      "continuous_peer_noise": "behavior"
+    },
+    "protocol_fresh": {
+      "algorithm": "bppo",
+      "continuous_peer_noise": "fresh",
+      "num_envs": 40,
+      "initial_std": 0.36552928931500245,
+      "normalize_value_targets": true,
+      "value_clip_coef": 0.2,
+      "value_huber_delta": 10.0
+    },
+    "protocol_behavior": {
+      "algorithm": "bppo",
+      "continuous_peer_noise": "behavior",
+      "num_envs": 40,
+      "initial_std": 0.36552928931500245,
+      "normalize_value_targets": true,
+      "value_clip_coef": 0.2,
+      "value_huber_delta": 10.0
+    }
+  },
+  "wall_time_minutes": 240
+}

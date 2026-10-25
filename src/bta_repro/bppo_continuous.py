@@ -128,12 +128,15 @@ def continuous_bppo_update(
     entropy_coef: float = 0.01,
     epochs: int = 4,
     max_grad_norm: float = 0.5,
+    peer_noise: str = "fresh",
 ) -> dict[str, float]:
     """Reverse-order BPPO on one fresh rollout, using raw Gaussian rsamples.
 
     The corrected scalar PPO loss, peer dot product, and full numerator and
     denominator action derivative are shared with discrete BPPO. Actors and
     their optimizer states are independent. Advantages are not normalized here.
+    ``peer_noise='behavior'`` reconstructs and holds the recorded action's
+    Gaussian noise fixed across epochs; ``'fresh'`` retains the original control.
     """
     policy._validate(obs, actions)
     if (
@@ -154,6 +157,8 @@ def continuous_bppo_update(
         raise ValueError("entropy_coef must be finite and nonnegative.")
     if not math.isfinite(max_grad_norm) or max_grad_norm <= 0:
         raise ValueError("max_grad_norm must be finite and positive.")
+    if peer_noise not in ("fresh", "behavior"):
+        raise ValueError("peer_noise must be fresh or behavior.")
     if len(optimizers) != policy.num_agents:
         raise ValueError("Provide exactly one optimizer per actor.")
     for actor, optimizer in zip(policy.actors, optimizers):
@@ -176,13 +181,20 @@ def continuous_bppo_update(
         multiplier, coefficients = _successor_feedback(
             policy, behavior, obs, actions, actions, i
         )
+        if peer_noise == "behavior" and i < policy.num_agents - 1:
+            old_distribution = behavior._distribution(obs, actions, i).base_dist
+            # Recover the exogenous noise of the raw rollout sample. The
+            # behavior policy and recorded predecessor inputs stay fixed.
+            noise = ((actions[:, i] - old_distribution.loc) / old_distribution.scale).detach()
         for _ in range(epochs):
             distribution = policy._distribution(obs, actions, i)
-            reparameterized_action = (
-                distribution.rsample()
-                if i < policy.num_agents - 1
-                else torch.zeros_like(actions[:, i])
-            )
+            if i == policy.num_agents - 1:
+                reparameterized_action = torch.zeros_like(actions[:, i])
+            elif peer_noise == "behavior":
+                base = distribution.base_dist
+                reparameterized_action = base.loc + base.scale * noise
+            else:
+                reparameterized_action = distribution.rsample()
             loss, metrics = _actor_objective(
                 distribution.log_prob(actions[:, i]),
                 distribution.entropy(),
@@ -208,4 +220,5 @@ def continuous_bppo_update(
             num_updates += 1
     result = {key: value / num_updates for key, value in totals.items()}
     result["num_updates"] = float(num_updates)
+    result["peer_noise_behavior"] = float(peer_noise == "behavior")
     return result

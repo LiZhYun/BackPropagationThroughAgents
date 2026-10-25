@@ -72,6 +72,7 @@ class Config:
     normalize_observations: bool = False
     observation_clip: float = 10.0
     temperature: float = 1.0
+    continuous_peer_noise: str = "fresh"
     eval_seed: int = 1_000_000
     eval_episodes: int = 32
     eval_max_steps: int = 10_000
@@ -132,6 +133,10 @@ class Config:
             raise ValueError("initial_std must be finite and within [exp(-5), exp(2)]")
         if self.environment != "mujoco" and self.initial_std != 1.0:
             raise ValueError("nondefault initial_std requires a continuous environment")
+        if self.continuous_peer_noise not in ("fresh", "behavior"):
+            raise ValueError("continuous_peer_noise must be fresh or behavior")
+        if self.continuous_peer_noise != "fresh" and (self.environment != "mujoco" or self.algorithm != "bppo"):
+            raise ValueError("behavior peer noise requires continuous BPPO")
         if isinstance(self.action_embed_dim, bool) or not isinstance(self.action_embed_dim, int) or self.action_embed_dim < 0:
             raise ValueError('action_embed_dim must be a nonnegative integer')
         if self.action_embed_dim and (self.environment == 'mujoco' or self.algorithm not in ('arppo', 'bppo')):
@@ -588,6 +593,7 @@ def train(config: Config, output: Path) -> dict:
                     value_coef=config.value_coef, max_grad_norm=config.max_grad_norm,
                     value_clip_coef=config.value_clip_coef, value_huber_delta=config.value_huber_delta,
                     normalize_advantages=config.normalize_advantages, temperature=config.temperature,
+                    continuous_peer_noise=config.continuous_peer_noise,
                 )
                 rollout_statistics = EpisodeStatistics()
                 rollout_statistics.add(completed)

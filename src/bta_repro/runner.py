@@ -265,6 +265,7 @@ def update_rollout(
     max_grad_norm: float = 0.5,
     normalize_advantages: bool = True,
     temperature: float = 1.0,
+    continuous_peer_noise: str = "fresh",
 ) -> dict[str, float]:
     """Update actors, then a centralized scalar critic, on the full rollout.
 
@@ -334,7 +335,8 @@ def update_rollout(
         else:
             from .bppo_continuous import continuous_bppo_update
             stats = continuous_bppo_update(
-                policy, actor_optimizers, batch.obs, batch.actions, batch.old_log_probs, advantages, **kwargs,
+                policy, actor_optimizers, batch.obs, batch.actions, batch.old_log_probs, advantages,
+                peer_noise=continuous_peer_noise, **kwargs,
             )
     else:
         totals: dict[str, float] = {}

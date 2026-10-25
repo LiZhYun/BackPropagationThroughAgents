@@ -131,3 +131,11 @@ The original failed runs remain in
 All96 short integration runs across15 MuJoCo observation variants and nine SMAC
 scenarios have completed, including the17-agent continuous cases. This verifies
 native execution and gradient shapes, not learning performance; job21196515.
+
+An additional estimator control tests whether continuous BPPO benefits from
+retaining the Gaussian noise associated with the recorded action. The
+[implementation note](bppo_continuous.md) explains the distinct scale gradient
+and the paper's underspecified trajectory/noise coupling. The existing
+fresh-noise default is preserved. Job21198169 compares both choices under both
+existing optimization settings in development seeds0–2 at500k steps each.
+Analytic and integration checks pass; no learning result is available yet.

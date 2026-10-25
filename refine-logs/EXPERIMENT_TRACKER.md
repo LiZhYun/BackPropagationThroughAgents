@@ -2,7 +2,7 @@
 
 | ID | Stage | Purpose | System | Status | Evidence |
 |---|---|---|---|---|---|
-| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 543 tests passed,1CUDA-onlyskip, 2026-10-25 |
+| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 551 tests passed,1CUDA-onlyskip, 2026-10-25 |
 | R002 | M0 | Pipeline smoke | MAPPO climbing, 2,048 steps | PASS | results/smoke/mappo_20261025 |
 | R003 | M0 | Pipeline smoke | AR-PPO, BPPO, AgentMixer | PASS | results/smoke/{algorithm}_20261025; 2,048 steps each |
 | R004 | M1 | Matrix development | Four algorithms × two games × seeds 0–2 | FAIL learning gate | Job21192344; all24 completed, zero final greedy optima |
@@ -44,3 +44,4 @@
 | R038 | M2 | SMAC200k retry | Five methods,seed0,native clock guard | QUEUED |21198089; after Prey and successful R037; prior failed artifacts retained |
 | R039 | M2 | Longer MuJoCo protocol comparison | Five matched methods,3M,seed0 | QUEUED |21198090;40×100 batch,initialstd0.365529,normalized clipped Huber critic; selected from existing500k development controls |
 | R040 | Targets | Author metric clarification | Prey and Football5v5 figures | RECORDED |2026-10-25: “eval return”; docs/author_clarifications.md; exact reduction remains unresolved |
+| R041 | M2 | Continuous BPPO noise coupling | Fresh versus behavior noise,two settings,seeds0–2,500k | QUEUED; numerical PASS |21198169; analytic two-epoch scale gradient, default identity and full trainer integration pass; no learning evidence yet |

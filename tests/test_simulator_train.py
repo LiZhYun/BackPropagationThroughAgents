@@ -124,6 +124,26 @@ def test_discrete_policy_factory_rejects_gaussian_scale_control():
         training.make_policy(config, FakeEnvironment(config, 7))
 
 
+def test_behavior_peer_noise_reaches_continuous_trainer(tmp_path, environments):
+    config = _config(environment='mujoco', algorithm='bppo', continuous_peer_noise='behavior')
+    summary = training.train(config, tmp_path / 'coupled')
+    assert summary['status'] == 'completed'
+    records = [json.loads(line) for line in (tmp_path / 'coupled/metrics.jsonl').read_text().splitlines()]
+    updates = [record for record in records if record.get('event') == 'update']
+    assert updates and all(record['losses']['peer_noise_behavior'] == 1 for record in updates)
+
+
+@pytest.mark.parametrize('options', [
+    {'continuous_peer_noise': 'invalid'},
+    {'continuous_peer_noise': True},
+    {'continuous_peer_noise': 'behavior', 'environment': 'smac', 'algorithm': 'bppo'},
+    {'continuous_peer_noise': 'behavior', 'environment': 'mujoco', 'algorithm': 'arppo'},
+])
+def test_rejects_unsupported_continuous_peer_noise(options):
+    with pytest.raises(ValueError, match='peer noise|peer_noise'):
+        _config(**options).validate()
+
+
 @pytest.mark.parametrize("environment", ["smac", "mujoco"])
 @pytest.mark.parametrize("algorithm", ["mappo", "arppo", "bppo", "agentmixer"])
 @pytest.mark.parametrize("normalize_observations", [False, True])

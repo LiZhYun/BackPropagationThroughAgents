@@ -182,7 +182,8 @@ def test_gaussian_peer_path_reaches_only_current_actor(initial_std):
     assert all(p.grad is None for p in behavior.parameters())
 
 
-def test_single_agent_matches_gaussian_ppo():
+@pytest.mark.parametrize("peer_noise", ["fresh", "behavior"])
+def test_single_agent_matches_gaussian_ppo(peer_noise):
     policy, obs, actions, old_log_probs = make_batch(agents=1, dimensions=3)
     reference = deepcopy(policy)
     advantages = torch.linspace(-1, 1, len(obs))
@@ -191,6 +192,7 @@ def test_single_agent_matches_gaussian_ppo():
     metrics = continuous_bppo_update(
         policy, [optimizer], obs, actions, old_log_probs, advantages,
         epochs=3, entropy_coef=0.02, max_grad_norm=1e9,
+        peer_noise=peer_noise,
     )
     for _ in range(3):
         log_probs, entropy = reference.evaluate_actions(obs, actions)
@@ -203,6 +205,62 @@ def test_single_agent_matches_gaussian_ppo():
     for actual, expected in zip(policy.parameters(), reference.parameters()):
         torch.testing.assert_close(actual, expected)
     assert metrics["peer_loss"] == metrics["peer_coefficient_norm"] == 0
+
+
+def test_behavior_noise_preserves_recorded_action_scale_gradient(monkeypatch):
+    """For c=a_old and paired Gaussian noise, d mean(c*g)/d log_std = sigma**2."""
+    import bta_repro.bppo_continuous as module
+
+    policy = ContinuousAutoregressivePolicy(1, 2, 1, hidden_dim=4, initial_std=1.7).double()
+    with torch.no_grad():
+        for actor in policy.actors:
+            for parameter in actor.mean.parameters():
+                parameter.zero_()
+            actor.mean[-1].bias.fill_(0.3)
+    obs = torch.zeros(2, 2, 1, dtype=torch.float64)
+    actions = torch.tensor([[[-1.4], [0.3]], [[2.0], [0.3]]], dtype=torch.float64)
+    log_probs, _ = policy.evaluate_actions(obs, actions)
+    log_probs = log_probs.detach()
+
+    def fixed_feedback(policy, behavior, obs, actions, features, agent):
+        coefficients = actions[:, agent] if agent == 0 else torch.zeros_like(actions[:, agent])
+        return obs.new_ones(len(obs)), coefficients
+
+    sampled = []
+    def peer_only(log_probs, entropy, old_log_probs, advantages, multiplier, coefficients, relaxed, **kwargs):
+        # Isolate the scale path while keeping a zero own-loss graph for the last actor.
+        if coefficients.abs().sum():
+            sampled.append(relaxed.detach().clone())
+        loss = -(coefficients * relaxed).sum(-1).mean() + 0 * log_probs.sum()
+        return loss, {"loss": loss.detach()}
+
+    monkeypatch.setattr(module, '_successor_feedback', fixed_feedback)
+    monkeypatch.setattr(module, '_actor_objective', peer_only)
+    optimizers = [torch.optim.SGD(actor.parameters(), lr=0.01) for actor in policy.actors]
+    old_log_std = policy.actors[0].log_std.detach().clone()
+    rng_before = torch.get_rng_state().clone()
+    continuous_bppo_update(policy, optimizers, obs, actions, log_probs, obs.new_ones(2),
+                           epochs=2, entropy_coef=0, max_grad_norm=1e9, peer_noise='behavior')
+    torch.testing.assert_close(sampled[0], actions[:, 0])
+    # The second epoch must keep the original noise as the current scale changes.
+    increment = .01 * 1.7**2
+    expected = old_log_std + increment + increment * math.exp(increment)
+    torch.testing.assert_close(policy.actors[0].log_std, expected, atol=1e-12, rtol=1e-12)
+    torch.testing.assert_close(sampled[1], .303 + math.exp(increment) * (actions[:, 0] - .3))
+    assert torch.equal(rng_before, torch.get_rng_state())
+
+
+def test_default_peer_noise_matches_explicit_fresh_control():
+    policy, obs, actions, log_probs = make_batch()
+    reference = deepcopy(policy)
+    rng = torch.get_rng_state().clone()
+    for model, options in [(policy, {}), (reference, {'peer_noise': 'fresh'})]:
+        torch.set_rng_state(rng)
+        optimizers = [torch.optim.SGD(actor.parameters(), lr=.01) for actor in model.actors]
+        continuous_bppo_update(model, optimizers, obs, actions, log_probs,
+                               torch.linspace(-1, 1, len(obs)), epochs=2, **options)
+    for actual, expected in zip(policy.parameters(), reference.parameters()):
+        assert torch.equal(actual, expected)
 
 
 def test_peer_dot_sums_coordinates_and_own_loss_is_scalar():

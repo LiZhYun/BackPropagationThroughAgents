@@ -12,7 +12,8 @@ not claims of exact equivalence to an unspecified original implementation.
 
 Each actor owns a two-hidden-layer tanh mean network and one trainable log
 standard deviation per action coordinate. The standard deviations are
-state-independent and initialized to one. Effective log standard deviations
+state-independent and initialized to one unless `initial_std` is specified.
+Effective log standard deviations
 are clamped to `[-5, 2]`, giving positive finite scales in
 `[exp(-5), exp(2)]`; gradients through the scale clamp are zero outside those
 bounds. There is no parameter sharing between agents.
@@ -52,7 +53,7 @@ behavior parameters are frozen. Other recorded actions are held constant.
 The exact first derivative is evaluated at the recorded raw predecessor
 action and detached before constructing the peer objective.
 
-The peer surrogate uses a fresh normal reparameterization
+By default, the peer surrogate uses a fresh normal reparameterization
 `g_i = mean_i + std_i * epsilon` with `epsilon ~ Normal(0, I)`. Its dot product
 with the detached successor-ratio derivative is summed over coordinates and
 averaged over transitions. The selected PPO ratio and advantage are detached
@@ -61,6 +62,46 @@ documented clipping-branch convention and advantage correction as discrete
 BPPO apply. No second-order gradients or successor-parameter updates pass
 through the peer coefficients. This does not assert that the finite-rollout,
 clipped BPPO surrogate is an unbiased estimator of the exact policy gradient.
+
+## Recorded-noise control
+
+The simulator option `continuous_peer_noise="behavior"` reconstructs the
+Gaussian noise that produced each recorded raw action:
+
+```
+epsilon_recorded = (action_recorded - behavior_mean) / behavior_std
+g_current = current_mean + current_std * stop_gradient(epsilon_recorded)
+```
+
+The behavior distribution conditions on the same recorded predecessor actions
+as the original rollout. Its parameters remain frozen, and the reconstructed
+noise stays fixed across that actor's update epochs. At the first epoch,
+`g_current` equals the recorded action up to floating-point error. Later epochs
+move it using the current parameters. The successor derivative still uses the
+recorded action, as required by the existing first-order surrogate.
+
+This is a controlled change to the sampling estimator. With fresh independent
+noise, a fixed peer coefficient times the log-standard-deviation derivative
+has zero expectation over the newly sampled noise. Reusing the recorded noise
+retains its correlation with the action-dependent coefficient and advantage.
+For example, with zero-mean action `a = sigma * epsilon` and coefficient `c=a`,
+the coupled derivative of `E[c*g]` with respect to `log(sigma)` at the behavior
+policy is `sigma**2`; independent fresh noise gives zero. The mean derivative
+does not have this distinction for a state-independent Gaussian scale.
+
+The paper's proof writes `a = g(theta, epsilon)`, while its algorithm and
+surrogate do not completely specify how a stored trajectory is coupled to
+update-time noise. We therefore expose both choices and preserve `"fresh"` as
+the existing default. Both retain reverse updates, conditional successor
+feedback and local actor parameter ownership. Neither choice establishes
+unbiasedness of the complete clipped surrogate or a performance improvement.
+The option is accepted only for continuous BPPO; discrete Gumbel sampling and
+other algorithms are unchanged. Raw actions, rather than actuator-clipped
+actions, are essential for reconstructing this noise.
+
+`configs/mujoco_hc2x3_peer_noise500k.json` compares both choices under the
+normalization-only and combined protocol settings, using development seeds
+0, 1 and 2. These are diagnostic 500k budgets, not final paper-budget results.
 
 When there are no successors, the ratio is one and the peer term is zero.
 The implementation then matches standard Gaussian PPO, including event-summed

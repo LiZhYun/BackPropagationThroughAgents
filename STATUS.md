@@ -8,7 +8,8 @@ Full reproduction and performance beyond the papers are not yet established.
 - Shared MAPPO, AR-PPO, BPPO and AgentMixer training supports matrix games, SMACv2, MA-MuJoCo, Predator–Prey and Football.
 - Temporal rollouts preserve terminal/time-limit observations, legal/dead-agent masks, raw policy actions and independent seeds. Evaluation preserves training RNG and normalization.
 - Optional critic-target normalization, clipped/Huber losses, initial Gaussian exploration, projected discrete predecessor actions and an experimental two-agent joint modifier are explicit controls.
-- Integrated suite: **543 passed, 1 CUDA-only skip**, including the SMAC clock guard, joint-distribution precision controls and matrix/simulator integration. Networks remain float32; optional joint probabilities use float64.
+- Integrated suite: **551 passed, 1 CUDA-only skip**, including the SMAC clock guard, recorded Gaussian-noise control, joint-distribution precision controls and matrix/simulator integration. Networks remain float32; optional joint probabilities use float64.
+- Continuous BPPO offers an explicit behavior-noise control that preserves the recorded action/noise coupling across update epochs; the existing fresh-noise default is unchanged. An analytic two-epoch scale-gradient check and full trainer integration pass; performance remains to be measured.
 - All 96 integration runs across 15 MuJoCo task/observation variants and nine SMACv2 scenarios pass with four algorithms. Predator–Prey matches 10,240 transitions from the pinned legacy implementation.
 - Football2.10.2 builds and exactly replays all four scenarios; all 16 algorithm/scenario integration runs pass. Fresh portable setup passes in a second private prefix; all four native replay traces match the original build. Private OpenGL also fixes login-node imports.
 - The author confirmed evaluation return for the Prey and Football 5v5 figures on 2026-10-25; see `docs/author_clarifications.md`. Prey separately logs the released fixed-window reduction, including unfinished episodes. Exact historical normalization and episode handling remain unresolved.
@@ -33,6 +34,7 @@ Full reproduction and performance beyond the papers are not yet established.
 - 21196497: five100k Football3v1 controls, after both HalfCheetah workers and the restart validation finish.
 - 21198089: five200k SMAC retries, after Prey finishes and the native restart validation passes.
 - 21198090: five3M HalfCheetah protocol controls, after the SMAC retries.
+- 21198169: twelve500k continuous BPPO noise controls, two optimization settings×two estimators×three development seeds, after Football.
 
 Dependencies enforce at most four workers, each at most2CPUs/8GB. Exact manifests and changes are in `experiments/jobs.jsonl`; use scheduler state before adding jobs. `python scripts/report_progress.py` reads artifact progress without querying or modifying jobs. `python scripts/check_paper_targets.py` verifies all45 target links (six numeric,39 digitized) without treating estimates as exact results.
 
