@@ -12,6 +12,9 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('plan', type=Path)
 args = parser.parse_args()
 plan = json.loads(args.plan.read_text())
+wall_minutes = plan.get('wall_time_minutes', 120)
+if isinstance(wall_minutes, bool) or not isinstance(wall_minutes, int) or not 1 <= wall_minutes <= 1440:
+    raise ValueError('wall_time_minutes must be an integer between1 and1440')
 label = plan['label']
 if not label.replace('_', '').isalnum():
     raise ValueError('label must be alphanumeric with optional underscores')
@@ -50,7 +53,7 @@ quote = lambda path: shlex.quote(str(path))
 #SBATCH --partition=batch-milan,batch-skl,batch-csl
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
-#SBATCH --time=02:00:00
+#SBATCH --time={wall_minutes // 60:02d}:{wall_minutes % 60:02d}:00
 #SBATCH --array=0-{workers-1}%2
 #SBATCH --output={directory}/slurm_%A_%a.out
 #SBATCH --error={directory}/slurm_%A_%a.err

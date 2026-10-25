@@ -2,7 +2,7 @@
 
 A readable, shared implementation of [Backpropagation Through Agents](https://arxiv.org/abs/2401.12574) and [AgentMixer](https://arxiv.org/abs/2401.08728).
 
-**Status: implementation and experiments in progress.** Matrix games and a shared SMAC/MuJoCo trainer are runnable. Real simulator smoke checks pass. Full benchmark reproduction and performance beyond the papers are not yet established. This repository documents corrections to the old implementation instead of silently preserving its bugs.
+**Status: implementation and experiments in progress.** Matrix games, Predator–Prey and a shared SMAC/MuJoCo/Football trainer are runnable. Real simulator checks pass. Full benchmark reproduction and performance beyond the papers are not yet established. This repository documents corrections to the old implementation instead of silently preserving its bugs.
 
 ## Quick start
 
@@ -33,9 +33,13 @@ Matrix training uses one-step episodes and reports reward per joint environment 
 5. `src/bta_repro/agentmixer.py`: centralized policy modification and local execution. See [the AgentMixer implementation notes](docs/agentmixer.md).
 6. `src/bta_repro/checkpoint.py`: model, optimizer, and RNG persistence.
 
-The [shared simulator guide](docs/simulator_training.md) connects these policies to [temporal rollout collection](docs/runner.md). Continuous variants use explicit Gaussian vector events. Optional simulators have separate setup instructions: [SMACv2](docs/smac.md) and [legacy MA-MuJoCo](docs/mujoco_setup.md). They are not needed to run the numerical tests or matrix games.
+The [shared simulator guide](docs/simulator_training.md) connects these policies to [temporal rollout collection](docs/runner.md). Continuous variants use explicit Gaussian vector events. Optional simulators have separate setup instructions: [SMACv2](docs/smac.md), [legacy MA-MuJoCo](docs/mujoco_setup.md) and [Football](docs/football.md). [Predator–Prey](docs/predator_prey_protocol.md) needs only the core dependencies. Optional engines are not needed for numerical tests or matrix games.
 
 [Matrix development notes](docs/matrix_development.md) retain negative results and explain subsequent controls. The [two-agent joint modifier](docs/agentmixer_joint.md) is an experimental correlated redesign with exact mode-preservation checks; it is not silently substituted for the factorized AgentMixer reference.
+
+[Simulator development results](docs/development_results.md) report the completed
+optimization controls and their limits. Current jobs and remaining acceptance
+requirements are recorded in [STATUS.md](STATUS.md).
 
 BPPO executes autoregressively and requires predecessor actions. AgentMixer executes using each local policy alone. The evaluator preserves this distinction.
 

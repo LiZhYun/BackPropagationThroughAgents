@@ -43,6 +43,7 @@ class Config:
     action_embed_dim: int = 0
     modifier_log_scale_bound: float | None = None
     agentmixer_correlation: str = "factorized"
+    joint_distribution_float64: bool = False
     max_grad_norm: float = .5
     temperature: float = 1.
     eval_every: int = 10
@@ -70,6 +71,10 @@ class Config:
             raise ValueError("modifier_log_scale_bound must be in (0, 8]")
         if self.agentmixer_correlation not in ("factorized", "joint"):
             raise ValueError("agentmixer_correlation must be factorized or joint")
+        if not isinstance(self.joint_distribution_float64, bool):
+            raise ValueError('joint_distribution_float64 must be boolean')
+        if self.joint_distribution_float64 and (self.algorithm != 'agentmixer' or self.agentmixer_correlation != 'joint'):
+            raise ValueError('float64 joint distributions require joint AgentMixer')
         if (isinstance(self.late_actor_lr_multiplier, bool)
                 or not isinstance(self.late_actor_lr_multiplier, (int, float))
                 or not math.isfinite(self.late_actor_lr_multiplier)
@@ -100,6 +105,8 @@ def make_policy(config):
         return AutoregressivePolicy(1, 2, 3, config.hidden_dim, action_embed_dim=config.action_embed_dim)
     if config.agentmixer_correlation == "joint":
         from .agentmixer_joint import JointAgentMixerPolicy as AgentMixerPolicy
+        return AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound,
+                                distribution_float64=config.joint_distribution_float64)
     else:
         from .agentmixer import AgentMixerPolicy
     return AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound)
@@ -153,7 +160,7 @@ def evaluate(policy, config, game):
     obs, state = game.observations(len(actions))
     logp, _ = likelihood(policy, config.algorithm, obs, state, actions)
     probability = logp.sum(-1).exp()
-    if not torch.isclose(probability.sum(), torch.tensor(1.), atol=1e-5):
+    if not torch.isclose(probability.sum(), probability.new_tensor(1.), atol=1e-5):
         raise RuntimeError("Policy does not define a normalized joint distribution")
     reward = game.reward(actions)
     one_obs, one_state = game.observations(1)

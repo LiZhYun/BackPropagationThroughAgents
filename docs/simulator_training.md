@@ -1,6 +1,6 @@
 # Shared simulator training
 
-`bta-train-simulator` (or `python -m bta_repro.simulator_train`) connects the optional SMACv2 and MA-MuJoCo adapters to the shared rollout and update implementation. It supports `mappo`, `arppo`, `bppo`, and `agentmixer` with discrete or continuous actions. Simulator packages are imported only when the corresponding environment is constructed.
+`bta-train-simulator` (or `python -m bta_repro.simulator_train`) connects SMACv2, MA-MuJoCo, Football and Predator–Prey to the shared rollout and update implementation. It supports `mappo`, `arppo`, `bppo`, and `agentmixer` with discrete or continuous actions. Optional simulator packages are imported only when the corresponding environment is constructed.
 
 Create an explicit JSON configuration, for example:
 
@@ -23,7 +23,7 @@ Create an explicit JSON configuration, for example:
 Then run:
 
 ```bash
-.venv/bin/python -m bta_repro.simulator_train \
+PYTHONNOUSERSITE=1 .venv-smac/bin/python -m bta_repro.simulator_train \
   --config configs/my_smac_run.json --output results/my_smac_run
 ```
 
@@ -36,6 +36,22 @@ For MA-MuJoCo, use `"environment": "mujoco"` and an adapter configuration such a
 ```
 
 See the adapter setup documents for simulator installation, supported partitions, versions, and deviations from the original releases. Unsupported tasks fail instead of silently substituting another benchmark.
+
+Predator–Prey uses the core interpreter, `"environment":"prey"`, and
+`"env_config":{"penalty":-1,"episode_limit":128}`. Football uses its private
+interpreter, `"environment":"football"`, and for example
+`"env_config":{"scenario":"academy_3_vs_1_with_keeper"}`. See their
+[Prey protocol](predator_prey_protocol.md) and [Football setup](football.md).
+
+Files such as `configs/prey_coordination300k.json` are experiment plans containing
+multiple variants, rather than single-run configurations. Freeze a plan with
+`python scripts/prepare_simulator.py configs/prey_coordination300k.json`.
+The printed directory contains individual JSON configurations, copied source,
+a manifest, and a Slurm submission script. Preparation does not submit jobs.
+`wall_time_minutes` optionally changes its bounded runtime allocation; the
+default is120 minutes, with at most two workers, each2CPUs/8GB. The measured
+3M MuJoCo follow-up uses240 minutes. Keep total project concurrency within the
+experiment plan's resource ceiling when submitting multiple manifests.
 
 For continuous policies, `initial_std` sets the initial diagonal Gaussian standard deviation in policy action units. It defaults to `1.0` and must lie in `[exp(-5), exp(2)]`. For example, `0.3` reduces initial exploration while preserving the policy family and identity modifier. SMAC configurations reject nondefault values because their actions are categorical. The selected value is saved in the run configuration.
 
@@ -50,6 +66,12 @@ The run `seed` controls model initialization and sampling. Simulator seeds are d
 Initial and final evaluations use exactly `eval_episodes` episodes, each time constructing a fresh environment with `eval_seed`. Optional periodic evaluation runs after crossing `eval_every_steps`; zero disables it. Evaluation interactions are counted separately and excluded from the training budget. Python, NumPy, PyTorch, and already-initialized CUDA RNG states are saved and restored around evaluation, so adding evaluation does not change the training random stream.
 
 Evaluation is deterministic: categorical actors use greedy actions and Gaussian actors use means. AgentMixer uses only its local actors, with no state or modifier. BPPO and autoregressive PPO retain ordered predecessor-action conditioning; their execution is explicitly labeled autoregressive. Continuous actions remain raw policy actions until the adapter applies actuator bounds. A failure to finish within `eval_max_steps` is an error rather than an invented truncation.
+
+Prey can additionally report fixed-window mean reward with
+`eval_window_steps=200, eval_windows=100`. This includes unfinished episodes
+and resets completed ones within each window, matching the released logger's
+reduction. It appears separately under `fixed_window`; the normal episode
+statistics retain their meaning. All additional evaluation steps are counted.
 
 An evaluation stream reused during development is not automatically a held-out final benchmark. Select configurations using development runs, then evaluate the frozen selection on separately reserved seeds. Episode standard deviations within one run are not uncertainty across independently trained seeds.
 

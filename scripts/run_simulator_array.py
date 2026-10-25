@@ -26,6 +26,11 @@ elif entry['environment'] == 'mujoco':
                                        + os.pathsep + environment.get('LD_LIBRARY_PATH', ''))
 elif entry['environment'] == 'prey':
     interpreter = root / '.venv' / 'bin' / 'python'
+elif entry['environment'] == 'football':
+    prefix = root / '.venv-football'
+    interpreter = prefix / 'bin' / 'python'
+    environment['LD_LIBRARY_PATH'] = str(prefix / 'lib') + os.pathsep + environment.get('LD_LIBRARY_PATH', '')
+    environment['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 else:
     raise ValueError('No private interpreter configured for this environment')
 subprocess.run([str(interpreter), '-m', 'bta_repro.simulator_train',

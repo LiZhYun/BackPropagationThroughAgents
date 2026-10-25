@@ -193,6 +193,36 @@ def test_optional_smooth_log_scale_bound():
     assert (scales >= .5).all() and (scales <= 2).all()
 
 
+def test_float64_distribution_retains_small_gap_gradients_and_strict_probability_modes():
+    local = torch.tensor([[[.001, 0., -.5], [.002, 0., -.5]]], requires_grad=True)
+    scales = torch.full((1, 3, 3), -8.)
+    low = joint_mode_preserving_logits(local, scales)
+    low_gradient, = torch.autograd.grad(low[0, 1, 0], local, retain_graph=True)
+    assert low_gradient.abs().sum() == 0  # Float32 mode guard is active.
+    precise = joint_mode_preserving_logits(local.double(), scales.double())
+    gradient, = torch.autograd.grad(precise[0, 1, 0], local)
+    expected = torch.zeros_like(local)
+    expected[0, 0, 0], expected[0, 0, 1] = -math.exp(-8), math.exp(-8)
+    torch.testing.assert_close(gradient, expected)
+    probabilities = Categorical(logits=precise.flatten(1)).probs
+    assert probabilities[0, 0] > probabilities[0, 1:].max()
+
+
+def test_precise_joint_policy_keeps_network_dtype_and_likelihood_identity():
+    torch.manual_seed(93)
+    policy = JointAgentMixerPolicy(1, 1, 2, 3, hidden_dim=8, distribution_float64=True)
+    assert all(p.dtype == torch.float32 for p in policy.parameters())
+    obs, state = torch.ones(32, 2, 1), torch.ones(32, 1)
+    actions, behavior_logp = policy.sample(obs, state)
+    logp, entropy = policy.evaluate_actions(obs, state, actions)
+    assert behavior_logp.dtype == logp.dtype == entropy.dtype == torch.float64
+    torch.testing.assert_close(behavior_logp, logp, rtol=0, atol=0)
+    (-logp.mean()).backward()
+    assert all(p.grad.dtype == torch.float32 for p in policy.parameters() if p.grad is not None)
+    _, local_logp = policy.sample(obs, decentralized=True)
+    assert local_logp.dtype == torch.float32
+
+
 def test_invalid_agent_count_masks_and_unavailable_scored_actions():
     with pytest.raises(ValueError, match="two agents"):
         JointAgentMixerPolicy(1, 1, 3, 3)

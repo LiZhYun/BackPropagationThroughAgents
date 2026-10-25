@@ -26,6 +26,9 @@ def summarize(manifest_path):
             evaluation = result.get('final_evaluation', {})
             record['evaluation_return_mean'] = evaluation.get('return_mean')
             record['evaluation_win_rate'] = evaluation.get('win_rate')
+            record['evaluation_capture_rate'] = evaluation.get('capture_rate')
+            record['evaluation_reward_per_environment_step'] = evaluation.get('reward_per_environment_step')
+            record['evaluation_fixed_window_reward_per_step'] = evaluation.get('fixed_window', {}).get('reward_per_environment_step')
             record['evaluation_episode_count'] = evaluation.get('count')
             record['evaluation_seed'] = evaluation.get('seed')
             record['error'] = result.get('error')
@@ -37,7 +40,8 @@ def summarize(manifest_path):
         group = {'variant': variant, 'declared_seeds': [run['seed'] for run in runs],
                  'completed_seeds': [run['seed'] for run in complete],
                  'all_declared_runs_completed': len(complete) == len(runs)}
-        for metric in ('evaluation_return_mean', 'evaluation_win_rate'):
+        for metric in ('evaluation_return_mean', 'evaluation_win_rate', 'evaluation_capture_rate',
+                       'evaluation_reward_per_environment_step', 'evaluation_fixed_window_reward_per_step'):
             values = [run[metric] for run in complete if run.get(metric) is not None]
             group[metric] = ({'mean': statistics.mean(values),
                               'median': statistics.median(values),

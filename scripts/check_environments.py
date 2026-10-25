@@ -26,7 +26,7 @@ def package(name):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--profile", choices=("core", "smac", "mujoco"), default="core")
+    parser.add_argument("--profile", choices=("core", "smac", "mujoco", "football"), default="core")
     parser.add_argument("--strict", action="store_true", help="fail on pin mismatches")
     parser.add_argument("--imports", action="store_true", help="import modules without starting engines")
     parser.add_argument("--sc2-path", help="inspect existing SC2 files; otherwise use SC2PATH for smac")
@@ -43,6 +43,10 @@ def main():
         expected.update({"numpy": "1.23.5", "gym": "0.10.8", "mujoco-py": "2.1.2.14", "Cython": "0.29.36", "MAMujoco": "1.1.0"})
         python_pin = "3.10"
         commit = ("MAMujoco", "b212ddd74b258e7cea006ff1d642b5ffada4b99d")
+    elif args.profile == 'football':
+        lock = json.loads((PROJECT / 'configs/environment_locks/football-cpu.json').read_text())
+        expected = {**lock['packages'], 'bta-repro': '0.1.0'}
+        python_pin = lock['python']
     packages = {name: package(name) for name in expected}
     mismatches, errors = [], []
     for name, pin in expected.items():
@@ -59,7 +63,9 @@ def main():
               "host": {"system": platform.system(), "machine": platform.machine(), "libc": platform.libc_ver()},
               "packages": packages, "pin_mismatches": mismatches, "errors": errors}
     if args.imports:
-        modules = ["numpy", "torch"] + (["smacv2.env.starcraft2.wrapper"] if args.profile == "smac" else ["gym"] if args.profile == "mujoco" else [])
+        modules = ["numpy", "torch"] + (["smacv2.env.starcraft2.wrapper"] if args.profile == "smac" else
+                  ["gym"] if args.profile == "mujoco" else
+                  ['gfootball.env', 'gfootball_engine'] if args.profile == 'football' else [])
         report["imports"] = {}
         for name in modules:
             try:

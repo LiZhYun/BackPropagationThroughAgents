@@ -28,6 +28,17 @@ The masked maxima remain attached to autograd. The construction is differentiabl
 
 By default, log scales are clamped to `[-8,8]`. Optional `log_scale_bound=b` uses `b*tanh(raw/b)`, preserving a unit derivative and identity value at zero while smoothly limiting scales. Positive gaps and energies are bounded to avoid overflow. Nonzero energies receive a small machine-precision floor to prevent underflow from creating extra modes; these guards can change extreme or nearly tied distributions. Half precision inputs use float32 energy calculations.
 
+The optional `joint_distribution_float64=true` training configuration computes
+only the enumerated joint energies, probabilities, entropy and likelihoods in
+float64. Networks, optimizer state and local execution retain their original
+dtype. This reduces the near-tie region affected by the numerical floor without
+changing the formula or introducing a substitute gradient. For example, a0.001
+local gap at scale`exp(-8)` is floored in float32, erasing its derivative; the
+float64 distribution preserves its exact nonzero derivative and unique mode.
+Both matrix and Predator–Prey trainers retain the double-precision behavior
+likelihoods through PPO. This is an explicit numerical development control;
+its effect on learning remains empirical. Default behavior is unchanged.
+
 Nonnegative penalties added to an already fixed independent energy can mainly concentrate the current mode. Pair scaling can also reduce the energy of coordinated alternatives. Nevertheless, the modifier can still sharpen a bad mode or improve stochastic return without moving local greedy actions. Exact IGC alone does not resolve these optimization failures. Evaluate local greedy performance, joint and local distributions, and modifier scales separately.
 
 ## API and integration boundary

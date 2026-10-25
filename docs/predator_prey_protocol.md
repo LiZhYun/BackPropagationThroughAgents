@@ -151,12 +151,27 @@ observation, reward, terminated, truncated, info = env.step([4, 4])
 env.close()
 ```
 
-To integrate, add `prey` to the trainer's environment choices and validation,
-then lazily construct `PreyEnv` with `env_config` and the existing derived seed.
-No rollout/loss changes are needed. Existing optional observation normalization
-can wrap it, but enabling that preprocessing is an explicit protocol choice.
-Capture success is available as `info['capture_success']`; this is not a SMAC
-win-rate metric. The trainer and rollout runner were not changed by this task.
+The shared trainer accepts `environment="prey"` and constructs `PreyEnv` with
+the existing independent training seeds. Optional observation normalization is
+an explicit protocol choice. Capture success is `info['capture_success']` and
+is logged separately from SMAC/Football win rate. Projected predecessor actions
+are available for AR-PPO/BPPO through `action_embed_dim`. Experimental two-agent
+joint AgentMixer is selected with `agentmixer_correlation="joint"`; its joint
+likelihood is scored once per transition while evaluation uses local actors.
+
+Set `eval_window_steps=200` and `eval_windows=100` to add the released logger's
+fixed-window reduction. Each independently seeded window starts from reset,
+autoresets after captures/timeouts, and includes rewards from any unfinished
+episode at the final step. Results retain each window's reward sum, completed
+captures, and unfinished segment. The aggregate is total reward divided by
+all20,000 evaluation decisions. These decisions are counted separately from
+training, and the episode evaluator's metrics remain unchanged. Frozen training
+normalization and preserved RNG states keep evaluation from affecting learning.
+
+The100k development pilot used episode evaluation only. The300k coordination
+controls add20 windows of200 steps for faster diagnosis; this is fewer evaluation
+windows than the released100, explicitly recorded in configuration. Matching
+the logger's reduction does not resolve the historical figure-to-logger link.
 
 Validation on 2026-10-25:
 

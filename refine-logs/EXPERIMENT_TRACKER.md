@@ -2,7 +2,7 @@
 
 | ID | Stage | Purpose | System | Status | Evidence |
 |---|---|---|---|---|---|
-| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 480 tests passed,1CUDA-onlyskip, 2026-10-25 |
+| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 536 tests passed,1CUDA-onlyskip, 2026-10-25 |
 | R002 | M0 | Pipeline smoke | MAPPO climbing, 2,048 steps | PASS | results/smoke/mappo_20261025 |
 | R003 | M0 | Pipeline smoke | AR-PPO, BPPO, AgentMixer | PASS | results/smoke/{algorithm}_20261025; 2,048 steps each |
 | R004 | M1 | Matrix development | Four algorithms × two games × seeds 0–2 | FAIL learning gate | Job21192344; all24 completed, zero final greedy optima |
@@ -22,6 +22,15 @@
 | R018 | M2 | Longer MuJoCo learning check | SamefiveHC2x3controls,1Msteps,seed0 | COMPLETED | Job21192905; finalreturns MAPPO1260.62,AR2087.35,BPPO2007.54,AMidentity1980.50,AM1695.45; no10Mcomparison |
 | R019 | M1 | Actor learning-rate controls | JointAgentMixer,200k,3seeds×2games | MIXED | Jobs21192929/21192931/21192932; fixedfastactorLR solvesClimbing3/3 by61–72k; failsPenalty3/3; lateLR solvesClimbing2/3 |
 | R020 | M1 | Matched modifier/exploration controls | Factorizedfastactor andjointzeroentropy | FAIL robustness | Jobs21193031/21193032; factorized0/6; noentropyClimbing0/3,Penalty1/3 |
-| R021 | M2 | MuJoCo protocol controls |7variants,500ksteps,seed0 | RUNNING | Job21195730; initialnoise,ValueNorm,40envbatch controls; allsourcefrozen |
-| R022 | M2 | Predator–Prey pilot |5methods×2penalties,100ksteps,seed0 | RUNNING | Job21195734; adapter64tests and10240legacydifferentialtransitions pass; historicalfixed-windowmetricsunresolved |
+| R021 | M2 | MuJoCo protocol controls |7variants,500ksteps,seed0 | COMPLETED | Job21195730; returns: normonly2698.45,noiseonly1871.94,MAPPOprotocol2193.79,AR2191.15,BPPO2399.97,AMidentity1527.66,AM2128.55; development seed only |
+| R022 | M2 | Predator–Prey pilot |5methods×2penalties,100ksteps,seed0 | COMPLETED | Job21195734; zero penalty capture90–100%; minus1 capture0–5%; episode metrics only, no exact paper-scale comparison |
 | R023 | Setup | FreshSMAC installation | Separateprivateverifyenvironment | PASS | .native/smac-verify/environment-report.json;47pins,privatePython,imports; existingprefixunchanged |
+
+| R024 | Setup | Native Football engine | Four scenarios, complete matches and seed replay | PASS | Build21195904; replay21196022;5v5 takes3001 API steps. Source2.10.2 checksum pinned |
+| R025 | M0 | Football training integration | Four algorithms × four scenarios ×128steps | PASS | All16 runs in job21196049 completed; complete-match evaluations, no performance claim |
+| R026 | Setup | Fresh portable Football installation |130 native packages,23 Python versions | RETRY QUEUED |21196106 compiled engine but shell was interrupted by a live script edit;21196130 retries unchanged recipe after21196038_1. Added private libopengl after login-node import exposed reliance on system library |
+| R027 | M0 | Prey fixed-window metric and joint runner | Reward denominator, partial episodes, local execution, float64 likelihoods | PASS | Fixed-window tests plus shared-runner integration; joint event scored once, partial rewards retained |
+| R028 | M2 | Prey coordination controls | Six variants × two penalties,300k,seed0 | RUNNING |21196038;20 fixed200-step windows plus20 complete evaluation episodes. Zero-penalty projectedAR/BPPO rates2.1975/2.185; factorizedAM1.9875,jointAM1.76 |
+| R029 | M2 | SMACv2 learning pilot | Five methods,terran5v5,20k,seed0 | COMPLETED |21196113; allfive methods completed with0/8 final wins; roughlyfour minutes/run |
+| R030 | M2 | Longer normalized-critic MuJoCo follow-up | Five matched HC2x3 controls,3M,seed0 | QUEUED |21196118; dependencies21196038 and21196130;2workers,4h cap based on500k timings |
+| R031 | M1 | Joint-distribution precision control | Two actor rates,both games,three seeds,200k | QUEUED/RUNNING |21196198/21196199;float64 joint distribution only,networks remainfloat32; matched existingfloat32 controls retained |

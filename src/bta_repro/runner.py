@@ -106,6 +106,13 @@ def _sample(policy, algorithm, is_discrete, obs, state, available):
     return policy.sample(obs, available_actions=available) if is_discrete else policy.sample(obs)
 
 
+def _uses_joint_event(policy, algorithm, is_discrete):
+    joint = bool(getattr(policy, 'joint_event', False))
+    if joint and (algorithm != 'agentmixer' or not is_discrete):
+        raise ValueError('one joint event is supported only for discrete AgentMixer')
+    return joint
+
+
 def _likelihood(policy, algorithm, is_discrete, batch):
     if algorithm == "agentmixer":
         if is_discrete:
@@ -142,6 +149,7 @@ def collect_rollout(
     if not 0 <= gamma <= 1 or not 0 <= gae_lambda <= 1:
         raise ValueError("gamma and gae_lambda must lie in [0, 1].")
     spec = _spec(envs[0])
+    joint_event = _uses_joint_event(policy, algorithm, spec[0])
     if any(_spec(env) != spec for env in envs[1:]):
         raise ValueError("Synchronous environments must have matching dimensions and action type.")
     device, dtype = _model_location(policy)
@@ -172,9 +180,11 @@ def collect_rollout(
     records = []
     for _ in range(steps):
         obs, state, available, active = _stack_observations(current, spec, device, dtype)
+        if joint_event and not active.all():
+            raise ValueError('joint AgentMixer currently requires every agent to be active')
         actions, log_probs = _sample(policy, algorithm, spec[0], obs, state, available)
         expected_actions = (count, spec[1]) if spec[0] else (count, spec[1], spec[4])
-        if actions.shape != expected_actions or log_probs.shape != (count, spec[1]):
+        if actions.shape != expected_actions or log_probs.shape != (count, 1 if joint_event else spec[1]):
             raise ValueError("Policy sample returned inconsistent action or log-probability shapes.")
         if not torch.isfinite(actions).all() or not torch.isfinite(log_probs).all():
             raise ValueError("Policy samples and log probabilities must be finite.")
@@ -278,7 +288,8 @@ def update_rollout(
     if batch.obs.ndim != 3 or len(batch.obs) == 0:
         raise ValueError("A nonempty [batch, agents, obs_dim] rollout is required.")
     count, agents = batch.obs.shape[:2]
-    if batch.state.ndim != 2 or len(batch.state) != count or batch.old_log_probs.shape != (count, agents):
+    joint_event = _uses_joint_event(policy, algorithm, is_discrete)
+    if batch.state.ndim != 2 or len(batch.state) != count or batch.old_log_probs.shape != (count, 1 if joint_event else agents):
         raise ValueError("States and old log probabilities must share the rollout batch dimension.")
     if batch.advantages.shape != (count,) or batch.returns.shape != (count,):
         raise ValueError("advantages and returns must have shape [batch].")
@@ -299,6 +310,8 @@ def update_rollout(
     if active.device != batch.obs.device:
         raise ValueError("active_agents and observations must use the same device.")
     active = active.bool()
+    if joint_event and not active.all():
+        raise ValueError('joint AgentMixer currently requires every agent to be active')
     if algorithm == "bppo" and not is_discrete and not active.all():
         raise ValueError("Continuous BPPO currently requires every agent to be active.")
     keys = ["critic"] + ([f"actor_{i}" for i in range(agents)] if algorithm == "bppo" else ["policy"])
@@ -329,7 +342,7 @@ def update_rollout(
             for _ in range(epochs):
                 log_probs, entropy = _likelihood(policy, algorithm, is_discrete, batch)
                 old_log_probs = batch.old_log_probs
-                if algorithm == "agentmixer":
+                if algorithm == "agentmixer" and not joint_event:
                     # Remove inactive factors before forming the joint event ratio.
                     log_probs, entropy = log_probs * active, entropy * active
                     old_log_probs = old_log_probs * active

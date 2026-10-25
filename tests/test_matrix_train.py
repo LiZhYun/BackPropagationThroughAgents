@@ -9,9 +9,11 @@ from bta_repro.train import (
 )
 
 
-def test_joint_modifier_matrix_training_integrates_one_joint_event(tmp_path):
+@pytest.mark.parametrize('precise_distribution', [False, True])
+def test_joint_modifier_matrix_training_integrates_one_joint_event(tmp_path, precise_distribution):
     output = tmp_path / 'joint_smoke'
     summary = train(Config(algorithm='agentmixer', agentmixer_correlation='joint',
+                           joint_distribution_float64=precise_distribution,
                            steps=128, batch_size=64, hidden_dim=8, epochs=2), output)
     assert summary['steps'] == 128
     assert abs(sum(summary['training_joint_probabilities']) - 1) < 1e-5
@@ -19,6 +21,16 @@ def test_joint_modifier_matrix_training_integrates_one_joint_event(tmp_path):
     assert (output / 'checkpoint.pt').exists()
     metadata = json.loads((output / 'config.json').read_text())
     assert metadata['method_variant'] == 'experimental_joint_gap_scaling'
+
+
+@pytest.mark.parametrize('arguments', [
+    {'joint_distribution_float64': 1},
+    {'joint_distribution_float64': True},
+    {'algorithm': 'agentmixer', 'joint_distribution_float64': True},
+])
+def test_joint_precision_control_requires_the_joint_method(arguments):
+    with pytest.raises(ValueError):
+        Config(**arguments).validate()
 
 
 def test_default_actor_learning_rate_is_constant_and_late_change_uses_environment_steps():

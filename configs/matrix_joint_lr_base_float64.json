@@ -1,0 +1,7 @@
+{
+  "agentmixer_correlation": "joint",
+  "modifier_learning_rate": 0.0005,
+  "learning_rate": 0.0005,
+  "entropy_coef": 0.01,
+  "joint_distribution_float64": true
+}

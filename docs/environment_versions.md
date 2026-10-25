@@ -10,12 +10,16 @@ CUDA, NumPy, or a simulator creates a new profile requiring separate checks.
 | Core `.venv` | Python 3.11.15; PyTorch 2.6.0+cpu; observed NumPy 2.4.6 (reported, not pinned by checker) | None |
 | SMAC `.venv-smac` | Python 3.11.15; NumPy 1.23.5; protobuf 3.20.3; PySC2 4.0.0; SMACv2 1.0.0 at commit `577ab5a2cff2391f8df582da5731ea9cd6adf3c6` | StarCraft II 4.10, Base75689 |
 | MuJoCo `.venv-mujoco` | Python 3.10.22; NumPy 1.23.5; Cython 0.29.36; Gym 0.10.8; mujoco-py 2.1.2.14; MAMujoco 1.1.0 at commit `b212ddd74b258e7cea006ff1d642b5ffada4b99d` | MuJoCo 2.1.0; Mesa 25.0.5 OSMesa |
+| Football `.venv-football` | Python3.10.22; NumPy1.23.5; Gym0.23.1; gfootball2.10.2 | Official source engine, private GCC12.3 build |
 
 The SMAC compatibility pins retain the old NumPy aliases and protobuf behavior
 used by the pinned PySC2 stack. The MuJoCo profile retains the original Gym and
 mujoco-py API and physics engine. Gymnasium/MuJoCo 3 is a separate migration,
 not the canonical benchmark profile. See [MuJoCo setup](mujoco_setup.md) and
 [adapter semantics](mujoco_adapter.md) for its native build and action mapping.
+The [Football guide](football.md) provides its private installer, native package
+lock, source checksum and full-match replay check. It explicitly includes the
+OpenGL runtime even for headless execution.
 
 ## Rebuild or check SMAC
 

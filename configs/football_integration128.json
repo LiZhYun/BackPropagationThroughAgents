@@ -1,0 +1,115 @@
+{
+  "label": "football_integration128",
+  "scope": "Four-method native Football integration on allfour paper scenarios;128 training steps perrun, complete-match evaluation. Not performance evidence.",
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "football",
+    "steps": 128,
+    "num_envs": 1,
+    "rollout_steps": 64,
+    "epochs": 2,
+    "eval_episodes": 2,
+    "checkpoint_every_updates": 0,
+    "threads": 1
+  },
+  "variants": {
+    "mappo_academy_3_vs_1_with_keeper": {
+      "algorithm": "mappo",
+      "env_config": {
+        "scenario": "academy_3_vs_1_with_keeper"
+      }
+    },
+    "arppo_academy_3_vs_1_with_keeper": {
+      "algorithm": "arppo",
+      "env_config": {
+        "scenario": "academy_3_vs_1_with_keeper"
+      }
+    },
+    "bppo_academy_3_vs_1_with_keeper": {
+      "algorithm": "bppo",
+      "env_config": {
+        "scenario": "academy_3_vs_1_with_keeper"
+      }
+    },
+    "agentmixer_academy_3_vs_1_with_keeper": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "scenario": "academy_3_vs_1_with_keeper"
+      }
+    },
+    "mappo_academy_counterattack_hard": {
+      "algorithm": "mappo",
+      "env_config": {
+        "scenario": "academy_counterattack_hard"
+      }
+    },
+    "arppo_academy_counterattack_hard": {
+      "algorithm": "arppo",
+      "env_config": {
+        "scenario": "academy_counterattack_hard"
+      }
+    },
+    "bppo_academy_counterattack_hard": {
+      "algorithm": "bppo",
+      "env_config": {
+        "scenario": "academy_counterattack_hard"
+      }
+    },
+    "agentmixer_academy_counterattack_hard": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "scenario": "academy_counterattack_hard"
+      }
+    },
+    "mappo_academy_corner": {
+      "algorithm": "mappo",
+      "env_config": {
+        "scenario": "academy_corner"
+      }
+    },
+    "arppo_academy_corner": {
+      "algorithm": "arppo",
+      "env_config": {
+        "scenario": "academy_corner"
+      }
+    },
+    "bppo_academy_corner": {
+      "algorithm": "bppo",
+      "env_config": {
+        "scenario": "academy_corner"
+      }
+    },
+    "agentmixer_academy_corner": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "scenario": "academy_corner"
+      }
+    },
+    "mappo_5_vs_5": {
+      "algorithm": "mappo",
+      "env_config": {
+        "scenario": "5_vs_5"
+      }
+    },
+    "arppo_5_vs_5": {
+      "algorithm": "arppo",
+      "env_config": {
+        "scenario": "5_vs_5"
+      }
+    },
+    "bppo_5_vs_5": {
+      "algorithm": "bppo",
+      "env_config": {
+        "scenario": "5_vs_5"
+      }
+    },
+    "agentmixer_5_vs_5": {
+      "algorithm": "agentmixer",
+      "env_config": {
+        "scenario": "5_vs_5"
+      }
+    }
+  }
+}

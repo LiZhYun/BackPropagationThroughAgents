@@ -79,12 +79,16 @@ class JointAgentMixerPolicy(nn.Module):
     Centralized log probabilities and entropies are [B,1]: one joint event,
     not two per-agent terms. Decentralized sampling returns [B,2] local log
     probabilities. This explicit difference limits current integration to the
-    matrix trainer; the generic simulator runner expects per-agent factors.
+    matrix trainer and two-agent Predator–Prey runner. The joint event is
+    scored once; it must never be duplicated across agents in PPO.
     """
+
+    joint_event = True
 
     def __init__(
         self, obs_dim: int, state_dim: int, num_agents: int, num_actions: int,
         hidden_dim: int = 64, log_scale_bound: float | None = None,
+        *, distribution_float64: bool = False,
     ) -> None:
         super().__init__()
         if num_agents != 2:
@@ -93,9 +97,12 @@ class JointAgentMixerPolicy(nn.Module):
             raise ValueError("all policy dimensions must be positive")
         if log_scale_bound is not None and not 0 < log_scale_bound <= 8:
             raise ValueError("log_scale_bound must be in (0, 8]")
+        if not isinstance(distribution_float64, bool):
+            raise ValueError('distribution_float64 must be boolean')
         self.obs_dim, self.state_dim = obs_dim, state_dim
         self.num_agents, self.num_actions = num_agents, num_actions
         self.log_scale_bound = log_scale_bound
+        self.distribution_float64 = distribution_float64
         self.local_actors = nn.ModuleList([
             nn.Sequential(nn.Linear(obs_dim, hidden_dim), nn.Tanh(),
                           nn.Linear(hidden_dim, hidden_dim), nn.Tanh(),
@@ -127,7 +134,12 @@ class JointAgentMixerPolicy(nn.Module):
 
     def joint_logits(self, obs: Tensor, state: Tensor, available_actions: Tensor | None = None) -> Tensor:
         local = self.local_logits(obs)
-        return joint_mode_preserving_logits(local, self.modifier_log_scales(local, state), available_actions)
+        scales = self.modifier_log_scales(local, state)
+        if self.distribution_float64:
+            # Keep networks/optimizer in their original dtype. Only the tiny
+            # enumerated distribution needs greater separation near local ties.
+            local, scales = local.double(), scales.double()
+        return joint_mode_preserving_logits(local, scales, available_actions)
 
     def local_actions(self, obs: Tensor, available_actions: Tensor | None = None) -> Tensor:
         local = self.local_logits(obs)
