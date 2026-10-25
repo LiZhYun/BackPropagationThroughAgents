@@ -8,28 +8,31 @@ Full reproduction and performance beyond the papers are not yet established.
 - Shared MAPPO, AR-PPO, BPPO and AgentMixer training supports matrix games, SMACv2, MA-MuJoCo, Predator–Prey and Football.
 - Temporal rollouts preserve terminal/time-limit observations, legal/dead-agent masks, raw policy actions and independent seeds. Evaluation preserves training RNG and normalization.
 - Optional critic-target normalization, clipped/Huber losses, initial Gaussian exploration, projected discrete predecessor actions and an experimental two-agent joint modifier are explicit controls.
-- Integrated suite: **536 passed, 1 CUDA-only skip**, including joint-distribution precision controls and matrix/simulator integration. Networks remain float32; optional joint probabilities use float64.
-- SMACv2 and all 12 MA-MuJoCo partitions pass native checks and all-method integration. Predator–Prey matches 10,240 transitions from the pinned legacy implementation.
+- Integrated suite: **543 passed, 1 CUDA-only skip**, including the SMAC clock guard, joint-distribution precision controls and matrix/simulator integration. Networks remain float32; optional joint probabilities use float64.
+- All 96 integration runs across 15 MuJoCo task/observation variants and nine SMACv2 scenarios pass with four algorithms. Predator–Prey matches 10,240 transitions from the pinned legacy implementation.
 - Football2.10.2 builds and exactly replays all four scenarios; all 16 algorithm/scenario integration runs pass. Fresh portable setup passes in a second private prefix; all four native replay traces match the original build. Private OpenGL also fixes login-node imports.
-- Prey evaluation now separately logs the released fixed-window reduction, including unfinished episodes. The historical plot-to-logger link remains unverified.
+- The author confirmed evaluation return for the Prey and Football 5v5 figures on 2026-10-25; see `docs/author_clarifications.md`. Prey separately logs the released fixed-window reduction, including unfinished episodes. Exact historical normalization and episode handling remain unresolved.
 
 ## Experiment evidence
 
 - Source inventory covers 45 tasks: 39 digitized plot targets with reading uncertainty and six numeric AgentMixer SMAC values. Historical aggregation ambiguities remain explicit.
 - Projected AR-PPO and BPPO solve both matrix games in all three development seeds. Their matched success does not establish a peer-feedback advantage.
 - Joint AgentMixer with faster actor updates solves Climbing in all three development seeds at200k but fails Penalty. The faster float64 control solves2/3 seeds in each game; the slower float64 control solves0/3 in both. No robust convergence claim.
-- Five HalfCheetah controls completed1M steps. Seven subsequent500k protocol controls completed; critic normalization alone reached2698.45, BPPO protocol2399.97 and AgentMixer protocol2128.55 in development seed0. These remain below the10M targets.
+- Five HalfCheetah controls completed1M steps and seven protocol controls completed500k. At3M, normalized-critic MAPPO reaches3045.06, AR-PPO3599.84 and BPPO599.40; AgentMixer and its identity control continue. BPPO learns poorly throughout this setting, with no large median KL or gradient spike. A longer matched run of the better500k protocol settings is queued.
 - Ten100k Prey runs completed: all methods learn captures without the penalty and struggle with penalty−1. All twelve300k coordination controls completed; penalty−1 still has0–5% capture. Both episodic and fixed-window metrics are retained.
-- All five SMAC20k learning pilots completed with0/8 final wins. Longer200k runs are active; MAPPO/AR-PPO reached1/32 wins at their first50k evaluation. This is far below the10M paper target.
+- All five SMAC20k pilots completed with0/8 final wins. Both initial200k workers failed after129,536 recorded steps when SMAC restarted mid-transition, consistent with the native cumulative game-clock limit. The adapter now restarts between episodes before expiry; native validation and a fresh matched retry are queued. Failed artifacts remain retained.
 - Full budgets, independent final training seeds, ablations and release evidence remain outstanding.
 
 ## Recorded active/queued jobs
 
 - 21196118: five3M normalized-critic HalfCheetah controls, two serial workers, running.
-- 21196276: five200k SMAC learning controls, two serial workers, running.
-- 21196515:96 tiny integration runs covering all15 MuJoCo task/observation variants and nine SMAC scenarios with four algorithms; queued after SMAC200k.
-- 21196495: sixteen1M Prey rollout-batch/entropy/precision controls; queued after the broader integration checks.
-- 21196497: five100k Football3v1 learning controls; queued after the HalfCheetah3M runs.
+- 21196276: SMAC200k failed; MAPPO/AR-PPO stopped and the remaining three methods did not start.
+- 21196515: all96 tiny integration runs completed.
+- 21196495: sixteen1M Prey controls running; all eight zero-penalty runs completed, penalty−1 runs continue.
+- 21198088: native SMAC restart validation, one worker after HalfCheetah worker1.
+- 21196497: five100k Football3v1 controls, after both HalfCheetah workers and the restart validation finish.
+- 21198089: five200k SMAC retries, after Prey finishes and the native restart validation passes.
+- 21198090: five3M HalfCheetah protocol controls, after the SMAC retries.
 
 Dependencies enforce at most four workers, each at most2CPUs/8GB. Exact manifests and changes are in `experiments/jobs.jsonl`; use scheduler state before adding jobs. `python scripts/report_progress.py` reads artifact progress without querying or modifying jobs. `python scripts/check_paper_targets.py` verifies all45 target links (six numeric,39 digitized) without treating estimates as exact results.
 

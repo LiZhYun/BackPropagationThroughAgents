@@ -55,9 +55,11 @@ Evaluation completes each match and determines winning from the final score.
 The legacy evaluator instead stops after200 rollout steps and leaves unfinished
 entries as zeros; its win check uses the last step's `score_reward`. That can
 differ from final match outcome, especially in5v5. These errors are not retained.
-Historical figure-to-logger correspondence still needs qualification: the5v5
-paper target is a plotted return, not a win rate, and the legacy training logger
-also repeats summed rewards across agents. Keep raw returns and scores separate.
+The author [confirmed on 2026-10-25](author_clarifications.md) that the5v5
+figure plots evaluation return. Its exact historical evaluation reduction and
+code version remain unresolved: this pinned200-step evaluator cannot finish a
+native3,001-step match. Keep raw returns and scores separate; do not interpret
+the figure using a training-reward reduction or convert it into a win rate.
 
 ## Current installation and checks
 

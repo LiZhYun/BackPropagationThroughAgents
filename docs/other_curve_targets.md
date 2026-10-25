@@ -138,7 +138,10 @@ The active main `Football_train.pdf` and active appendix `Football.pdf` contain
 panel is labeled generically; its mapping to the hard task follows the prose and
 existing benchmark inventory. `Football_5v5.pdf` instead reports **averaged
 episode return**, ending at **−0.29 [−0.30, −0.28] at 20M**. Its caption does not
-resolve train versus test aggregation. It must not be converted into a win rate.
+resolve train versus test aggregation by itself. The author
+[confirmed evaluation return on 2026-10-25](author_clarifications.md).
+Historical normalization and episode handling remain unresolved. It must not
+be converted into a win rate.
 
 | AgentMixer Predator-Prey task | Endpoint at 1M, in plotted return units |
 | --- | ---: |
@@ -147,7 +150,8 @@ resolve train versus test aggregation. It must not be converted into a win rate.
 
 `Prey_main.pdf` is referenced only by commented appendix source. Its accompanying
 commented text calls the metric average test-episode return and describes reward
-10 for capture. The PDF does not determine reward normalization, team versus
+10 for capture. The same author clarification confirms evaluation return for
+both penalties. The PDF does not determine reward normalization, team versus
 agent reduction, or episode length; the extracted 2.21/0.36 values must retain
 their plotted scale. AgentMixer's active main text refers readers to additional
 Climbing and Predator-Prey results, but their figure inclusion blocks remain

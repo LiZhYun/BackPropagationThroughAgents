@@ -14,6 +14,8 @@ import numpy as np
 
 
 SMACV2_COMMIT = "577ab5a2cff2391f8df582da5731ea9cd6adf3c6"
+# Blizzard's ResponseStep protocol limits one game to 2**19 simulation ticks.
+_MAX_GAME_LOOP = 1 << 19
 _RNG_LOCK = threading.RLock()
 _TEAMS = {
     "protoss": (["stalker", "zealot", "colossus"], [0.45, 0.45, 0.1], []),
@@ -27,7 +29,8 @@ def smac_config(scenario: str, seed: int = 0, **overrides) -> dict:
 
     Capability details follow pinned official SMACv2 examples; the accepted
     papers do not completely specify those details. Overrides are explicit
-    backend keyword arguments, except ``sc2_path`` which the adapter consumes.
+    backend keyword arguments, except ``sc2_path`` and ``restart_game_loop``
+    which the adapter consumes.
     """
     normalized = scenario.lower().strip().replace(" ", "_")
     match = re.fullmatch(r"(protoss|terran|zerg)_(5v5|10v10|10v11)", normalized)
@@ -45,6 +48,7 @@ def smac_config(scenario: str, seed: int = 0, **overrides) -> dict:
         "game_version": "4.10",
         "difficulty": "7",
         "step_mul": 8,
+        "restart_game_loop": 480_000,
         "move_amount": 2,
         "continuing_episode": True,
         "conic_fov": False,
@@ -85,6 +89,9 @@ def smac_config(scenario: str, seed: int = 0, **overrides) -> dict:
         },
     }
     config.update(deepcopy(overrides))
+    threshold = config["restart_game_loop"]
+    if isinstance(threshold, bool) or not isinstance(threshold, (int, np.integer)) or not 1 <= threshold < _MAX_GAME_LOOP:
+        raise ValueError("restart_game_loop must be an integer between 1 and 524287")
     if config["continuing_episode"] is not True:
         raise ValueError("continuing_episode=True is required to expose SMAC time-limit truncations")
     if config["action_mask"] is not True:
@@ -161,8 +168,10 @@ class SmacEnv:
         self._closed = False
         self._needs_reset = True
         self._has_reset = False
+        self.planned_restarts = 0
         self._last_available_actions = None
-        backend_config = {key: value for key, value in self.config.items() if key not in ("scenario", "sc2_path")}
+        backend_config = {key: value for key, value in self.config.items()
+                          if key not in ("scenario", "sc2_path", "restart_game_loop")}
         with self._backend_scope():
             self._env = _make_backend(backend_config)
             self.capability_rng_streams = _seed_capability_generators(self._env, self.seed)
@@ -178,6 +187,12 @@ class SmacEnv:
         if self.num_agents != self.config["capability_config"]["n_units"]:
             self.close()
             raise ValueError("SMAC agent count does not match capability_config")
+        # Leave an entire episode plus reset/setup overhead before engine expiry.
+        if self.config["restart_game_loop"] + self.episode_limit * self.config["step_mul"] + 1024 >= _MAX_GAME_LOOP:
+            self.close()
+            raise ValueError("restart_game_loop leaves insufficient room for a complete SMAC episode")
+        self.versions = {"smacv2_commit": SMACV2_COMMIT,
+                         "process_lifecycle": "episode_boundary_game_loop_restart_v1"}
 
     @contextmanager
     def _backend_scope(self):
@@ -205,6 +220,10 @@ class SmacEnv:
         if self._closed:
             raise RuntimeError("SMAC environment is closed")
 
+    def _game_loop(self) -> int:
+        # The pinned backend caches the native ResponseObservation after each step.
+        return int(self._env._obs.observation.game_loop)
+
     def _observation(self) -> dict:
         obs = np.asarray(self._env.get_obs(), dtype=np.float32)
         state = np.asarray(self._env.get_state(), dtype=np.float32)
@@ -230,6 +249,12 @@ class SmacEnv:
             raise ValueError("SMAC cannot reseed in place; construct a new SmacEnv with the desired seed")
         self._needs_reset = True
         with self._backend_scope():
+            restarted = self._has_reset and self._game_loop() >= self.config["restart_game_loop"]
+            if restarted:
+                # Called only at reset: no transition or partial PPO rollout is
+                # invented, and capability generators retain their current states.
+                self._env.full_restart()
+                self.planned_restarts += 1
             restarts = getattr(self._env, "force_restarts", 0)
             self._env.reset()
             if getattr(self._env, "force_restarts", 0) != restarts:
@@ -241,6 +266,8 @@ class SmacEnv:
         return observation, {
             "seed": self.seed, "scenario": self.scenario,
             "episode_limit": self.episode_limit, "capability_rng_streams": self.capability_rng_streams,
+            "planned_restart": restarted, "planned_restarts": self.planned_restarts,
+            "native_game_loop": self._game_loop(),
         }
 
     def step(self, actions: np.ndarray) -> tuple[dict, float, bool, bool, dict]:
@@ -276,6 +303,7 @@ class SmacEnv:
             raise SmacSimulatorError("SMAC returned a nonfinite reward")
         terminated = bool(done) and not truncated
         self._needs_reset = terminated or truncated
+        info.update(planned_restarts=self.planned_restarts, native_game_loop=self._game_loop())
         return observation, float(reward), terminated, truncated, info
 
     def close(self):

@@ -2,7 +2,7 @@
 
 | ID | Stage | Purpose | System | Status | Evidence |
 |---|---|---|---|---|---|
-| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 536 tests passed,1CUDA-onlyskip, 2026-10-25 |
+| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 543 tests passed,1CUDA-onlyskip, 2026-10-25 |
 | R002 | M0 | Pipeline smoke | MAPPO climbing, 2,048 steps | PASS | results/smoke/mappo_20261025 |
 | R003 | M0 | Pipeline smoke | AR-PPO, BPPO, AgentMixer | PASS | results/smoke/{algorithm}_20261025; 2,048 steps each |
 | R004 | M1 | Matrix development | Four algorithms × two games × seeds 0–2 | FAIL learning gate | Job21192344; all24 completed, zero final greedy optima |
@@ -35,7 +35,12 @@
 | R030 | M2 | Longer normalized-critic MuJoCo follow-up | Five matched HC2x3 controls,3M,seed0 | RUNNING |21196118; dependencies21196038 and21196130;2workers,4h cap based on500k timings |
 | R031 | M1 | Joint-distribution precision control | Two actor rates,both games,three seeds,200k | COMPLETED mixed |21196198 fast:Climbing2/3,Penalty2/3;21196199 slow:0/3both. Networks remainfloat32. Float32 fastcontrol3/3Climbing,0/3Penalty; no robust convergence |
 | R032 | Targets | Target inventory linkage |45 source targets | PASS coverage | Six original numeric values unchanged;39 digitized selectors resolve uniquely; stale matrix episode interpretation qualified. scripts/check_paper_targets.py |
-| R033 | M2 | Longer SMAC learning check | Five controls,terran5v5,200k,seed0 | RUNNING |21196276; follows stable20k checks;32 evaluation episodes |
-| R034 | M0 | Complete method/observation coverage |15 MuJoCo variants+nine SMAC scenarios×four methods | QUEUED |21196515;96 runs×64steps,diagnostic MuJoCo horizon16; not performance evidence |
-| R035 | M2 | Prey rollout-batch controls | Eight variants×two penalties,1M,seed0 | QUEUED |21196495; compare8×64/50×200 batches plus named entropy/precision controls;100 fixed200-step evaluation windows |
+| R033 | M2 | Longer SMAC learning check | Five controls,terran5v5,200k,seed0 | FAILED runtime |21196276; MAPPO/AR-PPO stop at129,536 recorded steps on native restart; three methods not started; retry R038 |
+| R034 | M0 | Complete method/observation coverage |15 MuJoCo variants+nine SMAC scenarios×four methods | PASS integration |21196515; all96 runs×64steps complete,diagnostic MuJoCo horizon16; not performance evidence |
+| R035 | M2 | Prey rollout-batch controls | Eight variants×two penalties,1M,seed0 | RUNNING |21196495; all eight penalty0 runs complete, penalty−1 continues;100 fixed200-step evaluation windows |
 | R036 | M2 | Football learning pilot | Five methods,3v1,100k,seed0 | QUEUED |21196497; full-match score/evaluation, no early-cap zeros |
+
+| R037 | M0 | Native SMAC process renewal | Planned restart between episodes before game-clock expiry | UNIT PASS; native QUEUED |34 SMAC tests;21198088 requires a native restart with diagnostic128-tick threshold; source frozen |
+| R038 | M2 | SMAC200k retry | Five methods,seed0,native clock guard | QUEUED |21198089; after Prey and successful R037; prior failed artifacts retained |
+| R039 | M2 | Longer MuJoCo protocol comparison | Five matched methods,3M,seed0 | QUEUED |21198090;40×100 batch,initialstd0.365529,normalized clipped Huber critic; selected from existing500k development controls |
+| R040 | Targets | Author metric clarification | Prey and Football5v5 figures | RECORDED |2026-10-25: “eval return”; docs/author_clarifications.md; exact reduction remains unresolved |

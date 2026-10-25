@@ -29,7 +29,33 @@ The factory accepts Protoss, Terran, or Zerg combined with `5v5`, `10v10`, or `1
 
 `reset(seed=None)` returns `(observation, info)`. `step(actions)` returns `(observation, reward, terminated, truncated, info)`. Observations are copied arrays: `obs` float32 `[agents, obs_dim]`, `state` float32 `[state_dim]`, `available_actions` bool `[agents, actions]`, and `active_agents` bool `[agents]`. Actions must be legal integer indices. An agent is active if any non-noop action is available; dead agents retain the backend's noop action.
 
-The adapter never auto-resets. A terminal or truncated step returns the final observation for value bootstrapping, and subsequent steps require an explicit reset. Losses/wins set `terminated`; `info["episode_limit"]` sets `truncated`. The backend exposes the time-limit flag only with `continuing_episode=True`, so the adapter requires this setting as a documented instrumentation change. Simulator restart-counter changes invalidate the transition and raise `SmacSimulatorError`, preventing engine failures from becoming training losses. These behaviors follow the inspected [backend implementation](https://github.com/oxwhirl/smacv2/blob/577ab5a2cff2391f8df582da5731ea9cd6adf3c6/smacv2/env/starcraft2/starcraft2.py).
+The adapter never auto-resets. A terminal or truncated step returns the final observation for value bootstrapping, and subsequent steps require an explicit reset. Losses/wins set `terminated`; `info["episode_limit"]` sets `truncated`. The backend exposes the time-limit flag only with `continuing_episode=True`, so the adapter requires this setting as a documented instrumentation change. Unexpected simulator restart-counter changes invalidate the transition and raise `SmacSimulatorError`, preventing engine failures from becoming training losses. These behaviors follow the inspected [backend implementation](https://github.com/oxwhirl/smacv2/blob/577ab5a2cff2391f8df582da5731ea9cd6adf3c6/smacv2/env/starcraft2/starcraft2.py).
+
+StarCraft II ends a game after2^19 native ticks, according to Blizzard's
+[`ResponseStep` protocol](https://github.com/Blizzard/s2client-proto/blob/master/s2clientprotocol/sc2api.proto).
+Ordinary SMAC episode resets do not reset this clock. Two200k development runs
+failed after129,536 recorded training transitions with two environments, near
+this limit; the old failure artifacts are retained.
+
+The adapter now checks the native clock at `reset()`. Once it reaches
+`restart_game_loop=480000`, it calls the pinned backend's `full_restart()` before
+starting the next episode. The threshold leaves a whole episode and1024 ticks
+of setup allowance before expiry; incompatible settings are rejected. This
+changes native process lifecycle, not reward or termination rules. Capability
+generators keep advancing without reseeding; the native process reuses its
+constructor seed as defined by upstream. Reset/step info records the clock and
+planned restart count. An additional unexpected restart remains an error.
+
+To exercise the lifecycle quickly with a smaller diagnostic threshold:
+
+```bash
+PYTHONNOUSERSITE=1 .venv-smac/bin/python scripts/smoke_smac.py \
+  --steps 512 --restart-game-loop 128 --require-restarts 1 \
+  --output results/smac-restart-smoke.json
+```
+
+The512-step check is runtime validation, not benchmark evidence. Long-run
+training must also pass beyond the previous failure point.
 
 ## Seeding
 

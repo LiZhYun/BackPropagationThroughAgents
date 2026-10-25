@@ -98,3 +98,36 @@ but does not supply a robust solution. Some greedy-optimal policies still have
 negative expected return when sampling their independent local policies; both
 metrics remain reported. Mode consistency concerns greedy execution and does
 not imply matching stochastic distributions or an equilibrium theorem.
+
+## Longer runs and native-clock correction
+
+The normalized-critic HalfCheetah experiment has completed three of its five
+3M-step runs in development seed0. Final evaluation returns over ten episodes
+are3045.06 for MAPPO,3599.84 for AR-PPO and599.40 for BPPO. BPPO's curve remains
+poor throughout: its largest recorded evaluation mean is825.37 at1M. Median
+approximate KL stays below0.002 in each of the three inspected training periods,
+and the median gradient norm stays below1. These diagnostics do not support an
+explanation based on exploding updates. They also do not establish the cause
+of poor learning from a single seed. AgentMixer and its identity control are
+still running. Evidence: job21196118 and
+`results/mujoco_hc2x3_valuenorm3m_20261025T083844Z`.
+
+At500k, the larger-batch protocol settings already gave BPPO2399.97 and
+AgentMixer2128.55, compared with684.46 and800.11 under the normalization-only
+setting. A matched five-method3M protocol follow-up therefore uses the existing
+40×100 batch, lower initial action noise, and clipped Huber normalized critic.
+This is a configuration comparison; several settings change together.
+Configuration: `configs/mujoco_hc2x3_protocol3m.json`; queued job21198090.
+
+The first two200k SMAC runs both stopped after129,536 recorded transitions;
+their remaining three controls were not started. The adapter rejected an
+unexpected native restart, preserving the error instead of training on a false
+terminal transition. This is consistent with StarCraft II's cumulative clock
+limit. The [SMAC lifecycle correction](smac.md) restarts at episode boundaries
+before expiry, with native validation21198088 and fresh matched retry21198089.
+The original failed runs remain in
+`results/smac_terran5_learning200k_20261025T085510Z`.
+
+All96 short integration runs across15 MuJoCo observation variants and nine SMAC
+scenarios have completed, including the17-agent continuous cases. This verifies
+native execution and gradient shapes, not learning performance; job21196515.

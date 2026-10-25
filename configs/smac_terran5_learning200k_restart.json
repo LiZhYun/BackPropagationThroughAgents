@@ -1,0 +1,50 @@
+{
+  "label": "smac_terran5_learning200k_restart",
+  "scope": "Restart from seed0 after the prior native-clock failure; same five200k controls with explicit episode-boundary process renewal at480000 native ticks. Development only,not a10M paper result.",
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "smac",
+    "env_config": {
+      "scenario": "terran_5v5",
+      "restart_game_loop": 480000
+    },
+    "steps": 200000,
+    "num_envs": 2,
+    "rollout_steps": 128,
+    "hidden_dim": 64,
+    "epochs": 5,
+    "learning_rate": 0.0005,
+    "modifier_learning_rate": 5e-05,
+    "critic_learning_rate": 0.0005,
+    "entropy_coef": 0.01,
+    "max_grad_norm": 10.0,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "eval_episodes": 32,
+    "eval_every_steps": 50000,
+    "checkpoint_every_updates": 100,
+    "threads": 1
+  },
+  "variants": {
+    "mappo": {
+      "algorithm": "mappo"
+    },
+    "arppo": {
+      "algorithm": "arppo"
+    },
+    "bppo": {
+      "algorithm": "bppo"
+    },
+    "agentmixer": {
+      "algorithm": "agentmixer"
+    },
+    "agentmixer_identity": {
+      "algorithm": "agentmixer",
+      "modifier_enabled": false
+    }
+  },
+  "wall_time_minutes": 240
+}

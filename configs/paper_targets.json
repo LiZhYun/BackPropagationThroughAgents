@@ -1558,6 +1558,14 @@
         },
         "status": "estimate_not_original_measurement",
         "reading_uncertainty_is_statistical": false
+      },
+      "metric_clarification": {
+        "origin": "evaluation_return",
+        "source": "author_statement_in_reproduction_conversation",
+        "date": "2026-10-25",
+        "quote": "eval return",
+        "record": "docs/author_clarifications.md",
+        "historical_reduction_verified": false
       }
     },
     {
@@ -2156,6 +2164,14 @@
         },
         "status": "estimate_not_original_measurement",
         "reading_uncertainty_is_statistical": false
+      },
+      "metric_clarification": {
+        "origin": "evaluation_return",
+        "source": "author_statement_in_reproduction_conversation",
+        "date": "2026-10-25",
+        "quote": "eval return",
+        "record": "docs/author_clarifications.md",
+        "historical_reduction_verified": false
       }
     },
     {
@@ -2197,6 +2213,14 @@
         },
         "status": "estimate_not_original_measurement",
         "reading_uncertainty_is_statistical": false
+      },
+      "metric_clarification": {
+        "origin": "evaluation_return",
+        "source": "author_statement_in_reproduction_conversation",
+        "date": "2026-10-25",
+        "quote": "eval return",
+        "record": "docs/author_clarifications.md",
+        "historical_reduction_verified": false
       }
     },
     {

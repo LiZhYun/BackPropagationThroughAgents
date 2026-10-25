@@ -118,9 +118,9 @@ runner computes a different quantity:
 
 The launcher's 100 evaluation environments therefore yield 20,000 decisions per
 evaluation call. Although it passes `eval_episodes=100`, this runner's evaluation
-loop does not use that argument to stop after 100 completed episodes. Its
-training logger instead multiplies mean step reward by rollout length 200.
-The source is compatible with the plotted numbers being per-decision rewards,
+loop does not use that argument to stop after 100 completed episodes.
+On 2026-10-25 the author [confirmed evaluation return](author_clarifications.md)
+for both Prey figures. The source is compatible with the plotted numbers being per-decision rewards,
 but no plotting script/run ID links those values to this exact logger key.
 Do not relabel or rescale the original plotted endpoints as proven raw episodic
 returns. Cross-seed aggregation and the band statistic remain unresolved. The
@@ -132,7 +132,7 @@ New experiments should retain raw episodic return, episode length, capture
 rate, and mean reward per decision as separate named metrics. An exact legacy
 logger comparison additionally needs a fixed 200-decision, autoreset evaluation
 window per environment, rather than an average of per-episode reward rates.
-Before claiming superiority to the paper, identify/justify the plotted metric
+Before claiming superiority to the paper, identify/justify the evaluation reduction
 and match the evaluation protocol, budget, and aggregation. No training result
 or reproduction claim is supplied by this implementation audit.
 

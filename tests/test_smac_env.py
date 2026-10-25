@@ -1,4 +1,5 @@
 import random
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -28,6 +29,7 @@ class FakeSmac:
             "team_gen": FakeDistribution(), "start_positions": FakeDistribution(nested=True),
         }
         self.force_restarts = 0
+        self._obs = SimpleNamespace(observation=SimpleNamespace(game_loop=0))
         self.reset_calls = 0
         self.step_calls = 0
         self.closed = False
@@ -50,6 +52,7 @@ class FakeSmac:
 
     def reset(self):
         self.reset_calls += 1
+        self._obs.observation.game_loop += 1
         self.force_restarts += int(self.restart_on_reset)
         self.obs.fill(self._draw())
         self.state.fill(self.reset_calls)
@@ -67,10 +70,15 @@ class FakeSmac:
     def step(self, actions):
         assert isinstance(actions, list)
         self.step_calls += 1
+        self._obs.observation.game_loop += self.config['step_mul']
         self.force_restarts += int(self.restart_on_step)
         self.obs.fill(self._draw())
         self.state.fill(10 + self.step_calls)
         return self.next_result
+
+    def full_restart(self):
+        self.force_restarts += 1
+        self._obs.observation.game_loop = 0
 
     def close(self):
         self.closed = True
@@ -205,6 +213,44 @@ def test_restart_invalidates_step_and_reset(factory):
     factory[0].restart_on_reset = True
     with pytest.raises(smac.SmacSimulatorError, match="restarted"):
         env.reset()
+
+
+def test_native_clock_restart_only_at_reset_preserves_capability_streams(factory):
+    env = smac.SmacEnv({"restart_game_loop": 10, "seed": 9})
+    control = smac.SmacEnv({"seed": 9})
+    assert "restart_game_loop" not in factory[0].config
+    env.reset()
+    control.reset()
+    for index in range(2):
+        factory[0].next_result = factory[1].next_result = (1.5, index == 1, {"battle_won": index == 1})
+        result = env.step(_legal_actions(env))
+        other = control.step(_legal_actions(control))
+        np.testing.assert_array_equal(result[0]["obs"], other[0]["obs"])
+        assert result[1:4] == other[1:4]
+        assert result[4]["planned_restarts"] == 0
+    assert factory[0].force_restarts == 0
+    observed, info = env.reset()
+    expected, _ = control.reset()
+    assert info["planned_restart"] and info["planned_restarts"] == 1
+    assert info["native_game_loop"] == 1
+    np.testing.assert_array_equal(observed["obs"], expected["obs"])
+    # A second, unexpected restart during the subsequent reset is still fatal.
+    factory[0]._obs.observation.game_loop = 10
+    factory[0].restart_on_reset = True
+    with pytest.raises(smac.SmacSimulatorError, match="during reset"):
+        env.reset()
+
+
+@pytest.mark.parametrize("threshold", [True, 0, -1, 1.5, 524288])
+def test_rejects_invalid_restart_clock(threshold):
+    with pytest.raises(ValueError, match="restart_game_loop"):
+        smac.smac_config("terran_5v5", restart_game_loop=threshold)
+
+
+def test_restart_clock_leaves_room_for_episode(factory):
+    with pytest.raises(ValueError, match="complete SMAC episode"):
+        smac.SmacEnv({"restart_game_loop": 524000})
+    assert factory[0].closed
 
 
 def test_rejects_invalid_backend_observations(factory):
