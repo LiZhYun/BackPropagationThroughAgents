@@ -1,0 +1,5595 @@
+{
+  "schema_version": 1,
+  "status": "digitized_curve_estimates_not_exact_published_measurements",
+  "script": "scripts/extract_curve_targets.py",
+  "script_sha256": "c7d9699707f0c24717c49bfc6b2fd2eeb0371c9e6a9a64bd2a8424f0a1c94832",
+  "python": "3.9.25",
+  "pymupdf": "1.26.5",
+  "source_archive_inventory": [
+    {
+      "archive": "AAAI2025_AgentMixer.zip",
+      "sha256": "5cee49bf2e5e252f9bf48b2beb8aa7c08b695704a2c9f06ab1a789bd204c3fbd",
+      "extracted_to": "references/agentmixer",
+      "archive_available": true,
+      "verified_sha256": "5cee49bf2e5e252f9bf48b2beb8aa7c08b695704a2c9f06ab1a789bd204c3fbd",
+      "file_count": 29,
+      "files": [
+        "figs/agentmixer.pdf",
+        "figs/MuJoCo_abl.pdf",
+        "figs/MuJoCo_main.pdf",
+        "aaai25.tex",
+        "aaai25.sty",
+        "aaai25.bst",
+        "aaai25.bib",
+        "figs/SMAC_aaai25_.pdf",
+        "figs/SMAC_aaai25.pdf",
+        "figs/SMAC_significance.pdf",
+        "figs/SMAC_main_.pdf",
+        "figs/SMAC_main.pdf",
+        "figs/SMAC_app.pdf",
+        "figs/SMAC_abl.pdf",
+        "figs/Prey_significance.pdf",
+        "figs/Prey_main.pdf",
+        "figs/partial_bridge_4.pdf",
+        "figs/partial_bridge_3.pdf",
+        "figs/partial_bridge_2.pdf",
+        "figs/partial_bridge_1.pdf",
+        "figs/partialbridge.pdf",
+        "figs/MuJoCo_significance.pdf",
+        "figs/MuJoCo_sac.pdf",
+        "figs/MuJoCo_app.pdf",
+        "figs/MuJoCo_abl_app1.pdf",
+        "figs/MuJoCo_abl_app.pdf",
+        "figs/mlpmixer.pdf",
+        "figs/Matrix.pdf",
+        "figs/climbing_demo.pdf"
+      ],
+      "verified_extracted_assets": [
+        {
+          "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+          "archive_member": "figs/MuJoCo_main.pdf",
+          "sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90"
+        },
+        {
+          "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+          "archive_member": "figs/MuJoCo_app.pdf",
+          "sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446"
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "archive_member": "aaai25.tex",
+          "sha256": "ea64cd02174240d4ad51f823e8d0a23c378c75990ba6ee6d5d60a63bf30456d8"
+        }
+      ],
+      "data_or_plotting_script_candidates": []
+    },
+    {
+      "archive": "AAAI_24_Backpropagation_Through_Agents.zip",
+      "sha256": "d937462c077f324f4e6ce0cd490c06913f617ea9c2005254a7f0cff206d39de2",
+      "extracted_to": "references/bpta",
+      "archive_available": true,
+      "verified_sha256": "d937462c077f324f4e6ce0cd490c06913f617ea9c2005254a7f0cff206d39de2",
+      "file_count": 21,
+      "files": [
+        "Formatting-Instructions-LaTeX-2024.tex",
+        "Football_5v5.pdf",
+        "Matrix.pdf",
+        "SMAC_incre.pdf",
+        "MuJoCo_Half_ar.pdf",
+        "MuJoCo.pdf",
+        "Football_train.pdf",
+        "SMAC.pdf",
+        "MuJoCo_ablation.pdf",
+        "mlpmixer.pdf",
+        "Matrix_proj.pdf",
+        "Football.pdf",
+        "bpta.pdf",
+        "agentmixer.pdf",
+        "MuJoCo_aaai_feedback2.pdf",
+        "MuJoCo_aaai_feedback1.pdf",
+        "figure2.pdf",
+        "figure1.pdf",
+        "aaai24.sty",
+        "aaai24.bst",
+        "aaai24.bib"
+      ],
+      "verified_extracted_assets": [
+        {
+          "path": "references/bpta/MuJoCo.pdf",
+          "archive_member": "MuJoCo.pdf",
+          "sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac"
+        },
+        {
+          "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+          "archive_member": "Formatting-Instructions-LaTeX-2024.tex",
+          "sha256": "43338ce41cc32dddeec445e8f573a62296cdcfdf202ad3ec601c0e90e5d254cb"
+        }
+      ],
+      "data_or_plotting_script_candidates": []
+    }
+  ],
+  "figures": [
+    {
+      "source": "references/bpta/MuJoCo.pdf",
+      "sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "metadata": {
+        "format": "PDF 1.4",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "Matplotlib v3.7.2, https://matplotlib.org",
+        "producer": "Matplotlib pdf backend v3.7.2",
+        "creationDate": "D:20240103000333+08'00'",
+        "modDate": "",
+        "trapped": "",
+        "encryption": null
+      },
+      "embedded_file_count": 0,
+      "page_rect": [
+        0.0,
+        0.0,
+        864.0,
+        648.0
+      ],
+      "drawing_count": 878,
+      "panel_count": 9,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "original_render": "bppo_original.png",
+      "overlay_render": "bppo_verified_overlay.png",
+      "overlay_sha256": "9970e7fb29ab46967be688841c0e80a4bcd1d8a2f2effb601f391e1d02657c9c"
+    },
+    {
+      "source": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "metadata": {
+        "format": "PDF 1.4",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "Matplotlib v3.9.2, https://matplotlib.org",
+        "producer": "Matplotlib pdf backend v3.9.2",
+        "creationDate": "D:20250119154818+03'00'",
+        "modDate": "",
+        "trapped": "",
+        "encryption": null
+      },
+      "embedded_file_count": 0,
+      "page_rect": [
+        0.0,
+        0.0,
+        864.0,
+        432.0
+      ],
+      "drawing_count": 574,
+      "panel_count": 6,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "original_render": "agentmixer_main_original.png",
+      "overlay_render": "agentmixer_main_verified_overlay.png",
+      "overlay_sha256": "f3b67468477acbfec3275db684cbf39e2031afb411b3d65098205460a5c9dc5c"
+    },
+    {
+      "source": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "metadata": {
+        "format": "PDF 1.4",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "Matplotlib v3.7.4, https://matplotlib.org",
+        "producer": "Matplotlib pdf backend v3.7.4",
+        "creationDate": "D:20240121150838+08'00'",
+        "modDate": "",
+        "trapped": "",
+        "encryption": null
+      },
+      "embedded_file_count": 0,
+      "page_rect": [
+        0.0,
+        0.0,
+        864.0,
+        432.0
+      ],
+      "drawing_count": 640,
+      "panel_count": 6,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "original_render": "agentmixer_app_original.png",
+      "overlay_render": "agentmixer_app_verified_overlay.png",
+      "overlay_sha256": "4d5b8aa7019b5a2a0cdb49aa4d4229a6242430e1c32051fbf25479ccb0f47a35"
+    }
+  ],
+  "targets": [
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "Ant-v2_2x4",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 0,
+      "title": "Ant-v2 2x4",
+      "title_bbox": [
+        130.2927703857422,
+        4.793733596801758,
+        224.55133056640625,
+        34.100616455078125
+      ],
+      "plot_frame": [
+        65.03250122070312,
+        32.0999755859375,
+        289.56866455078125,
+        180.36666870117188
+      ],
+      "plot_frame_path_index": 1,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 82,
+      "band_path_index": 2,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.98089346945,
+        "intercept": -3645074.909378402,
+        "max_fit_residual_pt": 5.304245775050731e-06,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 75.15621185302734,
+            "grid_path_index": 6,
+            "text_bbox": [
+              65.60933685302734,
+              178.19566345214844,
+              84.68933868408203,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 116.39334106445312,
+            "grid_path_index": 11,
+            "text_bbox": [
+              106.84646606445312,
+              178.19566345214844,
+              125.92646789550781,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 157.63047790527344,
+            "grid_path_index": 16,
+            "text_bbox": [
+              148.08360290527344,
+              178.19566345214844,
+              167.16360473632812,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 198.8675994873047,
+            "grid_path_index": 21,
+            "text_bbox": [
+              189.3207244873047,
+              178.19566345214844,
+              208.40072631835938,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 240.104736328125,
+            "grid_path_index": 26,
+            "text_bbox": [
+              230.557861328125,
+              178.19566345214844,
+              249.6378631591797,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 281.34185791015625,
+            "grid_path_index": 31,
+            "text_bbox": [
+              271.79498291015625,
+              178.19566345214844,
+              290.8749694824219,
+              198.54766845703125
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -34.40657891421036,
+        "intercept": 6441.329894915454,
+        "max_fit_residual_pt": 1.4210854715202004e-14,
+        "anchors": [
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 158.14794921875,
+            "grid_path_index": 39,
+            "text_bbox": [
+              30.969999313354492,
+              147.91444396972656,
+              61.49800109863281,
+              168.26644897460938
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 129.083740234375,
+            "grid_path_index": 45,
+            "text_bbox": [
+              30.969999313354492,
+              118.8502426147461,
+              61.49800109863281,
+              139.20223999023438
+            ]
+          },
+          {
+            "label": "3000",
+            "value": 3000.0,
+            "pdf_position": 100.01953125,
+            "grid_path_index": 51,
+            "text_bbox": [
+              30.969999313354492,
+              89.7860336303711,
+              61.49800109863281,
+              110.13803100585938
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 70.955322265625,
+            "grid_path_index": 57,
+            "text_bbox": [
+              30.969999313354492,
+              60.72182083129883,
+              61.49800109863281,
+              81.07382202148438
+            ]
+          },
+          {
+            "label": "5000",
+            "value": 5000.0,
+            "pdf_position": 41.89111328125,
+            "grid_path_index": 63,
+            "text_bbox": [
+              30.969999313354492,
+              31.657611846923828,
+              61.49800109863281,
+              52.009613037109375
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          266.89678955078125,
+          192.82066345214844,
+          289.540771484375,
+          213.17266845703125
+        ],
+        "origin": [
+          266.89678955078125,
+          207.61666870117188
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        279.36248779296875,
+        41.1971435546875
+      ],
+      "last_plotted_steps_estimate": 9904000.410932675,
+      "last_plotted_steps_reading_range": [
+        9867576.66802586,
+        9940424.15383949
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 5023.877124161047,
+      "reported_endpoint_rounded": 5020,
+      "digitization_reading_range": [
+        4990,
+        5050
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.4210854715202004e-14,
+        "total_y_reading_allowance_pt": 0.7510000000000142,
+        "return_reading_allowance_before_rounding": 25.839340764572466,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        4949.28893630247,
+        5104.99844599192
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": 3.2665669861480637,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.897125855,
+          9604000.02557756,
+          9704000.154029265,
+          9804000.28248097,
+          9904000.410932675
+        ],
+        "central_curve_values": [
+          4892.009038447,
+          4912.6353457037985,
+          4834.68924038405,
+          4875.820054264283,
+          5023.877124161047
+        ],
+        "mean": 4907.806160592036,
+        "range": [
+          4834.68924038405,
+          5023.877124161047
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "Ant-v2_4x2",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 1,
+      "title": "Ant-v2 4x2",
+      "title_bbox": [
+        407.9594421386719,
+        4.793733596801758,
+        502.2179870605469,
+        34.100616455078125
+      ],
+      "plot_frame": [
+        342.69915771484375,
+        32.0999755859375,
+        567.2353515625,
+        180.36666870117188
+      ],
+      "plot_frame_path_index": 125,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 193,
+      "band_path_index": 126,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.97397135308,
+        "intercept": -17111900.08991806,
+        "max_fit_residual_pt": 9.591238210759911e-06,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 352.8228759765625,
+            "grid_path_index": 130,
+            "text_bbox": [
+              343.2760009765625,
+              178.19566345214844,
+              362.3559875488281,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 394.05999755859375,
+            "grid_path_index": 135,
+            "text_bbox": [
+              384.51312255859375,
+              178.19566345214844,
+              403.5931091308594,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 435.2971496582031,
+            "grid_path_index": 140,
+            "text_bbox": [
+              425.7502746582031,
+              178.19566345214844,
+              444.83026123046875,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 476.5342712402344,
+            "grid_path_index": 145,
+            "text_bbox": [
+              466.9873962402344,
+              178.19566345214844,
+              486.0673828125,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 517.7714233398438,
+            "grid_path_index": 150,
+            "text_bbox": [
+              508.2245178222656,
+              178.19566345214844,
+              527.3045654296875,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 559.008544921875,
+            "grid_path_index": 155,
+            "text_bbox": [
+              549.461669921875,
+              178.19566345214844,
+              568.5416870117188,
+              198.54766845703125
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -36.3014285932669,
+        "intercept": 6794.835554572599,
+        "max_fit_residual_pt": 1.2207032597189027e-05,
+        "anchors": [
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 159.63107299804688,
+            "grid_path_index": 163,
+            "text_bbox": [
+              308.63665771484375,
+              149.39756774902344,
+              339.1646423339844,
+              169.74957275390625
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 132.08392333984375,
+            "grid_path_index": 169,
+            "text_bbox": [
+              308.63665771484375,
+              121.85045623779297,
+              339.1646423339844,
+              142.20245361328125
+            ]
+          },
+          {
+            "label": "3000",
+            "value": 3000.0,
+            "pdf_position": 104.53680419921875,
+            "grid_path_index": 175,
+            "text_bbox": [
+              308.63665771484375,
+              94.30330657958984,
+              339.1646423339844,
+              114.65530395507812
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 76.98968505859375,
+            "grid_path_index": 181,
+            "text_bbox": [
+              308.63665771484375,
+              66.75618743896484,
+              339.1646423339844,
+              87.10818481445312
+            ]
+          },
+          {
+            "label": "5000",
+            "value": 5000.0,
+            "pdf_position": 49.44256591796875,
+            "grid_path_index": 187,
+            "text_bbox": [
+              308.63665771484375,
+              39.20906448364258,
+              339.1646423339844,
+              59.561065673828125
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          544.5634765625,
+          192.82066345214844,
+          567.20751953125,
+          213.17266845703125
+        ],
+        "origin": [
+          544.5634765625,
+          207.61666870117188
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        557.0291748046875,
+        42.59295654296875
+      ],
+      "last_plotted_steps_estimate": 9904000.389393572,
+      "last_plotted_steps_reading_range": [
+        9867576.443766283,
+        9940424.33502086
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 5248.650384051899,
+      "reported_endpoint_rounded": 5250,
+      "digitization_reading_range": [
+        5220,
+        5280
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.2207032597189027e-05,
+        "total_y_reading_allowance_pt": 0.7510122070325972,
+        "return_reading_allowance_before_rounding": 27.262816006265602,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        5119.388583262642,
+        5384.909249751894
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": 3.498532455369059,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.932676464,
+          9603998.566753995,
+          9704000.161035016,
+          9803998.79511255,
+          9904000.389393572
+        ],
+        "central_curve_values": [
+          5033.71109655164,
+          5127.746065480281,
+          5196.635470864916,
+          5193.666481954089,
+          5248.650384051899
+        ],
+        "mean": 5160.081899780565,
+        "range": [
+          5033.71109655164,
+          5248.650384051899
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "Ant-v2_8x1",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 2,
+      "title": "Ant-v2 8x1",
+      "title_bbox": [
+        685.6260986328125,
+        4.793733596801758,
+        779.8846435546875,
+        34.100616455078125
+      ],
+      "plot_frame": [
+        620.3658447265625,
+        32.0999755859375,
+        844.9019775390625,
+        180.36666870117188
+      ],
+      "plot_frame_path_index": 210,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 278,
+      "band_path_index": 211,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.9903793354,
+        "intercept": -30578737.73920302,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 630.4895629882812,
+            "grid_path_index": 215,
+            "text_bbox": [
+              620.9426879882812,
+              178.19566345214844,
+              640.022705078125,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 671.7266845703125,
+            "grid_path_index": 220,
+            "text_bbox": [
+              662.1798095703125,
+              178.19566345214844,
+              681.2598266601562,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 712.9638061523438,
+            "grid_path_index": 225,
+            "text_bbox": [
+              703.4169311523438,
+              178.19566345214844,
+              722.4969482421875,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 754.200927734375,
+            "grid_path_index": 230,
+            "text_bbox": [
+              744.654052734375,
+              178.19566345214844,
+              763.7340698242188,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 795.4380493164062,
+            "grid_path_index": 235,
+            "text_bbox": [
+              785.8911743164062,
+              178.19566345214844,
+              804.97119140625,
+              198.54766845703125
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 836.6751708984375,
+            "grid_path_index": 240,
+            "text_bbox": [
+              827.1282958984375,
+              178.19566345214844,
+              846.2083129882812,
+              198.54766845703125
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -36.67386982297587,
+        "intercept": 6861.686416028286,
+        "max_fit_residual_pt": 2.4414057037347447e-05,
+        "anchors": [
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 159.832763671875,
+            "grid_path_index": 248,
+            "text_bbox": [
+              586.3033447265625,
+              149.59925842285156,
+              616.8313598632812,
+              169.95126342773438
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 132.5654296875,
+            "grid_path_index": 254,
+            "text_bbox": [
+              586.3033447265625,
+              122.33190155029297,
+              616.8313598632812,
+              142.68389892578125
+            ]
+          },
+          {
+            "label": "3000",
+            "value": 3000.0,
+            "pdf_position": 105.29803466796875,
+            "grid_path_index": 260,
+            "text_bbox": [
+              586.3033447265625,
+              95.06453704833984,
+              616.8313598632812,
+              115.41653442382812
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 78.0306396484375,
+            "grid_path_index": 266,
+            "text_bbox": [
+              586.3033447265625,
+              67.7971420288086,
+              616.8313598632812,
+              88.14913940429688
+            ]
+          },
+          {
+            "label": "5000",
+            "value": 5000.0,
+            "pdf_position": 50.7633056640625,
+            "grid_path_index": 272,
+            "text_bbox": [
+              586.3033447265625,
+              40.52980422973633,
+              616.8313598632812,
+              60.881805419921875
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          822.2301025390625,
+          192.82066345214844,
+          844.8741455078125,
+          213.17266845703125
+        ],
+        "origin": [
+          822.2301025390625,
+          207.61666870117188
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        834.69580078125,
+        46.3048095703125
+      ],
+      "last_plotted_steps_estimate": 9904000.568359263,
+      "last_plotted_steps_reading_range": [
+        9867577.075584382,
+        9940424.061134145
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 5163.509857668958,
+      "reported_endpoint_rounded": 5160,
+      "digitization_reading_range": [
+        5130,
+        5200
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 2.4414057037347447e-05,
+        "total_y_reading_allowance_pt": 0.7510244140570373,
+        "return_reading_allowance_before_rounding": 27.542971595004513,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        5051.243137638969,
+        5306.529891755214
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": 15.376657028133195,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.976318367,
+          9604001.604430832,
+          9704000.272338815,
+          9804001.900451288,
+          9904000.568359263
+        ],
+        "central_curve_values": [
+          5078.02329990472,
+          5046.535792165474,
+          5078.941042008444,
+          5283.071508225869,
+          5163.509857668958
+        ],
+        "mean": 5130.016299994693,
+        "range": [
+          5046.535792165474,
+          5283.071508225869
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "HalfCheetah-v2_2x3",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 3,
+      "title": "HalfCheetah-v2 2x3",
+      "title_bbox": [
+        91.58964538574219,
+        215.42041015625,
+        263.36627197265625,
+        244.727294921875
+      ],
+      "plot_frame": [
+        65.03250122070312,
+        242.72665405273438,
+        289.56866455078125,
+        390.99334716796875
+      ],
+      "plot_frame_path_index": 295,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 367,
+      "band_path_index": 296,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.98089346945,
+        "intercept": -3645074.909378402,
+        "max_fit_residual_pt": 5.304245775050731e-06,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 75.15621185302734,
+            "grid_path_index": 300,
+            "text_bbox": [
+              65.60933685302734,
+              388.8223571777344,
+              84.68933868408203,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 116.39334106445312,
+            "grid_path_index": 305,
+            "text_bbox": [
+              106.84646606445312,
+              388.8223571777344,
+              125.92646789550781,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 157.63047790527344,
+            "grid_path_index": 310,
+            "text_bbox": [
+              148.08360290527344,
+              388.8223571777344,
+              167.16360473632812,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 198.8675994873047,
+            "grid_path_index": 315,
+            "text_bbox": [
+              189.3207244873047,
+              388.8223571777344,
+              208.40072631835938,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 240.104736328125,
+            "grid_path_index": 320,
+            "text_bbox": [
+              230.557861328125,
+              388.8223571777344,
+              249.6378631591797,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 281.34185791015625,
+            "grid_path_index": 325,
+            "text_bbox": [
+              271.79498291015625,
+              388.8223571777344,
+              290.8749694824219,
+              409.1743469238281
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -42.95285966908177,
+        "intercept": 16503.904629655437,
+        "max_fit_residual_pt": 1.2207030636091076e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 384.23297119140625,
+            "grid_path_index": 333,
+            "text_bbox": [
+              53.891876220703125,
+              373.9994812011719,
+              61.52387619018555,
+              394.3514709472656
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 337.6702880859375,
+            "grid_path_index": 336,
+            "text_bbox": [
+              30.969999313354492,
+              327.4367980957031,
+              61.49800109863281,
+              347.7887878417969
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 291.10760498046875,
+            "grid_path_index": 342,
+            "text_bbox": [
+              30.969999313354492,
+              280.8741149902344,
+              61.49800109863281,
+              301.2261047363281
+            ]
+          },
+          {
+            "label": "6000",
+            "value": 6000.0,
+            "pdf_position": 244.54495239257812,
+            "grid_path_index": 348,
+            "text_bbox": [
+              30.969999313354492,
+              234.3114471435547,
+              61.49800109863281,
+              254.6634521484375
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          266.89678955078125,
+          403.4473571777344,
+          289.540771484375,
+          423.7993469238281
+        ],
+        "origin": [
+          266.89678955078125,
+          418.24334716796875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        279.36248779296875,
+        251.56167602539062
+      ],
+      "last_plotted_steps_estimate": 9904000.410932675,
+      "last_plotted_steps_reading_range": [
+        9867576.66802586,
+        9940424.15383949
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 5698.611261217822,
+      "reported_endpoint_rounded": 5700,
+      "digitization_reading_range": [
+        5660,
+        5740
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.2207030636091076e-05,
+        "total_y_reading_allowance_pt": 0.7510122070306361,
+        "return_reading_allowance_before_rounding": 32.25812193835429,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        5622.233872474586,
+        5764.239948505783
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": -5.374350727637648,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.897125855,
+          9604000.02557756,
+          9704000.154029265,
+          9804000.28248097,
+          9904000.410932675
+        ],
+        "central_curve_values": [
+          5671.14177491334,
+          5603.216535802252,
+          5670.045931691802,
+          5460.805417240605,
+          5698.611261217822
+        ],
+        "mean": 5620.764184173164,
+        "range": [
+          5460.805417240605,
+          5698.611261217822
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "HalfCheetah-v2_3x2",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 4,
+      "title": "HalfCheetah-v2 3x2",
+      "title_bbox": [
+        369.2563171386719,
+        215.42041015625,
+        541.0328979492188,
+        244.727294921875
+      ],
+      "plot_frame": [
+        342.69915771484375,
+        242.72665405273438,
+        567.2353515625,
+        390.99334716796875
+      ],
+      "plot_frame_path_index": 392,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 445,
+      "band_path_index": 393,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.97397135308,
+        "intercept": -17111900.08991806,
+        "max_fit_residual_pt": 9.591238210759911e-06,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 352.8228759765625,
+            "grid_path_index": 397,
+            "text_bbox": [
+              343.2760009765625,
+              388.8223571777344,
+              362.3559875488281,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 394.05999755859375,
+            "grid_path_index": 402,
+            "text_bbox": [
+              384.51312255859375,
+              388.8223571777344,
+              403.5931091308594,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 435.2971496582031,
+            "grid_path_index": 407,
+            "text_bbox": [
+              425.7502746582031,
+              388.8223571777344,
+              444.83026123046875,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 476.5342712402344,
+            "grid_path_index": 412,
+            "text_bbox": [
+              466.9873962402344,
+              388.8223571777344,
+              486.0673828125,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 517.7714233398438,
+            "grid_path_index": 417,
+            "text_bbox": [
+              508.2245178222656,
+              388.8223571777344,
+              527.3045654296875,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 559.008544921875,
+            "grid_path_index": 422,
+            "text_bbox": [
+              549.461669921875,
+              388.8223571777344,
+              568.5416870117188,
+              409.1743469238281
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -40.5374352414521,
+        "intercept": 15575.888671329913,
+        "max_fit_residual_pt": 1.0172526060614473e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 384.23468017578125,
+            "grid_path_index": 430,
+            "text_bbox": [
+              331.55853271484375,
+              374.0011901855469,
+              339.1905212402344,
+              394.3531799316406
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 334.8975830078125,
+            "grid_path_index": 433,
+            "text_bbox": [
+              308.63665771484375,
+              324.6640930175781,
+              339.1646423339844,
+              345.0160827636719
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 285.5604553222656,
+            "grid_path_index": 439,
+            "text_bbox": [
+              308.63665771484375,
+              275.32696533203125,
+              339.1646423339844,
+              295.678955078125
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          544.5634765625,
+          403.4473571777344,
+          567.20751953125,
+          423.7993469238281
+        ],
+        "origin": [
+          544.5634765625,
+          418.24334716796875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        557.0291748046875,
+        261.0328369140625
+      ],
+      "last_plotted_steps_estimate": 9904000.389393572,
+      "last_plotted_steps_reading_range": [
+        9867576.443766283,
+        9940424.33502086
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 4994.286949033576,
+      "reported_endpoint_rounded": 4990,
+      "digitization_reading_range": [
+        4960,
+        5030
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.0172526060614473e-05,
+        "total_y_reading_allowance_pt": 0.7510101725260606,
+        "return_reading_allowance_before_rounding": 30.44402623444695,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        4808.571607362372,
+        5173.491410526687
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": -3.255440089046715,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.932676464,
+          9603998.566753995,
+          9704000.161035016,
+          9803998.79511255,
+          9904000.389393572
+        ],
+        "central_curve_values": [
+          4786.6897056732,
+          4970.769595397713,
+          4869.8268291025,
+          4920.441716354355,
+          4994.286949033576
+        ],
+        "mean": 4908.402959112269,
+        "range": [
+          4786.6897056732,
+          4994.286949033576
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "HalfCheetah-v2_6x1",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 5,
+      "title": "HalfCheetah-v2 6x1",
+      "title_bbox": [
+        646.9229736328125,
+        215.42041015625,
+        818.6995849609375,
+        244.727294921875
+      ],
+      "plot_frame": [
+        620.3658447265625,
+        242.72665405273438,
+        844.9019775390625,
+        390.99334716796875
+      ],
+      "plot_frame_path_index": 470,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 540,
+      "band_path_index": 471,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.9903793354,
+        "intercept": -30578737.73920302,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 630.4895629882812,
+            "grid_path_index": 474,
+            "text_bbox": [
+              620.9426879882812,
+              388.8223571777344,
+              640.022705078125,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 671.7266845703125,
+            "grid_path_index": 479,
+            "text_bbox": [
+              662.1798095703125,
+              388.8223571777344,
+              681.2598266601562,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 712.9638061523438,
+            "grid_path_index": 484,
+            "text_bbox": [
+              703.4169311523438,
+              388.8223571777344,
+              722.4969482421875,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 754.200927734375,
+            "grid_path_index": 489,
+            "text_bbox": [
+              744.654052734375,
+              388.8223571777344,
+              763.7340698242188,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 795.4380493164062,
+            "grid_path_index": 494,
+            "text_bbox": [
+              785.8911743164062,
+              388.8223571777344,
+              804.97119140625,
+              409.1743469238281
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 836.6751708984375,
+            "grid_path_index": 499,
+            "text_bbox": [
+              827.1282958984375,
+              388.8223571777344,
+              846.2083129882812,
+              409.1743469238281
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -36.63874525587113,
+        "intercept": 14026.373189959024,
+        "max_fit_residual_pt": 1.3660248839642009e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 382.8289794921875,
+            "grid_path_index": 507,
+            "text_bbox": [
+              609.2252197265625,
+              372.5954895019531,
+              616.8572387695312,
+              392.9474792480469
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 355.53546142578125,
+            "grid_path_index": 510,
+            "text_bbox": [
+              586.3033447265625,
+              345.3019714355469,
+              616.8313598632812,
+              365.6539611816406
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 328.241943359375,
+            "grid_path_index": 516,
+            "text_bbox": [
+              586.3033447265625,
+              318.0084533691406,
+              616.8313598632812,
+              338.3604431152344
+            ]
+          },
+          {
+            "label": "3000",
+            "value": 3000.0,
+            "pdf_position": 300.94842529296875,
+            "grid_path_index": 522,
+            "text_bbox": [
+              586.3033447265625,
+              290.7149353027344,
+              616.8313598632812,
+              311.0669250488281
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 273.6549377441406,
+            "grid_path_index": 528,
+            "text_bbox": [
+              586.3033447265625,
+              263.42144775390625,
+              616.8313598632812,
+              283.7734375
+            ]
+          },
+          {
+            "label": "5000",
+            "value": 5000.0,
+            "pdf_position": 246.36141967773438,
+            "grid_path_index": 534,
+            "text_bbox": [
+              586.3033447265625,
+              236.12791442871094,
+              616.8313598632812,
+              256.47991943359375
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          822.2301025390625,
+          403.4473571777344,
+          844.8741455078125,
+          423.7993469238281
+        ],
+        "origin": [
+          822.2301025390625,
+          418.24334716796875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        834.69580078125,
+        257.769775390625
+      ],
+      "last_plotted_steps_estimate": 9904000.568359263,
+      "last_plotted_steps_reading_range": [
+        9867577.075584382,
+        9940424.061134145
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 4582.012054758796,
+      "reported_endpoint_rounded": 4580,
+      "digitization_reading_range": [
+        4550,
+        4610
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.3660248839642009e-05,
+        "total_y_reading_allowance_pt": 0.7510136602488396,
+        "return_reading_allowance_before_rounding": 27.516198181536584,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        4291.663863365575,
+        4886.249604476248
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": 6.94467916211579,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.976318367,
+          9604001.604430832,
+          9704000.272338815,
+          9804001.900451288,
+          9904000.568359263
+        ],
+        "central_curve_values": [
+          4586.295594586531,
+          4177.526702813388,
+          4139.788839924871,
+          4502.128677193474,
+          4582.012054758796
+        ],
+        "mean": 4397.550373855412,
+        "range": [
+          4139.788839924871,
+          4586.295594586531
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "Walker2d-v2_2x3",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 6,
+      "title": "Walker2d-v2 2x3",
+      "title_bbox": [
+        104.89433288574219,
+        426.0470886230469,
+        250.08465576171875,
+        455.3539733886719
+      ],
+      "plot_frame": [
+        65.03250122070312,
+        453.35333251953125,
+        289.56866455078125,
+        601.6199951171875
+      ],
+      "plot_frame_path_index": 564,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 657,
+      "band_path_index": 565,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.98089346945,
+        "intercept": -3645074.909378402,
+        "max_fit_residual_pt": 5.304245775050731e-06,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 75.15621185302734,
+            "grid_path_index": 569,
+            "text_bbox": [
+              65.60933685302734,
+              599.448974609375,
+              84.68933868408203,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 116.39334106445312,
+            "grid_path_index": 574,
+            "text_bbox": [
+              106.84646606445312,
+              599.448974609375,
+              125.92646789550781,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 157.63047790527344,
+            "grid_path_index": 579,
+            "text_bbox": [
+              148.08360290527344,
+              599.448974609375,
+              167.16360473632812,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 198.8675994873047,
+            "grid_path_index": 584,
+            "text_bbox": [
+              189.3207244873047,
+              599.448974609375,
+              208.40072631835938,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 240.104736328125,
+            "grid_path_index": 589,
+            "text_bbox": [
+              230.557861328125,
+              599.448974609375,
+              249.6378631591797,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 281.34185791015625,
+            "grid_path_index": 594,
+            "text_bbox": [
+              271.79498291015625,
+              599.448974609375,
+              290.8749694824219,
+              619.801025390625
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -14.069473176201216,
+        "intercept": 8430.707415240298,
+        "max_fit_residual_pt": 1.8310549990019354e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 599.2198486328125,
+            "grid_path_index": 618,
+            "text_bbox": [
+              53.891876220703125,
+              588.986328125,
+              61.52387619018555,
+              609.33837890625
+            ]
+          },
+          {
+            "label": "500",
+            "value": 500.0,
+            "pdf_position": 563.681884765625,
+            "grid_path_index": 621,
+            "text_bbox": [
+              38.610626220703125,
+              553.4483642578125,
+              61.50662612915039,
+              573.8004150390625
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 528.1439819335938,
+            "grid_path_index": 626,
+            "text_bbox": [
+              30.969999313354492,
+              517.9104614257812,
+              61.49800109863281,
+              538.2625122070312
+            ]
+          },
+          {
+            "label": "1500",
+            "value": 1500.0,
+            "pdf_position": 492.60601806640625,
+            "grid_path_index": 632,
+            "text_bbox": [
+              30.969999313354492,
+              482.3725280761719,
+              61.49800109863281,
+              502.7245178222656
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 457.068115234375,
+            "grid_path_index": 638,
+            "text_bbox": [
+              30.969999313354492,
+              446.8346252441406,
+              61.49800109863281,
+              467.1866149902344
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          266.89678955078125,
+          614.073974609375,
+          289.540771484375,
+          634.426025390625
+        ],
+        "origin": [
+          266.89678955078125,
+          628.8699951171875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        279.36248779296875,
+        529.8928833007812
+      ],
+      "last_plotted_steps_estimate": 9904000.410932675,
+      "last_plotted_steps_reading_range": [
+        9867576.66802586,
+        9940424.15383949
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 975.3937073800353,
+      "reported_endpoint_rounded": 980,
+      "digitization_reading_range": [
+        960,
+        990
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.8310549990019354e-05,
+        "total_y_reading_allowance_pt": 0.75101831054999,
+        "return_reading_allowance_before_rounding": 10.56643197511904,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        749.6483919804914,
+        1402.8054790567676
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": 100.83322813859422,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.897125855,
+          9604000.02557756,
+          9704000.154029265,
+          9804000.28248097,
+          9904000.410932675
+        ],
+        "central_curve_values": [
+          907.9875002898307,
+          890.5517957384645,
+          1246.1649436198968,
+          1188.1859018451423,
+          975.3937073800353
+        ],
+        "mean": 1041.6567697746739,
+        "range": [
+          890.5517957384645,
+          1246.1649436198968
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "Walker2d-v2_3x2",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 7,
+      "title": "Walker2d-v2 3x2",
+      "title_bbox": [
+        382.5610046386719,
+        426.0470886230469,
+        527.7512817382812,
+        455.3539733886719
+      ],
+      "plot_frame": [
+        342.69915771484375,
+        453.35333251953125,
+        567.2353515625,
+        601.6199951171875
+      ],
+      "plot_frame_path_index": 679,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 754,
+      "band_path_index": 680,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.97397135308,
+        "intercept": -17111900.08991806,
+        "max_fit_residual_pt": 9.591238210759911e-06,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 352.8228759765625,
+            "grid_path_index": 684,
+            "text_bbox": [
+              343.2760009765625,
+              599.448974609375,
+              362.3559875488281,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 394.05999755859375,
+            "grid_path_index": 689,
+            "text_bbox": [
+              384.51312255859375,
+              599.448974609375,
+              403.5931091308594,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 435.2971496582031,
+            "grid_path_index": 694,
+            "text_bbox": [
+              425.7502746582031,
+              599.448974609375,
+              444.83026123046875,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 476.5342712402344,
+            "grid_path_index": 699,
+            "text_bbox": [
+              466.9873962402344,
+              599.448974609375,
+              486.0673828125,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 517.7714233398438,
+            "grid_path_index": 704,
+            "text_bbox": [
+              508.2245178222656,
+              599.448974609375,
+              527.3045654296875,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 559.008544921875,
+            "grid_path_index": 709,
+            "text_bbox": [
+              549.461669921875,
+              599.448974609375,
+              568.5416870117188,
+              619.801025390625
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -8.119642616782869,
+        "intercept": 4914.588882630307,
+        "max_fit_residual_pt": 2.4414058771071723e-05,
+        "anchors": [
+          {
+            "label": "250",
+            "value": 250.0,
+            "pdf_position": 574.4820556640625,
+            "grid_path_index": 733,
+            "text_bbox": [
+              316.27728271484375,
+              564.24853515625,
+              339.17327880859375,
+              584.6005859375
+            ]
+          },
+          {
+            "label": "500",
+            "value": 500.0,
+            "pdf_position": 543.6925048828125,
+            "grid_path_index": 738,
+            "text_bbox": [
+              316.27728271484375,
+              533.458984375,
+              339.17327880859375,
+              553.81103515625
+            ]
+          },
+          {
+            "label": "750",
+            "value": 750.0,
+            "pdf_position": 512.9029541015625,
+            "grid_path_index": 743,
+            "text_bbox": [
+              316.27728271484375,
+              502.6694641113281,
+              339.17327880859375,
+              523.021484375
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 482.11346435546875,
+            "grid_path_index": 748,
+            "text_bbox": [
+              308.63665771484375,
+              471.8799743652344,
+              339.1646423339844,
+              492.2319641113281
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          544.5634765625,
+          614.073974609375,
+          567.20751953125,
+          634.426025390625
+        ],
+        "origin": [
+          544.5634765625,
+          628.8699951171875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        557.0291748046875,
+        539.8561401367188
+      ],
+      "last_plotted_steps_estimate": 9904000.389393572,
+      "last_plotted_steps_reading_range": [
+        9867576.443766283,
+        9940424.33502086
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 531.1499602443009,
+      "reported_endpoint_rounded": 530,
+      "digitization_reading_range": [
+        520,
+        540
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 2.4414058771071723e-05,
+        "total_y_reading_allowance_pt": 0.7510244140587711,
+        "return_reading_allowance_before_rounding": 6.098049838635981,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        344.46260593354964,
+        708.6814065139706
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": -4.577954020540801,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.932676464,
+          9603998.566753995,
+          9704000.161035016,
+          9803998.79511255,
+          9904000.389393572
+        ],
+        "central_curve_values": [
+          445.5056707655822,
+          517.1972979986404,
+          541.5081542343751,
+          584.1595704043084,
+          531.1499602443009
+        ],
+        "mean": 523.9041307294414,
+        "range": [
+          445.5056707655822,
+          584.1595704043084
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "bpta",
+      "algorithm": "BPPO",
+      "task": "Walker2d-v2_6x1",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/bpta/MuJoCo.pdf",
+      "source_pdf_sha256": "ca31ced9bad04c90b752479bfe256c3d3fe077ed8f0b7c5bcb0b6eade941c6ac",
+      "page": 1,
+      "panel_index": 8,
+      "title": "Walker2d-v2 6x1",
+      "title_bbox": [
+        660.2276611328125,
+        426.0470886230469,
+        805.41796875,
+        455.3539733886719
+      ],
+      "plot_frame": [
+        620.3658447265625,
+        453.35333251953125,
+        844.9019775390625,
+        601.6199951171875
+      ],
+      "plot_frame_path_index": 776,
+      "legend": {
+        "text": "BPPO",
+        "text_bbox": [
+          243.00929260253906,
+          126.38078308105469,
+          264.4412841796875,
+          139.9487762451172
+        ],
+        "line_path_index": 100,
+        "line_bbox": [
+          220.6092987060547,
+          133.44476318359375,
+          236.6092987060547,
+          133.44476318359375
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 856,
+      "band_path_index": 777,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 48499.9903793354,
+        "intercept": -30578737.73920302,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "0.0",
+            "value": 0.0,
+            "pdf_position": 630.4895629882812,
+            "grid_path_index": 781,
+            "text_bbox": [
+              620.9426879882812,
+              599.448974609375,
+              640.022705078125,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.2",
+            "value": 2000000.0,
+            "pdf_position": 671.7266845703125,
+            "grid_path_index": 786,
+            "text_bbox": [
+              662.1798095703125,
+              599.448974609375,
+              681.2598266601562,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.4",
+            "value": 4000000.0,
+            "pdf_position": 712.9638061523438,
+            "grid_path_index": 791,
+            "text_bbox": [
+              703.4169311523438,
+              599.448974609375,
+              722.4969482421875,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.6",
+            "value": 6000000.0,
+            "pdf_position": 754.200927734375,
+            "grid_path_index": 796,
+            "text_bbox": [
+              744.654052734375,
+              599.448974609375,
+              763.7340698242188,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "0.8",
+            "value": 8000000.0,
+            "pdf_position": 795.4380493164062,
+            "grid_path_index": 801,
+            "text_bbox": [
+              785.8911743164062,
+              599.448974609375,
+              804.97119140625,
+              619.801025390625
+            ]
+          },
+          {
+            "label": "1.0",
+            "value": 10000000.0,
+            "pdf_position": 836.6751708984375,
+            "grid_path_index": 806,
+            "text_bbox": [
+              827.1282958984375,
+              599.448974609375,
+              846.2083129882812,
+              619.801025390625
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -7.4116848486811095,
+        "intercept": 4502.174219378306,
+        "max_fit_residual_pt": 2.4414058316324372e-05,
+        "anchors": [
+          {
+            "label": "200",
+            "value": 200.0,
+            "pdf_position": 580.4583129882812,
+            "grid_path_index": 830,
+            "text_bbox": [
+              593.9439697265625,
+              570.2247924804688,
+              616.8399658203125,
+              590.5768432617188
+            ]
+          },
+          {
+            "label": "400",
+            "value": 400.0,
+            "pdf_position": 553.4739379882812,
+            "grid_path_index": 835,
+            "text_bbox": [
+              593.9439697265625,
+              543.2404174804688,
+              616.8399658203125,
+              563.5924682617188
+            ]
+          },
+          {
+            "label": "600",
+            "value": 600.0,
+            "pdf_position": 526.489501953125,
+            "grid_path_index": 840,
+            "text_bbox": [
+              593.9439697265625,
+              516.2559814453125,
+              616.8399658203125,
+              536.6080322265625
+            ]
+          },
+          {
+            "label": "800",
+            "value": 800.0,
+            "pdf_position": 499.50506591796875,
+            "grid_path_index": 845,
+            "text_bbox": [
+              593.9439697265625,
+              489.2715759277344,
+              616.8399658203125,
+              509.6235656738281
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 472.5206604003906,
+            "grid_path_index": 850,
+            "text_bbox": [
+              586.3033447265625,
+              462.28717041015625,
+              616.8313598632812,
+              482.63916015625
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          822.2301025390625,
+          614.073974609375,
+          844.8741455078125,
+          634.426025390625
+        ],
+        "origin": [
+          822.2301025390625,
+          628.8699951171875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        834.69580078125,
+        521.31591796875
+      ],
+      "last_plotted_steps_estimate": 9904000.568359263,
+      "last_plotted_steps_reading_range": [
+        9867577.075584382,
+        9940424.061134145
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 638.3449287930371,
+      "reported_endpoint_rounded": 640,
+      "digitization_reading_range": [
+        630,
+        650
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 2.4414058316324372e-05,
+        "total_y_reading_allowance_pt": 0.7510244140583163,
+        "return_reading_allowance_before_rounding": 5.566356270665631,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        551.8972877277747,
+        753.0627371708383
+      ],
+      "shaded_band_interpretation": "source_text_states_standard_deviation_over_five_seeds_but_polygon_asymmetry_is_unresolved",
+      "shaded_band_midpoint_minus_centerline": 14.135083656269444,
+      "central_curve_aggregation": "mean_over_five_seeds",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.976318367,
+          9604001.604430832,
+          9704000.272338815,
+          9804001.900451288,
+          9904000.568359263
+        ],
+        "central_curve_values": [
+          741.4188735134512,
+          843.2886003952917,
+          622.0300841844137,
+          727.3536815386469,
+          638.3449287930371
+        ],
+        "mean": 714.4872336849681,
+        "range": [
+          622.0300841844137,
+          843.2886003952917
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Ant-v2_2x4",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "source_pdf_sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "page": 1,
+      "panel_index": 0,
+      "title": "Ant-v2 2x4",
+      "title_bbox": [
+        128.5537109375,
+        5.562732696533203,
+        238.51942443847656,
+        39.754093170166016
+      ],
+      "plot_frame": [
+        74.39250183105469,
+        36.420013427734375,
+        292.52740478515625,
+        172.82000732421875
+      ],
+      "plot_frame_path_index": 1,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 65,
+      "band_path_index": 2,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 49923.22901885193,
+        "intercept": -4204913.769383568,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 84.22760009765625,
+            "grid_path_index": 7,
+            "text_bbox": [
+              68.64166259765625,
+              169.69863891601562,
+              99.8056640625,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 134.3044891357422,
+            "grid_path_index": 13,
+            "text_bbox": [
+              118.71855163574219,
+              169.69863891601562,
+              149.88255310058594,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 184.38137817382812,
+            "grid_path_index": 19,
+            "text_bbox": [
+              168.79544067382812,
+              169.69863891601562,
+              199.95945739746094,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 234.45826721191406,
+            "grid_path_index": 25,
+            "text_bbox": [
+              218.872314453125,
+              169.69863891601562,
+              250.0363311767578,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 284.53515625,
+            "grid_path_index": 31,
+            "text_bbox": [
+              268.94921875,
+              169.69863891601562,
+              300.11322021484375,
+              193.442626953125
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -14.83807981626284,
+        "intercept": 3072.006437321248,
+        "max_fit_residual_pt": 2.842170943040401e-14,
+        "anchors": [
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 139.64114379882812,
+            "grid_path_index": 40,
+            "text_bbox": [
+              35.26750183105469,
+              127.69945526123047,
+              70.88350677490234,
+              151.44345092773438
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 72.24697875976562,
+            "grid_path_index": 46,
+            "text_bbox": [
+              35.26750183105469,
+              60.30529022216797,
+              70.88350677490234,
+              84.0492935180664
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          266.10552978515625,
+          186.24551391601562,
+          292.5235290527344,
+          209.989501953125
+        ],
+        "origin": [
+          266.10552978515625,
+          203.50750732421875
+        ],
+        "size": 14.0
+      },
+      "endpoint_pdf_xy": [
+        282.6121826171875,
+        119.431640625
+      ],
+      "last_plotted_steps_estimate": 9903998.94693189,
+      "last_plotted_steps_reading_range": [
+        9866506.601938732,
+        9941491.291925047
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 1299.8702211402785,
+      "reported_endpoint_rounded": 1300,
+      "digitization_reading_range": [
+        1280,
+        1320
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 2.842170943040401e-14,
+        "total_y_reading_allowance_pt": 0.7510000000000284,
+        "return_reading_allowance_before_rounding": 11.143397942013815,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        723.680611780986,
+        1802.5722115658048
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": -36.74380946688302,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.129756214,
+          9603999.464934142,
+          9703999.800112072,
+          9804000.13529,
+          9903998.94693189
+        ],
+        "central_curve_values": [
+          1567.2296153003206,
+          1673.1913826112627,
+          1429.944320974908,
+          1520.2253062436941,
+          1299.8702211402785
+        ],
+        "mean": 1498.0921692540928,
+        "range": [
+          1299.8702211402785,
+          1673.1913826112627
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Ant-v2_4x2",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "source_pdf_sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "page": 1,
+      "panel_index": 1,
+      "title": "Ant-v2 4x2",
+      "title_bbox": [
+        404.7803649902344,
+        5.562732696533203,
+        514.74609375,
+        39.754093170166016
+      ],
+      "plot_frame": [
+        350.6191711425781,
+        36.420013427734375,
+        568.7540893554688,
+        172.82000732421875
+      ],
+      "plot_frame_path_index": 119,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 176,
+      "band_path_index": 120,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 49923.22293406501,
+        "intercept": -17995038.087482024,
+        "max_fit_residual_pt": 1.2207031318212103e-05,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 360.4542541503906,
+            "grid_path_index": 125,
+            "text_bbox": [
+              344.8683166503906,
+              169.69863891601562,
+              376.0323181152344,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 410.5311584472656,
+            "grid_path_index": 131,
+            "text_bbox": [
+              394.9452209472656,
+              169.69863891601562,
+              426.1092224121094,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 460.6080322265625,
+            "grid_path_index": 137,
+            "text_bbox": [
+              445.0220947265625,
+              169.69863891601562,
+              476.18609619140625,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 510.6849365234375,
+            "grid_path_index": 143,
+            "text_bbox": [
+              495.0989990234375,
+              169.69863891601562,
+              526.2630004882812,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 560.7618408203125,
+            "grid_path_index": 149,
+            "text_bbox": [
+              545.1759033203125,
+              169.69863891601562,
+              576.3399047851562,
+              193.442626953125
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -12.258114716321607,
+        "intercept": 2692.8288831828004,
+        "max_fit_residual_pt": 1.4210854715202004e-14,
+        "anchors": [
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 138.0986328125,
+            "grid_path_index": 158,
+            "text_bbox": [
+              311.4941711425781,
+              126.15694427490234,
+              347.11016845703125,
+              149.90093994140625
+            ]
+          },
+          {
+            "label": "1500",
+            "value": 1500.0,
+            "pdf_position": 97.309326171875,
+            "grid_path_index": 164,
+            "text_bbox": [
+              311.4941711425781,
+              85.36763763427734,
+              347.11016845703125,
+              109.11164093017578
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 56.52001953125,
+            "grid_path_index": 170,
+            "text_bbox": [
+              311.4941711425781,
+              44.578330993652344,
+              347.11016845703125,
+              68.32233428955078
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          542.3322143554688,
+          186.24551391601562,
+          568.7501831054688,
+          209.989501953125
+        ],
+        "origin": [
+          542.3322143554688,
+          203.50750732421875
+        ],
+        "size": 14.0
+      },
+      "endpoint_pdf_xy": [
+        558.8388671875,
+        89.52908325195312
+      ],
+      "last_plotted_steps_estimate": 9903999.263339885,
+      "last_plotted_steps_reading_range": [
+        9866506.313502057,
+        9941492.213177713
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 1595.3711102332513,
+      "reported_endpoint_rounded": 1600,
+      "digitization_reading_range": [
+        1580,
+        1610
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.4210854715202004e-14,
+        "total_y_reading_allowance_pt": 0.7510000000000142,
+        "return_reading_allowance_before_rounding": 9.2058441519577,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        1154.396955223166,
+        2062.0855105253395
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": 12.870122641001444,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503997.971381485,
+          9603999.817906938,
+          9703998.617360685,
+          9804000.463886142,
+          9903999.263339885
+        ],
+        "central_curve_values": [
+          1617.5272186409534,
+          1308.1613276831088,
+          1358.856607590694,
+          1429.9209776564737,
+          1595.3711102332513
+        ],
+        "mean": 1461.9674483608962,
+        "range": [
+          1308.1613276831088,
+          1617.5272186409534
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Ant-v2_8x1",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "source_pdf_sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "page": 1,
+      "panel_index": 2,
+      "title": "Ant-v2 8x1",
+      "title_bbox": [
+        681.0070190429688,
+        5.562732696533203,
+        790.9727783203125,
+        39.754093170166016
+      ],
+      "plot_frame": [
+        626.8458251953125,
+        36.420013427734375,
+        844.9807739257812,
+        172.82000732421875
+      ],
+      "plot_frame_path_index": 194,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 256,
+      "band_path_index": 195,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 49923.22597645559,
+        "intercept": -31785165.46453367,
+        "max_fit_residual_pt": 2.441406843445293e-05,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 636.680908203125,
+            "grid_path_index": 200,
+            "text_bbox": [
+              621.094970703125,
+              169.69863891601562,
+              652.2589721679688,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 686.7578125,
+            "grid_path_index": 206,
+            "text_bbox": [
+              671.171875,
+              169.69863891601562,
+              702.3358764648438,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 736.834716796875,
+            "grid_path_index": 212,
+            "text_bbox": [
+              721.248779296875,
+              169.69863891601562,
+              752.4127807617188,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 786.91162109375,
+            "grid_path_index": 218,
+            "text_bbox": [
+              771.32568359375,
+              169.69863891601562,
+              802.4896850585938,
+              193.442626953125
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 836.9884643554688,
+            "grid_path_index": 224,
+            "text_bbox": [
+              821.4025268554688,
+              169.69863891601562,
+              852.5665283203125,
+              193.442626953125
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -7.1303215094344266,
+        "intercept": 1933.9765695128078,
+        "max_fit_residual_pt": 1.2207032057176548e-05,
+        "anchors": [
+          {
+            "label": "750",
+            "value": 750.0,
+            "pdf_position": 166.04812622070312,
+            "grid_path_index": 233,
+            "text_bbox": [
+              596.6270751953125,
+              154.1064453125,
+              623.3390502929688,
+              177.85043334960938
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 130.98660278320312,
+            "grid_path_index": 238,
+            "text_bbox": [
+              587.7208251953125,
+              119.04491424560547,
+              623.3367919921875,
+              142.78890991210938
+            ]
+          },
+          {
+            "label": "1250",
+            "value": 1250.0,
+            "pdf_position": 95.92507934570312,
+            "grid_path_index": 244,
+            "text_bbox": [
+              587.7208251953125,
+              83.98339080810547,
+              623.3367919921875,
+              107.7273941040039
+            ]
+          },
+          {
+            "label": "1500",
+            "value": 1500.0,
+            "pdf_position": 60.863525390625,
+            "grid_path_index": 250,
+            "text_bbox": [
+              587.7208251953125,
+              48.921836853027344,
+              623.3367919921875,
+              72.66584014892578
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          818.5588989257812,
+          186.24551391601562,
+          844.9768676757812,
+          209.989501953125
+        ],
+        "origin": [
+          818.5588989257812,
+          203.50750732421875
+        ],
+        "size": 14.0
+      },
+      "endpoint_pdf_xy": [
+        835.0655517578125,
+        90.14047241210938
+      ],
+      "last_plotted_steps_estimate": 9904000.781025179,
+      "last_plotted_steps_reading_range": [
+        9866507.219487805,
+        9941494.342562553
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 1291.246020202164,
+      "reported_endpoint_rounded": 1290,
+      "digitization_reading_range": [
+        1280,
+        1300
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.2207032057176548e-05,
+        "total_y_reading_allowance_pt": 0.7510122070320572,
+        "return_reading_allowance_before_rounding": 5.354958493648498,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        1153.4163483684283,
+        1429.1098552584633
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": 0.017081611281810183,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.464690141,
+          9603998.270237952,
+          9704000.12285766,
+          9803998.928405471,
+          9904000.781025179
+        ],
+        "central_curve_values": [
+          1026.1102546853053,
+          1054.602164703641,
+          1129.9335936585396,
+          1004.0083904874672,
+          1291.246020202164
+        ],
+        "mean": 1101.1800847474233,
+        "range": [
+          1004.0083904874672,
+          1291.246020202164
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Ant-v2_2x4d",
+      "shared_task_name_across_papers": false,
+      "source_scope": "active_main",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "source_pdf_sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "page": 1,
+      "panel_index": 3,
+      "title": "Ant-v2 2x4d",
+      "title_bbox": [
+        122.1630859375,
+        212.2427215576172,
+        244.930419921875,
+        246.43408203125
+      ],
+      "plot_frame": [
+        74.39250183105469,
+        243.10000610351562,
+        292.52740478515625,
+        379.5
+      ],
+      "plot_frame_path_index": 274,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 354,
+      "band_path_index": 275,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 49923.22901885193,
+        "intercept": -4204913.769383568,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 84.22760009765625,
+            "grid_path_index": 280,
+            "text_bbox": [
+              68.64166259765625,
+              376.3786315917969,
+              99.8056640625,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 134.3044891357422,
+            "grid_path_index": 286,
+            "text_bbox": [
+              118.71855163574219,
+              376.3786315917969,
+              149.88255310058594,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 184.38137817382812,
+            "grid_path_index": 292,
+            "text_bbox": [
+              168.79544067382812,
+              376.3786315917969,
+              199.95945739746094,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 234.45826721191406,
+            "grid_path_index": 298,
+            "text_bbox": [
+              218.872314453125,
+              376.3786315917969,
+              250.0363311767578,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 284.53515625,
+            "grid_path_index": 304,
+            "text_bbox": [
+              268.94921875,
+              376.3786315917969,
+              300.11322021484375,
+              400.12261962890625
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -20.67966213794183,
+        "intercept": 7989.385012293696,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 337.9835205078125,
+            "grid_path_index": 329,
+            "text_bbox": [
+              35.26750183105469,
+              326.0418395996094,
+              70.88350677490234,
+              349.78582763671875
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 289.6268310546875,
+            "grid_path_index": 335,
+            "text_bbox": [
+              35.26750183105469,
+              277.6851501464844,
+              70.88350677490234,
+              301.42913818359375
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          266.10552978515625,
+          392.9255065917969,
+          292.5235290527344,
+          416.66949462890625
+        ],
+        "origin": [
+          266.10552978515625,
+          410.1875
+        ],
+        "size": 14.0
+      },
+      "endpoint_pdf_xy": [
+        282.6121826171875,
+        303.7659912109375
+      ],
+      "last_plotted_steps_estimate": 9903998.94693189,
+      "last_plotted_steps_reading_range": [
+        9866506.601938732,
+        9941491.291925047
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 1707.606945054501,
+      "reported_endpoint_rounded": 1710,
+      "digitization_reading_range": [
+        1690,
+        1730
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 0.0,
+        "total_y_reading_allowance_pt": 0.751,
+        "return_reading_allowance_before_rounding": 15.530426265594313,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        840.351720864951,
+        2574.862800337256
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": 0.00031554660245092236,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.129756214,
+          9603999.464934142,
+          9703999.800112072,
+          9804000.13529,
+          9903998.94693189
+        ],
+        "central_curve_values": [
+          1554.1642054031672,
+          1339.566009824859,
+          1476.098607051078,
+          1787.5765516057536,
+          1707.606945054501
+        ],
+        "mean": 1573.0024637878719,
+        "range": [
+          1339.566009824859,
+          1787.5765516057536
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Ant observation settings differ across papers: BPTA obsk=None, AgentMixer obsk=0."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "HalfCheetah-v2_6x1",
+      "shared_task_name_across_papers": true,
+      "source_scope": "active_main",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "source_pdf_sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "page": 1,
+      "panel_index": 4,
+      "title": "HalfCheetah-v2 6x1",
+      "title_bbox": [
+        359.6475524902344,
+        212.2427215576172,
+        560.051025390625,
+        246.43408203125
+      ],
+      "plot_frame": [
+        350.6191711425781,
+        243.10000610351562,
+        568.7540893554688,
+        379.5
+      ],
+      "plot_frame_path_index": 373,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 449,
+      "band_path_index": 374,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 49923.22293406501,
+        "intercept": -17995038.087482024,
+        "max_fit_residual_pt": 1.2207031318212103e-05,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 360.4542541503906,
+            "grid_path_index": 379,
+            "text_bbox": [
+              344.8683166503906,
+              376.3786315917969,
+              376.0323181152344,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 410.5311584472656,
+            "grid_path_index": 385,
+            "text_bbox": [
+              394.9452209472656,
+              376.3786315917969,
+              426.1092224121094,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 460.6080322265625,
+            "grid_path_index": 391,
+            "text_bbox": [
+              445.0220947265625,
+              376.3786315917969,
+              476.18609619140625,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 510.6849365234375,
+            "grid_path_index": 397,
+            "text_bbox": [
+              495.0989990234375,
+              376.3786315917969,
+              526.2630004882812,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 560.7618408203125,
+            "grid_path_index": 403,
+            "text_bbox": [
+              545.1759033203125,
+              376.3786315917969,
+              576.3399047851562,
+              400.12261962890625
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -29.275623094221086,
+        "intercept": 10856.402211038576,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 370.8341979980469,
+            "grid_path_index": 428,
+            "text_bbox": [
+              338.2129211425781,
+              358.89251708984375,
+              347.1169128417969,
+              382.6365051269531
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 336.67608642578125,
+            "grid_path_index": 431,
+            "text_bbox": [
+              311.4941711425781,
+              324.7344055175781,
+              347.11016845703125,
+              348.4783935546875
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 302.5179748535156,
+            "grid_path_index": 437,
+            "text_bbox": [
+              311.4941711425781,
+              290.5762939453125,
+              347.11016845703125,
+              314.3202819824219
+            ]
+          },
+          {
+            "label": "3000",
+            "value": 3000.0,
+            "pdf_position": 268.35986328125,
+            "grid_path_index": 443,
+            "text_bbox": [
+              311.4941711425781,
+              256.4181823730469,
+              347.11016845703125,
+              280.16217041015625
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          542.3322143554688,
+          392.9255065917969,
+          568.7501831054688,
+          416.66949462890625
+        ],
+        "origin": [
+          542.3322143554688,
+          410.1875
+        ],
+        "size": 14.0
+      },
+      "endpoint_pdf_xy": [
+        558.8388671875,
+        268.1842041015625
+      ],
+      "last_plotted_steps_estimate": 9903999.263339885,
+      "last_plotted_steps_reading_range": [
+        9866506.313502057,
+        9941492.213177713
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 3005.142531937571,
+      "reported_endpoint_rounded": 3010,
+      "digitization_reading_range": [
+        2980,
+        3030
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 0.0,
+        "total_y_reading_allowance_pt": 0.751,
+        "return_reading_allowance_before_rounding": 21.985992943760035,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        2594.5127861962865,
+        3415.810694786799
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": 0.01920855397156629,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503997.971381485,
+          9603999.817906938,
+          9703998.617360685,
+          9804000.463886142,
+          9903999.263339885
+        ],
+        "central_curve_values": [
+          2955.145792924641,
+          3172.3391462289146,
+          3076.7484474574576,
+          3215.564646611745,
+          3005.142531937571
+        ],
+        "mean": 3084.988113032066,
+        "range": [
+          2955.145792924641,
+          3215.564646611745
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Humanoid-v2_17x1",
+      "shared_task_name_across_papers": false,
+      "source_scope": "active_main",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_main.pdf",
+      "source_pdf_sha256": "1e89c9b7f32e85d87b606e0eaf379e8e51113a6796433bfb109ef9b0aebe9e90",
+      "page": 1,
+      "panel_index": 5,
+      "title": "Humanoid-v2 17x1",
+      "title_bbox": [
+        640.1710815429688,
+        212.2427215576172,
+        831.9461059570312,
+        246.43408203125
+      ],
+      "plot_frame": [
+        626.8458251953125,
+        243.10000610351562,
+        844.9807739257812,
+        379.5
+      ],
+      "plot_frame_path_index": 475,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          115.09249877929688,
+          41.11638259887695,
+          177.67337036132812,
+          59.77238464355469
+        ],
+        "line_path_index": 84,
+        "line_bbox": [
+          84.2925033569336,
+          50.829376220703125,
+          106.2925033569336,
+          50.829376220703125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 550,
+      "band_path_index": 476,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 49923.22597645559,
+        "intercept": -31785165.46453367,
+        "max_fit_residual_pt": 2.441406843445293e-05,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 636.680908203125,
+            "grid_path_index": 481,
+            "text_bbox": [
+              621.094970703125,
+              376.3786315917969,
+              652.2589721679688,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 686.7578125,
+            "grid_path_index": 487,
+            "text_bbox": [
+              671.171875,
+              376.3786315917969,
+              702.3358764648438,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 736.834716796875,
+            "grid_path_index": 493,
+            "text_bbox": [
+              721.248779296875,
+              376.3786315917969,
+              752.4127807617188,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 786.91162109375,
+            "grid_path_index": 499,
+            "text_bbox": [
+              771.32568359375,
+              376.3786315917969,
+              802.4896850585938,
+              400.12261962890625
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 836.9884643554688,
+            "grid_path_index": 505,
+            "text_bbox": [
+              821.4025268554688,
+              376.3786315917969,
+              852.5665283203125,
+              400.12261962890625
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -4.931467122379858,
+        "intercept": 2030.6633096430498,
+        "max_fit_residual_pt": 6.103515772792889e-06,
+        "anchors": [
+          {
+            "label": "200",
+            "value": 200.0,
+            "pdf_position": 371.2208251953125,
+            "grid_path_index": 530,
+            "text_bbox": [
+              596.6270751953125,
+              359.2791442871094,
+              623.3390502929688,
+              383.02313232421875
+            ]
+          },
+          {
+            "label": "400",
+            "value": 400.0,
+            "pdf_position": 330.6649475097656,
+            "grid_path_index": 535,
+            "text_bbox": [
+              596.6270751953125,
+              318.7232666015625,
+              623.3390502929688,
+              342.4672546386719
+            ]
+          },
+          {
+            "label": "600",
+            "value": 600.0,
+            "pdf_position": 290.10906982421875,
+            "grid_path_index": 540,
+            "text_bbox": [
+              596.6270751953125,
+              278.1673889160156,
+              623.3390502929688,
+              301.911376953125
+            ]
+          },
+          {
+            "label": "800",
+            "value": 800.0,
+            "pdf_position": 249.5531768798828,
+            "grid_path_index": 545,
+            "text_bbox": [
+              596.6270751953125,
+              237.61148071289062,
+              623.3390502929688,
+              261.3554992675781
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          818.5588989257812,
+          392.9255065917969,
+          844.9768676757812,
+          416.66949462890625
+        ],
+        "origin": [
+          818.5588989257812,
+          410.1875
+        ],
+        "size": 14.0
+      },
+      "endpoint_pdf_xy": [
+        835.0655517578125,
+        277.5089111328125
+      ],
+      "last_plotted_steps_estimate": 9904000.781025179,
+      "last_plotted_steps_reading_range": [
+        9866507.219487805,
+        9941494.342562553
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 662.1372382241514,
+      "reported_endpoint_rounded": 660,
+      "digitization_reading_range": [
+        650,
+        670
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 6.103515772792889e-06,
+        "total_y_reading_allowance_pt": 0.7510061035157728,
+        "return_reading_allowance_before_rounding": 3.703561908194638,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        578.3047050866246,
+        722.9368942495032
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": -11.51643855608745,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.464690141,
+          9603998.270237952,
+          9704000.12285766,
+          9803998.928405471,
+          9904000.781025179
+        ],
+        "central_curve_values": [
+          656.2173105286577,
+          691.7525283306697,
+          656.4800773009867,
+          665.1534877379067,
+          662.1372382241514
+        ],
+        "mean": 666.3481284244745,
+        "range": [
+          656.2173105286577,
+          691.7525283306697
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "HalfCheetah-v2_2x3",
+      "shared_task_name_across_papers": true,
+      "source_scope": "commented_appendix_asset",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "source_pdf_sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "page": 1,
+      "panel_index": 0,
+      "title": "HalfCheetah-v2 2x3",
+      "title_bbox": [
+        86.50464630126953,
+        4.793764114379883,
+        258.2812805175781,
+        34.10064697265625
+      ],
+      "plot_frame": [
+        65.03250122070312,
+        32.100006103515625,
+        279.398681640625,
+        177.67999267578125
+      ],
+      "plot_frame_path_index": 1,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 68,
+      "band_path_index": 2,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 50800.92381777605,
+        "intercept": -3794710.8747153506,
+        "max_fit_residual_pt": 6.1035158012145985e-06,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 74.69767761230469,
+            "grid_path_index": 7,
+            "text_bbox": [
+              61.33049011230469,
+              175.5089874267578,
+              88.04249572753906,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 123.90937805175781,
+            "grid_path_index": 13,
+            "text_bbox": [
+              110.54219055175781,
+              175.5089874267578,
+              137.2541961669922,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 173.12107849121094,
+            "grid_path_index": 19,
+            "text_bbox": [
+              159.75389099121094,
+              175.5089874267578,
+              186.4658966064453,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 222.33277893066406,
+            "grid_path_index": 25,
+            "text_bbox": [
+              208.96559143066406,
+              175.5089874267578,
+              235.67759704589844,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 271.54449462890625,
+            "grid_path_index": 31,
+            "text_bbox": [
+              258.17730712890625,
+              175.5089874267578,
+              284.8893127441406,
+              195.86099243164062
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -43.000353327791835,
+        "intercept": 7354.793704575562,
+        "max_fit_residual_pt": 1.0172526060614473e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 171.04031372070312,
+            "grid_path_index": 40,
+            "text_bbox": [
+              53.891876220703125,
+              160.8068084716797,
+              61.52387619018555,
+              181.1588134765625
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 124.529052734375,
+            "grid_path_index": 43,
+            "text_bbox": [
+              30.969999313354492,
+              114.29558563232422,
+              61.49800109863281,
+              134.6475830078125
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 78.017822265625,
+            "grid_path_index": 49,
+            "text_bbox": [
+              30.969999313354492,
+              67.7843246459961,
+              61.49800109863281,
+              88.13632202148438
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          256.726806640625,
+          190.1339874267578,
+          279.37078857421875,
+          210.48599243164062
+        ],
+        "origin": [
+          256.726806640625,
+          204.92999267578125
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        269.6547546386719,
+        53.9012451171875
+      ],
+      "last_plotted_steps_estimate": 9903999.772784911,
+      "last_plotted_steps_reading_range": [
+        9865847.96893352,
+        9942151.576636301
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 5037.021119728584,
+      "reported_endpoint_rounded": 5040,
+      "digitization_reading_range": [
+        5000,
+        5070
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.0172526060614473e-05,
+        "total_y_reading_allowance_pt": 0.7510101725260606,
+        "return_reading_allowance_before_rounding": 32.29370277138651,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        4484.412514080806,
+        5556.266658268033
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": -16.68153355416507,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.859602898,
+          9604000.225478692,
+          9703999.041033324,
+          9803999.406909117,
+          9903999.772784911
+        ],
+        "central_curve_values": [
+          5224.7251156789225,
+          4831.433553979932,
+          5141.104860712079,
+          5034.9687347003655,
+          5037.021119728584
+        ],
+        "mean": 5053.850676959977,
+        "range": [
+          4831.433553979932,
+          5224.7251156789225
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "HalfCheetah-v2_3x2",
+      "shared_task_name_across_papers": true,
+      "source_scope": "commented_appendix_asset",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "source_pdf_sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "page": 1,
+      "panel_index": 1,
+      "title": "HalfCheetah-v2 3x2",
+      "title_bbox": [
+        369.2563171386719,
+        4.793764114379883,
+        541.0328979492188,
+        34.10064697265625
+      ],
+      "plot_frame": [
+        347.7841796875,
+        32.100006103515625,
+        562.1503295898438,
+        177.67999267578125
+      ],
+      "plot_frame_path_index": 130,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 190,
+      "band_path_index": 131,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 50800.92696808633,
+        "intercept": -18158757.857803296,
+        "max_fit_residual_pt": 5.684341886080802e-14,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 357.4493408203125,
+            "grid_path_index": 136,
+            "text_bbox": [
+              344.0821533203125,
+              175.5089874267578,
+              370.7941589355469,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 406.6610412597656,
+            "grid_path_index": 142,
+            "text_bbox": [
+              393.2938537597656,
+              175.5089874267578,
+              420.0058288574219,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 455.87274169921875,
+            "grid_path_index": 148,
+            "text_bbox": [
+              442.50555419921875,
+              175.5089874267578,
+              469.2175598144531,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 505.0844421386719,
+            "grid_path_index": 154,
+            "text_bbox": [
+              491.7172546386719,
+              175.5089874267578,
+              518.4292602539062,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 554.296142578125,
+            "grid_path_index": 160,
+            "text_bbox": [
+              540.928955078125,
+              175.5089874267578,
+              567.6409912109375,
+              195.86099243164062
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -43.817670724671935,
+        "intercept": 7449.913592885072,
+        "max_fit_residual_pt": 1.2207031872435437e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 170.020751953125,
+            "grid_path_index": 169,
+            "text_bbox": [
+              336.6435546875,
+              159.78724670410156,
+              344.2755432128906,
+              180.13925170898438
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 124.3770751953125,
+            "grid_path_index": 172,
+            "text_bbox": [
+              313.7216796875,
+              114.1435775756836,
+              344.2496643066406,
+              134.49557495117188
+            ]
+          },
+          {
+            "label": "4000",
+            "value": 4000.0,
+            "pdf_position": 78.7333984375,
+            "grid_path_index": 178,
+            "text_bbox": [
+              313.7216796875,
+              68.4999008178711,
+              344.2496643066406,
+              88.85189819335938
+            ]
+          },
+          {
+            "label": "6000",
+            "value": 6000.0,
+            "pdf_position": 33.089691162109375,
+            "grid_path_index": 184,
+            "text_bbox": [
+              313.7216796875,
+              22.856189727783203,
+              344.2496643066406,
+              43.20819091796875
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          539.4784545898438,
+          190.1339874267578,
+          562.1224975585938,
+          210.48599243164062
+        ],
+        "origin": [
+          539.4784545898438,
+          204.92999267578125
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        552.4064331054688,
+        57.978851318359375
+      ],
+      "last_plotted_steps_estimate": 9904001.007088687,
+      "last_plotted_steps_reading_range": [
+        9865849.510935651,
+        9942152.503241723
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 4909.41537682249,
+      "reported_endpoint_rounded": 4910,
+      "digitization_reading_range": [
+        4870,
+        4950
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.2207031872435437e-05,
+        "total_y_reading_allowance_pt": 0.7510122070318724,
+        "return_reading_allowance_before_rounding": 32.907605597931735,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        4336.155134452002,
+        5442.532599321314
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": -20.071509935831273,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.51878028,
+          9604001.441178638,
+          9704000.262934484,
+          9803999.084690329,
+          9904001.007088687
+        ],
+        "central_curve_values": [
+          5109.325476248668,
+          4852.156079324001,
+          4601.930809720906,
+          4725.114520266462,
+          4909.41537682249
+        ],
+        "mean": 4839.588452476505,
+        "range": [
+          4601.930809720906,
+          5109.325476248668
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Walker2d-v2_2x3",
+      "shared_task_name_across_papers": true,
+      "source_scope": "commented_appendix_asset",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "source_pdf_sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "page": 1,
+      "panel_index": 2,
+      "title": "Walker2d-v2 2x3",
+      "title_bbox": [
+        665.3126831054688,
+        4.793764114379883,
+        810.5029907226562,
+        34.10064697265625
+      ],
+      "plot_frame": [
+        630.5358276367188,
+        32.100006103515625,
+        844.9019775390625,
+        177.67999267578125
+      ],
+      "plot_frame_path_index": 216,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 281,
+      "band_path_index": 217,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 50800.926968083986,
+        "intercept": -32522804.295504384,
+        "max_fit_residual_pt": 1.831054919421149e-05,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 640.2009887695312,
+            "grid_path_index": 222,
+            "text_bbox": [
+              626.8338012695312,
+              175.5089874267578,
+              653.5458374023438,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 689.4127197265625,
+            "grid_path_index": 228,
+            "text_bbox": [
+              676.0455322265625,
+              175.5089874267578,
+              702.757568359375,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 738.6243896484375,
+            "grid_path_index": 234,
+            "text_bbox": [
+              725.2572021484375,
+              175.5089874267578,
+              751.96923828125,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 787.8361206054688,
+            "grid_path_index": 240,
+            "text_bbox": [
+              774.4689331054688,
+              175.5089874267578,
+              801.1809692382812,
+              195.86099243164062
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 837.0477905273438,
+            "grid_path_index": 246,
+            "text_bbox": [
+              823.6806030273438,
+              175.5089874267578,
+              850.3926391601562,
+              195.86099243164062
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -14.409992429124625,
+        "intercept": 2500.8512836713494,
+        "max_fit_residual_pt": 1.2207033400102318e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 173.5498046875,
+            "grid_path_index": 255,
+            "text_bbox": [
+              619.3952026367188,
+              163.3162841796875,
+              627.0272216796875,
+              183.6682891845703
+            ]
+          },
+          {
+            "label": "500",
+            "value": 500.0,
+            "pdf_position": 138.85165405273438,
+            "grid_path_index": 258,
+            "text_bbox": [
+              604.1139526367188,
+              128.61814880371094,
+              627.0099487304688,
+              148.97015380859375
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 104.15350341796875,
+            "grid_path_index": 263,
+            "text_bbox": [
+              596.4733276367188,
+              93.92000579833984,
+              627.0013427734375,
+              114.27200317382812
+            ]
+          },
+          {
+            "label": "1500",
+            "value": 1500.0,
+            "pdf_position": 69.45535278320312,
+            "grid_path_index": 269,
+            "text_bbox": [
+              596.4733276367188,
+              59.22185134887695,
+              627.0013427734375,
+              79.5738525390625
+            ]
+          },
+          {
+            "label": "2000",
+            "value": 2000.0,
+            "pdf_position": 34.757232666015625,
+            "grid_path_index": 275,
+            "text_bbox": [
+              596.4733276367188,
+              24.523731231689453,
+              627.0013427734375,
+              44.875732421875
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          822.2301025390625,
+          190.1339874267578,
+          844.8741455078125,
+          210.48599243164062
+        ],
+        "origin": [
+          822.2301025390625,
+          204.92999267578125
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        835.1580810546875,
+        102.80377197265625
+      ],
+      "last_plotted_steps_estimate": 9904000.386959963,
+      "last_plotted_steps_reading_range": [
+        9865847.96061406,
+        9942152.813305866
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 1019.4497078599186,
+      "reported_endpoint_rounded": 1020,
+      "digitization_reading_range": [
+        1000,
+        1040
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.2207033400102318e-05,
+        "total_y_reading_allowance_pt": 0.7510122070334001,
+        "return_reading_allowance_before_rounding": 10.82208021753147,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        684.9991838090323,
+        1565.9647658798222
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": 106.03226698450862,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9504001.999294087,
+          9604000.821049929,
+          9703999.64280577,
+          9804001.565204121,
+          9904000.386959963
+        ],
+        "central_curve_values": [
+          854.784937195516,
+          1036.4995679816711,
+          1037.9204263049896,
+          1133.919612928461,
+          1019.4497078599186
+        ],
+        "mean": 1016.5148504541113,
+        "range": [
+          854.784937195516,
+          1133.919612928461
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Walker2d-v2_3x2",
+      "shared_task_name_across_papers": true,
+      "source_scope": "commented_appendix_asset",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "source_pdf_sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "page": 1,
+      "panel_index": 3,
+      "title": "Walker2d-v2 3x2",
+      "title_bbox": [
+        99.80933380126953,
+        212.73374938964844,
+        244.99966430664062,
+        242.04063415527344
+      ],
+      "plot_frame": [
+        65.03250122070312,
+        240.0399932861328,
+        279.398681640625,
+        385.6199951171875
+      ],
+      "plot_frame_path_index": 304,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 396,
+      "band_path_index": 305,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 50800.92381777605,
+        "intercept": -3794710.8747153506,
+        "max_fit_residual_pt": 6.1035158012145985e-06,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 74.69767761230469,
+            "grid_path_index": 310,
+            "text_bbox": [
+              61.33049011230469,
+              383.4490051269531,
+              88.04249572753906,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 123.90937805175781,
+            "grid_path_index": 316,
+            "text_bbox": [
+              110.54219055175781,
+              383.4490051269531,
+              137.2541961669922,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 173.12107849121094,
+            "grid_path_index": 322,
+            "text_bbox": [
+              159.75389099121094,
+              383.4490051269531,
+              186.4658966064453,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 222.33277893066406,
+            "grid_path_index": 328,
+            "text_bbox": [
+              208.96559143066406,
+              383.4490051269531,
+              235.67759704589844,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 271.54449462890625,
+            "grid_path_index": 334,
+            "text_bbox": [
+              258.17730712890625,
+              383.4490051269531,
+              284.8893127441406,
+              403.8009948730469
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -8.597174518444506,
+        "intercept": 3298.5920867373075,
+        "max_fit_residual_pt": 1.2207032511923899e-05,
+        "anchors": [
+          {
+            "label": "0",
+            "value": 0.0,
+            "pdf_position": 383.68328857421875,
+            "grid_path_index": 359,
+            "text_bbox": [
+              53.891876220703125,
+              373.4497985839844,
+              61.52387619018555,
+              393.8017883300781
+            ]
+          },
+          {
+            "label": "250",
+            "value": 250.0,
+            "pdf_position": 354.60394287109375,
+            "grid_path_index": 362,
+            "text_bbox": [
+              38.610626220703125,
+              344.3704528808594,
+              61.50662612915039,
+              364.7224426269531
+            ]
+          },
+          {
+            "label": "500",
+            "value": 500.0,
+            "pdf_position": 325.5246276855469,
+            "grid_path_index": 367,
+            "text_bbox": [
+              38.610626220703125,
+              315.2911376953125,
+              61.50662612915039,
+              335.64312744140625
+            ]
+          },
+          {
+            "label": "750",
+            "value": 750.0,
+            "pdf_position": 296.4453125,
+            "grid_path_index": 372,
+            "text_bbox": [
+              38.610626220703125,
+              286.2118225097656,
+              61.50662612915039,
+              306.5638122558594
+            ]
+          },
+          {
+            "label": "1000",
+            "value": 1000.0,
+            "pdf_position": 267.3659973144531,
+            "grid_path_index": 377,
+            "text_bbox": [
+              30.969999313354492,
+              257.13250732421875,
+              61.49800109863281,
+              277.4844970703125
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          256.726806640625,
+          398.0740051269531,
+          279.37078857421875,
+          418.4259948730469
+        ],
+        "origin": [
+          256.726806640625,
+          412.8699951171875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        269.6547546386719,
+        321.29443359375
+      ],
+      "last_plotted_steps_estimate": 9903999.772784911,
+      "last_plotted_steps_reading_range": [
+        9865847.96893352,
+        9942151.576636301
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 536.3677693270597,
+      "reported_endpoint_rounded": 540,
+      "digitization_reading_range": [
+        520,
+        550
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.2207032511923899e-05,
+        "total_y_reading_allowance_pt": 0.7510122070325119,
+        "return_reading_allowance_before_rounding": 6.456583009340681,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        313.31243928875983,
+        759.4230993653591
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": -2.2737367544323206e-13,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.859602898,
+          9604000.225478692,
+          9703999.041033324,
+          9803999.406909117,
+          9903999.772784911
+        ],
+        "central_curve_values": [
+          429.54798088136477,
+          348.3995528461837,
+          434.1451394480205,
+          495.3139521899707,
+          536.3677693270597
+        ],
+        "mean": 448.7548789385199,
+        "range": [
+          348.3995528461837,
+          536.3677693270597
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "Walker2d-v2_6x1",
+      "shared_task_name_across_papers": true,
+      "source_scope": "commented_appendix_asset",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "source_pdf_sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "page": 1,
+      "panel_index": 4,
+      "title": "Walker2d-v2 6x1",
+      "title_bbox": [
+        382.5610046386719,
+        212.73374938964844,
+        527.7512817382812,
+        242.04063415527344
+      ],
+      "plot_frame": [
+        347.7841796875,
+        240.0399932861328,
+        562.1503295898438,
+        385.6199951171875
+      ],
+      "plot_frame_path_index": 419,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 494,
+      "band_path_index": 420,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 50800.92696808633,
+        "intercept": -18158757.857803296,
+        "max_fit_residual_pt": 5.684341886080802e-14,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 357.4493408203125,
+            "grid_path_index": 425,
+            "text_bbox": [
+              344.0821533203125,
+              383.4490051269531,
+              370.7941589355469,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 406.6610412597656,
+            "grid_path_index": 431,
+            "text_bbox": [
+              393.2938537597656,
+              383.4490051269531,
+              420.0058288574219,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 455.87274169921875,
+            "grid_path_index": 437,
+            "text_bbox": [
+              442.50555419921875,
+              383.4490051269531,
+              469.2175598144531,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 505.0844421386719,
+            "grid_path_index": 443,
+            "text_bbox": [
+              491.7172546386719,
+              383.4490051269531,
+              518.4292602539062,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 554.296142578125,
+            "grid_path_index": 449,
+            "text_bbox": [
+              540.928955078125,
+              383.4490051269531,
+              567.6409912109375,
+              403.8009948730469
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -5.534184180936001,
+        "intercept": 2151.8044471158664,
+        "max_fit_residual_pt": 1.0681152843972086e-05,
+        "anchors": [
+          {
+            "label": "200",
+            "value": 200.0,
+            "pdf_position": 352.6815185546875,
+            "grid_path_index": 474,
+            "text_bbox": [
+              321.3623046875,
+              342.4480285644531,
+              344.25830078125,
+              362.8000183105469
+            ]
+          },
+          {
+            "label": "400",
+            "value": 400.0,
+            "pdf_position": 316.54248046875,
+            "grid_path_index": 479,
+            "text_bbox": [
+              321.3623046875,
+              306.3089904785156,
+              344.25830078125,
+              326.6609802246094
+            ]
+          },
+          {
+            "label": "600",
+            "value": 600.0,
+            "pdf_position": 280.4034729003906,
+            "grid_path_index": 484,
+            "text_bbox": [
+              321.3623046875,
+              270.16998291015625,
+              344.25830078125,
+              290.52197265625
+            ]
+          },
+          {
+            "label": "800",
+            "value": 800.0,
+            "pdf_position": 244.2644500732422,
+            "grid_path_index": 489,
+            "text_bbox": [
+              321.3623046875,
+              234.03094482421875,
+              344.25830078125,
+              254.38294982910156
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          539.4784545898438,
+          398.0740051269531,
+          562.1224975585938,
+          418.4259948730469
+        ],
+        "origin": [
+          539.4784545898438,
+          412.8699951171875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        552.4064331054688,
+        324.84307861328125
+      ],
+      "last_plotted_steps_estimate": 9904001.007088687,
+      "last_plotted_steps_reading_range": [
+        9865849.510935651,
+        9942152.503241723
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 354.0630201676954,
+      "reported_endpoint_rounded": 350,
+      "digitization_reading_range": [
+        340,
+        360
+      ],
+      "reporting_quantum": 10,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 1.0681152843972086e-05,
+        "total_y_reading_allowance_pt": 0.751010681152844,
+        "return_reading_allowance_before_rounding": 4.15623143135004,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        243.61645796590778,
+        556.8031827639065
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": 46.146800197211746,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9503999.51878028,
+          9604001.441178638,
+          9704000.262934484,
+          9803999.084690329,
+          9904001.007088687
+        ],
+        "central_curve_values": [
+          282.8333678642862,
+          261.24957666692103,
+          273.1718523535858,
+          272.0006009102633,
+          354.0630201676954
+        ],
+        "mean": 288.66368359255034,
+        "range": [
+          261.24957666692103,
+          354.0630201676954
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    },
+    {
+      "paper": "agentmixer",
+      "algorithm": "AgentMixer",
+      "task": "HumanoidStandup-v2_17x1",
+      "shared_task_name_across_papers": false,
+      "source_scope": "commented_appendix_asset",
+      "source_pdf": "references/agentmixer/figs/MuJoCo_app.pdf",
+      "source_pdf_sha256": "1aae0f0f5122b793547fef62183475338864cfd61628437c370e1120793b4446",
+      "page": 1,
+      "panel_index": 5,
+      "title": "HumanoidStandup-v2 17x1",
+      "title_bbox": [
+        619.6720581054688,
+        212.73374938964844,
+        856.2487182617188,
+        242.04063415527344
+      ],
+      "plot_frame": [
+        630.5358276367188,
+        240.0399932861328,
+        844.9019775390625,
+        385.6199951171875
+      ],
+      "plot_frame_path_index": 517,
+      "legend": {
+        "text": "AgentMixer",
+        "text_bbox": [
+          94.63249969482422,
+          35.51411437988281,
+          140.15011596679688,
+          49.08211135864258
+        ],
+        "line_path_index": 95,
+        "line_bbox": [
+          72.23249816894531,
+          42.578125,
+          88.23249816894531,
+          42.578125
+        ],
+        "rgb": [
+          0.8941176533699036,
+          0.10196078568696976,
+          0.10980392247438431
+        ]
+      },
+      "curve_path_index": 609,
+      "band_path_index": 518,
+      "curve_width_pt": 1.0,
+      "curve_vertices": 100,
+      "axis_x": {
+        "slope": 50800.926968083986,
+        "intercept": -32522804.295504384,
+        "max_fit_residual_pt": 1.831054919421149e-05,
+        "anchors": [
+          {
+            "label": "0.00",
+            "value": 0.0,
+            "pdf_position": 640.2009887695312,
+            "grid_path_index": 523,
+            "text_bbox": [
+              626.8338012695312,
+              383.4490051269531,
+              653.5458374023438,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.25",
+            "value": 2500000.0,
+            "pdf_position": 689.4127197265625,
+            "grid_path_index": 529,
+            "text_bbox": [
+              676.0455322265625,
+              383.4490051269531,
+              702.757568359375,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.50",
+            "value": 5000000.0,
+            "pdf_position": 738.6243896484375,
+            "grid_path_index": 535,
+            "text_bbox": [
+              725.2572021484375,
+              383.4490051269531,
+              751.96923828125,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "0.75",
+            "value": 7500000.0,
+            "pdf_position": 787.8361206054688,
+            "grid_path_index": 541,
+            "text_bbox": [
+              774.4689331054688,
+              383.4490051269531,
+              801.1809692382812,
+              403.8009948730469
+            ]
+          },
+          {
+            "label": "1.00",
+            "value": 10000000.0,
+            "pdf_position": 837.0477905273438,
+            "grid_path_index": 547,
+            "text_bbox": [
+              823.6806030273438,
+              383.4490051269531,
+              850.3926391601562,
+              403.8009948730469
+            ]
+          }
+        ]
+      },
+      "axis_y": {
+        "slope": -831.1544951030675,
+        "intercept": 344289.00881376845,
+        "max_fit_residual_pt": 0.0,
+        "anchors": [
+          {
+            "label": "25000",
+            "value": 25000.0,
+            "pdf_position": 384.1512145996094,
+            "grid_path_index": 572,
+            "text_bbox": [
+              588.8327026367188,
+              373.917724609375,
+              626.9927368164062,
+              394.26971435546875
+            ]
+          },
+          {
+            "label": "50000",
+            "value": 50000.0,
+            "pdf_position": 354.07257080078125,
+            "grid_path_index": 579,
+            "text_bbox": [
+              588.8327026367188,
+              343.8390808105469,
+              626.9927368164062,
+              364.1910705566406
+            ]
+          },
+          {
+            "label": "75000",
+            "value": 75000.0,
+            "pdf_position": 323.9939270019531,
+            "grid_path_index": 586,
+            "text_bbox": [
+              588.8327026367188,
+              313.76043701171875,
+              626.9927368164062,
+              334.1124267578125
+            ]
+          },
+          {
+            "label": "100000",
+            "value": 100000.0,
+            "pdf_position": 293.915283203125,
+            "grid_path_index": 593,
+            "text_bbox": [
+              581.1920776367188,
+              283.6817932128906,
+              626.9840698242188,
+              304.0337829589844
+            ]
+          },
+          {
+            "label": "125000",
+            "value": 125000.0,
+            "pdf_position": 263.8366394042969,
+            "grid_path_index": 601,
+            "text_bbox": [
+              581.1920776367188,
+              253.60313415527344,
+              626.9840698242188,
+              273.95513916015625
+            ]
+          }
+        ]
+      },
+      "x_exponent_text": {
+        "text": "1e7",
+        "bbox": [
+          822.2301025390625,
+          398.0740051269531,
+          844.8741455078125,
+          418.4259948730469
+        ],
+        "origin": [
+          822.2301025390625,
+          412.8699951171875
+        ],
+        "size": 12.0
+      },
+      "endpoint_pdf_xy": [
+        835.1580810546875,
+        308.8873291015625
+      ],
+      "last_plotted_steps_estimate": 9904000.386959963,
+      "last_plotted_steps_reading_range": [
+        9865847.96061406,
+        9942152.813305866
+      ],
+      "paper_training_budget_steps": 10000000,
+      "central_curve_endpoint_estimate": 87555.91675062422,
+      "reported_endpoint_rounded": 87600,
+      "digitization_reading_range": [
+        86900,
+        88200
+      ],
+      "reporting_quantum": 100,
+      "digitization_uncertainty": {
+        "coordinate_precision_tolerance_pt": 0.001,
+        "registration_allowance_pt": 0.25,
+        "curve_half_width_pt": 0.5,
+        "y_axis_fit_residual_pt": 0.0,
+        "total_y_reading_allowance_pt": 0.751,
+        "return_reading_allowance_before_rounding": 624.1970258224037,
+        "is_statistical_confidence_interval": false
+      },
+      "shaded_band_endpoint_estimates": [
+        68316.64835326502,
+        103331.31429348318
+      ],
+      "shaded_band_interpretation": "not_explicitly_defined_for_MuJoCo_in_active_source",
+      "shaded_band_midpoint_minus_centerline": -1731.9354272501223,
+      "central_curve_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+      "last_five_plotted_vertices": {
+        "steps": [
+          9504001.999294087,
+          9604000.821049929,
+          9703999.64280577,
+          9804001.565204121,
+          9904000.386959963
+        ],
+        "central_curve_values": [
+          94526.88011671876,
+          93962.79183496226,
+          89722.96033854937,
+          84772.0006858648,
+          87555.91675062422
+        ],
+        "mean": 90108.10994534388,
+        "range": [
+          84772.0006858648,
+          94526.88011671876
+        ],
+        "is_original_evaluation_aggregation": false
+      },
+      "caveats": [
+        "Digitized plotted centerline, not original seed-level data.",
+        "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+        "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure.",
+        "Band midpoint differs from the centerline by more than the digitization reading allowance; its statistical construction is unresolved."
+      ]
+    }
+  ],
+  "pdf_coordinate_system": "points (1/72 inch), origin at top left, y increasing downwards",
+  "render_scale": 1.5,
+  "render_dpi": 108,
+  "visual_review": "Original and annotated renders require manual visual verification; see docs/curve_targets.md.",
+  "canonical_manifest_modified": false
+}

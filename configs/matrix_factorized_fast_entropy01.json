@@ -1,0 +1,7 @@
+{
+  "agentmixer_correlation": "factorized",
+  "modifier_learning_rate": 0.0005,
+  "entropy_coef": 0.1,
+  "entropy_final": 0.01,
+  "entropy_decay_start": 0.5
+}

@@ -1,0 +1,6 @@
+{
+  "entropy_coef": 0.1,
+  "entropy_final": 0.01,
+  "entropy_decay_start": 0.5,
+  "modifier_log_scale_bound": 0.6931471805599453
+}

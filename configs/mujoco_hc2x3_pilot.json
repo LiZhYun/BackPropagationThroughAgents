@@ -1,0 +1,38 @@
+{
+  "label": "mujoco_hc2x3_pilot",
+  "scope": "100k-step development pilot and throughput measurement; not a full paper benchmark",
+  "seeds": [0],
+  "base_config": {
+    "environment": "mujoco",
+    "env_config": {
+      "scenario": "HalfCheetah-v2",
+      "agent_conf": "2x3",
+      "agent_obsk": 0,
+      "episode_limit": 1000,
+      "action_units": "normalized"
+    },
+    "steps": 100000,
+    "num_envs": 8,
+    "rollout_steps": 100,
+    "hidden_dim": 64,
+    "learning_rate": 0.0003,
+    "modifier_learning_rate": 0.00003,
+    "critic_learning_rate": 0.0003,
+    "entropy_coef": 0.0,
+    "epochs": 5,
+    "max_grad_norm": 10.0,
+    "normalize_observations": true,
+    "eval_seed": 1000000,
+    "eval_episodes": 5,
+    "eval_every_steps": 20000,
+    "checkpoint_every_updates": 25,
+    "threads": 1
+  },
+  "variants": {
+    "mappo": {"algorithm": "mappo"},
+    "arppo": {"algorithm": "arppo"},
+    "bppo": {"algorithm": "bppo"},
+    "agentmixer_identity": {"algorithm": "agentmixer", "modifier_enabled": false},
+    "agentmixer": {"algorithm": "agentmixer"}
+  }
+}

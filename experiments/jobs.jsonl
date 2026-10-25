@@ -1,0 +1,19 @@
+{"job_id": "21192344", "purpose": "matrix development,24 tasks,max concurrency2", "manifest": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_dev_20261024T222903Z/manifest.json"}
+{"job_id":"21192446","purpose":"matrix normalization correction validation,24 tasks,max concurrency2","manifest":"/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_normfix_20261024T224628Z/manifest.json"}
+{"job_id":"21192452","purpose":"real SMAC engine and adapter smoke,32 steps","script":"scripts/smoke_smac.sbatch"}
+{"job_id":"21192554","purpose":"matrix entropy0.1-to0.01 control and bounded AgentMixer scales,24tasks,concurrency2","manifest":"results/matrix_entropy01_20261024T230203Z/manifest.json"}
+{"job_id":"21192580","purpose":"matched ARPPO/BPPO projection64 entropy0.1,12tasks,concurrency2","manifest":"results/matrix_projected_entropy01_20261024T230922Z/manifest.json","dependency":"afterany:21192554"}
+{"job_id":"21192592","purpose":"matched ARPPO/BPPO projection64 entropy0.3,12tasks,concurrency2","manifest":"results/matrix_projected_entropy03_20261024T230929Z/manifest.json","dependency":"afterany:21192580"}
+{"job_id":"21192597","purpose":"all-four-method SMAC/MuJoCo integration smoke,128steps,8tasks,concurrency2","manifest":"results/simulator_smoke_20261024T231104Z/manifest.json","dependency":"afterany:21192592"}
+{"job_id":"21192580","status":"canceled_while_pending","reason":"consolidate short runs into two serial workers","replacement":"21192609"}
+{"job_id":"21192592","status":"canceled_while_pending","reason":"consolidate short runs into two serial workers","replacement":"21192611"}
+{"job_id":"21192597","status":"canceled_while_pending","reason":"replace canceled parent dependency; identical smoke configurations retained"}
+{"job_id":"21192609","purpose":"projected entropy0.1,12runs in2serialworkers","manifest":"results/matrix_projected_entropy01_20261024T230922Z/manifest.json","dependency":"afterany:21192554","launcher":"scripts/run_matrix_array.py; BTA_MATRIX_WORKERS=2"}
+{"job_id":"21192611","purpose":"projected entropy0.3,12runs in2serialworkers","manifest":"results/matrix_projected_entropy03_20261024T230929Z/manifest.json","dependency":"afterany:21192609","launcher":"scripts/run_matrix_array.py; BTA_MATRIX_WORKERS=2"}
+{"job_id":"21192619","purpose":"experimental correlated AgentMixer,6runs in2serialworkers","manifest":"results/matrix_joint_20261024T231609Z/manifest.json","dependency":"afterany:21192611"}
+{"job_id":"21192625","purpose":"matched factorized AgentMixer modifier-learning-rate control,6runs in2serialworkers","manifest":"results/matrix_factorized_fast_20261024T231622Z/manifest.json","dependency":"afterany:21192619"}
+{"job_id":"21192629","purpose":"all-method simulator integration smoke,128steps,8tasks","manifest":"results/simulator_smoke_20261024T231104Z/manifest.json","dependency":"afterany:21192625","replaces":"21192597"}
+{"job_id":"21192700","purpose":"joint modifier slow learning rate with entropy schedule,6runs","manifest":"results/matrix_joint_slow_entropy01_20261024T233313Z/manifest.json"}
+{"job_id":"21192705","purpose":"joint modifier slow learning rate,scales0.1to10,6runs","manifest":"results/matrix_joint_slow_bounded_20261024T233315Z/manifest.json","dependency":"afterany:21192700"}
+{"job_id":"21192712","purpose":"joint modifier fast learning rate,scales0.1to10,6runs","manifest":"results/matrix_joint_fast_bounded_20261024T233317Z/manifest.json","dependency":"afterany:21192705"}
+{"job_id":"21192732","purpose":"100k-step HalfCheetah2x3 pilot,five algorithms/controls,seed0,two serial CPUworkers","manifest":"results/mujoco_hc2x3_pilot_20261024T233938Z/manifest.json","dependency":"afterany:21192712"}

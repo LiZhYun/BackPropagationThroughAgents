@@ -1,0 +1,3324 @@
+{
+  "schema_version": 1,
+  "description": "Canonical accepted-source targets; not results or executable training configurations.",
+  "status": "source_audited_not_reproduced",
+  "source_manifest": "references/sources.json",
+  "archive_provenance": [
+    {
+      "archive": "AAAI2025_AgentMixer.zip",
+      "sha256": "5cee49bf2e5e252f9bf48b2beb8aa7c08b695704a2c9f06ab1a789bd204c3fbd",
+      "extracted_to": "references/agentmixer"
+    },
+    {
+      "archive": "AAAI_24_Backpropagation_Through_Agents.zip",
+      "sha256": "d937462c077f324f4e6ce0cd490c06913f617ea9c2005254a7f0cff206d39de2",
+      "extracted_to": "references/bpta"
+    }
+  ],
+  "canonical_sources": [
+    {
+      "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+      "sha256": "43338ce41cc32dddeec445e8f573a62296cdcfdf202ad3ec601c0e90e5d254cb"
+    },
+    {
+      "path": "references/agentmixer/aaai25.tex",
+      "sha256": "ea64cd02174240d4ad51f823e8d0a23c378c75990ba6ee6d5d60a63bf30456d8"
+    }
+  ],
+  "numeric_target_policy": "Only explicit numeric measured results populate published_value. Curves stay null until documented digitization or original data. Derived ceilings are separate.",
+  "configurations": {
+    "bpta_common": {
+      "values": {
+        "optimizer": "Adam",
+        "optimizer_epsilon": 1e-05,
+        "weight_decay": 0,
+        "max_grad_norm": 10,
+        "data_chunk_length": 1,
+        "activation": "ReLU",
+        "ppo_clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "parameter_sharing": false
+      },
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          471,
+          500
+        ],
+        "status": "active_tex"
+      }
+    },
+    "bpta_matrix": {
+      "inherits": "bpta_common",
+      "values": {
+        "actor_lr": 0.0005,
+        "critic_lr": 0.0005,
+        "entropy_coefficient": 0.01,
+        "hidden_layers": 1,
+        "hidden_size": 64,
+        "ppo_epochs": 15,
+        "minibatches": 1,
+        "environment_steps": 1000000,
+        "rollout_threads": 50,
+        "episode_length": 200
+      },
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          502,
+          536
+        ],
+        "status": "active_tex"
+      }
+    },
+    "bpta_smacv2": {
+      "inherits": "bpta_common",
+      "values": {
+        "actor_lr": 0.0005,
+        "critic_lr": 0.0005,
+        "entropy_coefficient": 0.01,
+        "hidden_layers": 1,
+        "hidden_size": 64,
+        "ppo_epochs": 5,
+        "minibatches": 1,
+        "environment_steps": 10000000,
+        "rollout_threads": 50,
+        "episode_length": 200
+      },
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          538,
+          572
+        ],
+        "status": "active_tex"
+      }
+    },
+    "bpta_mamujoco": {
+      "inherits": "bpta_common",
+      "values": {
+        "actor_lr": 0.0003,
+        "critic_lr": 0.0003,
+        "entropy_coefficient": 0,
+        "hidden_layers": 2,
+        "hidden_size": 64,
+        "ppo_epochs": 5,
+        "minibatches": 1,
+        "environment_steps": 10000000,
+        "rollout_threads": 40,
+        "episode_length": 100,
+        "agent_obsk": 0
+      },
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          574,
+          612
+        ],
+        "status": "active_tex"
+      }
+    },
+    "agentmixer_common": {
+      "values": {
+        "optimizer": "Adam",
+        "optimizer_epsilon": 1e-05,
+        "weight_decay": 0,
+        "max_grad_norm": 10,
+        "data_chunk_length": 1,
+        "activation": "ReLU",
+        "ppo_clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "parameter_sharing": false
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1105,
+          1198
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "agentmixer_matrix": {
+      "inherits": "agentmixer_common",
+      "values": {
+        "actor_lr": 0.0005,
+        "critic_lr": 0.0005,
+        "entropy_coefficient": 0.01,
+        "hidden_layers": 1,
+        "hidden_size": 64,
+        "ppo_epochs": 15,
+        "minibatches": 1,
+        "environment_steps": 200000,
+        "rollout_threads": 50,
+        "episode_length": 200
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1202,
+          1236
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "agentmixer_smacv2": {
+      "inherits": "agentmixer_common",
+      "values": {
+        "actor_lr": 0.0005,
+        "critic_lr": 0.0005,
+        "entropy_coefficient": 0.01,
+        "hidden_layers": 1,
+        "hidden_size": 64,
+        "ppo_epochs": 5,
+        "minibatches": 1,
+        "environment_steps": 10000000,
+        "rollout_threads": 50,
+        "episode_length": 200
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1238,
+          1272
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "agentmixer_mamujoco": {
+      "inherits": "agentmixer_common",
+      "values": {
+        "actor_lr": 0.0003,
+        "critic_lr": 0.0003,
+        "entropy_coefficient": 0,
+        "hidden_layers": 2,
+        "hidden_size": 64,
+        "ppo_epochs": 5,
+        "minibatches": 1,
+        "environment_steps": 10000000,
+        "rollout_threads": 40,
+        "episode_length": 100,
+        "agent_obsk": 0
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1274,
+          1312
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "bpta_mamujoco_ant": {
+      "inherits": "bpta_mamujoco",
+      "values": {
+        "agent_obsk": null
+      },
+      "notes": "None is an explicit setting, not missing information.",
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          613,
+          626
+        ],
+        "status": "active_tex"
+      }
+    },
+    "bpta_grf": {
+      "inherits": "bpta_common",
+      "values": {
+        "actor_lr": 0.0005,
+        "critic_lr": 0.0005,
+        "entropy_coefficient": 0.01,
+        "hidden_layers": 1,
+        "hidden_size": 64,
+        "ppo_epochs": 15,
+        "minibatches": 2,
+        "environment_steps": 20000000,
+        "rollout_threads": 50,
+        "episode_length": 200
+      },
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          628,
+          662
+        ],
+        "status": "active_tex"
+      }
+    },
+    "agentmixer_predator_prey": {
+      "values": {
+        "environment_steps": 1000000,
+        "single_capture_penalty_options": [
+          0,
+          -1
+        ],
+        "successful_capture_reward": 10,
+        "actor_lr": null,
+        "critic_lr": null,
+        "episode_length": null,
+        "rollout_threads": null
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1009,
+          1015
+        ],
+        "status": "commented_appendix"
+      },
+      "budget_source": "references/agentmixer/figs/Prey_main.pdf page 1 x-axis",
+      "notes": "Dynamics, agent counts and normalization incompletely specified."
+    },
+    "agentmixer_modifier": {
+      "values": {
+        "agent_mixing_hidden_size": 32,
+        "channel_mixing_hidden_size": 256,
+        "learning_rate": 5e-05,
+        "blocks": null
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1110,
+          1123
+        ],
+        "status": "commented_appendix"
+      },
+      "notes": "Block number 2 appears only in a doubly commented draft table; not confirmed."
+    }
+  },
+  "benchmarks": [
+    {
+      "id": "bpta:climbing",
+      "paper": "bpta",
+      "task": "climbing",
+      "suite": "matrix",
+      "paper_scope": "main",
+      "configuration": "bpta_matrix",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Matrix.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 2200,
+          "unit": "sum of 200 matrix decisions",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Qualitatively claims Pareto-optimal convergence. Ceiling is derived from payoff and horizon, not a measured result.",
+      "payoff_matrix": [
+        [
+          11,
+          -30,
+          0
+        ],
+        [
+          -30,
+          7,
+          0
+        ],
+        [
+          0,
+          6,
+          5
+        ]
+      ],
+      "payoff_source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          278,
+          293
+        ]
+      },
+      "per_step_payoff_ceiling": 11,
+      "saturation_policy": "Match optimal return and improve convergence speed or reliability; a larger return is impossible."
+    },
+    {
+      "id": "bpta:penalty",
+      "paper": "bpta",
+      "task": "penalty",
+      "suite": "matrix",
+      "paper_scope": "main",
+      "configuration": "bpta_matrix",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Matrix.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 2000,
+          "unit": "sum of 200 matrix decisions",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Qualitatively claims Pareto-optimal convergence. Ceiling is derived from payoff and horizon, not a measured result.",
+      "payoff_matrix": [
+        [
+          -100,
+          0,
+          10
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          10,
+          0,
+          -100
+        ]
+      ],
+      "payoff_source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          294,
+          309
+        ]
+      },
+      "per_step_payoff_ceiling": 10,
+      "saturation_policy": "Match optimal return and improve convergence speed or reliability; a larger return is impossible."
+    },
+    {
+      "id": "bpta:10gen_protoss_5v5",
+      "paper": "bpta",
+      "task": "10gen_protoss_5v5",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_protoss_10v10",
+      "paper": "bpta",
+      "task": "10gen_protoss_10v10",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_protoss_10v11",
+      "paper": "bpta",
+      "task": "10gen_protoss_10v11",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_zerg_5v5",
+      "paper": "bpta",
+      "task": "10gen_zerg_5v5",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_zerg_10v10",
+      "paper": "bpta",
+      "task": "10gen_zerg_10v10",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_zerg_10v11",
+      "paper": "bpta",
+      "task": "10gen_zerg_10v11",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_terran_5v5",
+      "paper": "bpta",
+      "task": "10gen_terran_5v5",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_terran_10v10",
+      "paper": "bpta",
+      "task": "10gen_terran_10v10",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:10gen_terran_10v11",
+      "paper": "bpta",
+      "task": "10gen_terran_10v11",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "bpta_smacv2",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC_incre.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/SMAC.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Both figure titles confirm this task. Prose line330 lists conflicting 20-unit tasks."
+    },
+    {
+      "id": "bpta:Ant-v2_2x4",
+      "paper": "bpta",
+      "task": "Ant-v2_2x4",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco_ant",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:Ant-v2_4x2",
+      "paper": "bpta",
+      "task": "Ant-v2_4x2",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco_ant",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:Ant-v2_8x1",
+      "paper": "bpta",
+      "task": "Ant-v2_8x1",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco_ant",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:HalfCheetah-v2_2x3",
+      "paper": "bpta",
+      "task": "HalfCheetah-v2_2x3",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:HalfCheetah-v2_3x2",
+      "paper": "bpta",
+      "task": "HalfCheetah-v2_3x2",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:HalfCheetah-v2_6x1",
+      "paper": "bpta",
+      "task": "HalfCheetah-v2_6x1",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:Walker2d-v2_2x3",
+      "paper": "bpta",
+      "task": "Walker2d-v2_2x3",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:Walker2d-v2_3x2",
+      "paper": "bpta",
+      "task": "Walker2d-v2_3x2",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:Walker2d-v2_6x1",
+      "paper": "bpta",
+      "task": "Walker2d-v2_6x1",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "bpta_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/MuJoCo.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Main plot does not specify train/test convention. Ant obsk=None; other tasks obsk=0."
+    },
+    {
+      "id": "bpta:academy_3_vs_1_with_keeper",
+      "paper": "bpta",
+      "task": "academy_3_vs_1_with_keeper",
+      "suite": "grf",
+      "paper_scope": "main",
+      "configuration": "bpta_grf",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football_train.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings."
+    },
+    {
+      "id": "bpta:academy_counterattack_hard",
+      "paper": "bpta",
+      "task": "academy_counterattack_hard",
+      "suite": "grf",
+      "paper_scope": "main",
+      "configuration": "bpta_grf",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football_train.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings."
+    },
+    {
+      "id": "bpta:academy_corner",
+      "paper": "bpta",
+      "task": "academy_corner",
+      "suite": "grf",
+      "paper_scope": "main",
+      "configuration": "bpta_grf",
+      "metrics": [
+        {
+          "name": "train_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football_train.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        },
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Scenario normalized from prose lines348-350; verify exact simulator identifier and reward settings."
+    },
+    {
+      "id": "bpta:5_vs_5",
+      "paper": "bpta",
+      "task": "5_vs_5",
+      "suite": "grf",
+      "paper_scope": "main",
+      "configuration": "bpta_grf",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": "mean",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/bpta/Football_5v5.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Exact engine identifier, difficulty and rewards unspecified. Return is not win rate; paper says all methods remain negative."
+    },
+    {
+      "id": "agentmixer:climbing",
+      "paper": "agentmixer",
+      "task": "climbing",
+      "suite": "matrix",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_matrix",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/Matrix.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "unresolved normalization",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Plot scale is around per-step payoff11 despite archived episode length200. Appendix commented in tex.",
+      "payoff_matrix": [
+        [
+          11,
+          -30,
+          0
+        ],
+        [
+          -30,
+          7,
+          0
+        ],
+        [
+          0,
+          6,
+          5
+        ]
+      ],
+      "payoff_source": {
+        "path": "references/agentmixer/figs/climbing_demo.pdf",
+        "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+        "status": "supplied_figure"
+      },
+      "per_step_payoff_ceiling": 11,
+      "saturation_policy": "Match optimal per-step payoff and improve efficiency or reliability after resolving normalization."
+    },
+    {
+      "id": "agentmixer:Ant-v2_2x4",
+      "paper": "agentmixer",
+      "task": "Ant-v2_2x4",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Ant-v2_4x2",
+      "paper": "agentmixer",
+      "task": "Ant-v2_4x2",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Ant-v2_8x1",
+      "paper": "agentmixer",
+      "task": "Ant-v2_8x1",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Ant-v2_2x4d",
+      "paper": "agentmixer",
+      "task": "Ant-v2_2x4d",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:HalfCheetah-v2_6x1",
+      "paper": "agentmixer",
+      "task": "HalfCheetah-v2_6x1",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Humanoid-v2_17x1",
+      "paper": "agentmixer",
+      "task": "Humanoid-v2_17x1",
+      "suite": "mamujoco",
+      "paper_scope": "main",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:HalfCheetah-v2_2x3",
+      "paper": "agentmixer",
+      "task": "HalfCheetah-v2_2x3",
+      "suite": "mamujoco",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:HalfCheetah-v2_3x2",
+      "paper": "agentmixer",
+      "task": "HalfCheetah-v2_3x2",
+      "suite": "mamujoco",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Walker2d-v2_2x3",
+      "paper": "agentmixer",
+      "task": "Walker2d-v2_2x3",
+      "suite": "mamujoco",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Walker2d-v2_3x2",
+      "paper": "agentmixer",
+      "task": "Walker2d-v2_3x2",
+      "suite": "mamujoco",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:Walker2d-v2_6x1",
+      "paper": "agentmixer",
+      "task": "Walker2d-v2_6x1",
+      "suite": "mamujoco",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:HumanoidStandup-v2_17x1",
+      "paper": "agentmixer",
+      "task": "HumanoidStandup-v2_17x1",
+      "suite": "mamujoco",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_mamujoco",
+      "metrics": [
+        {
+          "name": "episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/MuJoCo_app.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "environment episode return",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "obsk=0. Evaluate local actors without modifier. Figure does not specify cross-seed aggregation; do not infer median from SMAC table."
+    },
+    {
+      "id": "agentmixer:predator_prey_penalty_0",
+      "paper": "agentmixer",
+      "task": "predator_prey_penalty_0",
+      "suite": "predator_prey",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_predator_prey",
+      "metrics": [
+        {
+          "name": "test_episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/Prey_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "unresolved return normalization",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M."
+    },
+    {
+      "id": "agentmixer:predator_prey_penalty_-1",
+      "paper": "agentmixer",
+      "task": "predator_prey_penalty_-1",
+      "suite": "predator_prey",
+      "paper_scope": "appendix_commented",
+      "configuration": "agentmixer_predator_prey",
+      "metrics": [
+        {
+          "name": "test_episode_return",
+          "higher_is_better": true,
+          "published_value": null,
+          "published_standard_deviation": null,
+          "across_run_aggregation": null,
+          "uncertainty": null,
+          "source": {
+            "path": "references/agentmixer/figs/Prey_main.pdf",
+            "locator": "page 1; figure labels extracted with pypdf; curves not digitized",
+            "status": "supplied_figure"
+          },
+          "target_status": "plot_only_not_digitized",
+          "mathematical_upper_bound": null,
+          "unit": "unresolved return normalization",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M."
+    },
+    {
+      "id": "agentmixer:10gen_protoss_5v5",
+      "paper": "agentmixer",
+      "task": "10gen_protoss_5v5",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "agentmixer_smacv2",
+      "metrics": [
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": 0.68,
+          "published_standard_deviation": 0.04,
+          "across_run_aggregation": "median",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          },
+          "target_status": "explicit_numeric_table",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "published_baselines": {
+        "mappo": {
+          "value": 0.51,
+          "standard_deviation": 0.1,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "happo": {
+          "value": 0.38,
+          "standard_deviation": 0.08,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat": {
+          "value": 0.55,
+          "standard_deviation": 0.11,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat_dec": {
+          "value": 0.53,
+          "standard_deviation": 0.04,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "maven": {
+          "value": 0.49,
+          "standard_deviation": 0.11,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "ar_ppo": {
+          "value": 0.5,
+          "standard_deviation": 0.09,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              551,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        }
+      },
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Active table: median and SD at10M steps. Checkpoint/window and evaluation episode count unspecified."
+    },
+    {
+      "id": "agentmixer:10gen_terran_5v5",
+      "paper": "agentmixer",
+      "task": "10gen_terran_5v5",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "agentmixer_smacv2",
+      "metrics": [
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": 0.71,
+          "published_standard_deviation": 0.1,
+          "across_run_aggregation": "median",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          },
+          "target_status": "explicit_numeric_table",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "published_baselines": {
+        "mappo": {
+          "value": 0.48,
+          "standard_deviation": 0.11,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "happo": {
+          "value": 0.39,
+          "standard_deviation": 0.12,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat": {
+          "value": 0.63,
+          "standard_deviation": 0.11,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat_dec": {
+          "value": 0.45,
+          "standard_deviation": 0.06,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "maven": {
+          "value": 0.47,
+          "standard_deviation": 0.03,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "ar_ppo": {
+          "value": 0.41,
+          "standard_deviation": 0.04,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              552,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        }
+      },
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Active table: median and SD at10M steps. Checkpoint/window and evaluation episode count unspecified."
+    },
+    {
+      "id": "agentmixer:10gen_zerg_5v5",
+      "paper": "agentmixer",
+      "task": "10gen_zerg_5v5",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "agentmixer_smacv2",
+      "metrics": [
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": 0.66,
+          "published_standard_deviation": 0.03,
+          "across_run_aggregation": "median",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          },
+          "target_status": "explicit_numeric_table",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "published_baselines": {
+        "mappo": {
+          "value": 0.48,
+          "standard_deviation": 0.05,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "happo": {
+          "value": 0.39,
+          "standard_deviation": 0.05,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat": {
+          "value": 0.48,
+          "standard_deviation": 0.1,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat_dec": {
+          "value": 0.51,
+          "standard_deviation": 0.1,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "maven": {
+          "value": 0.46,
+          "standard_deviation": 0.08,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "ar_ppo": {
+          "value": 0.44,
+          "standard_deviation": 0.06,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              553,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        }
+      },
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Active table: median and SD at10M steps. Checkpoint/window and evaluation episode count unspecified."
+    },
+    {
+      "id": "agentmixer:10gen_protoss_10v10",
+      "paper": "agentmixer",
+      "task": "10gen_protoss_10v10",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "agentmixer_smacv2",
+      "metrics": [
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": 0.47,
+          "published_standard_deviation": 0.02,
+          "across_run_aggregation": "median",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          },
+          "target_status": "explicit_numeric_table",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "published_baselines": {
+        "mappo": {
+          "value": 0.4,
+          "standard_deviation": 0.08,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "happo": {
+          "value": 0.13,
+          "standard_deviation": 0.02,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat": {
+          "value": 0.32,
+          "standard_deviation": 0.09,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat_dec": {
+          "value": 0.52,
+          "standard_deviation": 0.02,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "maven": {
+          "value": 0.36,
+          "standard_deviation": 0.05,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "ar_ppo": {
+          "value": 0.36,
+          "standard_deviation": 0.04,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              554,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        }
+      },
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Active table: median and SD at10M steps. Checkpoint/window and evaluation episode count unspecified."
+    },
+    {
+      "id": "agentmixer:10gen_terran_10v10",
+      "paper": "agentmixer",
+      "task": "10gen_terran_10v10",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "agentmixer_smacv2",
+      "metrics": [
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": 0.5,
+          "published_standard_deviation": 0.11,
+          "across_run_aggregation": "median",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          },
+          "target_status": "explicit_numeric_table",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "published_baselines": {
+        "mappo": {
+          "value": 0.29,
+          "standard_deviation": 0.05,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "happo": {
+          "value": 0.12,
+          "standard_deviation": 0.09,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat": {
+          "value": 0.46,
+          "standard_deviation": 0.14,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat_dec": {
+          "value": 0.33,
+          "standard_deviation": 0.03,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "maven": {
+          "value": 0.26,
+          "standard_deviation": 0.02,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "ar_ppo": {
+          "value": 0.2,
+          "standard_deviation": 0.02,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              555,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        }
+      },
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Active table: median and SD at10M steps. Checkpoint/window and evaluation episode count unspecified."
+    },
+    {
+      "id": "agentmixer:10gen_zerg_10v10",
+      "paper": "agentmixer",
+      "task": "10gen_zerg_10v10",
+      "suite": "smacv2",
+      "paper_scope": "main",
+      "configuration": "agentmixer_smacv2",
+      "metrics": [
+        {
+          "name": "test_win_rate",
+          "higher_is_better": true,
+          "published_value": 0.52,
+          "published_standard_deviation": 0.06,
+          "across_run_aggregation": "median",
+          "uncertainty": "standard_deviation",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          },
+          "target_status": "explicit_numeric_table",
+          "mathematical_upper_bound": 1,
+          "unit": "fraction",
+          "achieved_value": null,
+          "reproduction_status": "not_run"
+        }
+      ],
+      "published_baselines": {
+        "mappo": {
+          "value": 0.38,
+          "standard_deviation": 0.12,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "happo": {
+          "value": 0.29,
+          "standard_deviation": 0.07,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat": {
+          "value": 0.52,
+          "standard_deviation": 0.09,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "mat_dec": {
+          "value": 0.36,
+          "standard_deviation": 0.05,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "maven": {
+          "value": 0.46,
+          "standard_deviation": 0.05,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        },
+        "ar_ppo": {
+          "value": 0.36,
+          "standard_deviation": 0.06,
+          "aggregation": "median",
+          "unit": "win-rate fraction",
+          "source": {
+            "path": "references/agentmixer/aaai25.tex",
+            "lines": [
+              556,
+              559
+            ],
+            "label": "tab:expsmac",
+            "status": "active_tex"
+          }
+        }
+      },
+      "original_seed_ids": null,
+      "simulator_package_versions": null,
+      "reproduction_status": "not_run",
+      "notes": "Active table: median and SD at10M steps. Checkpoint/window and evaluation episode count unspecified."
+    }
+  ],
+  "achieved_results": [],
+  "evaluation_protocol": {
+    "bpta": {
+      "training_seed_count": 5,
+      "original_seed_ids": null,
+      "across_seed_aggregation": "mean",
+      "uncertainty": "standard_deviation",
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          276,
+          276
+        ]
+      },
+      "evaluation_episode_count": null,
+      "checkpoint_selection": null
+    },
+    "agentmixer": {
+      "training_seed_count": 5,
+      "seed_count_status": "commented_appendix_only",
+      "original_seed_ids": null,
+      "smac_table_aggregation": "median",
+      "smac_table_uncertainty": "standard_deviation",
+      "other_figures_across_seed_aggregation": null,
+      "significance_test": "T-test",
+      "significance_per_run_summary": "average of last 5 evaluations",
+      "significance_threshold": 0.05,
+      "source": [
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            559,
+            559
+          ],
+          "status": "active_tex"
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            1061,
+            1069
+          ],
+          "status": "commented_appendix"
+        }
+      ],
+      "evaluation_episode_count": null
+    },
+    "reproduction_requirements": [
+      "Record config, code hash, training and evaluation seeds, simulator versions, steps and wall time.",
+      "Use independent final evaluation seeds after configuration selection.",
+      "Report both mean and median with seed-level data.",
+      "Keep train/test and modifier/local-actor metrics separate.",
+      "Toy or smoke experiments do not complete a full task.",
+      "Never compare against guessed curve endpoints."
+    ],
+    "performance_target": "Exceed paper results under comparable budgets with uncertainty; improve efficiency or reliability if optimal return is saturated."
+  },
+  "baselines": {
+    "mappo": {
+      "paper_name": "MAPPO",
+      "role": "Independent actors; centralized value",
+      "configuration_rule": "Use paper_common plus paper_domain configuration; no modifier",
+      "parameter_sharing": false,
+      "source": [
+        {
+          "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+          "lines": [
+            471,
+            472
+          ]
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            905,
+            905
+          ],
+          "status": "commented_appendix"
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            1105,
+            1105
+          ],
+          "status": "commented_appendix"
+        }
+      ]
+    },
+    "ar_ppo": {
+      "paper_name": "ARMAPPO",
+      "repository_alias": "ar_ppo",
+      "role": "Forward auto-regressive action conditioning; no BPTA peer-gradient term",
+      "configuration_rule": "Same per-paper domain settings as MAPPO; no modifier",
+      "parameter_sharing": false,
+      "execution_order": {
+        "bpta": "fixed sequential",
+        "agentmixer": null
+      },
+      "predecessor_action_projection_dimension": null,
+      "source": [
+        {
+          "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+          "lines": [
+            276,
+            276
+          ]
+        },
+        {
+          "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+          "lines": [
+            326,
+            326
+          ]
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            913,
+            913
+          ],
+          "status": "commented_appendix"
+        }
+      ],
+      "notes": "Projected ARMAPPO is a separate BPTA matrix ablation. AgentMixer local-observation statement does not fully specify treatment of predecessor-action communication."
+    },
+    "happo": {
+      "paper_name": "HAPPO",
+      "role": "Sequential policy updates",
+      "configuration_rule": "Same per-paper domain settings"
+    },
+    "mat": {
+      "paper_name": "MAT",
+      "role": "Centralized execution reference; richer evaluation information than AgentMixer",
+      "values": {
+        "blocks": 1,
+        "attention_heads": 1
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1125,
+          1137
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "mat_dec": {
+      "paper_name": "MAT-Dec",
+      "role": "Other agents observations at execution; richer information than AgentMixer",
+      "values": {
+        "blocks": 1,
+        "attention_heads": 1
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          909,
+          909
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "maven": {
+      "paper_name": "MAVEN",
+      "values": {
+        "noise_dimension": 2,
+        "epsilon_start": 1.0,
+        "epsilon_end": 1.0,
+        "target_update_interval": 200
+      },
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1139,
+          1153
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    "ail": {
+      "paper_name": "AIL",
+      "role": "Full-state PPO teacher; partial-observation student; AgentMixer ablation",
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          606,
+          606
+        ]
+      }
+    },
+    "gcs": {
+      "paper_name": "GCS",
+      "role": "BPTA additional HalfCheetah-v2 6x1 baseline",
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          665,
+          671
+        ]
+      }
+    }
+  },
+  "method_contracts": {
+    "bppo": {
+      "core": "Auto-regressive action dependencies plus successor-to-predecessor peer gradients through reparameterized actions; reverse sequential PPO updates.",
+      "execution_order": "1..N fixed for main results",
+      "update_order": "N..1",
+      "critic": "Global value; GAE",
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          195,
+          264
+        ]
+      },
+      "unresolved": [
+        "bppo_eq6"
+      ]
+    },
+    "agentmixer": {
+      "core": "Policy modifier from state and local policy features; preserve modes under Individual-Global-Consistency; local actors at execution.",
+      "modifier": "Residual agent-mixing and channel-mixing MLPs with LayerNorm",
+      "continuous_mode": "Concatenated local means; modifier-generated Gaussian scale",
+      "discrete_mode": "Eq12 Gumbel mechanism unresolved",
+      "optimizer_family": "PPO",
+      "source": [
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            308,
+            317
+          ]
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            378,
+            435
+          ]
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            493,
+            497
+          ]
+        }
+      ],
+      "unresolved": [
+        "agentmixer_eq12"
+      ]
+    }
+  },
+  "unresolved_source_issues": [
+    {
+      "id": "bppo_eq6",
+      "status": "unresolved",
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          225,
+          237
+        ],
+        "label": "eq:bppo (Eq6)"
+      },
+      "issue": "Printed own-learning r_i*M lacks explicit advantage; peer term includes advantage. Detach boundaries and old-policy denominator action derivatives need explicit decisions.",
+      "required_resolution": "Document corrected objective and estimator; check analytically and with gradient tests."
+    },
+    {
+      "id": "agentmixer_eq12",
+      "status": "unresolved",
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          417,
+          435
+        ],
+        "label": "eq:cate_joint (Eq12)"
+      },
+      "issue": "Probability/logit notation inconsistent. Arbitrary learned additive epsilon can alter argmax; temperature to zero does not remove epsilon. Sigmoid outputs are not inherently uniform random samples.",
+      "required_resolution": "Specify distribution, likelihood and randomness; prove/test mode consistency; label repairs."
+    },
+    {
+      "id": "bpta_smac_task_disagreement",
+      "status": "unresolved",
+      "source": [
+        {
+          "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+          "lines": [
+            330,
+            330
+          ]
+        },
+        {
+          "path": "references/bpta/SMAC_incre.pdf",
+          "locator": "page1 titles"
+        },
+        {
+          "path": "references/bpta/SMAC.pdf",
+          "locator": "page1 titles"
+        }
+      ],
+      "issue": "Prose20v20/10v11/20v23 conflicts with plotted5v5/10v10/10v11.",
+      "unverified_prose_tasks": [
+        "10gen_protoss_20v20",
+        "10gen_protoss_20v23",
+        "10gen_terran_20v20",
+        "10gen_terran_20v23",
+        "10gen_zerg_20v20",
+        "10gen_zerg_20v23"
+      ],
+      "published_values": null,
+      "required_resolution": "Keep nine figure-backed tasks confirmed and six prose-only tasks unresolved until original configs/logs clarify."
+    },
+    {
+      "id": "agentmixer_commented_appendix",
+      "status": "provenance_warning",
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          618,
+          1316
+        ],
+        "status": "commented_appendix"
+      },
+      "issue": "Archived appendix, hyperparameters and additional results are not compiled from supplied source unchanged."
+    },
+    {
+      "id": "matrix_return_normalization",
+      "status": "unresolved",
+      "source": [
+        {
+          "path": "references/bpta/Matrix.pdf",
+          "locator": "page1 axes"
+        },
+        {
+          "path": "references/agentmixer/figs/Matrix.pdf",
+          "locator": "page1 axes"
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            1229,
+            1231
+          ],
+          "status": "commented_appendix"
+        }
+      ],
+      "issue": "BPTA scale agrees with200-step sum; AgentMixer around11 despite length200 table. Do not compare directly."
+    },
+    {
+      "id": "seed_and_eval_protocol",
+      "status": "unresolved",
+      "source": [
+        {
+          "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+          "lines": [
+            276,
+            276
+          ]
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            559,
+            559
+          ]
+        },
+        {
+          "path": "references/agentmixer/aaai25.tex",
+          "lines": [
+            1063,
+            1063
+          ],
+          "status": "commented_appendix"
+        }
+      ],
+      "issue": "Original seed IDs, evaluation episode counts, deterministic/stochastic rule and simulator package versions unspecified. Last5 evaluations rule belongs to AgentMixer significance tests, not explicitly SMAC table."
+    }
+  ],
+  "ablations_and_secondary_results": [
+    {
+      "paper": "bpta",
+      "name": "simultaneous_vs_reverse_sequential_update",
+      "tasks": [
+        "HalfCheetah-v2_6x1",
+        "Walker2d-v2_6x1"
+      ],
+      "source": {
+        "path": "references/bpta/MuJoCo_ablation.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          692,
+          699
+        ],
+        "status": "active_tex"
+      }
+    },
+    {
+      "paper": "bpta",
+      "name": "sequential_reverse_random_execution_order",
+      "tasks": [
+        "HalfCheetah-v2_6x1"
+      ],
+      "source": {
+        "path": "references/bpta/MuJoCo_aaai_feedback2.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          702,
+          708
+        ],
+        "status": "active_tex"
+      }
+    },
+    {
+      "paper": "bpta",
+      "name": "ar_ppo_action_projection",
+      "tasks": [
+        "climbing",
+        "penalty"
+      ],
+      "source": {
+        "path": "references/bpta/Matrix_proj.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          711,
+          717
+        ],
+        "status": "active_tex"
+      },
+      "projection_dimension": null
+    },
+    {
+      "paper": "bpta",
+      "name": "gcs_comparison",
+      "tasks": [
+        "HalfCheetah-v2_6x1"
+      ],
+      "source": {
+        "path": "references/bpta/MuJoCo_aaai_feedback1.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          665,
+          671
+        ],
+        "status": "active_tex"
+      }
+    },
+    {
+      "paper": "agentmixer",
+      "name": "ail_train_vs_test",
+      "tasks": [
+        "Ant-v2_2x4",
+        "Ant-v2_4x2",
+        "Ant-v2_8x1",
+        "Ant-v2_2x4d"
+      ],
+      "source": {
+        "path": "references/agentmixer/figs/MuJoCo_abl.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          604,
+          606
+        ],
+        "status": "active_tex"
+      }
+    },
+    {
+      "paper": "agentmixer",
+      "name": "ail_additional_mamujoco",
+      "tasks": [
+        "HalfCheetah-v2_6x1",
+        "Humanoid-v2_17x1",
+        "HalfCheetah-v2_2x3",
+        "HalfCheetah-v2_3x2",
+        "Walker2d-v2_2x3",
+        "Walker2d-v2_3x2",
+        "Walker2d-v2_6x1",
+        "HumanoidStandup-v2_17x1"
+      ],
+      "source": {
+        "path": "references/agentmixer/figs/MuJoCo_abl_app.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          937,
+          958
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    {
+      "paper": "agentmixer",
+      "name": "mappo_full_information",
+      "tasks": [
+        "HalfCheetah-v2_2x3",
+        "HalfCheetah-v2_3x2",
+        "HalfCheetah-v2_6x1"
+      ],
+      "source": {
+        "path": "references/agentmixer/figs/MuJoCo_abl_app1.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          952,
+          958
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    {
+      "paper": "agentmixer",
+      "name": "smac_full_information",
+      "tasks": null,
+      "source": {
+        "path": "references/agentmixer/figs/SMAC_aaai25_.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          969,
+          975
+        ],
+        "status": "commented_appendix"
+      }
+    },
+    {
+      "paper": "agentmixer",
+      "name": "ppo_vs_sac",
+      "tasks": null,
+      "source": {
+        "path": "references/agentmixer/figs/MuJoCo_sac.pdf",
+        "locator": "page1"
+      },
+      "published_values": null,
+      "reproduction_status": "not_run",
+      "tex_source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1019,
+          1026
+        ],
+        "status": "commented_appendix"
+      },
+      "notes": "Figure has no extractable text; task labels need image inspection."
+    },
+    {
+      "paper": "agentmixer",
+      "name": "modifier_architecture",
+      "tasks": [
+        "protoss_5v5",
+        "terran_5v5",
+        "zerg_5v5"
+      ],
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1031,
+          1042
+        ],
+        "status": "commented_appendix"
+      },
+      "published_values": {
+        "mlp": [
+          [
+            0.68,
+            0.04
+          ],
+          [
+            0.71,
+            0.1
+          ],
+          [
+            0.66,
+            0.03
+          ]
+        ],
+        "hypernetwork": [
+          [
+            0.6,
+            0.13
+          ],
+          [
+            0.53,
+            0.13
+          ],
+          [
+            0.52,
+            0.08
+          ]
+        ],
+        "attention": [
+          [
+            0.59,
+            0.14
+          ],
+          [
+            0.6,
+            0.02
+          ],
+          [
+            0.49,
+            0.1
+          ]
+        ]
+      },
+      "value_format": "score, standard deviation; estimator not restated",
+      "reproduction_status": "not_run"
+    },
+    {
+      "paper": "agentmixer",
+      "name": "runtime",
+      "tasks": [
+        "zerg_5v5",
+        "zerg_10v10"
+      ],
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1044,
+          1059
+        ],
+        "status": "commented_appendix"
+      },
+      "environment_steps": 10000000,
+      "unit": "seconds",
+      "published_values": {
+        "mappo": [
+          [
+            19778.6,
+            2927.1
+          ],
+          [
+            24070,
+            2130.9
+          ]
+        ],
+        "happo": [
+          [
+            16736,
+            1270.0
+          ],
+          [
+            25217.2,
+            224.9
+          ]
+        ],
+        "mat": [
+          [
+            19333.2,
+            650.9
+          ],
+          [
+            35758.8,
+            2842.8
+          ]
+        ],
+        "maven": [
+          [
+            20883.4,
+            1832.7
+          ],
+          [
+            27751.6,
+            966.5
+          ]
+        ],
+        "agentmixer": [
+          [
+            33234.6,
+            4206.8
+          ],
+          [
+            60737.4,
+            1248.62
+          ]
+        ]
+      },
+      "value_format": "seconds, standard deviation",
+      "notes": "Cluster uses Dell PowerEdge C4140; exact run allocation unspecified. Match hardware for comparison.",
+      "reproduction_status": "not_run"
+    }
+  ]
+}

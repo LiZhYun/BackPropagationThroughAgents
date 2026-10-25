@@ -1,0 +1,6 @@
+{
+  "entropy_coef": 0.1,
+  "entropy_final": 0.01,
+  "entropy_decay_start": 0.5,
+  "action_embed_dim": 64
+}

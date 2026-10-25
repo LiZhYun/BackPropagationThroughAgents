@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bta-repro"
+version = "0.1.0"
+description = "Readable BPTA and AgentMixer reproduction"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23.5,<3", "torch>=2.6,<2.7"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+bta-train = "bta_repro.train:main"
+bta-train-simulator = "bta_repro.simulator_train:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

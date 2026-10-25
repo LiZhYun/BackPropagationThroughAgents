@@ -1,0 +1,8 @@
+{
+  "agentmixer_correlation": "joint",
+  "modifier_learning_rate": 0.0005,
+  "modifier_log_scale_bound": 2.302585092994046,
+  "entropy_coef": 0.1,
+  "entropy_final": 0.01,
+  "entropy_decay_start": 0.5
+}
