@@ -70,7 +70,8 @@ Evaluation is deterministic: categorical actors use greedy actions and Gaussian 
 Prey can additionally report fixed-window mean reward with
 `eval_window_steps=200, eval_windows=100`. This includes unfinished episodes
 and resets completed ones within each window, matching the released logger's
-reduction. It appears separately under `fixed_window`; the normal episode
+reduction. This is the author-selected primary Prey comparison protocol
+(2026-10-26). It appears separately under `fixed_window`; the normal episode
 statistics retain their meaning. All additional evaluation steps are counted.
 
 An evaluation stream reused during development is not automatically a held-out final benchmark. Select configurations using development runs, then evaluate the frozen selection on separately reserved seeds. Episode standard deviations within one run are not uncertainty across independently trained seeds.

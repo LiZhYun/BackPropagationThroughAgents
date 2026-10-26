@@ -16,9 +16,26 @@ source .venv/bin/activate
 python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -e '.[dev]'
 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q
-python -m bta_repro.train --algorithm bppo --game climbing --steps 100000 --seed 0
-python -m bta_repro.train --algorithm agentmixer --game climbing --steps 100000 --seed 0
+python -m bta_repro.train --config configs/matrix_projected_entropy01.json \
+  --algorithm bppo --game climbing --steps 100000 --seed 0
 ```
+
+The BPPO example uses the projected predecessor-action inputs and entropy
+schedule that solved both matrix games in all three development seeds. Replace
+`bppo` with `arppo` for the matched baseline; that baseline also succeeds.
+This example demonstrates learning, not a peer-feedback advantage.
+
+For the experimental correlated AgentMixer variant:
+
+```bash
+python -m bta_repro.train --config configs/matrix_joint_lr_fast.json \
+  --algorithm agentmixer --game climbing --steps 200000 --seed 0
+```
+
+This setting solves Climbing in the three development seeds but fails Penalty.
+The factorized reference remains the default when no joint configuration is
+provided. See the [configuration guide](configs/README.md) for experiment-plan
+formats, tested settings and their limitations.
 
 Algorithms: `mappo`, `arppo`, `bppo`, `agentmixer`. Games: `climbing`, `penalty`. Every run creates a fresh result directory with configuration, source hashes, raw metrics, an exact matrix-game evaluation, and a checkpoint containing optimizer and random-number-generator states. `--output` must name a directory that does not already exist.
 

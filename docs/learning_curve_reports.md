@@ -17,8 +17,9 @@ eligibility errors, source/metric hashes and the evaluation denominator.
 
 Available metrics are `return_mean`, `win_rate`, `capture_rate` and
 `fixed_window_reward_per_step`. The last is the separately recorded Prey
-fixed-window evaluation, including unfinished segments. It is not automatically
-identified with the historical paper plot. Success rates require a success
+fixed-window evaluation, including unfinished segments. The author selected this released
+reduction for the primary Prey reproduction comparison on 2026-10-26; the exact
+historical figure-to-logger mapping remains unverified. Success rates require a success
 record for every evaluated episode.
 
 ## Area and aggregation
