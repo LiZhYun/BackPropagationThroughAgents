@@ -1,0 +1,1216 @@
+{
+  "recorded_utc": "2026-10-26T21:02:25.361320+00:00",
+  "scope": "Complete native Football released-rollout integration audit. All ten declarations retained. Correctness only; learning release additionally requires measured runtime/memory allocation.",
+  "manifest": "results/football_3v1_batch_integration10k_20261026T183030Z/manifest.json",
+  "manifest_sha256": "6ec50ff2015115c0824fee76cab39a06e24ba4ef9f769bd100f52dd7f457b2ba",
+  "audit_script": "results/football_complete_integration_audit_20261026/audit.py",
+  "audit_script_sha256": "68dfbd3233272be095cf8674b5cd56430af6a8de33ebf3eeb666bdfd449eaa5b",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "frozen_source_bytes_verified": true,
+  "metric": "return_mean",
+  "raw_evaluation_episodes_verified": 80,
+  "raw_evaluation_windows_verified": 0,
+  "rollout_updates_verified": 10,
+  "runs": [
+    {
+      "algorithm": "mappo",
+      "variant": "mappo_ff",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/mappo_ff_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 76.15211795107462,
+      "evaluation_environment_steps": 990,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 25.54759209405165
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 74.67567364801653
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 76.1515746070072
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": false,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "b6e7389e7c99356fb179337ddadb665770d7cb80bfa80a1d8606edb9f9777fab",
+        "metrics.jsonl": "7244e06bba8de71b0863a6b7921eec3c98eb92cc6e29acbb44d8ddc351bc748b",
+        "summary.json": "907841b1085fbfddd6f2c85e4fb9d7202dddf618723285f7b6a30d4846f69f44",
+        "checkpoint.pt": "70ad34271a747389a683e05b5bb1cc31ef9b9df9aa9160038054c817e7757fce"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.04999995231628418,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 1.2000000774860382,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": 0.575000062584877
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "mappo_gru",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/mappo_gru_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 74.48706911900081,
+      "evaluation_environment_steps": 1546,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 23.35503382398747
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 70.61550500208978
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 74.48664918809664
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": true,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "62b82b150cf6c0f0a7d95c1614a01dff8faf22b6db5c88d8ee7bf54da80979ea",
+        "metrics.jsonl": "5082729548e975cd378d19b5bd7ac538567f6c80ae26435047e1ea186a3663df",
+        "summary.json": "b3faf54dc62aed0e0762aa35bc35831c86609311c009ff72ee7fd6b8e4be0e7e",
+        "checkpoint.pt": "b161ea249ccec18af544d7ee8f0584f0d23e619f284d8de3c0b82929774133b5"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -2.299999952316284,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 1.4000000953674316,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": -0.44999992847442627
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_ff",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/arppo_ff_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 74.53231097501703,
+      "evaluation_environment_steps": 847,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 24.24272308999207
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 73.79148192494176
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 74.53183096996509
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": false,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "8943153a53f46ea6a18f786b3f3ffb9ce0dba474fb626bfc371b0eff175ca2e5",
+        "metrics.jsonl": "9ce916ee8e40d3da2f1590657426288318ba1e0da2c9f248250917731daefdda",
+        "summary.json": "95dd7c24d9fd6f34bc5e74518bbf8450278591f2da05286c9e573cb449f5afe5",
+        "checkpoint.pt": "3c520f2289d65ce39c63822330898431f1a79d14e426b23ba2acb58e30107477"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -2.299999952316284,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 0.8500000536441803,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": -0.7249999493360519
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_gru",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/arppo_gru_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 77.85045051795896,
+      "evaluation_environment_steps": 1489,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 25.968017609906383
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 75.28846277389675
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 77.84997206693515
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": true,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "990d9d794c57dcb433ace607ef1bc7ad623af0efa49c10f2198cecddc5c6278e",
+        "metrics.jsonl": "ca7005b184211756c061a264ee27118d69f576c131fbc9777f86c464d607c98a",
+        "summary.json": "cad9ba7a143c4c97b808867a41c404a074d5a00217ac1484310f7b59d07cf0e5",
+        "checkpoint.pt": "b3dee8f7dadee2f185ffb2d75050e3128240e5aac0e974c954f17acd167c2160"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.4999999478459358,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 0.7000000476837158,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": 0.10000004991889
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_ff",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/bppo_ff_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 75.15436489298008,
+      "evaluation_environment_steps": 806,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 24.430368035915308
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 74.58741780696437
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 75.15370608097874
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": false,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "805dd9547242aed9b011770dbdd5fe1a022c99ddd3f5b4bd22eea9e9a0695731",
+        "metrics.jsonl": "596b1521c5b6276160d134d08ff28ccfb346508cbcce6303e861881b7f3b032e",
+        "summary.json": "088ca0690f4ec582ae604a9d2376e8893089e2eea2256fa3c1ce45d8ebb6c02f",
+        "checkpoint.pt": "ccb2ddab3c4ac2129c81946a7ba5c82023568dbe912ef41502b5546749643a29"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -2.299999952316284,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 0.825000049546361,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": -0.7374999513849616
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_gru",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/bppo_gru_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 78.77110736898612,
+      "evaluation_environment_steps": 1391,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 25.657106118975207
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 76.74295004503801
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 78.77068701805547
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": true,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "6a16730ade6f7edf8b67394904df00a1fa9c479089302620b37f81470e4771a7",
+        "metrics.jsonl": "c9157d05c24c89b3b8b4f8495fb4b1757dca9e6ba013a17f49213194821f627f",
+        "summary.json": "43344b988d43aed3bc5bf64eca3fd07138eaaa64c84d2de5fa4d71f9709d807b",
+        "checkpoint.pt": "a893da807a95eb7647dcb8ebc6e42fb584c33d2918264744576337cdf83b0437"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.4999999478459358,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 0.7000000476837158,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": 0.10000004991889
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_ff",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/agentmixer_ff_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 89.49299286608584,
+      "evaluation_environment_steps": 523,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 22.36744812305551
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 88.39637438906357
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 89.49212335806806
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": false,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "a521b45320fe1f6665b8595439fe4f0745d2a6f64f337a62cb8c3f9bd87a5411",
+        "metrics.jsonl": "d6d0a285263b9a39cf21d822106078c6ab6f41d28a92eeccb0828aa514e4572f",
+        "summary.json": "0d6650feb77139dec6b4f68aac6b1f1e7458d3647a56af1a92e817cf4725f986",
+        "checkpoint.pt": "60395735c509a328724f093a6c5f90b05bd4c0f904522f54be8d9fd2e39f8d20"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 0.9250000659376383,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 0.8250000476837158,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": 0.875000056810677
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_gru",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/agentmixer_gru_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 85.87733466003556,
+      "evaluation_environment_steps": 821,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 23.45780488208402
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 85.24622499803081
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 85.87694208102766
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": true,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "4825a1969e0dfa526d974e0c4b512491df155c9c1a4570a5805383ce8f45f2a3",
+        "metrics.jsonl": "3e20f25f2fcf2e9a2c263b65760400f6cf015986dae5b3c3862b9ab5db434f44",
+        "summary.json": "4054323c18a950660d414078cd0ddae0a11556fc88a67f43d97ac8ebd7df9e67",
+        "checkpoint.pt": "30a0c9d9d86ba5b9e07fc3f2bfc98265aa3bb0110177683f581ebe255fb5f1a6"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -2.299999952316284,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 2.150000050663948,
+          "episodes": 4,
+          "wins": 1,
+          "win_rate": 0.25
+        }
+      ],
+      "normalized_auc": -0.07499995082616806
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity_ff",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/agentmixer_identity_ff_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 84.87923048599623,
+      "evaluation_environment_steps": 595,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 22.548253425047733
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 83.43562872800976
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 84.87866605306044
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": false,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "486a7f7c909bf9fdd3c2b6ec6e21d61bbe4500cd5e7cbb05d45216ba91ccd333",
+        "metrics.jsonl": "7b8a1db86061158e6ed56c68e6ac060ad13f8f6d0e6c27a386968ec8f0a8830b",
+        "summary.json": "1e7ef3de4d5e1e6418216159a3ca0994d20a4c834415a7ccc8d5d6ee6850c2a6",
+        "checkpoint.pt": "91f71d34ec1daf0ab8bbd119d42c7b584e23e2dcbeff6f93d90c40c0227b9644"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 0.9250000659376383,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 0.9750000555068254,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        }
+      ],
+      "normalized_auc": 0.9500000607222319
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity_gru",
+      "seed": 0,
+      "output_path": "results/football_3v1_batch_integration10k_20261026T183030Z/agentmixer_identity_gru_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "elapsed_seconds": 82.91935542202555,
+      "evaluation_environment_steps": 822,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 23.553939971025102
+        },
+        {
+          "event": "update",
+          "elapsed_seconds": 82.29263716202695
+        },
+        {
+          "event": "evaluation",
+          "elapsed_seconds": 82.91887853399385
+        }
+      ],
+      "config": {
+        "environment": "football",
+        "env_config": {
+          "scenario": "academy_3_vs_1_with_keeper"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000,
+        "num_envs": 50,
+        "rollout_steps": 200,
+        "hidden_dim": 64,
+        "recurrent_actor": true,
+        "initial_std": 1.0,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0005,
+        "modifier_learning_rate": 5e-05,
+        "critic_learning_rate": 0.0005,
+        "epochs": 15,
+        "num_minibatches": 2,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 1.0,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": false,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 4,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "328783a01eb921767f7ee4b2e24acf17c7f2c48f482e1d33fef7ba32164ac049",
+        "metrics.jsonl": "9971040711f74735514f2937886008f846624c54d4cb6a2a7c63c8952e6cb5df",
+        "summary.json": "6a2fec3c15b4e40f69e607fe239179eb89852e67b837a334960ccb928b52f8a6",
+        "checkpoint.pt": "e0dc3bc22f52d793ad889f951da07c381734d130f1941eeb069f6b532ff52e21"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -2.299999952316284,
+          "episodes": 4,
+          "wins": 0,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 10000,
+          "return_mean": 3.400000050663948,
+          "episodes": 4,
+          "wins": 2,
+          "win_rate": 0.5
+        }
+      ],
+      "normalized_auc": 0.5500000491738319
+    }
+  ],
+  "completed_runs": 10,
+  "declared_runs": 10,
+  "integrity_errors": [],
+  "limitations": [
+    "Raw episode/window reductions are checked; native transition rewards are not independently replayed in this audit.",
+    "All ten native integrations are retained; short checks cannot establish learning performance.",
+    "No early peak replaces a final endpoint; budgets and protocols must match before comparisons."
+  ],
+  "resource_accounting": "results/football_batch1m_dispatch_20261026T210630Z/native_gate_sacct.txt",
+  "resource_accounting_sha256": "dee1aabd58b7ce6d13583256701290c91913961af2fbd52b9b40bab1d4443498",
+  "workers": [
+    {
+      "job": "21219475_0.batch",
+      "elapsed_seconds": 414,
+      "total_cpu": "06:47.215",
+      "peak_kib": 3652120
+    },
+    {
+      "job": "21219475_1.batch",
+      "elapsed_seconds": 411,
+      "total_cpu": "06:45.413",
+      "peak_kib": 3650428
+    }
+  ]
+}

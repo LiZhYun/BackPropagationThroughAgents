@@ -1,0 +1,803 @@
+{
+  "recorded_utc": "2026-10-26T21:07:27.091538+00:00",
+  "release_plan": "experiments/football_batch1m_release_plan_20261026.json",
+  "release_plan_sha256": "09646fe66f7254a894a2373aa64180c5512ed5588250e4b8c81bc0586c597950",
+  "predecessors": {
+    "21214776_0": {
+      "JobId": "21214777",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21220995_2(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    },
+    "21214776_1": {
+      "JobId": "21214776",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "1",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21220995_3(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214777 ArrayJobId=21214776 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21220995_2(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214776 ArrayJobId=21214776 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21220995_3(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "sbatch",
+        "--hold",
+        "--parsable",
+        "--dependency=afterany:21214776",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+      ],
+      "returncode": 0,
+      "stdout": "21221161",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_0",
+        "Dependency=afterany:21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_1",
+        "Dependency=afterany:21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_2",
+        "Dependency=afterany:21221161_0"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_3",
+        "Dependency=afterany:21221161_1"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_4",
+        "Dependency=afterany:21221161_2"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_5",
+        "Dependency=afterany:21221161_3"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_6",
+        "Dependency=afterany:21221161_4"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_7",
+        "Dependency=afterany:21221161_5"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_8",
+        "Dependency=afterany:21221161_6"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21221161_9",
+        "Dependency=afterany:21221161_7"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221162 ArrayJobId=21221161 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21214776_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_0.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221163 ArrayJobId=21221161 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21214776_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_1.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_2"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221164 ArrayJobId=21221161 ArrayTaskId=2 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_2.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_2.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_3"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221165 ArrayJobId=21221161 ArrayTaskId=3 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_3.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_3.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_4"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221166 ArrayJobId=21221161 ArrayTaskId=4 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_2(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_4.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_4.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_5"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221167 ArrayJobId=21221161 ArrayTaskId=5 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_3(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_5.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_5.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_6"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221168 ArrayJobId=21221161 ArrayTaskId=6 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_4(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_6.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_6.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_7"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221169 ArrayJobId=21221161 ArrayTaskId=7 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_5(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_7.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_7.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_8"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221170 ArrayJobId=21221161 ArrayTaskId=8 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_6(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_8.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_8.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_9"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221161 ArrayJobId=21221161 ArrayTaskId=9 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21221161_7(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_9.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_9.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "release",
+        "21221161"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221162 ArrayJobId=21221161 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21214776_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_0.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221163 ArrayJobId=21221161 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21214776_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_1.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_2"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221164 ArrayJobId=21221161 ArrayTaskId=2 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_2.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_2.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_3"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221165 ArrayJobId=21221161 ArrayTaskId=3 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_3.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_3.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_4"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221166 ArrayJobId=21221161 ArrayTaskId=4 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_2(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_4.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_4.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_5"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221167 ArrayJobId=21221161 ArrayTaskId=5 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_3(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_5.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_5.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_6"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221168 ArrayJobId=21221161 ArrayTaskId=6 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_4(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_6.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_6.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_7"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221169 ArrayJobId=21221161 ArrayTaskId=7 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_5(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_7.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_7.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_8"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221170 ArrayJobId=21221161 ArrayTaskId=8 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_6(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_8.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_8.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21221161_9"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21221161 ArrayJobId=21221161 ArrayTaskId=9 ArrayTaskThrottle=2 JobName=bpta-agentmixer-football-batch UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21221161_7(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A SubmitTime=2026-10-26T23:07:27 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T23:07:27 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2429965 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21214776 /scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_9.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/slurm_21221161_9.out TresPerTask=cpu=1",
+      "stderr": ""
+    }
+  ],
+  "job_id": "21221161",
+  "verified_held": {
+    "21221161_0": {
+      "JobId": "21221162",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21214776_0(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_1": {
+      "JobId": "21221163",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "1",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21214776_1(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_2": {
+      "JobId": "21221164",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "2",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_0(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_3": {
+      "JobId": "21221165",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "3",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_1(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_4": {
+      "JobId": "21221166",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "4",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_2(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_5": {
+      "JobId": "21221167",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "5",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_3(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_6": {
+      "JobId": "21221168",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "6",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_4(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_7": {
+      "JobId": "21221169",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "7",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_5(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_8": {
+      "JobId": "21221170",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "8",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_6(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_9": {
+      "JobId": "21221161",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "9",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221161_7(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    }
+  },
+  "chains": {
+    "A0": [
+      "21214776_0",
+      "21221161_0",
+      "21221161_2",
+      "21221161_4",
+      "21221161_6",
+      "21221161_8"
+    ],
+    "A1": [
+      "21214776_1",
+      "21221161_1",
+      "21221161_3",
+      "21221161_5",
+      "21221161_7",
+      "21221161_9"
+    ]
+  },
+  "resource_proof": "New tasks append to existing A0/A1 chains;B0/B1 unchanged. Array cap2;maximum four concurrent project workers. Existing jobs/source/configuration/seeds unchanged.",
+  "after_release": {
+    "21221161_0": {
+      "JobId": "21221162",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21214776_0(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_1": {
+      "JobId": "21221163",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "1",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21214776_1(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_2": {
+      "JobId": "21221164",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "2",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_0(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_3": {
+      "JobId": "21221165",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "3",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_1(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_4": {
+      "JobId": "21221166",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "4",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_2(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_5": {
+      "JobId": "21221167",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "5",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_3(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_6": {
+      "JobId": "21221168",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "6",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_4(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_7": {
+      "JobId": "21221169",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "7",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_5(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_8": {
+      "JobId": "21221170",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "8",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_6(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    },
+    "21221161_9": {
+      "JobId": "21221161",
+      "ArrayJobId": "21221161",
+      "ArrayTaskId": "9",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-football-batch",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21221161_7(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "1",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "04:00:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch"
+    }
+  }
+}

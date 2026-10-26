@@ -1,6 +1,6 @@
 # Football rollout and optimizer audit
 
-The first three completed 1M-step 3v1 pilots have zero final wins. Their positive
+All five completed 1M-step 3v1 pilots have zero final wins. Their positive
 shaped returns do not establish task success. The accepted BPTA appendix and
 pinned release reveal concrete optimization differences worth testing.
 
@@ -31,7 +31,7 @@ identity-modifier control. Each feed-forward/GRU pair differs only in
 `recurrent_actor`. Comparisons with the earlier pilot bundle several changes
 and cannot isolate the effect of minibatches or rollout size.
 
-Job **21219475** first runs ten native integration configurations, each with
+Job **21219475** first ran ten native integration configurations, each with
 one 10,000-transition rollout, 15 epochs and two minibatches. Every run must
 have finite losses, 30 critic steps, 90 BPPO actor steps or 30 steps for the
 other methods, and four complete initial/final evaluation episodes. Source,
@@ -40,7 +40,8 @@ releasing the separate ten-run 1M learning manifest. Each integration worker
 requests 2 CPUs/8GB for at most two hours. It follows the corresponding existing
 Football worker and precedes Ant/Walker, preserving four serial worker chains.
 
-The learning manifest is **prepared, not submitted**. Its primary development
+The learning manifest is released as **21221161** after all ten native gates
+passed. Its primary development
 metric is final complete-match win fraction over 100 deterministic episodes;
 shaped return and score difference remain separate diagnostics. Evaluation
 runs initially, at 400k and 800k, and at the exact 1M endpoint. No earlier
@@ -62,31 +63,59 @@ exact recurrent Prey checkpoint replay. These are correctness checks, not
 evidence of Football learning performance.
 
 
-## Updated pilot evidence
+## Completed 1M pilot evidence
 
-The [partial audit](../experiments/football_3v1_1m_progress_20261026T194000Z.json)
-now verifies MAPPO, AR-PPO and BPPO at 1M: 300 raw evaluation episodes and
-3,750 finite rollout updates, with exact source/configuration/budget checks.
-All three final evaluations have 0 wins in 20 complete episodes. Final shaped
-returns are 0.8850, 0.7000 and 0.8850 respectively; normalized shaped-return
-curve areas are 0.6410, 0.6707 and 0.6850. The audit retains the earlier AR-PPO
-win without substituting it for the final endpoint. AgentMixer and its identity
-control remain unfinished at this snapshot. These are one-seed pilots below
-the paper budget, with no evidence of a method advantage.
+The [complete audit](../experiments/football_3v1_1m_complete_20261026.json)
+verifies all five methods at 1M: 500 raw evaluation episodes and 6,250 finite
+rollout updates, with exact source/configuration, seed, native score and
+interaction-count checks. Both workers exit successfully; peak memory is
+about 1.27 GiB.
+
+| Method | Final wins / 20 | Final shaped return | Normalized shaped-return curve area |
+| --- | ---: | ---: | ---: |
+| MAPPO | 0 | 0.8850 | 0.6410 |
+| AR-PPO | 0 | 0.7000 | 0.6707 |
+| BPPO | 0 | 0.8850 | 0.6850 |
+| AgentMixer | 0 | 1.0950 | 0.9357 |
+| Identity modifier | 0 | 1.7450 | 0.9568 |
+
+Earlier evaluations remain in the report and never replace a final endpoint.
+Shaped returns must not substitute for completed-match wins. These are one-seed
+pilots below the paper budget, without independent evidence of a method
+advantage. The [earlier partial audit](../experiments/football_3v1_1m_progress_20261026T194000Z.json)
+remains unchanged.
 
 
-## Partial native integration gate
+## Completed native integration gate and learning release
 
-Worker 21219475_1 completes all five recurrent variants in 411 seconds, with
-sampled batch peak memory of 3.48GiB. The
-[partial audit](../experiments/football_batch_integration_progress_20261026.json)
-verifies 40 raw evaluation episodes and five complete 50×200 rollout updates.
+Both workers complete successfully in 414/411 seconds, with maximum batch
+peak memory of 3.49 GiB. The
+[complete audit](../experiments/football_batch_integration_complete_20261026.json)
+verifies 80 raw evaluation episodes and ten complete 50×200 rollout updates.
 Each has 15 epochs and two minibatches: 30 critic steps, 90 BPPO actor steps
 or 30 actor steps for the other methods, with one ValueNorm update per rollout.
-Run times range from 74.49 to 85.88 seconds. Source, configuration, native win
+Run times range from 74.49 to 89.49 seconds. Source, configuration, native win
 flags, interaction counts and finite losses all pass.
 
 These are 10k-step correctness checks with only four episodes per evaluation.
-Their scores do not establish learning performance. The remaining five
-feed-forward integrations are pending, so the all-method learning-release gate
-remains closed.
+Their scores do not establish learning performance. The
+[earlier recurrent-only audit](../experiments/football_batch_integration_progress_20261026.json)
+remains unchanged.
+
+The [learning release plan](../experiments/football_batch1m_release_plan_20261026.json)
+retains all ten frozen configurations and their 25-module source snapshot.
+One array task runs one configuration, using one CPU/8 GiB with a four-hour
+limit and no automatic requeue. Array concurrency is capped at two. Even/odd
+tasks form serial chains after the matching independent HalfCheetah worker,
+preserving the four-worker project ceiling. The
+[schedule receipt](../experiments/football_batch1m_release_schedule_20261026.json)
+verifies every task's dependencies and resource requests before release.
+
+The allocation estimate uses the slowest observed rollout/update and evaluation
+costs. It allows 401 decisions for each of the 400 evaluation matches, following
+the pinned academy duration and native clock; all 53,577 completed episodes
+in the earlier 1M pilots also respect that horizon. With a 50% margin, the
+estimate is 3.16 hours per run. Eight GiB exceeds twice the measured peak memory.
+These are allocation estimates, not guaranteed runtimes or learning results.
+The original prepared two-worker script and all experiment configurations remain
+unchanged; a separately hashed dispatch script executes the frozen manifest.

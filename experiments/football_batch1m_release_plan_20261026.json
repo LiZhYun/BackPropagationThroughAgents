@@ -1,0 +1,279 @@
+{
+  "recorded_utc": "2026-10-26T21:06:30.473122+00:00",
+  "study": "experiments/football_batch_study_20261026.json",
+  "study_sha256": "424fb0174d2260d4431c6e764c71f91162a3482cbc3bfac1c77457bec3a2dd2a",
+  "native_gate_audit": "experiments/football_batch_integration_complete_20261026.json",
+  "native_gate_audit_sha256": "6c137cfd54bec0d9ad58b34320cce5c6215af290211206c742508f74771bfe4a",
+  "native_gate_workers": [
+    {
+      "job": "21219475_0.batch",
+      "elapsed_seconds": 414,
+      "total_cpu": "06:47.215",
+      "peak_kib": 3652120
+    },
+    {
+      "job": "21219475_1.batch",
+      "elapsed_seconds": 411,
+      "total_cpu": "06:45.413",
+      "peak_kib": 3650428
+    }
+  ],
+  "learning_manifest": "results/football_3v1_batch1m_20261026T183032Z/manifest.json",
+  "learning_manifest_sha256": "48b6ea39c97dfc1b841abb3aed4279298c5c7cb0b06842dd1da577fe0b8caef1",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "dispatch_script": "results/football_batch1m_dispatch_20261026T210630Z/submit.sbatch",
+  "dispatch_script_sha256": "5a6ccb614a7c4ef16c02eb986e8767261875fdac22a9b585d721ef546c2efaa6",
+  "launcher_sha256": "fc2b1ac704f19f30726e7bb52047452b881e9b5def4cf222e0fe6dc429a84a6e",
+  "all_ten_unstarted_configurations": [
+    {
+      "index": 0,
+      "variant": "mappo_ff",
+      "config_sha256": "ee35cdb3949213e6a9d33bf0f4ba9a064606d4ba7a1a2866384ea7232e495771",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 1,
+      "variant": "mappo_gru",
+      "config_sha256": "45cad44a154096301f429dfc654c63888db11d693b80f216315ccf229d97bccb",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 2,
+      "variant": "arppo_ff",
+      "config_sha256": "0fc031556c11d28b4b354b18a7e502ab30ed070de5982c55972ff6f8a24d0097",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 3,
+      "variant": "arppo_gru",
+      "config_sha256": "47b379aa0b8bb045a3898057715ac84312566eed11b100e7a49e39bda10d14df",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 4,
+      "variant": "bppo_ff",
+      "config_sha256": "2d0c574ae15f4d81a80271164d964121571f3817bd346db73bbb398008025d4a",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 5,
+      "variant": "bppo_gru",
+      "config_sha256": "9e7c8200968d72676811578d1e568130146c5adfb78735487e7db2b73656ccea",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 6,
+      "variant": "agentmixer_ff",
+      "config_sha256": "d8345f3df10f27524fa4a878c816662f59725950e3ba7468a8069dce2537d992",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 7,
+      "variant": "agentmixer_gru",
+      "config_sha256": "ea40956c27858412ca4fa094f34a2d312f3a1710d8639c579a503ae27177b2e6",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 8,
+      "variant": "agentmixer_identity_ff",
+      "config_sha256": "885bfb58e9d31f29f5d70c5bc9030094246ca54274463dee7b315f19891a0a08",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 9,
+      "variant": "agentmixer_identity_gru",
+      "config_sha256": "5268ffbaa5f842e5201fa499a8bb74973dcea9f5937c2e427fe87b55b8f85d25",
+      "unstarted_at_release": true
+    }
+  ],
+  "gate_phase_measurements": [
+    {
+      "variant": "mappo_ff",
+      "initial_setup_and_four_episode_eval_seconds": 25.54759209405165,
+      "rollout_update_seconds": 49.128081553964876,
+      "final_eval_seconds": 1.4759009589906782,
+      "final_eval_environment_steps": 275,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.005366912578147921
+    },
+    {
+      "variant": "mappo_gru",
+      "initial_setup_and_four_episode_eval_seconds": 23.35503382398747,
+      "rollout_update_seconds": 47.26047117810231,
+      "final_eval_seconds": 3.871144186006859,
+      "final_eval_environment_steps": 832,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.004652817531258244
+    },
+    {
+      "variant": "arppo_ff",
+      "initial_setup_and_four_episode_eval_seconds": 24.24272308999207,
+      "rollout_update_seconds": 49.548758834949695,
+      "final_eval_seconds": 0.7403490450233221,
+      "final_eval_environment_steps": 135,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.005484067000172756
+    },
+    {
+      "variant": "arppo_gru",
+      "initial_setup_and_four_episode_eval_seconds": 25.968017609906383,
+      "rollout_update_seconds": 49.32044516399037,
+      "final_eval_seconds": 2.561509293038398,
+      "final_eval_environment_steps": 464,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.00552049416603103
+    },
+    {
+      "variant": "bppo_ff",
+      "initial_setup_and_four_episode_eval_seconds": 24.430368035915308,
+      "rollout_update_seconds": 50.15704977104906,
+      "final_eval_seconds": 0.5662882740143687,
+      "final_eval_environment_steps": 94,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.00602434334057839
+    },
+    {
+      "variant": "bppo_gru",
+      "initial_setup_and_four_episode_eval_seconds": 25.657106118975207,
+      "rollout_update_seconds": 51.08584392606281,
+      "final_eval_seconds": 2.027736973017454,
+      "final_eval_environment_steps": 366,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.005540264953599602
+    },
+    {
+      "variant": "agentmixer_ff",
+      "initial_setup_and_four_episode_eval_seconds": 22.36744812305551,
+      "rollout_update_seconds": 66.02892626600806,
+      "final_eval_seconds": 1.0957489690044895,
+      "final_eval_environment_steps": 253,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.0043310235929031205
+    },
+    {
+      "variant": "agentmixer_gru",
+      "initial_setup_and_four_episode_eval_seconds": 23.45780488208402,
+      "rollout_update_seconds": 61.78842011594679,
+      "final_eval_seconds": 0.6307170829968527,
+      "final_eval_environment_steps": 107,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.005894552177540679
+    },
+    {
+      "variant": "agentmixer_identity_ff",
+      "initial_setup_and_four_episode_eval_seconds": 22.548253425047733,
+      "rollout_update_seconds": 60.88737530296203,
+      "final_eval_seconds": 1.4430373250506818,
+      "final_eval_environment_steps": 325,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.00444011484630979
+    },
+    {
+      "variant": "agentmixer_identity_gru",
+      "initial_setup_and_four_episode_eval_seconds": 23.553939971025102,
+      "rollout_update_seconds": 58.73869719100185,
+      "final_eval_seconds": 0.6262413719668984,
+      "final_eval_environment_steps": 108,
+      "eval_seconds_per_decision_including_setup_and_checkpoint": 0.005798531221915726
+    }
+  ],
+  "runtime_estimate": {
+    "formula": "Maximum observed setup+4episode eval +100 times slowest10k rollout/update +400 evaluations each allowed401decisions at slowest measured final-evaluation seconds/decision. Includes extra initial4episodes conservatively. Multiply by1.5 and round up to whole hours.",
+    "maximum_rollout_update_seconds": 66.02892626600806,
+    "maximum_eval_seconds_per_decision": 0.00602434334057839,
+    "estimated_seconds_before_margin": 7595.165316039485,
+    "estimated_hours_with_50pct_margin": 3.1646522150164524,
+    "wall_hours_per_task": 4
+  },
+  "horizon_evidence": {
+    "scenario_path": ".venv-football/lib/python3.10/site-packages/gfootball/scenarios/academy_3_vs_1_with_keeper.py",
+    "scenario_sha256": "b3fc1a0edf4d941c8c2a09d56b739d37351ab6b1c04bc97df574dd28a87e3234",
+    "core_path": ".venv-football/lib/python3.10/site-packages/gfootball/env/football_env_core.py",
+    "core_sha256": "101504c6f9a5e5440d440b2a4576e690733e0d2cf1a1212f22b8b7cd8fcb21a6",
+    "native_configured_duration": 400,
+    "native_clock_initial_value": -1,
+    "maximum_complete_match_decisions": 401,
+    "prior_training_episode_checks": [
+      {
+        "variant": "mappo",
+        "episodes": 10649,
+        "max_length": 401,
+        "episodes_sha256": "dbbe16e493c04b6af1d4f55789ddd1811c74d1d315c4cfe3a7826e7b1e8501d8"
+      },
+      {
+        "variant": "arppo",
+        "episodes": 11471,
+        "max_length": 401,
+        "episodes_sha256": "eac3c9c4c3e893910a5dc3594f7409588ee0d0a3d74a21ee9a77afb9968d202e"
+      },
+      {
+        "variant": "bppo",
+        "episodes": 10933,
+        "max_length": 401,
+        "episodes_sha256": "44ba776af263c5554f30f57108c61f4d0789cca8da995a874803b26e49709088"
+      },
+      {
+        "variant": "agentmixer",
+        "episodes": 10035,
+        "max_length": 401,
+        "episodes_sha256": "94eaaf412853446bb27193bbe63015a695fb37263e218b79f8a36174cc20e39c"
+      },
+      {
+        "variant": "agentmixer_identity",
+        "episodes": 10489,
+        "max_length": 401,
+        "episodes_sha256": "b2b2b64815fc7f5c096634fee5a4cd0b8f73d868c03291254a828d8f984c6ed2"
+      }
+    ]
+  },
+  "resource_request": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 8,
+    "wall_hours_per_task": 4,
+    "maximum_array_concurrency": 2,
+    "maximum_project_workers": 4,
+    "automatic_requeue": false
+  },
+  "resource_rationale": "Both native workers used approximately one CPU over elapsed time, with numerical threads fixed to1;8GiB exceeds twice the measured maximum RSS. Batch size and all source/configurations remain fixed.",
+  "proposed_chains": {
+    "A0": [
+      "21214776_0",
+      "NEW_0",
+      "NEW_2",
+      "NEW_4",
+      "NEW_6",
+      "NEW_8"
+    ],
+    "A1": [
+      "21214776_1",
+      "NEW_1",
+      "NEW_3",
+      "NEW_5",
+      "NEW_7",
+      "NEW_9"
+    ]
+  },
+  "limitations": [
+    "1M development budget remains below20M.",
+    "All ten variants andseed0 retained; no independent final training-seed confirmation.",
+    "Timing is an allocation estimate,not a guarantee or reported training speedup.",
+    "No exact simulator continuation; timeout is retained rather than automatically restarted."
+  ]
+}

@@ -112,3 +112,18 @@ and A1 takes1→3,between matching Ant/Walker and pending2×3 confirmation
 workers. The measured slowest estimate is20.87minutes including50%margin.
 See the [release plan](../experiments/hc_partitions_transfer_release_plan_20261026.json).
 The four-worker ceiling and frozen confirmation configurations remain fixed.
+
+
+## Football released-count learning, 2026-10-26
+
+All ten native FF/GRU integration checks pass, including80raw evaluation
+episodes,10full rollouts and expected optimizer/ValueNorm counts. Job21221161
+releases the unchanged ten-condition1M study,one configuration per task,
+1CPU/8GiB and4hours,no requeue. Even/odd task chains append after matching
+independent HalfCheetah workers21214776_i;four project workers remain the cap.
+The measured3.16-hour estimate includes50%margin and all400evaluations at
+the native401-decision horizon. The previous five small-batch1M pilots all
+finish with0/20wins. Retain all new variants andseed0;do not substitute
+shaped returns or early peaks for final complete-match wins. This remains
+below20M and does not supply independent final training seeds. See the
+[release plan](../experiments/football_batch1m_release_plan_20261026.json).

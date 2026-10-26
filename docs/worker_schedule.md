@@ -1,8 +1,8 @@
 # Recorded worker schedule
 
 This page retains successive scheduling snapshots. The [latest verified
-graph](#halfcheetah-partition-pilots-released-2026-10-26) includes the native-gated
-HalfCheetah partition pilots while retaining four serial worker chains.
+graph](#football-batch-learning-released-2026-10-26) includes the native-gated
+Football learning study while retaining four serial worker chains.
 
 The initial arrays used two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -338,3 +338,24 @@ retain recurrent Prey followed by their even/odd SMAC tasks; B0 first finishes
 its entropy, earlier Prey and learned-matrix workers. Each chain remains serial,
 so at most four project workers can run. The pilot array also has its own cap
 of two concurrent tasks.
+
+## Football batch learning released, 2026-10-26
+
+After all ten native Football checks passed, the frozen 1M FF/GRU study was
+released as `21221161`. One configuration runs per task, with one CPU/8 GiB,
+a four-hour measured limit and no requeue. The array is capped at two tasks.
+It appends these A-chain endings:
+
+```text
+A0: ... → 21220995_0 → 21220995_2 → 21214776_0 → 21221161_0 → _2 → _4 → _6 → _8
+A1: ... → 21220995_1 → 21220995_3 → 21214776_1 → 21221161_1 → _3 → _5 → _7 → _9
+          HC partition pilots      HC confirmation   Football FF/GRU
+```
+
+The [release receipt](../experiments/football_batch1m_release_schedule_20261026.json)
+records all ten tasks' held and released states. Only the new jobs receive
+dependencies; earlier jobs and both B chains are unchanged. Four serial chains
+still limit this project to four concurrent workers. The
+[runtime plan](../experiments/football_batch1m_release_plan_20261026.json)
+includes the complete-match evaluation allowance and preserves the original
+source/configurations. This remains development work below the 20M paper budget.
