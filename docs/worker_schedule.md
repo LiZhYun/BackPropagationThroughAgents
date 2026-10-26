@@ -299,3 +299,21 @@ The [schedule proof](../experiments/matrix_agentmixer_ablation1m_schedule_202610
 retains the before/after states. Active jobs were unchanged. The A chains
 remain Football → Football integration → Ant/Walker → independent HalfCheetah;
 at most four workers still run concurrently.
+
+## HalfCheetah partition check inserted, 2026-10-26
+
+Job `21220888_0` adds four short native checks for HalfCheetah 3×2 and 6×1,
+using the selected BPPO/AR-PPO source and full 40×100 rollouts. Its one worker
+runs all four configurations serially with 2 CPUs/8 GB, a 30-minute cap and
+no requeue. The latest B1 segment is:
+
+```text
+21220500_0 → 21220888_0 → 21219719_1 → 21220264_1 → _3 → _5 → _7 → _9
+matrix       HC checks     recurrent Prey   SMAC
+```
+
+The [receipt](../experiments/hc_partitions_check_schedule_20261026.json)
+records the pending successor's hold, the new job's held submission, verified
+dependencies/resources and releases. The other three chains are unchanged,
+preserving four concurrent workers. The four related 500k pilots remain
+unsubmitted until the [native gate](halfcheetah_partition_transfer.md) passes.

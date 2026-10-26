@@ -1,0 +1,77 @@
+{
+  "recorded_utc": "2026-10-26T20:42:20.137245+00:00",
+  "source_manifest": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/manifest.json",
+  "source_manifest_sha256": "d31da302360489d64a3170ee6c84d6d4b2dff34e089cc29edca085a97d4ceb5b",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "ddaecd74f68997c67b0577f320a61e425c6167a8d7c10651100fca64ec97998d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "agentmixer_continuous.py": "6b5e64b81ba85050efe285e9813ad2c1ccfe8bede3bd074da6de139a3b4add8c",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "checks": [
+    {
+      "manifest": "results/mujoco_hc_partitions_check12k_20261026T204220Z/manifest.json",
+      "variant": "hc3x2_arppo",
+      "config_sha256": "3b302abc3efa6d2e86ed871823ade3f3adb51f4c212d8c088eef56d6167894a2",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_check12k_20261026T204220Z/manifest.json",
+      "variant": "hc3x2_bppo",
+      "config_sha256": "e926b425e0e88b9328e5eee74203c039aee46baa7293a6dad8d40e68be2f6cb6",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_check12k_20261026T204220Z/manifest.json",
+      "variant": "hc6x1_arppo",
+      "config_sha256": "0352e483fed6f093111e84b382c10dc145f6c1f23a43247de9634f71a701378a",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_check12k_20261026T204220Z/manifest.json",
+      "variant": "hc6x1_bppo",
+      "config_sha256": "e20203abe96a61599a5bc61376dbb0593cacb8852094cea34dafe6e0d68312ee",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+      "variant": "hc3x2_arppo",
+      "config_sha256": "19617cb5f23007c28e866112d76390d41b8aa7a4e0f12a004422c0fe744dfe32",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+      "variant": "hc3x2_bppo",
+      "config_sha256": "1dcd6a9275a5f74f9e0ed2e5ac639247bf943d25232f99eb2cbb43b88eb330c7",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+      "variant": "hc6x1_arppo",
+      "config_sha256": "27c33c08565313e7d4b40480d6ddcbe934678572b31b65f7bc009dfecbbedc57",
+      "output_unstarted": true
+    },
+    {
+      "manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+      "variant": "hc6x1_bppo",
+      "config_sha256": "f30b37d580824f6af18701d7dd31df1e89b29a8a3450429d893208f120099373",
+      "output_unstarted": true
+    }
+  ],
+  "errors": []
+}

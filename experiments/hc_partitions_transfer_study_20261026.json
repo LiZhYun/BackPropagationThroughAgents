@@ -1,0 +1,35 @@
+{
+  "recorded_utc": "2026-10-26T20:42:20.153072+00:00",
+  "scope": "Development transfer of the exact selected HalfCheetah2x3 BPPO/AR-PPO reconstruction to3x2 and6x1 partitions,seed0,500k transitions. All four runs retained; native1000-step horizon and ten deterministic evaluations. Below10M; no independent confirmation or algorithm ranking across seeds.",
+  "source_manifest": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/manifest.json",
+  "source_manifest_sha256": "d31da302360489d64a3170ee6c84d6d4b2dff34e089cc29edca085a97d4ceb5b",
+  "source_modules": 19,
+  "integration_manifest": "results/mujoco_hc_partitions_check12k_20261026T204220Z/manifest.json",
+  "integration_manifest_sha256": "43fe1b9707be62f56e75ecf641d5e1c9b3a10c9d1a06964ff10d922cc6330a2c",
+  "integration_submit_sha256": "0264720f570088d02d604bb1ddc65e7d5908624b3a65f6309eb8c85767877389",
+  "learning_manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+  "learning_manifest_sha256": "23737dfa6093f1b6b373b4a5ed8b13e6b238b082d4183dae0d73048d7d756d64",
+  "learning_status": "prepared_not_submitted",
+  "training_seed": 0,
+  "primary_metric": "final_evaluation.return_mean",
+  "secondary_metric": "full-budget trapezoidal curve area divided by training steps",
+  "release_gates": [
+    "All four native checks complete at12000,with three full4000-transition rollouts and finite updates.",
+    "Native local observations and normalized actuators match canonical partitions;1000-step time limits and evaluation interaction counts verified.",
+    "Exact selected19-module source and matched configs remain unchanged.",
+    "Measure elapsed time and MaxRSS before selecting the500k task wall time.",
+    "Every declared pilot remains in analysis; no early peak or seed replacement.",
+    "Submission dependencies preserve four serial chains; no automatic requeue."
+  ],
+  "resource_limits": {
+    "integration_workers": 1,
+    "cpus_per_task": 2,
+    "memory_gib_per_task": 8,
+    "integration_minutes": 30,
+    "learning_wall_minutes_upper_bound": 240,
+    "maximum_project_workers": 4
+  },
+  "integration_dispatch": "Prepared serial-worker script narrowed to one array task and one worker before submission; all four configurations run serially.",
+  "learning_dispatch": "One configuration per array task,maximum2concurrent; explicit chain dependencies required at submission.",
+  "remaining_scope": "Both extra partitions still require10Mdevelopment,independent final training seeds,and AgentMixer controls; all45canonical targets retained."
+}

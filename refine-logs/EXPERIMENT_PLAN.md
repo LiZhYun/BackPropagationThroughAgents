@@ -92,3 +92,15 @@ The [budget correction](../experiments/matrix_budget_interpretation_correction_2
 clarifies that AgentMixer's archived Climbing budget is 200k; BPTA's matrix
 budget is 1M. The paired AgentMixer study is a longer-budget extension, with
 Penalty as an additional task. Its endpoint cannot certify the 200k target.
+
+
+## HalfCheetah partition transfer, 2026-10-26
+
+Transfer the selected2×3 BPPO/AR configuration and exact source to3×2 and6×1.
+A short native gate uses three40×100 rollouts per condition and the canonical
+1000-step horizon. Job21220888 follows matrix21220500_0 and precedes recurrent
+Prey21219719_1, preserving four serial worker chains. Four500k development
+pilots are frozen but remain unsubmitted until correctness/runtime/memory
+checks pass. All methods and both partitions remain declared, with no
+early-peak selection. Full10M runs, independent training seeds and AgentMixer
+coverage remain required. See the [study](../docs/halfcheetah_partition_transfer.md).

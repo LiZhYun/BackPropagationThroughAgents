@@ -72,3 +72,7 @@ they cannot establish performance at the paper's 10M budget or a method ranking.
 All eleven declarations remain visible. Worker 1 continues through its other
 controls, while worker 0 waits for its matching predecessor. The remaining
 methods must complete before selecting transfer follow-ups.
+
+The separate [HalfCheetah partition study](halfcheetah_partition_transfer.md)
+extends the selected BPPO/AR settings to3×2 and6×1, beginning with a native
+full-rollout gate. It does not replace these Ant/Walker controls.
