@@ -1,0 +1,75 @@
+{
+  "recorded_utc": "2026-10-26T22:07:27.406769+00:00",
+  "scope": "Observed prefix log/evaluation parity for the two started bounded AgentMixer runs. No checkpoint-tensor equality or result for the other seven runs is claimed.",
+  "study": "experiments/hc2x3_agentmixer10m_plan_20261026.json",
+  "study_sha256": "9b06a4f91cdb0ec0d9a639a6c0f8628b6c428818196e2316b96b52dc17dcb8b6",
+  "source_module_hashes_identical": true,
+  "training_budget_change": [
+    1000000,
+    10000000
+  ],
+  "evaluation_cadence_change": [
+    250000,
+    100000
+  ],
+  "all_logged_update_fields_compared_except": [
+    "elapsed_seconds"
+  ],
+  "runs": [
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "training_steps_compared": 500000,
+      "logged_updates_equal_except_elapsed_time": 125,
+      "common_evaluation_steps": [
+        0,
+        500000
+      ],
+      "raw_evaluation_episodes_equal": 20,
+      "prior": {
+        "source_log": "results/mujoco_hc2x3_entropy1m_20261026T094156Z/agentmixer_bounded_seed0/metrics.jsonl",
+        "source_log_sha256_at_read": "bd0a705fb76c2107f1470e73bacc8b62e0fd726d381aaca1e456e4d948aaa846",
+        "prefix_snapshot": "results/hc_eval_cadence_parity_20261026/agentmixer_bounded_seed0_prior.jsonl",
+        "prefix_snapshot_sha256": "7978cd9633c2116c4dbdc8d5efa6bbbeb92caf5d46c0ee88febed93e1ecaa46a"
+      },
+      "long_budget": {
+        "source_log": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed0/metrics.jsonl",
+        "source_log_sha256_at_read": "c2f3bd096fe8273798a9021b13f573206f8d2028fbc616152ab557c4d2ce49f6",
+        "prefix_snapshot": "results/hc_eval_cadence_parity_20261026/agentmixer_bounded_seed0_10m.jsonl",
+        "prefix_snapshot_sha256": "0f5fcb19ff5bab31d075634dace278975a81a10efedbdc707a87f920eeffe13d"
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "training_steps_compared": 500000,
+      "logged_updates_equal_except_elapsed_time": 125,
+      "common_evaluation_steps": [
+        0,
+        500000
+      ],
+      "raw_evaluation_episodes_equal": 20,
+      "prior": {
+        "source_log": "results/mujoco_hc2x3_entropy1m_20261026T094156Z/agentmixer_bounded_seed1/metrics.jsonl",
+        "source_log_sha256_at_read": "07ffe40490548e90fc936e362741f74a8514181904d883eef926a8753e3f28fc",
+        "prefix_snapshot": "results/hc_eval_cadence_parity_20261026/agentmixer_bounded_seed1_prior.jsonl",
+        "prefix_snapshot_sha256": "3fcd62d1e58e3c9da9073b8ea5f0cfca2cc12af7872f4454503b5636a2b1d094"
+      },
+      "long_budget": {
+        "source_log": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed1/metrics.jsonl",
+        "source_log_sha256_at_read": "88596779da1032f10b59717b7ca92d120af19112b7aabb19295049ac6666d7b0",
+        "prefix_snapshot": "results/hc_eval_cadence_parity_20261026/agentmixer_bounded_seed1_10m.jsonl",
+        "prefix_snapshot_sha256": "766304cb3eb3e92e9d85c79dbf80154695fcb3716951c5f8bc581151f945e838"
+      }
+    }
+  ],
+  "total_logged_updates_compared": 250,
+  "total_matching_raw_evaluation_episodes": 40,
+  "limitations": [
+    "Only seeds0/1,bounded variant,first500k;all nine full-budget outcomes remain required.",
+    "Shared evaluation points compare complete raw records;different-grid curve areas are not compared.",
+    "Checkpoints at this prefix were overwritten by ongoing training,so exact parameter/optimizer-state parity is not tested."
+  ],
+  "audit_script": "results/hc_eval_cadence_parity_20261026/audit.py",
+  "audit_script_sha256": "dd2fb45cd347ee3074da94254066071d41e831046edd2eec12eefb167fef304e"
+}

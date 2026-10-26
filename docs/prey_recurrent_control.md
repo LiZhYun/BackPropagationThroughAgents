@@ -56,7 +56,7 @@ Slurm peak memory determine the later worker allocation.
 This single worker requests 2 CPUs/8GB for at most 30 minutes. It follows
 AgentMixer confirmation `21218175_0` and precedes native GRU check `21213860_0`.
 The [schedule proof](../experiments/prey_recurrent_protocol_schedule_20261026.json)
-retains the four-worker ceiling. The gate has now passed, and the eight-run
+records the four-worker ceiling used then. The gate has now passed, and the eight-run
 learning study is queued as job **21219719** behind the existing Prey controls.
 
 These are reconstructed tanh actors and a shared feed-forward critic. The
@@ -92,3 +92,43 @@ holds/dependencies/releases. The original upper-bound submission script is
 unchanged; `sbatch --time=09:00:00` sets the measured allocation. The frozen
 study's initial `prepared_not_submitted` status remains a pre-launch record;
 this release record and the job ledger describe the subsequent submission.
+
+
+## First completed 1M run
+
+The zero-penalty recurrent AgentMixer run finishes at exactly1M training
+steps. Its [raw audit](../experiments/prey_recurrent_release1m_progress_20261026T220300Z.json)
+checks all101 evaluation points:10,100 windows (2.02M decisions),2,020 complete
+diagnostic episodes and100 full50×200 updates. Source/configuration hashes,
+seed derivation,15 actor/critic steps per rollout and ValueNorm counts agree.
+All eight declared conditions remain visible; seven are unfinished in this
+snapshot.
+
+| Quantity | Final result |
+| --- | ---: |
+| Primary100×200-window reward per decision | 2.0515 |
+| Normalized area of the101-point primary curve | 1.59706 |
+| Diagnostic episode mean return | 9.9590 |
+| Diagnostic captures | 20/20 |
+| Captures across the100 windows | 4,123 |
+| Windows ending inside an unfinished episode | 76 |
+
+Every zero-penalty episode/window satisfies the independent reward check
+`reward = 10 × captures − 0.01 × decisions`. This counts the shared team reward
+once and includes unfinished rewards. The run uses2,043,517 evaluation
+interactions separately from its1M training interactions and takes71m33s.
+
+A [fresh checkpoint replay](../experiments/prey_recurrent_first_complete_verification_20261026.json)
+using the exact frozen source and runtime reproduces all100 final windows and
+all20 episode records exactly. Replay adds20,082 evaluation decisions; these
+are not independent training seeds.
+
+The primary score remains below the figure reading range[2.19,2.23]. The
+released reduction follows the author's instruction, while the historical
+plot-to-logger association remains qualified. Complete episode captures do
+not by themselves satisfy this reward-rate target. The matched FF and identity
+controls, penalty−1 conditions and independent final seeds remain required;
+this one run cannot establish a recurrence or modifier advantage.
+
+The current [worker schedule](worker_schedule.md#remaining-mujoco-native-gates-2026-10-26)
+keeps this study in the B chains under the eight-worker project ceiling.

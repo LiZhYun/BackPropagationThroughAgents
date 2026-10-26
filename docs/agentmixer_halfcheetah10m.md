@@ -49,3 +49,12 @@ verifies all20 frozen modules,all nine resolved configurations,their evidence
 hashes and document links. All eight project workers started within the
 ceiling (14 CPUs/56 GiB in the recorded snapshot). This validates execution
 and provenance; learning results remain pending.
+
+
+A [prefix comparison](../experiments/hc2x3_eval_cadence_prefix_parity_20261026.json)
+checks the two started bounded runs against their corresponding1M development
+runs. All250 logged update records through500k match exactly after excluding
+elapsed time, and all40 raw episodes at shared0/500k evaluations match. This
+supports the intended isolation of the budget/cadence changes in those two
+prefixes. It does not test checkpoint tensors or the other seven full-budget
+runs, and it does not compare curve areas on different evaluation grids.

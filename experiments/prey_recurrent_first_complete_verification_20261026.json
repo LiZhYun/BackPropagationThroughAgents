@@ -1,0 +1,33 @@
+{
+  "recorded_utc": "2026-10-26T22:05:50.693573+00:00",
+  "scope": "First of eight matched recurrent Prey development runs;no recurrence/modifier advantage or paper reproduction claim.",
+  "raw_audit": "experiments/prey_recurrent_release1m_progress_20261026T220300Z.json",
+  "raw_audit_sha256": "8014407febf31916c2a0b930173601ca041e3582b1c5696b3b29a8ac8b9c4997",
+  "replay": "results/prey_recurrent_audit_20261026T220300Z/final_checkpoint_replay.json",
+  "replay_sha256": "a7aa2a139a1be494b70ed79a86d1efe66657402c2a9b406452fa4247988321ef",
+  "exact_final_evaluation_replay": true,
+  "source_and_runtime_versions_match": true,
+  "all100_windows_and20_episode_records_identical": true,
+  "completed_runs": 1,
+  "declared_runs": 8,
+  "primary_final_window_reward_per_step": 2.051500000000003,
+  "final_window_captures": 4123,
+  "final_window_environment_steps": 20000,
+  "final_unfinished_windows": 76,
+  "episode_diagnostic_return_mean": 9.959000000000001,
+  "episode_diagnostic_captures": 20,
+  "normalized_window_auc": 1.5970625000000025,
+  "raw_evaluation_episodes_verified": 2020,
+  "raw_windows_verified": 10100,
+  "window_evaluation_decisions_verified": 2020000,
+  "training_updates_verified": 100,
+  "replay_evaluation_decisions": 20082,
+  "elapsed_seconds_training_and_evaluation": 4293.070542162051,
+  "zero_penalty_reward_algebra_verified": "Each episode/window return equals10*captures-0.01*decisions;shared team reward counted once.",
+  "historical_reading_range": [
+    2.19,
+    2.23
+  ],
+  "historical_comparison": "Below the figure reading range under the author-selected released reduction;exact historical plot-to-logger association remains unverified.",
+  "evaluation_decisions_during_training": 2043517
+}
