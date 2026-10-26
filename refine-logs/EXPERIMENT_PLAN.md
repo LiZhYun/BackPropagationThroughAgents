@@ -149,3 +149,18 @@ bounded/identity contrast changes the scale map and initial centralized scale;
 residual/identity is the isolated modifier switch. This is development,with
 independent final confirmation still required. See the
 [study guide](../docs/agentmixer_halfcheetah10m.md).
+
+
+## Remaining MuJoCo coverage, 2026-10-26
+
+Freeze37 seed0 conditions across11 task/observation groups: nine without
+learning pilots and the missing HC3×2/6×1 MAPPO/AgentMixer/identity controls.
+Use the exact20-module Ant/Walker source and selected training settings;
+changes from the selected runtime configuration are algorithm,modifier switch
+and task/observations only. All74 gate/pilot configurations validate with the
+frozen trainer. Job21221614 runs37 native12k checks before any500k pilot
+release. Require complete raw-log,optimizer/normalization,source/seed and
+scheduler resource audits; the pilot allocation remains provisional until
+measured. Two2CPU/8GiB/two-hour gate workers insert into A0/B0 without changing
+the eight-worker ceiling. These are development studies below10M,not final
+confirmation. See [the coverage guide](../docs/mujoco_remaining_transfer.md).

@@ -1,0 +1,1218 @@
+{
+  "recorded_utc": "2026-10-26T21:58:54.424814+00:00",
+  "study": "experiments/mujoco_remaining_transfer_study_20261026.json",
+  "study_sha256": "4738cec18309e7cdf782f29dc6c1d00f17ae777143be0f7cf05617c56680a4c2",
+  "preflight": "experiments/mujoco_remaining_transfer_preflight_20261026.json",
+  "preflight_sha256": "7878c1da7597f67633439b59c625f72fc3caca6de5c08b664bdc2182b9093ca1",
+  "before": {
+    "21220995_0": {
+      "JobId": "21220996",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "248727",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212297_0(unfulfilled)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "00:30:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-26T22:51:51",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "Unknown",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-26T22:51:51",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:2258301",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1-1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=2G,node=1,billing=1",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "2G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21212297",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.out",
+      "TresPerTask": "cpu=1"
+    },
+    "21220499_0": {
+      "JobId": "21220499",
+      "ArrayJobId": "21220499",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-matrix-dev",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "248726",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212197_0(unfulfilled)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "03:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-26T21:52:06",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "Unknown",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-26T21:52:06",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:1699693",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1-1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "4G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_agentmixer_learned1m_20261026T194942Z/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21212197_0",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_agentmixer_learned1m_20261026T194942Z/slurm_21220499_0.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_agentmixer_learned1m_20261026T194942Z/slurm_21220499_0.out",
+      "TresPerTask": "cpu=1"
+    }
+  },
+  "queue_before": {
+    "21219719_1": {
+      "job": "21219719_1",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21220264_0": {
+      "job": "21220264_0",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21220264_1": {
+      "job": "21220264_1",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21221384_0": {
+      "job": "21221384_0",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    "21221384_1": {
+      "job": "21221384_1",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    "21214776_1": {
+      "job": "21214776_1",
+      "name": "bpta-agentmixer-hc-confirm",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21212197_0": {
+      "job": "21212197_0",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21212297_0": {
+      "job": "21212297_0",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21220995_2": {
+      "job": "21220995_2",
+      "name": "bpta-agentmixer-hc-partitions",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "2G",
+      "dependency": "afterany:21220995_0(unfulfilled)"
+    },
+    "21220995_0": {
+      "job": "21220995_0",
+      "name": "bpta-agentmixer-hc-partitions",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "2G",
+      "dependency": "afterany:21212297_0(unfulfilled)"
+    },
+    "21221384_8": {
+      "job": "21221384_8",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_6(unfulfilled)"
+    },
+    "21221384_7": {
+      "job": "21221384_7",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_5(unfulfilled)"
+    },
+    "21221384_6": {
+      "job": "21221384_6",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_4(unfulfilled)"
+    },
+    "21221384_5": {
+      "job": "21221384_5",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_3(unfulfilled)"
+    },
+    "21221384_4": {
+      "job": "21221384_4",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_2(unfulfilled)"
+    },
+    "21221384_3": {
+      "job": "21221384_3",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_1(unfulfilled)"
+    },
+    "21221384_2": {
+      "job": "21221384_2",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_0(unfulfilled)"
+    },
+    "21221161_9": {
+      "job": "21221161_9",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_7(unfulfilled)"
+    },
+    "21221161_8": {
+      "job": "21221161_8",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_6(unfulfilled)"
+    },
+    "21221161_7": {
+      "job": "21221161_7",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_5(unfulfilled)"
+    },
+    "21221161_6": {
+      "job": "21221161_6",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_4(unfulfilled)"
+    },
+    "21221161_5": {
+      "job": "21221161_5",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_3(unfulfilled)"
+    },
+    "21221161_4": {
+      "job": "21221161_4",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_2(unfulfilled)"
+    },
+    "21221161_3": {
+      "job": "21221161_3",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_1(unfulfilled)"
+    },
+    "21221161_2": {
+      "job": "21221161_2",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_0(unfulfilled)"
+    },
+    "21221161_1": {
+      "job": "21221161_1",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21214776_1(unfulfilled)"
+    },
+    "21221161_0": {
+      "job": "21221161_0",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21214776_0(unfulfilled)"
+    },
+    "21220499_0": {
+      "job": "21220499_0",
+      "name": "bpta-agentmixer-matrix-dev",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21212197_0(unfulfilled)"
+    },
+    "21220264_9": {
+      "job": "21220264_9",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_7(unfulfilled)"
+    },
+    "21220264_8": {
+      "job": "21220264_8",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_6(unfulfilled)"
+    },
+    "21220264_7": {
+      "job": "21220264_7",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_5(unfulfilled)"
+    },
+    "21220264_6": {
+      "job": "21220264_6",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_4(unfulfilled)"
+    },
+    "21220264_5": {
+      "job": "21220264_5",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_3(unfulfilled)"
+    },
+    "21220264_4": {
+      "job": "21220264_4",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_2(unfulfilled)"
+    },
+    "21220264_3": {
+      "job": "21220264_3",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_1(unfulfilled)"
+    },
+    "21220264_2": {
+      "job": "21220264_2",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_0(unfulfilled)"
+    },
+    "21219719_0": {
+      "job": "21219719_0",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220499_0(unfulfilled)"
+    },
+    "21214776_0": {
+      "job": "21214776_0",
+      "name": "bpta-agentmixer-hc-confirm",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220995_2(unfulfilled)"
+    }
+  },
+  "operations": [
+    {
+      "args": [
+        "scontrol",
+        "hold",
+        "21220995_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "hold",
+        "21220499_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "sbatch",
+        "--hold",
+        "--parsable",
+        "--job-name=bpta-agentmixer-mujoco-gates",
+        "--dependency=afterany:21212297_0:21212197_0",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/submit.sbatch"
+      ],
+      "output": "21221614"
+    },
+    {
+      "args": [
+        "scontrol",
+        "update",
+        "JobId=21221614_0",
+        "Dependency=afterany:21212297_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "update",
+        "JobId=21220995_0",
+        "Dependency=afterany:21221614_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "update",
+        "JobId=21221614_1",
+        "Dependency=afterany:21212197_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "update",
+        "JobId=21220499_0",
+        "Dependency=afterany:21221614_1"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "release",
+        "21220995_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "release",
+        "21220499_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "release",
+        "21221614_0"
+      ],
+      "output": ""
+    },
+    {
+      "args": [
+        "scontrol",
+        "release",
+        "21221614_1"
+      ],
+      "output": ""
+    }
+  ],
+  "job_id": "21221614",
+  "held_verified": {
+    "21220995_0": {
+      "JobId": "21220996",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "0",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221614_0(unfulfilled)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "00:30:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-26T22:51:51",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "Unknown",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-26T22:51:51",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:2258301",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1-1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=2G,node=1,billing=1",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "2G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21212297",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.out",
+      "TresPerTask": "cpu=1"
+    },
+    "21220499_0": {
+      "JobId": "21220499",
+      "ArrayJobId": "21220499",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-matrix-dev",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "0",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21221614_1(unfulfilled)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "03:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-26T21:52:06",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "Unknown",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-26T21:52:06",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:1699693",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1-1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "4G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_agentmixer_learned1m_20261026T194942Z/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21212197_0",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_agentmixer_learned1m_20261026T194942Z/slurm_21220499_0.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/matrix_agentmixer_learned1m_20261026T194942Z/slurm_21220499_0.out",
+      "TresPerTask": "cpu=1"
+    },
+    "21221614_0": {
+      "JobId": "21221615",
+      "ArrayJobId": "21221614",
+      "ArrayTaskId": "0",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-mujoco-gates",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "0",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21212297_0(unfulfilled)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "02:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-26T23:58:54",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "Unknown",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-26T23:58:54",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:2890152",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1",
+      "NumCPUs": "2",
+      "NumTasks": "1",
+      "Task": "2",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=2,mem=8G,node=1,billing=2",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "2",
+      "MinMemoryNode": "8G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "name": "bpta-agentmixer-mujoco-gates",
+      "dependency": "afterany:21212297_0:21212197_0",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/slurm_21221614_0.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/slurm_21221614_0.out",
+      "TresPerTask": "cpu=2"
+    },
+    "21221614_1": {
+      "JobId": "21221614",
+      "ArrayJobId": "21221614",
+      "ArrayTaskId": "1",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-mujoco-gates",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "0",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21212197_0(unfulfilled)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "02:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-26T23:58:54",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "Unknown",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-26T23:58:54",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:2890152",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1",
+      "NumCPUs": "2",
+      "NumTasks": "1",
+      "Task": "2",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=2,mem=8G,node=1,billing=2",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "2",
+      "MinMemoryNode": "8G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "name": "bpta-agentmixer-mujoco-gates",
+      "dependency": "afterany:21212297_0:21212197_0",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/slurm_21221614_1.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_remaining_check12k_20261026T215632Z/slurm_21221614_1.out",
+      "TresPerTask": "cpu=2"
+    }
+  },
+  "chains": {
+    "A0": [
+      "21212297_0",
+      "21221614_0",
+      "21220995_0",
+      "21220995_2",
+      "21214776_0",
+      "21221161_0",
+      "21221161_2",
+      "21221161_4",
+      "21221161_6",
+      "21221161_8"
+    ],
+    "A1": [
+      "21214776_1",
+      "21221161_1",
+      "21221161_3",
+      "21221161_5",
+      "21221161_7",
+      "21221161_9"
+    ],
+    "B0": [
+      "21212197_0",
+      "21221614_1",
+      "21220499_0",
+      "21219719_0"
+    ],
+    "B1": [
+      "21219719_1"
+    ],
+    "C0": [
+      "21221384_0",
+      "21221384_2",
+      "21221384_4",
+      "21221384_6",
+      "21221384_8"
+    ],
+    "C1": [
+      "21221384_1",
+      "21221384_3",
+      "21221384_5",
+      "21221384_7"
+    ],
+    "D0": [
+      "21220264_0",
+      "21220264_2",
+      "21220264_4",
+      "21220264_6",
+      "21220264_8"
+    ],
+    "D1": [
+      "21220264_1",
+      "21220264_3",
+      "21220264_5",
+      "21220264_7",
+      "21220264_9"
+    ]
+  },
+  "verified_serial_edges": 32,
+  "maximum_project_workers": 8,
+  "maximum_project_cpus": 16,
+  "maximum_project_memory_gib": 64,
+  "queue_after": {
+    "21219719_1": {
+      "job": "21219719_1",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21220264_0": {
+      "job": "21220264_0",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21220264_1": {
+      "job": "21220264_1",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21221384_0": {
+      "job": "21221384_0",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    "21221384_1": {
+      "job": "21221384_1",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    "21214776_1": {
+      "job": "21214776_1",
+      "name": "bpta-agentmixer-hc-confirm",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21212197_0": {
+      "job": "21212197_0",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21212297_0": {
+      "job": "21212297_0",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    "21221614_1": {
+      "job": "21221614_1",
+      "name": "bpta-agentmixer-mujoco-gates",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21212197_0(unfulfilled)"
+    },
+    "21221614_0": {
+      "job": "21221614_0",
+      "name": "bpta-agentmixer-mujoco-gates",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21212297_0(unfulfilled)"
+    },
+    "21220995_2": {
+      "job": "21220995_2",
+      "name": "bpta-agentmixer-hc-partitions",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "2G",
+      "dependency": "afterany:21220995_0(unfulfilled)"
+    },
+    "21220995_0": {
+      "job": "21220995_0",
+      "name": "bpta-agentmixer-hc-partitions",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "2G",
+      "dependency": "afterany:21221614_0(unfulfilled)"
+    },
+    "21221384_8": {
+      "job": "21221384_8",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_6(unfulfilled)"
+    },
+    "21221384_7": {
+      "job": "21221384_7",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_5(unfulfilled)"
+    },
+    "21221384_6": {
+      "job": "21221384_6",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_4(unfulfilled)"
+    },
+    "21221384_5": {
+      "job": "21221384_5",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_3(unfulfilled)"
+    },
+    "21221384_4": {
+      "job": "21221384_4",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_2(unfulfilled)"
+    },
+    "21221384_3": {
+      "job": "21221384_3",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_1(unfulfilled)"
+    },
+    "21221384_2": {
+      "job": "21221384_2",
+      "name": "bpta-agentmixer-hc-full",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221384_0(unfulfilled)"
+    },
+    "21221161_9": {
+      "job": "21221161_9",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_7(unfulfilled)"
+    },
+    "21221161_8": {
+      "job": "21221161_8",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_6(unfulfilled)"
+    },
+    "21221161_7": {
+      "job": "21221161_7",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_5(unfulfilled)"
+    },
+    "21221161_6": {
+      "job": "21221161_6",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_4(unfulfilled)"
+    },
+    "21221161_5": {
+      "job": "21221161_5",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_3(unfulfilled)"
+    },
+    "21221161_4": {
+      "job": "21221161_4",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_2(unfulfilled)"
+    },
+    "21221161_3": {
+      "job": "21221161_3",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_1(unfulfilled)"
+    },
+    "21221161_2": {
+      "job": "21221161_2",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21221161_0(unfulfilled)"
+    },
+    "21221161_1": {
+      "job": "21221161_1",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21214776_1(unfulfilled)"
+    },
+    "21221161_0": {
+      "job": "21221161_0",
+      "name": "bpta-agentmixer-football-batch",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "afterany:21214776_0(unfulfilled)"
+    },
+    "21220499_0": {
+      "job": "21220499_0",
+      "name": "bpta-agentmixer-matrix-dev",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21221614_1(unfulfilled)"
+    },
+    "21220264_9": {
+      "job": "21220264_9",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_7(unfulfilled)"
+    },
+    "21220264_8": {
+      "job": "21220264_8",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_6(unfulfilled)"
+    },
+    "21220264_7": {
+      "job": "21220264_7",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_5(unfulfilled)"
+    },
+    "21220264_6": {
+      "job": "21220264_6",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_4(unfulfilled)"
+    },
+    "21220264_5": {
+      "job": "21220264_5",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_3(unfulfilled)"
+    },
+    "21220264_4": {
+      "job": "21220264_4",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_2(unfulfilled)"
+    },
+    "21220264_3": {
+      "job": "21220264_3",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_1(unfulfilled)"
+    },
+    "21220264_2": {
+      "job": "21220264_2",
+      "name": "bpta-agentmixer-smac-batch1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220264_0(unfulfilled)"
+    },
+    "21219719_0": {
+      "job": "21219719_0",
+      "name": "bpta-agentmixer-simulator-pilot",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220499_0(unfulfilled)"
+    },
+    "21214776_0": {
+      "job": "21214776_0",
+      "name": "bpta-agentmixer-hc-confirm",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "8G",
+      "dependency": "afterany:21220995_2(unfulfilled)"
+    }
+  },
+  "active_workers_after_release": 8,
+  "status": "native_gate_released_pilots_unsubmitted",
+  "completed_utc": "2026-10-26T21:59:08.879914+00:00"
+}

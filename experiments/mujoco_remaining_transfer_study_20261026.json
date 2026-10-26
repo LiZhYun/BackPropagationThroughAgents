@@ -1,0 +1,1313 @@
+{
+  "recorded_utc": "2026-10-26T21:56:32.882506+00:00",
+  "scope": "Remaining MuJoCo task/method coverage:37 matched seed0 conditions across11 task/observation groups. Exact frozen Ant/Walker source and selected HalfCheetah training settings; no reward or actuator changes. Native gates precede any500k learning release. One development seed,below10M; no reproduction or superiority claim.",
+  "canonical_targets": "configs/paper_targets.json",
+  "canonical_targets_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+  "selected_source_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+  "selected_source_manifest_sha256": "e0fc52585d6d2d60bf41c3483985086d13b0b5ae71dfac19b92fc94095dbe9a8",
+  "selected_source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "selected_resolved_config": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_mappo_seed0/config.json",
+  "selected_resolved_config_sha256": "c542f8c59538a9c6de02d0beb00c7105f9a7cde4a7e4d7857c642e8f2e7e39ec",
+  "new_conditions": 37,
+  "task_observation_groups": 11,
+  "new_task_observation_groups": 9,
+  "prior_integration_qualification": "64-step,horizon16 checks validate prior adapters;the new37-condition gate validates exact source,40-environment updates and native1000-step evaluation horizons before learning. Identity reuses its AgentMixer shape gate but must pass its own new check.",
+  "conditions": [
+    {
+      "variant": "ant4x2_global_mappo",
+      "target_ids": [
+        "bpta:Ant-v2_4x2"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_4x2_global_mappo_seed0",
+      "prior_native_summary_sha256": "d7e2ba7381f1a1feea0e10975e9d406696bd84fca887dece1d355de96d267f65",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.8484105500392616
+    },
+    {
+      "variant": "ant4x2_global_arppo",
+      "target_ids": [
+        "bpta:Ant-v2_4x2"
+      ],
+      "method": "arppo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_4x2_global_arppo_seed0",
+      "prior_native_summary_sha256": "01934eaf0a36bc4b358193f2550a89448123117e9e3a6a98351d5d79357a9baa",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9422625037841499
+    },
+    {
+      "variant": "ant4x2_global_bppo",
+      "target_ids": [
+        "bpta:Ant-v2_4x2"
+      ],
+      "method": "bppo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_4x2_global_bppo_seed0",
+      "prior_native_summary_sha256": "a1dd4f0c7083ea10ae639cafa55910635afd22b1a7bde704ddd9dcb6307994c9",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9833002351224422
+    },
+    {
+      "variant": "ant8x1_global_mappo",
+      "target_ids": [
+        "bpta:Ant-v2_8x1"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_8x1_global_mappo_seed0",
+      "prior_native_summary_sha256": "3bd1df49ba0b56c4e4671c7579607b728b5347c06cc85bd183327595300aa352",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9762066998519003
+    },
+    {
+      "variant": "ant8x1_global_arppo",
+      "target_ids": [
+        "bpta:Ant-v2_8x1"
+      ],
+      "method": "arppo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_8x1_global_arppo_seed0",
+      "prior_native_summary_sha256": "1df920d8a0eba7bc8d2b5877323797e3150a09ff57f996283b52ed558277c600",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.064442493021488
+    },
+    {
+      "variant": "ant8x1_global_bppo",
+      "target_ids": [
+        "bpta:Ant-v2_8x1"
+      ],
+      "method": "bppo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_8x1_global_bppo_seed0",
+      "prior_native_summary_sha256": "62a17315c97a3024b105af7d73feff33432010509964fa4233a579028c89964e",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.1208540187217295
+    },
+    {
+      "variant": "hc3x2_local_mappo",
+      "target_ids": [
+        "bpta:HalfCheetah-v2_3x2",
+        "agentmixer:HalfCheetah-v2_3x2"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HalfCheetah_v2_3x2_local_mappo_seed0",
+      "prior_native_summary_sha256": "c81efd10451c66df87e59c7d179b3d168797aa19b64bd355fde66912bcfbe0cd",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.3377690818160772
+    },
+    {
+      "variant": "hc3x2_local_agentmixer",
+      "target_ids": [
+        "bpta:HalfCheetah-v2_3x2",
+        "agentmixer:HalfCheetah-v2_3x2"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HalfCheetah_v2_3x2_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "ec2fc39ed04dc0eeae4564feedfb390768f1c53bbd8024a059914fb9b9cb0436",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9805778469890356
+    },
+    {
+      "variant": "hc3x2_local_identity",
+      "target_ids": [
+        "bpta:HalfCheetah-v2_3x2",
+        "agentmixer:HalfCheetah-v2_3x2"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HalfCheetah_v2_3x2_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "ec2fc39ed04dc0eeae4564feedfb390768f1c53bbd8024a059914fb9b9cb0436",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9805778469890356
+    },
+    {
+      "variant": "hc6x1_local_mappo",
+      "target_ids": [
+        "bpta:HalfCheetah-v2_6x1",
+        "agentmixer:HalfCheetah-v2_6x1"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HalfCheetah_v2_6x1_local_mappo_seed0",
+      "prior_native_summary_sha256": "6fccfa48cfd82285161bddee74238ad186c1ab8e15d6bf58d89753a176e73920",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.932946695946157
+    },
+    {
+      "variant": "hc6x1_local_agentmixer",
+      "target_ids": [
+        "bpta:HalfCheetah-v2_6x1",
+        "agentmixer:HalfCheetah-v2_6x1"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HalfCheetah_v2_6x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "a0f9ca3bd0cb315fe07fe4025ad4ce8ffe6a9e99da82ed85788eb0ed26cecf23",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.933365378063172
+    },
+    {
+      "variant": "hc6x1_local_identity",
+      "target_ids": [
+        "bpta:HalfCheetah-v2_6x1",
+        "agentmixer:HalfCheetah-v2_6x1"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "HalfCheetah-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HalfCheetah_v2_6x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "a0f9ca3bd0cb315fe07fe4025ad4ce8ffe6a9e99da82ed85788eb0ed26cecf23",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.933365378063172
+    },
+    {
+      "variant": "walker3x2_local_mappo",
+      "target_ids": [
+        "bpta:Walker2d-v2_3x2",
+        "agentmixer:Walker2d-v2_3x2"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_3x2_local_mappo_seed0",
+      "prior_native_summary_sha256": "242018146fd4169e7318adb3184164423e7931acf922c00a8f6d20515699af59",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.0120351500809193
+    },
+    {
+      "variant": "walker3x2_local_arppo",
+      "target_ids": [
+        "bpta:Walker2d-v2_3x2",
+        "agentmixer:Walker2d-v2_3x2"
+      ],
+      "method": "arppo",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_3x2_local_arppo_seed0",
+      "prior_native_summary_sha256": "3d88c9480014591db6573399f2e59976c03cf01865a27567b591391f927af21f",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.152644833084196
+    },
+    {
+      "variant": "walker3x2_local_bppo",
+      "target_ids": [
+        "bpta:Walker2d-v2_3x2",
+        "agentmixer:Walker2d-v2_3x2"
+      ],
+      "method": "bppo",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_3x2_local_bppo_seed0",
+      "prior_native_summary_sha256": "2ffa4a8a5638190fa24d2b22e891720a445cf314b2ed8d098522e242efd33899",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.950302098877728
+    },
+    {
+      "variant": "walker3x2_local_agentmixer",
+      "target_ids": [
+        "bpta:Walker2d-v2_3x2",
+        "agentmixer:Walker2d-v2_3x2"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_3x2_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "de860f3b63db181255bc2ba39bd56fcb5939d27b02fd489d14cbbe7514e33158",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9694981831125915
+    },
+    {
+      "variant": "walker3x2_local_identity",
+      "target_ids": [
+        "bpta:Walker2d-v2_3x2",
+        "agentmixer:Walker2d-v2_3x2"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "3x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_3x2_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "de860f3b63db181255bc2ba39bd56fcb5939d27b02fd489d14cbbe7514e33158",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9694981831125915
+    },
+    {
+      "variant": "walker6x1_local_mappo",
+      "target_ids": [
+        "bpta:Walker2d-v2_6x1",
+        "agentmixer:Walker2d-v2_6x1"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_6x1_local_mappo_seed0",
+      "prior_native_summary_sha256": "638ac2a6e47803f04d70ba716f97d69300bfec369e7bc031d8fd0fcc03b275d1",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.0338486139662564
+    },
+    {
+      "variant": "walker6x1_local_arppo",
+      "target_ids": [
+        "bpta:Walker2d-v2_6x1",
+        "agentmixer:Walker2d-v2_6x1"
+      ],
+      "method": "arppo",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_6x1_local_arppo_seed0",
+      "prior_native_summary_sha256": "f54b7079d5bf9cc94543f82b929df5f023f7ad102788936f448b0a78be40f93b",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.203571486286819
+    },
+    {
+      "variant": "walker6x1_local_bppo",
+      "target_ids": [
+        "bpta:Walker2d-v2_6x1",
+        "agentmixer:Walker2d-v2_6x1"
+      ],
+      "method": "bppo",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_6x1_local_bppo_seed0",
+      "prior_native_summary_sha256": "53ae704d8e903cc443d2e0ed3c681fbca8201632209ca5fb7a52096c1c276aaa",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.227967774029821
+    },
+    {
+      "variant": "walker6x1_local_agentmixer",
+      "target_ids": [
+        "bpta:Walker2d-v2_6x1",
+        "agentmixer:Walker2d-v2_6x1"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_6x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "64b7712eb0b39b319f8217ef3b9b34dfa2dc06b3cfdd5eb6f73e71901e1591c7",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.159295631106943
+    },
+    {
+      "variant": "walker6x1_local_identity",
+      "target_ids": [
+        "bpta:Walker2d-v2_6x1",
+        "agentmixer:Walker2d-v2_6x1"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "6x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Walker2d_v2_6x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "64b7712eb0b39b319f8217ef3b9b34dfa2dc06b3cfdd5eb6f73e71901e1591c7",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.159295631106943
+    },
+    {
+      "variant": "ant4x2_local_mappo",
+      "target_ids": [
+        "agentmixer:Ant-v2_4x2"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_4x2_local_mappo_seed0",
+      "prior_native_summary_sha256": "37a1976b1dd574bff4415708dcf3af12930ae74a96f66d877b4b8537ccd5ad79",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.8672823896631598
+    },
+    {
+      "variant": "ant4x2_local_agentmixer",
+      "target_ids": [
+        "agentmixer:Ant-v2_4x2"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_4x2_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "b2517ea1a97a6a37ec50cc6ad17329b7d367d421adf7995ac4a8b1a00b9b4e37",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.98427330609411
+    },
+    {
+      "variant": "ant4x2_local_identity",
+      "target_ids": [
+        "agentmixer:Ant-v2_4x2"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "4x2",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_4x2_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "b2517ea1a97a6a37ec50cc6ad17329b7d367d421adf7995ac4a8b1a00b9b4e37",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.98427330609411
+    },
+    {
+      "variant": "ant8x1_local_mappo",
+      "target_ids": [
+        "agentmixer:Ant-v2_8x1"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_8x1_local_mappo_seed0",
+      "prior_native_summary_sha256": "bf3340393afa2583f799b4dd803cd4758fe3fb40cfaff721d7d8937783765522",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.903242148924619
+    },
+    {
+      "variant": "ant8x1_local_agentmixer",
+      "target_ids": [
+        "agentmixer:Ant-v2_8x1"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_8x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "ce15999e434a8ddb45bd379c4b3b58c26e174e68b79cf6804a7ca4f0952c268a",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.0247824671678245
+    },
+    {
+      "variant": "ant8x1_local_identity",
+      "target_ids": [
+        "agentmixer:Ant-v2_8x1"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "8x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_8x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "ce15999e434a8ddb45bd379c4b3b58c26e174e68b79cf6804a7ca4f0952c268a",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.0247824671678245
+    },
+    {
+      "variant": "ant2x4d_local_mappo",
+      "target_ids": [
+        "agentmixer:Ant-v2_2x4d"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_2x4d_local_mappo_seed0",
+      "prior_native_summary_sha256": "34777770d012fea4b08752dfaebcc8ee62292333fc496751e382a99563df08fd",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.8622699221596122
+    },
+    {
+      "variant": "ant2x4d_local_agentmixer",
+      "target_ids": [
+        "agentmixer:Ant-v2_2x4d"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_2x4d_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "e624a67de731c9c2386bfd778d7d2cbf00a3c9d26bdd0b208274d12508c0e2cf",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.981365397106856
+    },
+    {
+      "variant": "ant2x4d_local_identity",
+      "target_ids": [
+        "agentmixer:Ant-v2_2x4d"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4d",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Ant_v2_2x4d_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "e624a67de731c9c2386bfd778d7d2cbf00a3c9d26bdd0b208274d12508c0e2cf",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.981365397106856
+    },
+    {
+      "variant": "humanoid17x1_local_mappo",
+      "target_ids": [
+        "agentmixer:Humanoid-v2_17x1"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Humanoid_v2_17x1_local_mappo_seed0",
+      "prior_native_summary_sha256": "aab375aeebc9b138867d7f6fe0f41b6b8e2eb2ea2f619d2bbccef4aae06e321b",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.1578922760672867
+    },
+    {
+      "variant": "humanoid17x1_local_agentmixer",
+      "target_ids": [
+        "agentmixer:Humanoid-v2_17x1"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Humanoid_v2_17x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "72eea5ce8ae096661cfa14b451b659dad1e68fc5a6e41d1016163ce106c0aa5e",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.090784271247685
+    },
+    {
+      "variant": "humanoid17x1_local_identity",
+      "target_ids": [
+        "agentmixer:Humanoid-v2_17x1"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "Humanoid-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_Humanoid_v2_17x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "72eea5ce8ae096661cfa14b451b659dad1e68fc5a6e41d1016163ce106c0aa5e",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.090784271247685
+    },
+    {
+      "variant": "humanoidstandup17x1_local_mappo",
+      "target_ids": [
+        "agentmixer:HumanoidStandup-v2_17x1"
+      ],
+      "method": "mappo",
+      "environment": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HumanoidStandup_v2_17x1_local_mappo_seed0",
+      "prior_native_summary_sha256": "0261055b6b224539e18531614f1eb2f42f7341f462004d8cff6fad37307c5b6b",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 1.9939478528685868
+    },
+    {
+      "variant": "humanoidstandup17x1_local_agentmixer",
+      "target_ids": [
+        "agentmixer:HumanoidStandup-v2_17x1"
+      ],
+      "method": "agentmixer",
+      "environment": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HumanoidStandup_v2_17x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "25fb1152d618177127dee892416cc28f00a7f027300dbaa7a1952154ad5724e7",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.15059947501868
+    },
+    {
+      "variant": "humanoidstandup17x1_local_identity",
+      "target_ids": [
+        "agentmixer:HumanoidStandup-v2_17x1"
+      ],
+      "method": "identity",
+      "environment": {
+        "scenario": "HumanoidStandup-v2",
+        "agent_conf": "17x1",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      },
+      "prior_native_run": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/mujoco_HumanoidStandup_v2_17x1_local_agentmixer_seed0",
+      "prior_native_summary_sha256": "25fb1152d618177127dee892416cc28f00a7f027300dbaa7a1952154ad5724e7",
+      "prior_native_budget": 64,
+      "prior_native_horizon": 16,
+      "prior_native_elapsed_seconds": 2.15059947501868
+    }
+  ],
+  "studies": {
+    "gate": {
+      "config_plan": "configs/mujoco_remaining_check12k.json",
+      "config_plan_sha256": "5c85fdd24c81f401a4491accac60db0de2bb8bb6dc40c714de83da88714d22a0",
+      "manifest": "results/mujoco_remaining_check12k_20261026T215632Z/manifest.json",
+      "manifest_sha256": "55ec0b3d64b01500403158221fb1d3940336b474e3f412dc7aadfb3301b520ce",
+      "submit_script": "results/mujoco_remaining_check12k_20261026T215632Z/submit.sbatch",
+      "submit_script_sha256": "9dad8f878832205caca53b832f86de5f75f280ecc79c6d63ea3d206e2080288f",
+      "configs": [
+        {
+          "variant": "ant4x2_global_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_global_mappo_seed0.json",
+          "config_sha256": "50dee48a8fbbf6e707c589b09c5d67d84c6a3a7b022acf4e2bfb1df0316012ef",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_global_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_global_arppo_seed0.json",
+          "config_sha256": "0d9966b848b5dfc2ca00bdf8c2c38e9227d420a3c3444a63844aa39a39c078d1",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_global_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_global_bppo_seed0.json",
+          "config_sha256": "f162495aea265ba94937ee2509f3d79e2089588d212c2ee5f7bd1804f6fbf623",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_global_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_global_mappo_seed0.json",
+          "config_sha256": "a9305e6f74344bac420ddb7a74f86b21d234ce347b629095645130a157276bc1",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_global_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_global_arppo_seed0.json",
+          "config_sha256": "ac26f48076251d7faa824175c0ca24bf3ddb64eff312dcb3cccd9171f55b403a",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_global_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_global_bppo_seed0.json",
+          "config_sha256": "981a8bc07d183dfd007b38c81690af96552bf55d366fea443ffca6b8b3b9d656",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc3x2_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc3x2_local_mappo_seed0.json",
+          "config_sha256": "dd3d6735779f3fce1a25659e6e8d6a86eec81309feb558a7e61f5b08d90a5aa2",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc3x2_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc3x2_local_agentmixer_seed0.json",
+          "config_sha256": "2e68065472cb26bb414db6f448adeede97518e6c16093b1605a23173294c9496",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc3x2_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc3x2_local_identity_seed0.json",
+          "config_sha256": "3ac91b68c275a20f0c10bbbb40fb01097f2ba57dda46730d179e55c7a3e54248",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc6x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc6x1_local_mappo_seed0.json",
+          "config_sha256": "6b838889d5d9613eaaa354caf2c4425a6e82ea77cceab3aeeb02c6c06e89e4dc",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc6x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc6x1_local_agentmixer_seed0.json",
+          "config_sha256": "32b1f04bf06c0468cbf62589925c53f113569a374c9a7055dd9fefc052bdaeb8",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc6x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc6x1_local_identity_seed0.json",
+          "config_sha256": "5474385c36a75029d5934a791a211e02375f27540f9c2e301c0e6ef11e3ed385",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_mappo_seed0.json",
+          "config_sha256": "fdad654c948b6e055646c8a773bc250cf09ca6bc60b940d4be1eb1ebb7b24f03",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_arppo_seed0.json",
+          "config_sha256": "b25300517c2f2e0c902dda57ebf9a7f9786ff7a903be463b922da751c12ca5e1",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_bppo_seed0.json",
+          "config_sha256": "1b67c546cab37fd7ccf22d85163e7d6d768ca64e8b1474dafa3a110aeb04a28e",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_agentmixer_seed0.json",
+          "config_sha256": "fa44cd318265bc4efc3e61aad59fb7584613594df0b86aa2190dd7e47c674ee1",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_identity_seed0.json",
+          "config_sha256": "171b907963c033eae4c2992b58a3a36dac66d3be96dd3d0e630948ca5faae7ca",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_mappo_seed0.json",
+          "config_sha256": "68bdca38250267ce33d141878b2558618282841b2e272c66ba5067f46e4de59b",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_arppo_seed0.json",
+          "config_sha256": "fb4d23e739a194848618073d34f2390ab016a712b13c54ffcc525c073c7711f7",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_bppo_seed0.json",
+          "config_sha256": "7cf29b37d2fceb4010db969f4e9d6ea16770dba4d96d4e39858559241afd062c",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_agentmixer_seed0.json",
+          "config_sha256": "e06578d16cbe0e69bc3166a743831cae1a911581b959bdb5aa69fc98e1bd5a9f",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_identity_seed0.json",
+          "config_sha256": "1eb20e69ca0e03037defde0d34294b721a150b5bbb6b958e36fe8d22d1715507",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_local_mappo_seed0.json",
+          "config_sha256": "b81382fd093573c3494331bd6f066bf280242d2026f4fea2c78e36ccf9af9ba5",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_local_agentmixer_seed0.json",
+          "config_sha256": "025c5a59456407ebeb5b100692ad99d70caf2c0bc697d78c1e96e02bc2cf3f4c",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_local_identity_seed0.json",
+          "config_sha256": "ed510d76e3569bd750b319fde765fd06de0e76b855921e00a530ddca27e92ea3",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_local_mappo_seed0.json",
+          "config_sha256": "6730a571ac90972bc9e9f4de41fcad15ae3d8fdfb31cc501ec7fa16b0081ef34",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_local_agentmixer_seed0.json",
+          "config_sha256": "5a6ddefb924d4d231ca67d4172d0192d260063ea1df9587ebac09a659876e89a",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_local_identity_seed0.json",
+          "config_sha256": "921f3c3a67477206fb4d197036e01f099751cd84ee0fbefd927fb844468548af",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant2x4d_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant2x4d_local_mappo_seed0.json",
+          "config_sha256": "c7b2a28f2b6c5d2530911fb1621df3d9ea15e168d044059d5244ce20ffa55f4d",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant2x4d_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant2x4d_local_agentmixer_seed0.json",
+          "config_sha256": "4e5168899156b23b9c4b089a0c6d8c1a7cc17c8580b4e934f0d287ee54921dd9",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant2x4d_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant2x4d_local_identity_seed0.json",
+          "config_sha256": "96af922d961811112869869f4bdb9fedc5b206339d502e4141e97827b3866e62",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoid17x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoid17x1_local_mappo_seed0.json",
+          "config_sha256": "a17744d75f490ccfc04e8a3af95f1795bcc355adb44d8d18f3d7c47241b9b237",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoid17x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoid17x1_local_agentmixer_seed0.json",
+          "config_sha256": "10c992d7589e3fad62a5c4c422afbf8db6c08bcf5700a8ecebd59f46b7e7fb9b",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoid17x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoid17x1_local_identity_seed0.json",
+          "config_sha256": "e4921d6c93cc005817dff3819200efb42b77f60c13d401df22731ec7c4af272c",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoidstandup17x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoidstandup17x1_local_mappo_seed0.json",
+          "config_sha256": "749c21abd624afc6057f1a061b6fc9da2d1ef7333b4d61e8d3bdb2bbe07bbdcd",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoidstandup17x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoidstandup17x1_local_agentmixer_seed0.json",
+          "config_sha256": "e65284c100e377fc1ff55521188c38e9fd3f1411d3158d4286da53348ea4f68f",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoidstandup17x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoidstandup17x1_local_identity_seed0.json",
+          "config_sha256": "c78377232fd346e90c620eaa7e6355e64d8d51f982bc44eb2565e6709c4cba4e",
+          "output_unstarted": true
+        }
+      ],
+      "status": "prepared_not_submitted"
+    },
+    "pilot": {
+      "config_plan": "configs/mujoco_remaining_transfer500k.json",
+      "config_plan_sha256": "83b381d1973faf21c84c8a2b0d20f780d514bf6f6231de70a7e51c6d8709d8fe",
+      "manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "manifest_sha256": "009a5cf8d326ef0dbfea5d073dd7a35c4cf356b87c2b0219b7c01ff85274165d",
+      "submit_script": "results/mujoco_remaining_transfer500k_20261026T215632Z/submit.sbatch",
+      "submit_script_sha256": "858c157bb2e0688fc30e03c14eb4705919c3da621bdcdf4ea703ece2afc6f418",
+      "configs": [
+        {
+          "variant": "ant4x2_global_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_global_mappo_seed0.json",
+          "config_sha256": "326201d7070ba348322d8a54518a0024e7040f384772c55dccdacaa6f66870a7",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_global_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_global_arppo_seed0.json",
+          "config_sha256": "025b1153137aae8d2a4fae99f5ddbcb146b842fc73314340ae43fd0f5d19115c",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_global_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_global_bppo_seed0.json",
+          "config_sha256": "eaecdec7dba40f1ae7cdb6acf066a8a5297051834f13988a14e2c90094b3f4aa",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_global_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_global_mappo_seed0.json",
+          "config_sha256": "8d8607a059b6170ae3340b8e31eecd3e41113b12c43bd6eb9beefe7c9ce1b8b7",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_global_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_global_arppo_seed0.json",
+          "config_sha256": "773dde6b9828799ecffb7d4b86e4566e576389ab644472beb68fcd30e957fd5d",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_global_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_global_bppo_seed0.json",
+          "config_sha256": "a1c01d4bfc7a2b06c7ff4f2aebade1a06160bf030f2dd2f3bc2c5263424fa9f7",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc3x2_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc3x2_local_mappo_seed0.json",
+          "config_sha256": "ea7715f4ae3fcb5f0e530f1c8e038d66fc35ceaaa1cb9d2882153360824d30e5",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc3x2_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc3x2_local_agentmixer_seed0.json",
+          "config_sha256": "5cce22ffcec2d02ed2c9e42c4e907e3b4343a04878d2f90256d2e72e39357d3c",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc3x2_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc3x2_local_identity_seed0.json",
+          "config_sha256": "caf65b74a9babaa2cfd127f4726ef6f42ac0f99f075c84ae7fa1105febb81e0c",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc6x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc6x1_local_mappo_seed0.json",
+          "config_sha256": "9bee7f9122d543a204f3895d37d55642a036382ab18978f78e9a47fbf660c475",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc6x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc6x1_local_agentmixer_seed0.json",
+          "config_sha256": "f18a0b9cda4e45bee19061623d2dc39d3b0b50ef718f0fde9d58cfe07e66971e",
+          "output_unstarted": true
+        },
+        {
+          "variant": "hc6x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc6x1_local_identity_seed0.json",
+          "config_sha256": "7a7d9a6a673f7b60f5d94360e07b958c4598df12ba88d158b84a145e0b40cea1",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_mappo_seed0.json",
+          "config_sha256": "c39d4e8579727969db2b8666bacf7e0598625027ff84b411750bca9af2775aad",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_arppo_seed0.json",
+          "config_sha256": "7736b1732e588658a9573faa7c585d7e37ccca7ef9c1c68d066ee4b7180d2044",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_bppo_seed0.json",
+          "config_sha256": "12c58714fb4640f3d3850625fbdeba1b5039262db8a6a7bfddee0f60a96cfca6",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_agentmixer_seed0.json",
+          "config_sha256": "d14548ff08935d6b81535b0a1c36486855d817398702f8c0d132a7ed03ab13cb",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker3x2_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_identity_seed0.json",
+          "config_sha256": "77abba0136622d3434044f55ea15f19334c2767a4ea9f76031bc32d1cdadfc5e",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_mappo_seed0.json",
+          "config_sha256": "bec37f164b218e791aff6a19c31c787b899b80726324deebd28a402c975a7261",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_arppo_seed0.json",
+          "config_sha256": "00cbcc61c48ad7c6253b96b3c028df390cae474be7f62e4e395e2b525b71a562",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_bppo_seed0.json",
+          "config_sha256": "dcf7558a1445d85081e32b22e210aa0e25471b6f39d1ff4340ee13a629b3d485",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_agentmixer_seed0.json",
+          "config_sha256": "1b0e329a93f95dc7c822eb1b186f599d5973daa739a82d564d93f60920caaf26",
+          "output_unstarted": true
+        },
+        {
+          "variant": "walker6x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_identity_seed0.json",
+          "config_sha256": "806f54a460a600ec934c1965e4c71efd6be2f07e0d82843e579cef7736044adb",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_local_mappo_seed0.json",
+          "config_sha256": "75b03b0ff45a0ed340b5c82e92853ee483ee8267c57b2e985a02753611af1ccd",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_local_agentmixer_seed0.json",
+          "config_sha256": "7283861afde99cf285921ea6dd45c8cb743654268ccb6e4c56b721395dc7dd22",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant4x2_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_local_identity_seed0.json",
+          "config_sha256": "8d93764e66022449c45d6c4b8d1f11bc15e29f2aa6a2b7357083046edbe65c94",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_local_mappo_seed0.json",
+          "config_sha256": "437d45bc431a8c4a798dd7812d467f3d8cdac66922aaed10c9351d35b97de9d8",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_local_agentmixer_seed0.json",
+          "config_sha256": "8614f3da3bd759b193eb7e20f3f05212f9e343b8762d7f8b6f7baa969b4e0c39",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant8x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_local_identity_seed0.json",
+          "config_sha256": "9a653f9b26bf014c99ed03447e6095da57ee295621731bcbb4a79e3baa56daef",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant2x4d_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant2x4d_local_mappo_seed0.json",
+          "config_sha256": "6a2f93a47ab52a6a06a6bcf4f3c1eb646e5507e3b3641d71ea27f7b88b331758",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant2x4d_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant2x4d_local_agentmixer_seed0.json",
+          "config_sha256": "06821e5bc6a3d170723ccf11492341828be4f391ec689385b17ef8e2d7bd0ce8",
+          "output_unstarted": true
+        },
+        {
+          "variant": "ant2x4d_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant2x4d_local_identity_seed0.json",
+          "config_sha256": "580bb0d7bd3ffdbadc2a794ba48df221d517c34327a639ab4cd22d7ced60e7a7",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoid17x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoid17x1_local_mappo_seed0.json",
+          "config_sha256": "f95a627fbc5d95af0d60dd0e3626cb49cad45a7db0dfcc3bb122c1b2c0481932",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoid17x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoid17x1_local_agentmixer_seed0.json",
+          "config_sha256": "14a2fe56a42667ceed6c20d456603573e93331e4704154615b802a30693e8515",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoid17x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoid17x1_local_identity_seed0.json",
+          "config_sha256": "14bff40cbda7b176d2acfc4fff56837c6912f3c7893cb2db6a09053b5029649f",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoidstandup17x1_local_mappo",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoidstandup17x1_local_mappo_seed0.json",
+          "config_sha256": "41da84b0e8dadcd94c0771f7f306e72d24381f2526ebb4b71fdf08d216cdd95b",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoidstandup17x1_local_agentmixer",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoidstandup17x1_local_agentmixer_seed0.json",
+          "config_sha256": "210ea4164abc9ac6b549735590a63b3eb2b99666ca8bf4b9431f913821798951",
+          "output_unstarted": true
+        },
+        {
+          "variant": "humanoidstandup17x1_local_identity",
+          "seed": 0,
+          "config_path": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoidstandup17x1_local_identity_seed0.json",
+          "config_sha256": "c488b1453f21786e875feb75411d4bfa9a55b86cca17a981783084332dcbbcc0",
+          "output_unstarted": true
+        }
+      ],
+      "status": "prepared_not_submitted"
+    }
+  },
+  "gate_allocation": {
+    "workers": 2,
+    "cpus_per_worker": 2,
+    "memory_gib_per_worker": 8,
+    "wall_minutes_per_worker": 120,
+    "interpretation": "Bounded native diagnostic cap,not a measured full-pilot estimate. No GPU or paid external compute;each worker runs its19/18 conditions serially."
+  },
+  "learning_release_requirements": [
+    "All37 gate runs complete validly,with raw episode reductions,configuration/source/seed accounting and every optimizer/ValueNorm count verified.",
+    "Per-task500k time and memory must be estimated from completed native gates and checked against scheduler accounting before submission;the prepared120-minute header is provisional and is not a release allocation.",
+    "Source and resolved settings are fixed;only steps,evaluation episode count/cadence and checkpoint frequency differ between gate and pilot.",
+    "All37 pilot outcomes retained before overall study reporting;single-seed subgroup results do not establish across-seed superiority. Full10M budgets and independent final seeds remain required."
+  ],
+  "status": "prepared_native_gate_not_yet_submitted"
+}

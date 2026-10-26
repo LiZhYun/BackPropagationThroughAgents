@@ -1,9 +1,9 @@
 # Recorded worker schedule
 
 This page retains successive scheduling snapshots. The [latest verified
-graph](#eight-worker-schedule-2026-10-26) has eight serial chains, bounded by
-16 CPUs and 64 GiB. Earlier four-worker ceilings below describe historical
-snapshots and are superseded by that dated revision.
+graph](#remaining-mujoco-native-gates-2026-10-26) inserts37 native checks into
+two of the eight serial chains, bounded by16 CPUs and64 GiB. Earlier
+four-worker ceilings below are historical and superseded.
 
 The initial arrays used two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -407,3 +407,24 @@ SMAC two CPUs/8 GiB, Football one CPU/8 GiB. New jobs must fit these eight
 chains or have an explicit verified scheduling revision. No automatic retries
 or timeout-triggered restarts are introduced. Snapshot states are not live
 scheduler claims; query the recorded job IDs for current progress.
+
+
+## Remaining MuJoCo native gates, 2026-10-26
+
+Job21221614 adds37 [native checks](mujoco_remaining_transfer.md), split into
+19/18 serial runs. Each worker requests2 CPUs/8 GiB for at most two hours,
+without requeue. Its prepared500k learning counterpart remains unsubmitted.
+The only changes to the eight-chain graph are:
+
+```
+A0: 21212297_0 → 21221614_0 → 21220995_0 → existing A0 successors
+B0: 21212197_0 → 21221614_1 → 21220499_0 → existing B0 successors
+```
+
+The two existing successor heads were pending when held. The new array was
+submitted held, then all four changed dependencies, unchanged successor
+requests, gate requests and all32 serial edges were verified before release.
+The [receipt](../experiments/mujoco_remaining_gate_schedule_20261026.json)
+records40 project-owned jobs and eight active workers at release. Other
+chains, active jobs, configurations and the unrelated reproduction remain
+unchanged. The project ceiling stays eight workers,16 CPUs and64 GiB.

@@ -86,13 +86,15 @@ Full reproduction and performance beyond the papers are not yet established.
 - 21220995: two of four500k HalfCheetah partition pilots complete. BPPO returns2506.77 at3×2 and2174.01 at6×1;120 raw episodes and250 updates pass audit. Matched AR runs remain pending in the recorded snapshot. One run/task,1CPU/2GiB/30min,no requeue,max2active. [Study](docs/halfcheetah_partition_transfer.md).
 - 21221161: ten Football3v1 FF/GRU controls at1M,seed0,100complete-match eval episodes. Exact frozen25-module source/configs. One run/task,1CPU/8GiB,4h,no requeue,max2active;even/odd serial chains follow matching HC confirmation workers. All native gates and held/released dependencies verified. [Release](experiments/football_batch1m_release_plan_20261026.json).
 - 21221384: nine AgentMixer HalfCheetah 2×3 development runs at 10M, bounded/residual/identity × seeds 0–2, entropy 0.01. Exact selected source and training settings retained; ten evaluation episodes every 100k. One CPU/4 GiB/seven hours per task, maximum two active, no requeue. [Study](docs/agentmixer_halfcheetah10m.md).
+- 21221614:37 native MuJoCo checks for nine new task/observation groups and missing HC3×2/6×1 AgentMixer controls. All74 gate/pilot configurations pass exact-source preflight. Two2CPU/8GiB/2h serial workers insert into A0/B0; eight-worker cap unchanged. The37 frozen500k pilots remain unsubmitted until all native/resource gates pass. [Study](docs/mujoco_remaining_transfer.md).
 - Earlier jobs 21196118, 21196495, 21196497, 21198089, 21198090 and 21198169 all completed. Tiny integration 21196515 and native restart validation 21198088 also completed. Failed 21196276 remains preserved.
 
-The [latest verified schedule](docs/worker_schedule.md#eight-worker-schedule-2026-10-26)
+The [latest verified schedule](docs/worker_schedule.md#remaining-mujoco-native-gates-2026-10-26)
 has eight serial chains: two A chains for Ant/Walker, partition pilots,
 independent HalfCheetah and Football; two B chains for Prey and the matrix
-ablation; two C chains for AgentMixer10M; two D chains for SMAC. All30 serial
-edges and six pending-head changes were verified while held before release.
+ablation; two C chains for AgentMixer10M; two D chains for SMAC. The new MuJoCo native
+checks insert into A0/B0. All32 serial edges and the four changed dependencies
+were verified while held before release.
 The earlier four-worker ceiling was the initial pilot allocation. Frozen
 studies, active jobs and the unrelated reproduction remain unchanged.
 
