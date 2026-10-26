@@ -1,0 +1,113 @@
+{
+  "recorded_utc": "2026-10-26T20:36:21.558611+00:00",
+  "scope": "Exploratory matched development comparison, three seeds at 1M; not independent final confirmation.",
+  "audit_inputs": [
+    {
+      "path": "experiments/hc2x3_entropy_zero_raw_audit_20261026.json",
+      "sha256": "62025c81357f3cb27915995459ba350c92d4ecec5f03396df02f039477bde83b"
+    },
+    {
+      "path": "experiments/hc2x3_entropy_positive_progress_20261026T203600Z.json",
+      "sha256": "b57cfdc0796ca1878f1f86d028af49397ebf37935e1d874c65765f6b3cb6fc85"
+    }
+  ],
+  "comparison_script": "results/hc_entropy_audit_20261026T203600Z/compare.py",
+  "comparison_script_sha256": "ea65b80725f8671eb1224320a8df2f86c6b4652206d69bf51cd90b7ed4f670d0",
+  "shared_training_source_verified": true,
+  "source_difference": "Positive-entropy snapshot adds only learning_curves.py; shared modules are byte-identical and do not import the added helper.",
+  "declared_runs": 18,
+  "eligible_runs": 16,
+  "all_runs_complete": false,
+  "pairing": [
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "both_complete": true,
+      "config_sha256": [
+        "6528ccd1d5a858fcbe5c3a23b84569a93a13bbfc0eb2efa8e37d78d5aec373dc",
+        "ada599947fa4d290948978f898bae8d7d51b62a1133a26bfd468e4eced49677c"
+      ]
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "both_complete": true,
+      "config_sha256": [
+        "9fd13388b19807913e8c4e09ea870035a7749bdfe5ca18a44add3b5928136fd8",
+        "055fde53998f32a8c0df5ae219fb3f4fd443b3c11554f34315108c071fb641a5"
+      ]
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "both_complete": true,
+      "config_sha256": [
+        "f35feb51d0c299ccde7ac48aaf2ca97220fabbcef36cbf5edf992261d29fe66b",
+        "79fe577b0e3059dfdd589d074240456f15e4be562e180127d604af5ea04fe1a5"
+      ]
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "both_complete": false,
+      "config_sha256": [
+        "4ded47d36b5adbb14d9f6c77a2b357f8d7f2c31d21678af6459c0d4f8735ca5a",
+        "46e1aee924d75c24f119057f4e8a6ecb9216bb482ed06e3ff604dd597247d0d3"
+      ]
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "both_complete": true,
+      "config_sha256": [
+        "7397441302d08a82b8cb5ed614986f4e9a4f31b9e08d34eed5b14d300c58db8c",
+        "451ba9645c3a720f711e35a21a1c35785765ff2674211ee5e3eb9ae4b57f40f1"
+      ]
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "both_complete": false,
+      "config_sha256": [
+        "f733a9b5750f440ec7fbbb8fe640a42baa767f763248d37265d5a541bbc79ea7",
+        "862a57191cb9b5a46537037ef41b9667966008c8171a2c3a3a5191bd3c05c752"
+      ]
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "both_complete": true,
+      "config_sha256": [
+        "cbdd81da2df2a9b5a058e75b38321f1cdefc799300c813f970badbafe71cdef1",
+        "b685474889c850e24346c11b33476e979b37342d45bf43ac818384b986cd8daf"
+      ]
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "both_complete": true,
+      "config_sha256": [
+        "72db96f05be36d3dfb8ad7c07c89095e3a348b4daa0bffdbfc9801702709c950",
+        "6db65c9ea7e153fb1b18427976303a3f63a3bac435af15d9e4e9db3fdbc40803"
+      ]
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "both_complete": true,
+      "config_sha256": [
+        "9786a688cf6c7441e62ffd9407afcbbec19a03c0d344cf1fe86ab6bf0f903b94",
+        "0c4c5477be507d99b3c05ab6662e900d87391f1b917274c012d68d82e4024776"
+      ]
+    }
+  ],
+  "groups": [],
+  "contrasts": [],
+  "limitations": [
+    "Three development seeds; no independent final confidence intervals.",
+    "This analysis is prepared after partial results exist; it is not a preregistered success test.",
+    "Final-update differential entropy describes training distributions, not evaluation policy variance.",
+    "No early peak, missing-run imputation or pooled development/final seeds.",
+    "1M is below the archived 10M MuJoCo budget."
+  ]
+}

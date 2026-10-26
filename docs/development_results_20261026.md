@@ -137,7 +137,26 @@ Relative to identity, residual has a 4.71% lower final mean but a 25.30% higher 
 
 The geometric-mean scale inferred from the final training-update Gaussian entropy is 0.0323–0.0430 for the residual policies and 0.0370–0.0434 for bounded policies. Both families substantially reduce their initial exploration scale. This is a diagnostic over PPO-update observations and epochs, not an evaluation-action variance or proof of the cause of low return.
 
-The released coefficient is zero entropy regularization. Job 21211006 queues an explicit coefficient-0.01 comparison for all three variants and seeds 0–2 after the queued matrix control (itself after SMAC), with every other learning and evaluation setting fixed. The residual default remains unchanged. The full 10M BPPO/AR comparison and independent final confirmation are separate pending evidence.
+The released coefficient is zero entropy regularization. Job 21211006 tests
+coefficient 0.01 for all three variants and seeds 0–2. At the 2026-10-26
+20:34 UTC raw-log snapshot, seven of nine positive-entropy runs are complete.
+The [raw baseline audit](../experiments/hc2x3_entropy_zero_raw_audit_20261026.json)
+and [partial intervention audit](../experiments/hc2x3_entropy_positive_progress_20261026T203600Z.json)
+verify 800 evaluation episodes and 4,000 updates across 16 completed runs.
+The [pairing check](../experiments/hc2x3_entropy_pairing_progress_20261026T203600Z.json)
+confirms that each declared pair differs only in entropy coefficient. Shared
+training modules are byte-identical; the later snapshot adds an unused
+reporting module. Every seed remains declared, and no complete-study aggregate
+is emitted until all 18 runs are valid.
+
+The analysis will compare paired final returns, complete-curve areas and the
+geometric-mean Gaussian scale from the final training update, retaining the
+identity control at each entropy setting. These are three-seed development
+comparisons at 1M, below the archived 10M budget. The analysis was prepared
+after partial results existed and is not a preregistered success test. The
+residual default remains unchanged. The [completed 10M BPPO/AR development
+comparison](halfcheetah_confirmation.md) and its queued independent confirmation
+are separate evidence.
 
 ## Evidence index
 

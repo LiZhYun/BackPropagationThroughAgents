@@ -1,0 +1,1115 @@
+{
+  "recorded_utc": "2026-10-26T20:34:11.898737+00:00",
+  "scope": "Raw audit of matched entropy development controls, seeds0-2. All declarations retained; no independent confirmation or paper-level performance claim.",
+  "manifest": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/manifest.json",
+  "manifest_sha256": "37795980e5b55cfa71585719691a30e52df26cecd214a8e0b8bc5b79c2771b46",
+  "audit_script": "results/hc_entropy_audit_20261026T203600Z/audit.py",
+  "audit_script_sha256": "a1ba29e0de40b4a0c577c484822181bb55e4623eb3ab1a3558503c97cff0af4f",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "frozen_source_bytes_verified": true,
+  "metric": "return_mean",
+  "raw_evaluation_episodes_verified": 450,
+  "raw_evaluation_windows_verified": 0,
+  "rollout_updates_verified": 2250,
+  "runs": [
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_residual_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1396.898124758969,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -10.359913635253907,
+      "final_training_update_geometric_mean_scale": 0.04304148737540458,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "c32b9e8be92712cf3343caaa6cb404e84b4fad9c2e6094fecfd54251e463ad70",
+        "metrics.jsonl": "ccc452c928ca499afc46ba294daf083a4c9a11713540cbf54cd15c2dedce731a",
+        "summary.json": "5c23ed6c8d69fd07c0703e7bd6f67b0290927796e1b11c5556fa0f2bfbf03dd5",
+        "checkpoint.pt": "e7e2177ee107676515342a8ffd3981124be7c63b24c1f51a6e57ed04ed18f7fc"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.027213632423737883,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 1705.1330966672426,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 2122.364096931958,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2520.4311424117404,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2678.964510886556,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1919.1702544349828
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_residual_seed1",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1386.0343596129678,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -12.08406982421875,
+      "final_training_update_geometric_mean_scale": 0.03229153457471851,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 1,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "00f35eb86474b5fe9db8de80ec611c2b9a0256d83786a0d65368224e6a875be1",
+        "metrics.jsonl": "c304370f10d7d87e8338d828708be401959c45984dde34065c7935495eb09e60",
+        "summary.json": "494a4644429c89e9c256e0ddb5f6c9d9aa667c75b05620ed5e450ba0d9833de5",
+        "checkpoint.pt": "828b93663e06b7d9f96522a8e190e91178361bf66240fd839e887e1712996324"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.019372146998947376,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 1576.4461815927602,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 2139.5938789118563,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2393.2575962791134,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2454.7602542182735,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1831.7122448284765
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_residual_seed2",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1371.829470303026,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -11.74696750640869,
+      "final_training_update_geometric_mean_scale": 0.03415772703924146,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 2,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "b862f11a6be4064cf3b976ba6e67daab908ccf961433f95fc442cd808f8f6f53",
+        "metrics.jsonl": "f0301e5103fd42d7de29cff9b720bba31585dd5171f9b2ead8ed5c7009350901",
+        "summary.json": "40b1fdac5ed490e6ad2d701336c9914178e2853666185acb6268d01737682fc5",
+        "checkpoint.pt": "8517e4ee980552236249a2c26f4855ef5b3d4cb048a75d1a5bc3d44b734cb822"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.0268451226458107,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 1518.2871657905328,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 2856.51997633282,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 3001.442575960495,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3033.339980734378,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 2220.1932046465713
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_bounded_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1379.7929733539931,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -10.303703880310058,
+      "final_training_update_geometric_mean_scale": 0.04344660729638814,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "bounded",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "069fb8101878c5d01835178d1ed01d89363e410ee5c953e2548d1c8f877074a4",
+        "metrics.jsonl": "bd3d861a2fd495b62c2f2dd28fc5a14f1695071cf33162c84c5bf5959f3dbdd3",
+        "summary.json": "e0ea636d3cb6d9540d79688bd15c50d76756572098aa4d94b1aeb111e84d9c09",
+        "checkpoint.pt": "03980b7eba6ab58d5d6ac819e44405ecd7d3d25a68601ac01ee59341eae95fa9"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.027213632423737883,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 572.9399559405224,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1879.425063421495,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2375.2999374667274,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2479.234185666223,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1514.3378493121124
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_bounded_seed1",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1363.487371110008,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -11.262438583374024,
+      "final_training_update_geometric_mean_scale": 0.03703056484596539,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 1,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "bounded",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "8c10656fe723d49edf69ddf782195d2cb584b36c2e79ecac5ec412bd56dce6d5",
+        "metrics.jsonl": "bb11851e465596d72bd30ca5b47298eda7718e2d6470207ecab9c2346b4515c7",
+        "summary.json": "b5a88ae2f7282f5b9a05851ed336f334111006017c96f56457cf8173227e4cad",
+        "checkpoint.pt": "451bd1d97461c1bd7c5059db8c033d5a0940a30079bd10acc0668b1c7b8bc23e"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.019372146998947376,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 1258.4587672710518,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1739.133123169504,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2489.9974320722317,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2593.9897856394423,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1693.549623156966
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_bounded_seed2",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1368.734373384039,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -11.178426933288574,
+      "final_training_update_geometric_mean_scale": 0.037552711659227925,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 2,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "bounded",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "ce7a85e1f275e6d534db0d678e24d27ce1887b83ed0ecf5b325da2465dfd551a",
+        "metrics.jsonl": "b969393fedc06d69f1c38d3eb01bfa7ca73d7eff01c7f9d1afbc66f86c22b52f",
+        "summary.json": "855f04f48d045dac49268fd39d3c94e59e15306b3b12e753cec68004770a04a5",
+        "checkpoint.pt": "dc50e270403cd629b1891e0028f5edd44acf7832736f5aa5b9a630c20ef7c5f0"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.0268451226458107,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 807.5016755747172,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1949.7221055899836,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2451.162117274889,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2567.2576396406985,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1620.4330394398908
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1252.276141355047,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -5.329211807250976,
+      "final_training_update_geometric_mean_scale": 0.09954549520481083,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "69cfb635d9ea633b0955bcbb7084cbe46871fb0a897d2eabb977cb0f842ec7f3",
+        "metrics.jsonl": "ab301e715eb1b4f98f0c07dcf7ed2cd3bf735ccba6fee1abc839d66b6bf0f11a",
+        "summary.json": "75586b8fe8902e3248c0ae93ad34e121cad390c4ae271092c2a18a6870628e70",
+        "checkpoint.pt": "9f2eac6501f8edf6dc9b028253271065f56ce5f91524031d942187e9461ae6aa"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.027213632423737883,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 1053.3234340480076,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1528.2634474367726,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2114.0517878695073,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2340.281758583574,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1464.1011764852494
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_identity_seed1",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1262.878784656059,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -5.306203079223633,
+      "final_training_update_geometric_mean_scale": 0.09992796395030605,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 1,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "0cd4ac91aa2ed382891ad21103e0c70d3dca960b15d5fd260b4d20a012d4dbf5",
+        "metrics.jsonl": "76fa9661a417fbd5c93db974c64eec6e3e394415894c537681c82fce4661cab5",
+        "summary.json": "8d872afacc80cee711bd80c21c0de122f5556a4f2e95c9c6038e529f12a45007",
+        "checkpoint.pt": "9ad017e06fd5c548fc1f6a0323760477cf8899750832358aaee7cffe66290435"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.019372146998947376,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 977.530118175181,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1267.6595447391915,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 2090.3336957251577,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2768.398050216732,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1427.1597569962353
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "output_path": "results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_identity_seed2",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 250,
+      "elapsed_seconds": 1240.8769356400007,
+      "evaluation_environment_steps": 50000,
+      "final_training_update_joint_entropy": -4.508746814727783,
+      "final_training_update_geometric_mean_scale": 0.11413237321619747,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 2,
+        "steps": 1000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 250000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "da4d5c5e1d1ef75fe2028f46809016dd1b7b2a454b4c00e8ab330cfa88a72656",
+        "metrics.jsonl": "3987b240e9eaa6ccfe8ba4d2314af07068177ae17fda24c4dcbffa869e0d839d",
+        "summary.json": "921af6a128ee012063ddd35de3c2cabafb8b34e388f302de5f0b92075e087fa0",
+        "checkpoint.pt": "3832b7e6c210822924696c3194677b123dbeed3188f128cb48ce6aa9efee999b"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.0268451226458107,
+          "episodes": 10
+        },
+        {
+          "steps": 252000,
+          "return_mean": 618.0057942464583,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1777.6446604709965,
+          "episodes": 10
+        },
+        {
+          "steps": 752000,
+          "return_mean": 3383.0857536872113,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3462.156035124809,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 1873.9880179711895
+    }
+  ],
+  "completed_runs": 9,
+  "declared_runs": 9,
+  "integrity_errors": [],
+  "limitations": [
+    "Raw episode/window reductions are checked; native transition rewards are not independently replayed in this audit.",
+    "Incomplete methods remain in the report; three development seeds do not provide independent final confirmation.",
+    "No early peak replaces a final endpoint; budgets and protocols must match before comparisons."
+  ]
+}
