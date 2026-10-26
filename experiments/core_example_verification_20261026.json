@@ -1,0 +1,351 @@
+{
+  "source_commit": "1e38c2dc21748dc8b2dd08041fb22bc4bdeb9920",
+  "scope": "Installed core validation and runnable Prey interface example; not benchmark performance.",
+  "directory": "results/core_example_check_20261026T153110Z",
+  "commands": [
+    {
+      "name": "install",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "sync",
+        "--offline",
+        "--locked",
+        "--extra",
+        "dev",
+        "--no-editable"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 1,
+      "stdout": "results/core_example_check_20261026T153110Z/install.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/install.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "4ce13b8f724fd722f8a5710daf04d1aacd9b4fff5959429a56cd5e72c4c81ebc"
+    },
+    {
+      "name": "install_online",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "sync",
+        "--locked",
+        "--extra",
+        "dev",
+        "--no-editable"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/install_online.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/install_online.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "3ace8187b89afed9e992ed8971af0fde48dd4c4fe270603e42c3fb3447c04214"
+    },
+    {
+      "name": "build",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "build",
+        "--offline",
+        "--wheel",
+        "--out-dir",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/dist"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/build.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/build.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a10ffd9f30fb22e57cd224ce0df75cf95aace9dfbb0d178cff41c521caa1c1b0"
+    },
+    {
+      "name": "install_wheel",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "--no-deps",
+        "--reinstall-package",
+        "bta-repro",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/dist/bta_repro-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/install_wheel.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/install_wheel.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "4629d5a2be149554508bf77c7e78edb90dff2639f66e89ff3210e67110ce794c"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-o",
+        "pythonpath=",
+        "--junitxml=/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/core-tests.xml"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/tests.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/tests.stderr",
+      "stdout_sha256": "8161fc65d9cb858e90f3c949ce64c007f0168232f5312dac9989f060a49b55b7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "installed_commands",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/scripts/check_installed_package.py",
+        "--output",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/installed_commands.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/installed_commands.stderr",
+      "stdout_sha256": "a06ad6c7c051780ebfd61aa7da7eadc17359a4acbf6a3e578d805b70405ba491",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "prey_example",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/bta-train-simulator",
+        "--config",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/configs/prey_example.json",
+        "--output",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/prey_example"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/prey_example.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/prey_example.stderr",
+      "stdout_sha256": "304bdf073ca939dd69bbd59e2650caa0eb57d55d84e9c73747801aef4fbbacc4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "prey_replay",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/scripts/evaluate_simulator.py",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/prey_example",
+        "--output",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/prey_replay.json"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/prey_replay.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/prey_replay.stderr",
+      "stdout_sha256": "3a2e19b6a21e52d3348c67ce9748f56fe9e2e760c162ca42b2dc1c1cdccc05c3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "targets",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "-S",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/scripts/check_paper_targets.py"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/targets.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/targets.stderr",
+      "stdout_sha256": "1225a971a5576d8ff24b5270b7d44d61bcbb138dbbef48fe92012a452eac4388",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "progress",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "-S",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/scripts/report_progress.py",
+        "--latest",
+        "1"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/progress.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/progress.stderr",
+      "stdout_sha256": "0b91e2000d3bd3ef400ddcafb500065408ebd0fa776bed01c549eff66b19ea91",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+        "-S",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/scripts/report_benchmark_coverage.py"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source",
+      "exit_code": 0,
+      "stdout": "results/core_example_check_20261026T153110Z/coverage.stdout",
+      "stderr": "results/core_example_check_20261026T153110Z/coverage.stderr",
+      "stdout_sha256": "b49c79248ca237a9c6a05cfd690b321a6c1b192084c721860d2ad2882a3637ae",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "status": "completed",
+  "prior_errors": [
+    "RuntimeError: install failed; preserve output"
+  ],
+  "wheel": {
+    "path": "results/core_example_check_20261026T153110Z/dist/bta_repro-0.1.0-py3-none-any.whl",
+    "sha256": "ef3092e5526b8a89192f08e61f31af187758012908dcca9ce353f6542010a11d"
+  },
+  "prey_example": {
+    "steps": 10240,
+    "updates": 20,
+    "elapsed_seconds": 42.16294208006002,
+    "exact_evaluation_replay": true,
+    "fixed_window_reductions_checked": true,
+    "config": {
+      "path": "results/core_example_check_20261026T153110Z/source/configs/prey_example.json",
+      "sha256": "03c863b52f970f66f0448cec38fa469762393c20e1ad4081c447508e13550f96"
+    },
+    "metadata": {
+      "path": "results/core_example_check_20261026T153110Z/prey_example/config.json",
+      "sha256": "c983969ac77d7c6be04c2512aece8a4baed75e53aa43c7f99a214b8b8f207ab8"
+    },
+    "summary": {
+      "path": "results/core_example_check_20261026T153110Z/prey_example/summary.json",
+      "sha256": "d6a495bc206d7e7c445578dd6a1762cb8591733c1629f36472d198d9aa9bc097"
+    },
+    "metrics": {
+      "path": "results/core_example_check_20261026T153110Z/prey_example/metrics.jsonl",
+      "sha256": "f5bec02f53edde663aece9d31d9ac2320c25479644bbdb38762893adde018d88"
+    },
+    "checkpoint": {
+      "path": "results/core_example_check_20261026T153110Z/prey_example/checkpoint.pt",
+      "sha256": "15935b8e1e646e0e3fe38bf2fd5468c53115e8e52e780dfdb93ee3a9b58c8417"
+    },
+    "replay": {
+      "path": "results/core_example_check_20261026T153110Z/prey_replay.json",
+      "sha256": "90f5fbf3c692b23a96b935adf74988dcd3294bb42e6315cb237a12d94dc2f1f3"
+    },
+    "evaluation_environment_steps": 44393,
+    "training_environment_steps": 10240,
+    "eval_episodes_per_checkpoint": 20,
+    "eval_windows_per_checkpoint": 100,
+    "eval_steps_per_window": 200,
+    "performance_interpretation": "Short interface check using a development seed; no benchmark or independent performance claim."
+  },
+  "tests": {
+    "passed": 763,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "pytest_reported_seconds": 38.4,
+    "junit": {
+      "path": "results/core_example_check_20261026T153110Z/core-tests.xml",
+      "sha256": "cf6020efab77b5331cbd67525c46fdc17a7064e8cc388d8128bdc26329d25b9e"
+    },
+    "stdout": {
+      "path": "results/core_example_check_20261026T153110Z/tests.stdout",
+      "sha256": "8161fc65d9cb858e90f3c949ce64c007f0168232f5312dac9989f060a49b55b7"
+    }
+  },
+  "installed_package_check": {
+    "scope": "installed-package integration only; not learning performance",
+    "installed_package": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/lib/python3.11/site-packages/bta_repro",
+    "module_sha256": {
+      "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+      "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+      "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+      "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+      "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+      "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+      "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+      "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+      "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+      "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+      "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+      "learning_curves.py": "a7fbcb906a355679294a0a4a340462830ef9e4523c6b4520798b2b3995337496",
+      "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+      "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+      "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+      "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+      "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+      "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+      "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+      "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+      "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+      "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+      "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+      "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+    },
+    "commands": [
+      {
+        "name": "bppo",
+        "command": [
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/bta-train",
+          "--config",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/bppo.json",
+          "--algorithm",
+          "bppo",
+          "--game",
+          "climbing",
+          "--seed",
+          "0",
+          "--output",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/bppo"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "agentmixer",
+        "command": [
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/bta-train",
+          "--config",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/agentmixer.json",
+          "--algorithm",
+          "agentmixer",
+          "--game",
+          "climbing",
+          "--seed",
+          "0",
+          "--output",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/agentmixer"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "prey",
+        "command": [
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/bta-train-simulator",
+          "--config",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/prey.json",
+          "--output",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/prey"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "replay",
+        "command": [
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/.venv/bin/python",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/source/scripts/evaluate_simulator.py",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/prey",
+          "--output",
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_example_check_20261026T153110Z/installed-check/replay.json"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "exact_checkpoint_replay": true
+  },
+  "package_versions": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cpu",
+    "numpy": "2.4.6",
+    "smacv2": null,
+    "pysc2": null,
+    "mujoco-py": null,
+    "gym": null,
+    "gymnasium": null,
+    "gfootball": null
+  },
+  "hosted_workflow_executed": false,
+  "initial_offline_attempt": "Failed because the locked CPU torch wheel was unavailable in the cache; online locked installation then succeeded. Original failed logs are retained."
+}

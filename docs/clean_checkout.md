@@ -71,6 +71,29 @@ installed-wheel run includes the five added progress-report tests. Workflow
 YAML and shell syntax were checked locally. No hosted GitHub Actions run has
 been triggered; its runner and action setup remain unverified here.
 
+## Updated core and direct Prey example
+
+A later clean export, commit `1e38c2d`, includes the source-snapshot preparation,
+simulator confirmation reporter and CPU timing wrapper checks added since that
+CI run. Its exact installed wheel passes **763 tests, one CUDA-only skip in
+38.40 seconds**, with source-path injection disabled. All 24 installed modules,
+README and license match the exported source. Both short matrix console checks,
+recurrent Prey replay and the three standard-library reports also pass.
+
+The new README `configs/prey_example.json` command then completes its unchanged
+10,240-decision budget and 20 updates in 42.16 seconds on the recorded host.
+Initial and final evaluations each contain 20 complete episodes and 100 windows
+of 200 decisions; total evaluation work is 44,393 interactions, separately
+counted from training. Both window reductions were recomputed from their raw
+window totals. Saved-policy replay exactly matches every final episode and
+window record. This remains a short interface check using a development seed.
+
+The [updated verification record](../experiments/core_example_verification_20261026.json)
+retains commands, the wheel and module hashes, JUnit/stdout hashes, example
+configuration, logs, checkpoint and replay hashes. An initial offline install
+failed because the locked CPU PyTorch wheel was absent from the cache; its logs
+are retained. Online locked installation succeeded. Hosted CI remains untested.
+
 ## Repeat on another machine
 
 From a fresh checkout, run:
