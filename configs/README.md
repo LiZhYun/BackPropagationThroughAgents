@@ -15,6 +15,13 @@ experiment directory and prints that path. It does not submit or run anything.
 Use that frozen source when launching a generated run or replaying a checkpoint;
 see [the simulator guide](../docs/simulator_training.md).
 
+For confirmation of a selected experiment, add
+`--source-manifest results/SELECTED/manifest.json`. Preparation verifies and
+copies that experiment's exact source instead of the current working tree,
+recording the parent manifest hash. Use fully resolved settings from the
+selected run and validate compatibility with the copied trainer before launch;
+the option does not translate new configuration fields into old schemas.
+
 ## Starting points
 
 | Question | Configuration | Evidence and scope |
@@ -22,6 +29,7 @@ see [the simulator guide](../docs/simulator_training.md).
 | Run BPPO or its matched AR-PPO baseline on a matrix game | `matrix_projected_entropy01.json` | Both methods reach the optimum on both games in development seeds 0–2 at 100k steps |
 | Inspect AgentMixer's correlated discrete redesign | `matrix_joint_lr_fast.json` | At 200k, all three development Climbing seeds succeed; all three Penalty seeds fail |
 | Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | Six development runs at the 10M paper budget; still in progress |
+| Confirm the selected HalfCheetah protocol on unused seeds | `mujoco_hc2x3_confirmation10m.json` | Ten frozen runs, seeds1000–1004, separate evaluation seed; exact development source retained. See [the study](../docs/halfcheetah_confirmation.md) |
 | Check transfer to Ant and Walker | `mujoco_ant_walker_transfer500k.json` | Eleven 500k pilots queued; distinct Ant observation protocols and matched controls |
 | Compare continuous AgentMixer scale maps | `mujoco_hc2x3_modifier_scale1m.json` | All nine runs complete; neither modifier improves the final three-seed mean over identity |
 | Reproduce the Prey batch controls | `prey_batch1m.json` | Sixteen completed runs at 1M; neither penalty setting clears the selected paper comparison |
@@ -30,7 +38,8 @@ see [the simulator guide](../docs/simulator_training.md).
 | Check private GRU actors in native SMAC | `smac_recurrent_batch_integration10k.json` | Five-method integration queued; one 10,000-transition rollout per run |
 | Compare feed-forward and GRU actors at a larger SMAC batch | `smac_terran5_batch1m.json` | Ten-run plan frozen but unsubmitted pending native correctness, runtime and memory checks |
 
-These are development settings, not certified final reproduction recipes.
+These files describe development and explicitly frozen confirmation studies;
+none is a certified final reproduction recipe yet.
 The [current status](../STATUS.md) records job completion and acceptance gaps;
 the [experiment tracker](../refine-logs/EXPERIMENT_TRACKER.md) retains earlier
 controls and negative results. Every result must be associated with its actual

@@ -54,3 +54,18 @@ Do not invent GPU-hour estimates before measuring simulator throughput. Known bu
 - [ ] Full baseline and method evidence.
 - [ ] Independent final seeds and ablations.
 - [ ] Reproducible community release with verified performance claims.
+
+## HalfCheetah independent confirmation, 2026-10-26
+
+The first completed10M BPPO development group has mean5980.37±118.29 across
+seeds0–2. Freeze five unused training seeds1000–1004 and evaluation seed2000000
+for BPPO and matched AR-PPO, retaining the exact selected source and all other
+resolved settings. The study tests one pinned reconstruction; all historical
+comparison qualifications and the remaining45-target scope stay in force.
+
+The [study record](../experiments/hc2x3_confirmation10m_plan.json) fixes the
+endpoint, complete-group rule, paired comparisons and uncertainty before launch.
+Both workers follow matching Ant/Walker workers21212297_i. Measured runtime
+predicts13.68hours per serial worker; request18hours,2CPUs/8GB each within the
+existing four-chain ceiling. No replacement seeds, early selection, or pooling
+with development is allowed. See [the study guide](../docs/halfcheetah_confirmation.md).

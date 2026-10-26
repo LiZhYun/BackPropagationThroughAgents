@@ -1,0 +1,760 @@
+{
+  "scope": "First paper-budget10M HalfCheetah2x3 development comparison: BPPO versus matched AR-PPO,training seeds0\u20132,32 deterministic evaluation episodes every500k. Protocol selected from prior500k/3M development controls. Not independent final confirmation.",
+  "metric": "return_mean",
+  "manifest_sha256": "d31da302360489d64a3170ee6c84d6d4b2dff34e089cc29edca085a97d4ceb5b",
+  "reporter_sha256": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+  "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+  "uncertainty": {
+    "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+    "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+    "bootstrap_seed": 1729,
+    "bootstrap_samples": 10000
+  },
+  "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+  "runs": [
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2092415093521931
+        },
+        {
+          "steps": 500000,
+          "value": 2406.8187547279294
+        },
+        {
+          "steps": 1000000,
+          "value": 3429.7160576475767
+        },
+        {
+          "steps": 1500000,
+          "value": 3131.9715311668674
+        },
+        {
+          "steps": 2000000,
+          "value": 4567.594893749419
+        },
+        {
+          "steps": 2500000,
+          "value": 5263.866041803345
+        },
+        {
+          "steps": 3000000,
+          "value": 5216.992006841402
+        },
+        {
+          "steps": 3500000,
+          "value": 5455.802907024645
+        },
+        {
+          "steps": 4000000,
+          "value": 5280.6750748225795
+        },
+        {
+          "steps": 4500000,
+          "value": 5587.899788142335
+        },
+        {
+          "steps": 5000000,
+          "value": 5631.509921510171
+        },
+        {
+          "steps": 5500000,
+          "value": 5665.140151613844
+        },
+        {
+          "steps": 6000000,
+          "value": 5809.665206768287
+        },
+        {
+          "steps": 6500000,
+          "value": 5767.112924744159
+        },
+        {
+          "steps": 7000000,
+          "value": 5767.449098284226
+        },
+        {
+          "steps": 7500000,
+          "value": 5658.485759218116
+        },
+        {
+          "steps": 8000000,
+          "value": 5364.750755685386
+        },
+        {
+          "steps": 8500000,
+          "value": 5546.775819307229
+        },
+        {
+          "steps": 9000000,
+          "value": 5716.117430596649
+        },
+        {
+          "steps": 9500000,
+          "value": 5887.895426381738
+        },
+        {
+          "steps": 10000000,
+          "value": 5843.801900407821
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50039017939.74257,
+        "normalized_by_training_steps": 5003.901793974257
+      },
+      "budget": 10000000,
+      "summary_sha256": "7a1953a67e143767f4471bfdcabd4c5ca702debc53807fec762fcb4630fbe4e0",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "a236419a3d42b68bf7ad308be3adb7b3eefbf3a04853e0a62bd1e0513d125824",
+      "metrics_snapshot_sha256": "fee9ebc7f140b32c38c37340429a2d57e3a6acbb7d0d75d54133a225f86a8bc7",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.21223168205939136
+        },
+        {
+          "steps": 500000,
+          "value": 2107.43730659989
+        },
+        {
+          "steps": 1000000,
+          "value": 3793.3534187517016
+        },
+        {
+          "steps": 1500000,
+          "value": 4222.966958733698
+        },
+        {
+          "steps": 2000000,
+          "value": 5208.778730448771
+        },
+        {
+          "steps": 2500000,
+          "value": 5300.058517008851
+        },
+        {
+          "steps": 3000000,
+          "value": 5548.296974735096
+        },
+        {
+          "steps": 3500000,
+          "value": 5595.792064515289
+        },
+        {
+          "steps": 4000000,
+          "value": 5845.269534466002
+        },
+        {
+          "steps": 4500000,
+          "value": 5826.703489999549
+        },
+        {
+          "steps": 5000000,
+          "value": 5878.888468202147
+        },
+        {
+          "steps": 5500000,
+          "value": 5819.723440091666
+        },
+        {
+          "steps": 6000000,
+          "value": 6071.885906548776
+        },
+        {
+          "steps": 6500000,
+          "value": 5937.822011713553
+        },
+        {
+          "steps": 7000000,
+          "value": 6125.967592257516
+        },
+        {
+          "steps": 7500000,
+          "value": 5883.126376156255
+        },
+        {
+          "steps": 8000000,
+          "value": 6209.304927968366
+        },
+        {
+          "steps": 8500000,
+          "value": 6218.972051801152
+        },
+        {
+          "steps": 9000000,
+          "value": 5656.132449133738
+        },
+        {
+          "steps": 9500000,
+          "value": 5810.55637329417
+        },
+        {
+          "steps": 10000000,
+          "value": 6046.914100280875
+        }
+      ],
+      "full_budget_auc": {
+        "area": 53042193763.3628,
+        "normalized_by_training_steps": 5304.21937633628
+      },
+      "budget": 10000000,
+      "summary_sha256": "1ea58a3c7fe012103d8de5ec543dc4eaa82f8eebe6be01cecb4ec0eb1f9e6e4b",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "a236419a3d42b68bf7ad308be3adb7b3eefbf3a04853e0a62bd1e0513d125824",
+      "metrics_snapshot_sha256": "400b958f6eefc833ecff6b90d667e14c2eb850191a7f20d1b18e326687cff26e",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2307743511512389
+        },
+        {
+          "steps": 500000,
+          "value": 3121.4345705514875
+        },
+        {
+          "steps": 1000000,
+          "value": 3737.977023194076
+        },
+        {
+          "steps": 1500000,
+          "value": 4049.4757806566167
+        },
+        {
+          "steps": 2000000,
+          "value": 4500.085575721324
+        },
+        {
+          "steps": 2500000,
+          "value": 4970.730924231129
+        },
+        {
+          "steps": 3000000,
+          "value": 5363.745380789028
+        },
+        {
+          "steps": 3500000,
+          "value": 5386.63233788112
+        },
+        {
+          "steps": 4000000,
+          "value": 5341.5366090100815
+        },
+        {
+          "steps": 4500000,
+          "value": 5440.147603728846
+        },
+        {
+          "steps": 5000000,
+          "value": 5756.7869454849015
+        },
+        {
+          "steps": 5500000,
+          "value": 5773.307347751892
+        },
+        {
+          "steps": 6000000,
+          "value": 5052.985381841322
+        },
+        {
+          "steps": 6500000,
+          "value": 5883.87628525573
+        },
+        {
+          "steps": 7000000,
+          "value": 6038.425399842153
+        },
+        {
+          "steps": 7500000,
+          "value": 6136.2380313257145
+        },
+        {
+          "steps": 8000000,
+          "value": 5595.434910247635
+        },
+        {
+          "steps": 8500000,
+          "value": 5815.577972775031
+        },
+        {
+          "steps": 9000000,
+          "value": 6209.329685996159
+        },
+        {
+          "steps": 9500000,
+          "value": 6190.083203264529
+        },
+        {
+          "steps": 10000000,
+          "value": 6050.396605610867
+        }
+      ],
+      "full_budget_auc": {
+        "area": 51694446942.58932,
+        "normalized_by_training_steps": 5169.444694258932
+      },
+      "budget": 10000000,
+      "summary_sha256": "25231aab0cff537c4d9ea6d5fb2b36b5139376c6e6e9a5f8646cd210d7c186c0",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "a236419a3d42b68bf7ad308be3adb7b3eefbf3a04853e0a62bd1e0513d125824",
+      "metrics_snapshot_sha256": "7433ca68ae0793ffa84eb27ab1833b0e27daf14722cd64b6d8284fd5e75198e8",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2092415093521931
+        },
+        {
+          "steps": 500000,
+          "value": 2196.070317375385
+        },
+        {
+          "steps": 1000000,
+          "value": 3523.444239585428
+        },
+        {
+          "steps": 1500000,
+          "value": 3518.7803964369646
+        },
+        {
+          "steps": 2000000,
+          "value": 3852.2885593424226
+        },
+        {
+          "steps": 2500000,
+          "value": 4515.434615864366
+        },
+        {
+          "steps": 3000000,
+          "value": 4527.293650618676
+        },
+        {
+          "steps": 3500000,
+          "value": 4857.694198611975
+        },
+        {
+          "steps": 4000000,
+          "value": 4862.5715344585105
+        },
+        {
+          "steps": 4500000,
+          "value": 5183.639139434989
+        },
+        {
+          "steps": 5000000,
+          "value": 5512.882359875565
+        },
+        {
+          "steps": 5500000,
+          "value": 5552.9015742687725
+        },
+        {
+          "steps": 6000000,
+          "value": 5509.687215553079
+        },
+        {
+          "steps": 6500000,
+          "value": 5583.195204879704
+        },
+        {
+          "steps": 7000000,
+          "value": 5353.344969190207
+        },
+        {
+          "steps": 7500000,
+          "value": 5457.393119428695
+        },
+        {
+          "steps": 8000000,
+          "value": 5251.950561816819
+        },
+        {
+          "steps": 8500000,
+          "value": 5432.197930491758
+        },
+        {
+          "steps": 9000000,
+          "value": 5606.997479859276
+        },
+        {
+          "steps": 9500000,
+          "value": 5794.283909079287
+        },
+        {
+          "steps": 10000000,
+          "value": 5726.121555064376
+        }
+      ],
+      "full_budget_auc": {
+        "area": 47477503566.47469,
+        "normalized_by_training_steps": 4747.75035664747
+      },
+      "budget": 10000000,
+      "summary_sha256": "65cf0c480d2fce2be80cd0e31463718f7c24db8fc553b34efb31f0b81267280a",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "75d9c255f88fd4a213d508fb6039d592621bbf635a6bb2ea8cf26e5ba59cd33a",
+      "metrics_snapshot_sha256": "a64506dba950dba9631915865761705186669dade2db748aa0b2814a51d172fe",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed1",
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.21223168205939136
+        }
+      ],
+      "full_budget_auc": null,
+      "budget": 10000000,
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "75d9c255f88fd4a213d508fb6039d592621bbf635a6bb2ea8cf26e5ba59cd33a",
+      "metrics_snapshot_sha256": "0203e019a1400b3e17ff93524f2fa9d5240ce051b8d882c7a97ccbd4369b5049",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed2",
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2307743511512389
+        }
+      ],
+      "full_budget_auc": null,
+      "budget": 10000000,
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "75d9c255f88fd4a213d508fb6039d592621bbf635a6bb2ea8cf26e5ba59cd33a",
+      "metrics_snapshot_sha256": "471a038e77857352396a5a4f5bca87262380c93cee9c7aeb2c123f8536871bbd",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    }
+  ],
+  "groups": [
+    {
+      "variant": "bppo_protocol",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 3,
+          "mean": 5980.370868766521,
+          "median": 6046.914100280875,
+          "sample_sd_across_training_seeds": 118.28501299726413,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 5159.188621523156,
+          "median": 5169.444694258932,
+          "sample_sd_across_training_seeds": 150.42125129087904,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 3,
+            "mean": -0.21741584752094112,
+            "median": -0.21223168205939136,
+            "sample_sd_across_training_seeds": 0.011665011686030475
+          },
+          {
+            "steps": 500000,
+            "seed_count": 3,
+            "mean": 2545.2302106264356,
+            "median": 2406.8187547279294,
+            "sample_sd_across_training_seeds": 520.9759218699935
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 3,
+            "mean": 3653.682166531118,
+            "median": 3737.977023194076,
+            "sample_sd_across_training_seeds": 195.9266437791563
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 3,
+            "mean": 3801.471423519061,
+            "median": 4049.4757806566167,
+            "sample_sd_across_training_seeds": 586.2570908844876
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 3,
+            "mean": 4758.8197333065045,
+            "median": 4567.594893749419,
+            "sample_sd_across_training_seeds": 391.13514459469155
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 3,
+            "mean": 5178.218494347775,
+            "median": 5263.866041803345,
+            "sample_sd_across_training_seeds": 180.59842920152363
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 3,
+            "mean": 5376.344787455176,
+            "median": 5363.745380789028,
+            "sample_sd_across_training_seeds": 166.0114581106215
+          },
+          {
+            "steps": 3500000,
+            "seed_count": 3,
+            "mean": 5479.409103140351,
+            "median": 5455.802907024645,
+            "sample_sd_across_training_seeds": 106.5593129797201
+          },
+          {
+            "steps": 4000000,
+            "seed_count": 3,
+            "mean": 5489.160406099554,
+            "median": 5341.5366090100815,
+            "sample_sd_across_training_seeds": 309.89726534022134
+          },
+          {
+            "steps": 4500000,
+            "seed_count": 3,
+            "mean": 5618.250293956909,
+            "median": 5587.899788142335,
+            "sample_sd_across_training_seeds": 195.05698707052917
+          },
+          {
+            "steps": 5000000,
+            "seed_count": 3,
+            "mean": 5755.72844506574,
+            "median": 5756.7869454849015,
+            "sample_sd_across_training_seeds": 123.6926701878959
+          },
+          {
+            "steps": 5500000,
+            "seed_count": 3,
+            "mean": 5752.723646485801,
+            "median": 5773.307347751892,
+            "sample_sd_across_training_seeds": 79.32064572047524
+          },
+          {
+            "steps": 6000000,
+            "seed_count": 3,
+            "mean": 5644.845498386128,
+            "median": 5809.665206768287,
+            "sample_sd_across_training_seeds": 529.0687308995554
+          },
+          {
+            "steps": 6500000,
+            "seed_count": 3,
+            "mean": 5862.937073904481,
+            "median": 5883.87628525573,
+            "sample_sd_across_training_seeds": 87.2595898597416
+          },
+          {
+            "steps": 7000000,
+            "seed_count": 3,
+            "mean": 5977.280696794632,
+            "median": 6038.425399842153,
+            "sample_sd_across_training_seeds": 186.91678272240864
+          },
+          {
+            "steps": 7500000,
+            "seed_count": 3,
+            "mean": 5892.6167222333615,
+            "median": 5883.126376156255,
+            "sample_sd_across_training_seeds": 239.01748550574837
+          },
+          {
+            "steps": 8000000,
+            "seed_count": 3,
+            "mean": 5723.163531300463,
+            "median": 5595.434910247635,
+            "sample_sd_across_training_seeds": 436.524785043404
+          },
+          {
+            "steps": 8500000,
+            "seed_count": 3,
+            "mean": 5860.441947961137,
+            "median": 5815.577972775031,
+            "sample_sd_across_training_seeds": 338.33640943132434
+          },
+          {
+            "steps": 9000000,
+            "seed_count": 3,
+            "mean": 5860.526521908849,
+            "median": 5716.117430596649,
+            "sample_sd_across_training_seeds": 303.55771273065335
+          },
+          {
+            "steps": 9500000,
+            "seed_count": 3,
+            "mean": 5962.845000980145,
+            "median": 5887.895426381738,
+            "sample_sd_across_training_seeds": 200.557305317456
+          },
+          {
+            "steps": 10000000,
+            "seed_count": 3,
+            "mean": 5980.370868766521,
+            "median": 6046.914100280875,
+            "sample_sd_across_training_seeds": 118.28501299726413
+          }
+        ]
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0
+      ],
+      "aggregation_errors": [
+        "some declared seeds lack a valid completed full-budget curve"
+      ],
+      "aggregate": null
+    }
+  ]
+}

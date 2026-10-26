@@ -167,3 +167,18 @@ the last plotted vertex is about 9.904M rather than exactly 10M; and the
 figure alone does not establish evaluation, smoothing or checkpoint-selection
 conventions. The matched baseline and independent final confirmation remain
 necessary. No best-checkpoint selection or extrapolation is used here.
+
+## All three BPPO 10M development seeds complete
+
+The subsequent [validated snapshot](../experiments/hc2x3_bppo10m_development_20261026.json)
+includes seed 2's final return **6050.40**. BPPO's three-seed mean is now
+**5980.37 ± 118.29** (sample SD), median 6046.91. Normalized curve area is
+5159.19 ± 150.42. Every declared BPPO curve has the exact budget, matching
+configuration/source and evaluation grid; no best checkpoint is selected.
+
+AR-PPO seed 0 also completes with 5726.12. Its remaining two seeds are still
+running, so the reporter refuses a baseline group aggregate. BPPO minus AR-PPO
+for seed 0 is +117.68 (+2.06%); this one pair cannot establish a method advantage.
+All historical comparison qualifications above remain. The
+[five-seed confirmation study](halfcheetah_confirmation.md) uses unused seeds,
+a separate evaluation stream and the exact selected source snapshot.
