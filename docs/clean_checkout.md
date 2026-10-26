@@ -52,6 +52,25 @@ The standard-library-only target checker validates all 45 target references
 evidence for unavailable manifests. Both commands exit successfully with
 `python3 -S`, without importing the installed learning dependencies.
 
+## Continuous integration
+
+The [core workflow](../.github/workflows/core.yml) builds and installs the exact
+wheel before running the full suite with pytest's source-path injection
+disabled (`-o pythonpath=`). It also checks the installed console commands and
+checkpoint replay outside the checkout, followed by all three public reports.
+The workflow uses a CPU-only locked environment, one numerical thread, pinned
+action commits and read-only repository permissions. Native engines and local
+experiment artifacts are unnecessary.
+
+A third clean export, commit `e47bc0d`, passed these commands locally:
+**698 passed, one CUDA-only skip in 37.50 seconds**, both short matrix CLI runs,
+the recurrent Prey CLI run and exact replay, and all three standard-library
+reports. The [CI verification record](../experiments/core_ci_verification_20261026.json)
+includes the JUnit/stdout hashes and exact installed module hashes. This full
+installed-wheel run includes the five added progress-report tests. Workflow
+YAML and shell syntax were checked locally. No hosted GitHub Actions run has
+been triggered; its runner and action setup remain unverified here.
+
 ## Repeat on another machine
 
 From a fresh checkout, run:
@@ -68,6 +87,14 @@ commands from outside the source tree. Pass absolute paths to the JSON
 configurations and fresh output directories. The wheel supplies `bta-train`
 and `bta-train-simulator`; scripts, example configurations and research records
 remain in the source checkout.
+
+After installing the wheel, run its Python on
+`scripts/check_installed_package.py --output NEW_DIRECTORY` from outside the
+source checkout. The output must also be outside that checkout. This reusable
+check compares installed modules, README and license with the source, exercises
+both console entry points and verifies exact recurrent Prey checkpoint replay.
+Its tiny budgets test integration only. Command logs and a verification JSON
+are retained in the chosen directory.
 
 This verifies the core CPU installation on the recorded platform. Separate
 native-engine installations are covered by the [SMAC](smac.md),

@@ -27,6 +27,11 @@ causal gradients, legal actions, episode boundaries, execution information and
 checkpoint replay. Native integration and learning performance are separate
 evidence. Include the commands and results with the change.
 
+The [core CI workflow](.github/workflows/core.yml) runs the suite against a built
+wheel and checks installed console commands outside the checkout. The
+[clean-install guide](docs/clean_checkout.md) explains how to repeat those checks
+and distinguishes local verification from hosted CI execution.
+
 ## Experiments
 
 Use the [configuration guide](configs/README.md) to distinguish a flat training
