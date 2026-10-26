@@ -1,0 +1,61 @@
+{
+  "recorded_utc": "2026-10-26T20:32:01.147175+00:00",
+  "scope": "Future simulator job preparation only; no experiments submitted or existing snapshots modified.",
+  "partitions": [
+    {
+      "PartitionName": "batch-csl",
+      "MaxTime": "5-00:00:00",
+      "DefaultTime": "00:15:00",
+      "State": "UP",
+      "AllowAccounts": "stress,aalto_users"
+    },
+    {
+      "PartitionName": "batch-skl",
+      "MaxTime": "5-00:00:00",
+      "DefaultTime": "00:15:00",
+      "State": "UP",
+      "AllowAccounts": "stress,aalto_users"
+    },
+    {
+      "PartitionName": "batch-milan",
+      "MaxTime": "5-00:00:00",
+      "DefaultTime": "00:15:00",
+      "State": "UP",
+      "AllowAccounts": "stress,aalto_users"
+    }
+  ],
+  "partition_evidence": "results/simulator_long_dispatch_20261026/partitions.txt",
+  "partition_evidence_sha256": "bc7cd43a48efb77b6b0194445781ce7677e11fae573db6413229f7a8a64a2ce7",
+  "source_sha256": {
+    "scripts/prepare_simulator.py": "8438d1d20c85959c9481480e1e15e93ae614a4cec2d95067e28935a3928b3b54",
+    "scripts/run_simulator_array.py": "fc2b1ac704f19f30726e7bb52047452b881e9b5def4cf222e0fe6dc429a84a6e",
+    "scripts/run_simulator_worker.py": "5e4071142f138bd4136203ace09e8ee9225684a03ae8b4a0b3b286ff85e0beac",
+    "tests/test_prepare_simulator.py": "78389aa456518f26251724106d8030771bf39c1ea430f49123f3dd842a353e9a"
+  },
+  "changes": {
+    "maximum_wall_minutes": 7200,
+    "default_wall_minutes": 120,
+    "dispatch_modes": [
+      "serial_workers",
+      "one_run_per_task"
+    ],
+    "default_dispatch_mode": "serial_workers",
+    "maximum_concurrent_tasks_per_manifest": 2,
+    "cpus_per_task": 2,
+    "memory_gib_per_task": 8,
+    "automatic_requeue": false
+  },
+  "verification": {
+    "command": "OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONNOUSERSITE=1 .venv/bin/python -m pytest tests/test_prepare_simulator.py tests/test_simulator_confirmation.py tests/test_progress_report.py -q",
+    "result": "90 passed in 11.29s",
+    "evidence": "Observed command output; no separate pytest log retained.",
+    "actual_copied_launchers_executed_with_training_subprocess_mock": true,
+    "dispatch_cases": "Default, explicit serial and one-run modes; 1 and 5 runs; each declared configuration launched exactly once.",
+    "wall_time_checks": "1 minute through 5 days, day rollover, invalid types and out-of-range rejection before artifact creation."
+  },
+  "limitations": [
+    "A per-manifest array cap does not enforce the four-worker project ceiling; submitted dependency chains must still enforce it.",
+    "No simulator-state resume; timeout remains incomplete.",
+    "Full-budget performance is not established by launch tests."
+  ]
+}

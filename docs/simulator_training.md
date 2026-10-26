@@ -67,10 +67,23 @@ multiple variants, rather than single-run configurations. Freeze a plan with
 `python scripts/prepare_simulator.py configs/prey_coordination300k.json`.
 The printed directory contains individual JSON configurations, copied source,
 a manifest, and a Slurm submission script. Preparation does not submit jobs.
-`wall_time_minutes` optionally changes its bounded runtime allocation; the
-default is120 minutes, with at most two workers, each2CPUs/8GB. The measured
-3M MuJoCo follow-up uses240 minutes. Keep total project concurrency within the
-experiment plan's resource ceiling when submitting multiple manifests.
+`wall_time_minutes` sets the limit per scheduler task, from 1 to 7200 minutes
+(five days); the default is 120. These limits match the three configured CPU
+partitions, verified on 2026-10-26. Choose the allocation from measured run and
+evaluation times, with a margin for variability.
+
+The default `"dispatch_mode": "serial_workers"` assigns runs to at most two
+workers, each executing its slice in order. The time limit must cover every run
+in that slice. For long runs, set `"dispatch_mode": "one_run_per_task"`: array
+task index *i* executes only manifest run *i*, and each run gets its own time
+allocation. Both modes allow at most two concurrent tasks, each using 2 CPUs
+and 8 GB. Keep total project concurrency within the experiment plan's resource
+ceiling when submitting multiple manifests; an array's own cap does not enforce
+that project-wide ceiling.
+
+New submission scripts disable automatic requeue. A timeout is retained as an
+incomplete run; the trainer does not support exact simulator-state continuation.
+Previously frozen scripts and running jobs are unchanged by preparation changes.
 
 For continuous policies, `initial_std` sets the initial diagonal Gaussian standard deviation in policy action units. It defaults to `1.0` and must lie in `[exp(-5), exp(2)]`. For example, `0.3` reduces initial exploration while preserving the policy family and identity modifier. SMAC configurations reject nondefault values because their actions are categorical. The selected value is saved in the run configuration.
 

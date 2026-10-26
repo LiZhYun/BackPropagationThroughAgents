@@ -4,6 +4,10 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import runpy
+import shlex
+import subprocess
+import sys
 
 import pytest
 
@@ -111,3 +115,77 @@ def test_existing_experiment_is_never_overwritten(project, plan):
     with pytest.raises(FileExistsError):
         preparation.prepare(plan, project, stamp='test')
     assert (output / 'manifest.json').read_bytes() == before
+
+
+@pytest.mark.parametrize('minutes,formatted', [
+    (1, '00:01:00'), (60, '01:00:00'), (1439, '23:59:00'),
+    (1440, '1-00:00:00'), (1441, '1-00:01:00'),
+    (7199, '4-23:59:00'), (7200, '5-00:00:00'),
+])
+def test_wall_time_fits_verified_partition_limit(project, plan, minutes, formatted):
+    plan['wall_time_minutes'] = minutes
+    output = preparation.prepare(plan, project, stamp='test')
+    assert f'#SBATCH --time={formatted}\n' in (output / 'submit.sbatch').read_text()
+
+
+@pytest.mark.parametrize('minutes', [0, -1, 7201, True, 60.0, '60', None])
+def test_invalid_wall_time_creates_no_experiment(project, plan, minutes):
+    plan['wall_time_minutes'] = minutes
+    with pytest.raises(ValueError, match='wall_time_minutes'):
+        preparation.prepare(plan, project, stamp='test')
+    assert not (project / 'results').exists()
+
+
+@pytest.mark.parametrize('dispatch', ['unknown', '', True, 1, None, []])
+def test_invalid_dispatch_creates_no_experiment(project, plan, dispatch):
+    plan['dispatch_mode'] = dispatch
+    with pytest.raises(ValueError, match='dispatch_mode'):
+        preparation.prepare(plan, project, stamp='test')
+    assert not (project / 'results').exists()
+
+
+@pytest.mark.parametrize('dispatch', [None, 'serial_workers', 'one_run_per_task'])
+@pytest.mark.parametrize('run_count', [1, 5])
+def test_prepared_tasks_dispatch_every_run_exactly_once(project, plan, monkeypatch,
+                                                       dispatch, run_count):
+    """Execute the actual copied launchers, replacing only training subprocesses."""
+    for name in ('run_simulator_array.py', 'run_simulator_worker.py'):
+        (project / 'scripts' / name).write_bytes((path.parent / name).read_bytes())
+    plan['variants'] = {'bppo': {'algorithm': 'bppo'}}
+    plan['seeds'] = list(range(run_count))
+    if dispatch is not None:
+        plan['dispatch_mode'] = dispatch
+    output = preparation.prepare(plan, project, stamp='test')
+    script = (output / 'submit.sbatch').read_text()
+    tasks = run_count if dispatch == 'one_run_per_task' else min(2, run_count)
+    assert f'#SBATCH --array=0-{tasks - 1}%2\n' in script
+    assert '#SBATCH --cpus-per-task=2\n' in script
+    assert '#SBATCH --mem=8G\n' in script
+    assert '#SBATCH --time=02:00:00\n' in script
+    assert '#SBATCH --no-requeue\n' in script
+    command = shlex.split(next(line for line in script.splitlines() if line.startswith('exec ')))[1:]
+    assert command[0] == str(project / '.venv/bin/python')
+    launched = []
+
+    def execute_launcher(arguments, task_index):
+        with monkeypatch.context() as context:
+            context.setattr(sys, 'argv', arguments)
+            context.setenv('SLURM_ARRAY_TASK_ID', str(task_index))
+            runpy.run_path(arguments[0], run_name='__main__')
+
+    def fake_run(arguments, *, check, env, **kwargs):
+        assert check is True
+        if arguments[1:3] == ['-m', 'bta_repro.simulator_train']:
+            assert arguments[0] == str(project / '.venv/bin/python')
+            assert env['PYTHONNOUSERSITE'] == '1'
+            launched.append(arguments[3:])
+        else:
+            execute_launcher(arguments[1:], env['SLURM_ARRAY_TASK_ID'])
+
+    monkeypatch.setattr(subprocess, 'run', fake_run)
+    for task in range(tasks):
+        execute_launcher(command[1:], task)
+    manifest = json.loads((output / 'manifest.json').read_text())
+    expected = [['--config', run['config_path'], '--output', run['output_path']]
+                for run in manifest['runs']]
+    assert sorted(launched) == sorted(expected)
