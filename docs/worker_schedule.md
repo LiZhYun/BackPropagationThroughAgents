@@ -58,3 +58,24 @@ the scheduler confirmed all six changed edges. Entropy workers were still
 pending during the update. The two A chains are unchanged. There are still
 four serial chains and at most four concurrent workers. Submission hashes and
 every dependency update are in the job ledger.
+
+## Recurrent native integration insertion, 2026-10-26
+
+Job `21213860` was then inserted between `21213330` and `21211006`, again for
+each matching worker index. The current B chains are:
+
+```
+21209234_i → 21211813_i → 21213329_i → 21213330_i → 21213860_i → 21211006_i → 21212197_i
+SMAC          joint LR      100k check    1M matrix     GRU check     entropy       Prey
+```
+
+The GRU check contains five native SMAC runs of 10,000 transitions, each with
+one complete 2×5,000 rollout and four final evaluation episodes. Its two workers
+request 2CPUs/8GB and one hour. It was submitted held and released after the
+four changed dependency edges were checked. All affected successors were still
+pending. The four-worker ceiling and A chains remain unchanged.
+
+The ten-run `smac_terran5_batch1m` learning manifest is prepared but **not
+submitted**. Its integration, measured-runtime and memory gates are recorded in
+[`experiments/smac_recurrent_study_20261026.json`](../experiments/smac_recurrent_study_20261026.json).
+Passing unit tests alone does not release this native learning study.

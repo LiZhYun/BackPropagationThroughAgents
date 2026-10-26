@@ -86,3 +86,17 @@ experimental differences. Performance claims await actual results.
 Public source captures used in this audit are retained under
 `results/smac_release_audit_20261026/`; references and archived papers were not
 modified.
+
+The native check is frozen in
+`results/smac_recurrent_batch_integration10k_20261026T125710Z/manifest.json`
+and queued as job `21213860`. The larger learning control is frozen in
+`results/smac_terran5_batch1m_20261026T125713Z/manifest.json` and remains
+unsubmitted until native correctness, runtime and memory have been checked.
+The [study record](../experiments/smac_recurrent_study_20261026.json) states the
+gates and the [worker schedule](worker_schedule.md) preserves resource limits.
+
+A later snapshot in this turn recorded the first completed small-batch pilot:
+MAPPO finished exactly 1M transitions with mean evaluation return
+9.722725808083473 and win rate 4/32. AR-PPO, BPPO and the two modifier variants
+were not all complete, so this is one development baseline result, not an
+across-method conclusion.

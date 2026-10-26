@@ -54,4 +54,6 @@ optimizer ownership, encoder/GRU gradients, a finite-difference successor-action
 derivative, AgentMixer mode consistency, unsupported settings, and real Prey
 training/checkpoint replay through episode and fixed-window evaluation. The
 full suite passed 691 tests with one CUDA-only skip after integration. Native
-SMAC validation is a separate scheduled experiment.
+SMAC validation is a separate scheduled experiment. Two additional evaluator
+trace checks explicitly verified fresh memory at episode boundaries and resets
+inside fixed windows; all 33 recurrent-focused tests passed afterwards.

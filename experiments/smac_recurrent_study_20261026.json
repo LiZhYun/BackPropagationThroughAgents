@@ -1,0 +1,12 @@
+{
+  "integration_job_id": "21213860",
+  "integration_manifest": "results/smac_recurrent_batch_integration10k_20261026T125710Z/manifest.json",
+  "learning_manifest": "results/smac_terran5_batch1m_20261026T125713Z/manifest.json",
+  "learning_status": "prepared_not_submitted",
+  "release_gates": [
+    "All five native integration runs complete at10000 steps with finite updates and four final evaluation episodes.",
+    "Inspect per-run elapsed time and Slurm peak memory; choose worker/time layout from measured throughput within2CPUs/8GB per worker.",
+    "Submit only with dependencies preserving the existing four serial worker chains."
+  ],
+  "source_commit": "cb30f9e1c09d891118b712e6a9f53c0422df1728"
+}
