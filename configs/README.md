@@ -37,6 +37,7 @@ the option does not translate new configuration fields into old schemas.
 | Run the longer SMAC or Football learning checks | `smac_terran5_learning1m.json`, `football_3v1_learning1m.json` | Development plans following the shorter runtime and learning pilots |
 | Check private GRU actors in native SMAC | `smac_recurrent_batch_integration10k.json` | Five-method integration queued; one 10,000-transition rollout per run |
 | Compare feed-forward and GRU actors at a larger SMAC batch | `smac_terran5_batch1m.json` | Ten-run plan frozen but unsubmitted pending native correctness, runtime and memory checks |
+| Measure native SMAC runtime | `smac_runtime_profile4096.json` | Two short diagnostics with a separate timing wrapper; see [the profiling guide](../docs/simulator_runtime.md). Rewards are not learning evidence |
 
 These files describe development and explicitly frozen confirmation studies;
 none is a certified final reproduction recipe yet.

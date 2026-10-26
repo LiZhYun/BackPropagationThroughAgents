@@ -1,0 +1,190 @@
+{
+  "scope": "Engine-free synthetic input CPU profile only, not learning or native throughput evidence.",
+  "recorded_utc": "2026-10-26T14:49:59.764528+00:00",
+  "host": "login5.triton.aalto.fi",
+  "cpu": "Intel(R) Xeon(R) Gold 6148 CPU @ 2.40GHz",
+  "python": "3.11.15",
+  "torch": "2.6.0+cpu",
+  "numpy": "1.23.5",
+  "threads": 1,
+  "native_execution_host": "milan1 (different from synthetic profiling host)",
+  "shape": {
+    "is_discrete": true,
+    "num_agents": 5,
+    "obs_dim": 82,
+    "state_dim": 120,
+    "action_dim": 11
+  },
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "script_sha256": "7b25a74b1b6f9699deb5a56c54e61f9e09dfd52ff13c16717cbbe35534ab6dbe",
+  "limitations": [
+    "Synthetic observations, rewards, legal masks and episode lengths differ from native SMAC.",
+    "Synthetic timed samples exclude cProfile instrumentation; the separate call profile includes it.",
+    "Native intervals include rollout, optimization, logging, checkpointing and episode-boundary restarts, but exclude the prior evaluation event.",
+    "Different machines and input distributions prevent interpreting the timing difference as an exact native simulator fraction or a measured speedup."
+  ],
+  "raw_profile": "results/smac_cpu_profile_20261026T144828Z/profile.json",
+  "raw_profile_sha256": "2072ef87204075257802c2f68b2e6f9ccc15d9cfd9de97e596ad16ece16d07a7",
+  "results": [
+    {
+      "variant": "mappo",
+      "synthetic_samples": [
+        {
+          "collect_seconds": 0.2876161029562354,
+          "update_seconds": 0.04537193104624748,
+          "total_seconds": 0.3329880340024829
+        },
+        {
+          "collect_seconds": 0.3372106768656522,
+          "update_seconds": 0.048553899163380265,
+          "total_seconds": 0.38576457602903247
+        },
+        {
+          "collect_seconds": 0.38086093589663506,
+          "update_seconds": 0.09810343803837895,
+          "total_seconds": 0.478964373935014
+        }
+      ],
+      "synthetic_medians": {
+        "collect_seconds": 0.3372106768656522,
+        "update_seconds": 0.048553899163380265,
+        "total_seconds": 0.38576457602903247
+      },
+      "native_recent_full_update_count": 100,
+      "native_recent_full_update_median_seconds": 2.212271319993306,
+      "native_last_recorded_steps": 1000000
+    },
+    {
+      "variant": "arppo",
+      "synthetic_samples": [
+        {
+          "collect_seconds": 0.5721251829527318,
+          "update_seconds": 0.059349099872633815,
+          "total_seconds": 0.6314742828253657
+        },
+        {
+          "collect_seconds": 0.5238137401174754,
+          "update_seconds": 0.08507751696743071,
+          "total_seconds": 0.6088912570849061
+        },
+        {
+          "collect_seconds": 0.6963637869339436,
+          "update_seconds": 0.06654368713498116,
+          "total_seconds": 0.7629074740689248
+        }
+      ],
+      "synthetic_medians": {
+        "collect_seconds": 0.5721251829527318,
+        "update_seconds": 0.06654368713498116,
+        "total_seconds": 0.6314742828253657
+      },
+      "native_recent_full_update_count": 100,
+      "native_recent_full_update_median_seconds": 2.4423622915055603,
+      "native_last_recorded_steps": 1000000
+    },
+    {
+      "variant": "bppo",
+      "synthetic_samples": [
+        {
+          "collect_seconds": 0.5694769478868693,
+          "update_seconds": 0.18471741513349116,
+          "total_seconds": 0.7541943630203605
+        },
+        {
+          "collect_seconds": 0.6967272551264614,
+          "update_seconds": 0.16662988089956343,
+          "total_seconds": 0.8633571360260248
+        },
+        {
+          "collect_seconds": 0.589397014118731,
+          "update_seconds": 0.17525925883091986,
+          "total_seconds": 0.7646562729496509
+        }
+      ],
+      "synthetic_medians": {
+        "collect_seconds": 0.589397014118731,
+        "update_seconds": 0.17525925883091986,
+        "total_seconds": 0.7646562729496509
+      },
+      "native_recent_full_update_count": 100,
+      "native_recent_full_update_median_seconds": 2.426950755470898,
+      "native_last_recorded_steps": 654080
+    },
+    {
+      "variant": "agentmixer",
+      "synthetic_samples": [
+        {
+          "collect_seconds": 0.5577345748897642,
+          "update_seconds": 0.2953656211029738,
+          "total_seconds": 0.853100195992738
+        },
+        {
+          "collect_seconds": 0.7077531090471894,
+          "update_seconds": 0.28509523207321763,
+          "total_seconds": 0.992848341120407
+        },
+        {
+          "collect_seconds": 0.5760068509262055,
+          "update_seconds": 0.24972221907228231,
+          "total_seconds": 0.8257290699984878
+        }
+      ],
+      "synthetic_medians": {
+        "collect_seconds": 0.5760068509262055,
+        "update_seconds": 0.28509523207321763,
+        "total_seconds": 0.853100195992738
+      },
+      "native_recent_full_update_count": 100,
+      "native_recent_full_update_median_seconds": 2.455894912534859,
+      "native_last_recorded_steps": 568320
+    },
+    {
+      "variant": "agentmixer_identity",
+      "synthetic_samples": [
+        {
+          "collect_seconds": 0.42120761214755476,
+          "update_seconds": 0.16253164689987898,
+          "total_seconds": 0.5837392590474337
+        },
+        {
+          "collect_seconds": 0.43770639901049435,
+          "update_seconds": 0.16076398990117013,
+          "total_seconds": 0.5984703889116645
+        },
+        {
+          "collect_seconds": 0.4193329559639096,
+          "update_seconds": 0.18419324699789286,
+          "total_seconds": 0.6035262029618025
+        }
+      ],
+      "synthetic_medians": {
+        "collect_seconds": 0.42120761214755476,
+        "update_seconds": 0.16253164689987898,
+        "total_seconds": 0.5984703889116645
+      },
+      "native_recent_full_update_count": 0,
+      "native_recent_full_update_median_seconds": null,
+      "native_last_recorded_steps": null
+    }
+  ]
+}
