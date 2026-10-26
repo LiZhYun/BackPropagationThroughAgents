@@ -74,3 +74,10 @@ the curve reader and bootstrap calculation shared with
 [`learning_curves.py`](../src/bta_repro/learning_curves.py). Tests cover valid and
 negative results, pairing, missing seeds, changed provenance, raw episode
 reductions, rollout accounting and paths outside the checkout.
+
+At commit `ce04d97`, the [raw development audit](../experiments/hc2x3_development_raw_audit_20261026.json)
+verified 2,688 evaluation episodes and 10,000 rollout updates across four
+completed 10M runs, retaining both unfinished baseline runs. The
+[confirmation preflight](../experiments/hc2x3_confirmation_preflight_20261026.json)
+found no integrity errors and all ten confirmation runs unstarted. Neither
+artifact is a completed independent confirmation.

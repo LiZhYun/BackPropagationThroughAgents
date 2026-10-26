@@ -1,0 +1,139 @@
+{
+  "study_id": "hc2x3_confirmation10m_20261026",
+  "scope": "Independent validation of corrected BPPO and its matched AR-PPO control under the pinned HalfCheetah2x3 reconstruction. Not certification of the original historical plotting protocol or other paper targets.",
+  "plan_sha256": "9e9bf7a1036c248ba4f39dfbb2c9334a1397886cb5f32083e5b8c29db5d8b29a",
+  "reporter_sha256": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+  "curve_reader_sha256": "a7fbcb906a355679294a0a4a340462830ef9e4523c6b4520798b2b3995337496",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1000,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1001,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1002,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1003,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1004,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1000,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1001,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1002,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1003,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1004,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "bppo",
+      "declared_seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004
+      ],
+      "eligible_seeds": [],
+      "complete": false,
+      "aggregate": null
+    },
+    {
+      "algorithm": "arppo",
+      "declared_seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004
+      ],
+      "eligible_seeds": [],
+      "complete": false,
+      "aggregate": null
+    }
+  ],
+  "paired_comparison": null,
+  "figure_comparison": null,
+  "validation_decision": "incomplete_or_invalid",
+  "paper_reproduction": "not_established",
+  "uncertainty": {
+    "unit": "whole training seed; paired differences retain the same seed pairs",
+    "method": "two-sided 95% percentile bootstrap with linear percentile interpolation",
+    "resamples": 10000,
+    "rng_seed": 1729
+  },
+  "interpretation": "Intervals describe independent training-seed scores under the frozen reconstruction. Historical evaluation, smoothing and simulator equivalence remain unverified. Figure comparison and paired peer-feedback evidence are separate conclusions."
+}

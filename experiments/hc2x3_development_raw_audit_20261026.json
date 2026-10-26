@@ -1,0 +1,88 @@
+{
+  "scope": "Raw episode reductions and rollout accounting for every completed development run; not independent confirmation. All declared incomplete runs remain listed.",
+  "recorded_utc": "2026-10-26T14:37:03.987427+00:00",
+  "auditor_commit": "ce04d973e474a5c768918ae32e451f4d522448d5",
+  "auditor_sha256": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+  "manifest": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/manifest.json",
+  "manifest_sha256": "d31da302360489d64a3170ee6c84d6d4b2dff34e089cc29edca085a97d4ceb5b",
+  "runs": [
+    {
+      "algorithm": "bppo",
+      "seed": 0,
+      "output": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed0",
+      "audited": true,
+      "status": "completed",
+      "training_steps": 10000000,
+      "updates": 2500,
+      "evaluation_calls": 21,
+      "evaluation_episodes": 672,
+      "evaluation_interactions": 672000,
+      "final_return": 5843.801900407821,
+      "summary_sha256": "7a1953a67e143767f4471bfdcabd4c5ca702debc53807fec762fcb4630fbe4e0",
+      "metrics_sha256": "fee9ebc7f140b32c38c37340429a2d57e3a6acbb7d0d75d54133a225f86a8bc7",
+      "metadata_sha256": "4d488e6ad2766d4fc090c50f382f7aeee22880814cf24a8e749ba8ff0e99b444"
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 1,
+      "output": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed1",
+      "audited": true,
+      "status": "completed",
+      "training_steps": 10000000,
+      "updates": 2500,
+      "evaluation_calls": 21,
+      "evaluation_episodes": 672,
+      "evaluation_interactions": 672000,
+      "final_return": 6046.914100280875,
+      "summary_sha256": "1ea58a3c7fe012103d8de5ec543dc4eaa82f8eebe6be01cecb4ec0eb1f9e6e4b",
+      "metrics_sha256": "400b958f6eefc833ecff6b90d667e14c2eb850191a7f20d1b18e326687cff26e",
+      "metadata_sha256": "66da0fdadfd0d4d3c3e10f06a35d870754c23f833f8bacac774cf29ad5336f0d"
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 2,
+      "output": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed2",
+      "audited": true,
+      "status": "completed",
+      "training_steps": 10000000,
+      "updates": 2500,
+      "evaluation_calls": 21,
+      "evaluation_episodes": 672,
+      "evaluation_interactions": 672000,
+      "final_return": 6050.396605610867,
+      "summary_sha256": "25231aab0cff537c4d9ea6d5fb2b36b5139376c6e6e9a5f8646cd210d7c186c0",
+      "metrics_sha256": "7433ca68ae0793ffa84eb27ab1833b0e27daf14722cd64b6d8284fd5e75198e8",
+      "metadata_sha256": "aefd1433890c0bec1525022c2c8db719fb0514e1d227243910f71c9b19922ebe"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 0,
+      "output": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed0",
+      "audited": true,
+      "status": "completed",
+      "training_steps": 10000000,
+      "updates": 2500,
+      "evaluation_calls": 21,
+      "evaluation_episodes": 672,
+      "evaluation_interactions": 672000,
+      "final_return": 5726.121555064376,
+      "summary_sha256": "65cf0c480d2fce2be80cd0e31463718f7c24db8fc553b34efb31f0b81267280a",
+      "metrics_sha256": "a64506dba950dba9631915865761705186669dade2db748aa0b2814a51d172fe",
+      "metadata_sha256": "37e1d921ac683dc6424ef1861ebdad7a42b10075c511f0b72c7a9e482ecfff07"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 1,
+      "output": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed1",
+      "audited": false,
+      "status": "incomplete"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 2,
+      "output": "results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed2",
+      "audited": false,
+      "status": "incomplete"
+    }
+  ]
+}
