@@ -85,6 +85,12 @@ continuous update. Other algorithms use the common PPO objective. AgentMixer
 uses the joint product-distribution ratio; independent and autoregressive PPO
 baselines use per-agent ratios.
 
+The experimental two-agent discrete [joint modifier](agentmixer_joint.md)
+instead emits one categorical score per joint transition. Its
+`joint_event=True` marker selects `[T×E, 1]` behavior likelihoods; PPO scores
+that event once. Collection and updates require every agent to be active for
+this variant. The simulator CLI restricts it to Predator–Prey.
+
 Discrete BPPO and the PPO baselines support inactive-agent masks. Each BPPO
 actor averages own, peer, and entropy terms over its active transitions and
 skips its optimizer when none exist. For AgentMixer, inactive factors are

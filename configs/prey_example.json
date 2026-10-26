@@ -1,0 +1,29 @@
+{
+  "environment": "prey",
+  "env_config": {
+    "penalty": 0,
+    "episode_limit": 128
+  },
+  "algorithm": "agentmixer",
+  "seed": 0,
+  "steps": 10240,
+  "num_envs": 8,
+  "rollout_steps": 64,
+  "hidden_dim": 64,
+  "epochs": 5,
+  "learning_rate": 0.0005,
+  "modifier_learning_rate": 0.00005,
+  "critic_learning_rate": 0.0005,
+  "entropy_coef": 0.01,
+  "max_grad_norm": 10.0,
+  "normalize_value_targets": true,
+  "value_clip_coef": 0.2,
+  "value_huber_delta": 10.0,
+  "eval_seed": 1000000,
+  "eval_episodes": 20,
+  "eval_every_steps": 0,
+  "eval_window_steps": 200,
+  "eval_windows": 100,
+  "checkpoint_every_updates": 0,
+  "threads": 1
+}

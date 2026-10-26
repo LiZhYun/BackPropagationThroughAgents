@@ -46,6 +46,23 @@ Algorithms: `mappo`, `arppo`, `bppo`, `agentmixer`. Games: `climbing`, `penalty`
 
 Matrix training uses one-step episodes and reports reward per joint environment step, matching the pinned legacy environment's termination convention. Legacy training logs multiply mean reward by 200, while evaluation reports reward per decision. The exact connection to historical plot files is unverified; see the [protocol audit](docs/other_curve_targets.md).
 
+To try the shared temporal trainer with only the core dependencies, run:
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  python -m bta_repro.simulator_train --config configs/prey_example.json \
+  --output results/prey_example
+python scripts/evaluate_simulator.py results/prey_example \
+  --output results/prey_example_replay.json
+```
+
+This AgentMixer example trains for 10,240 Predator–Prey decisions. It is an
+interface example, not the 1M-step benchmark. Initial and final evaluations each
+use 20 complete episodes plus the author-selected 100×200-decision windows.
+The primary window score is
+`final_evaluation.fixed_window.reward_per_environment_step` in `summary.json`;
+it includes rewards from unfinished episodes. Both output paths must be new.
+
 ## Reading the code
 
 1. `src/bta_repro/envs.py`: the accepted BPTA payoff tables and exact joint-action enumeration.
@@ -55,7 +72,16 @@ Matrix training uses one-step episodes and reports reward per joint environment 
 5. `src/bta_repro/agentmixer.py`: centralized policy modification and local execution. See [the AgentMixer implementation notes](docs/agentmixer.md).
 6. `src/bta_repro/checkpoint.py`: model, optimizer, and RNG persistence.
 
-The [shared simulator guide](docs/simulator_training.md) connects these policies to [temporal rollout collection](docs/runner.md). Continuous variants use explicit Gaussian vector events. Optional simulators have separate setup instructions: [SMACv2](docs/smac.md), [legacy MA-MuJoCo](docs/mujoco_setup.md) and [Football](docs/football.md). [Predator–Prey](docs/predator_prey_protocol.md) needs only the core dependencies. Optional engines are not needed for numerical tests or matrix games.
+For temporal tasks, start with [`simulator_train.py`](src/bta_repro/simulator_train.py)
+for configuration, evaluation and the training loop, then
+[`runner.py`](src/bta_repro/runner.py) for rollout collection and updates.
+The [shared simulator guide](docs/simulator_training.md) explains their use and
+the [runner guide](docs/runner.md) explains their tensor and episode contracts.
+Continuous variants use explicit Gaussian vector events. Optional simulators
+have separate setup instructions: [SMACv2](docs/smac.md),
+[legacy MA-MuJoCo](docs/mujoco_setup.md) and [Football](docs/football.md).
+[Predator–Prey](docs/predator_prey_protocol.md) needs only the core dependencies.
+Optional engines are not needed for numerical tests or matrix games.
 
 Discrete simulator runs can enable [private recurrent actor memory](docs/recurrent_actors.md)
 with `recurrent_actor: true`. The default remains feed-forward; the guide states

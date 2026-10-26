@@ -49,7 +49,18 @@ Centralized `sample` returns actions `[batch,2]` and log probabilities `[batch,1
 
 Decentralized sampling ignores state and the modifier, samples the independent local policies, and returns their per-agent log probabilities `[batch,2]`. Deterministic centralized sampling explicitly chooses the local argmax tuple, which is a global joint MAP. Greedily choosing marginal modes in an ancestral sampler would not provide that guarantee.
 
-This variant is intended for the matrix trainer's explicit joint-ratio objective. The generic simulator runner currently requires per-agent score shapes and does not support this single-component interface. No tree generalization, simulator integration, or Gaussian extension is implemented here.
+The matrix trainer and shared temporal runner both support this single-event
+interface. The policy declares `joint_event = True`; the runner stores one
+behavior log probability per joint transition and scores the joint event once.
+It rejects rollouts with inactive agents for this variant instead of pretending
+that a joint score can be masked into per-agent factors.
+
+The simulator CLI enables it only for the two-agent Predator–Prey task with
+`agentmixer_correlation: "joint"`. Optional `joint_distribution_float64: true`
+retains double-precision likelihoods through collection and updates. Greedy
+evaluation still uses the local actors, and checkpoint replay reconstructs the
+same variant. This option does not support recurrent actors. No multi-agent
+tree generalization or Gaussian joint modifier is implemented here.
 
 ## Verification
 

@@ -1,10 +1,11 @@
 # Choosing a configuration
 
-Configuration files serve three purposes. The command depends on the file type.
+The command depends on the configuration file type.
 
 | File type | Contents | How to use it |
 | --- | --- | --- |
 | Matrix settings | Flat fields such as `entropy_coef` and `action_embed_dim` | `python -m bta_repro.train --config FILE --algorithm METHOD --game GAME` |
+| Single simulator run | Flat fields including `environment`, `algorithm`, `steps` and `env_config` | `python -m bta_repro.simulator_train --config FILE --output NEW_DIRECTORY` |
 | Simulator experiment plan | `base_config`, `variants`, `seeds`, `label`, `scope` | `python scripts/prepare_simulator.py FILE` expands and freezes individual runs |
 | Paper targets and environment locks | Source measurements, extraction provenance or dependency pins | Used for comparisons or installation; not training configurations |
 
@@ -28,6 +29,7 @@ the option does not translate new configuration fields into old schemas.
 | --- | --- | --- |
 | Run BPPO or its matched AR-PPO baseline on a matrix game | `matrix_projected_entropy01.json` | Both methods reach the optimum on both games in development seeds 0–2 at 100k steps |
 | Inspect AgentMixer's correlated discrete redesign | `matrix_joint_lr_fast.json` | At 200k, all three development Climbing seeds succeed; all three Penalty seeds fail |
+| Try the shared trainer with only core dependencies | `prey_example.json` | Flat single-run example: 10,240 training decisions, 20 evaluation episodes and 100×200 evaluation windows; not a benchmark result |
 | Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | Six development runs at the 10M paper budget; still in progress |
 | Confirm the selected HalfCheetah protocol on unused seeds | `mujoco_hc2x3_confirmation10m.json` | Ten frozen runs, seeds1000–1004, separate evaluation seed; exact development source retained. See [the study](../docs/halfcheetah_confirmation.md) |
 | Check transfer to Ant and Walker | `mujoco_ant_walker_transfer500k.json` | Eleven 500k pilots queued; distinct Ant observation protocols and matched controls |

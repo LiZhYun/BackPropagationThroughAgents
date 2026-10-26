@@ -8,6 +8,19 @@ supported. The shared critic remains feed-forward. See the [recurrent actor
 guide](recurrent_actors.md) for buffer layout, episode resets, one-decision
 gradient truncation, checkpoint replay and the explicit architecture differences.
 
+For a runnable example without native engines or a scheduler, use the checked-in
+flat configuration:
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  python -m bta_repro.simulator_train --config configs/prey_example.json \
+  --output results/prey_example
+```
+
+It performs 10,240 training decisions and evaluates local AgentMixer actors
+with both complete episodes and the released Prey fixed-window reduction.
+This short interface example does not reproduce the paper's 1M-step budget.
+
 Create an explicit JSON configuration, for example:
 
 ```json
