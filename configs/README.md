@@ -29,6 +29,7 @@ the option does not translate new configuration fields into old schemas.
 | --- | --- | --- |
 | Run BPPO or its matched AR-PPO baseline on a matrix game | `matrix_projected_entropy01.json` | Both methods reach the optimum on both games in development seeds 0–2 at 100k steps |
 | Inspect AgentMixer's correlated discrete redesign | `matrix_joint_lr_fast.json` | At 200k, all three development Climbing seeds succeed; all three Penalty seeds fail |
+| Inspect the diagnosed actor-rate control | `matrix_joint_lr_faster_float64.json` | All three development seeds reach each game's greedy optimum at 200k; central/local sampling gaps remain. [Complete results](../docs/matrix_final_diagnosis.md#completed-actor-rate-control-2026-10-26) |
 | Try the shared trainer with only core dependencies | `prey_example.json` | Flat single-run example: 10,240 training decisions, 20 evaluation episodes and 100×200 evaluation windows; not a benchmark result |
 | Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | Six development runs at the 10M paper budget; still in progress |
 | Confirm the selected HalfCheetah protocol on unused seeds | `mujoco_hc2x3_confirmation10m.json` | Ten frozen runs, seeds1000–1004, separate evaluation seed; exact development source retained. See [the study](../docs/halfcheetah_confirmation.md) |

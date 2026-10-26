@@ -1,0 +1,180 @@
+{
+  "scope": "All six completed development runs of the fivefold actor-rate control. Optimal greedy modes do not imply central or local stochastic convergence, independent reliability, or paper reproduction.",
+  "recorded_utc": "2026-10-26T16:22:22.191132+00:00",
+  "auditor_commit": "60aed3e5e632a40b0c1491631e38b621f084ca40",
+  "manifest": "results/matrix_joint_lr_faster_float64_20261026T105306Z/manifest.json",
+  "manifest_sha256": "8a67ddbaabbbf6dc02ad6f11de6e87de333696e51a5185827dd9d3a00444a0b7",
+  "comparison_manifest": "results/matrix_joint_lr_fast_float64_20261025T084839Z/manifest.json",
+  "comparison_manifest_sha256": "11ec102077b1e5a8ddbd57ebbf677273c84948695fa1c0eea13202a6b2fa30c9",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652"
+  },
+  "source_bytes_verified": true,
+  "only_resolved_setting_changed": {
+    "learning_rate": {
+      "previous": 0.0025,
+      "current": 0.0125
+    }
+  },
+  "software_versions_match_previous_control": true,
+  "completed_runs": 6,
+  "evaluation_points_checked": 126,
+  "greedy_optimal_counts": {
+    "climbing": 3,
+    "penalty": 3
+  },
+  "stable_crossing_rule": "Earliest logged point for which every later logged point reaches the specified threshold; no interpolation or guarantee between observations.",
+  "limits": [
+    "Development seeds0\u20132 were reused; no independent validation is claimed.",
+    "Central sampling, local greedy execution and local stochastic sampling are distinct reported outcomes.",
+    "Correlated joint modifier remains an explicitly named redesign; no inherited convergence theorem.",
+    "Historical figure/logger mapping and sample-efficiency comparability remain qualified."
+  ],
+  "runs": [
+    {
+      "game": "climbing",
+      "seed": 0,
+      "steps": 200000,
+      "greedy_return": 11.0,
+      "greedy_actions": [
+        0,
+        0
+      ],
+      "central_expected_return": 9.094145562992013,
+      "local_sampling_expected_return": 11.0,
+      "central_optimal_probability": 0.5235363907480032,
+      "local_optimal_probability": 1.0,
+      "first_logged_stable_greedy_optimum_steps": 61440,
+      "first_logged_stable_central_95pct_steps": null,
+      "first_logged_stable_local_95pct_steps": 81920,
+      "elapsed_seconds": 94.42685728799552,
+      "config_sha256": "236fc247885e1ce0df5c5bf8a3721dd73e7985288beb3b27d0c0de0e31e92781",
+      "metadata_sha256": "225a2c4db5d13f29f01751f504aff1d69620ae32c963bbdd1d3fec6d609f5787",
+      "summary_sha256": "e92835f74d6a0747c05e424c6bd1d180bd2842b8ad8b6c07a2f969d02ff9026d",
+      "metrics_sha256": "9b5a6e4baf86d69a9e4d6e657fa860b8642f1083bf30fc1b8f8d4d577e729a2a",
+      "checkpoint_sha256": "5d9a6ccb4baac32be7e691a506acbf6670079ed3d73c87c98ac494f00059c136"
+    },
+    {
+      "game": "climbing",
+      "seed": 1,
+      "steps": 200000,
+      "greedy_return": 11.0,
+      "greedy_actions": [
+        0,
+        0
+      ],
+      "central_expected_return": 10.999999293615947,
+      "local_sampling_expected_return": 11.0,
+      "central_optimal_probability": 0.9999999357832577,
+      "local_optimal_probability": 1.0,
+      "first_logged_stable_greedy_optimum_steps": 30720,
+      "first_logged_stable_central_95pct_steps": 71680,
+      "first_logged_stable_local_95pct_steps": 40960,
+      "elapsed_seconds": 76.38068993698107,
+      "config_sha256": "a60da91f5991aac0d6133bb1d614a3f3ed7139f02b1550eae799e033871865a2",
+      "metadata_sha256": "1dfe1951bbd645bea807bd893d67cd56cb98503942769193121c6fc74eb142d2",
+      "summary_sha256": "409662e82f6b03fc56ea675e1757c71aaf79e313fb7e1f6e08ddd1e2ac853410",
+      "metrics_sha256": "6be01225dc53e70c01ca0a7b01fc12a0c220b1e3180f6a66d88831e6eb488979",
+      "checkpoint_sha256": "e7e38b0d35ca28870c0b07b5460c489608437d4baf19be25a560a32346acf1d8"
+    },
+    {
+      "game": "climbing",
+      "seed": 2,
+      "steps": 200000,
+      "greedy_return": 11.0,
+      "greedy_actions": [
+        0,
+        0
+      ],
+      "central_expected_return": 10.999999999999968,
+      "local_sampling_expected_return": 10.687859535217285,
+      "central_optimal_probability": 0.9999999999999947,
+      "local_optimal_probability": 0.9919255971908569,
+      "first_logged_stable_greedy_optimum_steps": 30720,
+      "first_logged_stable_central_95pct_steps": 30720,
+      "first_logged_stable_local_95pct_steps": 30720,
+      "elapsed_seconds": 88.89151734596817,
+      "config_sha256": "60335568e9dde25f6eeddbd9858df46cd45e80c0e5c12a0e1be78716f4fafd59",
+      "metadata_sha256": "3f5538f4cb3b15fa58bbaeddb1bb1f32baae5ee93c4cad8ac6b7700a8ef420ef",
+      "summary_sha256": "dcd0ce7b8beed03a04b32bd089364fe4191abcf53231db4f36ca5304d5e2d24f",
+      "metrics_sha256": "a3f4efd6272e9cb994ef5a58294505a90723ceec3fa9cde0066cf487cc11dbd0",
+      "checkpoint_sha256": "1eff9b62221a21963ffd12d01e728f5eaba3f7e1600dd1b2f83c6d2e77d542d9"
+    },
+    {
+      "game": "penalty",
+      "seed": 0,
+      "steps": 200000,
+      "greedy_return": 10.0,
+      "greedy_actions": [
+        0,
+        2
+      ],
+      "central_expected_return": 10.0,
+      "local_sampling_expected_return": -29.346080780029297,
+      "central_optimal_probability": 1.0,
+      "local_optimal_probability": 0.6327571868896484,
+      "first_logged_stable_greedy_optimum_steps": 81920,
+      "first_logged_stable_central_95pct_steps": 81920,
+      "first_logged_stable_local_95pct_steps": null,
+      "elapsed_seconds": 81.96147556498181,
+      "config_sha256": "a4f2795ec065e99f0cc3731a257ee12e91e8a930809cef93f1c80e7c9bd8b34f",
+      "metadata_sha256": "e41d73634c638e07fefe32d6e4252133239e37da8aee8889c3ff891093db4c20",
+      "summary_sha256": "5ff05c7cf50e5cc04eb26e0f006e58519e5db01cbe120845d18c129e9c34d7be",
+      "metrics_sha256": "6d680943796c85dae478f8af33bc987077901b0e332f33ceb7d5649453c063f1",
+      "checkpoint_sha256": "71e3208440ebed94807add62317459d5839f19396b732498b9f3c39043d19dbe"
+    },
+    {
+      "game": "penalty",
+      "seed": 1,
+      "steps": 200000,
+      "greedy_return": 10.0,
+      "greedy_actions": [
+        0,
+        2
+      ],
+      "central_expected_return": 10.0,
+      "local_sampling_expected_return": -33.30728530883789,
+      "central_optimal_probability": 1.0,
+      "local_optimal_probability": 0.6049557328224182,
+      "first_logged_stable_greedy_optimum_steps": 122880,
+      "first_logged_stable_central_95pct_steps": 122880,
+      "first_logged_stable_local_95pct_steps": null,
+      "elapsed_seconds": 85.0356865709764,
+      "config_sha256": "11483ab21ba54cd573a0d003ac2dd9a54af49b38e82afb9244b37575e816e83b",
+      "metadata_sha256": "ab3e024e06411289864df4df093c0f2a659a816a4788b583b7854a8c243839ca",
+      "summary_sha256": "002afe077564de6549aa50851b6b3ad31532a9244ea08b85d27934fef085e0cf",
+      "metrics_sha256": "1254b64ba37aaf02a00fe3ab60f58b83893665e9961af90914e828ed7d25527f",
+      "checkpoint_sha256": "3e6cc77274f7d76a67a3fc02dbc095c56f7c74dbf9e7ffb97f9de553d24c9c1d"
+    },
+    {
+      "game": "penalty",
+      "seed": 2,
+      "steps": 200000,
+      "greedy_return": 10.0,
+      "greedy_actions": [
+        0,
+        2
+      ],
+      "central_expected_return": 10.0,
+      "local_sampling_expected_return": 1.4775696992874146,
+      "central_optimal_probability": 0.9999999999999999,
+      "local_optimal_probability": 0.921820342540741,
+      "first_logged_stable_greedy_optimum_steps": 71680,
+      "first_logged_stable_central_95pct_steps": 71680,
+      "first_logged_stable_local_95pct_steps": null,
+      "elapsed_seconds": 94.2606787160039,
+      "config_sha256": "2bfcd3122b4a0121b47dbe5cd9a9922855840729d076dd9c9b71399f265fa632",
+      "metadata_sha256": "b9c1665ee67e991ed11402c33d64a25e6802256f1a5729188b8c3828c20641f8",
+      "summary_sha256": "f1d13e4798219bff3c4b7ecc8899130e393b572882a9db01f2a8c487779b9d87",
+      "metrics_sha256": "2a2ce94b0c15f8eaaa674ca076a3e751f7facf74930ce3a4f5c936b13abb1af6",
+      "checkpoint_sha256": "3346bc21411e7569fbb1a1456f1e73a48284bf4de4bfc70a122749af6e7999b1"
+    }
+  ]
+}

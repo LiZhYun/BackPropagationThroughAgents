@@ -74,6 +74,39 @@ The control is reward-independent and does not alter the forward mode invariant.
 It must retain every seed and be assessed at the fixed endpoint. A successful
 configuration would still need disjoint final seeds and non-matrix validation.
 
+## Completed actor-rate control, 2026-10-26
+
+Job `21211813` completes all six declared 200k-step runs. Source hashes,
+software versions and resolved configurations match the preceding float64
+control, with actor learning rate **0.0025 → 0.0125 as the only setting change**.
+All 126 evaluation points were checked against the frozen payoff tables and
+all nine probabilities of both the central and local distributions. The
+[result record](../experiments/matrix_faster_actor200k_20261026.json) and
+[CSV](../experiments/matrix_faster_actor200k_20261026.csv) retain every seed.
+
+| Game | Seed | Greedy payoff | Central expected payoff | Local sampling expected payoff | First logged stable greedy optimum |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Climbing | 0 | 11 | 9.0941 | 11.0000 | 61,440 |
+| Climbing | 1 | 11 | 11.0000 | 11.0000 | 30,720 |
+| Climbing | 2 | 11 | 11.0000 | 10.6879 | 30,720 |
+| Penalty | 0 | 10 | 10.0000 | −29.3461 | 81,920 |
+| Penalty | 1 | 10 | 10.0000 | −33.3073 | 122,880 |
+| Penalty | 2 | 10 | 10.0000 | 1.4776 | 71,680 |
+
+The last column means every subsequent **logged** greedy payoff is optimal;
+it does not infer unobserved behavior between checkpoints. The faster update
+recovers the optimal greedy outcome in both previously failed seeds. Local
+sampling reaches at least 95% of the Climbing ceiling in all three seeds, but
+remains poor on Penalty. Climbing seed 0 also retains central probability
+0.4765 on the suboptimal BB action despite nearly deterministic local AA
+execution. Its central expected payoff is below 95% of the ceiling.
+
+Thus six optimal greedy endpoints do not establish optimal central and local
+stochastic policies across all runs. The results support an independent configuration
+check, not a population reliability, paper sample-efficiency or convergence
+claim. The correlated modifier remains a named experimental redesign, and the
+default configuration is unchanged.
+
 ## Provenance and limitations
 
 The [raw table](../experiments/matrix_final_diagnosis_20261026.csv) retains all
