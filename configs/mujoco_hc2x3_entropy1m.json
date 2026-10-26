@@ -1,0 +1,65 @@
+{
+  "label": "mujoco_hc2x3_entropy1m",
+  "scope": "Controlled1M-step follow-up: entropy coefficient0.01 for residual, bounded-replacement and identity AgentMixer, development seeds0\u20132. Compare with all nine matched zero-entropy runs from mujoco_hc2x3_modifier_scale1m. The first completed residual/bounded seed0 policies both reach geometric-mean scale about0.043; this experiment tests whether explicit entropy changes that behavior. It does not assert the cause of poor returns. All other settings, evaluation episodes and core mean-consistency mechanisms remain fixed. Positive entropy is a labeled optimization change from the released MuJoCo coefficient0.",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "base_config": {
+    "environment": "mujoco",
+    "env_config": {
+      "scenario": "HalfCheetah-v2",
+      "agent_conf": "2x3",
+      "agent_obsk": 0,
+      "episode_limit": 1000,
+      "action_units": "normalized"
+    },
+    "steps": 1000000,
+    "num_envs": 8,
+    "rollout_steps": 100,
+    "hidden_dim": 64,
+    "learning_rate": 0.0003,
+    "modifier_learning_rate": 3e-05,
+    "critic_learning_rate": 0.0003,
+    "entropy_coef": 0.01,
+    "epochs": 5,
+    "max_grad_norm": 10.0,
+    "normalize_observations": true,
+    "eval_seed": 1000000,
+    "eval_episodes": 10,
+    "eval_every_steps": 250000,
+    "checkpoint_every_updates": 125,
+    "threads": 1
+  },
+  "variants": {
+    "agentmixer_residual": {
+      "algorithm": "agentmixer",
+      "num_envs": 40,
+      "initial_std": 0.36552928931500245,
+      "normalize_value_targets": true,
+      "value_clip_coef": 0.2,
+      "value_huber_delta": 10.0,
+      "continuous_modifier_scale": "residual"
+    },
+    "agentmixer_bounded": {
+      "algorithm": "agentmixer",
+      "num_envs": 40,
+      "initial_std": 0.36552928931500245,
+      "normalize_value_targets": true,
+      "value_clip_coef": 0.2,
+      "value_huber_delta": 10.0,
+      "continuous_modifier_scale": "bounded"
+    },
+    "agentmixer_identity": {
+      "algorithm": "agentmixer",
+      "num_envs": 40,
+      "initial_std": 0.36552928931500245,
+      "normalize_value_targets": true,
+      "value_clip_coef": 0.2,
+      "value_huber_delta": 10.0,
+      "modifier_enabled": false
+    }
+  },
+  "wall_time_minutes": 240
+}

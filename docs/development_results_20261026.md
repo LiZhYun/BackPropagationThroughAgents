@@ -18,6 +18,41 @@ At 3M in this development seed, BPPO exceeds matched AR-PPO by 488.58 (10.31%). 
 
 The final logged joint Gaussian entropy for AgentMixer is −9.3107 over six coordinates, versus −11.1441 for its identity control. Converting the averaged differential entropy to the geometric-mean coordinate scale gives approximately 0.0513 and 0.0378, respectively. These describe the last PPO update and are not evaluation entropies. Both are much smaller than their initial 0.3655 scale. This motivates a controlled variance-parameterization experiment; it does not identify the cause of the performance gap.
 
+## Learning-curve area
+
+The [curve reporter](learning_curve_reports.md) validates all 48 completed runs
+and integrates each evaluation curve over its actual training-step coordinates.
+The [area CSV](../experiments/curve_summary_20261026.csv) retains every variant,
+its seed counts, metric and provenance. Normalized area has the same units as
+its evaluation metric; it is an average over training progress, not a new
+terminal score.
+
+| HalfCheetah method, combined protocol | Final return at 3M | Normalized curve area, 0–3M |
+| --- | ---: | ---: |
+| mappo_protocol | 4041.12 | 3042.59 |
+| arppo_protocol | 4739.43 | 3290.08 |
+| bppo_protocol | 5228.01 | 3580.56 |
+| agentmixer_protocol | 2411.14 | 2311.47 |
+| agentmixer_identity_protocol | 2975.45 | 2326.86 |
+
+BPPO's normalized area exceeds AR-PPO's by 8.83% in this development seed.
+AgentMixer is 0.66% below its identity control in area, compared with an 18.97%
+final-return deficit. Their different early/late behavior is visible in the
+figure. There is one training seed per curve, so no uncertainty band or
+training-seed confidence interval is shown.
+
+![HalfCheetah development learning curves](figures/hc2x3_protocol3m_20261026.png)
+
+[Standalone PDF](figures/hc2x3_protocol3m_20261026.pdf) and
+[validated curve data](../experiments/hc2x3_protocol3m_curves_20261026.json).
+
+For the three-seed BPPO noise control, small-batch normalized area is
+819.31 ± 480.79 for fresh noise and 1527.80 ± 59.73 for behavior noise.
+Under the combined protocol it is 917.77 ± 57.00 and 792.80 ± 309.30,
+respectively (sample SD across training seeds). The mixed interaction persists
+when evaluating the whole learning curve. Three seeds do not provide the
+independent final confirmation required by the experiment plan.
+
 ## BPPO Gaussian noise at 500k transitions
 
 Each row uses three development training seeds and five deterministic evaluation episodes per seed. SD is the sample standard deviation across training-seed means, not the within-evaluation episode deviation. The behavior option reconstructs the Gaussian noise paired with the stored action and holds it across PPO epochs.
@@ -85,6 +120,21 @@ All recorded Football evaluation checkpoints have zero wins. Positive checkpoint
 4. Prey penalty −1 remains unsolved. The [frozen-policy behavior diagnosis](prey_behavior_diagnosis.md) reproduces all original evaluation returns and finds frequent blocked greedy actions despite successful recent stochastic training in two small-batch variants. Compare local and central sampling on fresh episode seeds before changing the architecture; keep both capture and reward metrics.
 5. SMAC’s native restart correction now passes actual 200k training. A longer learning check can proceed within the measured memory footprint. Football requires longer training before interpreting its zero-win pilot as a final algorithm failure.
 6. After selecting configurations, freeze them and use at least five disjoint final training seeds. No experiment here is independent final confirmation.
+
+## Continuous AgentMixer scale-map follow-up
+
+At this snapshot, 6/9 declared 1M-step runs are complete. All declared seeds, including pending runs, remain in the [snapshot CSV](../experiments/modifier_scale1m_snapshot_20261026.csv). Residual and bounded variants each have all three development seeds; identity-control aggregation waits for its own full seed set.
+
+| Variant | Seed 0 return | Seed 1 return | Seed 2 return | Mean ± sample SD | Normalized area ± sample SD |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| agentmixer_residual | 2678.96 | 2454.76 | 3033.34 | 2722.35 ± 291.72 | 1990.36 ± 203.79 |
+| agentmixer_bounded | 2479.23 | 2593.99 | 2567.26 | 2546.83 ± 60.04 | 1609.44 ± 90.11 |
+
+Bounded replacement does not improve the three-seed mean at 1M: 2546.83 versus 2722.35 for the residual map. Its curve area is also lower, 1609.44 versus 1990.36. It improves the final return in one of the three paired seeds and has a smaller sample SD; this does not establish a preferred final configuration.
+
+The geometric-mean scale inferred from the final training-update Gaussian entropy is 0.0323–0.0430 for the residual policies and 0.0370–0.0434 for bounded policies. Both families substantially reduce their initial exploration scale. This is a diagnostic over PPO-update observations and epochs, not an evaluation-action variance or proof of the cause of low return.
+
+The released coefficient is zero entropy regularization. Job 21211006 queues an explicit coefficient-0.01 comparison for all three variants and seeds 0–2 after SMAC, with every other learning and evaluation setting fixed. The residual default remains unchanged. The full 10M BPPO/AR comparison and independent final confirmation are separate pending evidence.
 
 ## Evidence index
 

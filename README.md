@@ -58,6 +58,12 @@ and failed runs. The second checks that all45 benchmark targets have either an
 explicit source value or a linked curve estimate; it does not certify achieved
 performance.
 
+Full-budget learning curves, curve areas and training-seed uncertainty can be
+exported with `scripts/summarize_learning_curves.py`. Every declared seed must
+finish at matching settings before the report pools a group. See the
+[curve-report guide](docs/learning_curve_reports.md) for commands, metric
+denominators, bootstrap conventions and optional PDF/PNG/SVG figures.
+
 BPPO executes autoregressively and requires predecessor actions. AgentMixer executes using each local policy alone. The evaluator preserves this distinction.
 
 ## What counts as reproduced

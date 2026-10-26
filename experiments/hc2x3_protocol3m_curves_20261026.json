@@ -1,0 +1,1058 @@
+{
+  "scope": "3M-step development follow-up to the500k protocol controls,which outperformed the normalization-only setting for BPPO and AgentMixer. Same40x100 rollout batch,initial std0.365529,clipped Huber normalized critic;five matched methods,seed0. Not a final10M result.",
+  "metric": "return_mean",
+  "manifest_sha256": "f67ec7f06118a057b96c0a4e52ae7c76ffe7626fd18109a1f915668deea3593d",
+  "reporter_sha256": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+  "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+  "uncertainty": {
+    "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+    "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+    "bootstrap_seed": 1729,
+    "bootstrap_samples": 10000
+  },
+  "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+  "runs": [
+    {
+      "variant": "mappo_protocol",
+      "algorithm": "mappo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_protocol3m_20261025T105407Z/mappo_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.02647070048839158
+        },
+        {
+          "steps": 252000,
+          "value": 558.5676947474402
+        },
+        {
+          "steps": 500000,
+          "value": 2188.9558675955395
+        },
+        {
+          "steps": 752000,
+          "value": 2515.279967654641
+        },
+        {
+          "steps": 1000000,
+          "value": 3058.765821820232
+        },
+        {
+          "steps": 1252000,
+          "value": 3156.0968175955345
+        },
+        {
+          "steps": 1500000,
+          "value": 3215.3068394216048
+        },
+        {
+          "steps": 1752000,
+          "value": 3624.8652405972025
+        },
+        {
+          "steps": 2000000,
+          "value": 3555.6295669487554
+        },
+        {
+          "steps": 2252000,
+          "value": 3998.3132992154265
+        },
+        {
+          "steps": 2500000,
+          "value": 4254.956805331001
+        },
+        {
+          "steps": 2752000,
+          "value": 4380.012887679382
+        },
+        {
+          "steps": 3000000,
+          "value": 4041.120857517262
+        }
+      ],
+      "full_budget_auc": {
+        "area": 9127783353.17557,
+        "normalized_by_training_steps": 3042.594451058523
+      },
+      "budget": 3000000,
+      "summary_sha256": "5e88e5e60282d83142d792ad07b9d45f144d7799201032892c9807a5b3ccba3a",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "4145a6e6f67fc506e512cf19c551d3e0ce5c0c2943a152950ba70a3257b72cd4",
+      "metrics_snapshot_sha256": "a82299ab323dc4314ab4f88ac72123663b81e76f24eeaa652f65a185746ebaa9",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "independent",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_protocol3m_20261025T105407Z/arppo_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.015395132064772034
+        },
+        {
+          "steps": 252000,
+          "value": 616.5984703417053
+        },
+        {
+          "steps": 500000,
+          "value": 2190.1384624058705
+        },
+        {
+          "steps": 752000,
+          "value": 3183.9346945654092
+        },
+        {
+          "steps": 1000000,
+          "value": 3509.798424272074
+        },
+        {
+          "steps": 1252000,
+          "value": 3653.590901530485
+        },
+        {
+          "steps": 1500000,
+          "value": 3347.2986943271794
+        },
+        {
+          "steps": 1752000,
+          "value": 3806.106026444913
+        },
+        {
+          "steps": 2000000,
+          "value": 3849.14181804362
+        },
+        {
+          "steps": 2252000,
+          "value": 3909.876665544859
+        },
+        {
+          "steps": 2500000,
+          "value": 4523.536305290678
+        },
+        {
+          "steps": 2752000,
+          "value": 4540.13545593265
+        },
+        {
+          "steps": 3000000,
+          "value": 4739.4318831036535
+        }
+      ],
+      "full_budget_auc": {
+        "area": 9870226593.393074,
+        "normalized_by_training_steps": 3290.0755311310245
+      },
+      "budget": 3000000,
+      "summary_sha256": "3be86d7cc52fd82bbddbf674ca17fa1f07f44d56cbea35e6138f38c27a8ae457",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "395b533d9c219a7afb8cd1490218a6d4822c450669ae3b023cbfc023cc66ba73",
+      "metrics_snapshot_sha256": "dd35676032d167e37e016bd761a26f96ba2233f3318eddd270e6ab29c323d51e",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_protocol3m_20261025T105407Z/bppo_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.015395132064772034
+        },
+        {
+          "steps": 252000,
+          "value": 877.2753119460081
+        },
+        {
+          "steps": 500000,
+          "value": 2403.804402937201
+        },
+        {
+          "steps": 752000,
+          "value": 3229.0064785203112
+        },
+        {
+          "steps": 1000000,
+          "value": 3413.473378326294
+        },
+        {
+          "steps": 1252000,
+          "value": 3670.283329142529
+        },
+        {
+          "steps": 1500000,
+          "value": 3306.329031538507
+        },
+        {
+          "steps": 1752000,
+          "value": 3566.466162425658
+        },
+        {
+          "steps": 2000000,
+          "value": 4805.186663540322
+        },
+        {
+          "steps": 2252000,
+          "value": 4563.723060441611
+        },
+        {
+          "steps": 2500000,
+          "value": 5254.015110982421
+        },
+        {
+          "steps": 2752000,
+          "value": 5284.018164337378
+        },
+        {
+          "steps": 3000000,
+          "value": 5228.011386013655
+        }
+      ],
+      "full_budget_auc": {
+        "area": 10741666745.613613,
+        "normalized_by_training_steps": 3580.5555818712046
+      },
+      "budget": 3000000,
+      "summary_sha256": "c15530064542d7cdac61294f03cee253ed5ec7adc9b485c8ad497794ffa68e9c",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "5cff4d61a1339dfcfe8c2b48c1061e8f518f51ec6c069a355210eefc063853b6",
+      "metrics_snapshot_sha256": "3089932f31c0948ebf0f44b2ac2a35987ac2b374507405a3218bd0316ef0e28b",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_protocol",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_protocol3m_20261025T105407Z/agentmixer_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.027213632423737883
+        },
+        {
+          "steps": 252000,
+          "value": 1705.1330966672426
+        },
+        {
+          "steps": 500000,
+          "value": 2122.364096931958
+        },
+        {
+          "steps": 752000,
+          "value": 2520.4311424117404
+        },
+        {
+          "steps": 1000000,
+          "value": 2678.964510886556
+        },
+        {
+          "steps": 1252000,
+          "value": 2666.0022464523345
+        },
+        {
+          "steps": 1500000,
+          "value": 2171.123889221173
+        },
+        {
+          "steps": 1752000,
+          "value": 2783.190016792951
+        },
+        {
+          "steps": 2000000,
+          "value": 2642.2173872814524
+        },
+        {
+          "steps": 2252000,
+          "value": 2420.1612400349695
+        },
+        {
+          "steps": 2500000,
+          "value": 2280.5652036465935
+        },
+        {
+          "steps": 2752000,
+          "value": 2551.5701164233064
+        },
+        {
+          "steps": 3000000,
+          "value": 2411.1354962255173
+        }
+      ],
+      "full_budget_auc": {
+        "area": 6934408109.301848,
+        "normalized_by_training_steps": 2311.469369767283
+      },
+      "budget": 3000000,
+      "summary_sha256": "ecab261635a1c5974753b964737c94eaf9ee68bdb12665cd74a18282a3bf70ed",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "5ca6380929c56fefd783e11eca4cab22ae0605a53cb6b87f4130266691eceff7",
+      "metrics_snapshot_sha256": "685586f5a497933f9c86ddfb702e5d81afe1a8f5318ab0a891958236c0125e1f",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_identity_protocol",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_protocol3m_20261025T105407Z/agentmixer_identity_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.027213632423737883
+        },
+        {
+          "steps": 252000,
+          "value": 1053.3234340480076
+        },
+        {
+          "steps": 500000,
+          "value": 1528.2634474367726
+        },
+        {
+          "steps": 752000,
+          "value": 2114.0517878695073
+        },
+        {
+          "steps": 1000000,
+          "value": 2340.281758583574
+        },
+        {
+          "steps": 1252000,
+          "value": 2630.7823276529275
+        },
+        {
+          "steps": 1500000,
+          "value": 2711.3850852110154
+        },
+        {
+          "steps": 1752000,
+          "value": 2881.761658630281
+        },
+        {
+          "steps": 2000000,
+          "value": 2949.7774330846646
+        },
+        {
+          "steps": 2252000,
+          "value": 2934.838405145199
+        },
+        {
+          "steps": 2500000,
+          "value": 2725.964442877207
+        },
+        {
+          "steps": 2752000,
+          "value": 2576.0636487986453
+        },
+        {
+          "steps": 3000000,
+          "value": 2975.445645679628
+        }
+      ],
+      "full_budget_auc": {
+        "area": 6980575188.481039,
+        "normalized_by_training_steps": 2326.8583961603463
+      },
+      "budget": 3000000,
+      "summary_sha256": "b8a3245cc8c81e89dc0d0ea30479cd6aac1dbbff4621dd132ccf1089eb7aa359",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "98533545e15c87257b8bc1e9f8a587355e7796afb0160ee45160dada18fe3cb7",
+      "metrics_snapshot_sha256": "9bc75738c1d4eab72e0081620939395f4b9169aaf6212a9bbb339483ac2c23f6",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    }
+  ],
+  "groups": [
+    {
+      "variant": "mappo_protocol",
+      "declared_seeds": [
+        0
+      ],
+      "eligible_seeds": [
+        0
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 1,
+          "mean": 4041.120857517262,
+          "median": 4041.120857517262,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 1,
+          "mean": 3042.594451058523,
+          "median": 3042.594451058523,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 1,
+            "mean": -0.02647070048839158,
+            "median": -0.02647070048839158,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 252000,
+            "seed_count": 1,
+            "mean": 558.5676947474402,
+            "median": 558.5676947474402,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 500000,
+            "seed_count": 1,
+            "mean": 2188.9558675955395,
+            "median": 2188.9558675955395,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 752000,
+            "seed_count": 1,
+            "mean": 2515.279967654641,
+            "median": 2515.279967654641,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 1,
+            "mean": 3058.765821820232,
+            "median": 3058.765821820232,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1252000,
+            "seed_count": 1,
+            "mean": 3156.0968175955345,
+            "median": 3156.0968175955345,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 1,
+            "mean": 3215.3068394216048,
+            "median": 3215.3068394216048,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1752000,
+            "seed_count": 1,
+            "mean": 3624.8652405972025,
+            "median": 3624.8652405972025,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 1,
+            "mean": 3555.6295669487554,
+            "median": 3555.6295669487554,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2252000,
+            "seed_count": 1,
+            "mean": 3998.3132992154265,
+            "median": 3998.3132992154265,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 1,
+            "mean": 4254.956805331001,
+            "median": 4254.956805331001,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2752000,
+            "seed_count": 1,
+            "mean": 4380.012887679382,
+            "median": 4380.012887679382,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 1,
+            "mean": 4041.120857517262,
+            "median": 4041.120857517262,
+            "sample_sd_across_training_seeds": null
+          }
+        ]
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "declared_seeds": [
+        0
+      ],
+      "eligible_seeds": [
+        0
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 1,
+          "mean": 4739.4318831036535,
+          "median": 4739.4318831036535,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 1,
+          "mean": 3290.0755311310245,
+          "median": 3290.0755311310245,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 1,
+            "mean": -0.015395132064772034,
+            "median": -0.015395132064772034,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 252000,
+            "seed_count": 1,
+            "mean": 616.5984703417053,
+            "median": 616.5984703417053,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 500000,
+            "seed_count": 1,
+            "mean": 2190.1384624058705,
+            "median": 2190.1384624058705,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 752000,
+            "seed_count": 1,
+            "mean": 3183.9346945654092,
+            "median": 3183.9346945654092,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 1,
+            "mean": 3509.798424272074,
+            "median": 3509.798424272074,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1252000,
+            "seed_count": 1,
+            "mean": 3653.590901530485,
+            "median": 3653.590901530485,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 1,
+            "mean": 3347.2986943271794,
+            "median": 3347.2986943271794,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1752000,
+            "seed_count": 1,
+            "mean": 3806.106026444913,
+            "median": 3806.106026444913,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 1,
+            "mean": 3849.14181804362,
+            "median": 3849.14181804362,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2252000,
+            "seed_count": 1,
+            "mean": 3909.876665544859,
+            "median": 3909.876665544859,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 1,
+            "mean": 4523.536305290678,
+            "median": 4523.536305290678,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2752000,
+            "seed_count": 1,
+            "mean": 4540.13545593265,
+            "median": 4540.13545593265,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 1,
+            "mean": 4739.4318831036535,
+            "median": 4739.4318831036535,
+            "sample_sd_across_training_seeds": null
+          }
+        ]
+      }
+    },
+    {
+      "variant": "bppo_protocol",
+      "declared_seeds": [
+        0
+      ],
+      "eligible_seeds": [
+        0
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 1,
+          "mean": 5228.011386013655,
+          "median": 5228.011386013655,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 1,
+          "mean": 3580.5555818712046,
+          "median": 3580.5555818712046,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 1,
+            "mean": -0.015395132064772034,
+            "median": -0.015395132064772034,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 252000,
+            "seed_count": 1,
+            "mean": 877.2753119460081,
+            "median": 877.2753119460081,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 500000,
+            "seed_count": 1,
+            "mean": 2403.804402937201,
+            "median": 2403.804402937201,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 752000,
+            "seed_count": 1,
+            "mean": 3229.0064785203112,
+            "median": 3229.0064785203112,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 1,
+            "mean": 3413.473378326294,
+            "median": 3413.473378326294,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1252000,
+            "seed_count": 1,
+            "mean": 3670.283329142529,
+            "median": 3670.283329142529,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 1,
+            "mean": 3306.329031538507,
+            "median": 3306.329031538507,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1752000,
+            "seed_count": 1,
+            "mean": 3566.466162425658,
+            "median": 3566.466162425658,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 1,
+            "mean": 4805.186663540322,
+            "median": 4805.186663540322,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2252000,
+            "seed_count": 1,
+            "mean": 4563.723060441611,
+            "median": 4563.723060441611,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 1,
+            "mean": 5254.015110982421,
+            "median": 5254.015110982421,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2752000,
+            "seed_count": 1,
+            "mean": 5284.018164337378,
+            "median": 5284.018164337378,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 1,
+            "mean": 5228.011386013655,
+            "median": 5228.011386013655,
+            "sample_sd_across_training_seeds": null
+          }
+        ]
+      }
+    },
+    {
+      "variant": "agentmixer_protocol",
+      "declared_seeds": [
+        0
+      ],
+      "eligible_seeds": [
+        0
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 1,
+          "mean": 2411.1354962255173,
+          "median": 2411.1354962255173,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 1,
+          "mean": 2311.469369767283,
+          "median": 2311.469369767283,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 1,
+            "mean": -0.027213632423737883,
+            "median": -0.027213632423737883,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 252000,
+            "seed_count": 1,
+            "mean": 1705.1330966672426,
+            "median": 1705.1330966672426,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 500000,
+            "seed_count": 1,
+            "mean": 2122.364096931958,
+            "median": 2122.364096931958,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 752000,
+            "seed_count": 1,
+            "mean": 2520.4311424117404,
+            "median": 2520.4311424117404,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 1,
+            "mean": 2678.964510886556,
+            "median": 2678.964510886556,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1252000,
+            "seed_count": 1,
+            "mean": 2666.0022464523345,
+            "median": 2666.0022464523345,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 1,
+            "mean": 2171.123889221173,
+            "median": 2171.123889221173,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1752000,
+            "seed_count": 1,
+            "mean": 2783.190016792951,
+            "median": 2783.190016792951,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 1,
+            "mean": 2642.2173872814524,
+            "median": 2642.2173872814524,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2252000,
+            "seed_count": 1,
+            "mean": 2420.1612400349695,
+            "median": 2420.1612400349695,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 1,
+            "mean": 2280.5652036465935,
+            "median": 2280.5652036465935,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2752000,
+            "seed_count": 1,
+            "mean": 2551.5701164233064,
+            "median": 2551.5701164233064,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 1,
+            "mean": 2411.1354962255173,
+            "median": 2411.1354962255173,
+            "sample_sd_across_training_seeds": null
+          }
+        ]
+      }
+    },
+    {
+      "variant": "agentmixer_identity_protocol",
+      "declared_seeds": [
+        0
+      ],
+      "eligible_seeds": [
+        0
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 1,
+          "mean": 2975.445645679628,
+          "median": 2975.445645679628,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 1,
+          "mean": 2326.8583961603463,
+          "median": 2326.8583961603463,
+          "sample_sd_across_training_seeds": null,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 1,
+            "mean": -0.027213632423737883,
+            "median": -0.027213632423737883,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 252000,
+            "seed_count": 1,
+            "mean": 1053.3234340480076,
+            "median": 1053.3234340480076,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 500000,
+            "seed_count": 1,
+            "mean": 1528.2634474367726,
+            "median": 1528.2634474367726,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 752000,
+            "seed_count": 1,
+            "mean": 2114.0517878695073,
+            "median": 2114.0517878695073,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 1,
+            "mean": 2340.281758583574,
+            "median": 2340.281758583574,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1252000,
+            "seed_count": 1,
+            "mean": 2630.7823276529275,
+            "median": 2630.7823276529275,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 1,
+            "mean": 2711.3850852110154,
+            "median": 2711.3850852110154,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 1752000,
+            "seed_count": 1,
+            "mean": 2881.761658630281,
+            "median": 2881.761658630281,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 1,
+            "mean": 2949.7774330846646,
+            "median": 2949.7774330846646,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2252000,
+            "seed_count": 1,
+            "mean": 2934.838405145199,
+            "median": 2934.838405145199,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 1,
+            "mean": 2725.964442877207,
+            "median": 2725.964442877207,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 2752000,
+            "seed_count": 1,
+            "mean": 2576.0636487986453,
+            "median": 2576.0636487986453,
+            "sample_sd_across_training_seeds": null
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 1,
+            "mean": 2975.445645679628,
+            "median": 2975.445645679628,
+            "sample_sd_across_training_seeds": null
+          }
+        ]
+      }
+    }
+  ]
+}

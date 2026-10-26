@@ -1,0 +1,10 @@
+{
+  "report": "experiments/hc2x3_protocol3m_curves_20261026.json",
+  "report_sha256": "159361c438166221182f5c9eb0f67d3c3a492cb72bebbebc822d95554da6c798",
+  "plotter_sha256": "d6d136c358f1d41d72ceaa0f57165de080683ce2e82c312927b454d835be89e5",
+  "matplotlib": "3.7.1",
+  "statistic": "mean",
+  "band": "sample standard deviation across training seeds",
+  "omitted_groups": [],
+  "title": "HalfCheetah 2\u00d73 \u2014 3M development steps"
+}

@@ -2,7 +2,7 @@
 
 | ID | Stage | Purpose | System | Status | Evidence |
 |---|---|---|---|---|---|
-| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 583 tests passed, 1 CUDA-only skip, 2026-10-26 |
+| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 607 tests passed, 1 CUDA-only skip, 2026-10-26 |
 | R002 | M0 | Pipeline smoke | MAPPO climbing, 2,048 steps | PASS | results/smoke/mappo_20261025 |
 | R003 | M0 | Pipeline smoke | AR-PPO, BPPO, AgentMixer | PASS | results/smoke/{algorithm}_20261025; 2,048 steps each |
 | R004 | M1 | Matrix development | Four algorithms × two games × seeds 0–2 | FAIL learning gate | Job21192344; all24 completed, zero final greedy optima |
@@ -48,8 +48,10 @@
 | R042 | M0 | Saved-policy evaluation | All methods,both action spaces,normalization/source provenance | PASS |560 full-suite tests; native Prey100k AgentMixer replay exactly equals original20-episode evaluation using frozen source; scripts/evaluate_simulator.py |
 
 | R043 | M2 | First paper-budget HalfCheetah comparison | BPPO and AR-PPO, 10M, seeds 0–2 | SUBMITTED | 21208906; configs/mujoco_hc2x3_bppo_ar10m.json; 32 evaluation episodes, two workers, 12h cap; development selection, not final independent seeds |
-| R044 | M2 | Continuous AgentMixer scale map | Residual, bounded replacement, identity; 1M, seeds 0–2 | SUBMITTED; numerical PASS | 21209002; configs/mujoco_hc2x3_modifier_scale1m.json; source frozen after 583 tests passed; means preserved, local features undetached, shared initialization |
+| R044 | M2 | Continuous AgentMixer scale map | Residual, bounded replacement, identity; 1M, seeds 0–2 | 6/9 complete; bounded not better | 21209002; residual mean±SD2722.35±291.72, bounded2546.83±60.04; full paired seed results retained; identity pending in snapshot; numerical invariants pass |
 | R045 | Analysis | Completed development results | All 48 runs from six suites | RECORDED | docs/development_results_20261026.md; raw CSV with per-run summary/manifest hashes; no final superiority claim |
 | R046 | M2 | Longer SMAC learning | Five methods, terran5v5, 1M, seed 0 | QUEUED | 21209234 after 21209002 and 21210161; same runtime and optimizer settings as completed 200k; two workers, 12h cap |
 | R047 | M2 | Longer Football learning | Five methods, 3v1, 1M, seed 0 | QUEUED | 21209248 after 21208906; same settings as zero-win 100k pilot; two workers, 12h cap |
-| R048 | Diagnosis | Prey execution behavior | All16 final policies, original20 evaluation episodes | PASS replay; learning gap found | Frozen source reproduces every per-episode return within1e-12. Small-batch AM recent training captures83–100%, greedy evaluation0/20; repeated blocked moves. Fresh100-episode distribution diagnostic queued21210161 after AgentMixer worker0; docs/prey_behavior_diagnosis.md |
+| R048 | Diagnosis | Prey execution behavior | All16 final policies, original20 evaluation episodes | PASS replay; learning gap found | Frozen source reproduces every per-episode return within1e-12. Small-batch AM recent training captures83–100%, greedy evaluation0/20; repeated blocked moves. Fresh100-episode distribution diagnostic queued21210161 after AgentMixer worker1; docs/prey_behavior_diagnosis.md |
+| R049 | Reporting | Full-budget learning curves and seed uncertainty | All48 completed native runs, plus live incomplete controls | PASS | 24 targeted checks; full suite607 passed/1skip. Missing seeds, changed protocols, source mismatches and absent endpoints block aggregates; PNG/PDF and data exported. docs/learning_curve_reports.md |
+| R050 | M2 | Continuous exploration control | Three AgentMixer variants, entropy0.01, 1M, seeds0–2 | QUEUED | 21211006 after21209234. Compare all nine against zero-entropy controls; same core and tasks. First residual/bounded seed0 scale≈0.043 motivates hypothesis, not an established cause |
