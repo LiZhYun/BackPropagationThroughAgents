@@ -69,3 +69,7 @@ queued behind those predecessors; no active experiment was changed.
 
 This is one target's confirmation study. It does not complete the remaining
 MuJoCo, SMAC, Football, Predator–Prey or matrix-game release requirements.
+
+Use the [confirmation reporter](simulator_confirmation.md) to check this frozen
+study. It validates the original plan and every declared seed before reporting
+group statistics, paired baseline differences or a qualified figure comparison.

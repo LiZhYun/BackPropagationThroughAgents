@@ -99,6 +99,10 @@ unused-seed study and separate paper-budget development extension. Its reporter
 checks provenance, recomputes scores and retains every declared seed before
 making a configuration-validation decision.
 
+The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the
+frozen independent HalfCheetah study, recomputes scores from raw episodes and
+verifies every rollout against the training budget before comparing results.
+
 BPPO executes autoregressively and requires predecessor actions. AgentMixer executes using each local policy alone. The evaluator preserves this distinction.
 
 ## What counts as reproduced

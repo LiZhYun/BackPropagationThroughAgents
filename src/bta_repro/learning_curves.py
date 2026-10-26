@@ -89,7 +89,8 @@ def seed_statistics(values, *, confidence_intervals=False):
     return result
 
 
-def _read_run(entry, source_hashes, metric):
+def read_curve_run(entry, source_hashes, metric):
+    """Read one declared run, retaining incomplete artifacts and validation errors."""
     output = Path(entry["output_path"])
     result = {key: entry[key] for key in ("variant", "algorithm", "seed")}
     result.update(output_path=str(output), status="unfinished" if output.exists() else "not_started",
@@ -181,7 +182,7 @@ def summarize_curves(manifest_path, metric="return_mean"):
         if key in seen:
             raise ValueError(f"duplicate variant/training seed in manifest: {key}")
         seen.add(key)
-        run = _read_run(entry, manifest["source_sha256"], metric)
+        run = read_curve_run(entry, manifest["source_sha256"], metric)
         runs.append(run)
         groups[entry["variant"]].append(run)
     comparisons = []
