@@ -1,11 +1,23 @@
 # HalfCheetah 2×3 independent confirmation
 
-The three completed BPPO development seeds at 10M steps return 5843.80,
-6046.91 and 6050.40. Their mean is 5980.37, with sample SD 118.29; normalized
-learning-curve area is 5159.19 ± 150.42. The
-[validated all-run report](../experiments/hc2x3_bppo10m_development_20261026.json)
-retains all six declared development runs. Only AR-PPO seed 0 has finished
-(5726.12), so there is no complete matched baseline aggregate yet.
+All six development runs complete the 10M-step budget. The
+[full audited comparison](../experiments/hc2x3_10m_complete_20261026.json)
+verifies the frozen source, 4,032 raw evaluation episodes and 15,000 rollout
+updates, including initial/final summary agreement and interaction counts.
+
+| Training seed | BPPO final return | AR-PPO final return | BPPO minus AR-PPO |
+| --- | ---: | ---: | ---: |
+| 0 | 5843.80 | 5726.12 | +117.68 |
+| 1 | 6046.91 | 6058.57 | −11.66 |
+| 2 | 6050.40 | 5667.49 | +382.90 |
+| Mean ± sample SD | 5980.37 ± 118.29 | 5817.39 ± 210.91 | +162.98 mean difference |
+
+BPPO's mean endpoint is 2.80% higher. Its normalized learning-curve area is
+5159.19 ± 150.42 versus 4997.48 ± 217.75, a 3.24% mean increase; the paired area
+difference is positive for all three seeds. The endpoint difference is positive
+for two seeds. These development results support testing the selected setting
+on fresh seeds; three selected seeds do not establish independent superiority.
+The earlier partial reports are retained as historical snapshots.
 
 Every BPPO endpoint exceeds the paper figure's reading range [5660, 5740].
 This motivates confirmation, not a final reproduction claim. The original

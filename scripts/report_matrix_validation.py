@@ -25,6 +25,7 @@ def main():
         stream.write("\n")
     columns = ["algorithm", "game", "seed", "status", "eligible", "threshold_success",
                "execution_policy_expected_return", "greedy_return", "optimal_action_probability",
+               "training_policy_expected_return", "training_optimal_action_probability",
                "normalized_expected_return_auc", "first_observed_sustained_95pct_expected_return_step", "errors"]
     with args.csv.open("x", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=columns, extrasaction="ignore")

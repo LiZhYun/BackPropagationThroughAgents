@@ -1,0 +1,65 @@
+{
+  "recorded_utc": "2026-10-26T17:10:02.912418+00:00",
+  "scope": "Insert one short, frozen validation worker on B0; only its pending successor dependency changes.",
+  "before": {
+    "21218175_0": {
+      "JobId": "21218175",
+      "ArrayJobId": "21218175",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21209234_0(unfulfilled)",
+      "TimeLimit": "00:45:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "0"
+    },
+    "21213860_0": {
+      "JobId": "21213861",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21209234_0(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "275252"
+    }
+  },
+  "verified_while_held": {
+    "21218175_0": {
+      "JobId": "21218175",
+      "ArrayJobId": "21218175",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21209234_0(unfulfilled)",
+      "TimeLimit": "00:45:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "0"
+    },
+    "21213860_0": {
+      "JobId": "21213861",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21218175_0(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    }
+  },
+  "new_chain": [
+    "21209234_0",
+    "21218175_0",
+    "21213860_0",
+    "21211006_0",
+    "21212197_0"
+  ],
+  "resource_ceiling": "The same four serial chains; at most four concurrent workers, each <=2CPU/8GB. New worker1CPU/4GB,45min.",
+  "unchanged": "All active jobs and frozen experiment source/configuration/submission files; A0,A1 and B1 dependencies."
+}

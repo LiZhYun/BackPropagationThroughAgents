@@ -1,42 +1,12 @@
 """Freeze an explicit simulator plan into at most two serial CPU workers."""
 import argparse
 from datetime import datetime, timezone
-import hashlib
 import json
 from pathlib import Path
 import shlex
 import shutil
 from bta_repro.simulator_train import Config
-
-def source_snapshot(root, source_manifest=None):
-    """Read and verify source bytes before creating any experiment files."""
-    root = root.resolve()
-    if source_manifest is None:
-        source = root / 'src' / 'bta_repro'
-        provenance = {'kind': 'working_tree', 'path': 'src/bta_repro'}
-        expected = None
-    else:
-        source_manifest = Path(source_manifest).resolve()
-        if not source_manifest.is_relative_to(root):
-            raise ValueError('source manifest must belong to this repository')
-        manifest_bytes = source_manifest.read_bytes()
-        expected = json.loads(manifest_bytes)['source_sha256']
-        source = source_manifest.parent / 'source' / 'bta_repro'
-        provenance = {'kind': 'frozen_manifest', 'manifest': str(source_manifest.relative_to(root)),
-                      'manifest_sha256': hashlib.sha256(manifest_bytes).hexdigest()}
-    if not source.resolve().is_relative_to(root):
-        raise ValueError('source directory must belong to this repository')
-    files = {}
-    for path in sorted(source.glob('*.py')):
-        if not path.resolve().is_relative_to(source.resolve()):
-            raise ValueError('source file points outside the snapshot')
-        files[path.name] = path.read_bytes()
-    if '__init__.py' not in files or 'simulator_train.py' not in files:
-        raise ValueError('source snapshot must contain the simulator package')
-    hashes = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}
-    if expected is not None and hashes != expected:
-        raise ValueError('frozen source hashes differ from the selected manifest')
-    return files, hashes, provenance
+from bta_repro.experiment_source import source_snapshot
 
 
 def prepare(plan, root, *, source_manifest=None, stamp=None):

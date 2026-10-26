@@ -129,7 +129,7 @@ their dependencies updated, and all edges and unchanged resources checked
 before release. Active jobs, manifests, sources, assigned runs, seeds and
 budgets were unchanged. No additional jobs were submitted.
 
-The current four serial chains are:
+The four serial chains at that update were:
 
 | Chain | Order |
 | --- | --- |
@@ -149,3 +149,25 @@ contains all prior states, requested edges, the concurrency argument and a hash
 of the hold/update/release verification. The ledger records each array's full
 dependency map. Both timing workers subsequently completed with exit 0; the
 joint-matrix control began while the remaining native training continued.
+
+## AgentMixer validation inserted, 2026-10-26
+
+The short studies and GRU worker 1 have now completed. A new ten-run
+[AgentMixer Climbing validation](agentmixer_confirmation.md), job `21218175`,
+occupies one existing B0 position:
+
+```text
+21209234_0 → 21218175_0 → 21213860_0 → 21211006_0 → 21212197_0
+SMAC         AM check     GRU check     entropy       Prey
+```
+
+The new worker runs ten serial 200k configurations using 1 CPU, 4GB and a
+45-minute limit. It was submitted held. After the frozen-plan preflight passed,
+the still-pending GRU worker 0 was held, its dependency updated, and both workers'
+edges and resources verified before release. The former matrix prerequisite
+had already completed. Active jobs and frozen run files were unchanged.
+
+The [verification record](../experiments/matrix_agentmixer_confirmation_schedule_20261026.json)
+preserves the old and new states. A0/A1 still run Football → Ant/Walker →
+HalfCheetah confirmation; B1 runs entropy → Prey after its completed GRU check.
+There are still at most four concurrent workers, each at most 2 CPUs and 8GB.

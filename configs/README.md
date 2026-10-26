@@ -23,15 +23,23 @@ recording the parent manifest hash. Use fully resolved settings from the
 selected run and validate compatibility with the copied trainer before launch;
 the option does not translate new configuration fields into old schemas.
 
+Matrix preparation supports the same `--source-manifest` option:
+`python scripts/prepare_matrix.py --overrides FILE --algorithms agentmixer
+--games climbing --seeds 2000 2001 --steps 200000 --workers 1` prepares runs
+without launching them. An explicit `--steps` takes precedence over the JSON
+budget; otherwise the JSON budget is used, or 100k if neither supplies one.
+`--wall-time-minutes` sets the generated submission limit. A separate frozen
+study plan defines any independent-validation claim.
+
 ## Starting points
 
 | Question | Configuration | Evidence and scope |
 | --- | --- | --- |
 | Run BPPO or its matched AR-PPO baseline on a matrix game | `matrix_projected_entropy01.json` | The selected setting passes its frozen 100k check on ten unused seeds per method/game: optimal greedy actions and expected returns above95% of the ceiling. [Validation](../docs/matrix_confirmation.md#completed-100k-validation) |
 | Inspect AgentMixer's correlated discrete redesign | `matrix_joint_lr_fast.json` | At 200k, all three development Climbing seeds succeed; all three Penalty seeds fail |
-| Inspect the diagnosed actor-rate control | `matrix_joint_lr_faster_float64.json` | All three development seeds reach each game's greedy optimum at 200k; central/local sampling gaps remain. [Complete results](../docs/matrix_final_diagnosis.md#completed-actor-rate-control-2026-10-26) |
+| Inspect the diagnosed actor-rate control | `matrix_joint_lr_faster_float64.json` | All three development seeds reach each game's greedy optimum at 200k; central/local sampling gaps remain. [Independent Climbing validation](../docs/agentmixer_confirmation.md) is queued |
 | Try the shared trainer with only core dependencies | `prey_example.json` | Flat single-run example: 10,240 training decisions, 20 evaluation episodes and 100×200 evaluation windows; not a benchmark result |
-| Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | Six development runs at the 10M paper budget; still in progress |
+| Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | All six development runs complete: BPPO5980.37±118.29 versus AR5817.39±210.91. [Full comparison](../docs/halfcheetah_confirmation.md) |
 | Confirm the selected HalfCheetah protocol on unused seeds | `mujoco_hc2x3_confirmation10m.json` | Ten frozen runs, seeds1000–1004, separate evaluation seed; exact development source retained. See [the study](../docs/halfcheetah_confirmation.md) |
 | Check transfer to Ant and Walker | `mujoco_ant_walker_transfer500k.json` | Eleven 500k pilots queued; distinct Ant observation protocols and matched controls |
 | Compare continuous AgentMixer scale maps | `mujoco_hc2x3_modifier_scale1m.json` | All nine runs complete; neither modifier improves the final three-seed mean over identity |

@@ -132,6 +132,11 @@ actions and expected execution rewards above 95% of their ceilings. The
 retain the small endpoint differences, mixed curve-area comparisons and
 limitations. The 1M study and full paper reproduction remain separate.
 
+The 1M development extension also completes with all 12 runs above the threshold;
+its longer entropy schedule and reused development seeds remain separate evidence.
+[AgentMixer Climbing validation](docs/agentmixer_confirmation.md) is queued on ten
+unused seeds at 200k, retaining central and local execution scores separately.
+
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the
 frozen independent HalfCheetah study, recomputes scores from raw episodes and
 verifies every rollout against the training budget before comparing results.

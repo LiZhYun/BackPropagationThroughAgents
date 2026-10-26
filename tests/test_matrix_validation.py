@@ -26,16 +26,16 @@ def evaluation(game, *, uniform=False):
             "greedy_actions": [index // 3, index % 3], "greedy_return": optimum}
 
 
-def study(root, seeds=(100, 101)):
+def study(root, seeds=(100, 101), algorithms=("arppo", "bppo"), games=tuple(PAYOFFS), steps=100000):
     source = root / "runs/source/bta_repro/envs.py"
     source.parent.mkdir(parents=True)
     source.write_text(f"PAYOFFS = {PAYOFFS!r}\n")
     for name in ("run_array.py", "submit.sbatch"):
         (root / "runs" / name).write_text("fixture")
     source_hash = {"envs.py": digest(source)}
-    plan = {"study_id": "fixture", "scope": "validation fixture", "training_steps": 100000,
-            "frozen_utc": "2026-01-01T00:00:00+00:00", "algorithms": ["arppo", "bppo"],
-            "games": list(PAYOFFS), "training_seeds": list(seeds),
+    plan = {"study_id": "fixture", "scope": "validation fixture", "training_steps": steps,
+            "frozen_utc": "2026-01-01T00:00:00+00:00", "algorithms": list(algorithms),
+            "games": list(games), "training_seeds": list(seeds),
             "all_prior_recorded_training_seeds": [0, 1, 2],
             "manifest": "runs/manifest.json", "source_sha256": source_hash,
             "launcher_sha256": digest(root / "runs/run_array.py"),
@@ -46,7 +46,7 @@ def study(root, seeds=(100, 101)):
         for game in plan["games"]:
             for seed in seeds:
                 name = f"{algorithm}_{game}_{seed}"
-                config = {"algorithm": algorithm, "game": game, "seed": seed, "steps": 100000,
+                config = {"algorithm": algorithm, "game": game, "seed": seed, "steps": steps,
                           "batch_size": 5000, "eval_every": 10}
                 path = root / f"runs/{name}.json"
                 write(path, config)
@@ -58,8 +58,17 @@ def study(root, seeds=(100, 101)):
                 metadata = {"config": config, "source_sha256": source_hash, **plan["environment"],
                             "created_utc": "2026-01-02T00:00:00+00:00"}
                 write(out / "config.json", metadata)
-                write(out / "summary.json", {"status": "completed", "steps": 100000, **evaluation(game)})
-                rows = [{"steps": step, **evaluation(game, uniform=step == 0)} for step in (0, 50000, 100000)]
+                final = {"status": "completed", "steps": steps, **evaluation(game)}
+                rows = [{"steps": step, **evaluation(game, uniform=step == 0)}
+                        for step in [*range(0, steps, 50000), steps]]
+                if algorithm == "agentmixer":
+                    for row in [final, *rows]:
+                        # An optimal local policy can coexist with a poor central policy.
+                        central = evaluation(game, uniform=True)
+                        row.update(training_joint_probabilities=central["execution_joint_probabilities"],
+                                   training_policy_expected_return=central["execution_policy_expected_return"],
+                                   training_optimal_action_probability=central["optimal_action_probability"])
+                write(out / "summary.json", final)
                 (out / "metrics.jsonl").write_text("\n".join(map(json.dumps, rows)) + "\n")
     manifest = {"source_sha256": source_hash, "runs": [
         {k: r[k] for k in ("algorithm", "game", "seed", "config_path", "output_path")}
@@ -221,3 +230,92 @@ def test_path_outside_project_is_rejected(tmp_path):
     plan["runs"][0]["output_path"] = "../unrelated_project/run"
     register(tmp_path, plan)
     assert "leaves the reproduction" in report(tmp_path)["errors"][0]
+
+
+@pytest.fixture
+def agentmixer_study(tmp_path, monkeypatch):
+    from bta_repro import matrix_validation as module
+    from bta_repro.learning_curves import seed_statistics
+    monkeypatch.setattr(module, "seed_statistics", lambda values, **kw: seed_statistics(values))
+    plan = study(tmp_path, seeds=range(2000, 2010), algorithms=["agentmixer"], games=["climbing"], steps=200000)
+    plan["validation_rule"] = {"kind": "all_seeds_meet_threshold", "algorithms": ["agentmixer"],
+                               "games": ["climbing"], "required_seed_count": 10}
+    register(tmp_path, plan)
+    return plan
+
+
+def test_agentmixer_rule_checks_local_execution_and_retains_central_gap(tmp_path, agentmixer_study):
+    result = report(tmp_path)
+    assert result["errors"] == []
+    assert result["validation_decision"] == "passed"
+    assert result["paired_comparisons"] == []
+    assert result["groups"][0]["aggregate"]["expected_return"]["mean"] == 11
+    assert result["groups"][0]["aggregate"]["training_expected_return"]["mean"] < 0
+    assert result["paper_reproduction"] == "not_established"
+
+
+def test_agentmixer_missing_or_failed_seed_cannot_pass(tmp_path, agentmixer_study):
+    out = tmp_path / agentmixer_study["runs"][0]["output_path"]
+    summary = json.loads((out / "summary.json").read_text())
+    summary.update(evaluation("climbing", uniform=True))
+    write(out / "summary.json", summary)
+    rows = [json.loads(line) for line in (out / "metrics.jsonl").read_text().splitlines()]
+    rows[-1].update(evaluation("climbing", uniform=True))
+    (out / "metrics.jsonl").write_text("\n".join(map(json.dumps, rows)))
+    result = report(tmp_path)
+    assert result["validation_decision"] == "failed"
+    assert result["groups"][0]["threshold_successes"] == 9
+    (out / "summary.json").unlink()
+    assert report(tmp_path)["validation_decision"] == "incomplete"
+
+
+@pytest.mark.parametrize("change", ["empty_algorithms", "absent_game", "wrong_count", "prior_seed", "no_rule"])
+def test_invalid_or_nonindependent_agentmixer_rule_cannot_pass(tmp_path, agentmixer_study, change):
+    plan = agentmixer_study
+    if change == "empty_algorithms": plan["validation_rule"]["algorithms"] = []
+    if change == "absent_game": plan["validation_rule"]["games"] = ["penalty"]
+    if change == "wrong_count": plan["validation_rule"]["required_seed_count"] = 9
+    if change == "prior_seed": plan["all_prior_recorded_training_seeds"].append(2000)
+    if change == "no_rule": del plan["validation_rule"]
+    register(tmp_path, plan)
+    assert report(tmp_path)["validation_decision"] == "not_assessed"
+
+
+@pytest.mark.parametrize("change", ["central_expected", "central_probability", "central_summary_mismatch", "extra_source"])
+def test_agentmixer_central_or_source_corruption_is_detected(tmp_path, agentmixer_study, change):
+    out = tmp_path / agentmixer_study["runs"][0]["output_path"]
+    if change == "extra_source":
+        (tmp_path / "runs/source/bta_repro/extra.py").write_text("# unrecorded\n")
+    else:
+        data = json.loads((out / "summary.json").read_text())
+        if change == "central_expected": data["training_policy_expected_return"] = 11
+        if change == "central_probability": data["training_joint_probabilities"][0] = 1
+        if change == "central_summary_mismatch":
+            data.update(training_joint_probabilities=evaluation("climbing")["execution_joint_probabilities"],
+                        training_policy_expected_return=11, training_optimal_action_probability=1)
+        write(out / "summary.json", data)
+    result = report(tmp_path)
+    assert result["errors"] or result["runs"][0]["errors"]
+    assert result["validation_decision"] != "passed"
+
+
+def test_seed_inventory_hash_and_declared_seeds_are_checked(tmp_path, agentmixer_study):
+    plan = agentmixer_study
+    plan["prior_run_inventory"] = "prior_seeds.json"
+    write(tmp_path / "prior_seeds.json", {"training_seeds": [0, 1, 2]})
+    plan["prior_run_inventory_sha256"] = digest(tmp_path / "prior_seeds.json")
+    register(tmp_path, plan)
+    assert report(tmp_path)["validation_decision"] == "passed"
+    write(tmp_path / "prior_seeds.json", {"training_seeds": [0, 1, 2, 2000]})
+    assert "prior seed inventory changed" in report(tmp_path)["errors"][0]
+    plan["prior_run_inventory_sha256"] = digest(tmp_path / "prior_seeds.json")
+    register(tmp_path, plan)
+    assert "inventory disagrees" in report(tmp_path)["errors"][0]
+
+
+def test_empty_study_does_not_pass_vacuously(tmp_path):
+    plan = study(tmp_path)
+    plan["training_seeds"] = []
+    plan["runs"] = []
+    register(tmp_path, plan)
+    assert report(tmp_path)["errors"] == ["training_seeds must be nonempty and unique"]

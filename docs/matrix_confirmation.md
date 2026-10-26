@@ -83,8 +83,28 @@ support a broad algorithm-superiority claim.
 Each 10/10 success count has a Wilson 95% interval of approximately [0.7225, 1],
 not a guarantee of perfect population reliability. This result validates the
 selected 100k reconstruction configuration. The separate 1M development study
-is still running, and the report's `paper_reproduction` remains
+is reported below, and the report's `paper_reproduction` remains
 `not_established` for the reasons above.
+
+## Completed 1M development extension
+
+All 12 declared runs finish, with no integrity errors in the
+[full report](../experiments/matrix_budget1m_results_20261026.json) and
+[seed-level CSV](../experiments/matrix_budget1m_results_20261026.csv).
+Every method/game has three optimal greedy endpoints and three expected-return
+threshold successes.
+
+| Game | BPPO expected return, mean ± seed SD | AR-PPO expected return, mean ± seed SD | BPPO / AR-PPO normalized area |
+| --- | ---: | ---: | ---: |
+| Climbing | 10.999971 ± 0.000027 | 10.999945 ± 0.000021 | 10.753071 / 10.757931 |
+| Penalty | 9.999949 ± 0.000017 | 9.999943 ± 0.000002 | 9.564044 / 9.560614 |
+
+The paired mean endpoint differences are +0.0000254 for Climbing (+0.000231%)
+and +0.00000604 for Penalty (+0.0000604%). BPPO's area is lower on Climbing and
+higher on Penalty. These near-ceiling differences do not support broad
+superiority. The longer entropy schedule and development seeds remain separate
+from the independent 100k study; the validation decision is `not_assessed` and
+paper reproduction is `not_established`.
 
 ## Reporting
 

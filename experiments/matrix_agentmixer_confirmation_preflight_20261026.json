@@ -1,0 +1,126 @@
+{
+  "study_id": "matrix_agentmixer_confirmation200k_20261026",
+  "scope": "Independent configuration validation of local AgentMixer execution on Climbing at200k decisions; no modifier-advantage or full-paper reproduction claim.",
+  "plan_sha256": "38e1c18fe449a0df9657be174325f202c7158d081d16a915200afb7f5b501f63",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2000,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2001,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2002,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2003,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2004,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2005,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2005",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2006,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2006",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2007,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2007",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2008,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2008",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2009,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2009",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "declared_seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009
+      ],
+      "eligible_seeds": [],
+      "threshold_successes": 0,
+      "declared_seed_count": 10,
+      "complete": false,
+      "aggregate": null,
+      "threshold_success_wilson_95pct": null
+    }
+  ],
+  "paired_comparisons": [],
+  "validation_decision": "incomplete",
+  "paper_reproduction": "not_established",
+  "unused_seeds_at_freeze": true
+}

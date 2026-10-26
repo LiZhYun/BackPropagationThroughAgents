@@ -1,0 +1,5261 @@
+{
+  "study_id": "matrix_budget1m_20261026",
+  "scope": "Development-only one-million-decision budget extension; not independent confirmation",
+  "plan_sha256": "a1770c38465615312f4580fde9496585e42d519fa671932b2bbdfc1b2be004b6",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 0,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/arppo_climbing_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "c39ef2cbb1c6438a017573d8065da819822f5943231b014fac525f8b38ef2dbd",
+      "summary_sha256": "a14d8180f05d894b0b8040c3feac0a681e444a005b66d2f130860ae6b0f9927c",
+      "final": {
+        "execution_policy_expected_return": 10.999966621398926,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999997615814209,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.763590028381348,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4470274448394775
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.411606788635254
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.447756290435791
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.627418518066406
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.73770523071289
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.96945858001709
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.98976993560791
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.995246887207031
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.9967622756958
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.99718189239502
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.99802017211914
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.998231887817383
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.99827766418457
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998772621154785
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998820304870605
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998814582824707
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998847007751465
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.998865127563477
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.998867988586426
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.998852729797363
+        },
+        {
+          "steps": 204800,
+          "expected_return": 10.998929023742676
+        },
+        {
+          "steps": 215040,
+          "expected_return": 10.99913215637207
+        },
+        {
+          "steps": 225280,
+          "expected_return": 10.999134063720703
+        },
+        {
+          "steps": 235520,
+          "expected_return": 10.999115943908691
+        },
+        {
+          "steps": 245760,
+          "expected_return": 10.999083518981934
+        },
+        {
+          "steps": 256000,
+          "expected_return": 10.998992919921875
+        },
+        {
+          "steps": 266240,
+          "expected_return": 10.999320030212402
+        },
+        {
+          "steps": 276480,
+          "expected_return": 10.999470710754395
+        },
+        {
+          "steps": 286720,
+          "expected_return": 10.999513626098633
+        },
+        {
+          "steps": 296960,
+          "expected_return": 10.999513626098633
+        },
+        {
+          "steps": 307200,
+          "expected_return": 10.999512672424316
+        },
+        {
+          "steps": 317440,
+          "expected_return": 10.99951171875
+        },
+        {
+          "steps": 327680,
+          "expected_return": 10.999510765075684
+        },
+        {
+          "steps": 337920,
+          "expected_return": 10.999510765075684
+        },
+        {
+          "steps": 348160,
+          "expected_return": 10.999509811401367
+        },
+        {
+          "steps": 358400,
+          "expected_return": 10.999503135681152
+        },
+        {
+          "steps": 368640,
+          "expected_return": 10.999502182006836
+        },
+        {
+          "steps": 378880,
+          "expected_return": 10.999502182006836
+        },
+        {
+          "steps": 389120,
+          "expected_return": 10.99950122833252
+        },
+        {
+          "steps": 399360,
+          "expected_return": 10.999500274658203
+        },
+        {
+          "steps": 409600,
+          "expected_return": 10.999627113342285
+        },
+        {
+          "steps": 419840,
+          "expected_return": 10.99971866607666
+        },
+        {
+          "steps": 430080,
+          "expected_return": 10.999720573425293
+        },
+        {
+          "steps": 440320,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 450560,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 460800,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 471040,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 481280,
+          "expected_return": 10.999788284301758
+        },
+        {
+          "steps": 491520,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 501760,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 512000,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 522240,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 532480,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 542720,
+          "expected_return": 10.999788284301758
+        },
+        {
+          "steps": 552960,
+          "expected_return": 10.999788284301758
+        },
+        {
+          "steps": 563200,
+          "expected_return": 10.999788284301758
+        },
+        {
+          "steps": 573440,
+          "expected_return": 10.99978256225586
+        },
+        {
+          "steps": 583680,
+          "expected_return": 10.99978256225586
+        },
+        {
+          "steps": 593920,
+          "expected_return": 10.99978256225586
+        },
+        {
+          "steps": 604160,
+          "expected_return": 10.99978256225586
+        },
+        {
+          "steps": 614400,
+          "expected_return": 10.99978256225586
+        },
+        {
+          "steps": 624640,
+          "expected_return": 10.999783515930176
+        },
+        {
+          "steps": 634880,
+          "expected_return": 10.999783515930176
+        },
+        {
+          "steps": 645120,
+          "expected_return": 10.999812126159668
+        },
+        {
+          "steps": 655360,
+          "expected_return": 10.99981689453125
+        },
+        {
+          "steps": 665600,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 675840,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 686080,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 696320,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 706560,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 716800,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 727040,
+          "expected_return": 10.999815940856934
+        },
+        {
+          "steps": 737280,
+          "expected_return": 10.999814987182617
+        },
+        {
+          "steps": 747520,
+          "expected_return": 10.999814987182617
+        },
+        {
+          "steps": 757760,
+          "expected_return": 10.999814987182617
+        },
+        {
+          "steps": 768000,
+          "expected_return": 10.999814987182617
+        },
+        {
+          "steps": 778240,
+          "expected_return": 10.999810218811035
+        },
+        {
+          "steps": 788480,
+          "expected_return": 10.999810218811035
+        },
+        {
+          "steps": 798720,
+          "expected_return": 10.999810218811035
+        },
+        {
+          "steps": 808960,
+          "expected_return": 10.999809265136719
+        },
+        {
+          "steps": 819200,
+          "expected_return": 10.999809265136719
+        },
+        {
+          "steps": 829440,
+          "expected_return": 10.999809265136719
+        },
+        {
+          "steps": 839680,
+          "expected_return": 10.999809265136719
+        },
+        {
+          "steps": 849920,
+          "expected_return": 10.999809265136719
+        },
+        {
+          "steps": 860160,
+          "expected_return": 10.999809265136719
+        },
+        {
+          "steps": 870400,
+          "expected_return": 10.999906539916992
+        },
+        {
+          "steps": 880640,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 890880,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 901120,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 911360,
+          "expected_return": 10.999963760375977
+        },
+        {
+          "steps": 921600,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 931840,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 942080,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 952320,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 962560,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 972800,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 983040,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 993280,
+          "expected_return": 10.999966621398926
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 10.999966621398926
+        }
+      ],
+      "metrics_sha256": "034254be953692b45e5794686210aa52a7f1268ca764d9bc4f6451c1ebd0c572"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 1,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/arppo_climbing_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "daf6f9d299fa4928e135be3c2847b15c9301d1483b8ef3d80bff143d98512ec6",
+      "summary_sha256": "b02381795b6f9fefd5bf4e0be3a1686bb7a56ffc78a37608750111da96fcca00",
+      "final": {
+        "execution_policy_expected_return": 10.999945640563965,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999947547912598,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.765838327331544,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4448893070220947
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.484067678451538
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.506840705871582
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.682805061340332
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.767226219177246
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.97115421295166
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.988920211791992
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.993721008300781
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.996551513671875
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997705459594727
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.998071670532227
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.9982328414917
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.998409271240234
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998452186584473
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.99860954284668
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998710632324219
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998781204223633
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.998779296875
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.99876880645752
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.998820304870605
+        },
+        {
+          "steps": 204800,
+          "expected_return": 10.998995780944824
+        },
+        {
+          "steps": 215040,
+          "expected_return": 10.999006271362305
+        },
+        {
+          "steps": 225280,
+          "expected_return": 10.999038696289062
+        },
+        {
+          "steps": 235520,
+          "expected_return": 10.999263763427734
+        },
+        {
+          "steps": 245760,
+          "expected_return": 10.999273300170898
+        },
+        {
+          "steps": 256000,
+          "expected_return": 10.9993257522583
+        },
+        {
+          "steps": 266240,
+          "expected_return": 10.999357223510742
+        },
+        {
+          "steps": 276480,
+          "expected_return": 10.999358177185059
+        },
+        {
+          "steps": 286720,
+          "expected_return": 10.999357223510742
+        },
+        {
+          "steps": 296960,
+          "expected_return": 10.999469757080078
+        },
+        {
+          "steps": 307200,
+          "expected_return": 10.999478340148926
+        },
+        {
+          "steps": 317440,
+          "expected_return": 10.999478340148926
+        },
+        {
+          "steps": 327680,
+          "expected_return": 10.999472618103027
+        },
+        {
+          "steps": 337920,
+          "expected_return": 10.999475479125977
+        },
+        {
+          "steps": 348160,
+          "expected_return": 10.999600410461426
+        },
+        {
+          "steps": 358400,
+          "expected_return": 10.99962043762207
+        },
+        {
+          "steps": 368640,
+          "expected_return": 10.99962043762207
+        },
+        {
+          "steps": 378880,
+          "expected_return": 10.999621391296387
+        },
+        {
+          "steps": 389120,
+          "expected_return": 10.999752044677734
+        },
+        {
+          "steps": 399360,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 409600,
+          "expected_return": 10.99977970123291
+        },
+        {
+          "steps": 419840,
+          "expected_return": 10.99977970123291
+        },
+        {
+          "steps": 430080,
+          "expected_return": 10.99977970123291
+        },
+        {
+          "steps": 440320,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 450560,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 460800,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 471040,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 481280,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 491520,
+          "expected_return": 10.999778747558594
+        },
+        {
+          "steps": 501760,
+          "expected_return": 10.99977970123291
+        },
+        {
+          "steps": 512000,
+          "expected_return": 10.999773979187012
+        },
+        {
+          "steps": 522240,
+          "expected_return": 10.99976921081543
+        },
+        {
+          "steps": 532480,
+          "expected_return": 10.99976921081543
+        },
+        {
+          "steps": 542720,
+          "expected_return": 10.99976921081543
+        },
+        {
+          "steps": 552960,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 563200,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 573440,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 583680,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 593920,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 604160,
+          "expected_return": 10.999856948852539
+        },
+        {
+          "steps": 614400,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 624640,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 634880,
+          "expected_return": 10.999855995178223
+        },
+        {
+          "steps": 645120,
+          "expected_return": 10.999859809875488
+        },
+        {
+          "steps": 655360,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 665600,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 675840,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 686080,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 696320,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 706560,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 716800,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 727040,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 737280,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 747520,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 757760,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 768000,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 778240,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 788480,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 798720,
+          "expected_return": 10.999870300292969
+        },
+        {
+          "steps": 808960,
+          "expected_return": 10.999870300292969
+        },
+        {
+          "steps": 819200,
+          "expected_return": 10.999870300292969
+        },
+        {
+          "steps": 829440,
+          "expected_return": 10.999870300292969
+        },
+        {
+          "steps": 839680,
+          "expected_return": 10.999870300292969
+        },
+        {
+          "steps": 849920,
+          "expected_return": 10.999871253967285
+        },
+        {
+          "steps": 860160,
+          "expected_return": 10.999942779541016
+        },
+        {
+          "steps": 870400,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 880640,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 890880,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 901120,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 911360,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 921600,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 931840,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 942080,
+          "expected_return": 10.99994945526123
+        },
+        {
+          "steps": 952320,
+          "expected_return": 10.999950408935547
+        },
+        {
+          "steps": 962560,
+          "expected_return": 10.999945640563965
+        },
+        {
+          "steps": 972800,
+          "expected_return": 10.999945640563965
+        },
+        {
+          "steps": 983040,
+          "expected_return": 10.999945640563965
+        },
+        {
+          "steps": 993280,
+          "expected_return": 10.999945640563965
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 10.999945640563965
+        }
+      ],
+      "metrics_sha256": "ffa35a9d7a8643d5fd790dabce15bde066b9e69e272773d14fba87c456504cc6"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 2,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/arppo_climbing_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "b68fd33b2b2480427cc2b00cb66b0f8e644a93d0e30ef681353ed346b443fbc9",
+      "summary_sha256": "ae26fe592620336cecdaf8a006fe1a8ea2352523a248147a2f34bc4c44be28da",
+      "final": {
+        "execution_policy_expected_return": 10.999923706054688,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999966621398926,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.744364255371094,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4468822479248047
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2837579250335693
+        },
+        {
+          "steps": 20480,
+          "expected_return": 5.9688944816589355
+        },
+        {
+          "steps": 30720,
+          "expected_return": 7.942649841308594
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.186845779418945
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.944228172302246
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.98729419708252
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.993630409240723
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.995647430419922
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997337341308594
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.99771499633789
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.997823715209961
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.997971534729004
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998342514038086
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998344421386719
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998533248901367
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998549461364746
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.998625755310059
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.998758316040039
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.99891471862793
+        },
+        {
+          "steps": 204800,
+          "expected_return": 10.999082565307617
+        },
+        {
+          "steps": 215040,
+          "expected_return": 10.999101638793945
+        },
+        {
+          "steps": 225280,
+          "expected_return": 10.999098777770996
+        },
+        {
+          "steps": 235520,
+          "expected_return": 10.999096870422363
+        },
+        {
+          "steps": 245760,
+          "expected_return": 10.999247550964355
+        },
+        {
+          "steps": 256000,
+          "expected_return": 10.999253273010254
+        },
+        {
+          "steps": 266240,
+          "expected_return": 10.999252319335938
+        },
+        {
+          "steps": 276480,
+          "expected_return": 10.999251365661621
+        },
+        {
+          "steps": 286720,
+          "expected_return": 10.999245643615723
+        },
+        {
+          "steps": 296960,
+          "expected_return": 10.99924373626709
+        },
+        {
+          "steps": 307200,
+          "expected_return": 10.999237060546875
+        },
+        {
+          "steps": 317440,
+          "expected_return": 10.999237060546875
+        },
+        {
+          "steps": 327680,
+          "expected_return": 10.999472618103027
+        },
+        {
+          "steps": 337920,
+          "expected_return": 10.999490737915039
+        },
+        {
+          "steps": 348160,
+          "expected_return": 10.99948501586914
+        },
+        {
+          "steps": 358400,
+          "expected_return": 10.99948501586914
+        },
+        {
+          "steps": 368640,
+          "expected_return": 10.99948501586914
+        },
+        {
+          "steps": 378880,
+          "expected_return": 10.999484062194824
+        },
+        {
+          "steps": 389120,
+          "expected_return": 10.999470710754395
+        },
+        {
+          "steps": 399360,
+          "expected_return": 10.99946403503418
+        },
+        {
+          "steps": 409600,
+          "expected_return": 10.999703407287598
+        },
+        {
+          "steps": 419840,
+          "expected_return": 10.999722480773926
+        },
+        {
+          "steps": 430080,
+          "expected_return": 10.999722480773926
+        },
+        {
+          "steps": 440320,
+          "expected_return": 10.999716758728027
+        },
+        {
+          "steps": 450560,
+          "expected_return": 10.999716758728027
+        },
+        {
+          "steps": 460800,
+          "expected_return": 10.999716758728027
+        },
+        {
+          "steps": 471040,
+          "expected_return": 10.999716758728027
+        },
+        {
+          "steps": 481280,
+          "expected_return": 10.999716758728027
+        },
+        {
+          "steps": 491520,
+          "expected_return": 10.999716758728027
+        },
+        {
+          "steps": 501760,
+          "expected_return": 10.999772071838379
+        },
+        {
+          "steps": 512000,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 522240,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 532480,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 542720,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 552960,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 563200,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 573440,
+          "expected_return": 10.999786376953125
+        },
+        {
+          "steps": 583680,
+          "expected_return": 10.999780654907227
+        },
+        {
+          "steps": 593920,
+          "expected_return": 10.999780654907227
+        },
+        {
+          "steps": 604160,
+          "expected_return": 10.999780654907227
+        },
+        {
+          "steps": 614400,
+          "expected_return": 10.999781608581543
+        },
+        {
+          "steps": 624640,
+          "expected_return": 10.999752044677734
+        },
+        {
+          "steps": 634880,
+          "expected_return": 10.999750137329102
+        },
+        {
+          "steps": 645120,
+          "expected_return": 10.999751091003418
+        },
+        {
+          "steps": 655360,
+          "expected_return": 10.999773979187012
+        },
+        {
+          "steps": 665600,
+          "expected_return": 10.999777793884277
+        },
+        {
+          "steps": 675840,
+          "expected_return": 10.999777793884277
+        },
+        {
+          "steps": 686080,
+          "expected_return": 10.999777793884277
+        },
+        {
+          "steps": 696320,
+          "expected_return": 10.999777793884277
+        },
+        {
+          "steps": 706560,
+          "expected_return": 10.999776840209961
+        },
+        {
+          "steps": 716800,
+          "expected_return": 10.999776840209961
+        },
+        {
+          "steps": 727040,
+          "expected_return": 10.999776840209961
+        },
+        {
+          "steps": 737280,
+          "expected_return": 10.999776840209961
+        },
+        {
+          "steps": 747520,
+          "expected_return": 10.999775886535645
+        },
+        {
+          "steps": 757760,
+          "expected_return": 10.999775886535645
+        },
+        {
+          "steps": 768000,
+          "expected_return": 10.999775886535645
+        },
+        {
+          "steps": 778240,
+          "expected_return": 10.999775886535645
+        },
+        {
+          "steps": 788480,
+          "expected_return": 10.99977970123291
+        },
+        {
+          "steps": 798720,
+          "expected_return": 10.99979305267334
+        },
+        {
+          "steps": 808960,
+          "expected_return": 10.999792098999023
+        },
+        {
+          "steps": 819200,
+          "expected_return": 10.999792098999023
+        },
+        {
+          "steps": 829440,
+          "expected_return": 10.999842643737793
+        },
+        {
+          "steps": 839680,
+          "expected_return": 10.999921798706055
+        },
+        {
+          "steps": 849920,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 860160,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 870400,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 880640,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 890880,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 901120,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 911360,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 921600,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 931840,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 942080,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 952320,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 962560,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 972800,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 983040,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 993280,
+          "expected_return": 10.999923706054688
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 10.999923706054688
+        }
+      ],
+      "metrics_sha256": "c51c8504f1521476c662c34e03f3e8ed4ba53db6af3e4adf255c1e11a9bf20aa"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 0,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/arppo_penalty_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "d7a42d88928138139bd512d5906fb3209654c485be54ea83dca94ff3fdf55103",
+      "summary_sha256": "96314cba8bcd1b08bca7ffc5a9c694aabcf17db5214f1f67e0dc96bd6a9aabfc",
+      "final": {
+        "execution_policy_expected_return": 9.999942779541016,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9999942779541016,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.56098087890625,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.853940963745117
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.0782670974731445
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.8027747869491577
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.290213584899902
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.403854370117188
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.797195434570312
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.939926147460938
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.975558280944824
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.986482620239258
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.988761901855469
+        },
+        {
+          "steps": 102400,
+          "expected_return": 9.992903709411621
+        },
+        {
+          "steps": 112640,
+          "expected_return": 9.994436264038086
+        },
+        {
+          "steps": 122880,
+          "expected_return": 9.996210098266602
+        },
+        {
+          "steps": 133120,
+          "expected_return": 9.996733665466309
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.99744701385498
+        },
+        {
+          "steps": 153600,
+          "expected_return": 9.997915267944336
+        },
+        {
+          "steps": 163840,
+          "expected_return": 9.998318672180176
+        },
+        {
+          "steps": 174080,
+          "expected_return": 9.998597145080566
+        },
+        {
+          "steps": 184320,
+          "expected_return": 9.998645782470703
+        },
+        {
+          "steps": 194560,
+          "expected_return": 9.998740196228027
+        },
+        {
+          "steps": 204800,
+          "expected_return": 9.998736381530762
+        },
+        {
+          "steps": 215040,
+          "expected_return": 9.998895645141602
+        },
+        {
+          "steps": 225280,
+          "expected_return": 9.999140739440918
+        },
+        {
+          "steps": 235520,
+          "expected_return": 9.999296188354492
+        },
+        {
+          "steps": 245760,
+          "expected_return": 9.999305725097656
+        },
+        {
+          "steps": 256000,
+          "expected_return": 9.999265670776367
+        },
+        {
+          "steps": 266240,
+          "expected_return": 9.999383926391602
+        },
+        {
+          "steps": 276480,
+          "expected_return": 9.9993896484375
+        },
+        {
+          "steps": 286720,
+          "expected_return": 9.999422073364258
+        },
+        {
+          "steps": 296960,
+          "expected_return": 9.999414443969727
+        },
+        {
+          "steps": 307200,
+          "expected_return": 9.999542236328125
+        },
+        {
+          "steps": 317440,
+          "expected_return": 9.999549865722656
+        },
+        {
+          "steps": 327680,
+          "expected_return": 9.99954891204834
+        },
+        {
+          "steps": 337920,
+          "expected_return": 9.99952507019043
+        },
+        {
+          "steps": 348160,
+          "expected_return": 9.999517440795898
+        },
+        {
+          "steps": 358400,
+          "expected_return": 9.999632835388184
+        },
+        {
+          "steps": 368640,
+          "expected_return": 9.999639511108398
+        },
+        {
+          "steps": 378880,
+          "expected_return": 9.999639511108398
+        },
+        {
+          "steps": 389120,
+          "expected_return": 9.999635696411133
+        },
+        {
+          "steps": 399360,
+          "expected_return": 9.9996337890625
+        },
+        {
+          "steps": 409600,
+          "expected_return": 9.999619483947754
+        },
+        {
+          "steps": 419840,
+          "expected_return": 9.99960708618164
+        },
+        {
+          "steps": 430080,
+          "expected_return": 9.999696731567383
+        },
+        {
+          "steps": 440320,
+          "expected_return": 9.999714851379395
+        },
+        {
+          "steps": 450560,
+          "expected_return": 9.999713897705078
+        },
+        {
+          "steps": 460800,
+          "expected_return": 9.999711990356445
+        },
+        {
+          "steps": 471040,
+          "expected_return": 9.999743461608887
+        },
+        {
+          "steps": 481280,
+          "expected_return": 9.999753952026367
+        },
+        {
+          "steps": 491520,
+          "expected_return": 9.99974536895752
+        },
+        {
+          "steps": 501760,
+          "expected_return": 9.999748229980469
+        },
+        {
+          "steps": 512000,
+          "expected_return": 9.99972915649414
+        },
+        {
+          "steps": 522240,
+          "expected_return": 9.999727249145508
+        },
+        {
+          "steps": 532480,
+          "expected_return": 9.99972915649414
+        },
+        {
+          "steps": 542720,
+          "expected_return": 9.99972915649414
+        },
+        {
+          "steps": 552960,
+          "expected_return": 9.99972915649414
+        },
+        {
+          "steps": 563200,
+          "expected_return": 9.999719619750977
+        },
+        {
+          "steps": 573440,
+          "expected_return": 9.99972152709961
+        },
+        {
+          "steps": 583680,
+          "expected_return": 9.99972152709961
+        },
+        {
+          "steps": 593920,
+          "expected_return": 9.999719619750977
+        },
+        {
+          "steps": 604160,
+          "expected_return": 9.99972152709961
+        },
+        {
+          "steps": 614400,
+          "expected_return": 9.999719619750977
+        },
+        {
+          "steps": 624640,
+          "expected_return": 9.99972152709961
+        },
+        {
+          "steps": 634880,
+          "expected_return": 9.999765396118164
+        },
+        {
+          "steps": 645120,
+          "expected_return": 9.999677658081055
+        },
+        {
+          "steps": 655360,
+          "expected_return": 9.999822616577148
+        },
+        {
+          "steps": 665600,
+          "expected_return": 9.99986457824707
+        },
+        {
+          "steps": 675840,
+          "expected_return": 9.999862670898438
+        },
+        {
+          "steps": 686080,
+          "expected_return": 9.999866485595703
+        },
+        {
+          "steps": 696320,
+          "expected_return": 9.999866485595703
+        },
+        {
+          "steps": 706560,
+          "expected_return": 9.99986457824707
+        },
+        {
+          "steps": 716800,
+          "expected_return": 9.999856948852539
+        },
+        {
+          "steps": 727040,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 737280,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 747520,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 757760,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 768000,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 778240,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 788480,
+          "expected_return": 9.999861717224121
+        },
+        {
+          "steps": 798720,
+          "expected_return": 9.999866485595703
+        },
+        {
+          "steps": 808960,
+          "expected_return": 9.999866485595703
+        },
+        {
+          "steps": 819200,
+          "expected_return": 9.999871253967285
+        },
+        {
+          "steps": 829440,
+          "expected_return": 9.999924659729004
+        },
+        {
+          "steps": 839680,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 849920,
+          "expected_return": 9.999929428100586
+        },
+        {
+          "steps": 860160,
+          "expected_return": 9.99992847442627
+        },
+        {
+          "steps": 870400,
+          "expected_return": 9.999917030334473
+        },
+        {
+          "steps": 880640,
+          "expected_return": 9.999919891357422
+        },
+        {
+          "steps": 890880,
+          "expected_return": 9.999922752380371
+        },
+        {
+          "steps": 901120,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 911360,
+          "expected_return": 9.999856948852539
+        },
+        {
+          "steps": 921600,
+          "expected_return": 9.999862670898438
+        },
+        {
+          "steps": 931840,
+          "expected_return": 9.999861717224121
+        },
+        {
+          "steps": 942080,
+          "expected_return": 9.999944686889648
+        },
+        {
+          "steps": 952320,
+          "expected_return": 9.999947547912598
+        },
+        {
+          "steps": 962560,
+          "expected_return": 9.999943733215332
+        },
+        {
+          "steps": 972800,
+          "expected_return": 9.999942779541016
+        },
+        {
+          "steps": 983040,
+          "expected_return": 9.999944686889648
+        },
+        {
+          "steps": 993280,
+          "expected_return": 9.999942779541016
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 9.999942779541016
+        }
+      ],
+      "metrics_sha256": "8acac261b54630648a8b725f85c1b79c6754d31b8d8d15ebfdd3ab85e22369fa"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 1,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/arppo_penalty_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "7b1cea4fde915c00bd5e52b1b8cce95e3d6aba4fd3c5a61dad58b67b94957120",
+      "summary_sha256": "0a329f7cf6fc0a0ec84303f4da130b5ee08fed2b0f235641e37bf1fef87fc2a2",
+      "final": {
+        "execution_policy_expected_return": 9.999940872192383,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9999940395355225,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.56380902404785,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.76248550415039
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.010869026184082
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.8864104747772217
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.310426712036133
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.439254760742188
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.813945770263672
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.949590682983398
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.978200912475586
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.987215042114258
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.992522239685059
+        },
+        {
+          "steps": 102400,
+          "expected_return": 9.993664741516113
+        },
+        {
+          "steps": 112640,
+          "expected_return": 9.995194435119629
+        },
+        {
+          "steps": 122880,
+          "expected_return": 9.99594497680664
+        },
+        {
+          "steps": 133120,
+          "expected_return": 9.996124267578125
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.996834754943848
+        },
+        {
+          "steps": 153600,
+          "expected_return": 9.99699592590332
+        },
+        {
+          "steps": 163840,
+          "expected_return": 9.997361183166504
+        },
+        {
+          "steps": 174080,
+          "expected_return": 9.997920989990234
+        },
+        {
+          "steps": 184320,
+          "expected_return": 9.998344421386719
+        },
+        {
+          "steps": 194560,
+          "expected_return": 9.998405456542969
+        },
+        {
+          "steps": 204800,
+          "expected_return": 9.99867057800293
+        },
+        {
+          "steps": 215040,
+          "expected_return": 9.99866771697998
+        },
+        {
+          "steps": 225280,
+          "expected_return": 9.998662948608398
+        },
+        {
+          "steps": 235520,
+          "expected_return": 9.998725891113281
+        },
+        {
+          "steps": 245760,
+          "expected_return": 9.998930931091309
+        },
+        {
+          "steps": 256000,
+          "expected_return": 9.99892807006836
+        },
+        {
+          "steps": 266240,
+          "expected_return": 9.998929977416992
+        },
+        {
+          "steps": 276480,
+          "expected_return": 9.998922348022461
+        },
+        {
+          "steps": 286720,
+          "expected_return": 9.998917579650879
+        },
+        {
+          "steps": 296960,
+          "expected_return": 9.999043464660645
+        },
+        {
+          "steps": 307200,
+          "expected_return": 9.999181747436523
+        },
+        {
+          "steps": 317440,
+          "expected_return": 9.999211311340332
+        },
+        {
+          "steps": 327680,
+          "expected_return": 9.999261856079102
+        },
+        {
+          "steps": 337920,
+          "expected_return": 9.999258041381836
+        },
+        {
+          "steps": 348160,
+          "expected_return": 9.999310493469238
+        },
+        {
+          "steps": 358400,
+          "expected_return": 9.999313354492188
+        },
+        {
+          "steps": 368640,
+          "expected_return": 9.999316215515137
+        },
+        {
+          "steps": 378880,
+          "expected_return": 9.999308586120605
+        },
+        {
+          "steps": 389120,
+          "expected_return": 9.999448776245117
+        },
+        {
+          "steps": 399360,
+          "expected_return": 9.99945068359375
+        },
+        {
+          "steps": 409600,
+          "expected_return": 9.999452590942383
+        },
+        {
+          "steps": 419840,
+          "expected_return": 9.999448776245117
+        },
+        {
+          "steps": 430080,
+          "expected_return": 9.999584197998047
+        },
+        {
+          "steps": 440320,
+          "expected_return": 9.999580383300781
+        },
+        {
+          "steps": 450560,
+          "expected_return": 9.999618530273438
+        },
+        {
+          "steps": 460800,
+          "expected_return": 9.999621391296387
+        },
+        {
+          "steps": 471040,
+          "expected_return": 9.999616622924805
+        },
+        {
+          "steps": 481280,
+          "expected_return": 9.999614715576172
+        },
+        {
+          "steps": 491520,
+          "expected_return": 9.999616622924805
+        },
+        {
+          "steps": 501760,
+          "expected_return": 9.999671936035156
+        },
+        {
+          "steps": 512000,
+          "expected_return": 9.999650955200195
+        },
+        {
+          "steps": 522240,
+          "expected_return": 9.99964714050293
+        },
+        {
+          "steps": 532480,
+          "expected_return": 9.999750137329102
+        },
+        {
+          "steps": 542720,
+          "expected_return": 9.999752044677734
+        },
+        {
+          "steps": 552960,
+          "expected_return": 9.999752044677734
+        },
+        {
+          "steps": 563200,
+          "expected_return": 9.999738693237305
+        },
+        {
+          "steps": 573440,
+          "expected_return": 9.999744415283203
+        },
+        {
+          "steps": 583680,
+          "expected_return": 9.999767303466797
+        },
+        {
+          "steps": 593920,
+          "expected_return": 9.999776840209961
+        },
+        {
+          "steps": 604160,
+          "expected_return": 9.999780654907227
+        },
+        {
+          "steps": 614400,
+          "expected_return": 9.999780654907227
+        },
+        {
+          "steps": 624640,
+          "expected_return": 9.999858856201172
+        },
+        {
+          "steps": 634880,
+          "expected_return": 9.99986457824707
+        },
+        {
+          "steps": 645120,
+          "expected_return": 9.999876022338867
+        },
+        {
+          "steps": 655360,
+          "expected_return": 9.999857902526855
+        },
+        {
+          "steps": 665600,
+          "expected_return": 9.99985122680664
+        },
+        {
+          "steps": 675840,
+          "expected_return": 9.999850273132324
+        },
+        {
+          "steps": 686080,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 696320,
+          "expected_return": 9.999849319458008
+        },
+        {
+          "steps": 706560,
+          "expected_return": 9.999849319458008
+        },
+        {
+          "steps": 716800,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 727040,
+          "expected_return": 9.999849319458008
+        },
+        {
+          "steps": 737280,
+          "expected_return": 9.999849319458008
+        },
+        {
+          "steps": 747520,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 757760,
+          "expected_return": 9.999923706054688
+        },
+        {
+          "steps": 768000,
+          "expected_return": 9.999923706054688
+        },
+        {
+          "steps": 778240,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 788480,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 798720,
+          "expected_return": 9.999923706054688
+        },
+        {
+          "steps": 808960,
+          "expected_return": 9.999918937683105
+        },
+        {
+          "steps": 819200,
+          "expected_return": 9.999918937683105
+        },
+        {
+          "steps": 829440,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 839680,
+          "expected_return": 9.999923706054688
+        },
+        {
+          "steps": 849920,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 860160,
+          "expected_return": 9.999935150146484
+        },
+        {
+          "steps": 870400,
+          "expected_return": 9.99993896484375
+        },
+        {
+          "steps": 880640,
+          "expected_return": 9.999939918518066
+        },
+        {
+          "steps": 890880,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 901120,
+          "expected_return": 9.999942779541016
+        },
+        {
+          "steps": 911360,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 921600,
+          "expected_return": 9.999942779541016
+        },
+        {
+          "steps": 931840,
+          "expected_return": 9.999938011169434
+        },
+        {
+          "steps": 942080,
+          "expected_return": 9.999938011169434
+        },
+        {
+          "steps": 952320,
+          "expected_return": 9.999938011169434
+        },
+        {
+          "steps": 962560,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 972800,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 983040,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 993280,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 9.999940872192383
+        }
+      ],
+      "metrics_sha256": "564bbd878640693f75844a8aa9a5a931df7f23a1838c4da8e3a88cde4e672d7a"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 2,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/arppo_penalty_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "8e09621cbd4fbe53b24943b03b8e1493d2d7852e39edc2de22af0af643bc58cf",
+      "summary_sha256": "f7a474c13818f8da9681ef6ea6c38e7c84fdb10e056439ca87a41eaf9b4fcc22",
+      "final": {
+        "execution_policy_expected_return": 9.999944686889648,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9999943971633911,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.557052166137696,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.80489158630371
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.001492977142334
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.706443190574646
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.041840553283691
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.302558898925781
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.769617080688477
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.942462921142578
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.975061416625977
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.984460830688477
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.990562438964844
+        },
+        {
+          "steps": 102400,
+          "expected_return": 9.992305755615234
+        },
+        {
+          "steps": 112640,
+          "expected_return": 9.993797302246094
+        },
+        {
+          "steps": 122880,
+          "expected_return": 9.994972229003906
+        },
+        {
+          "steps": 133120,
+          "expected_return": 9.995857238769531
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.996280670166016
+        },
+        {
+          "steps": 153600,
+          "expected_return": 9.996810913085938
+        },
+        {
+          "steps": 163840,
+          "expected_return": 9.996925354003906
+        },
+        {
+          "steps": 174080,
+          "expected_return": 9.997532844543457
+        },
+        {
+          "steps": 184320,
+          "expected_return": 9.997817993164062
+        },
+        {
+          "steps": 194560,
+          "expected_return": 9.997806549072266
+        },
+        {
+          "steps": 204800,
+          "expected_return": 9.998573303222656
+        },
+        {
+          "steps": 215040,
+          "expected_return": 9.998672485351562
+        },
+        {
+          "steps": 225280,
+          "expected_return": 9.998686790466309
+        },
+        {
+          "steps": 235520,
+          "expected_return": 9.998790740966797
+        },
+        {
+          "steps": 245760,
+          "expected_return": 9.99878978729248
+        },
+        {
+          "steps": 256000,
+          "expected_return": 9.999068260192871
+        },
+        {
+          "steps": 266240,
+          "expected_return": 9.99920654296875
+        },
+        {
+          "steps": 276480,
+          "expected_return": 9.99920654296875
+        },
+        {
+          "steps": 286720,
+          "expected_return": 9.99920654296875
+        },
+        {
+          "steps": 296960,
+          "expected_return": 9.999151229858398
+        },
+        {
+          "steps": 307200,
+          "expected_return": 9.999143600463867
+        },
+        {
+          "steps": 317440,
+          "expected_return": 9.999292373657227
+        },
+        {
+          "steps": 327680,
+          "expected_return": 9.999542236328125
+        },
+        {
+          "steps": 337920,
+          "expected_return": 9.99954891204834
+        },
+        {
+          "steps": 348160,
+          "expected_return": 9.999541282653809
+        },
+        {
+          "steps": 358400,
+          "expected_return": 9.999563217163086
+        },
+        {
+          "steps": 368640,
+          "expected_return": 9.999593734741211
+        },
+        {
+          "steps": 378880,
+          "expected_return": 9.99955940246582
+        },
+        {
+          "steps": 389120,
+          "expected_return": 9.999678611755371
+        },
+        {
+          "steps": 399360,
+          "expected_return": 9.999702453613281
+        },
+        {
+          "steps": 409600,
+          "expected_return": 9.999740600585938
+        },
+        {
+          "steps": 419840,
+          "expected_return": 9.99974250793457
+        },
+        {
+          "steps": 430080,
+          "expected_return": 9.999740600585938
+        },
+        {
+          "steps": 440320,
+          "expected_return": 9.999737739562988
+        },
+        {
+          "steps": 450560,
+          "expected_return": 9.999740600585938
+        },
+        {
+          "steps": 460800,
+          "expected_return": 9.999732971191406
+        },
+        {
+          "steps": 471040,
+          "expected_return": 9.999732971191406
+        },
+        {
+          "steps": 481280,
+          "expected_return": 9.999732971191406
+        },
+        {
+          "steps": 491520,
+          "expected_return": 9.999732971191406
+        },
+        {
+          "steps": 501760,
+          "expected_return": 9.999734878540039
+        },
+        {
+          "steps": 512000,
+          "expected_return": 9.999734878540039
+        },
+        {
+          "steps": 522240,
+          "expected_return": 9.999731063842773
+        },
+        {
+          "steps": 532480,
+          "expected_return": 9.999723434448242
+        },
+        {
+          "steps": 542720,
+          "expected_return": 9.999791145324707
+        },
+        {
+          "steps": 552960,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 563200,
+          "expected_return": 9.999791145324707
+        },
+        {
+          "steps": 573440,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 583680,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 593920,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 604160,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 614400,
+          "expected_return": 9.999802589416504
+        },
+        {
+          "steps": 624640,
+          "expected_return": 9.999835968017578
+        },
+        {
+          "steps": 634880,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 645120,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 655360,
+          "expected_return": 9.999835968017578
+        },
+        {
+          "steps": 665600,
+          "expected_return": 9.999839782714844
+        },
+        {
+          "steps": 675840,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 686080,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 696320,
+          "expected_return": 9.999839782714844
+        },
+        {
+          "steps": 706560,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 716800,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 727040,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 737280,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 747520,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 757760,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 768000,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 778240,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 788480,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 798720,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 808960,
+          "expected_return": 9.999835968017578
+        },
+        {
+          "steps": 819200,
+          "expected_return": 9.999835968017578
+        },
+        {
+          "steps": 829440,
+          "expected_return": 9.999853134155273
+        },
+        {
+          "steps": 839680,
+          "expected_return": 9.999874114990234
+        },
+        {
+          "steps": 849920,
+          "expected_return": 9.999872207641602
+        },
+        {
+          "steps": 860160,
+          "expected_return": 9.999872207641602
+        },
+        {
+          "steps": 870400,
+          "expected_return": 9.999868392944336
+        },
+        {
+          "steps": 880640,
+          "expected_return": 9.999871253967285
+        },
+        {
+          "steps": 890880,
+          "expected_return": 9.999871253967285
+        },
+        {
+          "steps": 901120,
+          "expected_return": 9.999871253967285
+        },
+        {
+          "steps": 911360,
+          "expected_return": 9.999868392944336
+        },
+        {
+          "steps": 921600,
+          "expected_return": 9.999871253967285
+        },
+        {
+          "steps": 931840,
+          "expected_return": 9.999874114990234
+        },
+        {
+          "steps": 942080,
+          "expected_return": 9.999900817871094
+        },
+        {
+          "steps": 952320,
+          "expected_return": 9.999903678894043
+        },
+        {
+          "steps": 962560,
+          "expected_return": 9.999902725219727
+        },
+        {
+          "steps": 972800,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 983040,
+          "expected_return": 9.99993896484375
+        },
+        {
+          "steps": 993280,
+          "expected_return": 9.999944686889648
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 9.999944686889648
+        }
+      ],
+      "metrics_sha256": "4faf57fedb2ca45aa632fb4e2248af852274cce14d8815455cf3e2ed502063cf"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 0,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/bppo_climbing_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "cb808d78eb0cc16470331debfd40ca9f38923cfbf3d302b0ae6540cf4b0cd759",
+      "summary_sha256": "7b95e7cc82acf518815626912a6b598edc42b0013270bb148cc1f75d849145e4",
+      "final": {
+        "execution_policy_expected_return": 10.9999418258667,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999961853027344,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.760705921325684,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4470274448394775
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.3810110092163086
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.50400447845459
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.50662612915039
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.527567863464355
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.970717430114746
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.994874954223633
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.997086524963379
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.998004913330078
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998305320739746
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.998403549194336
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.99839973449707
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.998382568359375
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998372077941895
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998723983764648
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998735427856445
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998819351196289
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.99912166595459
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.999491691589355
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.99952507019043
+        },
+        {
+          "steps": 204800,
+          "expected_return": 10.999564170837402
+        },
+        {
+          "steps": 215040,
+          "expected_return": 10.999574661254883
+        },
+        {
+          "steps": 225280,
+          "expected_return": 10.999595642089844
+        },
+        {
+          "steps": 235520,
+          "expected_return": 10.999600410461426
+        },
+        {
+          "steps": 245760,
+          "expected_return": 10.999600410461426
+        },
+        {
+          "steps": 256000,
+          "expected_return": 10.999606132507324
+        },
+        {
+          "steps": 266240,
+          "expected_return": 10.999637603759766
+        },
+        {
+          "steps": 276480,
+          "expected_return": 10.999632835388184
+        },
+        {
+          "steps": 286720,
+          "expected_return": 10.99974250793457
+        },
+        {
+          "steps": 296960,
+          "expected_return": 10.999751091003418
+        },
+        {
+          "steps": 307200,
+          "expected_return": 10.999850273132324
+        },
+        {
+          "steps": 317440,
+          "expected_return": 10.999859809875488
+        },
+        {
+          "steps": 327680,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 337920,
+          "expected_return": 10.999878883361816
+        },
+        {
+          "steps": 348160,
+          "expected_return": 10.999878883361816
+        },
+        {
+          "steps": 358400,
+          "expected_return": 10.999878883361816
+        },
+        {
+          "steps": 368640,
+          "expected_return": 10.999878883361816
+        },
+        {
+          "steps": 378880,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 389120,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 399360,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 409600,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 419840,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 430080,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 440320,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 450560,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 460800,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 471040,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 481280,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 491520,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 501760,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 512000,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 522240,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 532480,
+          "expected_return": 10.999873161315918
+        },
+        {
+          "steps": 542720,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 552960,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 563200,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 573440,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 583680,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 593920,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 604160,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 614400,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 624640,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 634880,
+          "expected_return": 10.999872207641602
+        },
+        {
+          "steps": 645120,
+          "expected_return": 10.99986743927002
+        },
+        {
+          "steps": 655360,
+          "expected_return": 10.99986743927002
+        },
+        {
+          "steps": 665600,
+          "expected_return": 10.999866485595703
+        },
+        {
+          "steps": 675840,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 686080,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 696320,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 706560,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 716800,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 727040,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 737280,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 747520,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 757760,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 768000,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 778240,
+          "expected_return": 10.999861717224121
+        },
+        {
+          "steps": 788480,
+          "expected_return": 10.999860763549805
+        },
+        {
+          "steps": 798720,
+          "expected_return": 10.999860763549805
+        },
+        {
+          "steps": 808960,
+          "expected_return": 10.999940872192383
+        },
+        {
+          "steps": 819200,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 829440,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 839680,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 849920,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 860160,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 870400,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 880640,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 890880,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 901120,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 911360,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 921600,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 931840,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 942080,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 952320,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 962560,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 972800,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 983040,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 993280,
+          "expected_return": 10.9999418258667
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 10.9999418258667
+        }
+      ],
+      "metrics_sha256": "0734cf3a0b079530dcb569b91d3295d5d5cefa1e1ee1b06e242002855c596eb0"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 1,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/bppo_climbing_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "12ca6d701af308650bad50bcccbd43f6c2887489dab4e017d1f92224e02f7309",
+      "summary_sha256": "c26df4487e5a00fed0af715a352e1726936f5e69531c7a1e6866ccdd142a1780",
+      "final": {
+        "execution_policy_expected_return": 10.999995231628418,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 1.0,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.757364295349122,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4448893070220947
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.4096972942352295
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.440587997436523
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.386378288269043
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.368470191955566
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.959239959716797
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.991780281066895
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.995798110961914
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997836112976074
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998377799987793
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.99837589263916
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.998457908630371
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.99844741821289
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998437881469727
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998645782470703
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.999147415161133
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.999347686767578
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.999470710754395
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.999472618103027
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.999468803405762
+        },
+        {
+          "steps": 204800,
+          "expected_return": 10.999469757080078
+        },
+        {
+          "steps": 215040,
+          "expected_return": 10.999464988708496
+        },
+        {
+          "steps": 225280,
+          "expected_return": 10.999466896057129
+        },
+        {
+          "steps": 235520,
+          "expected_return": 10.99946117401123
+        },
+        {
+          "steps": 245760,
+          "expected_return": 10.999560356140137
+        },
+        {
+          "steps": 256000,
+          "expected_return": 10.999629974365234
+        },
+        {
+          "steps": 266240,
+          "expected_return": 10.999640464782715
+        },
+        {
+          "steps": 276480,
+          "expected_return": 10.999645233154297
+        },
+        {
+          "steps": 286720,
+          "expected_return": 10.999728202819824
+        },
+        {
+          "steps": 296960,
+          "expected_return": 10.999832153320312
+        },
+        {
+          "steps": 307200,
+          "expected_return": 10.999828338623047
+        },
+        {
+          "steps": 317440,
+          "expected_return": 10.999828338623047
+        },
+        {
+          "steps": 327680,
+          "expected_return": 10.999828338623047
+        },
+        {
+          "steps": 337920,
+          "expected_return": 10.99982738494873
+        },
+        {
+          "steps": 348160,
+          "expected_return": 10.99982738494873
+        },
+        {
+          "steps": 358400,
+          "expected_return": 10.99982738494873
+        },
+        {
+          "steps": 368640,
+          "expected_return": 10.99990177154541
+        },
+        {
+          "steps": 378880,
+          "expected_return": 10.999902725219727
+        },
+        {
+          "steps": 389120,
+          "expected_return": 10.999903678894043
+        },
+        {
+          "steps": 399360,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 409600,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 419840,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 430080,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 440320,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 450560,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 460800,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 471040,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 481280,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 491520,
+          "expected_return": 10.999905586242676
+        },
+        {
+          "steps": 501760,
+          "expected_return": 10.99990463256836
+        },
+        {
+          "steps": 512000,
+          "expected_return": 10.99990463256836
+        },
+        {
+          "steps": 522240,
+          "expected_return": 10.999900817871094
+        },
+        {
+          "steps": 532480,
+          "expected_return": 10.999885559082031
+        },
+        {
+          "steps": 542720,
+          "expected_return": 10.999885559082031
+        },
+        {
+          "steps": 552960,
+          "expected_return": 10.999885559082031
+        },
+        {
+          "steps": 563200,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 573440,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 583680,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 593920,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 604160,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 614400,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 624640,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 634880,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 645120,
+          "expected_return": 10.999884605407715
+        },
+        {
+          "steps": 655360,
+          "expected_return": 10.999903678894043
+        },
+        {
+          "steps": 665600,
+          "expected_return": 10.999934196472168
+        },
+        {
+          "steps": 675840,
+          "expected_return": 10.999934196472168
+        },
+        {
+          "steps": 686080,
+          "expected_return": 10.999934196472168
+        },
+        {
+          "steps": 696320,
+          "expected_return": 10.999934196472168
+        },
+        {
+          "steps": 706560,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 716800,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 727040,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 737280,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 747520,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 757760,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 768000,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 778240,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 788480,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 798720,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 808960,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 819200,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 829440,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 839680,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 849920,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 860160,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 870400,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 880640,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 890880,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 901120,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 911360,
+          "expected_return": 10.999943733215332
+        },
+        {
+          "steps": 921600,
+          "expected_return": 10.999942779541016
+        },
+        {
+          "steps": 931840,
+          "expected_return": 10.999942779541016
+        },
+        {
+          "steps": 942080,
+          "expected_return": 10.999960899353027
+        },
+        {
+          "steps": 952320,
+          "expected_return": 10.999960899353027
+        },
+        {
+          "steps": 962560,
+          "expected_return": 10.999960899353027
+        },
+        {
+          "steps": 972800,
+          "expected_return": 10.999960899353027
+        },
+        {
+          "steps": 983040,
+          "expected_return": 10.999972343444824
+        },
+        {
+          "steps": 993280,
+          "expected_return": 10.999995231628418
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 10.999995231628418
+        }
+      ],
+      "metrics_sha256": "b778cfa4f54b4171c178837377049f58ce22a64b46e6d6200fb2b5fa56a37e70"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 2,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/bppo_climbing_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "124ab17beba03520bbff16e622d57fdc213f7ff8390735ad0d25fdee77e7daac",
+      "summary_sha256": "b1004c9813188b3f561a46a096f481d1f131a3263232ae17bb493704ea0f301d",
+      "final": {
+        "execution_policy_expected_return": 10.999975204467773,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999980926513672,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.741141627807616,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4468822479248047
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2020671367645264
+        },
+        {
+          "steps": 20480,
+          "expected_return": 5.962559700012207
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.025041580200195
+        },
+        {
+          "steps": 40960,
+          "expected_return": 9.8793363571167
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.919978141784668
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.989372253417969
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.994184494018555
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.996871948242188
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998159408569336
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.998578071594238
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.998698234558105
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.998854637145996
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998863220214844
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998857498168945
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998849868774414
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998844146728516
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.999114990234375
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.99933910369873
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.999345779418945
+        },
+        {
+          "steps": 204800,
+          "expected_return": 10.999342918395996
+        },
+        {
+          "steps": 215040,
+          "expected_return": 10.999343872070312
+        },
+        {
+          "steps": 225280,
+          "expected_return": 10.999388694763184
+        },
+        {
+          "steps": 235520,
+          "expected_return": 10.999404907226562
+        },
+        {
+          "steps": 245760,
+          "expected_return": 10.999396324157715
+        },
+        {
+          "steps": 256000,
+          "expected_return": 10.999395370483398
+        },
+        {
+          "steps": 266240,
+          "expected_return": 10.999624252319336
+        },
+        {
+          "steps": 276480,
+          "expected_return": 10.99964714050293
+        },
+        {
+          "steps": 286720,
+          "expected_return": 10.99964714050293
+        },
+        {
+          "steps": 296960,
+          "expected_return": 10.999642372131348
+        },
+        {
+          "steps": 307200,
+          "expected_return": 10.999641418457031
+        },
+        {
+          "steps": 317440,
+          "expected_return": 10.999692916870117
+        },
+        {
+          "steps": 327680,
+          "expected_return": 10.999693870544434
+        },
+        {
+          "steps": 337920,
+          "expected_return": 10.999693870544434
+        },
+        {
+          "steps": 348160,
+          "expected_return": 10.999692916870117
+        },
+        {
+          "steps": 358400,
+          "expected_return": 10.999787330627441
+        },
+        {
+          "steps": 368640,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 378880,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 389120,
+          "expected_return": 10.999791145324707
+        },
+        {
+          "steps": 399360,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 409600,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 419840,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 430080,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 440320,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 450560,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 460800,
+          "expected_return": 10.999789237976074
+        },
+        {
+          "steps": 471040,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 481280,
+          "expected_return": 10.999785423278809
+        },
+        {
+          "steps": 491520,
+          "expected_return": 10.999784469604492
+        },
+        {
+          "steps": 501760,
+          "expected_return": 10.999784469604492
+        },
+        {
+          "steps": 512000,
+          "expected_return": 10.999784469604492
+        },
+        {
+          "steps": 522240,
+          "expected_return": 10.99979019165039
+        },
+        {
+          "steps": 532480,
+          "expected_return": 10.999788284301758
+        },
+        {
+          "steps": 542720,
+          "expected_return": 10.999788284301758
+        },
+        {
+          "steps": 552960,
+          "expected_return": 10.999787330627441
+        },
+        {
+          "steps": 563200,
+          "expected_return": 10.999787330627441
+        },
+        {
+          "steps": 573440,
+          "expected_return": 10.999787330627441
+        },
+        {
+          "steps": 583680,
+          "expected_return": 10.999929428100586
+        },
+        {
+          "steps": 593920,
+          "expected_return": 10.99992847442627
+        },
+        {
+          "steps": 604160,
+          "expected_return": 10.99992847442627
+        },
+        {
+          "steps": 614400,
+          "expected_return": 10.99992847442627
+        },
+        {
+          "steps": 624640,
+          "expected_return": 10.999974250793457
+        },
+        {
+          "steps": 634880,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 645120,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 655360,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 665600,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 675840,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 686080,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 696320,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 706560,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 716800,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 727040,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 737280,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 747520,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 757760,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 768000,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 778240,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 788480,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 798720,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 808960,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 819200,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 829440,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 839680,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 849920,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 860160,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 870400,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 880640,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 890880,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 901120,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 911360,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 921600,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 931840,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 942080,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 952320,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 962560,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 972800,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 983040,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 993280,
+          "expected_return": 10.999975204467773
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 10.999975204467773
+        }
+      ],
+      "metrics_sha256": "b168813d5d17637e9cf4932fd4803362b942bedb8f0e891b1310c54ddb98a469"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 0,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/bppo_penalty_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "d5880f3bf9a5ca3936f6216c687e7d76f7ea3f84ea3badb6e0067a93a66309b3",
+      "summary_sha256": "db05f4a919e72ae3e11533c33ffd3ce89cea1ab047d89b1ef6346e8694b0b778",
+      "final": {
+        "execution_policy_expected_return": 9.9999361038208,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9999935626983643,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.568884219055176,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.853940963745117
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.218670845031738
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.5044875144958496
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.626838684082031
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.287519454956055
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.746732711791992
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.957910537719727
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.98166275024414
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.989522933959961
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.993574142456055
+        },
+        {
+          "steps": 102400,
+          "expected_return": 9.994768142700195
+        },
+        {
+          "steps": 112640,
+          "expected_return": 9.995758056640625
+        },
+        {
+          "steps": 122880,
+          "expected_return": 9.996811866760254
+        },
+        {
+          "steps": 133120,
+          "expected_return": 9.997247695922852
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.997640609741211
+        },
+        {
+          "steps": 153600,
+          "expected_return": 9.997518539428711
+        },
+        {
+          "steps": 163840,
+          "expected_return": 9.998409271240234
+        },
+        {
+          "steps": 174080,
+          "expected_return": 9.998620986938477
+        },
+        {
+          "steps": 184320,
+          "expected_return": 9.99871826171875
+        },
+        {
+          "steps": 194560,
+          "expected_return": 9.998756408691406
+        },
+        {
+          "steps": 204800,
+          "expected_return": 9.998854637145996
+        },
+        {
+          "steps": 215040,
+          "expected_return": 9.998964309692383
+        },
+        {
+          "steps": 225280,
+          "expected_return": 9.999044418334961
+        },
+        {
+          "steps": 235520,
+          "expected_return": 9.99919319152832
+        },
+        {
+          "steps": 245760,
+          "expected_return": 9.999201774597168
+        },
+        {
+          "steps": 256000,
+          "expected_return": 9.999210357666016
+        },
+        {
+          "steps": 266240,
+          "expected_return": 9.999361991882324
+        },
+        {
+          "steps": 276480,
+          "expected_return": 9.99936294555664
+        },
+        {
+          "steps": 286720,
+          "expected_return": 9.999353408813477
+        },
+        {
+          "steps": 296960,
+          "expected_return": 9.9993896484375
+        },
+        {
+          "steps": 307200,
+          "expected_return": 9.99952220916748
+        },
+        {
+          "steps": 317440,
+          "expected_return": 9.999547958374023
+        },
+        {
+          "steps": 327680,
+          "expected_return": 9.999689102172852
+        },
+        {
+          "steps": 337920,
+          "expected_return": 9.999696731567383
+        },
+        {
+          "steps": 348160,
+          "expected_return": 9.999748229980469
+        },
+        {
+          "steps": 358400,
+          "expected_return": 9.999753952026367
+        },
+        {
+          "steps": 368640,
+          "expected_return": 9.999754905700684
+        },
+        {
+          "steps": 378880,
+          "expected_return": 9.999828338623047
+        },
+        {
+          "steps": 389120,
+          "expected_return": 9.999832153320312
+        },
+        {
+          "steps": 399360,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 409600,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 419840,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 430080,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 440320,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 450560,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 460800,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 471040,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 481280,
+          "expected_return": 9.999833106994629
+        },
+        {
+          "steps": 491520,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 501760,
+          "expected_return": 9.999839782714844
+        },
+        {
+          "steps": 512000,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 522240,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 532480,
+          "expected_return": 9.999835968017578
+        },
+        {
+          "steps": 542720,
+          "expected_return": 9.999837875366211
+        },
+        {
+          "steps": 552960,
+          "expected_return": 9.99983024597168
+        },
+        {
+          "steps": 563200,
+          "expected_return": 9.999794006347656
+        },
+        {
+          "steps": 573440,
+          "expected_return": 9.999789237976074
+        },
+        {
+          "steps": 583680,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 593920,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 604160,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 614400,
+          "expected_return": 9.99978256225586
+        },
+        {
+          "steps": 624640,
+          "expected_return": 9.999785423278809
+        },
+        {
+          "steps": 634880,
+          "expected_return": 9.99978256225586
+        },
+        {
+          "steps": 645120,
+          "expected_return": 9.999813079833984
+        },
+        {
+          "steps": 655360,
+          "expected_return": 9.99980640411377
+        },
+        {
+          "steps": 665600,
+          "expected_return": 9.999797821044922
+        },
+        {
+          "steps": 675840,
+          "expected_return": 9.999884605407715
+        },
+        {
+          "steps": 686080,
+          "expected_return": 9.99991512298584
+        },
+        {
+          "steps": 696320,
+          "expected_return": 9.999919891357422
+        },
+        {
+          "steps": 706560,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 716800,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 727040,
+          "expected_return": 9.999917030334473
+        },
+        {
+          "steps": 737280,
+          "expected_return": 9.999917030334473
+        },
+        {
+          "steps": 747520,
+          "expected_return": 9.999917030334473
+        },
+        {
+          "steps": 757760,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 768000,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 778240,
+          "expected_return": 9.999917030334473
+        },
+        {
+          "steps": 788480,
+          "expected_return": 9.999917030334473
+        },
+        {
+          "steps": 798720,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 808960,
+          "expected_return": 9.99991226196289
+        },
+        {
+          "steps": 819200,
+          "expected_return": 9.999916076660156
+        },
+        {
+          "steps": 829440,
+          "expected_return": 9.999931335449219
+        },
+        {
+          "steps": 839680,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 849920,
+          "expected_return": 9.999939918518066
+        },
+        {
+          "steps": 860160,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 870400,
+          "expected_return": 9.99993896484375
+        },
+        {
+          "steps": 880640,
+          "expected_return": 9.999942779541016
+        },
+        {
+          "steps": 890880,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 901120,
+          "expected_return": 9.99993896484375
+        },
+        {
+          "steps": 911360,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 921600,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 931840,
+          "expected_return": 9.99993896484375
+        },
+        {
+          "steps": 942080,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 952320,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 962560,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 972800,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 983040,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 993280,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 9.9999361038208
+        }
+      ],
+      "metrics_sha256": "b068f29327c2bd929f3847c1c84cca8b2912ca7418141ba296f80cb788952d3e"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 1,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/bppo_penalty_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "f222029bde85649b8331c1ca496dad95e242af4f1ce641cd14650ab0537ae3fe",
+      "summary_sha256": "62ca92950a62f8f3e48f7927f6f9e0370bbccf5deb5dd50534576c7bd59e93ac",
+      "final": {
+        "execution_policy_expected_return": 9.999967575073242,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9999967813491821,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.564389768981934,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.76248550415039
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.144809722900391
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.09769344329834
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.49165153503418
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.260623931884766
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.759971618652344
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.957765579223633
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.98161506652832
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.991686820983887
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.994098663330078
+        },
+        {
+          "steps": 102400,
+          "expected_return": 9.994474411010742
+        },
+        {
+          "steps": 112640,
+          "expected_return": 9.996177673339844
+        },
+        {
+          "steps": 122880,
+          "expected_return": 9.996258735656738
+        },
+        {
+          "steps": 133120,
+          "expected_return": 9.996330261230469
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.996414184570312
+        },
+        {
+          "steps": 153600,
+          "expected_return": 9.997207641601562
+        },
+        {
+          "steps": 163840,
+          "expected_return": 9.997880935668945
+        },
+        {
+          "steps": 174080,
+          "expected_return": 9.998191833496094
+        },
+        {
+          "steps": 184320,
+          "expected_return": 9.998449325561523
+        },
+        {
+          "steps": 194560,
+          "expected_return": 9.998903274536133
+        },
+        {
+          "steps": 204800,
+          "expected_return": 9.999149322509766
+        },
+        {
+          "steps": 215040,
+          "expected_return": 9.999162673950195
+        },
+        {
+          "steps": 225280,
+          "expected_return": 9.999153137207031
+        },
+        {
+          "steps": 235520,
+          "expected_return": 9.999082565307617
+        },
+        {
+          "steps": 245760,
+          "expected_return": 9.99908447265625
+        },
+        {
+          "steps": 256000,
+          "expected_return": 9.999405860900879
+        },
+        {
+          "steps": 266240,
+          "expected_return": 9.99941349029541
+        },
+        {
+          "steps": 276480,
+          "expected_return": 9.999387741088867
+        },
+        {
+          "steps": 286720,
+          "expected_return": 9.999491691589355
+        },
+        {
+          "steps": 296960,
+          "expected_return": 9.999571800231934
+        },
+        {
+          "steps": 307200,
+          "expected_return": 9.999614715576172
+        },
+        {
+          "steps": 317440,
+          "expected_return": 9.999616622924805
+        },
+        {
+          "steps": 327680,
+          "expected_return": 9.999616622924805
+        },
+        {
+          "steps": 337920,
+          "expected_return": 9.99968147277832
+        },
+        {
+          "steps": 348160,
+          "expected_return": 9.999687194824219
+        },
+        {
+          "steps": 358400,
+          "expected_return": 9.999688148498535
+        },
+        {
+          "steps": 368640,
+          "expected_return": 9.999683380126953
+        },
+        {
+          "steps": 378880,
+          "expected_return": 9.999685287475586
+        },
+        {
+          "steps": 389120,
+          "expected_return": 9.999702453613281
+        },
+        {
+          "steps": 399360,
+          "expected_return": 9.999702453613281
+        },
+        {
+          "steps": 409600,
+          "expected_return": 9.999652862548828
+        },
+        {
+          "steps": 419840,
+          "expected_return": 9.999643325805664
+        },
+        {
+          "steps": 430080,
+          "expected_return": 9.999642372131348
+        },
+        {
+          "steps": 440320,
+          "expected_return": 9.999637603759766
+        },
+        {
+          "steps": 450560,
+          "expected_return": 9.999637603759766
+        },
+        {
+          "steps": 460800,
+          "expected_return": 9.999635696411133
+        },
+        {
+          "steps": 471040,
+          "expected_return": 9.999632835388184
+        },
+        {
+          "steps": 481280,
+          "expected_return": 9.999784469604492
+        },
+        {
+          "steps": 491520,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 501760,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 512000,
+          "expected_return": 9.999792098999023
+        },
+        {
+          "steps": 522240,
+          "expected_return": 9.999792098999023
+        },
+        {
+          "steps": 532480,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 542720,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 552960,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 563200,
+          "expected_return": 9.999792098999023
+        },
+        {
+          "steps": 573440,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 583680,
+          "expected_return": 9.999788284301758
+        },
+        {
+          "steps": 593920,
+          "expected_return": 9.99978256225586
+        },
+        {
+          "steps": 604160,
+          "expected_return": 9.99985122680664
+        },
+        {
+          "steps": 614400,
+          "expected_return": 9.99985122680664
+        },
+        {
+          "steps": 624640,
+          "expected_return": 9.999853134155273
+        },
+        {
+          "steps": 634880,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 645120,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 655360,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 665600,
+          "expected_return": 9.999849319458008
+        },
+        {
+          "steps": 675840,
+          "expected_return": 9.999849319458008
+        },
+        {
+          "steps": 686080,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 696320,
+          "expected_return": 9.999852180480957
+        },
+        {
+          "steps": 706560,
+          "expected_return": 9.999845504760742
+        },
+        {
+          "steps": 716800,
+          "expected_return": 9.999845504760742
+        },
+        {
+          "steps": 727040,
+          "expected_return": 9.999845504760742
+        },
+        {
+          "steps": 737280,
+          "expected_return": 9.999862670898438
+        },
+        {
+          "steps": 747520,
+          "expected_return": 9.999862670898438
+        },
+        {
+          "steps": 757760,
+          "expected_return": 9.999908447265625
+        },
+        {
+          "steps": 768000,
+          "expected_return": 9.99991226196289
+        },
+        {
+          "steps": 778240,
+          "expected_return": 9.99991512298584
+        },
+        {
+          "steps": 788480,
+          "expected_return": 9.99991226196289
+        },
+        {
+          "steps": 798720,
+          "expected_return": 9.99991226196289
+        },
+        {
+          "steps": 808960,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 819200,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 829440,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 839680,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 849920,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 860160,
+          "expected_return": 9.999914169311523
+        },
+        {
+          "steps": 870400,
+          "expected_return": 9.99991226196289
+        },
+        {
+          "steps": 880640,
+          "expected_return": 9.999932289123535
+        },
+        {
+          "steps": 890880,
+          "expected_return": 9.99992847442627
+        },
+        {
+          "steps": 901120,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 911360,
+          "expected_return": 9.999931335449219
+        },
+        {
+          "steps": 921600,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 931840,
+          "expected_return": 9.999933242797852
+        },
+        {
+          "steps": 942080,
+          "expected_return": 9.999935150146484
+        },
+        {
+          "steps": 952320,
+          "expected_return": 9.99993896484375
+        },
+        {
+          "steps": 962560,
+          "expected_return": 9.999967575073242
+        },
+        {
+          "steps": 972800,
+          "expected_return": 9.999963760375977
+        },
+        {
+          "steps": 983040,
+          "expected_return": 9.999967575073242
+        },
+        {
+          "steps": 993280,
+          "expected_return": 9.999969482421875
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 9.999967575073242
+        }
+      ],
+      "metrics_sha256": "08249c2ab3bc08466cc5c6eb5068a3436b6cd1e7d79365641296c11fd1036137"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 2,
+      "output_path": "results/matrix_projected_budget1m_20261026T121428Z/bppo_penalty_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "04e7002addb2fb079461bdf10ad6bed740c8ff03e12ec725bf48f88e797f6f60",
+      "summary_sha256": "6307eac8eb42b1a921bc91ac1477def0e2ac307e800fdc1cb30b58b886720112",
+      "final": {
+        "execution_policy_expected_return": 9.999942779541016,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9999942779541016,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.55885777923584,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.80489158630371
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.1216278076171875
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.9749599695205688
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.370321273803711
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.078457832336426
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.664668083190918
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.943729400634766
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.97911548614502
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.988348007202148
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.99242115020752
+        },
+        {
+          "steps": 102400,
+          "expected_return": 9.994340896606445
+        },
+        {
+          "steps": 112640,
+          "expected_return": 9.99606990814209
+        },
+        {
+          "steps": 122880,
+          "expected_return": 9.996566772460938
+        },
+        {
+          "steps": 133120,
+          "expected_return": 9.99758243560791
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.997797012329102
+        },
+        {
+          "steps": 153600,
+          "expected_return": 9.997913360595703
+        },
+        {
+          "steps": 163840,
+          "expected_return": 9.998104095458984
+        },
+        {
+          "steps": 174080,
+          "expected_return": 9.998481750488281
+        },
+        {
+          "steps": 184320,
+          "expected_return": 9.998807907104492
+        },
+        {
+          "steps": 194560,
+          "expected_return": 9.998936653137207
+        },
+        {
+          "steps": 204800,
+          "expected_return": 9.998954772949219
+        },
+        {
+          "steps": 215040,
+          "expected_return": 9.998954772949219
+        },
+        {
+          "steps": 225280,
+          "expected_return": 9.998947143554688
+        },
+        {
+          "steps": 235520,
+          "expected_return": 9.999053001403809
+        },
+        {
+          "steps": 245760,
+          "expected_return": 9.999139785766602
+        },
+        {
+          "steps": 256000,
+          "expected_return": 9.999135971069336
+        },
+        {
+          "steps": 266240,
+          "expected_return": 9.999253273010254
+        },
+        {
+          "steps": 276480,
+          "expected_return": 9.999391555786133
+        },
+        {
+          "steps": 286720,
+          "expected_return": 9.999398231506348
+        },
+        {
+          "steps": 296960,
+          "expected_return": 9.999399185180664
+        },
+        {
+          "steps": 307200,
+          "expected_return": 9.999397277832031
+        },
+        {
+          "steps": 317440,
+          "expected_return": 9.999488830566406
+        },
+        {
+          "steps": 327680,
+          "expected_return": 9.999580383300781
+        },
+        {
+          "steps": 337920,
+          "expected_return": 9.999588012695312
+        },
+        {
+          "steps": 348160,
+          "expected_return": 9.999588012695312
+        },
+        {
+          "steps": 358400,
+          "expected_return": 9.999588012695312
+        },
+        {
+          "steps": 368640,
+          "expected_return": 9.999585151672363
+        },
+        {
+          "steps": 378880,
+          "expected_return": 9.999589920043945
+        },
+        {
+          "steps": 389120,
+          "expected_return": 9.999585151672363
+        },
+        {
+          "steps": 399360,
+          "expected_return": 9.999582290649414
+        },
+        {
+          "steps": 409600,
+          "expected_return": 9.999640464782715
+        },
+        {
+          "steps": 419840,
+          "expected_return": 9.999652862548828
+        },
+        {
+          "steps": 430080,
+          "expected_return": 9.999652862548828
+        },
+        {
+          "steps": 440320,
+          "expected_return": 9.999649047851562
+        },
+        {
+          "steps": 450560,
+          "expected_return": 9.99964714050293
+        },
+        {
+          "steps": 460800,
+          "expected_return": 9.99964714050293
+        },
+        {
+          "steps": 471040,
+          "expected_return": 9.999645233154297
+        },
+        {
+          "steps": 481280,
+          "expected_return": 9.999649047851562
+        },
+        {
+          "steps": 491520,
+          "expected_return": 9.999649047851562
+        },
+        {
+          "steps": 501760,
+          "expected_return": 9.99964714050293
+        },
+        {
+          "steps": 512000,
+          "expected_return": 9.999632835388184
+        },
+        {
+          "steps": 522240,
+          "expected_return": 9.999670028686523
+        },
+        {
+          "steps": 532480,
+          "expected_return": 9.999669075012207
+        },
+        {
+          "steps": 542720,
+          "expected_return": 9.99967098236084
+        },
+        {
+          "steps": 552960,
+          "expected_return": 9.99966812133789
+        },
+        {
+          "steps": 563200,
+          "expected_return": 9.99979019165039
+        },
+        {
+          "steps": 573440,
+          "expected_return": 9.999797821044922
+        },
+        {
+          "steps": 583680,
+          "expected_return": 9.999784469604492
+        },
+        {
+          "steps": 593920,
+          "expected_return": 9.999783515930176
+        },
+        {
+          "steps": 604160,
+          "expected_return": 9.999783515930176
+        },
+        {
+          "steps": 614400,
+          "expected_return": 9.99978256225586
+        },
+        {
+          "steps": 624640,
+          "expected_return": 9.999883651733398
+        },
+        {
+          "steps": 634880,
+          "expected_return": 9.999899864196777
+        },
+        {
+          "steps": 645120,
+          "expected_return": 9.999898910522461
+        },
+        {
+          "steps": 655360,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 665600,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 675840,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 686080,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 696320,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 706560,
+          "expected_return": 9.999899864196777
+        },
+        {
+          "steps": 716800,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 727040,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 737280,
+          "expected_return": 9.999899864196777
+        },
+        {
+          "steps": 747520,
+          "expected_return": 9.999899864196777
+        },
+        {
+          "steps": 757760,
+          "expected_return": 9.999899864196777
+        },
+        {
+          "steps": 768000,
+          "expected_return": 9.999899864196777
+        },
+        {
+          "steps": 778240,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 788480,
+          "expected_return": 9.999897003173828
+        },
+        {
+          "steps": 798720,
+          "expected_return": 9.999890327453613
+        },
+        {
+          "steps": 808960,
+          "expected_return": 9.999893188476562
+        },
+        {
+          "steps": 819200,
+          "expected_return": 9.999893188476562
+        },
+        {
+          "steps": 829440,
+          "expected_return": 9.999893188476562
+        },
+        {
+          "steps": 839680,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 849920,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 860160,
+          "expected_return": 9.999893188476562
+        },
+        {
+          "steps": 870400,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 880640,
+          "expected_return": 9.999893188476562
+        },
+        {
+          "steps": 890880,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 901120,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 911360,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 921600,
+          "expected_return": 9.999895095825195
+        },
+        {
+          "steps": 931840,
+          "expected_return": 9.999921798706055
+        },
+        {
+          "steps": 942080,
+          "expected_return": 9.999946594238281
+        },
+        {
+          "steps": 952320,
+          "expected_return": 9.999944686889648
+        },
+        {
+          "steps": 962560,
+          "expected_return": 9.9999361038208
+        },
+        {
+          "steps": 972800,
+          "expected_return": 9.999943733215332
+        },
+        {
+          "steps": 983040,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 993280,
+          "expected_return": 9.999940872192383
+        },
+        {
+          "steps": 1000000,
+          "expected_return": 9.999942779541016
+        }
+      ],
+      "metrics_sha256": "7892ebebcf20927dce3b8aaab57992a8408fd06a52f35843cac114f726b15681"
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "threshold_successes": 3,
+      "declared_seed_count": 3,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 3,
+          "mean": 10.999945322672525,
+          "median": 10.999945640563965,
+          "sample_sd_across_training_seeds": 2.1459438110017993e-05
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 10.757930870361328,
+          "median": 10.763590028381348,
+          "sample_sd_across_training_seeds": 0.011802690107018093
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.4385029682449546,
+        1.0
+      ]
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "threshold_successes": 3,
+      "declared_seed_count": 3,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 3,
+          "mean": 9.999942779541016,
+          "median": 9.999942779541016,
+          "sample_sd_across_training_seeds": 1.9073486328125e-06
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 9.560614023030599,
+          "median": 9.56098087890625,
+          "sample_sd_across_training_seeds": 0.003393334588517561
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.4385029682449546,
+        1.0
+      ]
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "threshold_successes": 3,
+      "declared_seed_count": 3,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 3,
+          "mean": 10.99997075398763,
+          "median": 10.999975204467773,
+          "sample_sd_across_training_seeds": 2.697960204152266e-05
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 10.753070614827474,
+          "median": 10.757364295349122,
+          "sample_sd_across_training_seeds": 0.010465044889142077
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.4385029682449546,
+        1.0
+      ]
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "threshold_successes": 3,
+      "declared_seed_count": 3,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 3,
+          "mean": 9.999948819478353,
+          "median": 9.999942779541016,
+          "sample_sd_across_training_seeds": 1.6582236424439716e-05
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 9.564043922424316,
+          "median": 9.564389768981934,
+          "sample_sd_across_training_seeds": 0.005022159022149278
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.4385029682449546,
+        1.0
+      ]
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "game": "climbing",
+      "eligible": true,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "expected_return_differences": [
+        -2.47955322265625e-05,
+        4.9591064453125e-05,
+        5.14984130859375e-05
+      ],
+      "difference_statistics": {
+        "seed_count": 3,
+        "mean": 2.5431315104166668e-05,
+        "median": 4.9591064453125e-05,
+        "sample_sd_across_training_seeds": 4.350817899303595e-05
+      },
+      "relative_mean_change_percent": 0.0002311949228670159
+    },
+    {
+      "game": "penalty",
+      "eligible": true,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "expected_return_differences": [
+        -6.67572021484375e-06,
+        2.6702880859375e-05,
+        -1.9073486328125e-06
+      ],
+      "difference_statistics": {
+        "seed_count": 3,
+        "mean": 6.039937337239583e-06,
+        "median": -1.9073486328125e-06,
+        "sample_sd_across_training_seeds": 1.805276344871608e-05
+      },
+      "relative_mean_change_percent": 6.0399718982360094e-05
+    }
+  ],
+  "validation_decision": "not_assessed",
+  "paper_reproduction": "not_established",
+  "unused_seeds_at_freeze": false
+}
