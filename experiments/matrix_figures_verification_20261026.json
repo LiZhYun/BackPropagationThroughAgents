@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-10-26T20:20:27.294815+00:00",
+  "scope": "Figures of completed configuration-validation studies; no new training, historical-equivalence or superiority claim.",
+  "plotter": "scripts/plot_matrix_evidence.py",
+  "plotter_sha256": "a7dae365d7a4315e87978ae25d67191d571101264f4ac83c4aaa2819f4450695",
+  "provenance": "docs/figures/matrix_validation_20261026/provenance.json",
+  "provenance_sha256": "eab2e2234a0be1035baba26cae89d23aa4fc4355fac18216ce2aa4e2edb9bf95",
+  "repeat_directory": "results/matrix_validation_figures_repeat_20261026",
+  "byte_identical_repeat": true,
+  "outputs_sha256": {
+    "docs/figures/matrix_validation_20261026/bppo_ar_1m.pdf": "a9ece30604a4010b216f1683cb1281cded6739c3c97dc86c8287a7a6623fc299",
+    "docs/figures/matrix_validation_20261026/provenance.json": "eab2e2234a0be1035baba26cae89d23aa4fc4355fac18216ce2aa4e2edb9bf95",
+    "docs/figures/matrix_validation_20261026/agentmixer_climbing_200k.pdf": "075ad1423f08e8fa1fec786d602ffee6c0090a9600fae3b42e4ebe2c6308f2b8",
+    "docs/figures/matrix_validation_20261026/agentmixer_climbing_200k.png": "031dba61cec11a3b7cc5f417b44c28851745bf4b9dacefbb144c8229cf3c71b5",
+    "docs/figures/matrix_validation_20261026/bppo_ar_1m.png": "212e2d73597c8d74ea8d4b9b55182ee00e265a28d08dd77902470a4cc2233b7f"
+  },
+  "visual_review": {
+    "reviewed": true,
+    "findings": [
+      "Both matrix games retain all five independent BPPO and AR-PPO seeds; curves nearly overlap after convergence.",
+      "AgentMixer retains all ten local trajectories and all final central/local pairs, including the two local threshold failures.",
+      "Training decisions and reward units are explicit; text and legends are legible; no image boundary truncates the plots."
+    ]
+  },
+  "data_checks": [
+    "No report-level or run-level integrity errors; every declared run eligible.",
+    "Exact seed sets and common step grids; final curve points equal audited endpoints.",
+    "Recomputed group means match stored audit means; finite values throughout.",
+    "Input report and output hashes match provenance; all PNG/PDF files and sidecar reproduce byte-for-byte."
+  ]
+}

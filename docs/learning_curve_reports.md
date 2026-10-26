@@ -118,3 +118,33 @@ version. Neither an existing figure nor its sidecar is overwritten.
 The same training budget, metric and environment protocol are necessary for
 meaningful comparisons. The reporter exposes these records; it does not
 automatically certify the full reproduction checklist.
+
+
+## Matrix validation figures
+
+The completed matrix configuration studies have a separate figure generator:
+
+```bash
+MPLCONFIGDIR="$PWD/.cache/matplotlib" .venv-plots/bin/python \
+  scripts/plot_matrix_evidence.py --output-dir results/my_matrix_figures
+```
+
+Use the plotting environment described above and a new output directory.
+Only the committed audit reports and plotting dependencies are needed; the
+script does not run training or load native engines. It produces PNG and
+vector PDF versions plus a JSON provenance sidecar. It refuses incomplete or
+invalid studies and checks exact seed sets, shared step grids and endpoint
+agreement before plotting. It does not smooth curves or omit failed criteria.
+
+The [BPPO/AR-PPO figure](matrix_confirmation.md#audited-1m-learning-curves) uses
+five independent training seeds per method and game at 1M, with mean ±1 sample
+SD. The [AgentMixer figure](agentmixer_confirmation.md#audited-local-and-central-scores)
+uses all ten seeds at its archived 200k Climbing budget, showing every local
+trajectory and each seed's final local/central scores. These different budgets
+and study definitions are displayed separately. Neither figure overlays or
+claims equivalence with historical paper curves.
+
+The [verification record](../experiments/matrix_figures_verification_20261026.json)
+records source/output hashes and visual review. Repeating the final rendering
+with Matplotlib 3.7.1 and NumPy 1.26.4 produces byte-identical PNGs, PDFs and
+provenance. Numerical outcomes and the earlier validation decisions are unchanged.

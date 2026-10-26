@@ -208,3 +208,20 @@ The initial preflight reports are
 all 40 and 12 runs respectively as not started, with no provenance errors.
 Jobs `21213329` and `21213330` use the [recorded serial worker
 dependencies](worker_schedule.md); the four-worker resource limit is preserved.
+
+
+## Audited 1M learning curves
+
+![BPPO and AR-PPO execution-policy expected reward across five independent seeds on both matrix games](figures/matrix_validation_20261026/bppo_ar_1m.png)
+
+Both methods use the selected predecessor-action projection setting. Lines are
+means across training seeds 3000–3004; shading is ±1 sample SD, not a confidence
+interval. Scores are exact expected team rewards per joint decision. The two
+methods nearly overlap after convergence, consistent with the paired endpoint
+intervals including zero. This figure validates the selected configurations
+and does not establish a BPPO advantage or historical protocol equivalence.
+
+The [PDF](figures/matrix_validation_20261026/bppo_ar_1m.pdf),
+[provenance](figures/matrix_validation_20261026/provenance.json) and
+[reproduction instructions](learning_curve_reports.md#matrix-validation-figures)
+retain the underlying report hashes and all declared seeds.

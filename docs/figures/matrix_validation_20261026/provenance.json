@@ -1,0 +1,118 @@
+{
+  "reports": {
+    "bppo_ar": {
+      "path": "experiments/matrix_confirmation1m_results_20261026.json",
+      "sha256": "ae92211218e0bfd215e3998689a1b13df491a26df87f67f6b673d49c46edcf83"
+    },
+    "agentmixer": {
+      "path": "experiments/matrix_agentmixer_confirmation200k_results_20261026.json",
+      "sha256": "42ef42807eee52ff98a88e8928490ad0da944c915055ca0922ddd2eb33564bd4"
+    }
+  },
+  "script": "scripts/plot_matrix_evidence.py",
+  "script_sha256": "a7dae365d7a4315e87978ae25d67191d571101264f4ac83c4aaa2819f4450695",
+  "matplotlib": "3.7.1",
+  "numpy": "1.26.4",
+  "groups": [
+    {
+      "label": "BPPO",
+      "seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "points": 99,
+      "budget": 1000000,
+      "final_mean": 10.999946212768554,
+      "final_sample_sd": 4.582898771306457e-05,
+      "variability_display": "mean plus/minus sample SD"
+    },
+    {
+      "label": "AR-PPO",
+      "seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "points": 99,
+      "budget": 1000000,
+      "final_mean": 10.999945068359375,
+      "final_sample_sd": 4.1088867286664e-05,
+      "variability_display": "mean plus/minus sample SD"
+    },
+    {
+      "label": "BPPO",
+      "seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "points": 99,
+      "budget": 1000000,
+      "final_mean": 9.999929809570313,
+      "final_sample_sd": 2.060466274384521e-05,
+      "variability_display": "mean plus/minus sample SD"
+    },
+    {
+      "label": "AR-PPO",
+      "seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "points": 99,
+      "budget": 1000000,
+      "final_mean": 9.999930381774902,
+      "final_sample_sd": 4.7721847546374526e-05,
+      "variability_display": "mean plus/minus sample SD"
+    },
+    {
+      "label": "Local execution mean",
+      "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009
+      ],
+      "points": 21,
+      "budget": 200000,
+      "final_mean": 9.453557014465332,
+      "final_sample_sd": 4.205603809650564,
+      "variability_display": "individual seed curves"
+    }
+  ],
+  "aggregation": "Arithmetic mean and sample SD across whole training seeds; identical logged step grids; no smoothing or interpolation beyond straight plotted segments.",
+  "agentmixer_endpoint_seeds": [
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009
+  ],
+  "omitted_runs": [],
+  "outputs": {
+    "bppo_ar_1m.png": "212e2d73597c8d74ea8d4b9b55182ee00e265a28d08dd77902470a4cc2233b7f",
+    "bppo_ar_1m.pdf": "a9ece30604a4010b216f1683cb1281cded6739c3c97dc86c8287a7a6623fc299",
+    "agentmixer_climbing_200k.png": "031dba61cec11a3b7cc5f417b44c28851745bf4b9dacefbb144c8229cf3c71b5",
+    "agentmixer_climbing_200k.pdf": "075ad1423f08e8fa1fec786d602ffee6c0090a9600fae3b42e4ebe2c6308f2b8"
+  }
+}

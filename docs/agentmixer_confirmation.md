@@ -100,3 +100,20 @@ A [budget correction](../experiments/matrix_budget_interpretation_correction_202
 records the earlier mistaken reference to a 1M AgentMixer paper budget. The
 frozen plan is preserved, and the failed 8/10 criterion is unchanged. The
 canonical target and archived figure both specify 200k for AgentMixer Climbing.
+
+
+## Audited local and central scores
+
+![All ten AgentMixer local learning curves and their final local versus central expected rewards](figures/matrix_validation_20261026/agentmixer_climbing_200k.png)
+
+These are the selected experimental joint-modifier reconstruction's results.
+Thin lines retain each training seed and the bold line gives their mean. The
+right panel keeps central and local expectations separate: seeds 2000 and 2008
+miss the local threshold despite nearly optimal central sampling. Every seed
+has an optimal greedy action at the final endpoint. The stochastic-return
+criterion still fails; no seed or earlier checkpoint is substituted.
+
+The [PDF](figures/matrix_validation_20261026/agentmixer_climbing_200k.pdf),
+[provenance](figures/matrix_validation_20261026/provenance.json) and
+[reproduction instructions](learning_curve_reports.md#matrix-validation-figures)
+make this figure reproducible from the committed audit reports.

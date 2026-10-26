@@ -139,7 +139,10 @@ of that fixed setting now passes: all20 runs complete, and both methods solve bo
 [AgentMixer Climbing validation](docs/agentmixer_confirmation.md#completed-result)
 finishes all ten unused seeds at 200k: all greedy actions are optimal, but only 8/10
 meet the predeclared local expected-return threshold, so the criterion fails.
-Central and local scores remain separate.
+Central and local scores remain separate. The audited
+[BPPO/AR-PPO curves](docs/matrix_confirmation.md#audited-1m-learning-curves) and
+[AgentMixer per-seed plots](docs/agentmixer_confirmation.md#audited-local-and-central-scores)
+can be regenerated from the committed reports.
 
 A [paired modifier ablation](docs/matrix_modifier_ablation.md) is queued at the
 1M budget extension on both games, using five fresh seeds per arm. AgentMixer's
