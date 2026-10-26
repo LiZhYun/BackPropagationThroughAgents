@@ -1,0 +1,262 @@
+{
+  "recorded_at_utc": "2026-10-26T13:37:06.274747+00:00",
+  "scope": "Core installation, wheel contents, runnable examples and checkpoint replay. Not independent performance confirmation or full benchmark reproduction.",
+  "clean_checkout": {
+    "source_commit": "1fd8c619f61d22cfd078614cd2fe3e8f2e43472c",
+    "source_directory": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/clean_checkout_20261026T130548Z/source",
+    "reference_archives_present": false,
+    "experiment_results_present": false,
+    "environment": {
+      "python": "3.11.15 (main, Apr 14 2026, 14:28:36) [Clang 22.1.3 ]",
+      "prefix": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/clean_checkout_20261026T130548Z/source/.venv",
+      "package_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/clean_checkout_20261026T130548Z/source/src/bta_repro/__init__.py",
+      "torch": "2.6.0+cpu",
+      "numpy": "2.4.6",
+      "pytest": "8.4.2",
+      "native_packages": {
+        "smacv2": false,
+        "mujoco_py": false,
+        "gfootball": false
+      },
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/clean_checkout_20261026T130548Z/source"
+    },
+    "test_command": "PYTHONPATH= PYTHONNOUSERSITE=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q",
+    "tests": {
+      "passed": 693,
+      "skipped": 1,
+      "skip_reason": "CUDA unavailable in the CPU environment",
+      "elapsed_seconds": 24.18,
+      "evidence": "Observed terminal result in this session; raw pytest stdout was not saved."
+    }
+  },
+  "wheel_checkout": {
+    "source_commit": "7021938f4bdfc7f02644f58bae71615e57853c03",
+    "source_directory": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/wheel_checkout_20261026T131742Z/source",
+    "reference_archives_present": false,
+    "experiment_results_present": false,
+    "artifact": "results/wheel_checkout_20261026T131742Z/dist/bta_repro-0.1.0-py3-none-any.whl",
+    "wheel_sha256": "34b17260125dd091d3b0c9e794847ff7ae39103f1273b6b86953fc6bbe3fa57e",
+    "wheel_bytes": 85192,
+    "installed_package_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/wheel_checkout_20261026T131742Z/source/.venv/lib/python3.11/site-packages/bta_repro/__init__.py",
+    "module_count": 23,
+    "license": "MIT",
+    "readme_included": true,
+    "license_notice_matches": true,
+    "runs": [
+      {
+        "command": [
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/wheel_checkout_20261026T131742Z/source/.venv/bin/bta-train",
+          "--config",
+          "source/configs/matrix_projected_entropy01.json",
+          "--algorithm",
+          "bppo",
+          "--game",
+          "climbing",
+          "--steps",
+          "100000",
+          "--seed",
+          "0",
+          "--output",
+          "bppo_climbing"
+        ],
+        "exit_code": 0,
+        "summary": {
+          "status": "completed",
+          "steps": 100000,
+          "elapsed_seconds": 7.908976544858888,
+          "greedy_return": 11.0,
+          "greedy_actions": [
+            0,
+            0
+          ],
+          "training_policy_expected_return": 10.998430252075195,
+          "execution_policy_expected_return": 10.998430252075195,
+          "optimal_action_probability": 0.9998655319213867,
+          "training_optimal_action_probability": 0.9998655319213867,
+          "training_joint_entropy": 0.0015388638712465763,
+          "execution_joint_entropy": 0.0015388638712465763,
+          "training_joint_probabilities": [
+            0.9998655319213867,
+            1.5292585885617882e-05,
+            5.5334417993435636e-05,
+            3.1958663493369954e-10,
+            1.8265061953570694e-05,
+            4.440331849764334e-06,
+            8.16174017259641e-10,
+            3.2994867069646716e-05,
+            8.377552148886025e-06
+          ],
+          "execution_joint_probabilities": [
+            0.9998655319213867,
+            1.5292585885617882e-05,
+            5.5334417993435636e-05,
+            3.1958663493369954e-10,
+            1.8265061953570694e-05,
+            4.440331849764334e-06,
+            8.16174017259641e-10,
+            3.2994867069646716e-05,
+            8.377552148886025e-06
+          ],
+          "optimum_per_step": 11.0
+        }
+      },
+      {
+        "command": [
+          "/scratch/work/liz23/reproduce/bpta-agentmixer/results/wheel_checkout_20261026T131742Z/source/.venv/bin/bta-train",
+          "--config",
+          "source/configs/matrix_joint_lr_fast.json",
+          "--algorithm",
+          "agentmixer",
+          "--game",
+          "climbing",
+          "--steps",
+          "200000",
+          "--seed",
+          "0",
+          "--output",
+          "agentmixer_climbing"
+        ],
+        "exit_code": 0,
+        "summary": {
+          "status": "completed",
+          "steps": 200000,
+          "elapsed_seconds": 180.49044007598422,
+          "greedy_return": 11.0,
+          "greedy_actions": [
+            0,
+            0
+          ],
+          "training_policy_expected_return": 11.0,
+          "execution_policy_expected_return": 8.310479164123535,
+          "optimal_action_probability": 0.8567255139350891,
+          "training_optimal_action_probability": 1.0,
+          "training_joint_entropy": 2.9908452152610857e-14,
+          "execution_joint_entropy": 0.540434718132019,
+          "training_joint_probabilities": [
+            1.0,
+            0.0,
+            1.6815581571897805e-44,
+            9.884773380331903e-40,
+            0.0,
+            0.0,
+            8.622380356904623e-16,
+            0.0,
+            1.5992760510168933e-30
+          ],
+          "execution_joint_probabilities": [
+            0.8567255139350891,
+            0.0016542106168344617,
+            0.008960557170212269,
+            0.035681627690792084,
+            6.889599899295717e-05,
+            0.00037319670082069933,
+            0.09535441547632217,
+            0.0001841153862187639,
+            0.0009973193518817425
+          ],
+          "optimum_per_step": 11.0,
+          "modifier_scale_min": 0.0006872174562886357,
+          "modifier_scale_max": 33.90084457397461
+        }
+      }
+    ],
+    "progress_report_tests": {
+      "command": "PYTHONPATH= PYTHONNOUSERSITE=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q tests/test_progress_report.py",
+      "passed": 5,
+      "elapsed_seconds": 0.09,
+      "evidence": "Observed terminal result in the second isolated environment; raw pytest stdout was not saved."
+    },
+    "package_modules_equal_to_full_suite_source": true,
+    "package_module_sha256": {
+      "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+      "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+      "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+      "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+      "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+      "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+      "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+      "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+      "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+      "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+      "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+      "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+      "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+      "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+      "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+      "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+      "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+      "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+      "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+      "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+      "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+      "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+      "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+    }
+  },
+  "simulator_cli": {
+    "scope": "installed wheel CLI and checkpoint replay only; not learning performance",
+    "commands": [
+      [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/wheel_checkout_20261026T131742Z/source/.venv/bin/bta-train-simulator",
+        "--config",
+        "prey_recurrent_smoke.json",
+        "--output",
+        "prey_recurrent_smoke"
+      ],
+      [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/wheel_checkout_20261026T131742Z/source/.venv/bin/python",
+        "source/scripts/evaluate_simulator.py",
+        "prey_recurrent_smoke",
+        "--output",
+        "prey_recurrent_replay.json"
+      ]
+    ],
+    "steps": 16,
+    "source_matches_training": true,
+    "exact_episode_and_window_replay": true
+  },
+  "stdlib_checks": [
+    {
+      "name": "targets",
+      "command": [
+        "python3",
+        "-S",
+        "scripts/check_paper_targets.py"
+      ],
+      "exit_code": 0,
+      "stdout": "results/wheel_checkout_20261026T131742Z/targets_verification.stdout",
+      "stdout_sha256": "1225a971a5576d8ff24b5270b7d44d61bcbb138dbbef48fe92012a452eac4388"
+    },
+    {
+      "name": "progress",
+      "command": [
+        "python3",
+        "-S",
+        "scripts/report_progress.py",
+        "--latest",
+        "1"
+      ],
+      "exit_code": 0,
+      "stdout": "results/wheel_checkout_20261026T131742Z/progress_verification.stdout",
+      "stdout_sha256": "d28763a18aafac46873e75b8b99eaa610a69e794f7935007e0f8bc08749de8c2"
+    }
+  ],
+  "environment_variables": {
+    "PYTHONPATH": "",
+    "PYTHONNOUSERSITE": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "installation_observations": [
+    "Offline sync initially missed the pinned CPU torch wheel in the cache; approved online locked sync succeeded.",
+    "A missing-results progress command failed in the first source export; commit7021938 handles absent manifests as unknown evidence and adds five targeted tests.",
+    "No running training environment or frozen source snapshot was changed."
+  ],
+  "local_artifacts": {
+    "results/wheel_checkout_20261026T131742Z/verification.json": "a31bdbe46cd8926588b9bc769756a3cd3db526b1533927cbbbe186c64ed6df46",
+    "results/wheel_checkout_20261026T131742Z/wheel_verification.json": "512ce38bf61778c6f0884594868793720ece91eae0a438fca4bd76b4e080b108",
+    "results/wheel_checkout_20261026T131742Z/wheel_simulator_verification.json": "cd02357546789a99c7378b085ebb534bd5ba9ceb8e41a3fa3ff53daadb13cb07",
+    "results/wheel_checkout_20261026T131742Z/prey_recurrent_replay.json": "7c602ff80457a59ca8dbd0cabd6220c664bd9c56e096a4d344c5375c72156818"
+  }
+}

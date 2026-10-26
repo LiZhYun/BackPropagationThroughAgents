@@ -27,6 +27,8 @@ see [the simulator guide](../docs/simulator_training.md).
 | Reproduce the Prey batch controls | `prey_batch1m.json` | Sixteen completed runs at 1M; neither penalty setting clears the selected paper comparison |
 | Test restricted Prey modifier ranges | `prey_modifier_bound1m.json` | Eight matched 1M controls queued after distribution diagnostics; no results yet |
 | Run the longer SMAC or Football learning checks | `smac_terran5_learning1m.json`, `football_3v1_learning1m.json` | Development plans following the shorter runtime and learning pilots |
+| Check private GRU actors in native SMAC | `smac_recurrent_batch_integration10k.json` | Five-method integration queued; one 10,000-transition rollout per run |
+| Compare feed-forward and GRU actors at a larger SMAC batch | `smac_terran5_batch1m.json` | Ten-run plan frozen but unsubmitted pending native correctness, runtime and memory checks |
 
 These are development settings, not certified final reproduction recipes.
 The [current status](../STATUS.md) records job completion and acceptance gaps;

@@ -12,6 +12,9 @@ recorded dependency locks and private environments.
 
 With uv, `uv sync --locked --extra dev` uses the checked-in CPU dependency lock. The manual installation below is also supported.
 
+The [clean-install record](docs/clean_checkout.md) covers the full core test
+suite, built wheel, both learning examples and saved simulator-policy replay.
+
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate

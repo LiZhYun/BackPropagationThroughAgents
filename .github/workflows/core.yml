@@ -1,0 +1,49 @@
+name: Core installation and correctness
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: core-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: ""
+      PYTHONNOUSERSITE: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: "0.11.7"
+          python-version: "3.11.15"
+          enable-cache: true
+      - name: Install locked core dependencies
+        run: uv sync --locked --extra dev --no-editable
+      - name: Build and install the exact wheel
+        run: |
+          uv build --wheel --out-dir "$RUNNER_TEMP/bta-wheel"
+          uv pip install --python .venv/bin/python --no-deps --reinstall-package bta-repro "$RUNNER_TEMP"/bta-wheel/*.whl
+      - name: Test the installed package
+        run: .venv/bin/python -m pytest -q -o pythonpath= --junitxml="$RUNNER_TEMP/core-tests.xml"
+      - name: Check commands and checkpoint replay outside the checkout
+        working-directory: ${{ runner.temp }}
+        run: '"$GITHUB_WORKSPACE/.venv/bin/python" "$GITHUB_WORKSPACE/scripts/check_installed_package.py" --output "$RUNNER_TEMP/installed-check"'
+      - name: Check public reports without experiment artifacts
+        run: |
+          .venv/bin/python -S scripts/check_paper_targets.py
+          .venv/bin/python -S scripts/report_progress.py --latest 1
+          .venv/bin/python -S scripts/report_benchmark_coverage.py
