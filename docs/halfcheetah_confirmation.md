@@ -85,3 +85,9 @@ MuJoCo, SMAC, Football, Predator–Prey or matrix-game release requirements.
 Use the [confirmation reporter](simulator_confirmation.md) to check this frozen
 study. It validates the original plan and every declared seed before reporting
 group statistics, paired baseline differences or a qualified figure comparison.
+
+The later [partition transfer schedule](halfcheetah_partition_transfer.md#pilot-release)
+inserts two short500k pilots between each Ant/Walker worker and this study
+(21220995 tasks0→2 on A0 and1→3 on A1). Both confirmation workers were pending
+when their dependencies changed; the frozen confirmation source, configurations
+and training/evaluation seeds are unchanged.

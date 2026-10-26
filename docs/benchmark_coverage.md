@@ -54,27 +54,33 @@ aliases to one manifest do not duplicate evidence. The older eight-run smoke
 manifest lacks a seed field in each entry; its explicit single-run configuration
 supplies the seed, and that origin is recorded. No seed is guessed.
 
-## 2026-10-26 snapshot
+## 2026-10-26 20:46 UTC snapshot
 
-The [coverage CSV](../experiments/benchmark_coverage_20261026.csv) and its
-[provenance](../experiments/benchmark_coverage_20261026.provenance.json) index
-444 runs from 41 manifests. All 45 targets are retained, including those with
+The [coverage CSV](../experiments/benchmark_coverage_20261026T204631Z.csv) and its
+[provenance](../experiments/benchmark_coverage_20261026T204631Z.provenance.json) index
+596 runs from 55 manifests. All 45 targets are retained, including those with
 only short integrations or queued experiments. This snapshot has no manifest
 or run-provenance errors.
 
 | Suite | Targets | Targets with any consistent method artifact at the exact paper budget |
 | --- | ---: | ---: |
-| Matrix | 3 | 1 |
+| Matrix | 3 | 3 |
 | MA-MuJoCo | 21 | 1 |
 | SMACv2 | 15 | 0 |
 | Football | 4 | 0 |
 | Predator–Prey | 2 | 2 |
 
-This is **four targets with budget-level artifacts, not four reproduced targets**.
-It includes unsuccessful matrix and Prey outcomes. The two completed 10M BPPO
-HalfCheetah seeds remain development evidence; their third seed and matched
-baselines were unfinished at this snapshot. Independent final confirmation and
-full benchmark coverage remain outstanding.
+These six targets have evidence at the specified training budget. That count
+does not establish successful reproduction: it includes the failed AgentMixer
+Climbing criterion and unsuccessful Prey outcomes. Both BPTA matrix games now
+have complete independent configuration checks, with matched AR-PPO controls
+also near the ceilings. The three completed 10M BPPO HalfCheetah seeds remain
+development evidence; independent native confirmation is queued. The other
+39 targets still lack a completed method run at the exact paper budget.
+
+The [earlier 444-run snapshot](../experiments/benchmark_coverage_20261026.csv)
+and its [provenance](../experiments/benchmark_coverage_20261026.provenance.json)
+remain unchanged. Snapshot counts must not be read as live scheduler state.
 
 Sixteen focused tests cover observation mismatches, identity controls, shortened
 horizons, short budgets, failed/missing runs, provenance changes, explicit older

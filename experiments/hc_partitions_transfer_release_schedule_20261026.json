@@ -1,0 +1,549 @@
+{
+  "recorded_utc": "2026-10-26T20:51:51.023890+00:00",
+  "release_plan": "experiments/hc_partitions_transfer_release_plan_20261026.json",
+  "release_plan_sha256": "4bcb98a6af5fde527c0242d5d42a94184966fa78216c3e887f71a2f9cb04e253",
+  "before": {
+    "21214776_0": {
+      "JobId": "21214777",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "0",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212297_0(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    },
+    "21214776_1": {
+      "JobId": "21214776",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "1",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212297_1(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214777 ArrayJobId=21214776 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21212297_0(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214776 ArrayJobId=21214776 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21212297_1(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "hold",
+        "21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "hold",
+        "21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "sbatch",
+        "--hold",
+        "--parsable",
+        "--dependency=afterany:21212297",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+      ],
+      "returncode": 0,
+      "stdout": "21220995",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21220995_0",
+        "Dependency=afterany:21212297_0"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21220995_1",
+        "Dependency=afterany:21212297_1"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21220995_2",
+        "Dependency=afterany:21220995_0"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21220995_3",
+        "Dependency=afterany:21220995_1"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21214776_0",
+        "Dependency=afterany:21220995_2"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "update",
+        "JobId=21214776_1",
+        "Dependency=afterany:21220995_3"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220996 ArrayJobId=21220995 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21212297_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220997 ArrayJobId=21220995 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21212297_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_1.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_2"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220998 ArrayJobId=21220995 ArrayTaskId=2 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21220995_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_2.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_2.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_3"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220995 ArrayJobId=21220995 ArrayTaskId=3 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21220995_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_3.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_3.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214777 ArrayJobId=21214776 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21220995_2(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214776 ArrayJobId=21214776 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21220995_3(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "release",
+        "21220995"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "release",
+        "21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "release",
+        "21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220996 ArrayJobId=21220995 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248727 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21212297_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_0.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220997 ArrayJobId=21220995 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248727 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21212297_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_1.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_2"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220998 ArrayJobId=21220995 ArrayTaskId=2 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248727 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21220995_0(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_2.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_2.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21220995_3"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21220995 ArrayJobId=21220995 ArrayTaskId=3 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-partitions UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248727 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21220995_1(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-26T22:51:51 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T22:51:51 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2258301 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_3.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/slurm_21220995_3.out TresPerTask=cpu=1",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_0"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214777 ArrayJobId=21214776 ArrayTaskId=0 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21220995_2(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_0.out TresPerTask=cpu=2",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21214776_1"
+      ],
+      "returncode": 0,
+      "stdout": "JobId=21214776 ArrayJobId=21214776 ArrayTaskId=1 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc-confirm UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=248726 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21220995_3(unfulfilled) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=18:00:00 TimeMin=N/A SubmitTime=2026-10-26T16:05:29 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-26T16:05:29 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2563007 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=8G,node=1,billing=2 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch SubmitLine=sbatch --parsable --hold --job-name=bpta-agentmixer-hc-confirm --dependency=afterany:21212297 /scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/slurm_21214776_1.out TresPerTask=cpu=2",
+      "stderr": ""
+    }
+  ],
+  "job_id": "21220995",
+  "verified_held": {
+    "21220995_0": {
+      "JobId": "21220996",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "0",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21212297_0(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21220995_1": {
+      "JobId": "21220997",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "1",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21212297_1(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21220995_2": {
+      "JobId": "21220998",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "2",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21220995_0(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21220995_3": {
+      "JobId": "21220995",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "3",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21220995_1(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21214776_0": {
+      "JobId": "21214777",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "0",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21220995_2(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    },
+    "21214776_1": {
+      "JobId": "21214776",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "1",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21220995_3(unfulfilled)",
+      "Priority": "0",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    }
+  },
+  "chains": {
+    "A0": [
+      "21212297_0",
+      "21220995_0",
+      "21220995_2",
+      "21214776_0"
+    ],
+    "A1": [
+      "21212297_1",
+      "21220995_1",
+      "21220995_3",
+      "21214776_1"
+    ]
+  },
+  "resource_proof": "Every new task extends one of the two existing A chains;B0/B1 remain serial. Array cap2;four project workers maximum. Native gate passed before release.",
+  "after_release": {
+    "21220995_0": {
+      "JobId": "21220996",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "0",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212297_0(unfulfilled)",
+      "Priority": "248727",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21220995_1": {
+      "JobId": "21220997",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "1",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212297_1(unfulfilled)",
+      "Priority": "248727",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21220995_2": {
+      "JobId": "21220998",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "2",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21220995_0(unfulfilled)",
+      "Priority": "248727",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21220995_3": {
+      "JobId": "21220995",
+      "ArrayJobId": "21220995",
+      "ArrayTaskId": "3",
+      "JobName": "bpta-agentmixer-hc-partitions",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21220995_1(unfulfilled)",
+      "Priority": "248727",
+      "NumCPUs": "1",
+      "MinMemoryNode": "2G",
+      "TimeLimit": "00:30:00",
+      "Requeue": "0",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch"
+    },
+    "21214776_0": {
+      "JobId": "21214777",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "0",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21220995_2(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    },
+    "21214776_1": {
+      "JobId": "21214776",
+      "ArrayJobId": "21214776",
+      "ArrayTaskId": "1",
+      "JobName": "bpta-agentmixer-hc-confirm",
+      "UserId": "liz23(3278648)",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21220995_3(unfulfilled)",
+      "Priority": "248726",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "TimeLimit": "18:00:00",
+      "Requeue": "1",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_confirmation10m_20261026T135643Z/submit.sbatch"
+    }
+  }
+}

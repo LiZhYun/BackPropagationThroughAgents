@@ -104,3 +104,11 @@ pilots are frozen but remain unsubmitted until correctness/runtime/memory
 checks pass. All methods and both partitions remain declared, with no
 early-peak selection. Full10M runs, independent training seeds and AgentMixer
 coverage remain required. See the [study](../docs/halfcheetah_partition_transfer.md).
+
+All four native checks subsequently passed:16raw evaluation episodes,12full
+updates,120seconds and0.49GiB peak memory. Job21220995 releases the four
+500k pilots,one run/task,1CPU/2GiB and30minutes,no requeue. A0 takes tasks0→2
+and A1 takes1→3,between matching Ant/Walker and pending2×3 confirmation
+workers. The measured slowest estimate is20.87minutes including50%margin.
+See the [release plan](../experiments/hc_partitions_transfer_release_plan_20261026.json).
+The four-worker ceiling and frozen confirmation configurations remain fixed.

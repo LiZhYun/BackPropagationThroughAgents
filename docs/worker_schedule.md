@@ -1,10 +1,10 @@
 # Recorded worker schedule
 
 This page retains successive scheduling snapshots. The [latest verified
-graph](#smac-learning-with-single-run-tasks-2026-10-26) appends bounded SMAC learning
-tasks while retaining four serial worker chains.
+graph](#halfcheetah-partition-pilots-released-2026-10-26) includes the native-gated
+HalfCheetah partition pilots while retaining four serial worker chains.
 
-The current queued arrays use two independent workers each. Worker `i` executes
+The initial arrays used two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
 Each run writes to its own output directory and keeps its own model and RNG.
 There is no training-data or checkpoint dependency between workers.
@@ -317,3 +317,24 @@ records the pending successor's hold, the new job's held submission, verified
 dependencies/resources and releases. The other three chains are unchanged,
 preserving four concurrent workers. The four related 500k pilots remain
 unsubmitted until the [native gate](halfcheetah_partition_transfer.md) passes.
+
+## HalfCheetah partition pilots released, 2026-10-26
+
+All four checks in `21220888_0` passed in 120 seconds, with 0.49 GiB peak memory.
+The four 500k pilots are released as `21220995`, using one configuration per
+task, one CPU/2 GiB, a measured 30-minute limit and no automatic requeue.
+The latest A-chain endings are:
+
+```text
+A0: ... → 21212297_0 → 21220995_0 → 21220995_2 → 21214776_0
+A1: ... → 21212297_1 → 21220995_1 → 21220995_3 → 21214776_1
+           Ant/Walker    HC partition pilots       HC2×3 confirmation
+```
+
+The [release receipt](../experiments/hc_partitions_transfer_release_schedule_20261026.json)
+records all six held and released dependency states. Both confirmation workers
+were pending; their source, configurations and seeds remain fixed. The B chains
+retain recurrent Prey followed by their even/odd SMAC tasks; B0 first finishes
+its entropy, earlier Prey and learned-matrix workers. Each chain remains serial,
+so at most four project workers can run. The pilot array also has its own cap
+of two concurrent tasks.

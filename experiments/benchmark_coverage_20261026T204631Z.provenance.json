@@ -1,0 +1,40 @@
+{
+  "recorded_utc": "2026-10-26T20:46:32.162941+00:00",
+  "scope": "Map recorded artifacts to paper tasks; never certify performance or release.\n\nThis standard-library report checks a small, explicit set of task fields and\nartifact provenance. It does not audit every simulator setting, learning\ncurve, metric reduction, independent seed registration, or method assumption.\n",
+  "report_path": "results/benchmark_coverage_20261026T204631Z.json",
+  "report_sha256": "457654e66a3b6ebeece215a75949504cabc4e48785dac9cfdc3a3e825a7823ef",
+  "csv_sha256": "e5ba8ef76e64797b4a00944d0f96dc08f49bf3b7ff43bf64e6bb2a19cd10febf",
+  "target_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+  "ledger_sha256": "a3243b2e3155740f4247b6370030646995762f62653afc43f10e7f8b733eb171",
+  "reporter_sha256": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+  "indexed_manifests": 55,
+  "indexed_runs": 596,
+  "benchmark_count": 45,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "suite_counts": {
+    "matrix": {
+      "targets": 3,
+      "targets_with_exact_budget_method_artifact": 3
+    },
+    "smacv2": {
+      "targets": 15,
+      "targets_with_exact_budget_method_artifact": 0
+    },
+    "mamujoco": {
+      "targets": 21,
+      "targets_with_exact_budget_method_artifact": 1
+    },
+    "grf": {
+      "targets": 4,
+      "targets_with_exact_budget_method_artifact": 0
+    },
+    "predator_prey": {
+      "targets": 2,
+      "targets_with_exact_budget_method_artifact": 2
+    }
+  },
+  "interpretation": "Counts describe indexed artifacts only. Basic task checks are not full protocol equivalence. No scores are compared, seeds pooled, or release claims certified. Incomplete is an artifact state, not a scheduler query.",
+  "csv_original_crlf_sha256": "d7aa25e25193c9a02916ee0f5582664180ae810242137892d89bb63f99f201c4",
+  "csv_record_separator": "LF; cell values unchanged from standard CSV output"
+}

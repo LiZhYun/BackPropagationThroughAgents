@@ -1,0 +1,103 @@
+{
+  "recorded_utc": "2026-10-26T20:51:07.593786+00:00",
+  "study": "experiments/hc_partitions_transfer_study_20261026.json",
+  "native_gate_audit": "experiments/hc_partitions_native_gate_20261026.json",
+  "native_gate_audit_sha256": "270b0f3cfd0c807588084dcc8f14b7ca86c786159b7e3dffb8d19a8372518d42",
+  "native_gate_job": "21220888_0",
+  "native_gate_elapsed_seconds": 120,
+  "native_gate_total_cpu": "01:56.373",
+  "native_gate_peak_kib": 510088,
+  "resource_accounting": "results/hc_partitions_learning_dispatch_20261026T205107Z/native_gate_sacct.txt",
+  "resource_accounting_sha256": "bea90371442b772e6df80496497c82ccc7b7b22727372688a76a35b7665043a4",
+  "learning_manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+  "learning_manifest_sha256": "23737dfa6093f1b6b373b4a5ed8b13e6b238b082d4183dae0d73048d7d756d64",
+  "dispatch_script": "results/hc_partitions_learning_dispatch_20261026T205107Z/submit.sbatch",
+  "dispatch_script_sha256": "d7bf95efa25a07cc742dfc21416857a93ffae0e4224ff57ba74ee6f31ac948a7",
+  "per_variant_runtime_estimates": [
+    {
+      "variant": "hc3x2_arppo",
+      "setup_and_two_episode_initial_eval_seconds": 7.032862305059098,
+      "maximum_rollout_update_seconds": 4.424252807977609,
+      "estimated_final_eval_seconds_per_episode_including_checkpoint_overhead": 1.6533698904677294,
+      "estimated_500k_seconds": 655.9599169493886,
+      "with_50pct_margin_seconds": 983.9398754240829
+    },
+    {
+      "variant": "hc3x2_bppo",
+      "setup_and_two_episode_initial_eval_seconds": 6.75644879299216,
+      "maximum_rollout_update_seconds": 4.535123058012687,
+      "estimated_final_eval_seconds_per_episode_including_checkpoint_overhead": 1.6399200250161812,
+      "estimated_500k_seconds": 668.7621924955165,
+      "with_50pct_margin_seconds": 1003.1432887432748
+    },
+    {
+      "variant": "hc6x1_arppo",
+      "setup_and_two_episode_initial_eval_seconds": 8.73123279295396,
+      "maximum_rollout_update_seconds": 4.575480945059098,
+      "estimated_final_eval_seconds_per_episode_including_checkpoint_overhead": 2.6462431449908763,
+      "estimated_500k_seconds": 734.1484533348121,
+      "with_50pct_margin_seconds": 1101.222680002218
+    },
+    {
+      "variant": "hc6x1_bppo",
+      "setup_and_two_episode_initial_eval_seconds": 8.796357428072952,
+      "maximum_rollout_update_seconds": 5.2957829820225015,
+      "estimated_final_eval_seconds_per_episode_including_checkpoint_overhead": 2.826109752524644,
+      "estimated_500k_seconds": 834.683595827315,
+      "with_50pct_margin_seconds": 1252.0253937409725
+    }
+  ],
+  "estimate_formula": "Initial setup plus2episodes +125 times the slowest observed4000-transition rollout/update +58 remaining evaluation episodes; multiply by1.5 and round up to30minutes.",
+  "resource_request": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 2,
+    "wall_minutes_per_task": 30,
+    "maximum_array_concurrency": 2,
+    "maximum_project_workers": 4,
+    "automatic_requeue": false
+  },
+  "resource_rationale": "Gate used116.373CPU-seconds over120wall-seconds with one configured numerical thread. One CPU matches observed use;2GiB exceeds four times measured peak RSS. Fixed batch size retained.",
+  "configs": [
+    {
+      "index": 0,
+      "variant": "hc3x2_arppo",
+      "config_sha256": "19617cb5f23007c28e866112d76390d41b8aa7a4e0f12a004422c0fe744dfe32",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 1,
+      "variant": "hc3x2_bppo",
+      "config_sha256": "1dcd6a9275a5f74f9e0ed2e5ac639247bf943d25232f99eb2cbb43b88eb330c7",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 2,
+      "variant": "hc6x1_arppo",
+      "config_sha256": "27c33c08565313e7d4b40480d6ddcbe934678572b31b65f7bc009dfecbbedc57",
+      "unstarted_at_release": true
+    },
+    {
+      "index": 3,
+      "variant": "hc6x1_bppo",
+      "config_sha256": "f30b37d580824f6af18701d7dd31df1e89b29a8a3450429d893208f120099373",
+      "unstarted_at_release": true
+    }
+  ],
+  "source_snapshot_modules": 19,
+  "source_and_gate_config_compatibility_verified": true,
+  "proposed_chains": {
+    "A0": [
+      "21212297_0",
+      "NEW_0",
+      "NEW_2",
+      "21214776_0"
+    ],
+    "A1": [
+      "21212297_1",
+      "NEW_1",
+      "NEW_3",
+      "21214776_1"
+    ]
+  },
+  "interpretation": "500k seed0 development transfer only; no10M or independent confirmation claim. Preserve failures; source/configs of existing experiments unchanged."
+}

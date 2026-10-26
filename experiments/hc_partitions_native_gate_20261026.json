@@ -1,0 +1,562 @@
+{
+  "recorded_utc": "2026-10-26T20:48:47.537759+00:00",
+  "scope": "Complete four-condition native partition gate. Correctness and measured resources only; no learning or benchmark claim.",
+  "manifest": "results/mujoco_hc_partitions_check12k_20261026T204220Z/manifest.json",
+  "manifest_sha256": "43fe1b9707be62f56e75ecf641d5e1c9b3a10c9d1a06964ff10d922cc6330a2c",
+  "audit_script": "results/hc_partitions_gate_audit_20261026/audit.py",
+  "audit_script_sha256": "5578691c0f935885d209f7aa3b5272b9be6d8ac4b44d192ca1889f9dd16099d2",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "6b5e64b81ba85050efe285e9813ad2c1ccfe8bede3bd074da6de139a3b4add8c",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "ddaecd74f68997c67b0577f320a61e425c6167a8d7c10651100fca64ec97998d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "frozen_source_bytes_verified": true,
+  "metric": "return_mean",
+  "raw_evaluation_episodes_verified": 16,
+  "raw_evaluation_windows_verified": 0,
+  "rollout_updates_verified": 12,
+  "runs": [
+    {
+      "algorithm": "arppo",
+      "variant": "hc3x2_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_hc_partitions_check12k_20261026T204220Z/hc3x2_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 23.48159373307135,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 7.032862305059098
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 11.364840077003464
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 15.749928296077996
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 20.174181104055606
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 23.480920884991065
+        }
+      ],
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "1a551ed06804e7a4ceb3e11241537250eb3a9d299558cf4892d8fa1c206df866",
+        "metrics.jsonl": "5c686d5de72ef24a80e67719710e4ed9e521aeade45cd830e230fca88dc2a74e",
+        "summary.json": "8ee232dfbd9d0a9d331c3ac4953f73db5160f085b6be470eb0594571b570c178",
+        "checkpoint.pt": "cdb2e5859127e622b7fb30b6858968e9cb0711daa53e52dbe76da65b7f9a1f59"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.27733319869822703,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.10739632049898859,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.19236475959860783
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "hc3x2_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_hc_partitions_check12k_20261026T204220Z/hc3x2_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 23.54656259994954,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 6.75644879299216
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 11.25606694095768
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 15.730759828933515
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 20.2658828869462
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 23.545722936978564
+        }
+      ],
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "cc774b351acb810a1fe4a260c325d96c0aa2fd0fde0612f7cd7f8f8fcfe14434",
+        "metrics.jsonl": "bf3191af51066ff63d596dcd6fddb285bf4c96c0a39399cb96943560ef6d79e5",
+        "summary.json": "367086b21ea3dae401f6e7fe133f59915dd6cb6aaa33dac5dc7bbcb0902ffe9c",
+        "checkpoint.pt": "04a59bf814c9f523b4bc6b77ead617023cc2c911272dec81051af7320596d562"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.27733319869822703,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.11523381225944321,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.1962835054788351
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "hc6x1_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_hc_partitions_check12k_20261026T204220Z/hc6x1_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 27.711787567008287,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 8.73123279295396
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.28289799101185
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 17.84142345597502
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 22.416904401034117
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 27.70939069101587
+        }
+      ],
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "f68936cf4f66e048fba20a4a56a4dd6156aeffe94c56a6b0177e295f29a05dc3",
+        "metrics.jsonl": "3fcfb78f83274f9784590b1807cc1ae285665c31536ba50dd8561e654839753b",
+        "summary.json": "a804fc153cea22b8bd0dd9f0ad3bce170d091652155e934ec0600b39b7083e68",
+        "checkpoint.pt": "3a00a547d0462b647faf663a2f1976b07aae309771b2e4b10a748236fd413afb"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.26861993819248564,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.2905767852305786,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.27959836171153213
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "hc6x1_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_hc_partitions_check12k_20261026T204220Z/hc6x1_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 29.934278012020513,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 8.796357428072952
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.86962042900268
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 18.985551489982754
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 24.281334472005256
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 29.933553977054544
+        }
+      ],
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 0,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "74a5d6e91d0f7e7b435bb8b45ac61547129f64896e4594a8afd808e04d42606c",
+        "metrics.jsonl": "9209d1631ae1244add04d1ad7b3d79b31d209acfda2a7dd29f1b03e6f22abc75",
+        "summary.json": "a26cf81712b18692575f960cdea8edda72f0f7678861dc78ec473895143d840d",
+        "checkpoint.pt": "9d150128230806cd8eba50ad0be4bd9871a81c3317941ef9d3c20abd060cea7a"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.26861993819248564,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.31437555343659696,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.2914977458145413
+    }
+  ],
+  "completed_runs": 4,
+  "declared_runs": 4,
+  "integrity_errors": [],
+  "limitations": [
+    "Raw episode/window reductions are checked; native transition rewards are not independently replayed in this audit.",
+    "Short native checks cannot estimate learned performance or training-seed uncertainty.",
+    "Full500k pilot release additionally requires scheduler resource accounting and a bounded runtime estimate."
+  ]
+}

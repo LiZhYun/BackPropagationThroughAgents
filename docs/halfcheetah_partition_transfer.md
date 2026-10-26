@@ -26,12 +26,15 @@ endpoint and complete-curve area for every declared run; do not replace an
 endpoint with an earlier peak. One development seed cannot establish an
 algorithm ranking across seeds, and 500k is below the papers' 10M budget.
 
-Before releasing those pilots, job **21220888** runs four native checks with
+Before releasing those pilots, job **21220888** ran four native checks with
 the same source and settings: 12k training transitions, three full rollouts,
 and two initial/final evaluation episodes. One worker executes all four checks
 serially, using 2 CPUs/8 GB with a 30-minute limit and no automatic requeue.
-Source/configuration, raw evaluation records, update counts, runtime and
-memory must pass before the longer jobs are submitted.
+All four checks completed successfully in 120 seconds. The
+[native audit](../experiments/hc_partitions_native_gate_20261026.json) verifies
+16 raw evaluation episodes, 12 updates, exact source/configuration, local
+dimensions and 1,000-step evaluation truncations. Peak memory was 510,088 KiB
+(about 0.49 GiB); total CPU use was 116.37 seconds.
 
 The [study record](../experiments/hc_partitions_transfer_study_20261026.json)
 and [eight-configuration preflight](../experiments/hc_partitions_transfer_preflight_20261026.json)
@@ -40,7 +43,22 @@ matrix identity job 21220500 and precedes recurrent Prey worker 21219719_1;
 the [schedule receipt](../experiments/hc_partitions_check_schedule_20261026.json)
 verifies this insertion within the existing four-worker ceiling.
 
-The 500k manifest is prepared but not submitted. Full 10M runs, independent
-final training seeds, AgentMixer comparisons and the other paper targets
-remain required. The separate 2×3 independent confirmation keeps its frozen
-source, seeds and configurations.
+## Pilot release
+
+Job **21220995** releases the four frozen 500k configurations, one per array
+task. Each requests one CPU, 2 GiB and 30 minutes, with at most two tasks active
+and no automatic requeue. The longest estimated run takes 20.87 minutes after
+a 50% margin; the memory request exceeds four times the observed peak.
+The [release plan](../experiments/hc_partitions_transfer_release_plan_20261026.json)
+retains the phase measurements, estimate formula, source/configuration checks
+and the new dispatch script's hash. The original prepared script is unchanged.
+
+Even/odd task chains follow their matching Ant/Walker worker and precede the
+pending 2×3 confirmation worker. The
+[release receipt](../experiments/hc_partitions_transfer_release_schedule_20261026.json)
+verifies all dependencies while held and after release. Four project workers
+remain the maximum; the confirmation keeps its frozen source, seeds and
+configurations. No pilot learning result is available at release.
+
+Full 10M runs, independent final training seeds, AgentMixer comparisons and
+the other paper targets remain required.
