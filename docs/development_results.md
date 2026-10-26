@@ -99,44 +99,27 @@ negative expected return when sampling their independent local policies; both
 metrics remain reported. Mode consistency concerns greedy execution and does
 not imply matching stochastic distributions or an equilibrium theorem.
 
-## Longer runs and native-clock correction
+## Completed longer runs and follow-up controls
 
-The normalized-critic HalfCheetah experiment has completed four of its five
-3M-step runs in development seed0. Final evaluation returns over ten episodes
-are3045.06 for MAPPO,3599.84 for AR-PPO,599.40 for BPPO and2607.24 for AgentMixer. BPPO's curve remains
-poor throughout: its largest recorded evaluation mean is825.37 at1M. Median
-approximate KL stays below0.002 in each of the three inspected training periods,
-and the median gradient norm stays below1. These diagnostics do not support an
-explanation based on exploding updates. They also do not establish the cause
-of poor learning from a single seed. AgentMixer's identity control is
-still running. Evidence: job21196118 and
-`results/mujoco_hc2x3_valuenorm3m_20261025T083844Z`.
+All five normalized-critic and all five combined-protocol HalfCheetah runs have
+completed 3M steps. The twelve BPPO noise controls, sixteen Prey 1M controls,
+five Football 100k pilots and five corrected SMAC 200k runs are also complete.
+The [2026-10-26 report](development_results_20261026.md) records all 48 results,
+paired noise-control changes, seed uncertainty, negative controls and next steps.
+The report's raw CSV links every row to a hashed summary and frozen manifest.
 
-At500k, the larger-batch protocol settings already gave BPPO2399.97 and
-AgentMixer2128.55, compared with684.46 and800.11 under the normalization-only
-setting. A matched five-method3M protocol follow-up therefore uses the existing
-40×100 batch, lower initial action noise, and clipped Huber normalized critic.
-This is a configuration comparison; several settings change together.
-Configuration: `configs/mujoco_hc2x3_protocol3m.json`; queued job21198090.
+The combined HalfCheetah settings give BPPO 5,228.01 versus matched AR-PPO
+4,739.43 in seed 0, but AgentMixer 2,411.14 remains below its identity control
+2,975.45. A three-development-seed BPPO/AR comparison now runs to 10M, and a
+separate three-seed experiment isolates AgentMixer's modifier scale map.
+Neither result establishes final multi-seed paper superiority.
 
-The first two200k SMAC runs both stopped after129,536 recorded transitions;
-their remaining three controls were not started. The adapter rejected an
-unexpected native restart, preserving the error instead of training on a false
-terminal transition. This is consistent with StarCraft II's cumulative clock
-limit. The [SMAC lifecycle correction](smac.md) restarts at episode boundaries
-before expiry. Native validation21198088 passed512 transitions and12 planned
-restarts; fresh matched retry21198089 has been released into the available slot.
-The original failed runs remain in
-`results/smac_terran5_learning200k_20261025T085510Z`.
+The first two 200k SMAC runs stopped at 129,536 recorded transitions on an
+unexpected native restart; three controls did not start. Those failed artifacts
+remain in `results/smac_terran5_learning200k_20261025T085510Z`. The corrected
+retry completes all five methods and logs one planned episode-boundary restart
+per training environment. Final wins are still only 0–4 out of 32 episodes.
 
-All96 short integration runs across15 MuJoCo observation variants and nine SMAC
-scenarios have completed, including the17-agent continuous cases. This verifies
-native execution and gradient shapes, not learning performance; job21196515.
-
-An additional estimator control tests whether continuous BPPO benefits from
-retaining the Gaussian noise associated with the recorded action. The
-[implementation note](bppo_continuous.md) explains the distinct scale gradient
-and the paper's underspecified trajectory/noise coupling. The existing
-fresh-noise default is preserved. Job21198169 compares both choices under both
-existing optimization settings in development seeds0–2 at500k steps each.
-Analytic and integration checks pass; no learning result is available yet.
+All 96 short integration runs across 15 MuJoCo observation variants and nine
+SMAC scenarios completed, including 17-agent continuous cases. Job 21196515
+verifies native execution and gradient shapes, not learning performance.

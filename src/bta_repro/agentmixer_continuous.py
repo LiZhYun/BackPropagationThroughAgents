@@ -47,7 +47,7 @@ class _GaussianActor(nn.Module):
 
 
 class ContinuousPolicyModifier(nn.Module):
-    """Mix local Gaussian parameters and state to adjust log standard deviations."""
+    """Mix local Gaussian parameters and state into unconstrained scale scores."""
 
     def __init__(self, state_dim: int, num_agents: int, action_dim: int, hidden_dim: int) -> None:
         super().__init__()
@@ -58,7 +58,8 @@ class ContinuousPolicyModifier(nn.Module):
             _MixerBlock(num_agents, 2 * hidden_dim),
         )
         self.log_std_head = nn.Linear(2 * hidden_dim, action_dim)
-        # A zero residual starts the centralized policy at the local policy.
+        # Shared zero initialization isolates the choice of output scale map.
+        # The residual map starts at local std; the bounded map starts at .375.
         nn.init.zeros_(self.log_std_head.weight)
         nn.init.zeros_(self.log_std_head.bias)
 
@@ -88,14 +89,18 @@ class ContinuousAgentMixerPolicy(nn.Module):
         hidden_dim: int = 64,
         *,
         initial_std: float = 1.0,
+        modifier_scale: str = "residual",
     ) -> None:
         super().__init__()
         if min(obs_dim, state_dim, num_agents, action_dim, hidden_dim) < 1:
             raise ValueError("all policy dimensions must be positive")
+        if modifier_scale not in ("residual", "bounded"):
+            raise ValueError("modifier_scale must be residual or bounded")
         self.obs_dim = obs_dim
         self.state_dim = state_dim
         self.num_agents = num_agents
         self.action_dim = action_dim
+        self.modifier_scale = modifier_scale
         self.local_actors = nn.ModuleList([
             _GaussianActor(obs_dim, action_dim, hidden_dim, initial_std=initial_std)
             for _ in range(num_agents)
@@ -120,10 +125,16 @@ class ContinuousAgentMixerPolicy(nn.Module):
             raise ValueError("state must have shape [batch, state_dim]")
         if not torch.isfinite(state).all():
             raise ValueError("state must be finite")
-        residual = self.modifier(mean, local_std, state)
-        if not torch.isfinite(residual).all():
-            raise ValueError("modifier log standard deviations must be finite")
-        joint_log_std = (local_std.log() + residual).clamp(LOG_STD_MIN, LOG_STD_MAX)
+        score = self.modifier(mean, local_std, state)
+        if not torch.isfinite(score).all():
+            raise ValueError("modifier scale scores must be finite")
+        if self.modifier_scale == "bounded":
+            # Released AgentMixer scale map, with a positive numerical floor.
+            # Local std still enters the modifier features but is not added to
+            # its output. Neither map changes the local means or their modes.
+            joint_std = (0.75 * torch.sigmoid(0.3 * score)).clamp_min(math.exp(LOG_STD_MIN))
+            return mean, joint_std
+        joint_log_std = (local_std.log() + score).clamp(LOG_STD_MIN, LOG_STD_MAX)
         return mean, joint_log_std.exp()
 
     def local_actions(self, obs: Tensor) -> Tensor:

@@ -73,6 +73,7 @@ class Config:
     observation_clip: float = 10.0
     temperature: float = 1.0
     continuous_peer_noise: str = "fresh"
+    continuous_modifier_scale: str = "residual"
     eval_seed: int = 1_000_000
     eval_episodes: int = 32
     eval_max_steps: int = 10_000
@@ -137,6 +138,12 @@ class Config:
             raise ValueError("continuous_peer_noise must be fresh or behavior")
         if self.continuous_peer_noise != "fresh" and (self.environment != "mujoco" or self.algorithm != "bppo"):
             raise ValueError("behavior peer noise requires continuous BPPO")
+        if self.continuous_modifier_scale not in ("residual", "bounded"):
+            raise ValueError("continuous_modifier_scale must be residual or bounded")
+        if self.continuous_modifier_scale != "residual" and (
+            self.environment != "mujoco" or self.algorithm != "agentmixer" or not self.modifier_enabled
+        ):
+            raise ValueError("bounded modifier scale requires continuous AgentMixer with modifier enabled")
         if isinstance(self.action_embed_dim, bool) or not isinstance(self.action_embed_dim, int) or self.action_embed_dim < 0:
             raise ValueError('action_embed_dim must be a nonnegative integer')
         if self.action_embed_dim and (self.environment == 'mujoco' or self.algorithm not in ('arppo', 'bppo')):
@@ -186,6 +193,8 @@ def environment_spec(env) -> dict:
 def make_policy(config: Config, env):
     if env.is_discrete and config.initial_std != 1.0:
         raise ValueError("nondefault initial_std requires a continuous environment")
+    if env.is_discrete and config.continuous_modifier_scale != "residual":
+        raise ValueError("bounded modifier scale requires a continuous environment")
     dimensions = (env.obs_dim, env.num_agents, env.num_actions if env.is_discrete else env.action_dim)
     scale_arguments = {} if env.is_discrete else {"initial_std": config.initial_std}
     if config.algorithm == "agentmixer":
@@ -197,6 +206,7 @@ def make_policy(config: Config, env):
                 from .agentmixer import AgentMixerPolicy as Policy
         else:
             from .agentmixer_continuous import ContinuousAgentMixerPolicy as Policy
+            scale_arguments['modifier_scale'] = config.continuous_modifier_scale
         policy = Policy(env.obs_dim, env.state_dim, env.num_agents, dimensions[-1], config.hidden_dim,
                         **scale_arguments)
         if not config.modifier_enabled:
@@ -535,6 +545,8 @@ def train(config: Config, output: Path) -> dict:
     }
     if config.algorithm == "agentmixer" and not config.modifier_enabled:
         metadata["method_variant"] = "mode_consistent_no_modifier_control"
+    if config.continuous_modifier_scale == "bounded":
+        metadata["method_variant"] = "mode_consistent_bounded_modifier"
     if config.agentmixer_correlation == 'joint':
         metadata['method_variant'] = ('experimental_joint_gap_scaling' if config.modifier_enabled
                                       else 'experimental_joint_identity_control')

@@ -14,6 +14,24 @@ The bounds are numerical and exploration choices, not constants specified by the
 
 The local actors and modifier receive PPO gradients through the centralized distribution. The modifier receives mean and standard deviation tensors without detaching them. Its hidden layers begin learning after its zero-initialized output layer changes. `local_actions(obs)` returns only local means; `sample(..., decentralized=True)` samples the local policies without invoking the modifier or using a state.
 
+## Bounded replacement scale control
+
+The default is `continuous_modifier_scale="residual"`. The simulator configuration can instead select `"bounded"`, which uses the output map audited in the [released implementation](mujoco_optimization_audit.md):
+
+```text
+score = modifier(local_mean, local_std, state)
+joint_std = max(exp(-5), 0.75 * sigmoid(0.3 * score))
+joint_mean = local_mean
+```
+
+This replaces the local standard deviations rather than adding their logarithms. Local scales still enter the modifier's features without detachment, and local means remain exactly unchanged. The upper scale bound is 0.75. The positive floor `exp(-5)` is a documented numerical safeguard; it is not present in the released sigmoid expression. At the floor, the clamp has zero gradient below the boundary.
+
+Both options use identical network weights and RNG consumption at initialization. A zero modifier head therefore gives a centralized standard deviation of exactly 0.375 for the bounded option, independently of `initial_std`. This deliberately holds initialization fixed to isolate the output map; the release used a small orthogonal head and started near, rather than exactly at, 0.375. This control does not reproduce the release's state-independent bounded local scales, recurrent architecture, or normalization. The parameter name `log_std_head` remains in saved weights for compatibility, but represents an unconstrained score under the bounded option.
+
+The bounded option requires continuous AgentMixer with the modifier enabled. A frozen zero bounded head would produce constant 0.375 exploration, not an identity modifier, so that combination is rejected. The existing identity control uses the residual map. The selected option is stored in run and checkpoint configurations and reconstructed during saved-policy evaluation.
+
+`configs/mujoco_hc2x3_modifier_scale1m.json` compares residual, bounded and identity variants at the same 1M-step budget in development seeds 0–2. Performance conclusions require those runs; the scale bounds alone do not establish better exploration or learning.
+
 ## Raw policy and actuator commands
 
 `sample` returns raw Normal actions `[batch, agents, action_dim]`, together with log probabilities summed over action coordinates `[batch, agents]`. `evaluate_actions` accepts those same raw actions and also returns coordinate-summed differential entropies. It does not sum across agents.

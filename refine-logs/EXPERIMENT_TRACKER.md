@@ -2,7 +2,7 @@
 
 | ID | Stage | Purpose | System | Status | Evidence |
 |---|---|---|---|---|---|
-| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 560 tests passed,1CUDA-onlyskip, 2026-10-25 |
+| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 583 tests passed, 1 CUDA-only skip, 2026-10-26 |
 | R002 | M0 | Pipeline smoke | MAPPO climbing, 2,048 steps | PASS | results/smoke/mappo_20261025 |
 | R003 | M0 | Pipeline smoke | AR-PPO, BPPO, AgentMixer | PASS | results/smoke/{algorithm}_20261025; 2,048 steps each |
 | R004 | M1 | Matrix development | Four algorithms × two games × seeds 0–2 | FAIL learning gate | Job21192344; all24 completed, zero final greedy optima |
@@ -32,17 +32,24 @@
 | R027 | M0 | Prey fixed-window metric and joint runner | Reward denominator, partial episodes, local execution, float64 likelihoods | PASS | Fixed-window tests plus shared-runner integration; joint event scored once, partial rewards retained |
 | R028 | M2 | Prey coordination controls | Six variants × two penalties,300k,seed0 | COMPLETED |21196038; zero-penalty projectedAR/BPPO rates2.1975/2.185; factorizedAM1.9875,jointAM1.76. Penalty−1 captures0–5% across allsix controls |
 | R029 | M2 | SMACv2 learning pilot | Five methods,terran5v5,20k,seed0 | COMPLETED |21196113; allfive methods completed with0/8 final wins; roughlyfour minutes/run |
-| R030 | M2 | Longer normalized-critic MuJoCo follow-up | Five matched HC2x3 controls,3M,seed0 | RUNNING |21196118; dependencies21196038 and21196130;2workers,4h cap based on500k timings |
+| R030 | M2 | Longer normalized-critic MuJoCo follow-up | Five matched HC2x3 controls, 3M, seed 0 | COMPLETED | 21196118; final returns MAPPO 3045.06, AR 3599.84, BPPO 599.40, AM 2607.24, identity 1359.66 |
 | R031 | M1 | Joint-distribution precision control | Two actor rates,both games,three seeds,200k | COMPLETED mixed |21196198 fast:Climbing2/3,Penalty2/3;21196199 slow:0/3both. Networks remainfloat32. Float32 fastcontrol3/3Climbing,0/3Penalty; no robust convergence |
 | R032 | Targets | Target inventory linkage |45 source targets | PASS coverage | Six original numeric values unchanged;39 digitized selectors resolve uniquely; stale matrix episode interpretation qualified. scripts/check_paper_targets.py |
 | R033 | M2 | Longer SMAC learning check | Five controls,terran5v5,200k,seed0 | FAILED runtime |21196276; MAPPO/AR-PPO stop at129,536 recorded steps on native restart; three methods not started; retry R038 |
 | R034 | M0 | Complete method/observation coverage |15 MuJoCo variants+nine SMAC scenarios×four methods | PASS integration |21196515; all96 runs×64steps complete,diagnostic MuJoCo horizon16; not performance evidence |
-| R035 | M2 | Prey rollout-batch controls | Eight variants×two penalties,1M,seed0 | RUNNING |21196495; all eight penalty0 runs complete, penalty−1 continues;100 fixed200-step evaluation windows |
-| R036 | M2 | Football learning pilot | Five methods,3v1,100k,seed0 | QUEUED |21196497; full-match score/evaluation, no early-cap zeros |
+| R035 | M2 | Prey rollout-batch controls | Eight variants × two penalties, 1M, seed 0 | COMPLETED; hard task unsolved | 21196495; penalty −1 fixed-window reward remains negative in all eight variants; entropy control captures 9/20 but return remains negative |
+| R036 | M2 | Football learning pilot | Five methods, 3v1, 100k, seed 0 | COMPLETED; zero wins | 21196497; all five final evaluations 0/20 wins despite positive shaped return |
 
 | R037 | M0 | Native SMAC process renewal | Planned restart between episodes before game-clock expiry | PASS native |34 SMAC tests;21198088 passes512 transitions and12 planned restarts with diagnostic128-tick threshold; scheduler exit0 |
-| R038 | M2 | SMAC200k retry | Five methods,seed0,native clock guard | RELEASED |21198089; worker0 uses verified R037 slot,worker1 follows Prey worker0; Football also waits for Prey to preserve cap; prior failures retained |
-| R039 | M2 | Longer MuJoCo protocol comparison | Five matched methods,3M,seed0 | QUEUED |21198090;40×100 batch,initialstd0.365529,normalized clipped Huber critic; selected from existing500k development controls |
+| R038 | M2 | SMAC 200k retry | Five methods, seed 0, native clock guard | COMPLETED | 21198089; all five pass previous failure point, each logs two planned native restarts; final wins MAPPO 1/32, AR 4/32, BPPO 0/32, AM 2/32, identity 0/32 |
+| R039 | M2 | Longer MuJoCo protocol comparison | Five matched methods, 3M, seed 0 | COMPLETED | 21198090; MAPPO 4041.12, AR 4739.43, BPPO 5228.01, AM 2411.14, identity 2975.45; BPPO +10.31% versus AR in one development seed |
 | R040 | Targets | Author metric clarification | Prey and Football5v5 figures | RECORDED |2026-10-25: “eval return”; docs/author_clarifications.md; exact reduction remains unresolved |
-| R041 | M2 | Continuous BPPO noise coupling | Fresh versus behavior noise,two settings,seeds0–2,500k | QUEUED; numerical PASS |21198169; analytic two-epoch scale gradient, default identity and full trainer integration pass; no learning evidence yet |
+| R041 | M2 | Continuous BPPO noise coupling | Two estimators × two settings × three seeds, 500k | COMPLETED; mixed | 21198169; fresh/behavior mean±SD: small batch 1844.05±1053.90 / 2853.01±343.67; combined protocol 2547.40±546.97 / 1959.81±805.73 |
 | R042 | M0 | Saved-policy evaluation | All methods,both action spaces,normalization/source provenance | PASS |560 full-suite tests; native Prey100k AgentMixer replay exactly equals original20-episode evaluation using frozen source; scripts/evaluate_simulator.py |
+
+| R043 | M2 | First paper-budget HalfCheetah comparison | BPPO and AR-PPO, 10M, seeds 0–2 | SUBMITTED | 21208906; configs/mujoco_hc2x3_bppo_ar10m.json; 32 evaluation episodes, two workers, 12h cap; development selection, not final independent seeds |
+| R044 | M2 | Continuous AgentMixer scale map | Residual, bounded replacement, identity; 1M, seeds 0–2 | SUBMITTED; numerical PASS | 21209002; configs/mujoco_hc2x3_modifier_scale1m.json; source frozen after 583 tests passed; means preserved, local features undetached, shared initialization |
+| R045 | Analysis | Completed development results | All 48 runs from six suites | RECORDED | docs/development_results_20261026.md; raw CSV with per-run summary/manifest hashes; no final superiority claim |
+| R046 | M2 | Longer SMAC learning | Five methods, terran5v5, 1M, seed 0 | QUEUED | 21209234 after 21209002; same runtime and optimizer settings as completed 200k; two workers, 12h cap |
+| R047 | M2 | Longer Football learning | Five methods, 3v1, 1M, seed 0 | QUEUED | 21209248 after 21208906; same settings as zero-win 100k pilot; two workers, 12h cap |
+| R048 | Diagnosis | Prey execution behavior | All16 final policies, original20 evaluation episodes | PASS replay; learning gap found | Frozen source reproduces every per-episode return within1e-12. Small-batch AM recent training captures83–100%, greedy evaluation0/20; repeated blocked moves. Fresh100-episode distribution diagnostic running; docs/prey_behavior_diagnosis.md |

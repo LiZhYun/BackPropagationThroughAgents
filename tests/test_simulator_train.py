@@ -146,6 +146,36 @@ def test_rejects_unsupported_continuous_peer_noise(options):
         _config(**options).validate()
 
 
+def test_bounded_modifier_reaches_trainer_and_checkpoint_evaluator(tmp_path, environments):
+    config = _config(environment='mujoco', continuous_modifier_scale='bounded', initial_std=.2,
+                     normalize_observations=True)
+    config.validate()
+    policy = training.make_policy(config, FakeEnvironment(config, 7))
+    mean, std = policy.joint_parameters(torch.zeros(4, 2, 3), torch.zeros(4, 4))
+    assert torch.equal(std, torch.full_like(std, .375))
+    output = tmp_path / 'bounded'
+    summary = training.train(config, output)
+    assert summary['status'] == 'completed'
+    metadata = json.loads((output / 'config.json').read_text())
+    assert metadata['method_variant'] == 'mode_consistent_bounded_modifier'
+    checkpoint = torch.load(output / 'checkpoint.pt', weights_only=True)
+    assert checkpoint['config']['continuous_modifier_scale'] == 'bounded'
+    replay = _checkpoint_evaluator()(output)
+    assert replay['evaluation'] == summary['final_evaluation']
+
+
+@pytest.mark.parametrize('options', [
+    {'continuous_modifier_scale': 'invalid'},
+    {'continuous_modifier_scale': True},
+    {'continuous_modifier_scale': 'bounded', 'environment': 'smac'},
+    {'continuous_modifier_scale': 'bounded', 'environment': 'mujoco', 'algorithm': 'bppo'},
+    {'continuous_modifier_scale': 'bounded', 'environment': 'mujoco', 'modifier_enabled': False},
+])
+def test_rejects_unsupported_continuous_modifier_scale(options):
+    with pytest.raises(ValueError, match='modifier.scale|modifier_scale'):
+        _config(**options).validate()
+
+
 def _checkpoint_evaluator():
     path = Path(__file__).resolve().parents[1] / 'scripts/evaluate_simulator.py'
     spec = importlib.util.spec_from_file_location('evaluate_simulator_script', path)
