@@ -17,3 +17,7 @@ The first entropy schedule (0.1 held for half the budget, then decayed to 0.01) 
 The [experimental joint modifier](agentmixer_joint.md) is tested separately with a matched faster-modifier factorized control. It preserves the same local greedy execution rule, but changes the centralized distribution from a product to an exactly normalized joint distribution. It has independent invariant tests and is recorded under `experimental_joint_gap_scaling`; it does not inherit the publication's convergence claims.
 
 Both projected-input controls subsequently completed: jobs21192609 and21192611, with initial entropy coefficients0.1 and0.3 respectively. AR-PPO and BPPO reached the greedy optimum on both games in all three seeds, within100k decisions. This validates an effective shared architecture/exploration setting; it does not establish an advantage of peer feedback, since the matched AR-PPO baseline also succeeded. Learning curves and independent seeds remain necessary for a sample-efficiency or reliability claim.
+
+The [next validation studies](matrix_confirmation.md) freeze ten unused seeds
+at 100k and a separate three-seed development extension to the 1M paper budget.
+Their selection, metrics and reporting rules are recorded before launch.
