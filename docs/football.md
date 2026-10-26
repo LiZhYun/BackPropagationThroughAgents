@@ -16,6 +16,10 @@ The native clock starts at −1. A full 5v5 match therefore takes 3,001 API step
 for its configured 3,000 ticks. Academy scenarios can end earlier on possession,
 score or out-of-play events. We preserve the engine's ending unchanged.
 
+The [rollout and optimizer audit](football_optimization_audit.md) compares the
+initial learning pilot with the accepted settings and records the native gate
+for matched feed-forward/GRU controls using 15 epochs and two minibatches.
+
 The pinned author release uses `simple115v2`, no frame stack, and
 `scoring,checkpoints` rewards. Each actor receives its own115-dimensional vector.
 Training uses the sum of rewards across controlled players, matching the legacy

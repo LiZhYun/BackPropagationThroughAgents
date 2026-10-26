@@ -134,12 +134,12 @@ intervals, retain failures, and do not replace seeds or select earlier peaks.
 The [preflight](../experiments/matrix_confirmation1m_preflight_20261026.json)
 has no integrity errors and retains all twenty unstarted runs. The reporter's
 37 checks include this explicit five-seed/full-budget rule and require the
-matched control to finish. No confirmation result is available yet.
+matched control to finish. The completed result is reported below.
 
-Job **21218775** uses one serial worker, one CPU, 4GB and a 60-minute cap.
+Job **21218775** completed all twenty runs on one serial worker, one CPU, 4GB and a 60-minute cap. Slurm records20m53s and443360KiB peak resident memory for the batch step.
 Development runs took 44.34–88.65 seconds each; twenty runs at the measured
 maximum would take about 29.55 minutes. The job follows entropy worker
-`21211006_1` and precedes the still-pending Prey worker `21212197_1`.
+`21211006_1` and precedes Prey worker `21212197_1`, which started after completion.
 Its [verified scheduling record](../experiments/matrix_confirmation1m_schedule_20261026.json)
 preserves the four-worker ceiling. The job was submitted held and released only
 after provenance, preflight, dependency and resource checks.
@@ -149,6 +149,31 @@ architecture differences. Both methods solved development seeds, so a special
 peer-feedback advantage is not assumed. The report still distinguishes
 configuration validation from full paper reproduction and cross-paper sample
 efficiency.
+
+## Completed independent 1M confirmation
+
+All 20 declared runs complete with valid provenance, exact budgets and no
+integrity errors. The frozen BPPO configuration criterion **passes on both
+games**: all five unused training seeds reach an optimal greedy action and at
+least 95% of the expected-return ceiling. The matched AR-PPO control also
+passes all five seeds in each game. These are separate from development and
+100k outcomes. See the [complete audit](../experiments/matrix_confirmation1m_results_20261026.json)
+and [seed-level CSV](../experiments/matrix_confirmation1m_results_20261026.csv).
+
+| Game | BPPO expected return, mean ± seed SD | AR-PPO expected return, mean ± seed SD | BPPO / AR-PPO normalized area |
+| --- | ---: | ---: | ---: |
+| Climbing | 10.999946 ± 0.000046 | 10.999945 ± 0.000041 | 10.750471 / 10.758750 |
+| Penalty | 9.999930 ± 0.000021 | 9.999930 ± 0.000048 | 9.563415 / 9.556117 |
+
+Paired endpoint bootstrap intervals include zero: Climbing
+[−0.00001869, 0.00002766], Penalty [−0.00004501, 0.00004177]. Both methods
+finish near the payoff ceilings; these results do not establish a BPPO
+advantage. Curve-area comparisons remain mixed. Each 5/5 success count has a
+Wilson 95% interval [0.5655, 1], which does not establish perfect reliability.
+
+This validates the selected reconstruction at the accepted budget and seed
+count. The historical metric and architecture qualifications above still apply;
+`paper_reproduction` remains `not_established`.
 
 ## Reporting
 

@@ -135,8 +135,8 @@ limitations. The 1M study and full paper reproduction remain separate.
 The 1M development extension also completes with all 12 runs above the threshold;
 its longer entropy schedule and reused development seeds remain separate evidence.
 A [five-seed 1M confirmation](docs/matrix_confirmation.md#independent-1m-confirmation)
-of that fixed setting is queued for both methods and games.
-[AgentMixer Climbing validation](docs/agentmixer_confirmation.md) is queued on ten
+of that fixed setting now passes: all20 runs complete, and both methods solve both games in all five seeds. Paired endpoint intervals include zero; this validates the configuration without establishing BPPO superiority.
+[AgentMixer Climbing validation](docs/agentmixer_confirmation.md) is running on ten
 unused seeds at 200k, retaining central and local execution scores separately.
 
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the

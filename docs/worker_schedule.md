@@ -1,8 +1,8 @@
 # Recorded worker schedule
 
 This page retains successive scheduling snapshots. The [latest verified
-graph](#short-diagnostics-first-2026-10-26) places short studies sequentially
-on the earlier-finishing SMAC chain, still within four concurrent workers.
+graph](#football-minibatch-integration-inserted-2026-10-26) adds the Football integration
+check before Ant/Walker while retaining four serial worker chains.
 
 The current queued arrays use two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -207,3 +207,25 @@ pending Prey worker 1 was held and rewired; both workers' resource/dependency
 checks passed before release. The [verification record](../experiments/matrix_confirmation1m_schedule_20261026.json)
 retains old and new states. A0/A1 and B0 are unchanged. At most four workers
 still run concurrently, each at most 2CPUs/8GB, and no active experiment was changed.
+
+## Football minibatch integration inserted, 2026-10-26
+
+The new native integration job `21219475` follows each matching Football worker
+and precedes Ant/Walker. The latest A chains are:
+
+```
+21208906_i → 21209248_i → 21219475_i → 21212297_i → 21214776_i
+BPPO/AR       Football      batch check   Ant/Walker    HC confirmation
+```
+
+Both integration workers request 2 CPUs/8GB for at most two hours. Each runs
+five fixed configurations serially. The job was submitted held; only the two
+pending Ant/Walker dependencies changed. All four worker dependencies, holds,
+resource requests and releases were checked and saved in the
+[scheduling proof](../experiments/football_batch_schedule_20261026.json).
+The B0/B1 chains remain as recorded in the preceding sections. Four serial
+chains still limit this project to four workers.
+
+The separate 1M Football development manifest remains prepared but unsubmitted
+until all ten integration runs pass correctness, runtime and memory gates.
+See the [optimization audit](football_optimization_audit.md).

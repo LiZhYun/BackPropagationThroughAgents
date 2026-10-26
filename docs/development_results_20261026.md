@@ -204,3 +204,27 @@ is not substituted for the final result. Positive checkpoint-shaped return does
 not establish success. BPPO, AgentMixer and its identity control are unfinished
 at this snapshot. These are one-seed development pilots below the 20M paper
 budget; no across-method superiority or reproduction claim is supported.
+
+## Completed SMAC 1M pilot, 2026-10-26
+
+All five terran 5v5 controls finish at exactly 1M decisions, training seed 0.
+The [complete audit](../experiments/smac_terran5_1m_complete_20261026.json)
+checks the frozen source bytes, configurations, versions, 19,535 finite rollout
+updates and 1,280 raw evaluation episode records. Native `battle_won` flags,
+return reductions, interaction counts, evaluation grids and final summaries
+agree. The earlier partial audit remains unchanged.
+
+| Method | Final wins / 32 episodes | Final return | Normalized win-rate curve area |
+| --- | ---: | ---: | ---: |
+| mappo | 4/32 | 9.722726 | 0.064056 |
+| arppo | 0/32 | 8.591813 | 0.035938 |
+| bppo | 6/32 | 11.611116 | 0.050775 |
+| agentmixer | 2/32 | 7.246001 | 0.067971 |
+| agentmixer_identity | 2/32 | 9.875934 | 0.056246 |
+
+BPPO has the largest final win count here, while AgentMixer has the largest
+recorded curve area. These are one-seed development observations with only
+32 evaluation episodes per checkpoint, below the 10M paper budget. They do
+not establish an algorithm advantage or a reproduced paper result. Both
+AgentMixer controls finish at 2/32 wins. Larger-batch learning still requires
+the separately frozen recurrent integration and runtime/memory checks.

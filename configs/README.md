@@ -80,3 +80,5 @@ choice is recorded separately from the historical figure labels in
 Optional simulators have private dependency locks under `environment_locks/`.
 The plotting lock belongs to a separate plotting environment. Matrix and Prey
 runs need only the core package; simulator installations are independent.
+
+The Football plans `football_3v1_batch_integration10k.json` and `football_3v1_batch1m.json` use the released50×200 rollout,15 epochs and two minibatches, with matched feed-forward/GRU controls. The native integration must pass before submitting the1M development plan; see the [protocol audit](../docs/football_optimization_audit.md).

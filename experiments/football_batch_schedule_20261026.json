@@ -1,0 +1,146 @@
+{
+  "recorded_utc": "2026-10-26T18:33:44.765868+00:00",
+  "before": {
+    "21212297_0": {
+      "JobId": "21212904",
+      "ArrayJobId": "21212297",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21209248_0(unfulfilled)",
+      "TimeLimit": "08:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259648"
+    },
+    "21212297_1": {
+      "JobId": "21212297",
+      "ArrayJobId": "21212297",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21209248_1(unfulfilled)",
+      "TimeLimit": "08:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259648"
+    }
+  },
+  "verified_while_held": {
+    "21219475_0": {
+      "JobId": "21219476",
+      "ArrayJobId": "21219475",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21209248_0(unfulfilled)",
+      "TimeLimit": "02:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21212297_0": {
+      "JobId": "21212904",
+      "ArrayJobId": "21212297",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21219475_0(unfulfilled)",
+      "TimeLimit": "08:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21219475_1": {
+      "JobId": "21219475",
+      "ArrayJobId": "21219475",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21209248_1(unfulfilled)",
+      "TimeLimit": "02:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21212297_1": {
+      "JobId": "21212297",
+      "ArrayJobId": "21212297",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21219475_1(unfulfilled)",
+      "TimeLimit": "08:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    }
+  },
+  "integration_job_id": "21219475",
+  "new_chains": [
+    [
+      "21209248_0",
+      "21219475_0",
+      "21212297_0",
+      "21214776_0"
+    ],
+    [
+      "21209248_1",
+      "21219475_1",
+      "21212297_1",
+      "21214776_1"
+    ]
+  ],
+  "resource_ceiling": "Four serial chains, at most four workers, each at most2CPU/8GB.",
+  "learning_status": "prepared_not_submitted; native integration and measured runtime/memory gates pending",
+  "verified_after_release": {
+    "21219475_0": {
+      "JobId": "21219476",
+      "ArrayJobId": "21219475",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21209248_0(unfulfilled)",
+      "TimeLimit": "02:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259649"
+    },
+    "21212297_0": {
+      "JobId": "21212904",
+      "ArrayJobId": "21212297",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21219475_0(unfulfilled)",
+      "TimeLimit": "08:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259648"
+    },
+    "21219475_1": {
+      "JobId": "21219475",
+      "ArrayJobId": "21219475",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21209248_1(unfulfilled)",
+      "TimeLimit": "02:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259649"
+    },
+    "21212297_1": {
+      "JobId": "21212297",
+      "ArrayJobId": "21212297",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21219475_1(unfulfilled)",
+      "TimeLimit": "08:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259648"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "label": "football_3v1_batch_integration10k",
+  "scope": "Native integration: one10k rollout,15 epochs,two minibatches,50 Football engines,FF/GRU matched across five methods. Finite-update,memory,timing and replay gate; no performance claim.",
+  "wall_time_minutes": 120,
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "football",
+    "env_config": {
+      "scenario": "academy_3_vs_1_with_keeper"
+    },
+    "steps": 10000,
+    "num_envs": 50,
+    "rollout_steps": 200,
+    "epochs": 15,
+    "num_minibatches": 2,
+    "hidden_dim": 64,
+    "learning_rate": 0.0005,
+    "modifier_learning_rate": 5e-05,
+    "critic_learning_rate": 0.0005,
+    "entropy_coef": 0.01,
+    "max_grad_norm": 10.0,
+    "value_coef": 1.0,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "eval_episodes": 4,
+    "eval_every_steps": 0,
+    "checkpoint_every_updates": 0,
+    "threads": 1
+  },
+  "variants": {
+    "mappo_ff": {
+      "algorithm": "mappo",
+      "recurrent_actor": false
+    },
+    "mappo_gru": {
+      "algorithm": "mappo",
+      "recurrent_actor": true
+    },
+    "arppo_ff": {
+      "algorithm": "arppo",
+      "recurrent_actor": false
+    },
+    "arppo_gru": {
+      "algorithm": "arppo",
+      "recurrent_actor": true
+    },
+    "bppo_ff": {
+      "algorithm": "bppo",
+      "recurrent_actor": false
+    },
+    "bppo_gru": {
+      "algorithm": "bppo",
+      "recurrent_actor": true
+    },
+    "agentmixer_ff": {
+      "algorithm": "agentmixer",
+      "recurrent_actor": false
+    },
+    "agentmixer_gru": {
+      "algorithm": "agentmixer",
+      "recurrent_actor": true
+    },
+    "agentmixer_identity_ff": {
+      "algorithm": "agentmixer",
+      "recurrent_actor": false,
+      "modifier_enabled": false
+    },
+    "agentmixer_identity_gru": {
+      "algorithm": "agentmixer",
+      "recurrent_actor": true,
+      "modifier_enabled": false
+    }
+  }
+}
