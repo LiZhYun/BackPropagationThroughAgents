@@ -182,3 +182,25 @@ for seed 0 is +117.68 (+2.06%); this one pair cannot establish a method advantag
 All historical comparison qualifications above remain. The
 [five-seed confirmation study](halfcheetah_confirmation.md) uses unused seeds,
 a separate evaluation stream and the exact selected source snapshot.
+
+
+## Longer Football pilot: partial 1M results
+
+The first two of five academy 3v1 runs finish at 1M decisions. The
+[partial audit](../experiments/football_3v1_1m_progress_20261026.json) verifies
+frozen source/configuration hashes, all 200 raw evaluation episodes and 2,500
+finite rollout updates. Match wins are recomputed from the native score, and
+initial/final summaries match their logged evaluations. Every declared method
+remains in the report.
+
+| Method | Final shaped return | Final wins | Elapsed seconds |
+| --- | ---: | ---: | ---: |
+| MAPPO | 0.8850 | 0/20 | 5196.92 |
+| AR-PPO | 0.7000 | 0/20 | 5348.50 |
+
+AR-PPO records one win among 20 episodes at 750,400 decisions, then returns to
+zero at the scheduled 1M endpoint. That earlier evaluation remains visible; it
+is not substituted for the final result. Positive checkpoint-shaped return does
+not establish success. BPPO, AgentMixer and its identity control are unfinished
+at this snapshot. These are one-seed development pilots below the 20M paper
+budget; no across-method superiority or reproduction claim is supported.

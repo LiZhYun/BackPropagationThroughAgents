@@ -1,0 +1,1133 @@
+{
+  "scope": "Partial one-seed Football3v1 development audit at1M; not20M paper-budget evidence. All five declarations retained.",
+  "recorded_utc": "2026-10-26T18:07:22.656955+00:00",
+  "manifest": "results/football_3v1_learning1m_20261026T084231Z/manifest.json",
+  "manifest_sha256": "f050635bb50f43b8a0f4b7093b40a585c4d0e3a59dd021a609648578b8592228",
+  "frozen_source_bytes_verified": true,
+  "runs": [
+    {
+      "algorithm": "mappo",
+      "variant": "mappo",
+      "seed": 0,
+      "output_path": "results/football_3v1_learning1m_20261026T084231Z/mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 1250,
+      "elapsed_seconds": 5196.917478966061,
+      "evaluation_environment_steps": 8783,
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": -0.32499995231628415,
+          "environment_steps": 3337
+        },
+        {
+          "steps": 250400,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.7000000476837158,
+          "environment_steps": 2306
+        },
+        {
+          "steps": 500000,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.7000000476837158,
+          "environment_steps": 2306
+        },
+        {
+          "steps": 750400,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.8850000504404306,
+          "environment_steps": 417
+        },
+        {
+          "steps": 1000000,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.8850000504404306,
+          "environment_steps": 417
+        }
+      ],
+      "final_evaluation": {
+        "count": 20,
+        "return_mean": 0.8850000504404306,
+        "return_std": 0.05871429573615116,
+        "length_mean": 20.85,
+        "terminated": 20,
+        "truncated": 0,
+        "win_rate": 0.0,
+        "win_records": 20,
+        "capture_rate": null,
+        "capture_records": 0,
+        "reward_per_environment_step": 0.04244604558467293,
+        "reward_per_step_scope": "completed_episodes_only",
+        "episodes": [
+          {
+            "episode": 0,
+            "return": 1.0000000521540642,
+            "length": 40,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 40,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 1,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 2,
+            "return": 0.8000000491738319,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 3,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 4,
+            "return": 0.9000000506639481,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 5,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 6,
+            "return": 0.8000000491738319,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 7,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 8,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 9,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 10,
+            "return": 0.8000000491738319,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 11,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 12,
+            "return": 0.8000000491738319,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 13,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 14,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 15,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 16,
+            "return": 0.9000000506639481,
+            "length": 19,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 19,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 17,
+            "return": 1.0000000521540642,
+            "length": 50,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 50,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 18,
+            "return": 0.9000000506639481,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 19,
+            "return": 0.8000000491738319,
+            "length": 16,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 16,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          }
+        ],
+        "seed": 1000000,
+        "environment_steps": 417,
+        "execution": "independent",
+        "deterministic": true
+      },
+      "software_versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "artifact_sha256": {
+        "config.json": "217893eb7a16a32532b566e359387568d7de13e9b31a0a80ce22b2e31bdefdb1",
+        "summary.json": "700dcb14d0b067d42256af782dfd11f7b491614f795ef03d994f34cf726b5210",
+        "metrics.jsonl": "63f1025d560a5cfc4a9b87d482139926ebf2a8b9f7b6450a07a865525e0dbcba",
+        "checkpoint.pt": "09f75f7f0339016dd5dad749a07f55650d739f9c958f42e0881c090de4a72dd5"
+      }
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 0,
+      "output_path": "results/football_3v1_learning1m_20261026T084231Z/arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 1000000,
+      "updates": 1250,
+      "elapsed_seconds": 5348.495060868096,
+      "evaluation_environment_steps": 7565,
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": -2.299999952316284,
+          "environment_steps": 3560
+        },
+        {
+          "steps": 250400,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.8850000504404306,
+          "environment_steps": 417
+        },
+        {
+          "steps": 500000,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.8850000504404306,
+          "environment_steps": 417
+        },
+        {
+          "steps": 750400,
+          "wins": 1,
+          "episodes": 20,
+          "return_mean": 1.7150001294910906,
+          "environment_steps": 865
+        },
+        {
+          "steps": 1000000,
+          "wins": 0,
+          "episodes": 20,
+          "return_mean": 0.7000000476837158,
+          "environment_steps": 2306
+        }
+      ],
+      "final_evaluation": {
+        "count": 20,
+        "return_mean": 0.7000000476837158,
+        "return_std": 0.0,
+        "length_mean": 115.3,
+        "terminated": 20,
+        "truncated": 0,
+        "win_rate": 0.0,
+        "win_records": 20,
+        "capture_rate": null,
+        "capture_records": 0,
+        "reward_per_environment_step": 0.006071119234030493,
+        "reward_per_step_scope": "completed_episodes_only",
+        "episodes": [
+          {
+            "episode": 0,
+            "return": 0.7000000476837158,
+            "length": 18,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 18,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 1,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 2,
+            "return": 0.7000000476837158,
+            "length": 401,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 401,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 3,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 4,
+            "return": 0.7000000476837158,
+            "length": 401,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 401,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 5,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 6,
+            "return": 0.7000000476837158,
+            "length": 401,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 401,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 7,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 8,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 9,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 10,
+            "return": 0.7000000476837158,
+            "length": 401,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 401,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 11,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 12,
+            "return": 0.7000000476837158,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 13,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 14,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 15,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 16,
+            "return": 0.7000000476837158,
+            "length": 21,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 21,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 17,
+            "return": 0.7000000476837158,
+            "length": 18,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 18,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 18,
+            "return": 0.7000000476837158,
+            "length": 401,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 401,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          },
+          {
+            "episode": 19,
+            "return": 0.7000000476837158,
+            "length": 17,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "score": [
+                0,
+                0
+              ],
+              "score_difference": 0.0,
+              "player_rewards": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "episode_limit": false,
+              "elapsed_steps": 17,
+              "native_score_reward": 0,
+              "match_won": false
+            }
+          }
+        ],
+        "seed": 1000000,
+        "environment_steps": 2306,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "software_versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "artifact_sha256": {
+        "config.json": "03e98e25e3128061bdc29c5a91f9a69900e1031a53318d055d575b3c37fe65f9",
+        "summary.json": "23fa5c0db732924f1b6ac5f891673e0dfe56b5b0c6edb2caf8dc6d02e362586a",
+        "metrics.jsonl": "3164ef67617de8d529d8243cc951b751ecbd1679aa390d3467851f93d7fc563b",
+        "checkpoint.pt": "b50eba09c4af57bddf00a7f65f8b039fd89db2f305cc630797573b0d29e80f21"
+      }
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 0,
+      "output_path": "results/football_3v1_learning1m_20261026T084231Z/bppo_seed0",
+      "status": "unfinished",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer",
+      "seed": 0,
+      "output_path": "results/football_3v1_learning1m_20261026T084231Z/agentmixer_seed0",
+      "status": "unfinished",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "output_path": "results/football_3v1_learning1m_20261026T084231Z/agentmixer_identity_seed0",
+      "status": "not_started",
+      "eligible": false
+    }
+  ],
+  "raw_evaluation_episodes_verified": 200,
+  "rollout_updates_verified": 2500,
+  "limits": [
+    "Positive checkpoint-shaped return does not establish a scored goal or match win.",
+    "Repeated evaluation checkpoints are not independent training seeds and are not pooled into a success estimate.",
+    "Use final scheduled endpoints; the earlier AR-PPO win is retained, not selected as the final score."
+  ],
+  "completed_runs": 2
+}
