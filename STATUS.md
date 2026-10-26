@@ -21,6 +21,7 @@ Full reproduction and performance beyond the papers are not yet established.
 
 ## Experiment evidence
 
+- The artifact-coverage reporter indexes 444 runs from 41 manifests, including all 45 targets, with no source/configuration errors in the recorded snapshot. Only four targets have exact paper-budget method artifacts; this includes unsuccessful outcomes and establishes no reproduction success. Sixteen focused report checks pass. See `docs/benchmark_coverage.md`.
 - Source inventory covers 45 tasks: 39 digitized plot targets with reading uncertainty and six numeric AgentMixer SMAC values. Historical aggregation ambiguities remain explicit.
 - Projected AR-PPO and BPPO solve both matrix games in all three development seeds. Their matched success does not establish a peer-feedback advantage.
 - Joint AgentMixer with faster actor updates solves Climbing in all three development seeds at200k but fails Penalty. The faster float64 control solves2/3 seeds in each game; the slower float64 control solves0/3 in both. No robust convergence claim.

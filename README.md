@@ -63,17 +63,20 @@ Saved simulator policies can be evaluated with
 The command restores observation preprocessing and checks source hashes; see
 the [checkpoint replay instructions](docs/simulator_training.md#evaluate-a-saved-policy).
 
-Two read-only reports need only Python's standard library:
+Three read-only reports need only Python's standard library:
 
 ```bash
 python scripts/report_progress.py
 python scripts/check_paper_targets.py
+python scripts/report_benchmark_coverage.py
 ```
 
 The first reports all declared runs in recent manifests, including unfinished
 and failed runs. The second checks that all45 benchmark targets have either an
 explicit source value or a linked curve estimate; it does not certify achieved
-performance.
+performance. The third maps every target to recorded experiment artifacts,
+retaining missing runs and basic task mismatches; it does not compare scores
+or certify reproduction. See the [coverage guide](docs/benchmark_coverage.md).
 
 Full-budget learning curves, curve areas and training-seed uncertainty can be
 exported with `scripts/summarize_learning_curves.py`. Every declared seed must

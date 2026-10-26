@@ -1,0 +1,12 @@
+{
+  "scope": "Artifact coverage, not reproduction success. Basic task checks only; no performance comparisons or independent-seed audit.",
+  "report_path": "results/benchmark_coverage_20261026_complete_index.json",
+  "report_sha256": "65e50ce4da695bf3b4f18f1b3421cbe0de95938da1a5480d5c30b4e73c975983",
+  "csv_sha256": "286086898f64c7fd8bb09e1237e4ff331b151ae4de61e329db8ab663dfe42495",
+  "target_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+  "ledger_sha256": "1512a716426a787c19a5de02f2363185967a9ed0b2f5c5bf70a400046d41e529",
+  "reporter_sha256": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+  "indexed_manifests": 41,
+  "indexed_runs": 444,
+  "benchmark_count": 45
+}
