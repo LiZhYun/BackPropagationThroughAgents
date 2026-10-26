@@ -1,0 +1,51 @@
+{
+  "label": "smac_recurrent_batch_integration10k",
+  "scope": "Native integration of optional one-decision-truncated recurrent actors, all five discrete method/control variants. One full 2x5000 rollout, update and four deterministic episodes; not benchmark performance evidence.",
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "smac",
+    "env_config": {
+      "scenario": "terran_5v5",
+      "restart_game_loop": 480000
+    },
+    "steps": 10000,
+    "num_envs": 2,
+    "rollout_steps": 5000,
+    "hidden_dim": 64,
+    "epochs": 5,
+    "learning_rate": 0.0005,
+    "modifier_learning_rate": 5e-05,
+    "critic_learning_rate": 0.0005,
+    "entropy_coef": 0.01,
+    "max_grad_norm": 10.0,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "eval_episodes": 4,
+    "eval_every_steps": 0,
+    "checkpoint_every_updates": 1,
+    "threads": 1,
+    "recurrent_actor": true
+  },
+  "variants": {
+    "mappo": {
+      "algorithm": "mappo"
+    },
+    "arppo": {
+      "algorithm": "arppo"
+    },
+    "bppo": {
+      "algorithm": "bppo"
+    },
+    "agentmixer": {
+      "algorithm": "agentmixer"
+    },
+    "agentmixer_identity": {
+      "algorithm": "agentmixer",
+      "modifier_enabled": false
+    }
+  },
+  "wall_time_minutes": 60
+}

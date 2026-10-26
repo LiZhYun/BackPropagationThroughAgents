@@ -35,14 +35,15 @@ def _actor_network(input_dim: int, num_actions: int, hidden_dim: int) -> nn.Sequ
 class _ProjectedConditionalActor(nn.Module):
     """A successor owns one action projection, shared across its input slots."""
 
-    def __init__(self, obs_dim, predecessors, num_actions, hidden_dim, action_embed_dim):
+    def __init__(self, obs_dim, predecessors, num_actions, hidden_dim, action_embed_dim, actor_factory=None):
         super().__init__()
         self.obs_dim = obs_dim
         self.predecessors = predecessors
         self.num_actions = num_actions
         self.action_projection = nn.Linear(num_actions, action_embed_dim, bias=False)
         nn.init.orthogonal_(self.action_projection.weight, gain=1.0)
-        self.network = _actor_network(obs_dim + predecessors * action_embed_dim, num_actions, hidden_dim)
+        factory = _actor_network if actor_factory is None else actor_factory
+        self.network = factory(obs_dim + predecessors * action_embed_dim, num_actions, hidden_dim)
 
     def forward(self, inputs: Tensor) -> Tensor:
         preceding_actions = inputs[:, self.obs_dim :].reshape(
@@ -58,7 +59,7 @@ class AutoregressivePolicy(nn.Module):
 
     def __init__(
         self, obs_dim: int, num_agents: int, num_actions: int, hidden_dim: int = 64,
-        action_embed_dim: int = 0,
+        action_embed_dim: int = 0, *, actor_factory=None,
     ) -> None:
         super().__init__()
         if min(obs_dim, num_agents, num_actions, hidden_dim) < 1:
@@ -70,11 +71,12 @@ class AutoregressivePolicy(nn.Module):
         self.num_actions = num_actions
         self.action_embed_dim = action_embed_dim
         self.actors = nn.ModuleList()
+        factory = _actor_network if actor_factory is None else actor_factory
         for i in range(num_agents):
             actor = (
-                _ProjectedConditionalActor(obs_dim, i, num_actions, hidden_dim, action_embed_dim)
+                _ProjectedConditionalActor(obs_dim, i, num_actions, hidden_dim, action_embed_dim, actor_factory)
                 if action_embed_dim > 0 and i > 0
-                else _actor_network(obs_dim + i * num_actions, num_actions, hidden_dim)
+                else factory(obs_dim + i * num_actions, num_actions, hidden_dim)
             )
             self.actors.append(actor)
 

@@ -50,6 +50,7 @@ class Config:
     num_envs: int = 1
     rollout_steps: int = 128
     hidden_dim: int = 64
+    recurrent_actor: bool = False
     initial_std: float = 1.0
     action_embed_dim: int = 0
     agentmixer_correlation: str = 'factorized'
@@ -125,9 +126,11 @@ class Config:
                 raise ValueError(f"{name} must be finite and nonnegative")
         if not 0 <= self.clip_coef < 1 or not 0 <= self.gamma <= 1 or not 0 <= self.gae_lambda <= 1:
             raise ValueError("invalid PPO clipping, discount, or GAE coefficient")
-        for name in ("normalize_advantages", "normalize_observations", "normalize_value_targets", "modifier_enabled"):
+        for name in ("normalize_advantages", "normalize_observations", "normalize_value_targets", "modifier_enabled", "recurrent_actor"):
             if not isinstance(getattr(self, name), bool):
                 raise ValueError(f"{name} must be boolean")
+        if self.recurrent_actor and (self.environment == "mujoco" or self.agentmixer_correlation != "factorized"):
+            raise ValueError("recurrent actors currently require discrete policies without the experimental joint modifier")
         validate_value_loss_options(self.value_clip_coef, self.value_huber_delta)
         if (isinstance(self.initial_std, bool) or not isinstance(self.initial_std, (int, float))
                 or not math.isfinite(self.initial_std)
@@ -199,6 +202,8 @@ def environment_spec(env) -> dict:
 
 
 def make_policy(config: Config, env):
+    if config.recurrent_actor and (not env.is_discrete or config.agentmixer_correlation != "factorized"):
+        raise ValueError("recurrent actors require discrete policies without the experimental joint modifier")
     if env.is_discrete and config.initial_std != 1.0:
         raise ValueError("nondefault initial_std requires a continuous environment")
     if env.is_discrete and config.continuous_modifier_scale != "residual":
@@ -216,7 +221,10 @@ def make_policy(config: Config, env):
                 from .agentmixer_joint import JointAgentMixerPolicy as Policy
                 scale_arguments['distribution_float64'] = config.joint_distribution_float64
             else:
-                from .agentmixer import AgentMixerPolicy as Policy
+                if config.recurrent_actor:
+                    from .recurrent import RecurrentAgentMixerPolicy as Policy
+                else:
+                    from .agentmixer import AgentMixerPolicy as Policy
         else:
             from .agentmixer_continuous import ContinuousAgentMixerPolicy as Policy
             scale_arguments['modifier_scale'] = config.continuous_modifier_scale
@@ -227,12 +235,18 @@ def make_policy(config: Config, env):
         return policy
     if config.algorithm in ("arppo", "bppo"):
         if env.is_discrete:
-            from .bppo import AutoregressivePolicy as Policy
+            if config.recurrent_actor:
+                from .recurrent import RecurrentAutoregressivePolicy as Policy
+            else:
+                from .bppo import AutoregressivePolicy as Policy
             scale_arguments['action_embed_dim'] = config.action_embed_dim
         else:
             from .bppo_continuous import ContinuousAutoregressivePolicy as Policy
     elif env.is_discrete:
-        from .core import IndependentPolicy as Policy
+        if config.recurrent_actor:
+            from .recurrent import RecurrentIndependentPolicy as Policy
+        else:
+            from .core import IndependentPolicy as Policy
     else:
         from .core import ContinuousIndependentPolicy as Policy
     return Policy(*dimensions, hidden_dim=config.hidden_dim, **scale_arguments)
@@ -327,9 +341,11 @@ class EpisodeStatistics:
 
 
 @torch.no_grad()
-def _evaluation_action(policy, config, env, observation):
+def _evaluation_action(policy, config, env, observation, memory=None):
     parameter = next(policy.parameters())
     obs = torch.as_tensor(observation['obs'], device=parameter.device, dtype=parameter.dtype).unsqueeze(0)
+    if config.recurrent_actor:
+        obs = policy.pack_observations(obs, memory)
     available = None
     if env.is_discrete:
         available = torch.as_tensor(
@@ -341,7 +357,8 @@ def _evaluation_action(policy, config, env, observation):
         action, _ = policy.sample(obs, available_actions=available, deterministic=True)
     else:
         action, _ = policy.sample(obs, deterministic=True)
-    return action[0].cpu().numpy().copy()
+    next_memory = policy.advance_memory(obs) if config.recurrent_actor else None
+    return action[0].cpu().numpy().copy(), next_memory
 
 
 @torch.no_grad()
@@ -375,10 +392,11 @@ def evaluate_fixed_windows(policy, config: Config, expected_spec=None, normalize
                     if expected_spec is not None and environment_spec(env) != expected_spec:
                         raise ValueError('fixed-window environment differs from training')
                     observation, _ = env.reset()
+                    memory = None
                     total, partial_return, partial_steps = 0.0, 0.0, 0
                     completed, captures, timeouts = 0, 0, 0
                     for step in range(config.eval_window_steps):
-                        action = _evaluation_action(policy, config, env, observation)
+                        action, memory = _evaluation_action(policy, config, env, observation, memory)
                         observation, reward, terminated, truncated, info = env.step(action)
                         if not np.isscalar(reward) or not np.isfinite(reward):
                             raise ValueError('fixed-window reward must be a finite scalar')
@@ -388,6 +406,7 @@ def evaluate_fixed_windows(policy, config: Config, expected_spec=None, normalize
                         partial_return += float(reward)
                         partial_steps += 1
                         if terminated or truncated:
+                            memory = None
                             completed += 1
                             captures += int(bool(info.get('capture_success', False)))
                             timeouts += int(truncated)
@@ -437,9 +456,10 @@ def evaluate(policy, config: Config, expected_spec: dict | None = None, normaliz
                 statistics = EpisodeStatistics()
                 for episode in range(config.eval_episodes):
                     observation, _ = env.reset()
+                    memory = None
                     episode_return = 0.0
                     for length in range(1, config.eval_max_steps + 1):
-                        action = _evaluation_action(policy, config, env, observation)
+                        action, memory = _evaluation_action(policy, config, env, observation, memory)
                         observation, reward, terminated, truncated, info = env.step(action)
                         if not np.isscalar(reward) or not np.isfinite(reward):
                             raise ValueError("evaluation reward must be a finite scalar")
@@ -533,7 +553,13 @@ def train(config: Config, output: Path) -> dict:
         "source_sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in sorted(Path(__file__).parent.glob("*.py"))},
         "created_utc": datetime.now(timezone.utc).isoformat(),
-        "scope": "feedforward simulator experiment; benchmark reproduction requires matched budgets and multiple seeds",
+        "scope": "simulator experiment; benchmark reproduction requires matched budgets and multiple seeds",
+        "actor_memory": {"enabled": config.recurrent_actor, "type": "GRUCell" if config.recurrent_actor else None,
+                         "hidden_dim": config.hidden_dim if config.recurrent_actor else 0,
+                         "gradient_chunk_length": 1 if config.recurrent_actor else None,
+                         "incoming_state": "frozen rollout memory" if config.recurrent_actor else None,
+                         "reset_on": "environment termination or truncation" if config.recurrent_actor else None,
+                         "critic_recurrent": False},
         "training_environment_seed_scheme": ENVIRONMENT_SEED_SCHEME,
         "training_environment_seeds": environment_seeds,
         "evaluation_environment_seed": config.eval_seed,

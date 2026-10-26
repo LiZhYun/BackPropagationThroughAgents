@@ -127,6 +127,7 @@ class AgentMixerPolicy(nn.Module):
         num_actions: int,
         hidden_dim: int = 64,
         log_scale_bound: float | None = None,
+        *, actor_factory=None,
     ) -> None:
         super().__init__()
         if min(obs_dim, state_dim, num_agents, num_actions, hidden_dim) < 1:
@@ -139,7 +140,7 @@ class AgentMixerPolicy(nn.Module):
             raise ValueError("log_scale_bound must be in (0, 8]")
         self.log_scale_bound = log_scale_bound
         self.local_actors = nn.ModuleList([
-            nn.Sequential(
+            actor_factory(obs_dim, num_actions, hidden_dim) if actor_factory is not None else nn.Sequential(
                 nn.Linear(obs_dim, hidden_dim),
                 nn.Tanh(),
                 nn.Linear(hidden_dim, hidden_dim),
@@ -148,7 +149,7 @@ class AgentMixerPolicy(nn.Module):
             )
             for _ in range(num_agents)
         ])
-        for actor in self.local_actors:
+        for actor in self.local_actors if actor_factory is None else ():
             for layer in actor:
                 if isinstance(layer, nn.Linear):
                     nn.init.orthogonal_(layer.weight, gain=math.sqrt(2))

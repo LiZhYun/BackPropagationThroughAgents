@@ -52,6 +52,10 @@ Matrix training uses one-step episodes and reports reward per joint environment 
 
 The [shared simulator guide](docs/simulator_training.md) connects these policies to [temporal rollout collection](docs/runner.md). Continuous variants use explicit Gaussian vector events. Optional simulators have separate setup instructions: [SMACv2](docs/smac.md), [legacy MA-MuJoCo](docs/mujoco_setup.md) and [Football](docs/football.md). [Predator–Prey](docs/predator_prey_protocol.md) needs only the core dependencies. Optional engines are not needed for numerical tests or matrix games.
 
+Discrete simulator runs can enable [private recurrent actor memory](docs/recurrent_actors.md)
+with `recurrent_actor: true`. The default remains feed-forward; the guide states
+the one-decision gradient truncation and differences from the released networks.
+
 [Matrix development notes](docs/matrix_development.md) retain negative results and explain subsequent controls. The [two-agent joint modifier](docs/agentmixer_joint.md) is an experimental correlated redesign with exact mode-preservation checks; it is not silently substituted for the factorized AgentMixer reference.
 
 [Simulator development results](docs/development_results.md) report the completed

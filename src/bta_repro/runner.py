@@ -1,4 +1,4 @@
-"""Composable synchronous rollouts and updates for feed-forward MARL policies.
+"""Composable synchronous rollouts and updates for MARL policies.
 
 Environment adapters own simulator details and physical action clipping. This
 module owns rollout boundaries, terminal-observation bootstrapping, and a
@@ -36,11 +36,12 @@ class RolloutBatch(Batch):
 class ObservationCarry(list):
     """List of next observations, retaining unfinished episode accounting."""
 
-    def __init__(self, observations, episode_returns, episode_lengths, environment_ids):
+    def __init__(self, observations, episode_returns, episode_lengths, environment_ids, *, policy_memory=None):
         super().__init__(observations)
         self.episode_returns = list(episode_returns)
         self.episode_lengths = list(episode_lengths)
         self.environment_ids = tuple(environment_ids)
+        self.policy_memory = policy_memory.detach().clone() if policy_memory is not None else None
 
 
 def _algorithm(algorithm: str) -> None:
@@ -157,6 +158,8 @@ def collect_rollout(
     if critic_parameter is not None and (critic_parameter.device != device or critic_parameter.dtype != dtype):
         raise ValueError("Policy and critic must use the same device and dtype.")
     count = len(envs)
+    recurrent = bool(getattr(policy, "memory_dim", 0))
+    memory = None
     env_ids = tuple(id(env) for env in envs)
     if observations is None:
         current = [deepcopy(env.reset()[0]) for env in envs]
@@ -170,6 +173,11 @@ def collect_rollout(
                 raise ValueError("Observation carry belongs to a different environment list or order.")
             episode_returns = observations.episode_returns.copy()
             episode_lengths = observations.episode_lengths.copy()
+            memory = observations.policy_memory
+            if recurrent and memory is None:
+                raise ValueError("recurrent rollout carry is missing actor memory")
+            if not recurrent and memory is not None:
+                raise ValueError("feed-forward policy cannot consume recurrent actor memory")
         else:
             episode_returns, episode_lengths = [0.0] * count, [0] * count
 
@@ -180,9 +188,13 @@ def collect_rollout(
     records = []
     for _ in range(steps):
         obs, state, available, active = _stack_observations(current, spec, device, dtype)
+        if recurrent:
+            obs = policy.pack_observations(obs, memory)
         if joint_event and not active.all():
             raise ValueError('joint AgentMixer currently requires every agent to be active')
         actions, log_probs = _sample(policy, algorithm, spec[0], obs, state, available)
+        if recurrent:
+            memory = policy.advance_memory(obs)
         expected_actions = (count, spec[1]) if spec[0] else (count, spec[1], spec[4])
         if actions.shape != expected_actions or log_probs.shape != (count, 1 if joint_event else spec[1]):
             raise ValueError("Policy sample returned inconsistent action or log-probability shapes.")
@@ -228,6 +240,8 @@ def collect_rollout(
                                 "terminated": terminated[i], "truncated": truncated[i], "info": infos[i]})
                 current[i] = deepcopy(env.reset()[0])
                 episode_returns[i], episode_lengths[i] = 0.0, 0
+                if recurrent:
+                    memory[i].zero_()
 
     tensors = {key: torch.stack(values) for key, values in buffers.items() if values}
     advantages, returns = generalized_advantage(
@@ -244,7 +258,7 @@ def collect_rollout(
         values=tensors["values"], next_values=tensors["next_values"],
         terminated=tensors["terminated"], truncated=tensors["truncated"], rollout_shape=(steps, count),
     )
-    carry = ObservationCarry(current, episode_returns, episode_lengths, env_ids)
+    carry = ObservationCarry(current, episode_returns, episode_lengths, env_ids, policy_memory=memory)
     return batch, carry, records
 
 

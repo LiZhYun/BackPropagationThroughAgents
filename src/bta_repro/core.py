@@ -47,10 +47,11 @@ def masked_categorical(logits: Tensor, available_actions: Tensor | None = None) 
 
 class IndependentPolicy(nn.Module):
     """MAPPO actor reference: separate local actors and simultaneous PPO updates."""
-    def __init__(self, obs_dim, num_agents, num_actions, hidden_dim=64):
+    def __init__(self, obs_dim, num_agents, num_actions, hidden_dim=64, *, actor_factory=None):
         super().__init__()
         self.num_agents, self.num_actions = num_agents, num_actions
-        self.actors = nn.ModuleList([mlp(obs_dim, num_actions, hidden_dim) for _ in range(num_agents)])
+        factory = mlp if actor_factory is None else actor_factory
+        self.actors = nn.ModuleList([factory(obs_dim, num_actions, hidden_dim) for _ in range(num_agents)])
 
     def logits(self, obs):
         return torch.stack([actor(obs[:, i]) for i, actor in enumerate(self.actors)], dim=1)

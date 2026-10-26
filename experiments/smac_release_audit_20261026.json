@@ -1,0 +1,58 @@
+{
+  "retrieved_utc": "2026-10-26T12:57:02.505431+00:00",
+  "repository": "LiZhYun/BackPropagationThroughAgents",
+  "commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+  "capture_directory": "results/smac_release_audit_20261026",
+  "files": [
+    {
+      "path": "bta/algorithms/bta/algorithm/r_actor_critic.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/algorithms/bta/algorithm/r_actor_critic.py",
+      "sha256": "c43d9a53e7bee6981a0201ec64ff5a8e0654fd40bf4e7f327ba815515df1a013"
+    },
+    {
+      "path": "bta/algorithms/utils/mlp.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/algorithms/utils/mlp.py",
+      "sha256": "2d65285f98041599757d9d4321dfc00d5ebe2494b3aadc2cf5310ca7bdf53ec4"
+    },
+    {
+      "path": "bta/algorithms/utils/rnn.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/algorithms/utils/rnn.py",
+      "sha256": "8a5f7bc2a9263d4ebd3234e877ee305c5caae24987d39e1155fc3fe35e089eaf"
+    },
+    {
+      "path": "bta/config.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/config.py",
+      "sha256": "beb9ea1518bea6177b79368e33ae2f52370b9de12b7cd02aa9fe763fbcb38109"
+    },
+    {
+      "path": "bta/envs/starcraft2/SMACv2.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/envs/starcraft2/SMACv2.py",
+      "sha256": "66e0b110c36d11f76b1c2cd07a633d53fb5c903b05fafca21eee389dcfde4bc3"
+    },
+    {
+      "path": "bta/envs/starcraft2/SMACv2_modified.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/envs/starcraft2/SMACv2_modified.py",
+      "sha256": "ebe155f0ce269d2771168cd37f84bea98a60f8cb1df6eaf5410d663f70c9fdf1"
+    },
+    {
+      "path": "bta/scripts/temporal/smac/lumi/train_smac.sh",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/scripts/temporal/smac/lumi/train_smac.sh",
+      "sha256": "4e7efb971d78a81dcbaeccdda1834f76dbd6fba207aabdb2bf904cf43602f340"
+    },
+    {
+      "path": "bta/scripts/temporal/smac/lumi/train_smac_ar.sh",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/scripts/temporal/smac/lumi/train_smac_ar.sh",
+      "sha256": "402a6280efa33f60d6b97d55ae87fda6df4aecfbf429ba93db92ec5d9a152674"
+    },
+    {
+      "path": "bta/scripts/train/train_smac.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/scripts/train/train_smac.py",
+      "sha256": "2edd6d65a3787e056f48d6b9639432ddee55ef453d25d75321b8481595915979"
+    },
+    {
+      "path": "bta/utils/separated_buffer.py",
+      "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/utils/separated_buffer.py",
+      "sha256": "a1ba4e4f740781c27a21ed29e372fcc35af0dda4f5d97c8be5e34b7929797124"
+    }
+  ]
+}
