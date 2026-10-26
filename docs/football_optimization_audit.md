@@ -107,7 +107,7 @@ retains all ten frozen configurations and their 25-module source snapshot.
 One array task runs one configuration, using one CPU/8 GiB with a four-hour
 limit and no automatic requeue. Array concurrency is capped at two. Even/odd
 tasks form serial chains after the matching independent HalfCheetah worker,
-preserving the four-worker project ceiling. The
+within the current [eight-worker project ceiling](worker_schedule.md#eight-worker-schedule-2026-10-26). The initial
 [schedule receipt](../experiments/football_batch1m_release_schedule_20261026.json)
 verifies every task's dependencies and resource requests before release.
 

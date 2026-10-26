@@ -115,7 +115,7 @@ All recorded Football evaluation checkpoints have zero wins. Positive checkpoint
 ## Findings and next experiments
 
 1. BPPO learns much better under the combined HalfCheetah settings in seed 0; its 3M return is 10.31% above matched AR-PPO. Run both to 10M in development seeds 0–2 with 32 evaluation episodes, then assess consistency. The chosen settings are already informed by these development results.
-2. AgentMixer does not beat its identity control under the same 3M protocol. The completed 1M scale-map control below also gives no terminal mean advantage for either modifier. The next matched entropy control tests whether retaining more exploration changes learning, without changing the equal-mean mechanism.
+2. AgentMixer does not beat its identity control under the same 3M protocol. The completed 1M scale-map control below also gives no terminal mean advantage for either modifier. The completed matched entropy control below improves the bounded variant; the frozen 10M follow-up tests whether that development result persists.
 3. Gaussian noise coupling interacts with the optimization settings. Retain all outcomes; do not select behavior noise globally from its favorable small-batch result.
 4. Prey penalty −1 remains unsolved. The [frozen-policy behavior diagnosis](prey_behavior_diagnosis.md) reproduces all original evaluation returns and finds frequent blocked greedy actions despite successful recent stochastic training in two small-batch variants. The completed 1,800-episode follow-up confirms successful central sampling and poor local execution, including poor stochastic local execution. Keep both capture and reward metrics; investigate the optimization gap before changing the architecture.
 5. SMAC’s native restart correction now passes actual 200k training. A longer learning check can proceed within the measured memory footprint. Football requires longer training before interpreting its zero-win pilot as a final algorithm failure.
@@ -137,26 +137,44 @@ Relative to identity, residual has a 4.71% lower final mean but a 25.30% higher 
 
 The geometric-mean scale inferred from the final training-update Gaussian entropy is 0.0323–0.0430 for the residual policies and 0.0370–0.0434 for bounded policies. Both families substantially reduce their initial exploration scale. This is a diagnostic over PPO-update observations and epochs, not an evaluation-action variance or proof of the cause of low return.
 
-The released coefficient is zero entropy regularization. Job 21211006 tests
-coefficient 0.01 for all three variants and seeds 0–2. At the 2026-10-26
-20:34 UTC raw-log snapshot, seven of nine positive-entropy runs are complete.
-The [raw baseline audit](../experiments/hc2x3_entropy_zero_raw_audit_20261026.json)
-and [partial intervention audit](../experiments/hc2x3_entropy_positive_progress_20261026T203600Z.json)
-verify 800 evaluation episodes and 4,000 updates across 16 completed runs.
-The [pairing check](../experiments/hc2x3_entropy_pairing_progress_20261026T203600Z.json)
-confirms that each declared pair differs only in entropy coefficient. Shared
-training modules are byte-identical; the later snapshot adds an unused
-reporting module. Every seed remains declared, and no complete-study aggregate
-is emitted until all 18 runs are valid.
+The released coefficient is zero entropy regularization. The completed
+coefficient-0.01 intervention uses the same three variants and seeds 0–2.
+The [complete comparison](../experiments/hc2x3_entropy_comparison_complete_20261026.json)
+and [verification](../experiments/hc2x3_entropy_complete_verification_20261026.json)
+cover all 18 runs, 900 raw evaluation episodes and 4,500 finite updates.
+Within each variant, paired configurations differ only in entropy coefficient;
+common training source is byte-identical, with an unused reporting module
+added in the later snapshot. Earlier partial audits remain unchanged.
 
-The analysis will compare paired final returns, complete-curve areas and the
-geometric-mean Gaussian scale from the final training update, retaining the
-identity control at each entropy setting. These are three-seed development
-comparisons at 1M, below the archived 10M budget. The analysis was prepared
-after partial results existed and is not a preregistered success test. The
-residual default remains unchanged. The [completed 10M BPPO/AR development
-comparison](halfcheetah_confirmation.md) and its queued independent confirmation
-are separate evidence.
+| Entropy coefficient | Variant | Final return, mean ± sample SD | Normalized curve area, mean ± sample SD |
+| --- | --- | ---: | ---: |
+| 0 | Residual | 2722.35 ± 291.72 | 1990.36 ± 203.79 |
+| 0 | Bounded | 2546.83 ± 60.04 | 1609.44 ± 90.11 |
+| 0 | Identity | 2856.95 ± 566.15 | 1588.42 ± 248.00 |
+| 0.01 | Residual | 2770.30 ± 159.66 | 1673.57 ± 52.45 |
+| 0.01 | Bounded | 3515.88 ± 238.38 | 1813.75 ± 262.41 |
+| 0.01 | Identity | 2812.05 ± 605.42 | 1495.84 ± 267.68 |
+
+Entropy regularization increases bounded-modifier endpoint return by 969.05
+and curve area by 204.31 on average, with both improvements in all three
+paired seeds. Its effect is mixed for the other variants: residual endpoint
+changes by +47.95 but area by −316.79; identity changes by −44.90 and −92.57.
+Higher final training entropy and scale occur for all variants, so preserving
+exploration does not uniformly improve return. Seed-level data are in the
+[CSV](../experiments/hc2x3_entropy_complete_20261026.csv).
+
+At coefficient 0.01, bounded exceeds identity by 703.83 in mean endpoint
+return (three of three pairs) and 317.91 in area (two of three). This contrast
+also changes the output scale map and initial centralized standard deviation
+(0.375 versus 0.365529); it is not an isolated modifier-learning ablation.
+Residual versus identity changes only the modifier switch: mean endpoint
+−41.75 (one of three wins), mean area +177.73 (two of three).
+
+These are three-seed development comparisons at 1M, below the archived 10M
+budget. Analysis began after partial results existed. The residual package
+default remains unchanged. The [frozen nine-run 10M follow-up](agentmixer_halfcheetah10m.md)
+retains all three variants and tests whether the short-budget ranking persists.
+The [BPPO/AR study](halfcheetah_confirmation.md) remains separate evidence.
 
 ## Evidence index
 

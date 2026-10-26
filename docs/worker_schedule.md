@@ -1,8 +1,9 @@
 # Recorded worker schedule
 
 This page retains successive scheduling snapshots. The [latest verified
-graph](#football-batch-learning-released-2026-10-26) includes the native-gated
-Football learning study while retaining four serial worker chains.
+graph](#eight-worker-schedule-2026-10-26) has eight serial chains, bounded by
+16 CPUs and 64 GiB. Earlier four-worker ceilings below describe historical
+snapshots and are superseded by that dated revision.
 
 The initial arrays used two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -359,3 +360,50 @@ still limit this project to four concurrent workers. The
 [runtime plan](../experiments/football_batch1m_release_plan_20261026.json)
 includes the complete-match evaluation allowance and preserves the original
 source/configurations. This remains development work below the 20M paper budget.
+
+
+## AgentMixer 10M submission, 2026-10-26
+
+Job21221384 first entered the A chains between independent HalfCheetah and
+Football learning, with even/odd task chains. The
+[submission receipt](../experiments/hc2x3_agentmixer10m_schedule_20261026.json)
+retains that initial four-worker arrangement. The following revision supersedes
+its scheduling dependencies; frozen source, configurations and budgets remain
+unchanged.
+
+## Eight-worker schedule, 2026-10-26
+
+The initial four-worker pilot ceiling is revised to **eight workers**, each
+at most two CPUs and 8 GiB: at most **16 CPUs and 64 GiB** for this project.
+This autonomous scheduling decision uses the user's standing authorization
+to continue low-risk local work; the user did not separately request eight
+workers. It follows completed native correctness/resource gates and the full
+entropy comparison. The CPU partitions reported 2,620 idle CPUs in the saved
+capacity snapshot. No new experimental run or training budget is added.
+
+The [prepared change](../experiments/eight_worker_schedule_plan_20261026.json)
+and [verified receipt](../experiments/eight_worker_schedule_verified_20261026.json)
+record all38 jobs,30 serial edges and six changed pending heads. Those heads
+were held while ownership, frozen readiness records, every edge, array caps
+and unchanged per-task requests were verified, then released. Active jobs
+and the other reproduction were untouched. The four newly independent roots
+are ready because their scientific gates have already completed; their former
+predecessors were scheduling constraints.
+
+| Chain | Root at revision | Pending successors, in order |
+| --- | --- | --- |
+| A0 | Ant/Walker `21212297_0` | HC partition `21220995_0 → _2` → HC confirmation `21214776_0` → Football `21221161_0 → _2 → _4 → _6 → _8` |
+| A1 | HC confirmation `21214776_1` | Football `21221161_1 → _3 → _5 → _7 → _9` |
+| B0 | Prey bounds `21212197_0` | Matrix learned `21220499_0` → recurrent Prey `21219719_0` |
+| B1 | Recurrent Prey `21219719_1` | None |
+| C0 | AgentMixer10M `21221384_0` | `21221384_2 → _4 → _6 → _8` |
+| C1 | AgentMixer10M `21221384_1` | `21221384_3 → _5 → _7` |
+| D0 | SMAC `21220264_0` | `21220264_2 → _4 → _6 → _8` |
+| D1 | SMAC `21220264_1` | `21220264_3 → _5 → _7 → _9` |
+
+Every arrow uses `afterany`; each chain has at most one active task. Each
+study still has an array cap of two. AgentMixer tasks use one CPU/4 GiB,
+SMAC two CPUs/8 GiB, Football one CPU/8 GiB. New jobs must fit these eight
+chains or have an explicit verified scheduling revision. No automatic retries
+or timeout-triggered restarts are introduced. Snapshot states are not live
+scheduler claims; query the recorded job IDs for current progress.

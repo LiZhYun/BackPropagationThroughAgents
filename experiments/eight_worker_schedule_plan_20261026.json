@@ -1,0 +1,141 @@
+{
+  "recorded_utc": "2026-10-26T21:37:58.722677+00:00",
+  "status": "prepared_not_applied",
+  "rationale": "The earlier four-worker ceiling was the initial pilot allocation. Native correctness/resource gates and the completed entropy comparison now support independent full-budget and larger-batch studies. Separate their scheduling-only dependencies to avoid serializing validated work; no new run or budget is added.",
+  "authorization_context": "Standing user instruction to continue autonomously and approve non-risky commands; this is a bounded scheduling change on the existing local cluster,within the isolated project.",
+  "old_project_limits": {
+    "workers": 4,
+    "maximum_cpus": 8,
+    "maximum_memory_gib": 32
+  },
+  "new_project_limits": {
+    "workers": 8,
+    "maximum_cpus": 16,
+    "maximum_memory_gib": 64,
+    "maximum_cpus_per_worker": 2,
+    "maximum_memory_gib_per_worker": 8
+  },
+  "capacity_observation": [
+    {
+      "partition": "batch-csl",
+      "availability": "up",
+      "nodes": 48,
+      "allocated_cpus": 1630,
+      "idle_cpus": 290,
+      "other_cpus": 0,
+      "total_cpus": 1920,
+      "memory_mb_per_node": 191000
+    },
+    {
+      "partition": "batch-skl*",
+      "availability": "up",
+      "nodes": 152,
+      "allocated_cpus": 4736,
+      "idle_cpus": 824,
+      "other_cpus": 520,
+      "total_cpus": 6080,
+      "memory_mb_per_node": 191000
+    },
+    {
+      "partition": "batch-milan",
+      "availability": "up",
+      "nodes": 32,
+      "allocated_cpus": 2590,
+      "idle_cpus": 1506,
+      "other_cpus": 0,
+      "total_cpus": 4096,
+      "memory_mb_per_node": 510000
+    }
+  ],
+  "validated_ready_studies": [
+    {
+      "study": "experiments/hc2x3_agentmixer10m_plan_20261026.json",
+      "study_sha256": "9b06a4f91cdb0ec0d9a639a6c0f8628b6c428818196e2316b96b52dc17dcb8b6",
+      "manifest": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/manifest.json",
+      "manifest_sha256": "643275e8836d33c092fd7072433a19e9d24dff7b78684b7583b84285e51511d5",
+      "completed_gate": "experiments/hc2x3_entropy_positive_complete_20261026.json",
+      "completed_gate_sha256": "a61bc5f821b691dd6523e9dc268ba9f9d7adc7ffc6aa945f5099ad4a67f9f7f7",
+      "declared_unstarted_runs": 9
+    },
+    {
+      "study": "experiments/smac_batch1m_release_plan_20261026.json",
+      "study_sha256": "7b6bd06c05337e9acb9930e9c324177f447b179c67e97595ae7445ae39b9c7a2",
+      "manifest": "results/smac_terran5_batch1m_20261026T125713Z/manifest.json",
+      "manifest_sha256": "c5785e9ab6f5b297ac1d6befc693206b40eaf464e2fc97550b40816a649f0b86",
+      "completed_gate": "experiments/smac_recurrent_integration_complete_20261026.json",
+      "completed_gate_sha256": "69abc79b1eeb6d080cbd498857aabb1952b3891c508d48a67c26ac8960a3975f",
+      "declared_unstarted_runs": 10
+    }
+  ],
+  "changes": {
+    "21221384_0": null,
+    "21221384_1": null,
+    "21220264_0": null,
+    "21220264_1": null,
+    "21221161_0": "21214776_0",
+    "21221161_1": "21214776_1"
+  },
+  "chains": {
+    "A0": [
+      "21212297_0",
+      "21220995_0",
+      "21220995_2",
+      "21214776_0",
+      "21221161_0",
+      "21221161_2",
+      "21221161_4",
+      "21221161_6",
+      "21221161_8"
+    ],
+    "A1": [
+      "21214776_1",
+      "21221161_1",
+      "21221161_3",
+      "21221161_5",
+      "21221161_7",
+      "21221161_9"
+    ],
+    "B0": [
+      "21212197_0",
+      "21220499_0",
+      "21219719_0"
+    ],
+    "B1": [
+      "21219719_1"
+    ],
+    "C0": [
+      "21221384_0",
+      "21221384_2",
+      "21221384_4",
+      "21221384_6",
+      "21221384_8"
+    ],
+    "C1": [
+      "21221384_1",
+      "21221384_3",
+      "21221384_5",
+      "21221384_7"
+    ],
+    "D0": [
+      "21220264_0",
+      "21220264_2",
+      "21220264_4",
+      "21220264_6",
+      "21220264_8"
+    ],
+    "D1": [
+      "21220264_1",
+      "21220264_3",
+      "21220264_5",
+      "21220264_7",
+      "21220264_9"
+    ]
+  },
+  "invariants": [
+    "Only pending heads change dependencies; active jobs and unrelated jobs remain unchanged.",
+    "Every chain remains serial and every study array retains cap2.",
+    "Per-task CPU,RAM,time,source,configs,seeds,steps,outputs and evaluation protocols remain unchanged.",
+    "No paid external compute,no automatic retries and no restart on observation timeout.",
+    "Actual scheduler state and all modified/unmodified child dependencies must be verified before releasing held heads."
+  ]
+}

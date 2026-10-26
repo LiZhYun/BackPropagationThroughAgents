@@ -77,9 +77,11 @@ one task would need 27.93h with the margin, exceeding the previous 24h header.
 The new dispatch layout leaves the frozen configurations and source unchanged.
 
 Even-numbered tasks follow the preceding even task; odd-numbered tasks follow
-the preceding odd task. Their first tasks wait for recurrent Prey workers
-21219719_0/1. This preserves the four project chains. Automatic requeue is
-disabled, failures remain recorded, and the six-hour estimate is not a guarantee.
+the preceding odd task. Their first tasks were initially queued behind recurrent Prey workers
+21219719_0/1. The verified [eight-worker revision](worker_schedule.md#eight-worker-schedule-2026-10-26)
+removes those scheduling-only dependencies after the native gate completed.
+These are now two independent serial chains. Automatic requeue is disabled,
+failures remain recorded, and the six-hour estimate is not a guarantee.
 
 The [native process diagnostic](simulator_runtime.md#completed-native-process-diagnostic)
 shows a modest call-time improvement under normal restart settings, with exact

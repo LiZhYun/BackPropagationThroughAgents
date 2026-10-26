@@ -1,0 +1,290 @@
+{
+  "recorded_utc": "2026-10-26T21:25:25.277331+00:00",
+  "scope": "Three-seed10M HalfCheetah2x3 development follow-up of the completed positive-entropy control:bounded modifier,identity and residual modifier. Exact selected source and training settings;100k evaluation cadence. All nine fresh runs retained. Not independent confirmation; archived plot aggregation/policy qualifications remain.",
+  "selection_evidence": "experiments/hc2x3_entropy_comparison_complete_20261026.json",
+  "selection_evidence_sha256": "a623b791aa05b8069be7eff1c04556689d35c03ab0a9c9e321cf5916a150835e",
+  "selection_verification": "experiments/hc2x3_entropy_complete_verification_20261026.json",
+  "selection_verification_sha256": "571e3f25f4d5a6edd1903f6bccd7a0af9501f9d5b8c33a3114903d5a9c36fb61",
+  "selection_rationale": "Bounded+entropy0.01 has the strongest1M method endpoints and exceeds identity in all three paired seeds. Retain residual and identity at10M to test whether the short-budget ranking persists and preserve the exact residual modifier ablation.",
+  "source_manifest": "results/mujoco_hc2x3_entropy1m_20261026T094156Z/manifest.json",
+  "source_manifest_sha256": "8d47c49ed3956cea1b236df27f90d9075dfb77cc34fea62abf5dacadd650d222",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "manifest": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/manifest.json",
+  "manifest_sha256": "643275e8836d33c092fd7072433a19e9d24dff7b78684b7583b84285e51511d5",
+  "submit_script": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/submit.sbatch",
+  "submit_script_sha256": "c20a2408a68e359d76931501b71da5d46f1b9d7efd2b061b375cb8be07171b3a",
+  "config_plan": "configs/mujoco_hc2x3_agentmixer10m.json",
+  "config_plan_sha256": "bf74bd018c6c6d969141caf6573ab7fe6dc82f662e0a4228a86b01e37704652f",
+  "training_seeds": [
+    0,
+    1,
+    2
+  ],
+  "independent_final_confirmation": false,
+  "training_budget_per_run": 10000000,
+  "evaluation": {
+    "seed": 1000000,
+    "episodes_per_checkpoint": 10,
+    "every_training_steps": 100000,
+    "expected_points_per_run": 101,
+    "execution": "deterministic local means without modifier",
+    "primary_endpoint_steps": 10000000,
+    "secondary_plot_aligned_checkpoint_steps": 9900000,
+    "training_interactions_exclude_evaluation": true
+  },
+  "analysis_rules": [
+    "All nine declared runs must be complete and valid before group or paired aggregation.",
+    "Retain failures and all seeds; no early peak replaces an endpoint and no pooling with the1M study.",
+    "Report each seed,mean,median,sample SD and complete-grid normalized curve area. Three development seeds do not provide independent final confidence intervals.",
+    "Compare bounded/residual against identity and both modifier output maps within seed. Residual/identity differs only in modifier_enabled;bounded/residual differs only in continuous_modifier_scale.",
+    "The bounded versus identity contrast also changes output map and initial central std0.375 versus0.365529; do not call it an isolated learning-switch effect."
+  ],
+  "historical_context": {
+    "benchmark_id": "agentmixer:HalfCheetah-v2_2x3",
+    "paper_scope": "appendix_commented",
+    "canonical_target_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+    "digitized_targets_sha256": "cda00a54df6a71a6609061ddefa3021bb7c27b093b0fd8c77a9b9d5a317d4b8a",
+    "paper_budget_steps": 10000000,
+    "centerline_reading_range": [
+      5000,
+      5070
+    ],
+    "last_plotted_steps_estimate": 9903999.772784911,
+    "last_plotted_steps_reading_range": [
+      9865847.96893352,
+      9942151.576636301
+    ],
+    "central_aggregation": "mean_or_median_not_resolved_from_supplied_source",
+    "caveats": [
+      "Digitized plotted centerline, not original seed-level data.",
+      "Final plotted vertex is earlier than the 10M budget; no extrapolation is performed.",
+      "Evaluation policy, smoothing and checkpoint selection are not recoverable from the figure."
+    ]
+  },
+  "per_run_runtime_estimates": [
+    {
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "observed_training_update_seconds_1m": 1478.0143641908653,
+      "observed_initial_setup_and_eval_seconds": 17.42298447806388,
+      "maximum_observed_eval_seconds_per_episode": 0.9336033495143056,
+      "estimated_10m_seconds": 15731.169975901023,
+      "estimated_seconds_with_50pct_margin": 23596.754963851534
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "observed_training_update_seconds_1m": 1319.011564831948,
+      "observed_initial_setup_and_eval_seconds": 14.016738482983783,
+      "maximum_observed_eval_seconds_per_episode": 0.8911300787003711,
+      "estimated_10m_seconds": 14095.262465502834,
+      "estimated_seconds_with_50pct_margin": 21142.89369825425
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "observed_training_update_seconds_1m": 1457.217225897126,
+      "observed_initial_setup_and_eval_seconds": 11.834539017174393,
+      "maximum_observed_eval_seconds_per_episode": 0.9342451351694763,
+      "estimated_10m_seconds": 15518.25193315791,
+      "estimated_seconds_with_50pct_margin": 23277.377899736864
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "observed_training_update_seconds_1m": 1331.2899169779848,
+      "observed_initial_setup_and_eval_seconds": 12.20146616990678,
+      "maximum_observed_eval_seconds_per_episode": 0.9053383185062558,
+      "estimated_10m_seconds": 14230.43895445601,
+      "estimated_seconds_with_50pct_margin": 21345.658431684016
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "observed_training_update_seconds_1m": 1448.1073270053603,
+      "observed_initial_setup_and_eval_seconds": 11.681519336998463,
+      "maximum_observed_eval_seconds_per_episode": 0.9517464163247495,
+      "estimated_10m_seconds": 15444.50120571535,
+      "estimated_seconds_with_50pct_margin": 23166.751808573026
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "observed_training_update_seconds_1m": 1293.9280433019157,
+      "observed_initial_setup_and_eval_seconds": 11.465424668975174,
+      "maximum_observed_eval_seconds_per_episode": 0.8881434430018998,
+      "estimated_10m_seconds": 13838.889300690033,
+      "estimated_seconds_with_50pct_margin": 20758.33395103505
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "observed_training_update_seconds_1m": 1311.4937671334483,
+      "observed_initial_setup_and_eval_seconds": 13.027509758248925,
+      "maximum_observed_eval_seconds_per_episode": 0.930354728596285,
+      "estimated_10m_seconds": 14058.319909689017,
+      "estimated_seconds_with_50pct_margin": 21087.479864533525
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "observed_training_update_seconds_1m": 1197.308959624148,
+      "observed_initial_setup_and_eval_seconds": 11.388496865984052,
+      "maximum_observed_eval_seconds_per_episode": 0.9200736586004495,
+      "estimated_10m_seconds": 12904.551751707913,
+      "estimated_seconds_with_50pct_margin": 19356.82762756187
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "observed_training_update_seconds_1m": 1305.8680626517162,
+      "observed_initial_setup_and_eval_seconds": 11.845917011145502,
+      "maximum_observed_eval_seconds_per_episode": 0.9305719416122884,
+      "estimated_10m_seconds": 14001.098485140596,
+      "estimated_seconds_with_50pct_margin": 21001.647727710893
+    }
+  ],
+  "runtime_formula": "Observed initial setup+10episodes,ten times observed summed rollout/update durations,plus1000additional evaluation episodes at the run maximum observed per-episode cost. Multiply by1.5 and round maximum up to whole hours.",
+  "resource_request": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 4,
+    "wall_hours_per_task": 7,
+    "maximum_array_concurrency": 2,
+    "maximum_project_workers": 4,
+    "automatic_requeue": false
+  },
+  "resource_rationale": "Completed entropy workers used approximately one CPU; numerical threads remain1. The4GiB request exceeds twice the measured1.44GiB peak. Fixed batch size and source retained.",
+  "configs": [
+    {
+      "index": 0,
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "config_sha256": "4f107e2bb126dcb981ae8287c948806ccec69098f2e758d61d71007de089e8ed",
+      "prior_config_sha256": "3b5476da2a4299c4575a5c7dc198f33747761310e67da1e17f6c134ba876de14",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 1,
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "config_sha256": "170003f71b49267e424292811bd939e7352d014b68bf2c0968aa7887ba604839",
+      "prior_config_sha256": "cf519dbe4de48c60d0caddc7496faeb4bed5c0c7a35181f3fbf7781f4e2c264d",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 2,
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "config_sha256": "30139335326de00f697235d942d491e6f0aaa9f69d371cd037fce397ee23ce19",
+      "prior_config_sha256": "f7bbb77ffad9667ae64ae4077b8dc1488ebf1166cd7427c2ca227093cce2e63a",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 3,
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "config_sha256": "d4a8f7a7e32fe2725f3ca1f597e3fda54de882457ebb77141b2e44627e612be4",
+      "prior_config_sha256": "f97124639aaefb7f08cabaf450c523ee2f3858c9738d4554ab742adea3d60db4",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 4,
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "config_sha256": "06c8e54ea2c562a5c4f24f1789ceb8e518179f929bbe7b52714700e27b3517da",
+      "prior_config_sha256": "41d86d4fc3a635d203be107c69e0fdb1fb042db74b8146170e4b3aea413e3e91",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 5,
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "config_sha256": "02eebe0633322ecb25f3d7c1a47f7ad0a46ffd265f44fb2bed2df1456ed70897",
+      "prior_config_sha256": "0bbfa60f78cedf063e7fdfb80a9bf935ca56e5145d3314137a1f8c47eba2a79f",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 6,
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "config_sha256": "6f9e6e17da59d6ffc8ef54035a3fa9554c2a4cbdcc0fbcef964dac75eaa886cd",
+      "prior_config_sha256": "41a640cc47d48d6b0a5d8069421e3d0aeba9dc69f48c2561b7de0ab8b8b55906",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 7,
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "config_sha256": "18fa2f2810b1629bdd240c9072234d67f3ecb26776f111b24360a861e84cf26e",
+      "prior_config_sha256": "d0347cb93bbb3f8eb51abdc54bcdfa79a7045567066c8a56c3bc8f60ceceedd0",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    },
+    {
+      "index": 8,
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "config_sha256": "dd38644328d340058ebfa2e302090ed24b85f9f9e51263ffe727005764679d74",
+      "prior_config_sha256": "a622c8475a67562d985c8dd1e0cbaffc16695b2eb62a08fe21d66329d739dea7",
+      "changed_fields": [
+        "steps",
+        "eval_every_steps"
+      ],
+      "unstarted": true
+    }
+  ],
+  "proposed_chain_position": "After matching independent HC2x3 confirmation workers21214776_i,before pending Football heads21221161_0/1;even/odd tasks form serial chains.",
+  "status": "prepared_not_submitted"
+}

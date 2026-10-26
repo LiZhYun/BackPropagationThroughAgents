@@ -1,0 +1,46 @@
+{
+  "recorded_utc": "2026-10-26T21:23:23.481159+00:00",
+  "scope": "Completed matched entropy development comparison; no independent confirmation or10M claim.",
+  "raw_audits": [
+    {
+      "path": "experiments/hc2x3_entropy_zero_raw_audit_20261026.json",
+      "sha256": "62025c81357f3cb27915995459ba350c92d4ecec5f03396df02f039477bde83b"
+    },
+    {
+      "path": "experiments/hc2x3_entropy_positive_complete_20261026.json",
+      "sha256": "a61bc5f821b691dd6523e9dc268ba9f9d7adc7ffc6aa945f5099ad4a67f9f7f7"
+    }
+  ],
+  "comparison": "experiments/hc2x3_entropy_comparison_complete_20261026.json",
+  "comparison_sha256": "a623b791aa05b8069be7eff1c04556689d35c03ab0a9c9e321cf5916a150835e",
+  "seed_table": "experiments/hc2x3_entropy_complete_20261026.csv",
+  "seed_table_sha256": "cee7a724ee6e7197a6f168b48c94aa332aeb387353518d1aa64e5337952db87e",
+  "resource_accounting": "results/hc_entropy_complete_audit_20261026/sacct.txt",
+  "resource_accounting_sha256": "9d36e0ac72f7af8287ec58f7325f84e4f579bf8eea5ad4ada01d6cdabccfa7a9",
+  "workers": [
+    {
+      "job": "21211006_0.batch",
+      "elapsed_seconds": 7284,
+      "total_cpu": "01:59:50",
+      "peak_kib": 1511176
+    },
+    {
+      "job": "21211006_1.batch",
+      "elapsed_seconds": 5352,
+      "total_cpu": "01:28:17",
+      "peak_kib": 1205636
+    }
+  ],
+  "raw_episodes_verified": 900,
+  "rollout_updates_verified": 4500,
+  "declared_runs": 18,
+  "all_runs_valid": true,
+  "all_group_means_and_sample_standard_deviations_recomputed": true,
+  "limitations": [
+    "Three development seeds; no final confidence intervals or independent confirmation.",
+    "Positive versus zero entropy is a matched one-setting intervention within each variant; only an unused reporting module differs between snapshots.",
+    "Residual versus identity differs only in modifier_enabled. Bounded versus identity also changes the scale map:bounded central scale starts0.375 versus identity local scale0.365529. Treat this as a modifier-family comparison,not an isolated learning-switch effect.",
+    "Final-update entropy/scales describe training distributions,not evaluation variance.",
+    "Analysis was prepared after partial results existed; not a preregistered success criterion."
+  ]
+}

@@ -1,0 +1,699 @@
+{
+  "recorded_utc": "2026-10-26T21:17:24.150982+00:00",
+  "scope": "Exploratory matched development comparison, three seeds at 1M; not independent final confirmation.",
+  "audit_inputs": [
+    {
+      "path": "experiments/hc2x3_entropy_zero_raw_audit_20261026.json",
+      "sha256": "62025c81357f3cb27915995459ba350c92d4ecec5f03396df02f039477bde83b"
+    },
+    {
+      "path": "experiments/hc2x3_entropy_positive_complete_20261026.json",
+      "sha256": "a61bc5f821b691dd6523e9dc268ba9f9d7adc7ffc6aa945f5099ad4a67f9f7f7"
+    }
+  ],
+  "comparison_script": "results/hc_entropy_audit_20261026T203600Z/compare.py",
+  "comparison_script_sha256": "ea65b80725f8671eb1224320a8df2f86c6b4652206d69bf51cd90b7ed4f670d0",
+  "shared_training_source_verified": true,
+  "source_difference": "Positive-entropy snapshot adds only learning_curves.py; shared modules are byte-identical and do not import the added helper.",
+  "declared_runs": 18,
+  "eligible_runs": 18,
+  "all_runs_complete": true,
+  "pairing": [
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "both_complete": true,
+      "config_sha256": [
+        "6528ccd1d5a858fcbe5c3a23b84569a93a13bbfc0eb2efa8e37d78d5aec373dc",
+        "ada599947fa4d290948978f898bae8d7d51b62a1133a26bfd468e4eced49677c"
+      ]
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "both_complete": true,
+      "config_sha256": [
+        "9fd13388b19807913e8c4e09ea870035a7749bdfe5ca18a44add3b5928136fd8",
+        "055fde53998f32a8c0df5ae219fb3f4fd443b3c11554f34315108c071fb641a5"
+      ]
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "both_complete": true,
+      "config_sha256": [
+        "f35feb51d0c299ccde7ac48aaf2ca97220fabbcef36cbf5edf992261d29fe66b",
+        "79fe577b0e3059dfdd589d074240456f15e4be562e180127d604af5ea04fe1a5"
+      ]
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "both_complete": true,
+      "config_sha256": [
+        "4ded47d36b5adbb14d9f6c77a2b357f8d7f2c31d21678af6459c0d4f8735ca5a",
+        "46e1aee924d75c24f119057f4e8a6ecb9216bb482ed06e3ff604dd597247d0d3"
+      ]
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "both_complete": true,
+      "config_sha256": [
+        "7397441302d08a82b8cb5ed614986f4e9a4f31b9e08d34eed5b14d300c58db8c",
+        "451ba9645c3a720f711e35a21a1c35785765ff2674211ee5e3eb9ae4b57f40f1"
+      ]
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "both_complete": true,
+      "config_sha256": [
+        "f733a9b5750f440ec7fbbb8fe640a42baa767f763248d37265d5a541bbc79ea7",
+        "862a57191cb9b5a46537037ef41b9667966008c8171a2c3a3a5191bd3c05c752"
+      ]
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "both_complete": true,
+      "config_sha256": [
+        "cbdd81da2df2a9b5a058e75b38321f1cdefc799300c813f970badbafe71cdef1",
+        "b685474889c850e24346c11b33476e979b37342d45bf43ac818384b986cd8daf"
+      ]
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "both_complete": true,
+      "config_sha256": [
+        "72db96f05be36d3dfb8ad7c07c89095e3a348b4daa0bffdbfc9801702709c950",
+        "6db65c9ea7e153fb1b18427976303a3f63a3bac435af15d9e4e9db3fdbc40803"
+      ]
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "both_complete": true,
+      "config_sha256": [
+        "9786a688cf6c7441e62ffd9407afcbbec19a03c0d344cf1fe86ab6bf0f903b94",
+        "0c4c5477be507d99b3c05ab6662e900d87391f1b917274c012d68d82e4024776"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "entropy_coef": 0,
+      "variant": "agentmixer_residual",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            2678.964510886556,
+            2454.7602542182735,
+            3033.339980734378
+          ],
+          "seed_count": 3,
+          "mean": 2722.354915279736,
+          "median": 2678.964510886556,
+          "sample_sd_across_training_seeds": 291.7201919286962
+        },
+        "normalized_auc": {
+          "seed_values": [
+            1919.1702544349828,
+            1831.7122448284765,
+            2220.1932046465713
+          ],
+          "seed_count": 3,
+          "mean": 1990.3585679700102,
+          "median": 1919.1702544349828,
+          "sample_sd_across_training_seeds": 203.7895876223024
+        },
+        "final_training_update_geometric_mean_scale": {
+          "seed_values": [
+            0.04304148737540458,
+            0.03229153457471851,
+            0.03415772703924146
+          ],
+          "seed_count": 3,
+          "mean": 0.03649691632978819,
+          "median": 0.03415772703924146,
+          "sample_sd_across_training_seeds": 0.005744060080378765
+        }
+      }
+    },
+    {
+      "entropy_coef": 0,
+      "variant": "agentmixer_bounded",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            2479.234185666223,
+            2593.9897856394423,
+            2567.2576396406985
+          ],
+          "seed_count": 3,
+          "mean": 2546.827203648788,
+          "median": 2567.2576396406985,
+          "sample_sd_across_training_seeds": 60.04385037135824
+        },
+        "normalized_auc": {
+          "seed_values": [
+            1514.3378493121124,
+            1693.549623156966,
+            1620.4330394398908
+          ],
+          "seed_count": 3,
+          "mean": 1609.440170636323,
+          "median": 1620.4330394398908,
+          "sample_sd_across_training_seeds": 90.1101955638432
+        },
+        "final_training_update_geometric_mean_scale": {
+          "seed_values": [
+            0.04344660729638814,
+            0.03703056484596539,
+            0.037552711659227925
+          ],
+          "seed_count": 3,
+          "mean": 0.03934329460052715,
+          "median": 0.037552711659227925,
+          "sample_sd_across_training_seeds": 0.0035631503804443255
+        }
+      }
+    },
+    {
+      "entropy_coef": 0,
+      "variant": "agentmixer_identity",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            2340.281758583574,
+            2768.398050216732,
+            3462.156035124809
+          ],
+          "seed_count": 3,
+          "mean": 2856.9452813083717,
+          "median": 2768.398050216732,
+          "sample_sd_across_training_seeds": 566.1545126480288
+        },
+        "normalized_auc": {
+          "seed_values": [
+            1464.1011764852494,
+            1427.1597569962353,
+            1873.9880179711895
+          ],
+          "seed_count": 3,
+          "mean": 1588.4163171508915,
+          "median": 1464.1011764852494,
+          "sample_sd_across_training_seeds": 248.001137800846
+        },
+        "final_training_update_geometric_mean_scale": {
+          "seed_values": [
+            0.09954549520481083,
+            0.09992796395030605,
+            0.11413237321619747
+          ],
+          "seed_count": 3,
+          "mean": 0.10453527745710478,
+          "median": 0.09992796395030605,
+          "sample_sd_across_training_seeds": 0.008313528483274494
+        }
+      }
+    },
+    {
+      "entropy_coef": 0.01,
+      "variant": "agentmixer_residual",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            2733.134987510073,
+            2632.5037517851215,
+            2945.2628291606916
+          ],
+          "seed_count": 3,
+          "mean": 2770.300522818629,
+          "median": 2733.134987510073,
+          "sample_sd_across_training_seeds": 159.65750180083327
+        },
+        "normalized_auc": {
+          "seed_values": [
+            1613.3359614604715,
+            1698.264340741893,
+            1709.1118231963233
+          ],
+          "seed_count": 3,
+          "mean": 1673.5707084662292,
+          "median": 1698.264340741893,
+          "sample_sd_across_training_seeds": 52.44602491167014
+        },
+        "final_training_update_geometric_mean_scale": {
+          "seed_values": [
+            0.26706983332268314,
+            0.16405490810351234,
+            0.15921888140141371
+          ],
+          "seed_count": 3,
+          "mean": 0.19678120760920306,
+          "median": 0.16405490810351234,
+          "sample_sd_across_training_seeds": 0.060919742014252834
+        }
+      }
+    },
+    {
+      "entropy_coef": 0.01,
+      "variant": "agentmixer_bounded",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            3593.7664605621603,
+            3705.57288261755,
+            3248.2906013143233
+          ],
+          "seed_count": 3,
+          "mean": 3515.876648164678,
+          "median": 3593.7664605621603,
+          "sample_sd_across_training_seeds": 238.38390959743296
+        },
+        "normalized_auc": {
+          "seed_values": [
+            1668.1127303961684,
+            2116.676542499723,
+            1656.4560918386244
+          ],
+          "seed_count": 3,
+          "mean": 1813.7484549115052,
+          "median": 1668.1127303961684,
+          "sample_sd_across_training_seeds": 262.4081534423168
+        },
+        "final_training_update_geometric_mean_scale": {
+          "seed_values": [
+            0.20698981303938374,
+            0.20193761904085167,
+            0.13420031717485514
+          ],
+          "seed_count": 3,
+          "mean": 0.18104258308503018,
+          "median": 0.20193761904085167,
+          "sample_sd_across_training_seeds": 0.04064516665914117
+        }
+      }
+    },
+    {
+      "entropy_coef": 0.01,
+      "variant": "agentmixer_identity",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            3251.9317753432256,
+            3062.648687989906,
+            2121.560813902083
+          ],
+          "seed_count": 3,
+          "mean": 2812.047092411738,
+          "median": 3062.648687989906,
+          "sample_sd_across_training_seeds": 605.4217516715815
+        },
+        "normalized_auc": {
+          "seed_values": [
+            1794.9986120036233,
+            1413.5825479051828,
+            1278.9477279996383
+          ],
+          "seed_count": 3,
+          "mean": 1495.842962636148,
+          "median": 1413.5825479051828,
+          "sample_sd_across_training_seeds": 267.679305502137
+        },
+        "final_training_update_geometric_mean_scale": {
+          "seed_values": [
+            0.24506949085218377,
+            0.26017520582620646,
+            0.25049075232834966
+          ],
+          "seed_count": 3,
+          "mean": 0.25191181633557996,
+          "median": 0.25049075232834966,
+          "sample_sd_across_training_seeds": 0.0076524651847353995
+        }
+      }
+    }
+  ],
+  "contrasts": [
+    {
+      "label": "entropy 0.01 minus 0",
+      "difference": "left minus right",
+      "left": [
+        1,
+        "agentmixer_residual"
+      ],
+      "right": [
+        0,
+        "agentmixer_residual"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            54.17047662351706,
+            177.74349756684796,
+            -88.07715157368648
+          ],
+          "positive_seeds": 2,
+          "seed_count": 3,
+          "mean": 47.94560753889285,
+          "median": 54.17047662351706,
+          "sample_sd_across_training_seeds": 133.01960804225183
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            -305.8342929745113,
+            -133.44790408658355,
+            -511.08138145024805
+          ],
+          "positive_seeds": 0,
+          "seed_count": 3,
+          "mean": -316.78785950378096,
+          "median": -305.8342929745113,
+          "sample_sd_across_training_seeds": 189.05487634871173
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            0.22402834594727855,
+            0.13176337352879383,
+            0.12506115436217224
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 0.16028429127941488,
+          "median": 0.13176337352879383,
+          "sample_sd_across_training_seeds": 0.055305590265036064
+        }
+      }
+    },
+    {
+      "label": "entropy 0.01 minus 0",
+      "difference": "left minus right",
+      "left": [
+        1,
+        "agentmixer_bounded"
+      ],
+      "right": [
+        0,
+        "agentmixer_bounded"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            1114.5322748959375,
+            1111.5830969781077,
+            681.0329616736249
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 969.0494445158901,
+          "median": 1111.5830969781077,
+          "sample_sd_across_training_seeds": 249.43394958228794
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            153.774881084056,
+            423.126919342757,
+            36.023052398733626
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 204.30828427518222,
+          "median": 153.774881084056,
+          "sample_sd_across_training_seeds": 198.43782295548328
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            0.1635432057429956,
+            0.16490705419488627,
+            0.09664760551562722
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 0.14169928848450303,
+          "median": 0.1635432057429956,
+          "sample_sd_across_training_seeds": 0.03902186085255292
+        }
+      }
+    },
+    {
+      "label": "entropy 0.01 minus 0",
+      "difference": "left minus right",
+      "left": [
+        1,
+        "agentmixer_identity"
+      ],
+      "right": [
+        0,
+        "agentmixer_identity"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            911.6500167596514,
+            294.2506377731743,
+            -1340.5952212227262
+          ],
+          "positive_seeds": 2,
+          "seed_count": 3,
+          "mean": -44.898188896633506,
+          "median": 294.2506377731743,
+          "sample_sd_across_training_seeds": 1163.794912335161
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            330.89743551837387,
+            -13.57720909105251,
+            -595.0402899715511
+          ],
+          "positive_seeds": 1,
+          "seed_count": 3,
+          "mean": -92.57335451474326,
+          "median": -13.57720909105251,
+          "sample_sd_across_training_seeds": 467.9962191249141
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            0.14552399564737295,
+            0.1602472418759004,
+            0.1363583791121522
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 0.14737653887847518,
+          "median": 0.14552399564737295,
+          "sample_sd_across_training_seeds": 0.012051696077881556
+        }
+      }
+    },
+    {
+      "label": "learned modifier minus identity",
+      "difference": "left minus right",
+      "left": [
+        0,
+        "agentmixer_residual"
+      ],
+      "right": [
+        0,
+        "agentmixer_identity"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            338.68275230298195,
+            -313.6377959984584,
+            -428.81605439043096
+          ],
+          "positive_seeds": 1,
+          "seed_count": 3,
+          "mean": -134.5903660286358,
+          "median": -313.6377959984584,
+          "sample_sd_across_training_seeds": 413.89260829719115
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            455.06907794973336,
+            404.55248783224124,
+            346.2051866753818
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 401.9422508191188,
+          "median": 404.55248783224124,
+          "sample_sd_across_training_seeds": 54.47886478990696
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            -0.056504007829406254,
+            -0.06763642937558753,
+            -0.07997464617695602
+          ],
+          "positive_seeds": 0,
+          "seed_count": 3,
+          "mean": -0.0680383611273166,
+          "median": -0.06763642937558753,
+          "sample_sd_across_training_seeds": 0.01174048031215735
+        }
+      }
+    },
+    {
+      "label": "learned modifier minus identity",
+      "difference": "left minus right",
+      "left": [
+        0,
+        "agentmixer_bounded"
+      ],
+      "right": [
+        0,
+        "agentmixer_identity"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            138.95242708264868,
+            -174.40826457728963,
+            -894.8983954841106
+          ],
+          "positive_seeds": 1,
+          "seed_count": 3,
+          "mean": -310.11807765958383,
+          "median": -174.40826457728963,
+          "sample_sd_across_training_seeds": 530.1176717065888
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            50.236672826863014,
+            266.38986616073066,
+            -253.55497853129873
+          ],
+          "positive_seeds": 2,
+          "seed_count": 3,
+          "mean": 21.023853485431648,
+          "median": 50.236672826863014,
+          "sample_sd_across_training_seeds": 261.2005015134178
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            -0.05609888790842269,
+            -0.06289739910434067,
+            -0.07657966155696955
+          ],
+          "positive_seeds": 0,
+          "seed_count": 3,
+          "mean": -0.06519198285657764,
+          "median": -0.06289739910434067,
+          "sample_sd_across_training_seeds": 0.010431412093181595
+        }
+      }
+    },
+    {
+      "label": "learned modifier minus identity",
+      "difference": "left minus right",
+      "left": [
+        1,
+        "agentmixer_residual"
+      ],
+      "right": [
+        1,
+        "agentmixer_identity"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            -518.7967878331524,
+            -430.1449362047847,
+            823.7020152586088
+          ],
+          "positive_seeds": 1,
+          "seed_count": 3,
+          "mean": -41.74656959310945,
+          "median": -430.1449362047847,
+          "sample_sd_across_training_seeds": 750.8100475257812
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            -181.6626505431518,
+            284.6817928367102,
+            430.1640951966849
+          ],
+          "positive_seeds": 2,
+          "seed_count": 3,
+          "mean": 177.7277458300811,
+          "median": 284.6817928367102,
+          "sample_sd_across_training_seeds": 319.62848407013394
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            0.022000342470499368,
+            -0.09612029772269412,
+            -0.09127187092693595
+          ],
+          "positive_seeds": 1,
+          "seed_count": 3,
+          "mean": -0.0551306087263769,
+          "median": -0.09127187092693595,
+          "sample_sd_across_training_seeds": 0.06684133851891087
+        }
+      }
+    },
+    {
+      "label": "learned modifier minus identity",
+      "difference": "left minus right",
+      "left": [
+        1,
+        "agentmixer_bounded"
+      ],
+      "right": [
+        1,
+        "agentmixer_identity"
+      ],
+      "metrics": {
+        "final_return": {
+          "paired_seed_differences": [
+            341.83468521893474,
+            642.9241946276438,
+            1126.7297874122405
+          ],
+          "positive_seeds": 3,
+          "seed_count": 3,
+          "mean": 703.8295557529397,
+          "median": 642.9241946276438,
+          "sample_sd_across_training_seeds": 395.976233658173
+        },
+        "normalized_auc": {
+          "paired_seed_differences": [
+            -126.88588160745485,
+            703.0939945945402,
+            377.50836383898604
+          ],
+          "positive_seeds": 2,
+          "seed_count": 3,
+          "mean": 317.9054922753571,
+          "median": 377.50836383898604,
+          "sample_sd_across_training_seeds": 418.18778730259754
+        },
+        "final_training_update_geometric_mean_scale": {
+          "paired_seed_differences": [
+            -0.03807967781280003,
+            -0.05823758678535479,
+            -0.11629043515349452
+          ],
+          "positive_seeds": 0,
+          "seed_count": 3,
+          "mean": -0.07086923325054978,
+          "median": -0.05823758678535479,
+          "sample_sd_across_training_seeds": 0.04060664367154104
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Three development seeds; no independent final confidence intervals.",
+    "This analysis is prepared after partial results exist; it is not a preregistered success test.",
+    "Final-update differential entropy describes training distributions, not evaluation policy variance.",
+    "No early peak, missing-run imputation or pooled development/final seeds.",
+    "1M is below the archived 10M MuJoCo budget."
+  ]
+}

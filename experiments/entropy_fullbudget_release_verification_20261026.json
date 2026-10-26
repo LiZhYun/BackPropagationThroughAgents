@@ -1,0 +1,18 @@
+{
+  "recorded_utc": "2026-10-26T21:48:31.755297+00:00",
+  "scope": "Post-release provenance and document verification; no learning result or prelaunch timing claim.",
+  "evidence_hash_links_verified": 12,
+  "frozen_modules": 20,
+  "expanded_configs_verified": 9,
+  "each_config_changes_only_budget_and_eval_cadence": true,
+  "markdown_links_verified": 103,
+  "canonical_targets_checked": 45,
+  "git_diff_check": "pass",
+  "startup_snapshot": "results/eight_worker_schedule_20261026/post_release.json",
+  "startup_snapshot_sha256": "1ff59b20fef4428163f0364edfb60d39aad499ecbeb78d5a8e5bf1db65f24c31",
+  "startup_workers": 8,
+  "startup_cpus": 14,
+  "startup_memory_gib": 56,
+  "audit_script": "results/hc_entropy_complete_audit_20261026/verify_release.py",
+  "audit_script_sha256": "ffeb3d789536fb3ecc784911cd2e4c4a21c5747bb41945a61bb68967a31b0cc8"
+}

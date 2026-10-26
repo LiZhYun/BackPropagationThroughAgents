@@ -31,7 +31,15 @@ Anti-claims: improvement only comes from changed simulator physics, more environ
 
 After the100k HalfCheetah pilot (136–186seconds perrun), allow at most four concurrent CPU workers across this project: two for the longer MuJoCo check and two for short matrix/SMAC diagnostics. Each requests at most2CPUs/8GB, so the ceiling is8CPUs/32GB. Record job dependencies to enforce this limit. This supersedes the initial two-worker ceiling above.
 
-The current independent two-worker arrays use matching-index dependencies: successor worker `i` waits for predecessor worker `i`. Four sequential chains preserve the same worker/resource ceiling while releasing work as each predecessor finishes. The verified graph is in [the worker schedule](../docs/worker_schedule.md); future submissions must preserve that cap.
+On2026-10-26, after completed native gates and measured development runs,
+the pilot ceiling is revised to eight serial worker chains, at most16CPUs/64GiB
+total and2CPUs/8GiB per worker. This is an autonomous scheduling choice under
+the user's standing authorization, not a separately requested resource count.
+The [verified schedule](../docs/worker_schedule.md#eight-worker-schedule-2026-10-26)
+separates already-gated AgentMixer10M and SMAC studies from scheduling-only
+predecessors. No experimental runs or budgets are added. Future submissions
+must preserve the eight-chain ceiling; earlier four-worker records below
+remain historical.
 
 Do not invent GPU-hour estimates before measuring simulator throughput. Known budgets are in the target manifest. Full reproduction spans dozens of tasks and hundreds of seed runs; measured pilot costs determine scheduling. No paid external compute is assumed. Preserve the concurrent unrelated reproduction.
 
@@ -127,3 +135,17 @@ finish with0/20wins. Retain all new variants andseed0;do not substitute
 shaped returns or early peaks for final complete-match wins. This remains
 below20M and does not supply independent final training seeds. See the
 [release plan](../experiments/football_batch1m_release_plan_20261026.json).
+
+
+## AgentMixer HalfCheetah full-budget development, 2026-10-26
+
+The complete matched entropy comparison validates all18 runs. Bounded+0.01
+has the strongest1M method endpoints. Job21221384 extends bounded,residual
+and identity to10M on all three development seeds0–2,using the exact selected
+source and training settings. Only budget and evaluation cadence change.
+Require all nine valid endpoints before aggregation,retain failed outcomes,
+and report each seed,mean/median/sample SD and full-grid curve area. The
+bounded/identity contrast changes the scale map and initial centralized scale;
+residual/identity is the isolated modifier switch. This is development,with
+independent final confirmation still required. See the
+[study guide](../docs/agentmixer_halfcheetah10m.md).
