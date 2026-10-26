@@ -117,6 +117,24 @@ class Batch:
     available_actions: Tensor | None = None
 
 
+def validate_num_minibatches(num_minibatches: int, count: int) -> None:
+    if (isinstance(num_minibatches, bool) or not isinstance(num_minibatches, int)
+            or not 1 <= num_minibatches <= count):
+        raise ValueError("num_minibatches must be an integer between 1 and the rollout size.")
+
+
+def minibatch_indices(count: int, num_minibatches: int, device) -> tuple:
+    """One epoch: every transition once, balanced sizes, no dropped remainder.
+
+    The single-batch default keeps the original order and consumes no RNG.
+    Call separately for each epoch (and each sequential BPPO actor).
+    """
+    validate_num_minibatches(num_minibatches, count)
+    if num_minibatches == 1:
+        return (slice(None),)
+    return torch.tensor_split(torch.randperm(count, device=device), num_minibatches)
+
+
 def normalize_advantages(advantages: Tensor, active: Tensor | None = None) -> Tensor:
     """Normalize valid samples with stable moments; constant signals become zero.
 

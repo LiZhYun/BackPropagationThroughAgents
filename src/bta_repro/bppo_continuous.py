@@ -15,7 +15,7 @@ from torch import Tensor, nn
 from torch.distributions import Independent, Normal
 
 from .bppo import _actor_objective, _successor_feedback
-from .core import LOG_STD_MAX, LOG_STD_MIN, initial_log_std
+from .core import LOG_STD_MAX, LOG_STD_MIN, initial_log_std, minibatch_indices, validate_num_minibatches
 
 
 class _GaussianActor(nn.Module):
@@ -127,6 +127,7 @@ def continuous_bppo_update(
     clip_coef: float = 0.2,
     entropy_coef: float = 0.01,
     epochs: int = 4,
+    num_minibatches: int = 1,
     max_grad_norm: float = 0.5,
     peer_noise: str = "fresh",
 ) -> dict[str, float]:
@@ -139,6 +140,7 @@ def continuous_bppo_update(
     Gaussian noise fixed across epochs; ``'fresh'`` retains the original control.
     """
     policy._validate(obs, actions)
+    validate_num_minibatches(num_minibatches, len(obs))
     if (
         old_log_probs.shape != obs.shape[:2]
         or not old_log_probs.is_floating_point()
@@ -187,37 +189,38 @@ def continuous_bppo_update(
             # behavior policy and recorded predecessor inputs stay fixed.
             noise = ((actions[:, i] - old_distribution.loc) / old_distribution.scale).detach()
         for _ in range(epochs):
-            distribution = policy._distribution(obs, actions, i)
-            if i == policy.num_agents - 1:
-                reparameterized_action = torch.zeros_like(actions[:, i])
-            elif peer_noise == "behavior":
-                base = distribution.base_dist
-                reparameterized_action = base.loc + base.scale * noise
-            else:
-                reparameterized_action = distribution.rsample()
-            loss, metrics = _actor_objective(
-                distribution.log_prob(actions[:, i]),
-                distribution.entropy(),
-                old_log_probs[:, i],
-                advantages,
-                multiplier,
-                coefficients,
-                reparameterized_action,
-                clip_coef=clip_coef,
-                entropy_coef=entropy_coef,
-            )
-            if not torch.isfinite(loss):
-                raise FloatingPointError("Non-finite continuous BPPO loss.")
-            optimizers[i].zero_grad(set_to_none=True)
-            loss.backward()
-            grad_norm = nn.utils.clip_grad_norm_(
-                policy.actors[i].parameters(), max_grad_norm, error_if_nonfinite=True
-            )
-            optimizers[i].step()
-            metrics["grad_norm"] = grad_norm.detach()
-            for key, value in metrics.items():
-                totals[key] = totals.get(key, 0.0) + float(value)
-            num_updates += 1
+            for indices in minibatch_indices(len(obs), num_minibatches, obs.device):
+                distribution = policy._distribution(obs[indices], actions[indices], i)
+                if i == policy.num_agents - 1:
+                    reparameterized_action = torch.zeros_like(actions[indices, i])
+                elif peer_noise == "behavior":
+                    base = distribution.base_dist
+                    reparameterized_action = base.loc + base.scale * noise[indices]
+                else:
+                    reparameterized_action = distribution.rsample()
+                loss, metrics = _actor_objective(
+                    distribution.log_prob(actions[indices, i]),
+                    distribution.entropy(),
+                    old_log_probs[indices, i],
+                    advantages[indices],
+                    multiplier[indices],
+                    coefficients[indices],
+                    reparameterized_action,
+                    clip_coef=clip_coef,
+                    entropy_coef=entropy_coef,
+                )
+                if not torch.isfinite(loss):
+                    raise FloatingPointError("Non-finite continuous BPPO loss.")
+                optimizers[i].zero_grad(set_to_none=True)
+                loss.backward()
+                grad_norm = nn.utils.clip_grad_norm_(
+                    policy.actors[i].parameters(), max_grad_norm, error_if_nonfinite=True
+                )
+                optimizers[i].step()
+                metrics["grad_norm"] = grad_norm.detach()
+                for key, value in metrics.items():
+                    totals[key] = totals.get(key, 0.0) + float(value)
+                num_updates += 1
     result = {key: value / num_updates for key, value in totals.items()}
     result["num_updates"] = float(num_updates)
     result["peer_noise_behavior"] = float(peer_noise == "behavior")

@@ -108,13 +108,28 @@ policy update, with its own optimizer and gradient clipping. Setting
 `value_coef=0` skips critic optimizer steps. Diagnostics include weighted value
 loss, unweighted mean squared error, update counts, and active-agent fraction.
 
-These are full-rollout updates. Optional [recurrent actors](recurrent_actors.md)
+`num_minibatches=1` preserves full-rollout updates and consumes no shuffle RNG.
+Larger values shuffle every epoch and split the rollout into balanced, nonempty
+minibatches, retaining every transition exactly once. Unequal sizes are allowed;
+the number cannot exceed the rollout size, including the last partial rollout.
+Advantage normalization and ValueNorm statistics use the full rollout once.
+Old likelihoods, raw values and return targets stay fixed. Each BPPO actor
+finishes all of its epochs and minibatches before its predecessor starts; one
+behavior snapshot covers the entire rollout. Successor feedback is computed
+after successors finish and remains fixed during that actor's optimization.
+Policy and critic epochs use separate shuffles. Actor minibatches with no
+active transitions skip optimization. Diagnostics average executed optimizer
+steps; update counts therefore reflect actual minibatches, and BPPO counts
+each actor's steps separately.
+
+Optional [recurrent actors](recurrent_actors.md)
 pack incoming hidden state after each local observation in `batch.obs`; raw
 environment dimensions and centralized `batch.state` remain unchanged. The
 encoder and GRU are recomputed during every likelihood evaluation while the
 incoming state stays detached, giving one-decision gradient chunks. Each
 environment's memory resets on termination or truncation and otherwise carries
-across updates. Longer gradient chunks, recurrent critics, minibatching,
+across updates. Minibatch selection keeps each observation together with its
+recorded incoming memory. Longer gradient chunks, recurrent critics,
 asynchronous environments, heterogeneous agent shapes, and
 distributed training remain outside this module. Tests use deterministic fake
 environments to establish boundary handling, raw-action retention, likelihood

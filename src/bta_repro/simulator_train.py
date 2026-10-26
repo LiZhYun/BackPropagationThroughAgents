@@ -1,4 +1,4 @@
-"""Train the shared feedforward MARL methods through optional simulator adapters."""
+"""Train the shared MARL methods through optional simulator adapters."""
 
 from __future__ import annotations
 
@@ -61,6 +61,7 @@ class Config:
     modifier_learning_rate: float = 5e-5
     critic_learning_rate: float = 5e-4
     epochs: int = 4
+    num_minibatches: int = 1
     clip_coef: float = 0.2
     entropy_coef: float = 0.01
     value_coef: float = 0.5
@@ -93,7 +94,7 @@ class Config:
             raise ValueError("unknown algorithm")
         if not isinstance(self.env_config, dict) or "seed" in self.env_config:
             raise ValueError("env_config must be a dict without seed; use the top-level seed fields")
-        for name in ("steps", "num_envs", "rollout_steps", "hidden_dim", "epochs", "eval_episodes", "eval_max_steps", "threads"):
+        for name in ("steps", "num_envs", "rollout_steps", "hidden_dim", "epochs", "num_minibatches", "eval_episodes", "eval_max_steps", "threads"):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or value < 1:
                 raise ValueError(f"{name} must be a positive integer")
@@ -116,6 +117,10 @@ class Config:
             raise ValueError("evaluation seed must differ from all training environment seeds")
         if self.steps % self.num_envs:
             raise ValueError("steps must be divisible by num_envs for an exact synchronous budget")
+        full_rollout = self.num_envs * self.rollout_steps
+        smallest_rollout = self.steps % full_rollout or min(self.steps, full_rollout)
+        if self.num_minibatches > smallest_rollout:
+            raise ValueError("num_minibatches cannot exceed the smallest rollout, including the final partial rollout")
         for name in ("learning_rate", "modifier_learning_rate", "critic_learning_rate", "max_grad_norm", "temperature", "observation_clip"):
             value = getattr(self, name)
             if not math.isfinite(value) or value <= 0:
@@ -644,7 +649,8 @@ def train(config: Config, output: Path) -> dict:
                 episodes.flush()
                 losses = update_rollout(
                     policy, critic, optimizers, batch, config.algorithm, spec["is_discrete"],
-                    epochs=config.epochs, clip_coef=config.clip_coef, entropy_coef=config.entropy_coef,
+                    epochs=config.epochs, num_minibatches=config.num_minibatches,
+                    clip_coef=config.clip_coef, entropy_coef=config.entropy_coef,
                     value_coef=config.value_coef, max_grad_norm=config.max_grad_norm,
                     value_clip_coef=config.value_clip_coef, value_huber_delta=config.value_huber_delta,
                     normalize_advantages=config.normalize_advantages, temperature=config.temperature,

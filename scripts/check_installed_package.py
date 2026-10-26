@@ -84,6 +84,7 @@ def main():
         "environment": "prey", "env_config": {"penalty": -1, "episode_limit": 4},
         "algorithm": "agentmixer", "recurrent_actor": True, "steps": 16,
         "num_envs": 2, "rollout_steps": 4, "hidden_dim": 8, "epochs": 1,
+        "num_minibatches": 2,
         "eval_episodes": 2, "eval_windows": 2, "eval_window_steps": 8,
         "normalize_value_targets": True, "threads": 1,
     })

@@ -14,6 +14,8 @@ from torch import Tensor, nn
 from torch.distributions import Categorical
 from torch.nn import functional as F
 
+from .core import minibatch_indices, validate_num_minibatches
+
 
 def _actor_network(input_dim: int, num_actions: int, hidden_dim: int) -> nn.Sequential:
     """Preserve the original network construction and initialization order."""
@@ -280,6 +282,7 @@ def bppo_update(
     clip_coef: float = 0.2,
     entropy_coef: float = 0.01,
     epochs: int = 4,
+    num_minibatches: int = 1,
     max_grad_norm: float = 0.5,
     temperature: float = 1.0,
 ) -> dict[str, float]:
@@ -289,8 +292,11 @@ def bppo_update(
     needed to differentiate the behavior denominator. ``advantages`` is one
     team advantage per transition and is not normalized inside this function.
     Each optimizer must own exactly the parameters of its corresponding actor.
+    Minibatches shuffle each actor's epoch, keeping the rollout behavior anchor
+    and that actor's successor feedback fixed across all of its minibatches.
     """
     policy._validate(obs, actions, available_actions)
+    validate_num_minibatches(num_minibatches, len(obs))
     if active_agents is not None:
         if active_agents.shape != actions.shape or not ((active_agents == 0) | (active_agents == 1)).all():
             raise ValueError("active_agents must be a binary mask with shape [batch, agents].")
@@ -340,39 +346,46 @@ def bppo_update(
             policy, behavior, obs, actions, features, i, available_actions
         )
         for _ in range(epochs):
-            distribution = policy._distribution(obs, features, i, available_actions)
-            if i < policy.num_agents - 1:
-                relaxed_action = F.gumbel_softmax(
-                    distribution.logits, tau=temperature, hard=True, dim=-1
+            for indices in minibatch_indices(len(obs), num_minibatches, obs.device):
+                mini_active = active[indices] if active is not None else None
+                if mini_active is not None and not mini_active.any():
+                    continue
+                distribution = policy._distribution(
+                    obs[indices], features[indices], i,
+                    available_actions[indices] if available_actions is not None else None,
                 )
-            else:
-                relaxed_action = torch.zeros_like(distribution.logits)
-            loss, metrics, components = _actor_objective(
-                distribution.log_prob(actions[:, i]),
-                distribution.entropy(),
-                old_log_probs[:, i],
-                advantages,
-                multiplier,
-                coefficients,
-                relaxed_action,
-                clip_coef=clip_coef,
-                entropy_coef=entropy_coef,
-                active=active,
-                return_components=True,
-            )
-            if not torch.isfinite(loss):
-                raise FloatingPointError("Non-finite BPPO loss.")
-            metrics.update(_gradient_diagnostics(components, tuple(policy.actors[i].parameters())))
-            optimizers[i].zero_grad(set_to_none=True)
-            loss.backward()
-            grad_norm = nn.utils.clip_grad_norm_(
-                policy.actors[i].parameters(), max_grad_norm, error_if_nonfinite=True
-            )
-            optimizers[i].step()
-            metrics["grad_norm"] = grad_norm.detach()
-            for key, value in metrics.items():
-                totals[key] = totals.get(key, 0.0) + float(value)
-            num_updates += 1
+                if i < policy.num_agents - 1:
+                    relaxed_action = F.gumbel_softmax(
+                        distribution.logits, tau=temperature, hard=True, dim=-1
+                    )
+                else:
+                    relaxed_action = torch.zeros_like(distribution.logits)
+                loss, metrics, components = _actor_objective(
+                    distribution.log_prob(actions[indices, i]),
+                    distribution.entropy(),
+                    old_log_probs[indices, i],
+                    advantages[indices],
+                    multiplier[indices],
+                    coefficients[indices],
+                    relaxed_action,
+                    clip_coef=clip_coef,
+                    entropy_coef=entropy_coef,
+                    active=mini_active,
+                    return_components=True,
+                )
+                if not torch.isfinite(loss):
+                    raise FloatingPointError("Non-finite BPPO loss.")
+                metrics.update(_gradient_diagnostics(components, tuple(policy.actors[i].parameters())))
+                optimizers[i].zero_grad(set_to_none=True)
+                loss.backward()
+                grad_norm = nn.utils.clip_grad_norm_(
+                    policy.actors[i].parameters(), max_grad_norm, error_if_nonfinite=True
+                )
+                optimizers[i].step()
+                metrics["grad_norm"] = grad_norm.detach()
+                for key, value in metrics.items():
+                    totals[key] = totals.get(key, 0.0) + float(value)
+                num_updates += 1
     if num_updates == 0:
         totals = dict.fromkeys(
             ("loss", "own_loss", "peer_loss", "entropy", "approx_kl", "clip_fraction",

@@ -17,6 +17,7 @@ import torch
 from torch import Tensor, nn
 
 from .core import Batch, generalized_advantage, normalize_advantages as normalize_team_advantages, ppo_objective
+from .core import minibatch_indices, validate_num_minibatches
 from .value_normalization import ValueNormalizedCritic, validate_value_loss_options, value_regression_loss
 
 
@@ -271,6 +272,7 @@ def update_rollout(
     is_discrete: bool,
     *,
     epochs: int = 4,
+    num_minibatches: int = 1,
     clip_coef: float = 0.2,
     entropy_coef: float = 0.01,
     value_coef: float = 0.5,
@@ -281,12 +283,14 @@ def update_rollout(
     temperature: float = 1.0,
     continuous_peer_noise: str = "fresh",
 ) -> dict[str, float]:
-    """Update actors, then a centralized scalar critic, on the full rollout.
+    """Update actors, then a centralized scalar critic, using rollout targets.
 
     Optimizer keys are ``critic`` plus ``actor_0``, ... for BPPO, or ``policy``
     for other methods. Defaults preserve value_coef * raw mean_squared_error.
     A ValueNormalizedCritic updates its moments once from this rollout's raw
     returns; clipping then transforms old raw predictions with those moments.
+    Advantage moments also use the full rollout, before minibatch shuffling.
+    Diagnostics average executed optimizer steps, including unequal batches.
     """
     _algorithm(algorithm)
     validate_value_loss_options(value_clip_coef, value_huber_delta)
@@ -303,6 +307,7 @@ def update_rollout(
     if batch.obs.ndim != 3 or len(batch.obs) == 0:
         raise ValueError("A nonempty [batch, agents, obs_dim] rollout is required.")
     count, agents = batch.obs.shape[:2]
+    validate_num_minibatches(num_minibatches, count)
     joint_event = _uses_joint_event(policy, algorithm, is_discrete)
     if batch.state.ndim != 2 or len(batch.state) != count or batch.old_log_probs.shape != (count, 1 if joint_event else agents):
         raise ValueError("States and old log probabilities must share the rollout batch dimension.")
@@ -339,7 +344,8 @@ def update_rollout(
         advantages = normalize_team_advantages(advantages, active=live)
     if algorithm == "bppo":
         actor_optimizers = [optimizers[f"actor_{i}"] for i in range(agents)]
-        kwargs = dict(clip_coef=clip_coef, entropy_coef=entropy_coef, epochs=epochs, max_grad_norm=max_grad_norm)
+        kwargs = dict(clip_coef=clip_coef, entropy_coef=entropy_coef, epochs=epochs,
+                      num_minibatches=num_minibatches, max_grad_norm=max_grad_norm)
         if is_discrete:
             from .bppo import bppo_update
             stats = bppo_update(
@@ -354,30 +360,42 @@ def update_rollout(
             )
     else:
         totals: dict[str, float] = {}
+        num_updates = 0
         if live.any():
             for _ in range(epochs):
-                log_probs, entropy = _likelihood(policy, algorithm, is_discrete, batch)
-                old_log_probs = batch.old_log_probs
-                if algorithm == "agentmixer" and not joint_event:
-                    # Remove inactive factors before forming the joint event ratio.
-                    log_probs, entropy = log_probs * active, entropy * active
-                    old_log_probs = old_log_probs * active
-                loss, metrics = ppo_objective(
-                    log_probs, old_log_probs, advantages, entropy, clip_coef=clip_coef,
-                    entropy_coef=entropy_coef, joint=algorithm == "agentmixer",
-                    active=live if algorithm == "agentmixer" else active,
-                )
-                if not torch.isfinite(loss):
-                    raise FloatingPointError("Non-finite policy loss.")
-                optimizers["policy"].zero_grad(set_to_none=True)
-                loss.backward()
-                grad_norm = nn.utils.clip_grad_norm_(policy.parameters(), max_grad_norm, error_if_nonfinite=True)
-                optimizers["policy"].step()
-                metrics["grad_norm"] = float(grad_norm)
-                for key, value in metrics.items():
-                    totals[key] = totals.get(key, 0.0) + value
-            stats = {key: value / epochs for key, value in totals.items()}
-            stats["num_updates"] = float(epochs)
+                for indices in minibatch_indices(count, num_minibatches, batch.obs.device):
+                    mini_active, mini_live = active[indices], live[indices]
+                    if not mini_live.any():
+                        continue
+                    mini = Batch(
+                        obs=batch.obs[indices], state=batch.state[indices], actions=batch.actions[indices],
+                        old_log_probs=batch.old_log_probs[indices], advantages=advantages[indices],
+                        returns=batch.returns[indices],
+                        available_actions=batch.available_actions[indices] if batch.available_actions is not None else None,
+                    )
+                    log_probs, entropy = _likelihood(policy, algorithm, is_discrete, mini)
+                    old_log_probs = mini.old_log_probs
+                    if algorithm == "agentmixer" and not joint_event:
+                        # Remove inactive factors before forming the joint event ratio.
+                        log_probs, entropy = log_probs * mini_active, entropy * mini_active
+                        old_log_probs = old_log_probs * mini_active
+                    loss, metrics = ppo_objective(
+                        log_probs, old_log_probs, mini.advantages, entropy, clip_coef=clip_coef,
+                        entropy_coef=entropy_coef, joint=algorithm == "agentmixer",
+                        active=mini_live if algorithm == "agentmixer" else mini_active,
+                    )
+                    if not torch.isfinite(loss):
+                        raise FloatingPointError("Non-finite policy loss.")
+                    optimizers["policy"].zero_grad(set_to_none=True)
+                    loss.backward()
+                    grad_norm = nn.utils.clip_grad_norm_(policy.parameters(), max_grad_norm, error_if_nonfinite=True)
+                    optimizers["policy"].step()
+                    metrics["grad_norm"] = float(grad_norm)
+                    for key, value in metrics.items():
+                        totals[key] = totals.get(key, 0.0) + value
+                    num_updates += 1
+            stats = {key: value / num_updates for key, value in totals.items()}
+            stats["num_updates"] = float(num_updates)
         else:
             stats = dict.fromkeys(("policy_loss", "entropy", "approx_kl", "clip_fraction", "grad_norm", "num_updates"), 0.0)
 
@@ -390,29 +408,33 @@ def update_rollout(
     else:
         targets, old_predictions = raw_returns, old_values
 
-    def regression():
-        prediction = _values(critic.normalized_forward if normalized else critic, batch.state.detach())
+    def regression(indices=slice(None)):
+        prediction = _values(critic.normalized_forward if normalized else critic, batch.state[indices].detach())
         raw_prediction = critic.normalizer.denormalize(prediction) if normalized else prediction
-        raw_mse = (raw_prediction - raw_returns).square().mean()
-        regression_loss = value_regression_loss(prediction, targets, old_prediction=old_predictions,
-                                                clip_coef=value_clip_coef, huber_delta=value_huber_delta)
+        raw_mse = (raw_prediction - raw_returns[indices]).square().mean()
+        regression_loss = value_regression_loss(
+            prediction, targets[indices], old_prediction=old_predictions[indices] if old_predictions is not None else None,
+            clip_coef=value_clip_coef, huber_delta=value_huber_delta,
+        )
         return regression_loss, raw_mse
 
     value_totals = {"value_loss": 0.0, "value_mse": 0.0, "value_regression_loss": 0.0, "critic_grad_norm": 0.0}
+    critic_updates = epochs * num_minibatches if value_coef > 0 else 0
     if value_coef > 0:
         for _ in range(epochs):
-            regression_loss, mse = regression()
-            value_loss = value_coef * regression_loss
-            if not torch.isfinite(value_loss):
-                raise FloatingPointError("Non-finite value loss.")
-            optimizers["critic"].zero_grad(set_to_none=True)
-            value_loss.backward()
-            grad_norm = nn.utils.clip_grad_norm_(critic.parameters(), max_grad_norm, error_if_nonfinite=True)
-            optimizers["critic"].step()
-            value_totals["value_loss"] += float(value_loss.detach()) / epochs
-            value_totals["value_mse"] += float(mse.detach()) / epochs
-            value_totals["value_regression_loss"] += float(regression_loss.detach()) / epochs
-            value_totals["critic_grad_norm"] += float(grad_norm) / epochs
+            for indices in minibatch_indices(count, num_minibatches, batch.obs.device):
+                regression_loss, mse = regression(indices)
+                value_loss = value_coef * regression_loss
+                if not torch.isfinite(value_loss):
+                    raise FloatingPointError("Non-finite value loss.")
+                optimizers["critic"].zero_grad(set_to_none=True)
+                value_loss.backward()
+                grad_norm = nn.utils.clip_grad_norm_(critic.parameters(), max_grad_norm, error_if_nonfinite=True)
+                optimizers["critic"].step()
+                value_totals["value_loss"] += float(value_loss.detach()) / critic_updates
+                value_totals["value_mse"] += float(mse.detach()) / critic_updates
+                value_totals["value_regression_loss"] += float(regression_loss.detach()) / critic_updates
+                value_totals["critic_grad_norm"] += float(grad_norm) / critic_updates
     else:
         with torch.no_grad():
             regression_loss, mse = regression()
@@ -426,4 +448,4 @@ def update_rollout(
         value_normalizer_updates=float(critic.normalizer.updates) if normalized else 0.0,
     )
     return {**stats, **value_totals, "value_coef": float(value_coef),
-            "critic_updates": float(epochs if value_coef > 0 else 0), "active_fraction": float(active.float().mean())}
+            "critic_updates": float(critic_updates), "active_fraction": float(active.float().mean())}
