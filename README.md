@@ -125,6 +125,13 @@ unused-seed study and separate paper-budget development extension. Its reporter
 checks provenance, recomputes scores and retains every declared seed before
 making a configuration-validation decision.
 
+The 100k configuration check now passes for BPPO and matched AR-PPO on both
+games, with ten unused seeds each: all 40 runs finish with optimal greedy
+actions and expected execution rewards above 95% of their ceilings. The
+[complete results](docs/matrix_confirmation.md#completed-100k-validation)
+retain the small endpoint differences, mixed curve-area comparisons and
+limitations. The 1M study and full paper reproduction remain separate.
+
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the
 frozen independent HalfCheetah study, recomputes scores from raw episodes and
 verifies every rollout against the training budget before comparing results.

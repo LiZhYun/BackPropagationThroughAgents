@@ -1,0 +1,3161 @@
+{
+  "study_id": "matrix_confirmation100k_20261026",
+  "scope": "Independent validation of the selected 100k matrix configuration; not a full paper reproduction",
+  "plan_sha256": "69a218b1e0f13a7d0686f996b0571f73cc096a59fb9b1774f825ebc896b55c4a",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 100,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed100",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "836ad94f990f1e5cf374c7136c4dd218514cb6ab1109f6763ae4b5e8f500fa61",
+      "summary_sha256": "293eb4cbb6b0f69bc4fead0e0cad60056b575b0636a283173758630dc6ff6735",
+      "final": {
+        "execution_policy_expected_return": 10.99599552154541,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9996729493141174,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.640892543792724,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4466118812561035
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.420761823654175
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.447266578674316
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.636724472045898
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.742339134216309
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.967362403869629
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.987736701965332
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.99327564239502
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.995003700256348
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.995706558227539
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.99599552154541
+        }
+      ],
+      "metrics_sha256": "1e0e5c3faa260f89a5a8df9a0ad7f45b385a695239877152a66483a4b6ef9584"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 101,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed101",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "c87a49372033b07f52d8d8a68e6334c1a5ad38605fe69b018d90d9f6bfa5e39c",
+      "summary_sha256": "0e246c884d8071e4869f7bf25d597fbd838681b336ce5927853befe2dc5e636e",
+      "final": {
+        "execution_policy_expected_return": 10.997204780578613,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999735414981842,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.503356398773194,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.42551589012146
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2235610485076904
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.031801223754883
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.165384292602539
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.476500511169434
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.960044860839844
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.989046096801758
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.99350357055664
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.995565414428711
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.996755599975586
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.997204780578613
+        }
+      ],
+      "metrics_sha256": "99bc168fff0c45bd1a100ef17ce3d971fcfb1883d2ba89c1d7ddc393e44f568e"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 102,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed102",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "58f3c02583aa8281ad42724af242c46bfe0005884df2d8cf8185c661b0ec172c",
+      "summary_sha256": "34a3e1f2b73892be091ac05edfab9341b48097ea2043515b0723245ef0e8c989",
+      "final": {
+        "execution_policy_expected_return": 10.995884895324707,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9996815323829651,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.563107227325439,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4321072101593018
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2886428833007812
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.211207389831543
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.348817825317383
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.62663745880127
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.969220161437988
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.990128517150879
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.993511199951172
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.995349884033203
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.995845794677734
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.995884895324707
+        }
+      ],
+      "metrics_sha256": "25c9ffa5291edc4d043d77e7b1a0fe1f4d6455c1a9c86e51575d18044f78cb42"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 103,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed103",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "6a9af19e45bc2afbef2e61203a2b12f906f786382d81d5012eae2f4a7cc7ba31",
+      "summary_sha256": "fa33b788abb7cfb7d6a9362182a63cca80e54db5c7c5eb56cbcc6ac8d717d683",
+      "final": {
+        "execution_policy_expected_return": 10.997572898864746,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9997797012329102,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.614007661437988,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4373679161071777
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.363736867904663
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.3549346923828125
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.536528587341309
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.713528633117676
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.973155975341797
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.989093780517578
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.994119644165039
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.996062278747559
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.99744701385498
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.997572898864746
+        }
+      ],
+      "metrics_sha256": "34a2fec72218cd63b0be1ff712ea91141d6a5881c45bee902803e7722f881181"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 104,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed104",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "a778bab5b4f40c75f405a261427aa02f5894f59eb9fbff184670b75f16e0c2d3",
+      "summary_sha256": "d0bee58ac849306bdca806e3f114294f68f0339d1cb6b37b574a1e03b9cbb206",
+      "final": {
+        "execution_policy_expected_return": 10.998422622680664,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998250007629395,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.607894742584229,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4684457778930664
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.3048224449157715
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.307921409606934
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.570022583007812
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.736225128173828
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.972100257873535
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.990556716918945
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.99616527557373
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.998042106628418
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998377799987793
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998422622680664
+        }
+      ],
+      "metrics_sha256": "a8d436195f360424a214a05d07221cf49578405266b39fee1fec24b4109d2802"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 105,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed105",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "0d5ecf5c33f4e9a0b977219d7bfca95384f5c09180bab538e7f45e6a897abdaa",
+      "summary_sha256": "7252609be2758f1dba378bf5d8c5263719bd5a5719dfe68ec6b7498463e5a4c1",
+      "final": {
+        "execution_policy_expected_return": 10.997747421264648,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998178482055664,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.710777584838867,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.440182685852051
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.430929183959961
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.70244026184082
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.941608428955078
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.832648277282715
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.976736068725586
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.9920072555542
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.994292259216309
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.9967679977417
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997549057006836
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.997747421264648
+        }
+      ],
+      "metrics_sha256": "479d7333553220ce1eb2bb19ec71e928ba0e68c22af4586d53333c6c56df2705"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 106,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed106",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "e42b832e7c30f9490be919268726330a29b01736ad6a6564d74036bbba744044",
+      "summary_sha256": "ee48360c5ca41bfba2b7eb0f9a3bc7fb1140c78642407590da18e85c6b6e2587",
+      "final": {
+        "execution_policy_expected_return": 10.99776840209961,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999791145324707,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.530169205474854,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.439727306365967
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2638535499572754
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.095407485961914
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.258578300476074
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.548538208007812
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.958786964416504
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.98750114440918
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.994220733642578
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.99645709991455
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997658729553223
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.99776840209961
+        }
+      ],
+      "metrics_sha256": "02061b78d2fc105e15c94c5d5454478b6ef68e26956a07c34cba2d8617315548"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 107,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed107",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "88acdf9e682fb4d9675d06fbcbc6d8031ba9f596b948024452310a11e08885f9",
+      "summary_sha256": "dee9cf879acafdd918dc711ae49db17cff599c72b5998953cb52a2f38d69cef0",
+      "final": {
+        "execution_policy_expected_return": 10.998403549194336,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999847412109375,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.638623664855958,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.442814350128174
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.401848316192627
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.433657169342041
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.624017715454102
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.745687484741211
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.973145484924316
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.992250442504883
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.995665550231934
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.99705696105957
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998157501220703
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998403549194336
+        }
+      ],
+      "metrics_sha256": "324b8dcbf310adb4d96e66b2cb949d1470f86cf42c290b63b5cbc8d2b1e50dfa"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 108,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed108",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "b8ef24263eb6a7ff91ce2439f95826451439f00f8dd048bf6cefb5b5f9a12e16",
+      "summary_sha256": "53295921ead419df328ec035e77e23021b104e6a54edfc115fa759f5bd302357",
+      "final": {
+        "execution_policy_expected_return": 10.996015548706055,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9996572136878967,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.59276139831543,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4463753700256348
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.4929537773132324
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.312531471252441
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.34429931640625
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.626455307006836
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.967386245727539
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.988036155700684
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.993071556091309
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.99538803100586
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.99592399597168
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.996015548706055
+        }
+      ],
+      "metrics_sha256": "d216db177d07bcaa5cefe982ec628e3a230d808601f5804a6d7f6de2a9d1ad13"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 109,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_climbing_seed109",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "a65431037ef1fd0b6a57bed06f4b010fb718e5c7c7208e5aa258cb3cf471cfbe",
+      "summary_sha256": "f2cbe040fd06d68ab9fc2a99a871022fd4cd9cc8afd92776ca9990a3b94c54be",
+      "final": {
+        "execution_policy_expected_return": 10.997323036193848,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999793529510498,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.539987969207763,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.438807725906372
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.3625552654266357
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.127312183380127
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.24144172668457
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.52873706817627
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.959699630737305
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.988822937011719
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.994929313659668
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.996125221252441
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.996885299682617
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.997323036193848
+        }
+      ],
+      "metrics_sha256": "7e950f29f602e2523657b09c61dc92b4d1428924be44d97f91b88cc0f3786e39"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 100,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed100",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "0d1ea02e449a228fafa54a139ac425c8f0bdb24a0892f895d59ef98ab4944389",
+      "summary_sha256": "c312acce996e5efb0e772623a15a980654fce3e8d5fb8f37307396356f4f341b",
+      "final": {
+        "execution_policy_expected_return": 9.992720603942871,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9992746114730835,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.801755919647217,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.735719680786133
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.803751230239868
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.548313856124878
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.687127113342285
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.716150283813477
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.824535369873047
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.948860168457031
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.975674629211426
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.983651161193848
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.990493774414062
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.992720603942871
+        }
+      ],
+      "metrics_sha256": "ef6e4dd628fd3fa55db8d9826e41dc68f6aacdd45efaa2faf45d4c0ff82a71d2"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 101,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed101",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "f1b9f1a678e94d4a5ce480b12caa784f24930105c3f4f084547a9555a3f48e27",
+      "summary_sha256": "b9eebf19fefd0e7e8ee8ddfb00263a93284d1a3f3bebb8f9c36f4fa0fc57042a",
+      "final": {
+        "execution_policy_expected_return": 9.993675231933594,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.99936842918396,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.871478977966309,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.83336639404297
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.8703360557556152
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.9104855060577393
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.858597755432129
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.93354606628418
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.855798721313477
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.953588485717773
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.979626655578613
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.987801551818848
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.991399765014648
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.993675231933594
+        }
+      ],
+      "metrics_sha256": "8201e94589256b9c08039d2dfd264ab6dac125b86b6e44c02207dfabf02d15de"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 102,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed102",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "9dfbb4d297db20d16f1454827779506ea1e2a8c20e6b577be520d29fc7738ec7",
+      "summary_sha256": "eef3260f8b276e671ebb1beba9b6075baa45919b24d6600de4b8ec14060b6406",
+      "final": {
+        "execution_policy_expected_return": 9.991907119750977,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9991921186447144,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.52115965423584,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.730310440063477
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.151639938354492
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.636818289756775
+        },
+        {
+          "steps": 30720,
+          "expected_return": 5.942519187927246
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.072877883911133
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.749040603637695
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.937955856323242
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.970013618469238
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.98195743560791
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.988712310791016
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.991907119750977
+        }
+      ],
+      "metrics_sha256": "dc0dde475de9c1c29e42169fc84869ee842212c1c856f0c233426cc4df4471e6"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 103,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed103",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "fc02e638bc2ada236b9ff87c47521d94da0ed95067d2ce4abca4374536f065c9",
+      "summary_sha256": "fcd3cc8bf8aa16439835465ad5819f43f4725b84b52e1a0d4f4817472d35d2a3",
+      "final": {
+        "execution_policy_expected_return": 9.993034362792969,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9993000030517578,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.484204985046387,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.81043815612793
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.14111852645874
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.6520240306854248
+        },
+        {
+          "steps": 30720,
+          "expected_return": 5.740152359008789
+        },
+        {
+          "steps": 40960,
+          "expected_return": 7.94679594039917
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.721324920654297
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.937084197998047
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.974444389343262
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.985688209533691
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.99085807800293
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.993034362792969
+        }
+      ],
+      "metrics_sha256": "c83cc007dfda26360a00a59f2977bf540088d737e5f93c0231fbb8a44673ecaf"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 104,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed104",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "32677de395d490c7133fb9d7483fdd623302e763c4bae12765ad5c2fe213122f",
+      "summary_sha256": "c091f6aaf3a1f4b4df32762391c642b5b106ee302ed0ca69c1c8fb11143b3c2c",
+      "final": {
+        "execution_policy_expected_return": 9.993915557861328,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9993934631347656,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.661192994689942,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.730514526367188
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.9946417808532715
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.887190341949463
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.3505096435546875
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.520153045654297
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.822511672973633
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.951863288879395
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.97834587097168
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.987781524658203
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.991743087768555
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.993915557861328
+        }
+      ],
+      "metrics_sha256": "d693a55fb1daf7d602647f8142f3d0c636e4d1ebe9a403e20080fce344ac8494"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 105,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed105",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "2f6ffab271217694094c774e48e35b4b1b8df015f1b3d5640ac9b8e5215e9775",
+      "summary_sha256": "32431e946d5e3a4c732cab0c108491fa2119bcdda5b01c09c8c33cf84f03dbf9",
+      "final": {
+        "execution_policy_expected_return": 9.991109848022461,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.999109148979187,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.47800998840332,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.78390121459961
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.044933319091797
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.5818289518356323
+        },
+        {
+          "steps": 30720,
+          "expected_return": 5.596840858459473
+        },
+        {
+          "steps": 40960,
+          "expected_return": 7.9902167320251465
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.7324800491333
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.935042381286621
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.969264030456543
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.984013557434082
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.989286422729492
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.991109848022461
+        }
+      ],
+      "metrics_sha256": "dfffb0b668d3fa487d1f3672a9e5a72be3cdf453b30d87efd3f862df4732f0f7"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 106,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed106",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "94daef9213c1365d53e6e7618bbab29630ba664688b503039b7524ca7f53356b",
+      "summary_sha256": "a4af5ea65575fbc1a625d7af3c110ac367bcd3486dcdb3f78f66abdfa7d1224c",
+      "final": {
+        "execution_policy_expected_return": 9.992449760437012,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9992111325263977,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.7019584861755375,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.780458450317383
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.9684576988220215
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.001941680908203
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.48256778717041
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.676872253417969
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.820379257202148
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.951210021972656
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.976277351379395
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.987659454345703
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.990493774414062
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.992449760437012
+        }
+      ],
+      "metrics_sha256": "ebd00e4382bbeed8f145866fddd43af11ba1c4c076e7733c52ca88968e9bb42b"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 107,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed107",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "cf7021a2492ae7d321c6e5de5493e6057952e2fef29aef3e7bb20f5680e3e265",
+      "summary_sha256": "f8a7fbfab5faae1b3d3677bc1790b3134f8728d0a269ba4bdb0cddd5cfb2f209",
+      "final": {
+        "execution_policy_expected_return": 9.99262809753418,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.999265193939209,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.611732038879395,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.764009475708008
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.9667701721191406
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.7924134731292725
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.198620796203613
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.330041885375977
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.779073715209961
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.947952270507812
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.973312377929688
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.985058784484863
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.989742279052734
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.99262809753418
+        }
+      ],
+      "metrics_sha256": "60116c8912d112e7c63e9502e2e2fa8f457cb5a18b1170a2d66181cbff81db65"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 108,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed108",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "6c528e372446a64a6ab96212387ce269f5ca61f7dd7cef3cce22db5902db8095",
+      "summary_sha256": "24edd65d0de7cb441f04470e5d0e7749061b0db2665abaccc5e17785a1bfcc8c",
+      "final": {
+        "execution_policy_expected_return": 9.992709159851074,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9992618560791016,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.396949127960205,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.825855255126953
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.124471664428711
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.3989603519439697
+        },
+        {
+          "steps": 30720,
+          "expected_return": 5.2979631423950195
+        },
+        {
+          "steps": 40960,
+          "expected_return": 7.845241546630859
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.664693832397461
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.932657241821289
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.9735689163208
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.98360824584961
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.990743637084961
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.992709159851074
+        }
+      ],
+      "metrics_sha256": "d023afac4a1803f054462cbd8eb34ca00075c88dc353238d88fd0152f1377dad"
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 109,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/arppo_penalty_seed109",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "b244f4557dae43d98989cc4bcfe2152a5b641e094b110e8ce04f010351e5f5c7",
+      "summary_sha256": "61c6f74301d71ea82641338a066d8d672a2add1bd447505dc788ee7443e0c261",
+      "final": {
+        "execution_policy_expected_return": 9.992487907409668,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9992337822914124,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.736644696807861,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.79644203186035
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.7346599102020264
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.099630117416382
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.523015022277832
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.646345138549805
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.83030891418457
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.949721336364746
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.97354507446289
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.986959457397461
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.990827560424805
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.992487907409668
+        }
+      ],
+      "metrics_sha256": "cd87133284bfd50dbe02ddf36c8855f8a66b40b41134cbe3c593224db1c1cbf3"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 100,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed100",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "54e30b886d3c5aa41ee63e2523421037bee5b29c9cde5cc14ebb574831762790",
+      "summary_sha256": "96b6d73f591bd43c75f3892da5651499f72dee5a267e68a221b34a6f1f81236e",
+      "final": {
+        "execution_policy_expected_return": 10.998504638671875,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998617172241211,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.577313089752197,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4466118812561035
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.34867000579834
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.438681602478027
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.428265571594238
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.403178215026855
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.960663795471191
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.992681503295898
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.996736526489258
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997655868530273
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998066902160645
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998504638671875
+        }
+      ],
+      "metrics_sha256": "46d81f5c52e5903f02c2b7a428de438f53e51662409a7a8725db5cd07628b2e8"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 101,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed101",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "cf0266dde3b04bafed0b7a9bd74e5630ed737d7290f4159d5c714f0f1df8c176",
+      "summary_sha256": "d8d7f67fa6da051d55f27a514aeb1e93727d3fe8456b86df74677d1be06cc0f0",
+      "final": {
+        "execution_policy_expected_return": 10.998579025268555,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999847412109375,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.382286557769776,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.42551589012146
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.1560873985290527
+        },
+        {
+          "steps": 20480,
+          "expected_return": 5.943809986114502
+        },
+        {
+          "steps": 30720,
+          "expected_return": 7.9751386642456055
+        },
+        {
+          "steps": 40960,
+          "expected_return": 9.699034690856934
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.895225524902344
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.988722801208496
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.995736122131348
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997825622558594
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997862815856934
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998579025268555
+        }
+      ],
+      "metrics_sha256": "7b4e33df8ed3397a88bb8b1e9ad0ab66b01c44bc2b70008dcdd9fef236f79621"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 102,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed102",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "61a750c00ca1ff9c325981c8fe0d81d8b187d282ec0542568bbed96aaf36e69a",
+      "summary_sha256": "93910d7615970fb398fbbe0eab1a5054a9abb73c8fa4dfdcc41c9dd4a553e144",
+      "final": {
+        "execution_policy_expected_return": 10.997747421264648,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998259544372559,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.496849901580811,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4321072101593018
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2530722618103027
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.110550880432129
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.228145599365234
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.247084617614746
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.951150894165039
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.992222785949707
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.99503231048584
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.996830940246582
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997735023498535
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.997747421264648
+        }
+      ],
+      "metrics_sha256": "ad72b028a6cbf5bca50f78b456d2c235f62c1cdabbdcc6a0c690e0b0f85019ad"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 103,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed103",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "c9b38e70b25b6ab6170833b5585ff87fbefb3c4be3fd7bef9dfec0cadc60f71f",
+      "summary_sha256": "68c5ee456e19f7f4f9fd567488be2f3e7e546f2f6fa4fd1c5ae8862e923b04dd",
+      "final": {
+        "execution_policy_expected_return": 10.998290061950684,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9997387528419495,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.58280430908203,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4373679161071777
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.323186159133911
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.440701961517334
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.446076393127441
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.46359634399414
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.960083961486816
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.989416122436523
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.99535846710205
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997148513793945
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998124122619629
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998290061950684
+        }
+      ],
+      "metrics_sha256": "658efdc81482269589eae2fd85f9d3c4c463d55239b4058e7d3a5ce435264316"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 104,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed104",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "53341c7b5c69168f1a6bedc30bce2fe67a6066a822cdcb4b58f270321e0613f2",
+      "summary_sha256": "f7e3381f5ce235c9896032dd2f18e8d6d2b94d78ea0e784c35130fb07d2ef09c",
+      "final": {
+        "execution_policy_expected_return": 10.998116493225098,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998412132263184,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.522872816467284,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4684457778930664
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.248075485229492
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.235515594482422
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.306397438049316
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.313570022583008
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.956744194030762
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.991990089416504
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.996593475341797
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997267723083496
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997841835021973
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998116493225098
+        }
+      ],
+      "metrics_sha256": "e787535bb786ffb6ca117fe9c9cc5767232453e47df483aca1842aef186903b3"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 105,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed105",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "fe49c128566daa4ca435255bf363b0129fd61d937b5c9c260f398211da18c213",
+      "summary_sha256": "48ebe6a0df436c13312836c2c8d8f70dc6fa814b8909c7ecd0b4a4508a121573",
+      "final": {
+        "execution_policy_expected_return": 10.998496055603027,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998664855957031,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.677394715118409,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.440182685852051
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.362189292907715
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.743251323699951
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.768256187438965
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.700703620910645
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.97845458984375
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.993769645690918
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.996453285217285
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997424125671387
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998270034790039
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998496055603027
+        }
+      ],
+      "metrics_sha256": "640796ce0ff85accaf1c5732b824f96909a657f99c2b37c2077c4b94cfc93163"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 106,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed106",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "46687c94d304fb539cb56c60c2515d08b63dc22bd519e22b5d878ab9d13f19a6",
+      "summary_sha256": "14deb38e6ff9e510e842db9260a8944a18d8408d509f3aa884a9ae7dd1041b99",
+      "final": {
+        "execution_policy_expected_return": 10.998376846313477,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998364448547363,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.453287731933594,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.439727306365967
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.151484966278076
+        },
+        {
+          "steps": 20480,
+          "expected_return": 5.9829254150390625
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.166264533996582
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.124239921569824
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.944177627563477
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.990165710449219
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.995495796203613
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.99722671508789
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998037338256836
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998376846313477
+        }
+      ],
+      "metrics_sha256": "4b0b843be85a4f93ad8fff253ae6ccc77b956a409f2441c39836ed1fffe7d317"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 107,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed107",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "5ac55ad7ae81963fec0605c593d0717bfdc4208ef51796fc442ed24edef7395a",
+      "summary_sha256": "1f99793d7b1945325664a7fed139b09f97daf8ee087f70f60b169df61f8f788a",
+      "final": {
+        "execution_policy_expected_return": 10.998886108398438,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999213218688965,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.597746296691895,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.442814350128174
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.3521530628204346
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.489598274230957
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.463269233703613
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.506436347961426
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.966307640075684
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.9925537109375
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.996149063110352
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.99731731414795
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998346328735352
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998886108398438
+        }
+      ],
+      "metrics_sha256": "d3d0317932f20498a8fe15c5e2fb404fe7fdf9d948206514e2d92fd0bdc83af1"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 108,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed108",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "81875dbd5960688a87d8024db4b7e50805a606575c312721d316b050ce215b54",
+      "summary_sha256": "cf9de8cfc2213ca6fd46e6fed89b20c3bad9a66a6eea522599fb075ac905bf3c",
+      "final": {
+        "execution_policy_expected_return": 10.998320579528809,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999882698059082,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.586857402038575,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4463753700256348
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.4176039695739746
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.4268598556518555
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.423982620239258
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.43768310546875
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.963979721069336
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.994384765625
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.996909141540527
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.998138427734375
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998236656188965
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.998320579528809
+        }
+      ],
+      "metrics_sha256": "caddbe5deaa7b67444989d03ccc938e0806d23922bb11103f80cc7d37a2603ed"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 109,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_climbing_seed109",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "a5d9ecf6473ecd0b84655f4621cfd66ca028e2c79cac2034f7760fbd6fb445d2",
+      "summary_sha256": "866ca2400f950df2d37a1b71484227284fcfc8345064b05dc45d48e7efe77ca7",
+      "final": {
+        "execution_policy_expected_return": 10.9977388381958,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9998383522033691,
+        "greedy_actions": [
+          0,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 8.585849069976806,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.438807725906372
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.2943830490112305
+        },
+        {
+          "steps": 20480,
+          "expected_return": 6.292532444000244
+        },
+        {
+          "steps": 30720,
+          "expected_return": 8.539373397827148
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.564114570617676
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.969305992126465
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.99325942993164
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.996541976928711
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.997086524963379
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.997711181640625
+        },
+        {
+          "steps": 100000,
+          "expected_return": 10.9977388381958
+        }
+      ],
+      "metrics_sha256": "69003a84b2940908616a498e809788790199aec9f8087c05aa033cc5dc8b9518"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 100,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed100",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "5011b413441cb7b0072581f604d6d7ae6cd85089a7b63604238e128e68b65dcc",
+      "summary_sha256": "c974908e19b2a99934acde9d0a4714e77a744d25cc85af7d09ba7752340ab382",
+      "final": {
+        "execution_policy_expected_return": 9.995284080505371,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9995049834251404,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.818380164337158,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.735719680786133
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.8588833808898926
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.882108688354492
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.789853572845459
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.48773193359375
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.803894996643066
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.961636543273926
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.982979774475098
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.990123748779297
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.993303298950195
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.995284080505371
+        }
+      ],
+      "metrics_sha256": "eb92c0ab33a2abeb06e31b4432124dc2e2d266d4ecdec05014760529d9ff25d2"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 101,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed101",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "da1b0995c7b00493082c9fc3ea5687b27ff5729b82341b4f3b6120538f968bd2",
+      "summary_sha256": "10086d3fae5976af081dff8331755ad985217f57b34fc7a7d7ae56d9c1feba46",
+      "final": {
+        "execution_policy_expected_return": 9.993809700012207,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9993813633918762,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.815496872711182,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.83336639404297
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.011640548706055
+        },
+        {
+          "steps": 20480,
+          "expected_return": 3.049569845199585
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.8287034034729
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.48025894165039
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.782330513000488
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.957450866699219
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.983479499816895
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.990909576416016
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.992866516113281
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.993809700012207
+        }
+      ],
+      "metrics_sha256": "665f89d5354fa4bf8ab4f39df8588cdb3b100d62e205b737004c6a62f274674d"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 102,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed102",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "a537bbfa098d29f6a05e1aec732aed69dd3712a9b746c806451289bcc7c189bf",
+      "summary_sha256": "29a07ab10c5622d9eee980a64a028e9d3f0b063abaf95fa328f6cdda14ecb8d6",
+      "final": {
+        "execution_policy_expected_return": 9.994108200073242,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9994103908538818,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.548805995941162,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.730310440063477
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.292702674865723
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.9000719785690308
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.287371635437012
+        },
+        {
+          "steps": 40960,
+          "expected_return": 7.9632391929626465
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.630517959594727
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.950349807739258
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.977767944335938
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.988174438476562
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.993123054504395
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.994108200073242
+        }
+      ],
+      "metrics_sha256": "cfe88c43c47625d187dc2748bea484026c85a3028043ba2e4e55811987a53065"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 103,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed103",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "491cbc06db644ef4bc3d1d5daef32c6d4a8d1d52a9e96b72c20d1cb307344895",
+      "summary_sha256": "b3f9ca8938b3621357b3101cd20450c8f28abbc6035ccb06c4aad1149979d718",
+      "final": {
+        "execution_policy_expected_return": 9.995134353637695,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9994897842407227,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.575301701354981,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.81043815612793
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.228527069091797
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.9775490760803223
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.2902092933654785
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.083330154418945
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.65791130065918
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.953137397766113
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.980127334594727
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.98900032043457
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.993656158447266
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.995134353637695
+        }
+      ],
+      "metrics_sha256": "6c00c46ab49b792a2f3feaa2a259926f9f911161e61ee5dd0aa572e0259a0a15"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 104,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed104",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "63578da5d7a2ad46b701458155fb74862e53c53687df07b16a4c4356741cfcb8",
+      "summary_sha256": "c74d488626873accf3ce5d9f0d352a68fd54bb8783061efe4d7a704dc2d15b5b",
+      "final": {
+        "execution_policy_expected_return": 9.995220184326172,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9995193481445312,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.596837002563476,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.730514526367188
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.112574100494385
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.9951823949813843
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.362029075622559
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.039344787597656
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.665081024169922
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.955016136169434
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.981796264648438
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.989473342895508
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.991050720214844
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.995220184326172
+        }
+      ],
+      "metrics_sha256": "1cb49bd7606615178e94d2c728ce2f2622373e9e5a42afa993fbc383e5497051"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 105,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed105",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "88603e6cbbc3afa54a736a638bcffb2b2d7ea3ba45d6b79f182cb297102f7865",
+      "summary_sha256": "8a2e0481ad1230a3fdc25cd1f09c9bd548d4adbc1d4d3b4c2237e2393319e9c5",
+      "final": {
+        "execution_policy_expected_return": 9.994302749633789,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9994208216667175,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.547422856140137,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.78390121459961
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.11068058013916
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.8088572025299072
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.123570442199707
+        },
+        {
+          "steps": 40960,
+          "expected_return": 7.993159294128418
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.682714462280273
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.954952239990234
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.979438781738281
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.987333297729492
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.99160385131836
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.994302749633789
+        }
+      ],
+      "metrics_sha256": "efe97129a9714a38e1883b998c05bdfa067e8e7eb035360caf513323e6d43ce1"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 106,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed106",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "272b8c54877b4e2b8640bd005384cd813f825eeb5cd9f6e18b3406e6e8cb40af",
+      "summary_sha256": "7a0533910616dad6d842649abe21d06926c167a6b3e99084e7278f71d7919852",
+      "final": {
+        "execution_policy_expected_return": 9.994427680969238,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9994363784790039,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.719223247528076,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.780458450317383
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.07714319229126
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.3798670768737793
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.6636810302734375
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.41709041595459
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.783191680908203
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.957874298095703
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.981856346130371
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.989019393920898
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.991464614868164
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.994427680969238
+        }
+      ],
+      "metrics_sha256": "654fe1d55843c73934542ec3a053add1f41bfc3c764658d55cf0d39152b1a1f7"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 107,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed107",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "70a33eadc95a130aa8d7fc6550b8cda22409bfcd52f798542c08c1d07f24c456",
+      "summary_sha256": "89434371eeb41ca3f81e00ddb098692f89f2577cb082695d81cf2600d922a09c",
+      "final": {
+        "execution_policy_expected_return": 9.994455337524414,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9994317889213562,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.627224385070801,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.764009475708008
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.105485916137695
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.083611488342285
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.431262969970703
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.165390014648438
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.69272232055664
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.948081970214844
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.98183822631836
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.990568161010742
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.992355346679688
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.994455337524414
+        }
+      ],
+      "metrics_sha256": "fc41b1af3e048d9194dfad92f545349ce6b597001c056471c7d94f0021e45309"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 108,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed108",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "f47ee61456ef8ce274cd6e53a33672df271ae5867faa0ead4c498caa21af3f63",
+      "summary_sha256": "3576254b26e138d00fc990a025e8aced926be497c6be8e4c3ceb0be9eb0e35a6",
+      "final": {
+        "execution_policy_expected_return": 9.995342254638672,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9995344877243042,
+        "greedy_actions": [
+          0,
+          2
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.519777912902832,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.825855255126953
+        },
+        {
+          "steps": 10240,
+          "expected_return": -4.213096618652344
+        },
+        {
+          "steps": 20480,
+          "expected_return": 1.6848944425582886
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.129064559936523
+        },
+        {
+          "steps": 40960,
+          "expected_return": 7.989543914794922
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.655092239379883
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.951311111450195
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.982806205749512
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.988922119140625
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.993207931518555
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.995342254638672
+        }
+      ],
+      "metrics_sha256": "7445cecf6eecb5a9ed96b355613e2184d78180f4d5ab1f9569790eaf845ead6d"
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 109,
+      "output_path": "results/matrix_projected_confirmation100k_20261026T121417Z/bppo_penalty_seed109",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "d50195f53a08589628703e489ceabfb6421572fffd49496351368dd05adbe6fd",
+      "summary_sha256": "39d7cd5e98315fcb25b3004abcb9bd646019d4917085d4386f9528d8906cb3c5",
+      "final": {
+        "execution_policy_expected_return": 9.99534797668457,
+        "greedy_return": 10.0,
+        "optimal_action_probability": 0.9995138049125671,
+        "greedy_actions": [
+          2,
+          0
+        ]
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.734000887298584,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -19.79644203186035
+        },
+        {
+          "steps": 10240,
+          "expected_return": -3.8090765476226807
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.4580979347229004
+        },
+        {
+          "steps": 30720,
+          "expected_return": 6.61445951461792
+        },
+        {
+          "steps": 40960,
+          "expected_return": 8.28541374206543
+        },
+        {
+          "steps": 51200,
+          "expected_return": 9.75775146484375
+        },
+        {
+          "steps": 61440,
+          "expected_return": 9.960742950439453
+        },
+        {
+          "steps": 71680,
+          "expected_return": 9.985143661499023
+        },
+        {
+          "steps": 81920,
+          "expected_return": 9.992298126220703
+        },
+        {
+          "steps": 92160,
+          "expected_return": 9.994362831115723
+        },
+        {
+          "steps": 100000,
+          "expected_return": 9.99534797668457
+        }
+      ],
+      "metrics_sha256": "f53335f81b0ad3a215298fe5708e10e878ec78499cb59ee22c9b4e50f42a8ca0"
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "declared_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "eligible_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "threshold_successes": 10,
+      "declared_seed_count": 10,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 10,
+          "mean": 10.997233867645264,
+          "median": 10.997447967529297,
+          "sample_sd_across_training_seeds": 0.0009598625793349596,
+          "bootstrap_95pct_mean": [
+            10.996675291061402,
+            10.997764313220976
+          ],
+          "bootstrap_95pct_median": [
+            10.996015548706055,
+            10.997988224029541
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 10,
+          "mean": 8.594157839660644,
+          "median": 8.60032807044983,
+          "sample_sd_across_training_seeds": 0.06198936959446705,
+          "bootstrap_95pct_mean": [
+            8.558765448608398,
+            8.631649783273698
+          ],
+          "bootstrap_95pct_median": [
+            8.539987969207763,
+            8.638623664855958
+          ]
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "declared_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "eligible_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "threshold_successes": 10,
+      "declared_seed_count": 10,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 10,
+          "mean": 9.992663764953614,
+          "median": 9.992668628692627,
+          "sample_sd_across_training_seeds": 0.0008026242255279277,
+          "bootstrap_95pct_mean": [
+            9.992181766033173,
+            9.993123438358307
+          ],
+          "bootstrap_95pct_median": [
+            9.992197513580322,
+            9.993197917938232
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 10,
+          "mean": 5.626508686981201,
+          "median": 5.636462516784668,
+          "sample_sd_across_training_seeds": 0.15494236072157147,
+          "bootstrap_95pct_mean": [
+            5.534359649963379,
+            5.718243790851593
+          ],
+          "bootstrap_95pct_median": [
+            5.484204985046387,
+            5.751857202911378
+          ]
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "declared_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "eligible_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "threshold_successes": 10,
+      "declared_seed_count": 10,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 10,
+          "mean": 10.998305606842042,
+          "median": 10.998348712921143,
+          "sample_sd_across_training_seeds": 0.00035927809986052245,
+          "bootstrap_95pct_mean": [
+            10.998088257312775,
+            10.998506453037262
+          ],
+          "bootstrap_95pct_median": [
+            10.998018741607666,
+            10.998537540435791
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 10,
+          "mean": 8.546326189041137,
+          "median": 8.580058699417114,
+          "sample_sd_across_training_seeds": 0.0842494862729597,
+          "bootstrap_95pct_mean": [
+            8.49552231757927,
+            8.59409025675392
+          ],
+          "bootstrap_95pct_median": [
+            8.496849901580811,
+            8.59179768333435
+          ]
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "declared_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "eligible_seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "threshold_successes": 10,
+      "declared_seed_count": 10,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 10,
+          "mean": 9.994743251800537,
+          "median": 9.994794845581055,
+          "sample_sd_across_training_seeds": 0.000582022234319286,
+          "bootstrap_95pct_mean": [
+            9.994399828910828,
+            9.995083906650542
+          ],
+          "bootstrap_95pct_median": [
+            9.994281768798828,
+            9.995284080505371
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 10,
+          "mean": 5.650247102584839,
+          "median": 5.612030693817139,
+          "sample_sd_across_training_seeds": 0.11266146373979931,
+          "bootstrap_95pct_mean": [
+            5.586274683702468,
+            5.719061739870071
+          ],
+          "bootstrap_95pct_median": [
+            5.548805995941162,
+            5.767360060119628
+          ]
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.7224672001371107,
+        0.9999999999999999
+      ]
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "game": "climbing",
+      "eligible": true,
+      "seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "expected_return_differences": [
+        0.0025091171264648438,
+        0.0013742446899414062,
+        0.0018625259399414062,
+        0.0007171630859375,
+        -0.00030612945556640625,
+        0.0007486343383789062,
+        0.0006084442138671875,
+        0.0004825592041015625,
+        0.0023050308227539062,
+        0.000415802001953125
+      ],
+      "difference_statistics": {
+        "seed_count": 10,
+        "mean": 0.0010717391967773437,
+        "median": 0.0007328987121582031,
+        "sample_sd_across_training_seeds": 0.0009082699484636028,
+        "bootstrap_95pct_mean": [
+          0.0005632328987121582,
+          0.0016042733192443849
+        ],
+        "bootstrap_95pct_median": [
+          0.0004825592041015625,
+          0.0018625259399414062
+        ]
+      },
+      "relative_mean_change_percent": 0.009745534283220853
+    },
+    {
+      "game": "penalty",
+      "eligible": true,
+      "seeds": [
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "expected_return_differences": [
+        0.0025634765625,
+        0.00013446807861328125,
+        0.002201080322265625,
+        0.0020999908447265625,
+        0.00130462646484375,
+        0.003192901611328125,
+        0.0019779205322265625,
+        0.001827239990234375,
+        0.0026330947875976562,
+        0.0028600692749023438
+      ],
+      "difference_statistics": {
+        "seed_count": 10,
+        "mean": 0.002079486846923828,
+        "median": 0.0021505355834960938,
+        "sample_sd_across_training_seeds": 0.0008732051663067364,
+        "bootstrap_95pct_mean": [
+          0.0015233993530273438,
+          0.0025559568405151365
+        ],
+        "bootstrap_95pct_median": [
+          0.0016412734985351562,
+          0.002711772918701172
+        ]
+      },
+      "relative_mean_change_percent": 0.02081013527360971
+    }
+  ],
+  "validation_decision": "passed",
+  "paper_reproduction": "not_established",
+  "unused_seeds_at_freeze": true
+}

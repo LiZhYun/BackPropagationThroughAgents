@@ -58,6 +58,34 @@ matrix figure-to-logger mapping is unresolved, and matrix payoff ceilings
 prevent strict improvement in maximum return. Cross-paper sample-efficiency
 and algorithm-superiority claims require additional matching and evidence.
 
+## Completed 100k validation
+
+All 40 declared runs complete with valid provenance, budgets and evaluation
+records. The frozen BPPO configuration criterion **passes on both games**:
+all ten unused training seeds achieve an optimal greedy action and expected
+execution reward above 95% of the ceiling. The matched AR-PPO control also
+passes in all ten seeds per game. The [complete report](../experiments/matrix_confirmation100k_results_20261026.json)
+and [seed-level CSV](../experiments/matrix_confirmation100k_results_20261026.csv)
+retain every run, probability-derived scores, audit hashes, curve areas and uncertainty.
+
+| Game | BPPO expected return, mean ± seed SD | AR-PPO expected return, mean ± seed SD | Successes per method |
+| --- | ---: | ---: | ---: |
+| Climbing, ceiling 11 | 10.998306 ± 0.000359 | 10.997234 ± 0.000960 | 10/10 |
+| Penalty, ceiling 10 | 9.994743 ± 0.000582 | 9.992664 ± 0.000803 | 10/10 |
+
+Paired BPPO-minus-AR-PPO endpoint means are +0.001072 for Climbing (95%
+bootstrap interval [0.000563, 0.001604]) and +0.002079 for Penalty
+([0.001523, 0.002556]). These are small differences near the ceilings:
+approximately +0.0097% and +0.0208%. Curve-area means are mixed: BPPO/AR-PPO
+8.5463/8.5942 on Climbing and 5.6502/5.6265 on Penalty. The evidence does not
+support a broad algorithm-superiority claim.
+
+Each 10/10 success count has a Wilson 95% interval of approximately [0.7225, 1],
+not a guarantee of perfect population reliability. This result validates the
+selected 100k reconstruction configuration. The separate 1M development study
+is still running, and the report's `paper_reproduction` remains
+`not_established` for the reasons above.
+
 ## Reporting
 
 The standard-library-only reporter audits the pre-run plan against its job-ledger
