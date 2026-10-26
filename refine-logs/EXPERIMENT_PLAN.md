@@ -31,6 +31,8 @@ Anti-claims: improvement only comes from changed simulator physics, more environ
 
 After the100k HalfCheetah pilot (136–186seconds perrun), allow at most four concurrent CPU workers across this project: two for the longer MuJoCo check and two for short matrix/SMAC diagnostics. Each requests at most2CPUs/8GB, so the ceiling is8CPUs/32GB. Record job dependencies to enforce this limit. This supersedes the initial two-worker ceiling above.
 
+The current independent two-worker arrays use matching-index dependencies: successor worker `i` waits for predecessor worker `i`. Four sequential chains preserve the same worker/resource ceiling while releasing work as each predecessor finishes. The verified graph is in [the worker schedule](../docs/worker_schedule.md); future submissions must preserve that cap.
+
 Do not invent GPU-hour estimates before measuring simulator throughput. Known budgets are in the target manifest. Full reproduction spans dozens of tasks and hundreds of seed runs; measured pilot costs determine scheduling. No paid external compute is assumed. Preserve the concurrent unrelated reproduction.
 
 ## Risks and interpretation

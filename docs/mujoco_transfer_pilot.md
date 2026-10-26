@@ -52,3 +52,7 @@ Job **21212297** is queued after Football **21209248**, with frozen manifest
 `results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json`. Expanded
 configurations and all source hashes were verified before submission. No
 learning outcomes are available yet.
+
+The current scheduler uses matching worker indices for this dependency; see
+the [verified worker schedule](worker_schedule.md). Each successor can start
+when its own preceding worker finishes, within the unchanged four-worker cap.

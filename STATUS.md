@@ -47,10 +47,12 @@ Full reproduction and performance beyond the papers are not yet established.
 - 21209248: five matched Football 3v1 controls at 1M steps, seed 0, after 21208906. Complete-match evaluation; two workers, 12h cap.
 - 21210161: completed all 18 frozen-policy Prey sampling conditions (1,800 episodes); one CPU/4GB. Both dependencies have completed and SMAC is running.
 - 21211006: nine matched AgentMixer entropy controls at 1M steps, seeds 0–2, coefficient 0.01 for residual/bounded/identity variants, after the matrix control (21211813); two workers, 4h cap.
-- 21211813: six matrix joint AgentMixer controls, actor LR 0.0125 at the unchanged 200k budget, after both SMAC workers (21209234); two workers at 1CPU/4GB, 30-minute cap. Frozen source is identical to the preceding fast-float64 experiment; only actor LR differs.
+- 21211813: six matrix joint AgentMixer controls, actor LR 0.0125 at the unchanged 200k budget, after the matching SMAC worker (21209234); two workers at 1CPU/4GB, 30-minute cap. Frozen source is identical to the preceding fast-float64 experiment; only actor LR differs.
 - 21212197: eight matched Prey 1M controls, factorized/joint modifiers with default or smooth 0.1–10 scale range, both penalties, seed 0; after entropy job 21211006. Two workers, 4h cap, frozen after all 621 tests passed.
 - 21212297: eleven Ant 2×4/Walker 2×3 transfer pilots, 500k, seed 0; after Football 21209248. Ant observation settings stay distinct for the two papers; matched method controls, canonical 1,000-step horizons. Two workers, 8h cap.
 - Earlier jobs 21196118, 21196495, 21196497, 21198089, 21198090 and 21198169 all completed. Tiny integration 21196515 and native restart validation 21198088 also completed. Failed 21196276 remains preserved.
+
+Queued worker `i` now waits for predecessor worker `i`. The two chains are BPPO/AR → Football → Ant/Walker, and SMAC → matrix → entropy → Prey, each with indices 0 and 1. All ten pending dependencies were verified; see `docs/worker_schedule.md`.
 
 At most four workers run concurrently, each at most 2CPUs/8GB. Exact manifests and scheduler IDs are in `experiments/jobs.jsonl`; query those IDs before adding jobs. `python scripts/report_progress.py` reads artifact progress. `python scripts/check_paper_targets.py` verifies all 45 target links (six numeric, 39 digitized), not performance.
 

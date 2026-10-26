@@ -104,3 +104,7 @@ The focused integration suite passes 182 tests; the full suite passes 621 with
 one CUDA-only skip (2026-10-26). Job **21212197** queues the eight frozen runs
 at `results/prey_modifier_bound1m_20261026T111603Z`, after entropy job 21211006.
 No learning result is available yet.
+
+The current scheduler uses matching worker indices for this dependency; see
+the [verified worker schedule](worker_schedule.md). Each successor can start
+when its own preceding worker finishes, within the unchanged four-worker cap.
