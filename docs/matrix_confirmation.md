@@ -7,7 +7,7 @@ and entropy coefficient 0.1, held for half the budget and linearly reduced to
 the smaller coefficient. This is configuration selection, not evidence that
 peer feedback outperforms the matched AR-PPO baseline.
 
-Two separate studies were frozen on 2026-10-26, before any of their runs started:
+Two initial studies were frozen on 2026-10-26, before any of their runs started:
 
 | Study | Methods and games | Seeds | Decisions per run | Purpose |
 | --- | --- | --- | --- | --- |
@@ -106,6 +106,50 @@ superiority. The longer entropy schedule and development seeds remain separate
 from the independent 100k study; the validation decision is `not_assessed` and
 paper reproduction is `not_established`.
 
+## Independent 1M confirmation
+
+After all twelve development runs passed, a separate five-seed full-budget
+study was frozen. The accepted BPTA source specifies mean and standard deviation
+over five training seeds with a fixed sequential execution order. The new study
+uses BPPO and matched AR-PPO on both games: **20 runs at 1M decisions**, seeds
+**3000–3004**. These seeds are absent from all 533 previously prepared runs
+across 48 manifests, including the queued AgentMixer confirmation.
+
+The [plan](../experiments/matrix_confirmation1m_plan.json) retains the exact
+eight-module source of the completed 1M development study. Every resolved
+configuration field except training seed matches its method/game development
+run; the copied trainer validates all twenty configurations and software
+versions match. The entropy hold/decay remains 500k–1M. The
+[prior-seed inventory](../experiments/matrix_confirmation1m_prior_seeds_20261026.json)
+and plan were frozen before launch; no development or 100k outcomes are pooled
+into the new confirmation.
+
+All twenty declared runs must complete validly before a completed decision.
+Every BPPO seed must select the optimal greedy action and reach exact expected
+execution reward at least 10.45 on Climbing or 9.5 on Penalty. AR-PPO outcomes,
+paired endpoint differences and normalized curve areas remain separate
+comparisons. Report whole-seed bootstrap uncertainty and Wilson success
+intervals, retain failures, and do not replace seeds or select earlier peaks.
+
+The [preflight](../experiments/matrix_confirmation1m_preflight_20261026.json)
+has no integrity errors and retains all twenty unstarted runs. The reporter's
+37 checks include this explicit five-seed/full-budget rule and require the
+matched control to finish. No confirmation result is available yet.
+
+Job **21218775** uses one serial worker, one CPU, 4GB and a 60-minute cap.
+Development runs took 44.34–88.65 seconds each; twenty runs at the measured
+maximum would take about 29.55 minutes. The job follows entropy worker
+`21211006_1` and precedes the still-pending Prey worker `21212197_1`.
+Its [verified scheduling record](../experiments/matrix_confirmation1m_schedule_20261026.json)
+preserves the four-worker ceiling. The job was submitted held and released only
+after provenance, preflight, dependency and resource checks.
+
+Matching the budget and seed count does not resolve historical metric or
+architecture differences. Both methods solved development seeds, so a special
+peer-feedback advantage is not assumed. The report still distinguishes
+configuration validation from full paper reproduction and cross-paper sample
+efficiency.
+
 ## Reporting
 
 The standard-library-only reporter audits the pre-run plan against its job-ledger
@@ -126,7 +170,8 @@ python scripts/report_matrix_validation.py \
 ```
 
 Use `experiments/matrix_budget1m_plan.json` and different output names for the
-development extension. Outputs must be new files. The reporter does not query
+development extension, or `experiments/matrix_confirmation1m_plan.json` for the
+new independent full-budget study. Outputs must be new files. The reporter does not query
 the scheduler and its `paper_reproduction` field remains `not_established` even
 when the specific independent configuration validation passes. Training
 metadata's generic matrix-development label is retained; validation context

@@ -190,3 +190,20 @@ were verified before release. The [schedule record](../experiments/smac_process_
 retains the old and new states. All edges use `afterany`; a failed diagnostic
 remains evidence and does not silently retry or alter the frozen entropy run.
 A0/A1 and B1 are unchanged, so the same four-worker ceiling applies.
+
+## Independent full-budget matrix validation inserted, 2026-10-26
+
+The [five-seed 1M study](matrix_confirmation.md#independent-1m-confirmation), job
+`21218775`, adds one serial worker to B1 after its active entropy worker:
+
+```text
+21211006_1 → 21218775_0 → 21212197_1
+entropy       matrix 1M    Prey
+```
+
+Twenty configurations run serially within 1CPU/4GB and a 60-minute limit. The
+job was submitted held and all twenty declarations passed preflight. Only the
+pending Prey worker 1 was held and rewired; both workers' resource/dependency
+checks passed before release. The [verification record](../experiments/matrix_confirmation1m_schedule_20261026.json)
+retains old and new states. A0/A1 and B0 are unchanged. At most four workers
+still run concurrently, each at most 2CPUs/8GB, and no active experiment was changed.

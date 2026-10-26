@@ -1,0 +1,63 @@
+{
+  "recorded_utc": "2026-10-26T17:58:13.183237+00:00",
+  "scope": "Insert the independent full-budget matrix study on B1; only its pending Prey successor changes dependency.",
+  "before": {
+    "21218775_0": {
+      "JobId": "21218775",
+      "ArrayJobId": "21218775",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21211006_1(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "0"
+    },
+    "21212197_1": {
+      "JobId": "21212197",
+      "ArrayJobId": "21212197",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21211006_1(unfulfilled)",
+      "TimeLimit": "04:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "265890"
+    }
+  },
+  "verified_while_held": {
+    "21218775_0": {
+      "JobId": "21218775",
+      "ArrayJobId": "21218775",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21211006_1(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "0"
+    },
+    "21212197_1": {
+      "JobId": "21212197",
+      "ArrayJobId": "21212197",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21218775_0(unfulfilled)",
+      "TimeLimit": "04:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    }
+  },
+  "new_chain": [
+    "21211006_1",
+    "21218775_0",
+    "21212197_1"
+  ],
+  "resource_ceiling": "Four serial chains remain; at most four workers, each <=2CPU/8GB. New worker1CPU/4GB for60min.",
+  "unchanged": "Active jobs and all frozen training sources/configurations/submission scripts; A0/A1 and B0 dependencies."
+}

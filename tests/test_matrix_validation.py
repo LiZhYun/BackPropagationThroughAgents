@@ -319,3 +319,20 @@ def test_empty_study_does_not_pass_vacuously(tmp_path):
     plan["runs"] = []
     register(tmp_path, plan)
     assert report(tmp_path)["errors"] == ["training_seeds must be nonempty and unique"]
+
+
+def test_explicit_full_budget_five_seed_bppo_rule_requires_the_matched_control(tmp_path, monkeypatch):
+    from bta_repro import matrix_validation as module
+    from bta_repro.learning_curves import seed_statistics
+    monkeypatch.setattr(module, "seed_statistics", lambda values, **kw: seed_statistics(values))
+    plan = study(tmp_path, seeds=range(3000, 3005), steps=1000000)
+    plan["validation_rule"] = {"kind": "all_seeds_meet_threshold", "algorithms": ["bppo"],
+                               "games": ["climbing", "penalty"], "required_seed_count": 5}
+    register(tmp_path, plan)
+    result = report(tmp_path)
+    assert len(result["runs"]) == 20 and result["validation_decision"] == "passed"
+    assert len(result["paired_comparisons"]) == 2
+    assert result["paper_reproduction"] == "not_established"
+    baseline = next(r for r in plan["runs"] if r["algorithm"] == "arppo")
+    (tmp_path / baseline["output_path"] / "summary.json").unlink()
+    assert report(tmp_path)["validation_decision"] == "incomplete"

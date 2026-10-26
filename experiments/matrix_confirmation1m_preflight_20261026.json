@@ -1,0 +1,271 @@
+{
+  "study_id": "matrix_confirmation1m_20261026",
+  "scope": "Independent five-seed configuration validation at the1M matrix budget; matched AR-PPO control retained; historical protocol and algorithm-advantage qualifications remain.",
+  "plan_sha256": "77a01773f649a708e1b7b0ee081142e1340bfaa1bdaad6c23dbf6817183bfcea",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 3000,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_climbing_seed3000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 3001,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_climbing_seed3001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 3002,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_climbing_seed3002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 3003,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_climbing_seed3003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "seed": 3004,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_climbing_seed3004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 3000,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_penalty_seed3000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 3001,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_penalty_seed3001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 3002,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_penalty_seed3002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 3003,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_penalty_seed3003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "seed": 3004,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/arppo_penalty_seed3004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 3000,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_climbing_seed3000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 3001,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_climbing_seed3001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 3002,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_climbing_seed3002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 3003,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_climbing_seed3003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "seed": 3004,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_climbing_seed3004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 3000,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_penalty_seed3000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 3001,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_penalty_seed3001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 3002,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_penalty_seed3002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 3003,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_penalty_seed3003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "seed": 3004,
+      "output_path": "results/matrix_confirmation1m_20261026T175229Z/bppo_penalty_seed3004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "arppo",
+      "game": "climbing",
+      "declared_seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "eligible_seeds": [],
+      "threshold_successes": 0,
+      "declared_seed_count": 5,
+      "complete": false,
+      "aggregate": null,
+      "threshold_success_wilson_95pct": null
+    },
+    {
+      "algorithm": "arppo",
+      "game": "penalty",
+      "declared_seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "eligible_seeds": [],
+      "threshold_successes": 0,
+      "declared_seed_count": 5,
+      "complete": false,
+      "aggregate": null,
+      "threshold_success_wilson_95pct": null
+    },
+    {
+      "algorithm": "bppo",
+      "game": "climbing",
+      "declared_seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "eligible_seeds": [],
+      "threshold_successes": 0,
+      "declared_seed_count": 5,
+      "complete": false,
+      "aggregate": null,
+      "threshold_success_wilson_95pct": null
+    },
+    {
+      "algorithm": "bppo",
+      "game": "penalty",
+      "declared_seeds": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "eligible_seeds": [],
+      "threshold_successes": 0,
+      "declared_seed_count": 5,
+      "complete": false,
+      "aggregate": null,
+      "threshold_success_wilson_95pct": null
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "game": "climbing",
+      "eligible": false
+    },
+    {
+      "game": "penalty",
+      "eligible": false
+    }
+  ],
+  "validation_decision": "incomplete",
+  "paper_reproduction": "not_established",
+  "unused_seeds_at_freeze": true
+}
