@@ -141,6 +141,10 @@ finishes all ten unused seeds at 200k: all greedy actions are optimal, but only 
 meet the predeclared local expected-return threshold, so the criterion fails.
 Central and local scores remain separate.
 
+A [paired modifier ablation](docs/matrix_modifier_ablation.md) is queued at the
+1M matrix budget on both games, using five fresh seeds per arm. The identity
+control freezes only the modifier; every other setting matches.
+
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the
 frozen independent HalfCheetah study, recomputes scores from raw episodes and
 verifies every rollout against the training budget before comparing results.

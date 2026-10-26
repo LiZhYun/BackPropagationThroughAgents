@@ -1,0 +1,92 @@
+{
+  "study_id": "matrix_agentmixer_ablation1m_20261026",
+  "frozen_utc": "2026-10-26T19:49:42.647207+00:00",
+  "scope": "Matched learned versus frozen-identity joint AgentMixer at the accepted 1M matrix budget on both games. The earlier 200k Climbing validation remains failed and separate.",
+  "training_steps": 1000000,
+  "games": [
+    "climbing",
+    "penalty"
+  ],
+  "training_seeds": [
+    4000,
+    4001,
+    4002,
+    4003,
+    4004
+  ],
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702"
+  },
+  "arms": {
+    "learned": {
+      "plan": "experiments/matrix_agentmixer_learned1m_plan.json",
+      "sha256": "fcb11e24a9bb23ec8a0a737336b0ec11fdf102900ab4fd9b1174bda1464a3c2b",
+      "manifest": "results/matrix_agentmixer_learned1m_20261026T194942Z/manifest.json",
+      "submit": "results/matrix_agentmixer_learned1m_20261026T194942Z/submit.sbatch"
+    },
+    "identity": {
+      "plan": "experiments/matrix_agentmixer_identity1m_plan.json",
+      "sha256": "97550428e26199f98787abbee5168457a98e4bc0adc936da71eeeb6d4de199bf",
+      "manifest": "results/matrix_agentmixer_identity1m_20261026T194942Z/manifest.json",
+      "submit": "results/matrix_agentmixer_identity1m_20261026T194942Z/submit.sbatch"
+    }
+  },
+  "question": "Does learning the mode-preserving joint modifier improve local execution relative to the same initialized policy with the modifier fixed at log scale zero?",
+  "expected_if_modifier_helps": "Positive paired learned-minus-identity final local expected returns and/or better local learning-curve area or greedy reliability; outcomes can also be negative.",
+  "selected_configuration": "experiments/matrix_agentmixer_confirmation200k_plan.json",
+  "selected_configuration_sha256": "38e1c18fe449a0df9657be174325f202c7158d081d16a915200afb7f5b501f63",
+  "changes_from_selected": "Only budget 200k to 1M and new training seeds for the learned arm. Identity differs only by modifier_enabled=False. Constant entropy and actor rates remain unchanged.",
+  "source_qualification": "Current eight-module snapshot includes previously verified default-preserving runner changes. Exact short-case parity against the selected frozen source covers 12 cases; new modifier flag does not change the default path.",
+  "default_parity": "experiments/matrix_identity_default_parity_20261026.json",
+  "default_parity_sha256": "2ed57accc1ae97bde963478e8cef2ede8b49ee5186c8087b14e035bc68d3c199",
+  "prior_run_inventory": "experiments/matrix_agentmixer_ablation1m_prior_seeds_20261026.json",
+  "prior_run_inventory_sha256": "43761f774065fba8dd0212c10e84cabbf065535abc52c024cbddf8ff702718b5",
+  "reporting": {
+    "primary": "For each game, mean paired difference in final local expected return, learned minus identity.",
+    "secondary": [
+      "normalized local expected-return curve area",
+      "greedy payoff and threshold-success counts"
+    ],
+    "diagnostics": [
+      "central expected return",
+      "local and central optimal-action probability",
+      "modifier scale extrema"
+    ],
+    "aggregate_gate": "All 20 declared runs must complete with valid source/configuration/score audits before either game receives a paired aggregate.",
+    "uncertainty": "10,000 whole-pair bootstrap draws with private seed 1729 and pointwise 95% percentile intervals. Five seeds give limited precision; no family-wise or broad superiority claim.",
+    "missing_or_failed": "Retain every seed; no replacements, selected peaks, development pooling or outcome-driven configuration changes.",
+    "historical_limit": "Reconstructed joint modifier, networks and numerical guards remain explicit differences. Matching the 1M budget alone does not prove historical equivalence."
+  },
+  "cost_per_arm": {
+    "workers_per_arm": 1,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 4,
+    "wall_time_minutes": 180,
+    "measured_200k_seconds": [
+      129.15323207096662,
+      129.01672091300134,
+      130.88226044300245,
+      126.58267460495699,
+      130.7925785239786,
+      130.2349298140034,
+      127.55314731999533,
+      127.20728223596234,
+      129.75489392498275,
+      127.61758008599281
+    ],
+    "linear_1m_seconds_per_run": 654.4113022150123,
+    "linear_ten_run_worker_seconds": 6544.113022150123,
+    "margin": 1.5,
+    "rounded_worker_hours": 3,
+    "limitations": "Planning estimate from Climbing learned-modifier runs; identity and Penalty runtime may differ. Failures/timeouts retained; no automatic retries."
+  },
+  "scheduling": "Each arm is one serial worker after the matching existing Prey worker21212197_i and before still-pending recurrent Prey21219719_i; at most four project workers total.",
+  "report_command": "python scripts/report_matrix_ablation.py experiments/matrix_agentmixer_ablation1m_plan.json --output NEW_REPORT.json"
+}

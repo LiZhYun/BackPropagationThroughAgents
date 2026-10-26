@@ -278,3 +278,24 @@ scheduler states. Array concurrency is also capped at two. Each task names a
 unique output; no stride or repeated configuration is used. Together with the
 unchanged A0/A1 chains, at most four project workers can run. This is a
 scheduling change, with no changes to the training backend or experiments.
+
+
+## Paired full-budget matrix study inserted, 2026-10-26
+
+Two bounded serial workers add the missing learned/identity modifier comparison
+on both games at 1M. The latest B chains are:
+
+```text
+B0: ... → 21212197_0 → 21220499_0 → 21219719_0 → 21220264_0 → _2 → _4 → _6 → _8
+B1: ... → 21212197_1 → 21220500_0 → 21219719_1 → 21220264_1 → _3 → _5 → _7 → _9
+```
+
+Each new matrix job has one task, one CPU/4GB, ten serial runs, a three-hour
+cap and no automatic requeue. Both recurrent Prey workers were still pending
+when held. The new jobs were submitted held, all 20 configurations passed the
+[paired preflight](../experiments/matrix_agentmixer_ablation1m_preflight_20261026.json),
+and all four dependencies/resource requests were checked before release.
+The [schedule proof](../experiments/matrix_agentmixer_ablation1m_schedule_20261026.json)
+retains the before/after states. Active jobs were unchanged. The A chains
+remain Football → Football integration → Ant/Walker → independent HalfCheetah;
+at most four workers still run concurrently.

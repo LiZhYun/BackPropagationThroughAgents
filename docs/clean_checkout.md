@@ -96,6 +96,13 @@ are retained. Online locked installation succeeded. Hosted CI remains untested.
 
 ## Repeat on another machine
 
+The later [matrix identity-control verification](../experiments/matrix_identity_wheel_verification_20261026.json)
+builds another fresh wheel and passes **899 tests, one CUDA-only skip in
+55.48 seconds**, with source-path injection disabled. All installed module,
+README, license, console-command and recurrent Prey replay checks pass. This
+includes the optional matrix identity control and the paired-study reporter.
+The existing native training environments remain unchanged.
+
 From a fresh checkout, run:
 
 ```bash

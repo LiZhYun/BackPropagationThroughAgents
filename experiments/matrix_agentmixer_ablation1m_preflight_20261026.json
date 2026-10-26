@@ -1,0 +1,287 @@
+{
+  "study_id": "matrix_agentmixer_ablation1m_20261026",
+  "plan_sha256": "2255f9a34d26234e18909b991c318ac8b0eebf7cc135b3fd7515655733f939b2",
+  "errors": [],
+  "status": "incomplete",
+  "arms": {
+    "learned": {
+      "study_id": "matrix_agentmixer_learned1m_20261026",
+      "scope": "One arm of the predeclared paired AgentMixer/identity matrix study at 1M. Fresh training seeds; no cross-paper superiority claim.",
+      "plan_sha256": "fcb11e24a9bb23ec8a0a737336b0ec11fdf102900ab4fd9b1174bda1464a3c2b",
+      "errors": [],
+      "runs": [
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4000,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_climbing_seed4000",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4001,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_climbing_seed4001",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4002,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_climbing_seed4002",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4003,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_climbing_seed4003",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4004,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_climbing_seed4004",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4000,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_penalty_seed4000",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4001,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_penalty_seed4001",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4002,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_penalty_seed4002",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4003,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_penalty_seed4003",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4004,
+          "output_path": "results/matrix_agentmixer_learned1m_20261026T194942Z/agentmixer_penalty_seed4004",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        }
+      ],
+      "groups": [
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "declared_seeds": [
+            4000,
+            4001,
+            4002,
+            4003,
+            4004
+          ],
+          "eligible_seeds": [],
+          "threshold_successes": 0,
+          "declared_seed_count": 5,
+          "complete": false,
+          "aggregate": null,
+          "threshold_success_wilson_95pct": null
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "declared_seeds": [
+            4000,
+            4001,
+            4002,
+            4003,
+            4004
+          ],
+          "eligible_seeds": [],
+          "threshold_successes": 0,
+          "declared_seed_count": 5,
+          "complete": false,
+          "aggregate": null,
+          "threshold_success_wilson_95pct": null
+        }
+      ],
+      "paired_comparisons": [],
+      "validation_decision": "incomplete",
+      "paper_reproduction": "not_established",
+      "unused_seeds_at_freeze": true
+    },
+    "identity": {
+      "study_id": "matrix_agentmixer_identity1m_20261026",
+      "scope": "One arm of the predeclared paired AgentMixer/identity matrix study at 1M. Fresh training seeds; no cross-paper superiority claim.",
+      "plan_sha256": "97550428e26199f98787abbee5168457a98e4bc0adc936da71eeeb6d4de199bf",
+      "errors": [],
+      "runs": [
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4000,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_climbing_seed4000",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4001,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_climbing_seed4001",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4002,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_climbing_seed4002",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4003,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_climbing_seed4003",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "seed": 4004,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_climbing_seed4004",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4000,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_penalty_seed4000",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4001,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_penalty_seed4001",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4002,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_penalty_seed4002",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4003,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_penalty_seed4003",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "seed": 4004,
+          "output_path": "results/matrix_agentmixer_identity1m_20261026T194942Z/agentmixer_penalty_seed4004",
+          "status": "not_started",
+          "eligible": false,
+          "errors": []
+        }
+      ],
+      "groups": [
+        {
+          "algorithm": "agentmixer",
+          "game": "climbing",
+          "declared_seeds": [
+            4000,
+            4001,
+            4002,
+            4003,
+            4004
+          ],
+          "eligible_seeds": [],
+          "threshold_successes": 0,
+          "declared_seed_count": 5,
+          "complete": false,
+          "aggregate": null,
+          "threshold_success_wilson_95pct": null
+        },
+        {
+          "algorithm": "agentmixer",
+          "game": "penalty",
+          "declared_seeds": [
+            4000,
+            4001,
+            4002,
+            4003,
+            4004
+          ],
+          "eligible_seeds": [],
+          "threshold_successes": 0,
+          "declared_seed_count": 5,
+          "complete": false,
+          "aggregate": null,
+          "threshold_success_wilson_95pct": null
+        }
+      ],
+      "paired_comparisons": [],
+      "validation_decision": "incomplete",
+      "paper_reproduction": "not_established",
+      "unused_seeds_at_freeze": true
+    }
+  },
+  "paired_comparisons": [],
+  "paper_reproduction": "not_established",
+  "interpretation": "Paired differences use whole training seeds and the exact final budget. Intervals are pointwise descriptive bootstrap intervals, not family-wise or cross-paper superiority claims. Missing or invalid runs prevent every paired aggregate; central scores remain separate in each arm."
+}

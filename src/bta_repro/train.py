@@ -43,6 +43,7 @@ class Config:
     action_embed_dim: int = 0
     modifier_log_scale_bound: float | None = None
     agentmixer_correlation: str = "factorized"
+    modifier_enabled: bool = True
     joint_distribution_float64: bool = False
     max_grad_norm: float = .5
     temperature: float = 1.
@@ -71,6 +72,13 @@ class Config:
             raise ValueError("modifier_log_scale_bound must be in (0, 8]")
         if self.agentmixer_correlation not in ("factorized", "joint"):
             raise ValueError("agentmixer_correlation must be factorized or joint")
+        if not isinstance(self.modifier_enabled, bool):
+            raise ValueError("modifier_enabled must be boolean")
+        if not self.modifier_enabled:
+            if self.algorithm != "agentmixer":
+                raise ValueError("modifier_enabled=False requires algorithm=agentmixer")
+            if self.modifier_log_scale_bound is not None:
+                raise ValueError("modifier_log_scale_bound requires a learned modifier")
         if not isinstance(self.joint_distribution_float64, bool):
             raise ValueError('joint_distribution_float64 must be boolean')
         if self.joint_distribution_float64 and (self.algorithm != 'agentmixer' or self.agentmixer_correlation != 'joint'):
@@ -105,11 +113,16 @@ def make_policy(config):
         return AutoregressivePolicy(1, 2, 3, config.hidden_dim, action_embed_dim=config.action_embed_dim)
     if config.agentmixer_correlation == "joint":
         from .agentmixer_joint import JointAgentMixerPolicy as AgentMixerPolicy
-        return AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound,
-                                distribution_float64=config.joint_distribution_float64)
+        policy = AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound,
+                                  distribution_float64=config.joint_distribution_float64)
     else:
         from .agentmixer import AgentMixerPolicy
-    return AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound)
+        policy = AgentMixerPolicy(1, 1, 2, 3, config.hidden_dim, log_scale_bound=config.modifier_log_scale_bound)
+    if not config.modifier_enabled:
+        # Its zero-initialized scale head stays at log scale zero. Constructing
+        # the same module preserves actor initialization and the RNG stream.
+        policy.modifier.requires_grad_(False)
+    return policy
 
 
 def make_optimizers(config, policy, critic):
@@ -118,9 +131,10 @@ def make_optimizers(config, policy, critic):
         for i, actor in enumerate(policy.actors):
             optimizers[f"actor_{i}"] = torch.optim.Adam(actor.parameters(), lr=config.learning_rate, eps=1e-5)
     elif config.algorithm == "agentmixer":
-        optimizers["policy"] = torch.optim.Adam([
-            {"params": policy.local_actors.parameters(), "lr": config.learning_rate},
-            {"params": policy.modifier.parameters(), "lr": config.modifier_learning_rate}], eps=1e-5)
+        parameters = [{"params": policy.local_actors.parameters(), "lr": config.learning_rate}]
+        if config.modifier_enabled:
+            parameters.append({"params": policy.modifier.parameters(), "lr": config.modifier_learning_rate})
+        optimizers["policy"] = torch.optim.Adam(parameters, eps=1e-5)
     else:
         optimizers["policy"] = torch.optim.Adam(policy.parameters(), lr=config.learning_rate, eps=1e-5)
     return optimizers
@@ -212,6 +226,9 @@ def train(config: Config, output: Path):
                     else "corrected_mode_preserving_gap_scaling")}.get(config.algorithm, "reference"),
                 "evaluation": "exact joint-action enumeration; AgentMixer executes local policies",
                 "created_utc": datetime.now(timezone.utc).isoformat()}
+    if config.algorithm == "agentmixer" and not config.modifier_enabled:
+        metadata["method_variant"] = ("experimental_joint_identity_control"
+                                      if config.agentmixer_correlation == "joint" else "identity_modifier_control")
     (output / "config.json").write_text(json.dumps(metadata, indent=2) + '\n')
     started = time.monotonic()
     steps, update = 0, 0

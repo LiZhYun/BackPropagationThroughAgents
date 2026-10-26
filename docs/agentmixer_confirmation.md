@@ -90,3 +90,7 @@ stochastic distributions can differ in either direction while preserving
 optimal greedy modes. The results do not establish reliable stochastic local
 execution or a modifier advantage. They also cannot replace the separate
 Predator–Prey or native-simulator evaluations.
+
+The separate [paired modifier study](matrix_modifier_ablation.md) now tests
+the selected setting at 1M on both games with five fresh seeds. It adds an
+identity control and does not replace or change this completed 200k result.

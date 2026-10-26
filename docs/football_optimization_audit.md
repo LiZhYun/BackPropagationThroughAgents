@@ -73,3 +73,20 @@ curve areas are 0.6410, 0.6707 and 0.6850. The audit retains the earlier AR-PPO
 win without substituting it for the final endpoint. AgentMixer and its identity
 control remain unfinished at this snapshot. These are one-seed pilots below
 the paper budget, with no evidence of a method advantage.
+
+
+## Partial native integration gate
+
+Worker 21219475_1 completes all five recurrent variants in 411 seconds, with
+sampled batch peak memory of 3.48GiB. The
+[partial audit](../experiments/football_batch_integration_progress_20261026.json)
+verifies 40 raw evaluation episodes and five complete 50×200 rollout updates.
+Each has 15 epochs and two minibatches: 30 critic steps, 90 BPPO actor steps
+or 30 actor steps for the other methods, with one ValueNorm update per rollout.
+Run times range from 74.49 to 85.88 seconds. Source, configuration, native win
+flags, interaction counts and finite losses all pass.
+
+These are 10k-step correctness checks with only four episodes per evaluation.
+Their scores do not establish learning performance. The remaining five
+feed-forward integrations are pending, so the all-method learning-release gate
+remains closed.
