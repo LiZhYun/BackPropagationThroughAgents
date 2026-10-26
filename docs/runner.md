@@ -1,9 +1,10 @@
-# Feed-forward temporal runner
+# Temporal runner
 
 `runner.collect_rollout` and `runner.update_rollout` provide the shared temporal
 training path for discrete and continuous environments. They use a synchronous
-list of environments, a feed-forward policy, and a centralized scalar critic.
-There are no simulator imports, hidden worker processes, recurrent states,
+list of environments, a feed-forward or optionally recurrent actor policy, and
+a feed-forward centralized scalar critic.
+There are no simulator imports, hidden worker processes,
 automatic checkpoint writes, or environment ownership changes in this module.
 The caller constructs and eventually closes the environments.
 
@@ -51,9 +52,9 @@ bootstraps its actual next state and does not reset an unfinished episode.
 collection arguments.
 
 The returned next observations are an `ObservationCarry`, which behaves as a
-list and retains unfinished episode returns and lengths. Pass this object
+list and retains unfinished episode returns, lengths and optional actor memory. Pass this object
 back to the next collection call. Converting it to an ordinary list discards
-that accounting metadata. A carry is checked against the identities and order
+that metadata and any recurrent memory. A carry is checked against the identities and order
 of its original environments. Completed episode records contain environment
 index, full return, full length, termination/truncation flags, and final info.
 Episodes may span arbitrarily many collection calls.
@@ -101,8 +102,14 @@ policy update, with its own optimizer and gradient clipping. Setting
 `value_coef=0` skips critic optimizer steps. Diagnostics include weighted value
 loss, unweighted mean squared error, update counts, and active-agent fraction.
 
-These are full-rollout, feed-forward updates. Recurrent hidden states,
-minibatching, asynchronous environments, heterogeneous agent shapes, and
+These are full-rollout updates. Optional [recurrent actors](recurrent_actors.md)
+pack incoming hidden state after each local observation in `batch.obs`; raw
+environment dimensions and centralized `batch.state` remain unchanged. The
+encoder and GRU are recomputed during every likelihood evaluation while the
+incoming state stays detached, giving one-decision gradient chunks. Each
+environment's memory resets on termination or truncation and otherwise carries
+across updates. Longer gradient chunks, recurrent critics, minibatching,
+asynchronous environments, heterogeneous agent shapes, and
 distributed training remain outside this module. Tests use deterministic fake
 environments to establish boundary handling, raw-action retention, likelihood
 identity, masking, and finite small updates; they do not establish simulator

@@ -2,6 +2,12 @@
 
 `bta-train-simulator` (or `python -m bta_repro.simulator_train`) connects SMACv2, MA-MuJoCo, Football and Predator–Prey to the shared rollout and update implementation. It supports `mappo`, `arppo`, `bppo`, and `agentmixer` with discrete or continuous actions. Optional simulator packages are imported only when the corresponding environment is constructed.
 
+`recurrent_actor` defaults to `false`. Discrete policies can enable private GRU
+actor memory with `true`; factorized AgentMixer and its identity control are
+supported. The shared critic remains feed-forward. See the [recurrent actor
+guide](recurrent_actors.md) for buffer layout, episode resets, one-decision
+gradient truncation, checkpoint replay and the explicit architecture differences.
+
 Create an explicit JSON configuration, for example:
 
 ```json

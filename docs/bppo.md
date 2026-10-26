@@ -143,9 +143,11 @@ typeset formula.
 
 This initial implementation uses feed-forward actors, fixed agent order,
 homogeneous discrete action spaces, full-rollout updates, and a fixed number of
-epochs. Continuous-action actors, recurrent states, heterogeneous action
-spaces, benchmark-specific encoders, and minibatching are not implemented in
-this module. The sum of log likelihood ratios is exponentiated without an
+epochs. Separate modules provide [continuous-action actors](bppo_continuous.md)
+and optional [recurrent discrete actors](recurrent_actors.md). The latter use
+the same BPPO update with recorded incoming hidden states and one-decision
+gradient chunks. Heterogeneous action spaces and minibatching are not implemented
+here. The sum of log likelihood ratios is exponentiated without an
 undocumented clamp; non-finite ratios or gradients raise an error. Training
 budgets and gradient-norm clipping still need benchmark tuning.
 

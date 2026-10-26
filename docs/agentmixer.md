@@ -23,7 +23,7 @@ The implementation additionally caps unscaled gaps at `1e4 * exp(8)` before mult
 
 The modifier depends on all local policy parameters and the full state. Given those inputs, each agent's action is sampled from its own categorical distribution independently. Shared deterministic features do **not** make these samples conditionally correlated. This implementation does not claim arbitrary correlated joint distributions or a shared stochastic latent variable. It also does not inherit the paper's correlated equilibrium convergence theorem: mode consistency alone is not a practical convergence guarantee.
 
-This first implementation handles homogeneous discrete action spaces and feedforward observations. Recurrent histories, heterogeneous actions, and the paper's continuous Gaussian branch require explicit extensions. The shared trainer is responsible for PPO losses, advantage estimation, rollout accounting, and evaluation. Decentralized stochastic evaluation must be requested explicitly with `decentralized=True`; greedy local evaluation uses the same maximizing action as the centralized policy.
+This module handles homogeneous discrete action spaces with feed-forward actors by default. Separate modules provide optional [private recurrent actors](recurrent_actors.md) and the [continuous Gaussian branch](agentmixer_continuous.md); heterogeneous actions remain unsupported. The shared trainer is responsible for PPO losses, advantage estimation, rollout accounting, and evaluation. Decentralized stochastic evaluation must be requested explicitly with `decentralized=True`; greedy local evaluation uses the same maximizing action as the centralized policy.
 
 ## Verification
 
