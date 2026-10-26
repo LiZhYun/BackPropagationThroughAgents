@@ -73,7 +73,7 @@ The interaction is mixed: behavior noise improves 2/3 small-batch seeds and 1/3 
 
 ## Predator–Prey at 1M transitions
 
-All conditions use training seed 0, twenty completed evaluation episodes, and a separate 100×200-step fixed-window evaluation. Windows include auto-resets and rewards from unfinished segments. The author confirmed that the paper plots evaluation return, but the historical reduction is still unresolved. The fixed-window rates below must not be silently relabeled as the historical paper metric.
+All conditions use training seed 0, twenty completed evaluation episodes, and a separate 100×200-step fixed-window evaluation. Windows include auto-resets and rewards from unfinished segments. On 2026-10-26 the author selected the released fixed-window reduction as the primary reproduction comparison. The rates below therefore use the selected metric; the exact historical figure-to-logger mapping remains unverified. The digitized targets at 1M are 2.21 [2.19, 2.23] for penalty 0 and 0.36 [0.35, 0.36] for penalty −1, with geometric reading ranges rather than statistical intervals.
 
 | Variant | Penalty | Episode return | Capture rate | Fixed-window reward / decision |
 | --- | ---: | ---: | ---: | ---: |
@@ -94,7 +94,7 @@ All conditions use training seed 0, twenty completed evaluation episodes, and a 
 | arppo_projected_batch | −1 | -0.1420 | 15% | -0.02995 |
 | bppo_projected_batch | −1 | -1.3065 | 10% | -0.05535 |
 
-Without the penalty, seven variants capture 20/20 evaluation episodes and projected BPPO captures 19/20; the best fixed-window rate is 2.142 in the higher-entropy factorized condition. With penalty −1, all fixed-window rates remain negative. Higher entropy raises capture to 9/20, but the final episode return is still −3.4625 and the rate is −0.01475, below the small-batch avoidance policy’s −0.01. A higher capture fraction alone is not a success criterion. Increasing batch size, entropy, or probability precision has not solved the hard task.
+Without the penalty, seven variants capture 20/20 evaluation episodes and projected BPPO captures 19/20; the best fixed-window rate is 2.142 in the higher-entropy factorized condition. With penalty −1, all fixed-window rates remain negative. Higher entropy raises capture to 9/20, but the final episode return is still −3.4625 and the rate is −0.01475, below the small-batch avoidance policy’s −0.01. A higher capture fraction alone is not a success criterion. Increasing batch size, entropy, or probability precision has not solved the hard task. Even the best zero-penalty development rate, 2.142, is below the digitized reading range [2.19, 2.23]; no condition clears the selected paper comparison.
 
 ## SMAC and Football pilots
 
@@ -115,26 +115,29 @@ All recorded Football evaluation checkpoints have zero wins. Positive checkpoint
 ## Findings and next experiments
 
 1. BPPO learns much better under the combined HalfCheetah settings in seed 0; its 3M return is 10.31% above matched AR-PPO. Run both to 10M in development seeds 0–2 with 32 evaluation episodes, then assess consistency. The chosen settings are already informed by these development results.
-2. AgentMixer does not beat its identity control under the same 3M protocol. Test only the modifier scale map—residual versus bounded replacement—with shared network initialization and an identity control at 1M in seeds 0–2. This tests a plausible optimization difference from the release without changing the equal-mean mechanism.
+2. AgentMixer does not beat its identity control under the same 3M protocol. The completed 1M scale-map control below also gives no terminal mean advantage for either modifier. The next matched entropy control tests whether retaining more exploration changes learning, without changing the equal-mean mechanism.
 3. Gaussian noise coupling interacts with the optimization settings. Retain all outcomes; do not select behavior noise globally from its favorable small-batch result.
-4. Prey penalty −1 remains unsolved. The [frozen-policy behavior diagnosis](prey_behavior_diagnosis.md) reproduces all original evaluation returns and finds frequent blocked greedy actions despite successful recent stochastic training in two small-batch variants. Compare local and central sampling on fresh episode seeds before changing the architecture; keep both capture and reward metrics.
+4. Prey penalty −1 remains unsolved. The [frozen-policy behavior diagnosis](prey_behavior_diagnosis.md) reproduces all original evaluation returns and finds frequent blocked greedy actions despite successful recent stochastic training in two small-batch variants. The completed 1,800-episode follow-up confirms successful central sampling and poor local execution, including poor stochastic local execution. Keep both capture and reward metrics; investigate the optimization gap before changing the architecture.
 5. SMAC’s native restart correction now passes actual 200k training. A longer learning check can proceed within the measured memory footprint. Football requires longer training before interpreting its zero-win pilot as a final algorithm failure.
 6. After selecting configurations, freeze them and use at least five disjoint final training seeds. No experiment here is independent final confirmation.
 
 ## Continuous AgentMixer scale-map follow-up
 
-At this snapshot, 6/9 declared 1M-step runs are complete. All declared seeds, including pending runs, remain in the [snapshot CSV](../experiments/modifier_scale1m_snapshot_20261026.csv). Residual and bounded variants each have all three development seeds; identity-control aggregation waits for its own full seed set.
+All nine declared 1M-step runs now complete, with scheduler exit 0 for both workers. The [final raw CSV](../experiments/modifier_scale1m_final_20261026.csv) and [validated curves](../experiments/hc2x3_modifier_scale1m_curves_20261026.json) retain every seed and provenance hash. The earlier [six-of-nine snapshot](../experiments/modifier_scale1m_snapshot_20261026.csv) remains unchanged as a dated intermediate artifact.
 
 | Variant | Seed 0 return | Seed 1 return | Seed 2 return | Mean ± sample SD | Normalized area ± sample SD |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | agentmixer_residual | 2678.96 | 2454.76 | 3033.34 | 2722.35 ± 291.72 | 1990.36 ± 203.79 |
 | agentmixer_bounded | 2479.23 | 2593.99 | 2567.26 | 2546.83 ± 60.04 | 1609.44 ± 90.11 |
+| agentmixer_identity | 2340.28 | 2768.40 | 3462.16 | 2856.95 ± 566.15 | 1588.42 ± 248.00 |
 
 Bounded replacement does not improve the three-seed mean at 1M: 2546.83 versus 2722.35 for the residual map. Its curve area is also lower, 1609.44 versus 1990.36. It improves the final return in one of the three paired seeds and has a smaller sample SD; this does not establish a preferred final configuration.
 
+Relative to identity, residual has a 4.71% lower final mean but a 25.30% higher normalized area; bounded has a 10.85% lower final mean and a 1.32% higher area. Both modifiers beat identity at the endpoint only in seed 0. Residual has higher area in all three paired seeds. This supports faster early learning in these development runs, not a reliable terminal advantage.
+
 The geometric-mean scale inferred from the final training-update Gaussian entropy is 0.0323–0.0430 for the residual policies and 0.0370–0.0434 for bounded policies. Both families substantially reduce their initial exploration scale. This is a diagnostic over PPO-update observations and epochs, not an evaluation-action variance or proof of the cause of low return.
 
-The released coefficient is zero entropy regularization. Job 21211006 queues an explicit coefficient-0.01 comparison for all three variants and seeds 0–2 after SMAC, with every other learning and evaluation setting fixed. The residual default remains unchanged. The full 10M BPPO/AR comparison and independent final confirmation are separate pending evidence.
+The released coefficient is zero entropy regularization. Job 21211006 queues an explicit coefficient-0.01 comparison for all three variants and seeds 0–2 after the queued matrix control (itself after SMAC), with every other learning and evaluation setting fixed. The residual default remains unchanged. The full 10M BPPO/AR comparison and independent final confirmation are separate pending evidence.
 
 ## Evidence index
 

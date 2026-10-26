@@ -18,13 +18,27 @@ the clarification.
 The [Prey audit](predator_prey_protocol.md) describes the released evaluator's
 200-step autoreset windows and per-decision reward reduction. The
 [Football audit](football.md) explains why the pinned 200-step evaluator cannot
-complete a native 5v5 match. New evaluations retain explicit metrics while the
-historical reduction is resolved. The clarification does not change digitized
+complete a native 5v5 match. New evaluations retain explicit metrics; the subsequent Prey protocol
+selection is recorded below. The clarification does not change digitized
 values or their reading uncertainty.
 
-## 2026-10-26: pending Prey evaluation reduction
+## 2026-10-26: selected Prey reproduction protocol
 
-A follow-up asks whether the confirmed evaluation return is summed per complete
-episode or averaged per decision over the released 100×200-step evaluation
-windows. No reply has been recorded yet. Both metrics remain logged, and no
-historical reduction is inferred from the absence of a reply.
+Asked whether the Prey figure used total reward per complete episode or the
+released 100×200-step evaluation-window reduction, the author answered:
+**“I don’t recall; use the released evaluation protocol”**.
+
+The primary Prey reproduction comparison therefore uses mean evaluation reward
+per decision over 100 separately seeded 200-decision windows, with automatic
+resets after captures/timeouts and rewards from unfinished segments included.
+Local actors select deterministic actions. Each predator receives the same
+reward; average across agents, rather than summing it twice. The denominator
+is 20,000 environment decisions. Completed-episode returns, lengths and capture
+rates remain separate diagnostic metrics.
+
+This selects the reproduction convention; it does not verify the historical
+figure-to-logger mapping, historical seeds or cross-seed aggregation. The
+selected metric is recorded separately from source labels in the target files.
+Digitized endpoints and their reading ranges are unchanged. No further author
+answer is needed to select the Prey metric. This reply does not resolve the
+separate Football 5v5 reduction.

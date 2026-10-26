@@ -10492,7 +10492,23 @@
       "reward_and_episode_convention": {
         "axis_unit": "plotted_average_test_episode_return",
         "per_decision_optimal_payoff": null,
-        "episode_convention": "Commented prose describes reward 10 for capture, but plotted returns near 2.2/0.35 do not determine episode length, team-versus-agent reduction, or reward normalization."
+        "episode_convention": "Commented prose describes reward 10 for capture, but plotted returns near 2.2/0.35 do not determine episode length, team-versus-agent reduction, or reward normalization.",
+        "selected_reproduction_evaluation": {
+          "date": "2026-10-26",
+          "source": "author_selected_reproduction_protocol",
+          "quote": "I don’t recall; use the released evaluation protocol",
+          "record": "docs/author_clarifications.md",
+          "metric": "fixed_window_reward_per_step",
+          "summary_field": "final_evaluation.fixed_window.reward_per_environment_step",
+          "unit": "mean per-agent reward per environment decision",
+          "evaluation_windows": 100,
+          "decisions_per_window": 200,
+          "autoreset_after_episode": true,
+          "include_unfinished_segments": true,
+          "policy": "deterministic decentralized local actors",
+          "historical_reduction_verified": false,
+          "across_training_seed_aggregation_verified": false
+        }
       },
       "caveats": [
         "Plotted centerline estimate, not original seed-level data.",
@@ -10766,7 +10782,23 @@
       "reward_and_episode_convention": {
         "axis_unit": "plotted_average_test_episode_return",
         "per_decision_optimal_payoff": null,
-        "episode_convention": "Commented prose describes reward 10 for capture, but plotted returns near 2.2/0.35 do not determine episode length, team-versus-agent reduction, or reward normalization."
+        "episode_convention": "Commented prose describes reward 10 for capture, but plotted returns near 2.2/0.35 do not determine episode length, team-versus-agent reduction, or reward normalization.",
+        "selected_reproduction_evaluation": {
+          "date": "2026-10-26",
+          "source": "author_selected_reproduction_protocol",
+          "quote": "I don’t recall; use the released evaluation protocol",
+          "record": "docs/author_clarifications.md",
+          "metric": "fixed_window_reward_per_step",
+          "summary_field": "final_evaluation.fixed_window.reward_per_environment_step",
+          "unit": "mean per-agent reward per environment decision",
+          "evaluation_windows": 100,
+          "decisions_per_window": 200,
+          "autoreset_after_episode": true,
+          "include_unfinished_segments": true,
+          "policy": "deterministic decentralized local actors",
+          "historical_reduction_verified": false,
+          "across_training_seed_aggregation_verified": false
+        }
       },
       "caveats": [
         "Plotted centerline estimate, not original seed-level data.",

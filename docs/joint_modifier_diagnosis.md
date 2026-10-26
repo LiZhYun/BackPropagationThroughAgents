@@ -91,3 +91,11 @@ All three planned configurations use `algorithm="agentmixer"`, `agentmixer_corre
 The schedule is evaluated from completed environment steps before collecting each rollout. It preserves rollout sizes and optimizer moments. With 1,024-step batches, the late control's nominal threshold is 100,000 steps and the first affected rollout starts at **100,352** steps. Its update ends at 101,376 steps. No rollout is split to hit the threshold. All PPO epochs for a rollout use the same active actor rate.
 
 `metrics.jsonl` records `actor_lr` and `actor_lr_schedule_steps` (the rollout's starting step). The first changed rollout is always logged, even between regular evaluation intervals, with `actor_lr_changed=true`. Only actor optimizer groups change: the modifier and critic retain their configured rates. BPPO changes each actor's separate optimizer; factorized and joint AgentMixer change only their local-actor group. The default multiplier is 1, preserving the previous constant-rate behavior. Multipliers must be finite and positive, and change fractions must be finite in `[0, 1)`; a fraction of zero selects the multiplied rate from the first rollout. Adam epsilon remains `1e-5`.
+
+## Follow-up at 200k with float64 joint probabilities
+
+The [final checkpoint diagnosis](matrix_final_diagnosis.md) includes all six
+faster-actor float64 runs. Four reach optimal greedy execution; the two failed
+seeds move to losing modes and recover slowly. The numerical floor is inactive.
+Saved-Adam counterfactuals motivate a further fixed actor-rate control, with
+all original outcomes retained.

@@ -100,7 +100,7 @@ supported. Other geometry/count/full-observation arguments are rejected.
 `episode_limit` may explicitly shorten the 128-step limit for diagnostics;
 that is a configuration change and must not be reported as the canonical task.
 
-## Metric scale and historical configuration remain qualified
+## Selected comparison metric and historical qualifications
 
 The [figure extraction](other_curve_targets.md) estimates AgentMixer endpoints
 at 1M as 2.21 [2.19, 2.23] for penalty 0 and 0.36 [0.35, 0.36] for penalty −1.
@@ -120,8 +120,11 @@ The launcher's 100 evaluation environments therefore yield 20,000 decisions per
 evaluation call. Although it passes `eval_episodes=100`, this runner's evaluation
 loop does not use that argument to stop after 100 completed episodes.
 On 2026-10-25 the author [confirmed evaluation return](author_clarifications.md)
-for both Prey figures. The source is compatible with the plotted numbers being per-decision rewards,
-but no plotting script/run ID links those values to this exact logger key.
+for both Prey figures. On 2026-10-26 the author selected the released evaluation
+protocol for reproduction. The **primary comparison metric is therefore mean
+reward per decision over 100×200-decision windows**, including unfinished
+segments. This is an author-selected convention; no plotting script/run ID
+links the historical values to this exact logger key.
 Do not relabel or rescale the original plotted endpoints as proven raw episodic
 returns. Cross-seed aggregation and the band statistic remain unresolved. The
 launcher seeds 0–4 are an example released configuration, not established
@@ -132,8 +135,10 @@ New experiments should retain raw episodic return, episode length, capture
 rate, and mean reward per decision as separate named metrics. An exact legacy
 logger comparison additionally needs a fixed 200-decision, autoreset evaluation
 window per environment, rather than an average of per-episode reward rates.
-Before claiming superiority to the paper, identify/justify the evaluation reduction
-and match the evaluation protocol, budget, and aggregation. No training result
+The author selection supplies the reduction for the reproduction comparison.
+Before claiming superiority, match the selected evaluation protocol and budget,
+report both mean and median across independent training seeds while the original
+aggregation is unknown, and account for the digitization reading range. No training result
 or reproduction claim is supplied by this implementation audit.
 
 ## Integration and validation

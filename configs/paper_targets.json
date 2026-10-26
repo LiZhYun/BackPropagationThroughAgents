@@ -2155,7 +2155,7 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M.",
+      "notes": "Commented text says average test-episode return; plot budget 1M. On 2026-10-26 the author selected the released 100×200-decision evaluation reduction for reproduction. Historical figure-to-logger mapping and cross-seed aggregation remain unverified.",
       "digitized_target": {
         "file": "configs/curve_estimates_other.json",
         "selector": {
@@ -2172,6 +2172,22 @@
         "quote": "eval return",
         "record": "docs/author_clarifications.md",
         "historical_reduction_verified": false
+      },
+      "reproduction_evaluation": {
+        "date": "2026-10-26",
+        "source": "author_selected_reproduction_protocol",
+        "quote": "I don’t recall; use the released evaluation protocol",
+        "record": "docs/author_clarifications.md",
+        "metric": "fixed_window_reward_per_step",
+        "summary_field": "final_evaluation.fixed_window.reward_per_environment_step",
+        "unit": "mean per-agent reward per environment decision",
+        "evaluation_windows": 100,
+        "decisions_per_window": 200,
+        "autoreset_after_episode": true,
+        "include_unfinished_segments": true,
+        "policy": "deterministic decentralized local actors",
+        "historical_reduction_verified": false,
+        "across_training_seed_aggregation_verified": false
       }
     },
     {
@@ -2204,7 +2220,7 @@
       "original_seed_ids": null,
       "simulator_package_versions": null,
       "reproduction_status": "not_run",
-      "notes": "Text says average return for test episodes. Number of episodes and cross-seed estimator unspecified; plot budget1M.",
+      "notes": "Commented text says average test-episode return; plot budget 1M. On 2026-10-26 the author selected the released 100×200-decision evaluation reduction for reproduction. Historical figure-to-logger mapping and cross-seed aggregation remain unverified.",
       "digitized_target": {
         "file": "configs/curve_estimates_other.json",
         "selector": {
@@ -2221,6 +2237,22 @@
         "quote": "eval return",
         "record": "docs/author_clarifications.md",
         "historical_reduction_verified": false
+      },
+      "reproduction_evaluation": {
+        "date": "2026-10-26",
+        "source": "author_selected_reproduction_protocol",
+        "quote": "I don’t recall; use the released evaluation protocol",
+        "record": "docs/author_clarifications.md",
+        "metric": "fixed_window_reward_per_step",
+        "summary_field": "final_evaluation.fixed_window.reward_per_environment_step",
+        "unit": "mean per-agent reward per environment decision",
+        "evaluation_windows": 100,
+        "decisions_per_window": 200,
+        "autoreset_after_episode": true,
+        "include_unfinished_segments": true,
+        "policy": "deterministic decentralized local actors",
+        "historical_reduction_verified": false,
+        "across_training_seed_aggregation_verified": false
       }
     },
     {

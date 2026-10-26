@@ -1,0 +1,720 @@
+{
+  "scope": "Controlled continuous AgentMixer scale-map comparison: residual log std versus bounded replacement 0.75*sigmoid(0.3*score), plus identity-modifier control, at1M transitions in development seeds0\u20132. Shared zero head initialization; bounded scale starts0.375 with exp(-5) numerical floor. Same40x100 batch, actor/modifier rates, normalization and local networks. Local scales enter undetached modifier features in both variants. Not final paper reproduction.",
+  "metric": "return_mean",
+  "manifest_sha256": "37795980e5b55cfa71585719691a30e52df26cecd214a8e0b8bc5b79c2771b46",
+  "reporter_sha256": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+  "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+  "uncertainty": {
+    "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+    "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+    "bootstrap_seed": 1729,
+    "bootstrap_samples": 10000
+  },
+  "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+  "runs": [
+    {
+      "variant": "agentmixer_residual",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_residual_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.027213632423737883
+        },
+        {
+          "steps": 252000,
+          "value": 1705.1330966672426
+        },
+        {
+          "steps": 500000,
+          "value": 2122.364096931958
+        },
+        {
+          "steps": 752000,
+          "value": 2520.4311424117404
+        },
+        {
+          "steps": 1000000,
+          "value": 2678.964510886556
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1919170254.4349828,
+        "normalized_by_training_steps": 1919.1702544349828
+      },
+      "budget": 1000000,
+      "summary_sha256": "5c23ed6c8d69fd07c0703e7bd6f67b0290927796e1b11c5556fa0f2bfbf03dd5",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "4b76b81a012ccd90604b74905475a8d6ec05229df6c1b4913b0d97a540cdd2e6",
+      "metrics_snapshot_sha256": "ccc452c928ca499afc46ba294daf083a4c9a11713540cbf54cd15c2dedce731a",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_residual",
+      "algorithm": "agentmixer",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_residual_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.019372146998947376
+        },
+        {
+          "steps": 252000,
+          "value": 1576.4461815927602
+        },
+        {
+          "steps": 500000,
+          "value": 2139.5938789118563
+        },
+        {
+          "steps": 752000,
+          "value": 2393.2575962791134
+        },
+        {
+          "steps": 1000000,
+          "value": 2454.7602542182735
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1831712244.8284764,
+        "normalized_by_training_steps": 1831.7122448284765
+      },
+      "budget": 1000000,
+      "summary_sha256": "494a4644429c89e9c256e0ddb5f6c9d9aa667c75b05620ed5e450ba0d9833de5",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "4b76b81a012ccd90604b74905475a8d6ec05229df6c1b4913b0d97a540cdd2e6",
+      "metrics_snapshot_sha256": "c304370f10d7d87e8338d828708be401959c45984dde34065c7935495eb09e60",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_residual",
+      "algorithm": "agentmixer",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_residual_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.0268451226458107
+        },
+        {
+          "steps": 252000,
+          "value": 1518.2871657905328
+        },
+        {
+          "steps": 500000,
+          "value": 2856.51997633282
+        },
+        {
+          "steps": 752000,
+          "value": 3001.442575960495
+        },
+        {
+          "steps": 1000000,
+          "value": 3033.339980734378
+        }
+      ],
+      "full_budget_auc": {
+        "area": 2220193204.646571,
+        "normalized_by_training_steps": 2220.1932046465713
+      },
+      "budget": 1000000,
+      "summary_sha256": "40b1fdac5ed490e6ad2d701336c9914178e2853666185acb6268d01737682fc5",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "4b76b81a012ccd90604b74905475a8d6ec05229df6c1b4913b0d97a540cdd2e6",
+      "metrics_snapshot_sha256": "f0301e5103fd42d7de29cff9b720bba31585dd5171f9b2ead8ed5c7009350901",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_bounded_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.027213632423737883
+        },
+        {
+          "steps": 252000,
+          "value": 572.9399559405224
+        },
+        {
+          "steps": 500000,
+          "value": 1879.425063421495
+        },
+        {
+          "steps": 752000,
+          "value": 2375.2999374667274
+        },
+        {
+          "steps": 1000000,
+          "value": 2479.234185666223
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1514337849.3121123,
+        "normalized_by_training_steps": 1514.3378493121124
+      },
+      "budget": 1000000,
+      "summary_sha256": "e0ea636d3cb6d9540d79688bd15c50d76756572098aa4d94b1aeb111e84d9c09",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "511b2e28a170555fcca68a613d67a40b4db1938afb7aad1c3f0e1366a1d3d967",
+      "metrics_snapshot_sha256": "bd3d861a2fd495b62c2f2dd28fc5a14f1695071cf33162c84c5bf5959f3dbdd3",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "algorithm": "agentmixer",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_bounded_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.019372146998947376
+        },
+        {
+          "steps": 252000,
+          "value": 1258.4587672710518
+        },
+        {
+          "steps": 500000,
+          "value": 1739.133123169504
+        },
+        {
+          "steps": 752000,
+          "value": 2489.9974320722317
+        },
+        {
+          "steps": 1000000,
+          "value": 2593.9897856394423
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1693549623.156966,
+        "normalized_by_training_steps": 1693.549623156966
+      },
+      "budget": 1000000,
+      "summary_sha256": "b5a88ae2f7282f5b9a05851ed336f334111006017c96f56457cf8173227e4cad",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "511b2e28a170555fcca68a613d67a40b4db1938afb7aad1c3f0e1366a1d3d967",
+      "metrics_snapshot_sha256": "bb11851e465596d72bd30ca5b47298eda7718e2d6470207ecab9c2346b4515c7",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "algorithm": "agentmixer",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_bounded_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.0268451226458107
+        },
+        {
+          "steps": 252000,
+          "value": 807.5016755747172
+        },
+        {
+          "steps": 500000,
+          "value": 1949.7221055899836
+        },
+        {
+          "steps": 752000,
+          "value": 2451.162117274889
+        },
+        {
+          "steps": 1000000,
+          "value": 2567.2576396406985
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1620433039.4398909,
+        "normalized_by_training_steps": 1620.4330394398908
+      },
+      "budget": 1000000,
+      "summary_sha256": "855f04f48d045dac49268fd39d3c94e59e15306b3b12e753cec68004770a04a5",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "511b2e28a170555fcca68a613d67a40b4db1938afb7aad1c3f0e1366a1d3d967",
+      "metrics_snapshot_sha256": "b969393fedc06d69f1c38d3eb01bfa7ca73d7eff01c7f9d1afbc66f86c22b52f",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.027213632423737883
+        },
+        {
+          "steps": 252000,
+          "value": 1053.3234340480076
+        },
+        {
+          "steps": 500000,
+          "value": 1528.2634474367726
+        },
+        {
+          "steps": 752000,
+          "value": 2114.0517878695073
+        },
+        {
+          "steps": 1000000,
+          "value": 2340.281758583574
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1464101176.4852495,
+        "normalized_by_training_steps": 1464.1011764852494
+      },
+      "budget": 1000000,
+      "summary_sha256": "75586b8fe8902e3248c0ae93ad34e121cad390c4ae271092c2a18a6870628e70",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "7bab43eab21020445b78e8b5ed6476a6251ca257c2666a1632507e88714e98d7",
+      "metrics_snapshot_sha256": "ab301e715eb1b4f98f0c07dcf7ed2cd3bf735ccba6fee1abc839d66b6bf0f11a",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "algorithm": "agentmixer",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_identity_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.019372146998947376
+        },
+        {
+          "steps": 252000,
+          "value": 977.530118175181
+        },
+        {
+          "steps": 500000,
+          "value": 1267.6595447391915
+        },
+        {
+          "steps": 752000,
+          "value": 2090.3336957251577
+        },
+        {
+          "steps": 1000000,
+          "value": 2768.398050216732
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1427159756.9962354,
+        "normalized_by_training_steps": 1427.1597569962353
+      },
+      "budget": 1000000,
+      "summary_sha256": "8d872afacc80cee711bd80c21c0de122f5556a4f2e95c9c6038e529f12a45007",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "7bab43eab21020445b78e8b5ed6476a6251ca257c2666a1632507e88714e98d7",
+      "metrics_snapshot_sha256": "76fa9661a417fbd5c93db974c64eec6e3e394415894c537681c82fce4661cab5",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "algorithm": "agentmixer",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_modifier_scale1m_20261026T083712Z/agentmixer_identity_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.0268451226458107
+        },
+        {
+          "steps": 252000,
+          "value": 618.0057942464583
+        },
+        {
+          "steps": 500000,
+          "value": 1777.6446604709965
+        },
+        {
+          "steps": 752000,
+          "value": 3383.0857536872113
+        },
+        {
+          "steps": 1000000,
+          "value": 3462.156035124809
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1873988017.9711895,
+        "normalized_by_training_steps": 1873.9880179711895
+      },
+      "budget": 1000000,
+      "summary_sha256": "921af6a128ee012063ddd35de3c2cabafb8b34e388f302de5f0b92075e087fa0",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "7bab43eab21020445b78e8b5ed6476a6251ca257c2666a1632507e88714e98d7",
+      "metrics_snapshot_sha256": "3987b240e9eaa6ccfe8ba4d2314af07068177ae17fda24c4dcbffa869e0d839d",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 10,
+        "seed": 1000000,
+        "execution": "decentralized",
+        "deterministic": true
+      }
+    }
+  ],
+  "groups": [
+    {
+      "variant": "agentmixer_residual",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 3,
+          "mean": 2722.354915279736,
+          "median": 2678.964510886556,
+          "sample_sd_across_training_seeds": 291.7201919286962,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 1990.3585679700102,
+          "median": 1919.1702544349828,
+          "sample_sd_across_training_seeds": 203.7895876223024,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 3,
+            "mean": -0.024476967356165318,
+            "median": -0.0268451226458107,
+            "sample_sd_across_training_seeds": 0.0044247421420583405
+          },
+          {
+            "steps": 252000,
+            "seed_count": 3,
+            "mean": 1599.9554813501786,
+            "median": 1576.4461815927602,
+            "sample_sd_across_training_seeds": 95.6157196940397
+          },
+          {
+            "steps": 500000,
+            "seed_count": 3,
+            "mean": 2372.825984058878,
+            "median": 2139.5938789118563,
+            "sample_sd_across_training_seeds": 418.9798622466202
+          },
+          {
+            "steps": 752000,
+            "seed_count": 3,
+            "mean": 2638.377104883783,
+            "median": 2520.4311424117404,
+            "sample_sd_across_training_seeds": 320.7891518195449
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 3,
+            "mean": 2722.354915279736,
+            "median": 2678.964510886556,
+            "sample_sd_across_training_seeds": 291.7201919286962
+          }
+        ]
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 3,
+          "mean": 2546.827203648788,
+          "median": 2567.2576396406985,
+          "sample_sd_across_training_seeds": 60.04385037135824,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 1609.440170636323,
+          "median": 1620.4330394398908,
+          "sample_sd_across_training_seeds": 90.1101955638432,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 3,
+            "mean": -0.024476967356165318,
+            "median": -0.0268451226458107,
+            "sample_sd_across_training_seeds": 0.0044247421420583405
+          },
+          {
+            "steps": 252000,
+            "seed_count": 3,
+            "mean": 879.6334662620972,
+            "median": 807.5016755747172,
+            "sample_sd_across_training_seeds": 348.4053050583924
+          },
+          {
+            "steps": 500000,
+            "seed_count": 3,
+            "mean": 1856.0934307269943,
+            "median": 1879.425063421495,
+            "sample_sd_across_training_seeds": 107.21568771577503
+          },
+          {
+            "steps": 752000,
+            "seed_count": 3,
+            "mean": 2438.8198289379493,
+            "median": 2451.162117274889,
+            "sample_sd_across_training_seeds": 58.336334117246686
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 3,
+            "mean": 2546.827203648788,
+            "median": 2567.2576396406985,
+            "sample_sd_across_training_seeds": 60.04385037135824
+          }
+        ]
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 3,
+          "mean": 2856.9452813083717,
+          "median": 2768.398050216732,
+          "sample_sd_across_training_seeds": 566.1545126480288,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 1588.4163171508915,
+          "median": 1464.1011764852494,
+          "sample_sd_across_training_seeds": 248.001137800846,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 3,
+            "mean": -0.024476967356165318,
+            "median": -0.0268451226458107,
+            "sample_sd_across_training_seeds": 0.0044247421420583405
+          },
+          {
+            "steps": 252000,
+            "seed_count": 3,
+            "mean": 882.9531154898823,
+            "median": 977.530118175181,
+            "sample_sd_across_training_seeds": 232.55960302318005
+          },
+          {
+            "steps": 500000,
+            "seed_count": 3,
+            "mean": 1524.5225508823203,
+            "median": 1528.2634474367726,
+            "sample_sd_across_training_seeds": 255.01313749936295
+          },
+          {
+            "steps": 752000,
+            "seed_count": 3,
+            "mean": 2529.1570790939586,
+            "median": 2114.0517878695073,
+            "sample_sd_across_training_seeds": 739.6190052609409
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 3,
+            "mean": 2856.9452813083717,
+            "median": 2768.398050216732,
+            "sample_sd_across_training_seeds": 566.1545126480288
+          }
+        ]
+      }
+    }
+  ]
+}
