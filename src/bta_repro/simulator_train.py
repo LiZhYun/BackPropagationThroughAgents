@@ -55,6 +55,7 @@ class Config:
     agentmixer_correlation: str = 'factorized'
     joint_distribution_float64: bool = False
     modifier_enabled: bool = True
+    modifier_log_scale_bound: float | None = None
     learning_rate: float = 5e-4
     modifier_learning_rate: float = 5e-5
     critic_learning_rate: float = 5e-4
@@ -156,6 +157,13 @@ class Config:
             raise ValueError('joint_distribution_float64 must be boolean')
         if self.joint_distribution_float64 and (self.algorithm != 'agentmixer' or self.agentmixer_correlation != 'joint'):
             raise ValueError('float64 joint distributions require joint AgentMixer')
+        if self.modifier_log_scale_bound is not None:
+            bound = self.modifier_log_scale_bound
+            if (isinstance(bound, bool) or not isinstance(bound, (int, float))
+                    or not math.isfinite(bound) or not 0 < bound <= 8):
+                raise ValueError("modifier_log_scale_bound must be finite and in (0, 8]")
+            if self.environment == "mujoco" or self.algorithm != "agentmixer" or not self.modifier_enabled:
+                raise ValueError("modifier_log_scale_bound requires discrete AgentMixer with modifier enabled")
         if self.algorithm != "agentmixer" and not self.modifier_enabled:
             raise ValueError("modifier_enabled=False requires algorithm=agentmixer")
         device = torch.device(self.device)
@@ -195,10 +203,15 @@ def make_policy(config: Config, env):
         raise ValueError("nondefault initial_std requires a continuous environment")
     if env.is_discrete and config.continuous_modifier_scale != "residual":
         raise ValueError("bounded modifier scale requires a continuous environment")
+    if config.modifier_log_scale_bound is not None and (
+        not env.is_discrete or config.algorithm != "agentmixer" or not config.modifier_enabled
+    ):
+        raise ValueError("modifier_log_scale_bound requires discrete AgentMixer with modifier enabled")
     dimensions = (env.obs_dim, env.num_agents, env.num_actions if env.is_discrete else env.action_dim)
     scale_arguments = {} if env.is_discrete else {"initial_std": config.initial_std}
     if config.algorithm == "agentmixer":
         if env.is_discrete:
+            scale_arguments['log_scale_bound'] = config.modifier_log_scale_bound
             if config.agentmixer_correlation == 'joint':
                 from .agentmixer_joint import JointAgentMixerPolicy as Policy
                 scale_arguments['distribution_float64'] = config.joint_distribution_float64
@@ -550,6 +563,10 @@ def train(config: Config, output: Path) -> dict:
     if config.agentmixer_correlation == 'joint':
         metadata['method_variant'] = ('experimental_joint_gap_scaling' if config.modifier_enabled
                                       else 'experimental_joint_identity_control')
+    if config.modifier_log_scale_bound is not None:
+        metadata['method_variant'] = ('experimental_joint_bounded_gap_scaling'
+                                      if config.agentmixer_correlation == 'joint'
+                                      else 'mode_consistent_bounded_gap_modifier')
     _write_json(output / "config.json", metadata)
     try:
         for environment_seed in environment_seeds:

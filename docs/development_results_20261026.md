@@ -149,3 +149,21 @@ The released coefficient is zero entropy regularization. Job 21211006 queues an 
 | prey1m | 21196495 | `results/prey_batch1m_20261025T090907Z` |
 | football100k | 21196497 | `results/football_3v1_pilot100k_20261025T090911Z` |
 | smac200k | 21198089 | `results/smac_terran5_learning200k_restart_20261025T105119Z` |
+
+## First two 10M BPPO endpoints (incomplete seed set)
+
+In `mujoco_hc2x3_bppo_ar10m_20261026T082155Z`, BPPO training seeds 0 and 1
+complete all 10M transitions with 32 deterministic evaluation episodes each.
+Their final means are **5843.80** and **6046.91**. The
+[snapshot report](../experiments/hc2x3_bppo_ar10m_snapshot_20261026.json) retains
+all six declared runs and refuses both group aggregates while seed 2 and the
+matched AR-PPO controls remain unfinished.
+
+Both individual means exceed the figure's digitization reading range
+[5660, 5740], whose rounded centerline estimate is 5700. That is a descriptive
+point comparison, not a completed reproduction or superiority claim: these
+are selected development seeds; the original centerline averages five seeds;
+the last plotted vertex is about 9.904M rather than exactly 10M; and the
+figure alone does not establish evaluation, smoothing or checkpoint-selection
+conventions. The matched baseline and independent final confirmation remain
+necessary. No best-checkpoint selection or extrapolation is used here.

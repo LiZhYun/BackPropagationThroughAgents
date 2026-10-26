@@ -24,6 +24,7 @@ see [the simulator guide](../docs/simulator_training.md).
 | Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | Six development runs at the 10M paper budget; still in progress |
 | Compare continuous AgentMixer scale maps | `mujoco_hc2x3_modifier_scale1m.json` | All nine runs complete; neither modifier improves the final three-seed mean over identity |
 | Reproduce the Prey batch controls | `prey_batch1m.json` | Sixteen completed runs at 1M; neither penalty setting clears the selected paper comparison |
+| Test restricted Prey modifier ranges | `prey_modifier_bound1m.json` | Eight matched 1M controls queued after distribution diagnostics; no results yet |
 | Run the longer SMAC or Football learning checks | `smac_terran5_learning1m.json`, `football_3v1_learning1m.json` | Development plans following the shorter runtime and learning pilots |
 
 These are development settings, not certified final reproduction recipes.

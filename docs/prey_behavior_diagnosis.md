@@ -44,3 +44,9 @@ The successful stochastic training behavior survives a fresh frozen-policy check
 This isolates a deployment gap under the current corrected parameterizations. It is not an infrastructure failure, a changed model during evaluation, or a numerical violation of mode agreement on the visited states. It does not prove whether actor optimization, local information, parameterization barriers or their interaction causes the failure. The known matrix fixed-mode barriers remain a concrete next diagnostic; stable decentralized performance is still a release requirement.
 
 Complete artifact: `results/prey_behavior_diagnosis_20261026/sampling_summary.json`, with per-episode data, frozen-source verification, seed scheme, manifest hash and the exact probe-script hash. Central sampling is diagnostic only; no benchmark-success claim is made from its higher scores.
+
+The [modifier-range diagnosis and control](prey_modifier_control.md) reconstructs
+the first two saved greedy trajectories for all twelve AgentMixer policies. It
+finds inactive numerical floors and mostly inactive hard clamps, but a large
+central/local probability difference in the small-batch policies. The proposed
+bound tests restricted modification; it is not presented as a saturation fix.

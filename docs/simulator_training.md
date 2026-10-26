@@ -55,6 +55,15 @@ experiment plan's resource ceiling when submitting multiple manifests.
 
 For continuous policies, `initial_std` sets the initial diagonal Gaussian standard deviation in policy action units. It defaults to `1.0` and must lie in `[exp(-5), exp(2)]`. For example, `0.3` reduces initial exploration while preserving the policy family and identity modifier. SMAC configurations reject nondefault values because their actions are categorical. The selected value is saved in the run configuration.
 
+For discrete AgentMixer, `modifier_log_scale_bound` optionally selects the
+existing smooth log-scale bound. For example, `2.302585092994046` constrains
+gap scales to approximately `[0.1, 10]`. The default `null` retains the original
+hard log-scale clamp. This option preserves local modes and shared initial
+weights, but changes centralized exploration. It is rejected for continuous
+policies, other algorithms and disabled modifiers. See the
+[Prey control](prey_modifier_control.md) for its measured motivation, matched
+configuration and limits.
+
 ## Training and evaluation
 
 The run `seed` controls model initialization and sampling. Simulator seeds are derived with NumPy `SeedSequence([0x425441, 0x53494D, 1, seed]).spawn(num_envs)`, taking one uint32 value from each child. The fixed BTA/SIM/version namespace avoids the overlapping consecutive simulator streams that `seed + env_index` creates for adjacent run seeds. Increasing `num_envs` preserves the earlier environments' derived seeds. The scheme name and actual simulator seeds are recorded in `config.json`.

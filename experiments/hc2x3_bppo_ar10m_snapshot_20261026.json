@@ -1,0 +1,379 @@
+{
+  "scope": "First paper-budget10M HalfCheetah2x3 development comparison: BPPO versus matched AR-PPO,training seeds0\u20132,32 deterministic evaluation episodes every500k. Protocol selected from prior500k/3M development controls. Not independent final confirmation.",
+  "metric": "return_mean",
+  "manifest_sha256": "d31da302360489d64a3170ee6c84d6d4b2dff34e089cc29edca085a97d4ceb5b",
+  "reporter_sha256": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+  "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+  "uncertainty": {
+    "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+    "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+    "bootstrap_seed": 1729,
+    "bootstrap_samples": 10000
+  },
+  "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+  "runs": [
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2092415093521931
+        },
+        {
+          "steps": 500000,
+          "value": 2406.8187547279294
+        },
+        {
+          "steps": 1000000,
+          "value": 3429.7160576475767
+        },
+        {
+          "steps": 1500000,
+          "value": 3131.9715311668674
+        },
+        {
+          "steps": 2000000,
+          "value": 4567.594893749419
+        },
+        {
+          "steps": 2500000,
+          "value": 5263.866041803345
+        },
+        {
+          "steps": 3000000,
+          "value": 5216.992006841402
+        },
+        {
+          "steps": 3500000,
+          "value": 5455.802907024645
+        },
+        {
+          "steps": 4000000,
+          "value": 5280.6750748225795
+        },
+        {
+          "steps": 4500000,
+          "value": 5587.899788142335
+        },
+        {
+          "steps": 5000000,
+          "value": 5631.509921510171
+        },
+        {
+          "steps": 5500000,
+          "value": 5665.140151613844
+        },
+        {
+          "steps": 6000000,
+          "value": 5809.665206768287
+        },
+        {
+          "steps": 6500000,
+          "value": 5767.112924744159
+        },
+        {
+          "steps": 7000000,
+          "value": 5767.449098284226
+        },
+        {
+          "steps": 7500000,
+          "value": 5658.485759218116
+        },
+        {
+          "steps": 8000000,
+          "value": 5364.750755685386
+        },
+        {
+          "steps": 8500000,
+          "value": 5546.775819307229
+        },
+        {
+          "steps": 9000000,
+          "value": 5716.117430596649
+        },
+        {
+          "steps": 9500000,
+          "value": 5887.895426381738
+        },
+        {
+          "steps": 10000000,
+          "value": 5843.801900407821
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50039017939.74257,
+        "normalized_by_training_steps": 5003.901793974257
+      },
+      "budget": 10000000,
+      "summary_sha256": "7a1953a67e143767f4471bfdcabd4c5ca702debc53807fec762fcb4630fbe4e0",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "a236419a3d42b68bf7ad308be3adb7b3eefbf3a04853e0a62bd1e0513d125824",
+      "metrics_snapshot_sha256": "fee9ebc7f140b32c38c37340429a2d57e3a6acbb7d0d75d54133a225f86a8bc7",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.21223168205939136
+        },
+        {
+          "steps": 500000,
+          "value": 2107.43730659989
+        },
+        {
+          "steps": 1000000,
+          "value": 3793.3534187517016
+        },
+        {
+          "steps": 1500000,
+          "value": 4222.966958733698
+        },
+        {
+          "steps": 2000000,
+          "value": 5208.778730448771
+        },
+        {
+          "steps": 2500000,
+          "value": 5300.058517008851
+        },
+        {
+          "steps": 3000000,
+          "value": 5548.296974735096
+        },
+        {
+          "steps": 3500000,
+          "value": 5595.792064515289
+        },
+        {
+          "steps": 4000000,
+          "value": 5845.269534466002
+        },
+        {
+          "steps": 4500000,
+          "value": 5826.703489999549
+        },
+        {
+          "steps": 5000000,
+          "value": 5878.888468202147
+        },
+        {
+          "steps": 5500000,
+          "value": 5819.723440091666
+        },
+        {
+          "steps": 6000000,
+          "value": 6071.885906548776
+        },
+        {
+          "steps": 6500000,
+          "value": 5937.822011713553
+        },
+        {
+          "steps": 7000000,
+          "value": 6125.967592257516
+        },
+        {
+          "steps": 7500000,
+          "value": 5883.126376156255
+        },
+        {
+          "steps": 8000000,
+          "value": 6209.304927968366
+        },
+        {
+          "steps": 8500000,
+          "value": 6218.972051801152
+        },
+        {
+          "steps": 9000000,
+          "value": 5656.132449133738
+        },
+        {
+          "steps": 9500000,
+          "value": 5810.55637329417
+        },
+        {
+          "steps": 10000000,
+          "value": 6046.914100280875
+        }
+      ],
+      "full_budget_auc": {
+        "area": 53042193763.3628,
+        "normalized_by_training_steps": 5304.21937633628
+      },
+      "budget": 10000000,
+      "summary_sha256": "1ea58a3c7fe012103d8de5ec543dc4eaa82f8eebe6be01cecb4ec0eb1f9e6e4b",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "a236419a3d42b68bf7ad308be3adb7b3eefbf3a04853e0a62bd1e0513d125824",
+      "metrics_snapshot_sha256": "400b958f6eefc833ecff6b90d667e14c2eb850191a7f20d1b18e326687cff26e",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "bppo_protocol",
+      "algorithm": "bppo",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/bppo_protocol_seed2",
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2307743511512389
+        }
+      ],
+      "full_budget_auc": null,
+      "budget": 10000000,
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "a236419a3d42b68bf7ad308be3adb7b3eefbf3a04853e0a62bd1e0513d125824",
+      "metrics_snapshot_sha256": "418b080e5534894e64166962c7506dbc1d0f3165ecbf56081c6a8c1e2cd9dcac",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed0",
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.2092415093521931
+        }
+      ],
+      "full_budget_auc": null,
+      "budget": 10000000,
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "75d9c255f88fd4a213d508fb6039d592621bbf635a6bb2ea8cf26e5ba59cd33a",
+      "metrics_snapshot_sha256": "9265244a7f5fa1fb1754d6581749f5afb6045106565257cfbcc07c41116c4338",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed1",
+      "status": "not_started",
+      "eligible": false,
+      "errors": [],
+      "points": [],
+      "full_budget_auc": null,
+      "budget": 10000000
+    },
+    {
+      "variant": "arppo_protocol",
+      "algorithm": "arppo",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_bppo_ar10m_20261026T082155Z/arppo_protocol_seed2",
+      "status": "not_started",
+      "eligible": false,
+      "errors": [],
+      "points": [],
+      "full_budget_auc": null,
+      "budget": 10000000
+    }
+  ],
+  "groups": [
+    {
+      "variant": "bppo_protocol",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1
+      ],
+      "aggregation_errors": [
+        "some declared seeds lack a valid completed full-budget curve"
+      ],
+      "aggregate": null
+    },
+    {
+      "variant": "arppo_protocol",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [],
+      "aggregation_errors": [
+        "some declared seeds lack a valid completed full-budget curve"
+      ],
+      "aggregate": null
+    }
+  ]
+}

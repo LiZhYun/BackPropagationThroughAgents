@@ -2,7 +2,7 @@
 
 | ID | Stage | Purpose | System | Status | Evidence |
 |---|---|---|---|---|---|
-| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 607 tests passed, 1 CUDA-only skip, 2026-10-26 |
+| R001 | M0 | Numerical and integration correctness | Shared core + both methods | PASS | 621 tests passed, 1 CUDA-only skip, 2026-10-26 |
 | R002 | M0 | Pipeline smoke | MAPPO climbing, 2,048 steps | PASS | results/smoke/mappo_20261025 |
 | R003 | M0 | Pipeline smoke | AR-PPO, BPPO, AgentMixer | PASS | results/smoke/{algorithm}_20261025; 2,048 steps each |
 | R004 | M1 | Matrix development | Four algorithms × two games × seeds 0–2 | FAIL learning gate | Job21192344; all24 completed, zero final greedy optima |
@@ -47,7 +47,7 @@
 | R041 | M2 | Continuous BPPO noise coupling | Two estimators × two settings × three seeds, 500k | COMPLETED; mixed | 21198169; fresh/behavior mean±SD: small batch 1844.05±1053.90 / 2853.01±343.67; combined protocol 2547.40±546.97 / 1959.81±805.73 |
 | R042 | M0 | Saved-policy evaluation | All methods,both action spaces,normalization/source provenance | PASS |560 full-suite tests; native Prey100k AgentMixer replay exactly equals original20-episode evaluation using frozen source; scripts/evaluate_simulator.py |
 
-| R043 | M2 | First paper-budget HalfCheetah comparison | BPPO and AR-PPO, 10M, seeds 0–2 | SUBMITTED | 21208906; configs/mujoco_hc2x3_bppo_ar10m.json; 32 evaluation episodes, two workers, 12h cap; development selection, not final independent seeds |
+| R043 | M2 | First paper-budget HalfCheetah comparison | BPPO and AR-PPO, 10M, seeds 0–2 | 2/6 complete | 21208906; BPPO seeds0/1 final5843.80/6046.91; no group aggregate yet; configs/mujoco_hc2x3_bppo_ar10m.json; 32 evaluation episodes, two workers, 12h cap; development selection, not final independent seeds |
 | R044 | M2 | Continuous AgentMixer scale map | Residual, bounded replacement, identity; 1M, seeds 0–2 | COMPLETED; no terminal modifier advantage | 21209002; residual mean±SD2722.35±291.72, bounded2546.83±60.04; full paired seed results retained; identity2856.95±566.15; residual area+25.30% versus identity; numerical invariants pass |
 | R045 | Analysis | Completed development results | All 48 runs from six suites | RECORDED | docs/development_results_20261026.md; raw CSV with per-run summary/manifest hashes; no final superiority claim |
 | R046 | M2 | Longer SMAC learning | Five methods, terran5v5, 1M, seed 0 | RUNNING | 21209234 after 21209002 and 21210161; same runtime and optimizer settings as completed 200k; two workers, 12h cap |
@@ -60,3 +60,5 @@
 | R052 | Targets | Author-selected Prey comparison | Both penalty settings | RECORDED | 2026-10-26: use released evaluation protocol; 100×200 decisions including unfinished rewards. Historical mapping still unverified; no further metric-choice reply needed |
 | R053 | Diagnosis | Final fast-float64 matrix policies | Six checkpoints, exact expected gradients and saved-Adam steps | COMPLETE; small useful recovery gradients | docs/matrix_final_diagnosis.md; all source/checkpoint hashes verified, no training; failed seeds have inactive floors and saturated favorable-action scales |
 | R054 | M1 | Faster actor update control | Two matrix games × three seeds, 200k, actor LR0.0125 | QUEUED | 21211813 after21209234, before21211006; identical source and all other settings to21196198; no results yet |
+| R055 | Diagnosis | Prey numerical range and distribution mismatch | Twelve policies, first two saved greedy episodes each | COMPLETED | Inactive numerical floors; hard clamps mostly inactive. Small-batch central/local KL2.331/3.654 nats; trajectories are diagnostic, not independent samples. docs/prey_modifier_control.md |
+| R056 | M0/M2 | Prey modifier-range control | Eight matched runs, two families × two ranges × two penalties, 1M, seed0 | TESTS PASS; QUEUED | 14 new integration/control tests; full621 passed/1skip. Job21212197 after21211006; 100×200-decision primary metric; defaults unchanged. configs/prey_modifier_bound1m.json |

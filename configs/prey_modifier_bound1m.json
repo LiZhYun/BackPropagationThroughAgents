@@ -1,0 +1,104 @@
+{
+  "label": "prey_modifier_bound1m",
+  "scope": "Eight development controls: factorized and experimental joint AgentMixer, original versus smooth log-scale bound log(10), penalties 0/-1, seed0, exact1M transitions. Same small-batch protocol as prior prey_batch1m controls, including 100x200-decision primary evaluation and20 episode diagnostics. Hard-clamp/floor saturation was mostly absent in the failed saved trajectories; this tests restricting distribution modification, not a proved saturation fix. All controls rerun with common frozen source; no final independent confirmation.",
+  "wall_time_minutes": 240,
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "prey",
+    "steps": 1000000,
+    "num_envs": 8,
+    "rollout_steps": 64,
+    "hidden_dim": 64,
+    "epochs": 5,
+    "learning_rate": 0.0005,
+    "modifier_learning_rate": 5e-05,
+    "critic_learning_rate": 0.0005,
+    "entropy_coef": 0.01,
+    "max_grad_norm": 10.0,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "eval_episodes": 20,
+    "eval_every_steps": 250000,
+    "checkpoint_every_updates": 100,
+    "threads": 1,
+    "eval_window_steps": 200,
+    "eval_windows": 100
+  },
+  "variants": {
+    "agentmixer_factorized_unbounded_zero": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "factorized",
+      "modifier_log_scale_bound": null,
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_factorized_bounded10_zero": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "factorized",
+      "modifier_log_scale_bound": 2.302585092994046,
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_joint_unbounded_zero": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "joint",
+      "modifier_log_scale_bound": null,
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_joint_bounded10_zero": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "joint",
+      "modifier_log_scale_bound": 2.302585092994046,
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_factorized_unbounded_minus1": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "factorized",
+      "modifier_log_scale_bound": null,
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_factorized_bounded10_minus1": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "factorized",
+      "modifier_log_scale_bound": 2.302585092994046,
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_joint_unbounded_minus1": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "joint",
+      "modifier_log_scale_bound": null,
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    },
+    "agentmixer_joint_bounded10_minus1": {
+      "algorithm": "agentmixer",
+      "agentmixer_correlation": "joint",
+      "modifier_log_scale_bound": 2.302585092994046,
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      }
+    }
+  }
+}
