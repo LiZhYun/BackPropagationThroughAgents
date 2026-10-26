@@ -6,12 +6,14 @@ A readable, shared implementation of [Backpropagation Through Agents](https://ar
 
 ## Quick start
 
-Use Python 3.10 or later. The development environment currently pins CPU PyTorch 2.6.0; larger simulator experiments will have their own recorded dependency locks.
+The tested core setup uses Python 3.11.15 and CPU PyTorch 2.6.0. The checked-in
+`.python-version` selects that Python for uv. Native simulators have separate
+recorded dependency locks and private environments.
 
 With uv, `uv sync --locked --extra dev` uses the checked-in CPU dependency lock. The manual installation below is also supported.
 
 ```bash
-python -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -e '.[dev]'
@@ -76,7 +78,8 @@ python scripts/report_benchmark_coverage.py
 ```
 
 The first reports all declared runs in recent manifests, including unfinished
-and failed runs. The second checks that all45 benchmark targets have either an
+and failed runs. A source checkout excludes local experiment artifacts; missing
+manifests are reported as unknown. The second checks that all 45 benchmark targets have either an
 explicit source value or a linked curve estimate; it does not certify achieved
 performance. The third maps every target to recorded experiment artifacts,
 retaining missing runs and basic task mismatches; it does not compare scores
@@ -104,3 +107,16 @@ Release requires method checks, reproducible installation and execution, full be
 Development seeds select configurations. Independent final seeds validate them. All final runs, including failures, are reported. Corrected implementations are labeled as such; passing tests does not establish the papers' convergence guarantees.
 
 The original source archives and the other reproduction in the parent workspace are kept untouched. Reference source copies and local environments are excluded from version control.
+
+## Citation and contributions
+
+Use [CITATION.bib](CITATION.bib) for the accepted
+[BPTA paper](https://ojs.aaai.org/index.php/AAAI/article/view/29277) and
+[AgentMixer paper](https://ojs.aaai.org/index.php/AAAI/article/view/34048).
+When reporting results from this reconstruction, also identify its commit and
+the exact configuration, including any named corrections or experimental variants.
+
+The repository retains the [MIT license](LICENSE) and copyright notice from
+the [pinned original implementation](https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/LICENSE).
+Separately installed simulator engines and dependencies retain their own licenses.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development and experiment workflow.

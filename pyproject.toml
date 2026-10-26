@@ -1,11 +1,14 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "bta-repro"
 version = "0.1.0"
 description = "Readable BPTA and AgentMixer reproduction"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.23.5,<3", "torch>=2.6,<2.7"]
 

@@ -24,6 +24,7 @@ def last_metric(path):
 
 
 def report(root, latest):
+    root = Path(root).resolve()
     jobs = {}
     for line in (root / 'experiments/jobs.jsonl').read_text().splitlines():
         entry = json.loads(line)
@@ -33,15 +34,31 @@ def report(root, latest):
         selected = selected[-latest:]
     records = []
     for job, entry in selected:
-        manifest_path = root / entry['manifest']
-        manifest = json.loads(manifest_path.read_text())
+        manifest_path = (root / entry['manifest']).resolve()
+        try:
+            if not manifest_path.is_relative_to(root):
+                raise ValueError('recorded manifest is outside this repository')
+            manifest = json.loads(manifest_path.read_text())
+            if not isinstance(manifest, dict) or not isinstance(manifest.get('runs'), list):
+                raise ValueError('manifest has no run list')
+        except (OSError, ValueError) as error:
+            records.append({'job_id': job, 'manifest': entry['manifest'],
+                            'artifact_status': 'manifest_missing' if isinstance(error, FileNotFoundError) else 'manifest_unreadable',
+                            'error': str(error), 'counts': None, 'declared_runs': None,
+                            'last_recorded_training_steps': None, 'runs': []})
+            continue
         runs = []
         for run in manifest['runs']:
             directory = Path(run['output_path'])
             if not directory.is_absolute():
                 directory = root / directory
+            directory = directory.resolve()
             summary = directory / 'summary.json'
             item = {'run': directory.name, 'status': 'not_started', 'last_recorded_training_steps': 0}
+            if not directory.is_relative_to(root):
+                item.update(status='unavailable', error='recorded output directory is outside this repository')
+                runs.append(item)
+                continue
             if summary.exists():
                 data = json.loads(summary.read_text())
                 item.update(status=data.get('status', 'unknown'),
@@ -53,8 +70,9 @@ def report(root, latest):
                 item.update(status='incomplete', last_recorded_training_steps=data.get('steps', 0))
             runs.append(item)
         counts = {state: sum(run['status'] == state for run in runs)
-                  for state in ('completed', 'failed', 'incomplete', 'not_started', 'unknown')}
-        records.append({'job_id': job, 'manifest': entry['manifest'], 'scope': manifest['scope'],
+                  for state in ('completed', 'failed', 'incomplete', 'not_started', 'unknown', 'unavailable')}
+        records.append({'job_id': job, 'manifest': entry['manifest'], 'scope': manifest.get('scope', 'unspecified'),
+                        'artifact_status': 'manifest_present',
                         'counts': counts, 'declared_runs': len(runs),
                         'last_recorded_training_steps': sum(run['last_recorded_training_steps'] for run in runs),
                         'runs': runs})
@@ -73,13 +91,17 @@ def main():
         print(json.dumps({'note': 'Artifact status only: incomplete does not imply a currently running scheduler job.',
                           'experiments': records}, indent=2))
     else:
-        print('job\tcomplete/declared\tfailed\tincomplete\tnot_started\tlast_recorded_steps\texperiment')
+        print('job\tcomplete/declared\tfailed\tincomplete\tnot_started\tunavailable\tlast_recorded_steps\texperiment')
         for entry in records:
+            if entry['counts'] is None:
+                print(f"{entry['job_id']}\tunknown\tunknown\tunknown\tunknown\tunknown\tunknown\t"
+                      f"{Path(entry['manifest']).parent.name} ({entry['artifact_status']})")
+                continue
             c = entry['counts']
             print(f"{entry['job_id']}\t{c['completed']}/{entry['declared_runs']}\t{c['failed']}\t"
-                  f"{c['incomplete']}\t{c['not_started']}\t{entry['last_recorded_training_steps']}\t"
+                  f"{c['incomplete']}\t{c['not_started']}\t{c['unavailable']}\t{entry['last_recorded_training_steps']}\t"
                   f"{Path(entry['manifest']).parent.name}")
-        print('Incomplete describes artifacts, not scheduler state. These are development results.')
+        print('Incomplete describes artifacts, not scheduler state. Missing manifests are unknown, not failed training runs.')
 
 
 if __name__ == '__main__':
