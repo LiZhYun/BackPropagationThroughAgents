@@ -171,3 +171,22 @@ The [verification record](../experiments/matrix_agentmixer_confirmation_schedule
 preserves the old and new states. A0/A1 still run Football → Ant/Walker →
 HalfCheetah confirmation; B1 runs entropy → Prey after its completed GRU check.
 There are still at most four concurrent workers, each at most 2 CPUs and 8GB.
+
+
+## Raw process diagnostic inserted, 2026-10-26
+
+Job `21218609` measures exact sequential/process SMAC trace parity and native
+call time. It requests one 2CPU/8GB worker for at most 30 minutes. The latest B0
+chain is:
+
+```text
+21209234_0 → 21218175_0 → 21213860_0 → 21218609 → 21211006_0 → 21212197_0
+SMAC         AM check     GRU check     process     entropy       Prey
+```
+
+The profiler was submitted held after its unit and copied-source preflights.
+Only the pending entropy worker 0 was held and rewired; both edges/resources
+were verified before release. The [schedule record](../experiments/smac_process_profile_schedule_20261026.json)
+retains the old and new states. All edges use `afterany`; a failed diagnostic
+remains evidence and does not silently retry or alter the frozen entropy run.
+A0/A1 and B1 are unchanged, so the same four-worker ceiling applies.

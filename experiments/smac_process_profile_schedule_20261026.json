@@ -1,0 +1,66 @@
+{
+  "recorded_utc": "2026-10-26T17:43:52.764502+00:00",
+  "scope": "Insert one standalone raw native diagnostic on B0; only its pending successor dependency changes.",
+  "before": {
+    "21218609": {
+      "JobId": "21218609",
+      "ArrayJobId": null,
+      "ArrayTaskId": null,
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21213860_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21211006_0": {
+      "JobId": "21212910",
+      "ArrayJobId": "21211006",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21213860_0(unfulfilled)",
+      "TimeLimit": "04:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "272131"
+    }
+  },
+  "verified_while_held": {
+    "21218609": {
+      "JobId": "21218609",
+      "ArrayJobId": null,
+      "ArrayTaskId": null,
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21213860_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21211006_0": {
+      "JobId": "21212910",
+      "ArrayJobId": "21211006",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21218609(unfulfilled)",
+      "TimeLimit": "04:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    }
+  },
+  "new_chain": [
+    "21209234_0",
+    "21218175_0",
+    "21213860_0",
+    "21218609",
+    "21211006_0",
+    "21212197_0"
+  ],
+  "resource_ceiling": "Same four serial chains; at most four workers, each at most2CPU/8GB. New job2CPU/8GB for30min.",
+  "unchanged": "Active jobs, all frozen training source/configuration/submission files, A0/A1 and B1 dependencies."
+}

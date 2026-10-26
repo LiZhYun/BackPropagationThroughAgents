@@ -130,5 +130,82 @@ in the same order as sequential execution. Merely forwarding asynchronous calls
 through `NormalizedEnv.__getattr__` would bypass its observation transformation.
 Any later rollout integration therefore needs exact normalized-batch, recurrent
 carry, parameter-update and checkpoint parity, plus owned-worker cleanup checks.
-This is the next diagnostic design; no process backend has been implemented or
-adopted by the frozen experiments.
+The standalone diagnostic below implements the raw-call comparison. A process
+backend has not been integrated into training or adopted by frozen experiments.
+
+
+## Standalone process comparison
+
+`scripts/profile_environment_processes.py` owns one spawned process per
+environment and retains a sequential reference. It sends all step/reset calls
+before collecting replies in environment-index order. Each variant creates
+fresh environments; the same private action generators choose legal actions.
+No learned policy, shared normalizer or PPO optimizer enters this measurement.
+
+Use the corresponding native Python environment and SMAC setup:
+
+```bash
+python scripts/profile_environment_processes.py --config configs/smac_process_profile.json --output results/profile_output/new_smac_process_check
+```
+
+`--source-manifest` additionally requires the loaded package to match a selected
+source snapshot. Full JSONL traces retain array dtype/shape, every observation,
+action, reward, ending flag, info and explicit reset. Initial observations and
+terminal observations remain distinct. Every pair and repeat must have identical
+per-environment trace hashes before a timing ratio is reported.
+
+Native step plus subsequent reset wall time includes IPC. Construction, initial
+reset, close, and the loop including trace I/O are reported separately. The
+sequential/process call-time ratio is not an end-to-end training speedup.
+Worker errors, timeouts, changed traces or nongraceful cleanup fail the
+diagnostic and remain in `report.json`. Cleanup acts only on owned children;
+a forced cleanup invalidates the measurement and native descendants then rely
+on allocation cleanup. It is not an accepted training-worker recovery mechanism.
+
+### Frozen native study
+
+The [study](../experiments/smac_process_profile_study_20261026.json) retains the
+exact 19-module source of the earlier native timing profiles:
+
+| Condition | Environment decisions per mode/trial | Trials | Restart threshold | Purpose |
+| --- | ---: | ---: | ---: | --- |
+| Normal | 2 environments × 512 | 3 | 480,000 native ticks | Compare native calls with IPC under the usual lifecycle |
+| Frequent restart | 2 environments × 512 | 1 | 128 native ticks | Require trace parity through at least one planned restart per environment in both modes |
+
+Each trial includes sequential and process variants, totaling 8,192 environment
+decisions. Normal trials alternate their order. Seeds 2865252013 and 1680950762
+are the earlier pilot's derived environment streams; these are runtime checks,
+not independent training seeds. Both modes keep those streams unchanged.
+
+The [preflight](../experiments/smac_process_profile_preflight_20261026.json)
+passes 23 tests: real Prey trace/reset parity, parent RNG preservation,
+pending-response draining, worker errors, stopped-child timeout/reaping,
+output preservation, source checks and bounded configuration validation.
+The copied script also passes exact raw-trace equality on 32 Prey decisions in
+the native Python 3.11.15 / NumPy 1.23.5 prefix. That cheap-environment probe has
+a sequential/process call-time ratio of 0.383; IPC costs exceed the saved native
+work there. It supplies no SMAC speed claim.
+
+Job **21218609** is queued with 2CPUs/8GB and a 30-minute cap. It follows
+`21213860_0`, and the still-pending entropy worker `21211006_0` follows it.
+The [schedule proof](../experiments/smac_process_profile_schedule_20261026.json)
+records both held workers' verified edges/resources before release. The four
+serial chains and all active training jobs are preserved. Native trace,
+restart, timing and sampled-memory gates remain pending. Artifacts go into
+`profile_output/` inside the frozen experiment directory.
+
+### Instrumentation files
+
+| File | Change | Purpose |
+| --- | --- | --- |
+| `scripts/profile_environment_processes.py` | Created | Standalone sequential/process calls, full traces, timers and owned-worker cleanup |
+| `tests/test_profile_environment_processes.py` | Created | 23 parity, failure, cleanup and provenance checks |
+| `configs/smac_process_profile.json` | Created | Normal native measurement |
+| `configs/smac_process_restart_profile.json` | Created | Frequent-restart parity check |
+| `experiments/smac_process_profile_study_20261026.json` | Created | Frozen source/configuration/instrumentation hashes and decision gates |
+| `experiments/smac_process_profile_preflight_20261026.json` | Created | Test and copied-script verification |
+| `experiments/smac_process_profile_schedule_20261026.json` | Created | Queue insertion and resource verification |
+
+The frozen directory also contains copied instrumentation, source/configurations
+and `submit.sbatch`. These profiling files can be removed after measurement
+without changing the trainer, but retain their evidence for reported timings.

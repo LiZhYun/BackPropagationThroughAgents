@@ -1,0 +1,18 @@
+{
+  "recorded_utc": "2026-10-26T17:43:06.274260+00:00",
+  "study_plan": "experiments/smac_process_profile_study_20261026.json",
+  "study_plan_sha256": "e702fd1a8ccb5ed11627bf572ff988ecb2c19f1c327edb74ead35fb8d2f89a3d",
+  "source_and_frozen_files_verified": true,
+  "unit_tests": 23,
+  "test_report": "results/environment_process_profile_final_tests_20261026.xml",
+  "test_report_sha256": "b1ee46e05a7c4b1cb14764946c3732220f8fbc7a37d1086e356ebfabe7fb4cd9",
+  "copied_profiler_native_prefix_prey_check": {
+    "report": "results/smac_process_profile_20261026T173908Z/profile_output/preflight_prey/report.json",
+    "report_sha256": "e46865a47411ff89cdb4ea0c77fc10f1ea3d71423785c71059627fb2ff5816a4",
+    "full_raw_traces_identical": true,
+    "environment_decisions": 32,
+    "python": "3.11.15",
+    "numpy": "1.23.5"
+  },
+  "native_smac_status": "Both conditions unstarted; native parity, timing and memory gates remain pending."
+}

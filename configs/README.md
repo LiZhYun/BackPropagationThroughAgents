@@ -7,6 +7,7 @@ The command depends on the configuration file type.
 | Matrix settings | Flat fields such as `entropy_coef` and `action_embed_dim` | `python -m bta_repro.train --config FILE --algorithm METHOD --game GAME` |
 | Single simulator run | Flat fields including `environment`, `algorithm`, `steps` and `env_config` | `python -m bta_repro.simulator_train --config FILE --output NEW_DIRECTORY` |
 | Simulator experiment plan | `base_config`, `variants`, `seeds`, `label`, `scope` | `python scripts/prepare_simulator.py FILE` expands and freezes individual runs |
+| Environment runtime diagnostic | `environment`, `env_config`, `seeds`, `decisions_per_environment`, `repeats`, `timeout_seconds` | `python scripts/profile_environment_processes.py --config FILE --output NEW_DIRECTORY`; see [runtime measurements](../docs/simulator_runtime.md#standalone-process-comparison) |
 | Paper targets and environment locks | Source measurements, extraction provenance or dependency pins | Used for comparisons or installation; not training configurations |
 
 A simulator plan is not accepted by the single-run trainer's `--config` option.

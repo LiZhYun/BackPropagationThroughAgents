@@ -1,0 +1,11 @@
+{
+  "environment": "smac",
+  "env_config": {
+    "scenario": "terran_5v5",
+    "restart_game_loop": 480000
+  },
+  "seeds": [2865252013, 1680950762],
+  "decisions_per_environment": 512,
+  "repeats": 3,
+  "timeout_seconds": 120
+}
