@@ -84,6 +84,11 @@ finish at matching settings before the report pools a group. See the
 [curve-report guide](docs/learning_curve_reports.md) for commands, metric
 denominators, bootstrap conventions and optional PDF/PNG/SVG figures.
 
+The [matrix validation guide](docs/matrix_confirmation.md) records the frozen
+unused-seed study and separate paper-budget development extension. Its reporter
+checks provenance, recomputes scores and retains every declared seed before
+making a configuration-validation decision.
+
 BPPO executes autoregressively and requires predecessor actions. AgentMixer executes using each local policy alone. The evaluator preserves this distinction.
 
 ## What counts as reproduced

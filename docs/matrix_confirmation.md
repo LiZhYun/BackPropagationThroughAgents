@@ -57,3 +57,36 @@ and epoch settings remain documented reconstruction choices. The historical
 matrix figure-to-logger mapping is unresolved, and matrix payoff ceilings
 prevent strict improvement in maximum return. Cross-paper sample-efficiency
 and algorithm-superiority claims require additional matching and evidence.
+
+## Reporting
+
+The standard-library-only reporter audits the pre-run plan against its job-ledger
+hash, source snapshot, manifest, launcher and configuration files. Completed
+runs must match their recorded software versions, start after the freeze,
+finish at the declared budget, and contain the exact expected evaluation grid.
+It recomputes expected reward, greedy payoff and optimal-action probability
+from the frozen payoff table and the nine logged action probabilities. Summary
+and final curve values must agree. Missing or invalid runs remain visible;
+their groups and paired comparisons are not aggregated. A changed study-level
+input invalidates the report without removing declared runs.
+
+```bash
+python scripts/report_matrix_validation.py \
+  experiments/matrix_confirmation100k_plan.json \
+  --output results/matrix_confirmation_report.json \
+  --csv results/matrix_confirmation_report.csv
+```
+
+Use `experiments/matrix_budget1m_plan.json` and different output names for the
+development extension. Outputs must be new files. The reporter does not query
+the scheduler and its `paper_reproduction` field remains `not_established` even
+when the specific independent configuration validation passes. Training
+metadata's generic matrix-development label is retained; validation context
+comes from the independently frozen study plan.
+
+The initial preflight reports are
+`results/matrix_confirmation100k_preflight_20261026.json` and
+`results/matrix_budget1m_preflight_20261026.json`, each with a CSV. They recorded
+all 40 and 12 runs respectively as not started, with no provenance errors.
+Jobs `21213329` and `21213330` use the [recorded serial worker
+dependencies](worker_schedule.md); the four-worker resource limit is preserved.

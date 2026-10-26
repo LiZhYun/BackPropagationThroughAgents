@@ -40,3 +40,21 @@ cap. The matching-index rule assumes the independent two-worker layout above;
 it must not be copied blindly to plans with shared output or different worker
 counts. Array-level historical dependency events remain in the ledger, followed
 by explicit per-worker updates and the verified scheduler values.
+
+## Matrix validation insertion, 2026-10-26
+
+The [frozen matrix studies](matrix_confirmation.md) were subsequently inserted
+between matrix job `21211813` and entropy job `21211006`, for each index `i`:
+
+```
+21209234_i → 21211813_i → 21213329_i → 21213330_i → 21211006_i → 21212197_i
+SMAC          joint LR      100k check    1M extension   entropy       Prey
+```
+
+Job `21213329` has 40 runs on ten unused seeds; job `21213330` has 12 development
+runs. Each has two workers requesting 1CPU/4GB for at most 30 minutes. They were
+submitted held, assigned matching-index dependencies, and released only after
+the scheduler confirmed all six changed edges. Entropy workers were still
+pending during the update. The two A chains are unchanged. There are still
+four serial chains and at most four concurrent workers. Submission hashes and
+every dependency update are in the job ledger.
