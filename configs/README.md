@@ -22,6 +22,7 @@ see [the simulator guide](../docs/simulator_training.md).
 | Run BPPO or its matched AR-PPO baseline on a matrix game | `matrix_projected_entropy01.json` | Both methods reach the optimum on both games in development seeds 0–2 at 100k steps |
 | Inspect AgentMixer's correlated discrete redesign | `matrix_joint_lr_fast.json` | At 200k, all three development Climbing seeds succeed; all three Penalty seeds fail |
 | Compare BPPO and AR-PPO on HalfCheetah 2×3 | `mujoco_hc2x3_bppo_ar10m.json` | Six development runs at the 10M paper budget; still in progress |
+| Check transfer to Ant and Walker | `mujoco_ant_walker_transfer500k.json` | Eleven 500k pilots queued; distinct Ant observation protocols and matched controls |
 | Compare continuous AgentMixer scale maps | `mujoco_hc2x3_modifier_scale1m.json` | All nine runs complete; neither modifier improves the final three-seed mean over identity |
 | Reproduce the Prey batch controls | `prey_batch1m.json` | Sixteen completed runs at 1M; neither penalty setting clears the selected paper comparison |
 | Test restricted Prey modifier ranges | `prey_modifier_bound1m.json` | Eight matched 1M controls queued after distribution diagnostics; no results yet |

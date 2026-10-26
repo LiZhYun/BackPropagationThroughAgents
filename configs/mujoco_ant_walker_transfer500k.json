@@ -1,0 +1,154 @@
+{
+  "label": "mujoco_ant_walker_transfer500k",
+  "scope": "Eleven500k-step development pilots transferring the shared HalfCheetah protocol to Ant2x4 and Walker2x3. Ant BPPO/AR-PPO/MAPPO use BPTA obsk=None; Ant AgentMixer/identity/MAPPO use AgentMixer obsk0. Walker uses obsk0 for all five methods. Each condition uses seed0 and ten complete deterministic evaluations. Native task horizons1000, normalized actuators, no reward changes. This checks transfer and throughput, not10M reproduction or independent confirmation.",
+  "wall_time_minutes": 480,
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "mujoco",
+    "steps": 500000,
+    "num_envs": 40,
+    "rollout_steps": 100,
+    "hidden_dim": 64,
+    "learning_rate": 0.0003,
+    "modifier_learning_rate": 3e-05,
+    "critic_learning_rate": 0.0003,
+    "entropy_coef": 0.0,
+    "epochs": 5,
+    "max_grad_norm": 10.0,
+    "normalize_observations": true,
+    "eval_seed": 1000000,
+    "eval_episodes": 10,
+    "eval_every_steps": 100000,
+    "checkpoint_every_updates": 125,
+    "threads": 1,
+    "initial_std": 0.36552928931500245,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0
+  },
+  "variants": {
+    "ant2x4_global_mappo": {
+      "algorithm": "mappo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "ant2x4_global_arppo": {
+      "algorithm": "arppo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "ant2x4_global_bppo": {
+      "algorithm": "bppo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": null,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "ant2x4_local_mappo": {
+      "algorithm": "mappo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "ant2x4_local_agentmixer": {
+      "algorithm": "agentmixer",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "ant2x4_local_identity": {
+      "algorithm": "agentmixer",
+      "modifier_enabled": false,
+      "env_config": {
+        "scenario": "Ant-v2",
+        "agent_conf": "2x4",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "walker2x3_local_mappo": {
+      "algorithm": "mappo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "walker2x3_local_arppo": {
+      "algorithm": "arppo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "walker2x3_local_bppo": {
+      "algorithm": "bppo",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "walker2x3_local_agentmixer": {
+      "algorithm": "agentmixer",
+      "modifier_enabled": true,
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    },
+    "walker2x3_local_identity": {
+      "algorithm": "agentmixer",
+      "modifier_enabled": false,
+      "env_config": {
+        "scenario": "Walker2d-v2",
+        "agent_conf": "2x3",
+        "agent_obsk": 0,
+        "episode_limit": 1000,
+        "action_units": "normalized"
+      }
+    }
+  }
+}
