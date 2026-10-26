@@ -26,7 +26,7 @@ Full reproduction and performance beyond the papers are not yet established.
 - At 3M HalfCheetah steps, combined-protocol BPPO reaches 5228.01 versus AR-PPO 4739.43 (+10.31%) in development seed 0. AgentMixer reaches 2411.14 versus identity 2975.45. Under normalization alone BPPO reaches only 599.40; these settings change several optimization choices together.
 - Three-seed BPPO fresh/behavior-noise means at 500k are 1844.05/2853.01 with the small batch and 2547.40/1959.81 with the combined protocol. No estimator wins consistently across settings.
 - All sixteen Prey 1M controls complete. Penalty −1 remains unsolved: every fixed-window reward rate is negative, even the higher-entropy condition with 9/20 captures. Evaluation return remains the author-confirmed metric; historical reduction is unresolved.
-- Frozen-source Prey replay reproduces all sixteen policies’ original per-episode evaluation returns. Small-batch AgentMixer has a large training/greedy-execution gap: recent stochastic training captures 83–100%, versus 0/20 greedy evaluation captures, with many blocked moves. `docs/prey_behavior_diagnosis.md` records the scope; a separate 100-episode local/central sampling diagnostic is running.
+- Frozen-source Prey replay reproduces all sixteen policies’ original per-episode evaluation returns. Small-batch AgentMixer has a large training/greedy-execution gap: recent stochastic training captures 83–100%, versus 0/20 greedy evaluation captures, with many blocked moves. `docs/prey_behavior_diagnosis.md` records the scope; a separate 100-episode local/central sampling diagnostic is queued as 21210161. Its local attempt was stopped for batch execution after recording 0/100 greedy captures in the first condition.
 - All five Football 100k controls finish with 0/20 wins. Positive shaped returns do not establish task success.
 - Corrected SMAC 200k final win counts are MAPPO 1/32, AR-PPO 4/32, BPPO 0/32, AgentMixer 2/32, identity 0/32. The original failed run is retained.
 - Full budgets, independent final training seeds, ablations and release evidence remain outstanding.
@@ -35,8 +35,9 @@ Full reproduction and performance beyond the papers are not yet established.
 
 - 21208906: BPPO and matched AR-PPO on HalfCheetah 2×3, 10M steps, development seeds 0–2, 32 deterministic evaluation episodes. Two serial workers, 12h cap. Selected from earlier development results; not independent final confirmation.
 - 21209002: AgentMixer residual scale, bounded replacement scale and identity control, 1M steps, development seeds 0–2. Two serial workers, 4h cap, frozen after the 583-test suite passed.
-- 21209234: five matched SMAC terran 5v5 controls at 1M steps, seed 0, after 21209002. Same validated runtime and learning settings; two workers, 12h cap.
+- 21209234: five matched SMAC terran 5v5 controls at 1M steps, seed 0, after both 21209002 and 21210161. Same validated runtime and learning settings; two workers, 12h cap.
 - 21209248: five matched Football 3v1 controls at 1M steps, seed 0, after 21208906. Complete-match evaluation; two workers, 12h cap.
+- 21210161: unchanged frozen-policy Prey sampling diagnostic, after 21209002_0; one CPU/4GB, 1h cap. SMAC also waits for this diagnostic to preserve the four-worker limit.
 - Earlier jobs 21196118, 21196495, 21196497, 21198089, 21198090 and 21198169 all completed. Tiny integration 21196515 and native restart validation 21198088 also completed. Failed 21196276 remains preserved.
 
 At most four workers run concurrently, each at most 2CPUs/8GB. Exact manifests and scheduler IDs are in `experiments/jobs.jsonl`; query those IDs before adding jobs. `python scripts/report_progress.py` reads artifact progress. `python scripts/check_paper_targets.py` verifies all 45 target links (six numeric, 39 digitized), not performance.

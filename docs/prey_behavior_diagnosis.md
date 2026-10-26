@@ -22,3 +22,5 @@ This is consistent with the [matrix diagnosis](joint_modifier_diagnosis.md): exa
 The original evaluation metric remains unchanged. Centralized sampling is a diagnostic and cannot replace local execution when claiming reproduction. New evaluation episodes are not new independent training seeds.
 
 Artifacts: `results/prey_behavior_diagnosis_20261026/probe.py`, `summary.json` and `trajectories.jsonl`; the summary records the manifest/probe hashes. The frozen source is `results/prey_batch1m_20261025T090907Z/source`.
+
+The expanded comparison uses 100 separately seeded fresh episodes shared across execution conditions, with diagnostic seed root 2,000,001. A local attempt completed the first greedy condition (factorized small-batch): 0/100 captures, return −1.28 in every episode. It was then interrupted to move the larger evaluation to the batch queue; its partial output and reason remain in `sampling_login_attempt.json`. Job 21210161 runs the unchanged script after an AgentMixer worker releases its slot. The full sampling comparison remains pending.
