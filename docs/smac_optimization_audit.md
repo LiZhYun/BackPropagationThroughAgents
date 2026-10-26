@@ -103,8 +103,16 @@ unsubmitted until native correctness, runtime and memory have been checked.
 The [study record](../experiments/smac_recurrent_study_20261026.json) states the
 gates and the [worker schedule](worker_schedule.md) preserves resource limits.
 
-A later snapshot in this turn recorded the first completed small-batch pilot:
-MAPPO finished exactly 1M transitions with mean evaluation return
-9.722725808083473 and win rate 4/32. AR-PPO, BPPO and the two modifier variants
-were not all complete, so this is one development baseline result, not an
-across-method conclusion.
+Two recurrent integration runs now complete: AR-PPO in 148.41 seconds and
+AgentMixer in 151.60 seconds. Each finishes one rollout of shape `[5000, 2]`,
+one finite five-epoch update, and four complete initial/final evaluation
+episodes. The [partial audit](../experiments/smac_recurrent_integration_progress_20261026.json)
+verifies source/configuration hashes, all 16 raw evaluation episodes and both
+rollout budgets, retaining the three pending variants.
+
+Worker `21213860_1` exits 0 after 5m06s. Slurm reports batch-step MaxRSS
+3,825,900 KiB (about 3.65 GiB) across its two sequential runs. This is sampled
+accounting, not a separate per-method peak or a guarantee for longer training.
+The remaining worker follows AgentMixer matrix validation `21218175_0` in the
+existing B0 chain. The larger learning study remains unsubmitted until all five
+native checks and the full runtime/memory review pass.

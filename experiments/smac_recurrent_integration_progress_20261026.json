@@ -1,0 +1,264 @@
+{
+  "scope": "Partial native recurrent integration audit; all five runs retained. Not benchmark evidence or learning-study release.",
+  "recorded_utc": "2026-10-26T17:22:40.210885+00:00",
+  "manifest": "results/smac_recurrent_batch_integration10k_20261026T125710Z/manifest.json",
+  "manifest_sha256": "2742cad38dd9cd3af708d47cb1da57719f5b948c546f62202af137c9a6b6ab5c",
+  "frozen_source_bytes_verified": true,
+  "runs": [
+    {
+      "algorithm": "mappo",
+      "variant": "mappo",
+      "seed": 0,
+      "output_path": "results/smac_recurrent_batch_integration10k_20261026T125710Z/mappo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 0,
+      "output_path": "results/smac_recurrent_batch_integration10k_20261026T125710Z/arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "elapsed_seconds": 148.40819514798932,
+      "evaluation_environment_steps": 335,
+      "final_evaluation": {
+        "count": 4,
+        "return_mean": 3.761437218468468,
+        "return_std": 2.1915997772401594,
+        "length_mean": 45.0,
+        "terminated": 4,
+        "truncated": 0,
+        "win_rate": 0.0,
+        "win_records": 4,
+        "capture_rate": null,
+        "capture_records": 0,
+        "reward_per_environment_step": 0.08358749374374373,
+        "reward_per_step_scope": "completed_episodes_only",
+        "episodes": [
+          {
+            "episode": 0,
+            "return": 1.2972972972972974,
+            "length": 56,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 5,
+              "dead_enemies": 0,
+              "planned_restarts": 0,
+              "native_game_loop": 450
+            }
+          },
+          {
+            "episode": 1,
+            "return": 4.504504504504504,
+            "length": 38,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 5,
+              "dead_enemies": 1,
+              "planned_restarts": 0,
+              "native_game_loop": 758
+            }
+          },
+          {
+            "episode": 2,
+            "return": 2.8465653153153156,
+            "length": 41,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 4,
+              "dead_enemies": 0,
+              "planned_restarts": 0,
+              "native_game_loop": 1090
+            }
+          },
+          {
+            "episode": 3,
+            "return": 6.397381756756756,
+            "length": 45,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 4,
+              "dead_enemies": 0,
+              "planned_restarts": 0,
+              "native_game_loop": 1454
+            }
+          }
+        ],
+        "seed": 1000000,
+        "environment_steps": 180,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "software_versions": {
+        "python": "3.11.15",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": "1.0.0",
+        "pysc2": "4.0.0",
+        "mujoco-py": null,
+        "gym": null,
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "artifact_sha256": {
+        "config.json": "384313973a0456f0dab291e43dbfd653774d469c5a6dda1aa52786e2f66eccf0",
+        "summary.json": "0a92bd94f8d27db4bfc17595e25bfec9800b92b4cfc458243572c9c521903782",
+        "metrics.jsonl": "fcd75251316ca1cdfe3da88a261fdff481b4d1fc62d9b41a567444cbd1623726",
+        "checkpoint.pt": "faac2b3e38d316ba308e1a518c557d713f1eb9b1d9c808e8d4b140ad5fb50238"
+      }
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 0,
+      "output_path": "results/smac_recurrent_batch_integration10k_20261026T125710Z/bppo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer",
+      "seed": 0,
+      "output_path": "results/smac_recurrent_batch_integration10k_20261026T125710Z/agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "updates": 1,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "elapsed_seconds": 151.59674472699407,
+      "evaluation_environment_steps": 495,
+      "final_evaluation": {
+        "count": 4,
+        "return_mean": 2.8394082559121623,
+        "return_std": 1.5736661503017986,
+        "length_mean": 51.75,
+        "terminated": 4,
+        "truncated": 0,
+        "win_rate": 0.0,
+        "win_records": 4,
+        "capture_rate": null,
+        "capture_records": 0,
+        "reward_per_environment_step": 0.054867792384776085,
+        "reward_per_step_scope": "completed_episodes_only",
+        "episodes": [
+          {
+            "episode": 0,
+            "return": 2.990990990990991,
+            "length": 37,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 5,
+              "dead_enemies": 1,
+              "planned_restarts": 0,
+              "native_game_loop": 298
+            }
+          },
+          {
+            "episode": 1,
+            "return": 1.7297297297297298,
+            "length": 36,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 5,
+              "dead_enemies": 0,
+              "planned_restarts": 0,
+              "native_game_loop": 590
+            }
+          },
+          {
+            "episode": 2,
+            "return": 1.6279032939189189,
+            "length": 79,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 5,
+              "dead_enemies": 0,
+              "planned_restarts": 0,
+              "native_game_loop": 1226
+            }
+          },
+          {
+            "episode": 3,
+            "return": 5.009009009009009,
+            "length": 55,
+            "terminated": true,
+            "truncated": false,
+            "info": {
+              "battle_won": false,
+              "dead_allies": 4,
+              "dead_enemies": 0,
+              "planned_restarts": 0,
+              "native_game_loop": 1670
+            }
+          }
+        ],
+        "seed": 1000000,
+        "environment_steps": 207,
+        "execution": "decentralized",
+        "deterministic": true
+      },
+      "software_versions": {
+        "python": "3.11.15",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": "1.0.0",
+        "pysc2": "4.0.0",
+        "mujoco-py": null,
+        "gym": null,
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "artifact_sha256": {
+        "config.json": "ea59467760af4aa02bca9a5c300e70d6070baefbcc8f6d58c66e76929f9233ea",
+        "summary.json": "3c5c46a27381f306d627f8265df5ae4aee2634d112b60ea22811eafe060c5874",
+        "metrics.jsonl": "594f64cabe16eae97dd0debb07f8b8a3425eb7995dae301009aa64890465c9be",
+        "checkpoint.pt": "ba60aa994b0fe0dbc952e68617ffef577fbef7e58782b7bc5ab7c3cd51873f6f"
+      }
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "output_path": "results/smac_recurrent_batch_integration10k_20261026T125710Z/agentmixer_identity_seed0",
+      "status": "not_started",
+      "eligible": false
+    }
+  ],
+  "raw_evaluation_episodes_verified": 16,
+  "rollout_updates_verified": 2,
+  "slurm_completed_worker": {
+    "job": "21213860_1",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 306,
+    "allocated_cpus": 2,
+    "batch_MaxRSS_KiB": 3825900,
+    "limits": "Sampled batch-step accounting across two sequential runs, not a per-run peak or future guarantee."
+  },
+  "learning_study_status": "prepared_not_submitted; all five native checks and cost review required",
+  "completed_runs": 2
+}

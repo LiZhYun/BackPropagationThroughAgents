@@ -112,3 +112,23 @@ must first preserve sequential/parallel native traces, seed streams, episode
 endings and cleanup, then demonstrate throughput and memory within the same
 resource allocation. No process-based execution or measured speedup is claimed
 by these profiles.
+
+## Requirements for a process diagnostic
+
+The current collector steps every environment, evaluates the resulting terminal
+states for bootstrapping, then resets completed environments. Responses must
+remain in environment-index order. Each environment needs its own process and
+unchanged derived seed; policy sampling and optimization must stay in the parent.
+The diagnostic should compare full native observations, masks, rewards, ending
+flags and reset traces before measuring throughput under the same allocation.
+Separate startup from subsequent step/reset time and include communication cost.
+
+Observation normalization adds an ordering constraint. `NormalizedEnv` shares
+training moments across environments and updates them on each reset and step.
+Raw native calls could overlap, but the parent must apply those moment updates
+in the same order as sequential execution. Merely forwarding asynchronous calls
+through `NormalizedEnv.__getattr__` would bypass its observation transformation.
+Any later rollout integration therefore needs exact normalized-batch, recurrent
+carry, parameter-update and checkpoint parity, plus owned-worker cleanup checks.
+This is the next diagnostic design; no process backend has been implemented or
+adopted by the frozen experiments.
