@@ -76,7 +76,7 @@ with development is allowed. See [the study guide](../docs/halfcheetah_confirmat
 The completed 200k Climbing configuration check has 10/10 optimal greedy
 policies but only 8/10 local stochastic returns above its frozen threshold.
 Keep that failed criterion unchanged. Test the same selected setting at the
-paper's 1M budget on both Climbing and Penalty, pairing a learned modifier
+longer 1M budget on both Climbing and Penalty, pairing a learned modifier
 with its frozen-identity control on five unused seeds 4000–4004. All 20 runs
 must be valid before paired aggregation; prior development is not pooled.
 
@@ -86,3 +86,9 @@ one CPU/4GB and a three-hour cap, derived from measured runtimes with 50%
 margin. Jobs 21220499/21220500 follow matching existing Prey workers and
 precede recurrent Prey, preserving four serial project chains. Independent
 simulator evidence and every other benchmark remain required.
+
+
+The [budget correction](../experiments/matrix_budget_interpretation_correction_20261026.json)
+clarifies that AgentMixer's archived Climbing budget is 200k; BPTA's matrix
+budget is 1M. The paired AgentMixer study is a longer-budget extension, with
+Penalty as an additional task. Its endpoint cannot certify the 200k target.

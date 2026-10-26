@@ -48,11 +48,27 @@ expanded configurations and a manifest. It uses at most two serial workers,
 each 2CPUs/8GB, with an eight-hour worker limit. Submission must follow the
 recorded Football job so that the combined project stays within four workers.
 
-Job **21212297** is queued after Football **21209248**, with frozen manifest
+Job **21212297** follows the matching Football integration workers **21219475**,
+which follow the earlier Football pilot. It uses frozen manifest
 `results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json`. Expanded
 configurations and all source hashes were verified before submission. No
-learning outcomes are available yet.
+complete method comparisons are available yet.
 
 The current scheduler uses matching worker indices for this dependency; see
 the [verified worker schedule](worker_schedule.md). Each successor can start
 when its own preceding worker finishes, within the unchanged four-worker cap.
+
+
+## First completed transfer run
+
+The [partial audit](../experiments/mujoco_transfer500k_progress_20261026.json)
+verifies the Ant 2×4 global-observation AR-PPO baseline at 500k decisions:
+60 raw evaluation episodes, 125 finite rollout updates, exact frozen source,
+configuration, seed derivation and training/evaluation accounting. Its final
+10-episode mean return is **877.68**, with normalized curve area **931.33**.
+The run takes 792.92 seconds. These are one development seed's pilot results;
+they cannot establish performance at the paper's 10M budget or a method ranking.
+
+All eleven declarations remain visible. Worker 1 continues through its other
+controls, while worker 0 waits for its matching predecessor. The remaining
+methods must complete before selecting transfer follow-ups.

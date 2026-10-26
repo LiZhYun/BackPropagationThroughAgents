@@ -1,0 +1,44 @@
+{
+  "recorded_utc": "2026-10-26T20:08:07.150809+00:00",
+  "scope": "Reporting-only budget annotation; training package, frozen experiments and criteria unchanged.",
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_matrix_ablation.py tests/test_benchmark_coverage.py tests/test_matrix_validation.py",
+    "passed": 66,
+    "elapsed_seconds": 1.55,
+    "stdout_saved": false,
+    "evidence": "Successful tool exit and pytest output observed in this session."
+  },
+  "files_sha256": {
+    "scripts/report_matrix_ablation.py": "760bd1dbbc4585da3cf2ea6d56fe949ec60225aa9b463b060142aef47de9b101",
+    "tests/test_matrix_ablation.py": "50b8bb16dd51297e29389053647d0970de1af86513c44ac3120de482b71baf40",
+    "configs/paper_targets.json": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc"
+  },
+  "dependency_free_report": "results/matrix_ablation_schedule_20261026/budget_corrected_report.json",
+  "dependency_free_report_sha256": "093041576e62837ede003459c9fd4c259dfaac73974046203d52c92f1adfb4c1",
+  "canonical_budget_context": {
+    "source": "configs/paper_targets.json",
+    "source_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+    "tasks": [
+      {
+        "game": "climbing",
+        "study_steps": 1000000,
+        "scope": "appendix_commented",
+        "benchmark": "agentmixer:climbing",
+        "paper_steps": 200000,
+        "budget_relation": "longer_than",
+        "study_to_paper_budget_ratio": 5.0,
+        "configuration": "agentmixer_matrix"
+      },
+      {
+        "game": "penalty",
+        "study_steps": 1000000,
+        "scope": "additional_task",
+        "benchmark": null,
+        "paper_steps": null
+      }
+    ],
+    "qualification": "Budget matching alone does not establish protocol or performance equivalence."
+  },
+  "prior_installed_wheel": "experiments/matrix_identity_wheel_verification_20261026.json",
+  "prior_installed_wheel_note": "899 passed/1CUDA skip before this reporting-only annotation; not represented as a rerun of the updated script."
+}

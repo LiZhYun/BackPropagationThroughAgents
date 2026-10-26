@@ -280,7 +280,7 @@ unchanged A0/A1 chains, at most four project workers can run. This is a
 scheduling change, with no changes to the training backend or experiments.
 
 
-## Paired full-budget matrix study inserted, 2026-10-26
+## Paired 1M matrix study inserted, 2026-10-26
 
 Two bounded serial workers add the missing learned/identity modifier comparison
 on both games at 1M. The latest B chains are:

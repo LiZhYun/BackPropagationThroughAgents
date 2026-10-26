@@ -1,0 +1,65 @@
+{
+  "recorded_utc": "2026-10-26T20:05:07.220030+00:00",
+  "kind": "interpretation_correction_no_experiment_changes",
+  "error": "Earlier prose applied BPTA's 1M matrix budget to AgentMixer and called the new1M AgentMixer ablation paper-budget matched.",
+  "affected_frozen_records": [
+    {
+      "path": "experiments/matrix_agentmixer_confirmation200k_plan.json",
+      "sha256": "38e1c18fe449a0df9657be174325f202c7158d081d16a915200afb7f5b501f63"
+    },
+    {
+      "path": "experiments/matrix_agentmixer_ablation1m_plan.json",
+      "sha256": "2255f9a34d26234e18909b991c318ac8b0eebf7cc135b3fd7515655733f939b2"
+    }
+  ],
+  "canonical_targets": "configs/paper_targets.json",
+  "canonical_targets_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+  "source_budgets": {
+    "bpta_matrix": {
+      "steps": 1000000,
+      "source": {
+        "path": "references/bpta/Formatting-Instructions-LaTeX-2024.tex",
+        "lines": [
+          502,
+          536
+        ],
+        "status": "active_tex"
+      }
+    },
+    "agentmixer_matrix": {
+      "steps": 200000,
+      "source": {
+        "path": "references/agentmixer/aaai25.tex",
+        "lines": [
+          1202,
+          1236
+        ],
+        "status": "commented_appendix"
+      }
+    }
+  },
+  "figure_evidence": {
+    "source_pdf": "references/agentmixer/figs/Matrix.pdf",
+    "source_pdf_sha256": "6e90b06e51f65587838560cef27781b71d333d8646cab8fd5e2f4de97528a3a4",
+    "source_scope": "commented_appendix_asset",
+    "last_plotted_steps_estimate": 199999.9984250678,
+    "last_plotted_steps_reading_range": [
+      199224.85101458986,
+      200775.14583554576
+    ],
+    "reported_endpoint_rounded": 11.0
+  },
+  "correct_interpretation": [
+    "The completed200k AgentMixer Climbing check matches the archived200k budget. Its unchanged local expected-return criterion still fails8/10; greedy payoffs are optimal10/10. Other historical protocol differences remain.",
+    "The new1M AgentMixer learned/identity study is a five-times-budget extension on Climbing. Penalty is an additional AgentMixer task, although it is a canonical BPTA target.",
+    "The1M extension can assess longer-budget behavior and modifier effects; it cannot replace or certify AgentMixer performance at200k or establish equal-budget sample-efficiency improvement."
+  ],
+  "preserved": [
+    "all frozen source/configuration/manifest/plan bytes",
+    "training budgets and seeds",
+    "evaluation endpoints and thresholds",
+    "earlier failed validation decision",
+    "running jobs and dependency graph"
+  ],
+  "reporting_fix": "scripts/report_matrix_ablation.py now derives paper budget and task scope from canonical targets, recording their hash, independently of plan prose."
+}

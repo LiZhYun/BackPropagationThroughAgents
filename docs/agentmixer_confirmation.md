@@ -59,8 +59,8 @@ held, checked, and inserted between `21209234_0` and the pending
 records the verified dependencies and resources before release.
 
 Even a passing study would validate this reconstruction setting only. The
-budget is below the paper's 1M matrix budget, historical protocol differences
-remain, and the payoff ceiling prevents return above 11. No cross-paper sample
+200k budget matches AgentMixer's archived matrix budget. Historical protocol
+differences remain, and the payoff ceiling prevents return above 11. No cross-paper sample
 efficiency, Penalty reliability, population-perfect convergence or algorithm
 advantage follows from this study. Future tuning after these seeds are observed
 requires a new untouched seed set for independent validation.
@@ -91,6 +91,12 @@ optimal greedy modes. The results do not establish reliable stochastic local
 execution or a modifier advantage. They also cannot replace the separate
 Predator–Prey or native-simulator evaluations.
 
-The separate [paired modifier study](matrix_modifier_ablation.md) now tests
-the selected setting at 1M on both games with five fresh seeds. It adds an
+The separate [paired modifier study](matrix_modifier_ablation.md) extends
+the selected setting to 1M on both games with five fresh seeds. It adds an
 identity control and does not replace or change this completed 200k result.
+
+
+A [budget correction](../experiments/matrix_budget_interpretation_correction_20261026.json)
+records the earlier mistaken reference to a 1M AgentMixer paper budget. The
+frozen plan is preserved, and the failed 8/10 criterion is unchanged. The
+canonical target and archived figure both specify 200k for AgentMixer Climbing.

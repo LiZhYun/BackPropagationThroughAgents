@@ -9,6 +9,32 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from bta_repro.learning_curves import seed_statistics
 from bta_repro.matrix_validation import checked_path, digest, report_study, require
+from bta_repro.benchmark_coverage import _settings
+
+
+def canonical_budget_context(root, games, training_steps):
+    """Derive paper scope from canonical targets, independently of study prose."""
+    path = root / "configs/paper_targets.json"
+    targets = json.loads(path.read_text())
+    comparisons = []
+    for game in games:
+        matches = [b for b in targets["benchmarks"]
+                   if b["paper"] == "agentmixer" and b["suite"] == "matrix" and b["task"] == game]
+        require(len(matches) <= 1, "ambiguous canonical AgentMixer matrix target")
+        item = {"game": game, "study_steps": training_steps}
+        if not matches:
+            item.update(scope="additional_task", benchmark=None, paper_steps=None)
+        else:
+            benchmark = matches[0]
+            budget = _settings(targets["configurations"], benchmark["configuration"])["environment_steps"]
+            require(type(budget) is int and budget > 0, "invalid canonical matrix budget")
+            relation = "matches" if training_steps == budget else "longer_than" if training_steps > budget else "shorter_than"
+            item.update(scope=benchmark["paper_scope"], benchmark=benchmark["id"], paper_steps=budget,
+                        budget_relation=relation, study_to_paper_budget_ratio=training_steps / budget,
+                        configuration=benchmark["configuration"])
+        comparisons.append(item)
+    return {"source": "configs/paper_targets.json", "source_sha256": digest(path), "tasks": comparisons,
+            "qualification": "Budget matching alone does not establish protocol or performance equivalence."}
 
 
 def paired_results(learned, identity, games, seeds):
@@ -49,11 +75,12 @@ def report_ablation(plan_path, root=ROOT):
     plan = json.loads(path.read_text())
     report = {"study_id": plan["study_id"], "plan_sha256": digest(path), "errors": [],
               "status": "incomplete", "arms": {}, "paired_comparisons": [],
-              "paper_reproduction": "not_established"}
+              "paper_reproduction": "not_established", "reporter_sha256": digest(Path(__file__))}
     try:
         games, seeds = plan["games"], plan["training_seeds"]
         require(games and len(games) == len(set(games)), "empty or duplicate games")
         require(len(seeds) >= 5 and len(seeds) == len(set(seeds)), "insufficient or duplicate seeds")
+        report["canonical_budget_context"] = canonical_budget_context(root, games, plan["training_steps"])
         submissions = [json.loads(line) for line in (root / "experiments/jobs.jsonl").read_text().splitlines()]
         registered = [event for event in submissions if event.get("ablation_plan") == str(path.relative_to(root))]
         require(registered and all(e["ablation_plan_sha256"] == report["plan_sha256"] for e in registered),
@@ -92,7 +119,8 @@ def report_ablation(plan_path, root=ROOT):
         report["status"] = "invalid"
     report["interpretation"] = ("Paired differences use whole training seeds and the exact final budget. "
         "Intervals are pointwise descriptive bootstrap intervals, not family-wise or cross-paper superiority claims. "
-        "Missing or invalid runs prevent every paired aggregate; central scores remain separate in each arm.")
+        "Missing or invalid runs prevent every paired aggregate; central scores remain separate in each arm. "
+        "Paper task and budget coverage comes from canonical_budget_context, not study-plan prose.")
     return report
 
 
@@ -107,7 +135,7 @@ def main():
     with args.output.open("x") as stream:
         json.dump(report, stream, indent=2, allow_nan=False)
         stream.write("\n")
-    print(json.dumps({k: report[k] for k in ("status", "errors", "paired_comparisons")}, indent=2))
+    print(json.dumps({k: report.get(k) for k in ("status", "errors", "canonical_budget_context", "paired_comparisons")}, indent=2))
 
 
 if __name__ == "__main__":

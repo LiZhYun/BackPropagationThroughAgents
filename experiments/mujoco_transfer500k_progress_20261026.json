@@ -1,0 +1,248 @@
+{
+  "recorded_utc": "2026-10-26T20:06:31.782409+00:00",
+  "scope": "Partial seed-0 development audit. All declarations retained; no independent confirmation or paper-level performance claim.",
+  "manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+  "manifest_sha256": "e0fc52585d6d2d60bf41c3483985086d13b0b5ae71dfac19b92fc94095dbe9a8",
+  "audit_script": "results/prey_transfer_audit_20261026T201000Z/audit.py",
+  "audit_script_sha256": "199e2a0e1b7de1fbde8c81736a374efd882932e97f51cea5c239f9399dc6b7ba",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "frozen_source_bytes_verified": true,
+  "metric": "return_mean",
+  "raw_evaluation_episodes_verified": 60,
+  "raw_evaluation_windows_verified": 0,
+  "rollout_updates_verified": 125,
+  "runs": [
+    {
+      "algorithm": "mappo",
+      "variant": "ant2x4_global_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_mappo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "ant2x4_global_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 500000,
+      "updates": 125,
+      "elapsed_seconds": 792.9179811719805,
+      "evaluation_environment_steps": 60000,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "2x4",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 500000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "6a754e0fada41d16203a4543c78c28f8bb12d846532c89514d4705060d117cbd",
+        "metrics.jsonl": "4cee98307765a0729a63ab8900885b45145299824d0a49a6c9b0373109a1dc40",
+        "summary.json": "0f6e52283288cca750947432344bb51e61bb7a6be4ab7f02fe40ba5386c119ce",
+        "checkpoint.pt": "414f4308fffce489ac17caf919810284814550d63d1cee293d245fb0b8b4564a"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 996.0693181265259,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 991.9285747094767,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 896.7408354137953,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 894.7984210160597,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 936.3063081605053,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 877.6820826351966,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 931.3299679361396
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "ant2x4_global_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_bppo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "ant2x4_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_local_mappo_seed0",
+      "status": "unfinished",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant2x4_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_local_agentmixer_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant2x4_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_local_identity_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "walker2x3_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_mappo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "walker2x3_local_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_arppo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "walker2x3_local_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_bppo_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "walker2x3_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_agentmixer_seed0",
+      "status": "not_started",
+      "eligible": false
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "walker2x3_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_identity_seed0",
+      "status": "not_started",
+      "eligible": false
+    }
+  ],
+  "completed_runs": 1,
+  "declared_runs": 11,
+  "integrity_errors": [],
+  "limitations": [
+    "Raw episode/window reductions are checked; native transition rewards are not independently replayed in this audit.",
+    "Incomplete methods remain in the report; development seed 0 cannot estimate training-seed uncertainty.",
+    "No early peak replaces a final endpoint; budgets and protocols must match before comparisons."
+  ]
+}

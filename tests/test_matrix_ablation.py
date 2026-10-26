@@ -47,6 +47,13 @@ def test_incomplete_declaration_or_invalid_run_cannot_produce_a_contrast(mutatio
 def frozen_pair(tmp_path, monkeypatch):
     experiments = tmp_path / "experiments"
     experiments.mkdir()
+    (tmp_path / "configs").mkdir()
+    targets = {"configurations": {
+        "common": {"values": {"environment_steps": 200_000}},
+        "matrix": {"inherits": "common", "values": {}}},
+        "benchmarks": [{"id": "agentmixer:climbing", "paper": "agentmixer", "suite": "matrix",
+                        "task": "climbing", "configuration": "matrix", "paper_scope": "appendix_commented"}]}
+    (tmp_path / "configs/paper_targets.json").write_text(json.dumps(targets))
     plan_path = experiments / "pair.json"
     plan = {"study_id": "pair", "frozen_utc": "2026-01-01T12:00:00+00:00",
             "games": GAMES, "training_seeds": SEEDS, "training_steps": 1_000_000,
@@ -79,6 +86,20 @@ def test_verified_pair_reports_both_games(frozen_pair):
     report = reporter.report_ablation(path, root)
     assert report["status"] == "complete" and not report["errors"]
     assert len(report["paired_comparisons"]) == 2
+    contexts = report["canonical_budget_context"]["tasks"]
+    assert contexts[0]["paper_steps"] == 200_000
+    assert contexts[0]["budget_relation"] == "longer_than"
+    assert contexts[0]["study_to_paper_budget_ratio"] == 5
+    assert contexts[1]["scope"] == "additional_task" and contexts[1]["paper_steps"] is None
+
+
+@pytest.mark.parametrize("steps,relation", [(100_000, "shorter_than"), (200_000, "matches"), (1_000_000, "longer_than")])
+def test_budget_annotation_resolves_canonical_inheritance(frozen_pair, steps, relation):
+    root, *_ = frozen_pair
+    context = reporter.canonical_budget_context(root, GAMES, steps)
+    assert context["tasks"][0]["budget_relation"] == relation
+    assert context["tasks"][0]["paper_steps"] == 200_000
+    assert context["source_sha256"] == reporter.digest(root / "configs/paper_targets.json")
 
 
 def test_configuration_change_beyond_the_modifier_is_rejected(frozen_pair):

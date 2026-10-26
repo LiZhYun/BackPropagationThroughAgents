@@ -142,7 +142,8 @@ meet the predeclared local expected-return threshold, so the criterion fails.
 Central and local scores remain separate.
 
 A [paired modifier ablation](docs/matrix_modifier_ablation.md) is queued at the
-1M matrix budget on both games, using five fresh seeds per arm. The identity
+1M budget extension on both games, using five fresh seeds per arm. AgentMixer's
+archived Climbing budget is 200k; Penalty is an additional task. The identity
 control freezes only the modifier; every other setting matches.
 
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the

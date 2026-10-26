@@ -3,7 +3,8 @@
 The paired study asks whether learning the joint modifier improves local
 execution compared with fixing the same initialized modifier at identity.
 It uses **both matrix games, 1M decisions and five fresh training seeds**.
-It is queued; no result is available yet. The earlier 200k Climbing study's
+This extends AgentMixer Climbing to five times its archived 200k budget;
+Penalty is an additional AgentMixer task. The study is in progress. The earlier 200k Climbing study's
 failed stochastic-return criterion remains separate evidence.
 
 ## One controlled difference
@@ -66,8 +67,9 @@ python scripts/report_matrix_ablation.py \
   --output results/my_matrix_ablation_report.json
 ```
 
-Matching the paper's 1M budget does not remove the documented differences in
-architecture, parameterization and historical evaluation. The earlier setting
+The 1M extension cannot substitute for AgentMixer's 200k result or establish
+equal-budget sample efficiency. Differences in architecture, parameterization
+and historical evaluation also remain. The earlier setting
 was selected using Climbing development results; poor Penalty results are
 retained. This study tests that fixed setting on both games without retuning it.
 
@@ -75,7 +77,7 @@ retained. This study tests that fixed setting on both games without retuning it.
 
 Twelve new checks cover identity initialization, RNG consumption, frozen
 modifier weights, actor learning, optimizer ownership and exact checkpoint
-replay for factorized and joint policies. Ten reporter checks reject missing
+replay for factorized and joint policies. Thirteen reporter checks reject missing
 or duplicate seeds, altered plans, changed configurations and results that
 predate the paired plan. The [fresh installed wheel](../experiments/matrix_identity_wheel_verification_20261026.json)
 passes **899 tests**, with one CUDA-only skip, plus the console/replay checks.
@@ -95,3 +97,22 @@ The jobs follow their matching existing Prey workers and precede the pending
 recurrent Prey workers. The [schedule proof](../experiments/matrix_agentmixer_ablation1m_schedule_20261026.json)
 records verified holds, dependencies, resources and releases. The unchanged
 four-chain structure limits the project to four concurrent workers.
+
+
+## Budget interpretation correction
+
+The frozen paired plan's scope mistakenly calls 1M the accepted matrix budget
+without distinguishing the two papers. BPTA uses 1M; AgentMixer's archived
+Climbing table and figure use 200k. The
+[correction record](../experiments/matrix_budget_interpretation_correction_20261026.json)
+identifies the original plan hashes and source evidence. Frozen plans, runs,
+seeds and decision rules are unchanged. The reporter now derives task scope
+and budget comparisons directly from `configs/paper_targets.json`: Climbing
+is a five-times-budget extension, and Penalty is an additional task for AgentMixer.
+
+
+After the correction, [66 focused reporting and coverage checks](../experiments/matrix_budget_reporting_verification_20261026.json)
+pass, including three budget-relation cases. The standard-library-only report
+correctly labels the 1M Climbing study as a five-times-budget extension and
+Penalty as an additional task. The 899-test installed-wheel record above
+predates this reporting-only annotation; the training package is unchanged.
