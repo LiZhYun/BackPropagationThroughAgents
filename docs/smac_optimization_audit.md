@@ -73,6 +73,14 @@ support an exploding-update explanation. They also cannot establish that
 larger batches or recurrence will improve learning. The original runs continue
 unchanged and their complete outcomes will be retained.
 
+A later [progress audit](../experiments/smac_terran5_1m_progress_20261026.json)
+records three completed 1M runs: BPPO wins 6/32 final episodes, MAPPO 4/32 and
+AR-PPO 0/32, with mean returns 11.6111, 9.7227 and 8.5918 respectively. The audit
+recomputes win counts and return statistics from 768 raw evaluation episodes
+across all checkpoints and verifies 11,721 rollout updates. Both unfinished
+AgentMixer controls remain listed. This one-seed, partial development study
+does not establish a method advantage or results at the 10M paper budget.
+
 The next native integration check uses the recurrent actors with a 10,000-sample
 rollout. The matched learning control then compares feed-forward and recurrent
 actors at that batch size for all five method/control variants. It uses two

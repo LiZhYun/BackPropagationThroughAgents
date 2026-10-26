@@ -1,0 +1,684 @@
+{
+  "scope": "Partial five-method SMAC terran5v5 development pilot at1M decisions, training seed0; three completed methods and both unfinished modifier controls retained. No paper-budget or independent performance claim.",
+  "recorded_utc": "2026-10-26T15:56:03.670132+00:00",
+  "auditor_commit": "42a7cdecb51e483c9a991263ad4ebc9d00676431",
+  "manifest": "results/smac_terran5_learning1m_20261026T084226Z/manifest.json",
+  "manifest_sha256": "4929c563e8ff3b55654f1df6d601cbc9a1fdb193f21fab02c52b3e65ca1c184f",
+  "frozen_source_bytes_verified": true,
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "reporter_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+  "rollout_auditor_sha256": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+  "raw_evaluation_episodes_verified": 768,
+  "rollout_updates_verified": 11721,
+  "runs": [
+    {
+      "variant": "mappo",
+      "algorithm": "mappo",
+      "seed": 0,
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "training_steps": 1000000,
+      "updates": 3907,
+      "eval_episodes": 32,
+      "wins": 4,
+      "win_rate": 0.125,
+      "return_mean": 9.722725808083473,
+      "elapsed_seconds": 8785.958286025096,
+      "normalized_win_rate_auc": 0.064056,
+      "metadata_sha256": "8b6bbb91d7f456905f101e05f41bffefbda08614c75633f91dd0049babf96106",
+      "summary_sha256": "081266c4c0af743bbb4df4b424c5b3c0d785ac64748de6e4613eb894c98a7323",
+      "metrics_sha256": "996bacea6e4c55935764bbdf107d4b84556e430d68e409bd0ecca401b83c3f56"
+    },
+    {
+      "variant": "arppo",
+      "algorithm": "arppo",
+      "seed": 0,
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "training_steps": 1000000,
+      "updates": 3907,
+      "eval_episodes": 32,
+      "wins": 0,
+      "win_rate": 0.0,
+      "return_mean": 8.591813370988179,
+      "elapsed_seconds": 9823.926031301962,
+      "normalized_win_rate_auc": 0.035938,
+      "metadata_sha256": "b8643a1ad39f6bb9b740b10411e8b56742268aa63479e61d4abe1a34ff277543",
+      "summary_sha256": "03b835f1aa4dc272589ce727caa05c36d699375c8312dd311eb4ed7081536c0c",
+      "metrics_sha256": "f06ed973563d90fc0b4f24e2c068eadde6410de75ebad088d7c5d2be6414f373"
+    },
+    {
+      "variant": "bppo",
+      "algorithm": "bppo",
+      "seed": 0,
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "training_steps": 1000000,
+      "updates": 3907,
+      "eval_episodes": 32,
+      "wins": 6,
+      "win_rate": 0.1875,
+      "return_mean": 11.611116426485076,
+      "elapsed_seconds": 10294.283502936945,
+      "normalized_win_rate_auc": 0.050775,
+      "metadata_sha256": "8fec4b3f5fac20c71b2339d83cd007b61f942dabe875865ac5b1c4bd7e0c697d",
+      "summary_sha256": "f31e58f8299f52e55023f9732c6572c1d33627b05b3e55362bd02e6a2be253dd",
+      "metrics_sha256": "8f115b90b2c1f55030a7a6e986716c172c8a257ab916bf44319825f3dfa2013b"
+    },
+    {
+      "variant": "agentmixer",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "last_evaluated_steps": 900096
+    },
+    {
+      "variant": "agentmixer_identity",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "last_evaluated_steps": 0
+    }
+  ],
+  "curves": {
+    "scope": "Five matched terran5v5 development controls at1M training transitions, seed0. Identical2x128 rollout and native-clock guard to the completed200k pilot, 32 evaluation episodes. Longer learning diagnostic; not a10M paper result.",
+    "metric": "win_rate",
+    "manifest_sha256": "4929c563e8ff3b55654f1df6d601cbc9a1fdb193f21fab02c52b3e65ca1c184f",
+    "reporter_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+    "uncertainty": {
+      "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+      "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+      "bootstrap_seed": 1729,
+      "bootstrap_samples": 10000
+    },
+    "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+    "runs": [
+      {
+        "variant": "mappo",
+        "algorithm": "mappo",
+        "seed": 0,
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_learning1m_20261026T084226Z/mappo_seed0",
+        "status": "completed",
+        "eligible": true,
+        "errors": [],
+        "points": [
+          {
+            "steps": 0,
+            "value": 0.0
+          },
+          {
+            "steps": 150016,
+            "value": 0.03125
+          },
+          {
+            "steps": 300032,
+            "value": 0.125
+          },
+          {
+            "steps": 450048,
+            "value": 0.0625
+          },
+          {
+            "steps": 600064,
+            "value": 0.03125
+          },
+          {
+            "steps": 750080,
+            "value": 0.03125
+          },
+          {
+            "steps": 900096,
+            "value": 0.125
+          },
+          {
+            "steps": 1000000,
+            "value": 0.125
+          }
+        ],
+        "full_budget_auc": {
+          "area": 64056.0,
+          "normalized_by_training_steps": 0.064056
+        },
+        "budget": 1000000,
+        "summary_sha256": "081266c4c0af743bbb4df4b424c5b3c0d785ac64748de6e4613eb894c98a7323",
+        "environment_versions": {
+          "smacv2_commit": "577ab5a2cff2391f8df582da5731ea9cd6adf3c6",
+          "process_lifecycle": "episode_boundary_game_loop_restart_v1"
+        },
+        "configuration_sha256_without_seed": "8dc7810f25b30d4f41d8fab3d3c87134d2df3f2c9b7549737f052dc49ca9a71c",
+        "metrics_snapshot_sha256": "996bacea6e4c55935764bbdf107d4b84556e430d68e409bd0ecca401b83c3f56",
+        "ignored_unfinished_tail": false,
+        "evaluation_protocol": {
+          "count": 32,
+          "seed": 1000000,
+          "execution": "independent",
+          "deterministic": true
+        }
+      },
+      {
+        "variant": "arppo",
+        "algorithm": "arppo",
+        "seed": 0,
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_learning1m_20261026T084226Z/arppo_seed0",
+        "status": "completed",
+        "eligible": true,
+        "errors": [],
+        "points": [
+          {
+            "steps": 0,
+            "value": 0.0
+          },
+          {
+            "steps": 150016,
+            "value": 0.03125
+          },
+          {
+            "steps": 300032,
+            "value": 0.03125
+          },
+          {
+            "steps": 450048,
+            "value": 0.03125
+          },
+          {
+            "steps": 600064,
+            "value": 0.0625
+          },
+          {
+            "steps": 750080,
+            "value": 0.03125
+          },
+          {
+            "steps": 900096,
+            "value": 0.0625
+          },
+          {
+            "steps": 1000000,
+            "value": 0.0
+          }
+        ],
+        "full_budget_auc": {
+          "area": 35938.0,
+          "normalized_by_training_steps": 0.035938
+        },
+        "budget": 1000000,
+        "summary_sha256": "03b835f1aa4dc272589ce727caa05c36d699375c8312dd311eb4ed7081536c0c",
+        "environment_versions": {
+          "smacv2_commit": "577ab5a2cff2391f8df582da5731ea9cd6adf3c6",
+          "process_lifecycle": "episode_boundary_game_loop_restart_v1"
+        },
+        "configuration_sha256_without_seed": "c47baae6a80d58a271a773aacbcdc1a56ace8e5a1eca7304884aa41ac8054d14",
+        "metrics_snapshot_sha256": "f06ed973563d90fc0b4f24e2c068eadde6410de75ebad088d7c5d2be6414f373",
+        "ignored_unfinished_tail": false,
+        "evaluation_protocol": {
+          "count": 32,
+          "seed": 1000000,
+          "execution": "autoregressive",
+          "deterministic": true
+        }
+      },
+      {
+        "variant": "bppo",
+        "algorithm": "bppo",
+        "seed": 0,
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_learning1m_20261026T084226Z/bppo_seed0",
+        "status": "completed",
+        "eligible": true,
+        "errors": [],
+        "points": [
+          {
+            "steps": 0,
+            "value": 0.0
+          },
+          {
+            "steps": 150016,
+            "value": 0.0
+          },
+          {
+            "steps": 300032,
+            "value": 0.03125
+          },
+          {
+            "steps": 450048,
+            "value": 0.09375
+          },
+          {
+            "steps": 600064,
+            "value": 0.03125
+          },
+          {
+            "steps": 750080,
+            "value": 0.09375
+          },
+          {
+            "steps": 900096,
+            "value": 0.03125
+          },
+          {
+            "steps": 1000000,
+            "value": 0.1875
+          }
+        ],
+        "full_budget_auc": {
+          "area": 50775.0,
+          "normalized_by_training_steps": 0.050775
+        },
+        "budget": 1000000,
+        "summary_sha256": "f31e58f8299f52e55023f9732c6572c1d33627b05b3e55362bd02e6a2be253dd",
+        "environment_versions": {
+          "smacv2_commit": "577ab5a2cff2391f8df582da5731ea9cd6adf3c6",
+          "process_lifecycle": "episode_boundary_game_loop_restart_v1"
+        },
+        "configuration_sha256_without_seed": "75e36a4c87c79ed650a1973c8f3e414432a3aa0a13cedd9c672cb9582660a01a",
+        "metrics_snapshot_sha256": "8f115b90b2c1f55030a7a6e986716c172c8a257ab916bf44319825f3dfa2013b",
+        "ignored_unfinished_tail": false,
+        "evaluation_protocol": {
+          "count": 32,
+          "seed": 1000000,
+          "execution": "autoregressive",
+          "deterministic": true
+        }
+      },
+      {
+        "variant": "agentmixer",
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_learning1m_20261026T084226Z/agentmixer_seed0",
+        "status": "unfinished",
+        "eligible": false,
+        "errors": [],
+        "points": [
+          {
+            "steps": 0,
+            "value": 0.0
+          },
+          {
+            "steps": 150016,
+            "value": 0.03125
+          },
+          {
+            "steps": 300032,
+            "value": 0.0625
+          },
+          {
+            "steps": 450048,
+            "value": 0.09375
+          },
+          {
+            "steps": 600064,
+            "value": 0.1875
+          },
+          {
+            "steps": 750080,
+            "value": 0.03125
+          },
+          {
+            "steps": 900096,
+            "value": 0.03125
+          }
+        ],
+        "full_budget_auc": null,
+        "budget": 1000000,
+        "environment_versions": {
+          "smacv2_commit": "577ab5a2cff2391f8df582da5731ea9cd6adf3c6",
+          "process_lifecycle": "episode_boundary_game_loop_restart_v1"
+        },
+        "configuration_sha256_without_seed": "1835d839678dc7caeb27ff486a84527cf0fc1adb55e4f4ebb904a59a38ab2e78",
+        "metrics_snapshot_sha256": "097d2e0f1490e417152bd6b5c5aa72db978d52b51f184e903216614ea2898ff4",
+        "ignored_unfinished_tail": false,
+        "evaluation_protocol": {
+          "count": 32,
+          "seed": 1000000,
+          "execution": "decentralized",
+          "deterministic": true
+        }
+      },
+      {
+        "variant": "agentmixer_identity",
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_learning1m_20261026T084226Z/agentmixer_identity_seed0",
+        "status": "unfinished",
+        "eligible": false,
+        "errors": [],
+        "points": [
+          {
+            "steps": 0,
+            "value": 0.0
+          }
+        ],
+        "full_budget_auc": null,
+        "budget": 1000000,
+        "environment_versions": {
+          "smacv2_commit": "577ab5a2cff2391f8df582da5731ea9cd6adf3c6",
+          "process_lifecycle": "episode_boundary_game_loop_restart_v1"
+        },
+        "configuration_sha256_without_seed": "2e01367acfe65915ac6fe7a40eb2f5c36c42f6f50858a18fdc9c307b1374e6a4",
+        "metrics_snapshot_sha256": "d993cd6955945ce56619b80723686d79c2b254a216e425fc75d7ef121d2996b1",
+        "ignored_unfinished_tail": false,
+        "evaluation_protocol": {
+          "count": 32,
+          "seed": 1000000,
+          "execution": "decentralized",
+          "deterministic": true
+        }
+      }
+    ],
+    "groups": [
+      {
+        "variant": "mappo",
+        "declared_seeds": [
+          0
+        ],
+        "eligible_seeds": [
+          0
+        ],
+        "aggregation_errors": [],
+        "aggregate": {
+          "final": {
+            "seed_count": 1,
+            "mean": 0.125,
+            "median": 0.125,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "normalized_auc": {
+            "seed_count": 1,
+            "mean": 0.064056,
+            "median": 0.064056,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "curve": [
+            {
+              "steps": 0,
+              "seed_count": 1,
+              "mean": 0.0,
+              "median": 0.0,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 150016,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 300032,
+              "seed_count": 1,
+              "mean": 0.125,
+              "median": 0.125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 450048,
+              "seed_count": 1,
+              "mean": 0.0625,
+              "median": 0.0625,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 600064,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 750080,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 900096,
+              "seed_count": 1,
+              "mean": 0.125,
+              "median": 0.125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 1000000,
+              "seed_count": 1,
+              "mean": 0.125,
+              "median": 0.125,
+              "sample_sd_across_training_seeds": null
+            }
+          ]
+        }
+      },
+      {
+        "variant": "arppo",
+        "declared_seeds": [
+          0
+        ],
+        "eligible_seeds": [
+          0
+        ],
+        "aggregation_errors": [],
+        "aggregate": {
+          "final": {
+            "seed_count": 1,
+            "mean": 0.0,
+            "median": 0.0,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "normalized_auc": {
+            "seed_count": 1,
+            "mean": 0.035938,
+            "median": 0.035938,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "curve": [
+            {
+              "steps": 0,
+              "seed_count": 1,
+              "mean": 0.0,
+              "median": 0.0,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 150016,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 300032,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 450048,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 600064,
+              "seed_count": 1,
+              "mean": 0.0625,
+              "median": 0.0625,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 750080,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 900096,
+              "seed_count": 1,
+              "mean": 0.0625,
+              "median": 0.0625,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 1000000,
+              "seed_count": 1,
+              "mean": 0.0,
+              "median": 0.0,
+              "sample_sd_across_training_seeds": null
+            }
+          ]
+        }
+      },
+      {
+        "variant": "bppo",
+        "declared_seeds": [
+          0
+        ],
+        "eligible_seeds": [
+          0
+        ],
+        "aggregation_errors": [],
+        "aggregate": {
+          "final": {
+            "seed_count": 1,
+            "mean": 0.1875,
+            "median": 0.1875,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "normalized_auc": {
+            "seed_count": 1,
+            "mean": 0.050775,
+            "median": 0.050775,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "curve": [
+            {
+              "steps": 0,
+              "seed_count": 1,
+              "mean": 0.0,
+              "median": 0.0,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 150016,
+              "seed_count": 1,
+              "mean": 0.0,
+              "median": 0.0,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 300032,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 450048,
+              "seed_count": 1,
+              "mean": 0.09375,
+              "median": 0.09375,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 600064,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 750080,
+              "seed_count": 1,
+              "mean": 0.09375,
+              "median": 0.09375,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 900096,
+              "seed_count": 1,
+              "mean": 0.03125,
+              "median": 0.03125,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 1000000,
+              "seed_count": 1,
+              "mean": 0.1875,
+              "median": 0.1875,
+              "sample_sd_across_training_seeds": null
+            }
+          ]
+        }
+      },
+      {
+        "variant": "agentmixer",
+        "declared_seeds": [
+          0
+        ],
+        "eligible_seeds": [],
+        "aggregation_errors": [
+          "some declared seeds lack a valid completed full-budget curve"
+        ],
+        "aggregate": null
+      },
+      {
+        "variant": "agentmixer_identity",
+        "declared_seeds": [
+          0
+        ],
+        "eligible_seeds": [],
+        "aggregation_errors": [
+          "some declared seeds lack a valid completed full-budget curve"
+        ],
+        "aggregate": null
+      }
+    ]
+  },
+  "limits": [
+    "One development training seed; evaluation episodes are not independent training seeds.",
+    "1M pilot budget is below the papers 10M SMAC budget.",
+    "Small 256-transition batch and feed-forward actors differ from released settings.",
+    "The matched modifier comparison is incomplete; no missing outcome is estimated."
+  ]
+}
