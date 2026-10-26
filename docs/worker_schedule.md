@@ -79,3 +79,20 @@ The ten-run `smac_terran5_batch1m` learning manifest is prepared but **not
 submitted**. Its integration, measured-runtime and memory gates are recorded in
 [`experiments/smac_recurrent_study_20261026.json`](../experiments/smac_recurrent_study_20261026.json).
 Passing unit tests alone does not release this native learning study.
+
+## HalfCheetah confirmation appended, 2026-10-26
+
+The [independent confirmation](halfcheetah_confirmation.md), job `21214776`,
+extends each A chain after its matching Ant/Walker transfer worker:
+
+```
+21208906_i → 21209248_i → 21212297_i → 21214776_i
+BPPO/AR       Football      Ant/Walker    five-seed confirmation
+```
+
+The new job has ten runs at 10M decisions, two workers with five serial runs
+each, 2CPUs/8GB per worker and an 18-hour cap. It was submitted held; both
+dependencies and resource limits were verified before release. The B chains
+are unchanged, and there are still four serial chains. Existing jobs, source
+snapshots and dependencies were not modified. The study record and submission
+ledger retain the frozen manifest, source, launcher and plan hashes.

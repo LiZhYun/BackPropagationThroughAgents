@@ -62,5 +62,10 @@ the matching Ant/Walker worker `21212297_i`, preserving the existing four
 serial chains. Scheduler IDs and verified edges belong to
 `experiments/jobs.jsonl`; preparing a manifest alone does not submit a job.
 
+The frozen study was subsequently submitted as **21214776**. Both workers were
+held until their respective `afterany:21212297_0` and `afterany:21212297_1`
+dependencies and resource limits were verified, then released. They remain
+queued behind those predecessors; no active experiment was changed.
+
 This is one target's confirmation study. It does not complete the remaining
 MuJoCo, SMAC, Football, Predator–Prey or matrix-game release requirements.
