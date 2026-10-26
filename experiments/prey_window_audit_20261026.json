@@ -1,0 +1,513 @@
+{
+  "scope": "Raw fixed-window audit of all sixteen 1M development runs; no new training or policy evaluation; no independent performance claim.",
+  "created_utc": "2026-10-26T15:50:00.302988+00:00",
+  "auditor_commit": "b32f08b6ec0fd409ddc09ad0f5688e1696c6dd29",
+  "auditor": {
+    "path": "src/bta_repro/learning_curves.py",
+    "sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67"
+  },
+  "manifest": {
+    "path": "results/prey_batch1m_20261025T090907Z/manifest.json",
+    "sha256": "bc2697200908d907430acaf7b78310a00d415c0e5b401878cb30396a1a49209a"
+  },
+  "frozen_source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "a9e14936bcc44b496b9e63b20525cca5f4754c66f8252ec73bd7702e3e982d31",
+    "smac_env.py": "e937675218bef05936bfaf623248a8cc8a5abbea33337803cc0ebdfc2bb2cd2c",
+    "runner.py": "8a805c15ef8659218522d3f5dfda14200652d8c3be1586d68553b9f21dbe9561",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "agentmixer_continuous.py": "6b5e64b81ba85050efe285e9813ad2c1ccfe8bede3bd074da6de139a3b4add8c",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "58aed9cd476f9bd7d2f40219ba429090657518d143d1175d1d5ad924fbe307da",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "frozen_source_bytes_verified": true,
+  "curve_report": {
+    "path": "results/prey_window_audit_20261026T154959Z/curves.json",
+    "sha256": "bb346db50e63298d20097165d60489daa61dc4c44f71ff348e9b745c160c0c43"
+  },
+  "declared_runs": 16,
+  "eligible_runs": 16,
+  "errors": [],
+  "evaluations_checked": 80,
+  "raw_windows_checked": 8000,
+  "window_environment_decisions": 1600000,
+  "windows_with_unfinished_episode": 7480,
+  "seed_derivation": {
+    "scheme": "numpy_seed_sequence_bta_win_v1",
+    "numpy": "2.4.6",
+    "recomputed_for_every_evaluation": true,
+    "training_seed_collisions": 0
+  },
+  "checks": [
+    "Raw finite window totals and rate over all decisions including unfinished episodes",
+    "Exact count, length, configured evaluation seed and algorithm execution convention",
+    "Ordered window IDs, distinct uint32 seeds and stable recorded schedule",
+    "Completed/captured/timed-out and unfinished episode bookkeeping",
+    "Exact initial and final window records in metrics and summary",
+    "Full budget, every declared seed, matching recorded configuration and source hashes"
+  ],
+  "limits": [
+    "Window totals are audited; rewards are not independently regenerated from transition traces.",
+    "NumPy seed derivation is checked in this audit in addition to the standard-library reporter.",
+    "All runs use development training seed0; windows are not independent training seeds.",
+    "Historical figure-to-logger mapping remains unverified."
+  ],
+  "tests": {
+    "regression_suite": {
+      "passed": 124,
+      "stdout": {
+        "path": "results/fixed_window_reporting_tests_20261026.stdout",
+        "sha256": "4c6553f892945a95812471b0fd715b0439247126cc90bfff3a44e1a104c95888"
+      },
+      "junit": {
+        "path": "results/fixed_window_reporting_tests_20261026.xml",
+        "sha256": "3ed60c32085235cd6e368e5c3a638baa87b59b86cb10b1d8aa648c7a62377dea"
+      }
+    },
+    "additional_type_checks": {
+      "passed": 4,
+      "new_cases": 3,
+      "stdout": {
+        "path": "results/fixed_window_reporting_types_20261026.stdout",
+        "sha256": "dd220d274d98c44c17d8353f931a6c06ccd7cbf31017c50d72607c0a23aa1493"
+      },
+      "junit": {
+        "path": "results/fixed_window_reporting_types_20261026.xml",
+        "sha256": "031fa86d1049028a0640a70c8fd6c45b1392a6e7ad1d3d7a5eb61bf2c2f79527"
+      }
+    }
+  },
+  "csv": {
+    "path": "experiments/prey_window_audit_20261026.csv",
+    "sha256": "331efe1dba2989f92c70fd7f8709fa5f2f93ef772dc2a93704649fed9410186c"
+  },
+  "runs": [
+    {
+      "variant": "agentmixer_factorized_small_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 2.0635000000000026,
+      "normalized_auc": 1.758559712000002,
+      "final_episode_return": 9.955,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_small_zero_seed0/config.json",
+        "sha256": "0e34767350befbe2ed7572c95f2c33a7839fc429b74938f79a922bab3eda8d8b"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_small_zero_seed0/summary.json",
+        "sha256": "49da83179d0b45c835e76d93c108314df72746cd98b92dd39f475f3373ef2794"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_small_zero_seed0/metrics.jsonl",
+        "sha256": "44be6153b7015da11188a6eaaa97cbaf67eb71bd494d02836d97ef25069c68b3"
+      }
+    },
+    {
+      "variant": "agentmixer_joint_small_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 1.965500000000003,
+      "normalized_auc": 1.6533518080000027,
+      "final_episode_return": 9.956499999999997,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_small_zero_seed0/config.json",
+        "sha256": "595bce0ad9f1b2aec2507fd519d1fe21b3288ec83a79a83435acdb1d5034b2d0"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_small_zero_seed0/summary.json",
+        "sha256": "7a0d42bc4570f422f630d3ffe4063597770cdbec79b8681fc048a41e1a35fd7f"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_small_zero_seed0/metrics.jsonl",
+        "sha256": "20a2fdbd757261d1c37df542ff749b09d032b68e5db4daebfbb58de2b93288b9"
+      }
+    },
+    {
+      "variant": "agentmixer_factorized_batch_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 1.9120000000000026,
+      "normalized_auc": 1.3327500000000019,
+      "final_episode_return": 9.955499999999999,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_zero_seed0/config.json",
+        "sha256": "63003a43ceb5040eaae7dd0f899102275022e12d095049f6f47c19570bf660bf"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_zero_seed0/summary.json",
+        "sha256": "a607bbbde7cbf680876f2f4b913cd90d79f2795c7f414911551143c0db990ef5"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_zero_seed0/metrics.jsonl",
+        "sha256": "59263845c6fb9ef34733657c15e1c625b47448ade42001958f0a33f60133eefa"
+      }
+    },
+    {
+      "variant": "agentmixer_joint_batch_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 1.9945000000000028,
+      "normalized_auc": 1.5694375000000023,
+      "final_episode_return": 9.952,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_zero_seed0/config.json",
+        "sha256": "f1818360ac23812da63ba797342645651c7ea32fd5256af4c64ec6a5f5326ae4"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_zero_seed0/summary.json",
+        "sha256": "e19c8c1ba6b3c5a60acfa90c94c5309deeda65d6cbc9a1b9fc005a89e205abbc"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_zero_seed0/metrics.jsonl",
+        "sha256": "3390d7cbeb4e9a536b93cf2523025927660fb67370028eed2f1814778fbb55ae"
+      }
+    },
+    {
+      "variant": "agentmixer_factorized_batch_entropy_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 2.142000000000003,
+      "normalized_auc": 1.3188750000000018,
+      "final_episode_return": 9.959500000000002,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_entropy_zero_seed0/config.json",
+        "sha256": "db9451354c28db9fb09425178f991252c5607f29c8a7a7df0d3637eb12e1b595"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_entropy_zero_seed0/summary.json",
+        "sha256": "fe6e0218e43a6efd05472b63a3a61b52f9db69bc379a561a8714401313151eb0"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_entropy_zero_seed0/metrics.jsonl",
+        "sha256": "784d370704a1b73521b83b5bb0f70829aaf112b3d05f2159f05caef8f2e56fc4"
+      }
+    },
+    {
+      "variant": "agentmixer_joint_batch_float64_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 1.882000000000003,
+      "normalized_auc": 1.498250000000002,
+      "final_episode_return": 9.959500000000002,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_float64_zero_seed0/config.json",
+        "sha256": "62e734284ddce2fb61d72f15b4c5bd4c2571d8c1787511c7e14635ec540b2505"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_float64_zero_seed0/summary.json",
+        "sha256": "b90f47f850f82a65c352b40f05968cec5bcef25c5d743d34f2e22d561374b160"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_float64_zero_seed0/metrics.jsonl",
+        "sha256": "584bf27fd9522349d4e95b9f701f441b6f853d3fe7bf9a31c0d3b60d9fa489b0"
+      }
+    },
+    {
+      "variant": "arppo_projected_batch_zero",
+      "algorithm": "arppo",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 1.8135000000000026,
+      "normalized_auc": 0.8621875000000015,
+      "final_episode_return": 9.9425,
+      "final_capture_rate": 1.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/arppo_projected_batch_zero_seed0/config.json",
+        "sha256": "3a92747eb9095dec216ce834752c2079cc1c31ac1083c8a27eceeddfecc4bb73"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/arppo_projected_batch_zero_seed0/summary.json",
+        "sha256": "3ef5dc31a0af6271106b6fb2fd5644daad9f7b1649f2fcad418b9bd0754ee42b"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/arppo_projected_batch_zero_seed0/metrics.jsonl",
+        "sha256": "2d7a4494163b673f3af1f3c9a000f6331b32edf697b22d20cf60ed31172c4c64"
+      }
+    },
+    {
+      "variant": "bppo_projected_batch_zero",
+      "algorithm": "bppo",
+      "seed": 0,
+      "penalty": 0,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": 1.1540000000000028,
+      "normalized_auc": 0.8205000000000012,
+      "final_episode_return": 9.388500000000004,
+      "final_capture_rate": 0.95,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/bppo_projected_batch_zero_seed0/config.json",
+        "sha256": "f36bd4603de1446c1f3bb3d651db96f557703e975054dd6d2da2c022c2c1a46b"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/bppo_projected_batch_zero_seed0/summary.json",
+        "sha256": "7a184503ce7a5c955f699c2a10ee067da232cf2f8c7061fea730670a384eea8b"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/bppo_projected_batch_zero_seed0/metrics.jsonl",
+        "sha256": "8042c12097f0640d690ecb03a2d99db9d2ec0fe143e9697ff86852a50b2b1ffc"
+      }
+    },
+    {
+      "variant": "agentmixer_factorized_small_minus1",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.010000000000000002,
+      "normalized_auc": -0.021320734400000003,
+      "final_episode_return": -1.280000000000001,
+      "final_capture_rate": 0.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_small_minus1_seed0/config.json",
+        "sha256": "19e20ffe66ebe7cfb42cbc807d352c205898fcf85e37bf00bbf18205b4253a39"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_small_minus1_seed0/summary.json",
+        "sha256": "767b0a8bff70d59f955164eb00d041818e59b7ef353c783d8538ecd4b7d99522"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_small_minus1_seed0/metrics.jsonl",
+        "sha256": "18e1a6849e2dd051c3ea8e380458be49b141b0f0812180cee526635eed42074e"
+      }
+    },
+    {
+      "variant": "agentmixer_joint_small_minus1",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.010000000000000002,
+      "normalized_auc": -0.016208870400000002,
+      "final_episode_return": -1.280000000000001,
+      "final_capture_rate": 0.0,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_small_minus1_seed0/config.json",
+        "sha256": "0651e1cff287015731129a13fe7ae32be4e6d40492da6decb8b8fd4f93d9c559"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_small_minus1_seed0/summary.json",
+        "sha256": "6340de53b7ee9c89293f74b8c3feebe719f3c94e7d667eaf9ec9f7b6ec9ddc06"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_small_minus1_seed0/metrics.jsonl",
+        "sha256": "788b13590da43deb09518170ba24c8e80c216b6d9cda7b67d36fd88cfced7b6a"
+      }
+    },
+    {
+      "variant": "agentmixer_factorized_batch_minus1",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.011549999999999899,
+      "normalized_auc": -0.022493749999999927,
+      "final_episode_return": -4.918999999999991,
+      "final_capture_rate": 0.05,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_minus1_seed0/config.json",
+        "sha256": "2a5d01e50653e9ea539895077b1d67757cc8aaae8620decbe6f3b85f5ba5f03e"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_minus1_seed0/summary.json",
+        "sha256": "be410aaad5d00dab6b141dd8d8ad6cc5d1053f88efed913ffb4a1c5c88a660d0"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_minus1_seed0/metrics.jsonl",
+        "sha256": "ac76f4986a92d9882cf3349001d2c0c5f42562f395a80c5cdf5ed5f0b7446f63"
+      }
+    },
+    {
+      "variant": "agentmixer_joint_batch_minus1",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.07334999999999996,
+      "normalized_auc": -0.06695625000000002,
+      "final_episode_return": -24.847500000000025,
+      "final_capture_rate": 0.2,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_minus1_seed0/config.json",
+        "sha256": "2c199ebb8d9f4a72ab77833cb435b205ce15a5c1640bd8e1de651c03aca88e62"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_minus1_seed0/summary.json",
+        "sha256": "a0c1829bef650a0c45261186a33d900900d1c07192f83516f74b68babb59c09f"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_minus1_seed0/metrics.jsonl",
+        "sha256": "ff23e205285d92c1d01e1f2c88020eee690c0d3c4272809489ea54b0d02f4dd9"
+      }
+    },
+    {
+      "variant": "agentmixer_factorized_batch_entropy_minus1",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.014750000000000025,
+      "normalized_auc": -0.04070625000000003,
+      "final_episode_return": -3.462499999999997,
+      "final_capture_rate": 0.45,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_entropy_minus1_seed0/config.json",
+        "sha256": "019dc9dace53b1340a0a0858a1c688edd8888134911838c2c075ad2f3032c281"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_entropy_minus1_seed0/summary.json",
+        "sha256": "234adb02715d429c459fc2a5635551e1e52940d934dfb14c469d14f0eb914944"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_factorized_batch_entropy_minus1_seed0/metrics.jsonl",
+        "sha256": "56f243e14937c62f4a2ff7dcf8537ed1ce692711ee6d9f6d0ab7d7cba271d4e3"
+      }
+    },
+    {
+      "variant": "agentmixer_joint_batch_float64_minus1",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.08194999999999998,
+      "normalized_auc": -0.035343749999999945,
+      "final_episode_return": -7.155000000000009,
+      "final_capture_rate": 0.1,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_float64_minus1_seed0/config.json",
+        "sha256": "1f65b5afc999795ee0cfad986be593cc2a2b77f049d65550274c7fe94f2c52b6"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_float64_minus1_seed0/summary.json",
+        "sha256": "68027129453cebcde84dc123bd4c15f7c78f331691e36a6bbd170c3096d4d117"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/agentmixer_joint_batch_float64_minus1_seed0/metrics.jsonl",
+        "sha256": "4a07ae9d866aea70b7e0078a23a97b81e5d74f17865e17bc1c4cd1fa415450c0"
+      }
+    },
+    {
+      "variant": "arppo_projected_batch_minus1",
+      "algorithm": "arppo",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.029949999999999897,
+      "normalized_auc": -0.04253124999999996,
+      "final_episode_return": -0.14199999999999652,
+      "final_capture_rate": 0.15,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/arppo_projected_batch_minus1_seed0/config.json",
+        "sha256": "f68624dbc6053f64807aa36d712f6f99834e7fd1c9a48d0758e1e9f5be99beee"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/arppo_projected_batch_minus1_seed0/summary.json",
+        "sha256": "fcede9f29a5f2632127954fb559f2192a9ad45d0d537393f09f1ad44bb276d30"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/arppo_projected_batch_minus1_seed0/metrics.jsonl",
+        "sha256": "2ac3f6ccfe37aab0787ec4dd42db1a557bcab111e878fceacdb44817f70987a8"
+      }
+    },
+    {
+      "variant": "bppo_projected_batch_minus1",
+      "algorithm": "bppo",
+      "seed": 0,
+      "penalty": -1,
+      "training_steps": 1000000,
+      "evaluations_checked": 5,
+      "window_count": 100,
+      "steps_per_window": 200,
+      "final_window_reward_per_step": -0.05534999999999997,
+      "normalized_auc": -0.052793750000000014,
+      "final_episode_return": -1.306499999999994,
+      "final_capture_rate": 0.1,
+      "metadata": {
+        "path": "results/prey_batch1m_20261025T090907Z/bppo_projected_batch_minus1_seed0/config.json",
+        "sha256": "4195f093aabd9a43348e31248cef1be911dd32c1145b716ef56ad8cb9a8b5347"
+      },
+      "summary": {
+        "path": "results/prey_batch1m_20261025T090907Z/bppo_projected_batch_minus1_seed0/summary.json",
+        "sha256": "d6d6daaa9e58ac8e56df7dddce32a16de767211886ffdbbb1113395f430f655d"
+      },
+      "metrics": {
+        "path": "results/prey_batch1m_20261025T090907Z/bppo_projected_batch_minus1_seed0/metrics.jsonl",
+        "sha256": "a2ab120dd6ca23dec3a44415a61a5659096d641d65b5da5e3df3d2386c83b414"
+      }
+    }
+  ]
+}

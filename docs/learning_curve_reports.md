@@ -38,6 +38,17 @@ seed stream. The report also does not turn a 20-window development run into the
 author-selected 100-window comparison: its explicit protocol fields retain
 that distinction.
 
+The [recorded Prey audit](../experiments/prey_window_audit_20261026.json) applies
+these checks to all sixteen completed 1M-step development runs: 80 evaluations,
+8,000 windows and 1,600,000 evaluation decisions. Of those windows, 7,480 end
+with an unfinished episode whose rewards remain included. The audit also checks
+the frozen source bytes and separately recomputes every window seed with the
+recorded NumPy scheme; none overlaps a training environment seed. All sixteen
+runs pass. The [complete CSV](../experiments/prey_window_audit_20261026.csv)
+retains each variant's final score and curve area. Results are unchanged: the
+best zero-penalty rate is 2.142, and every penalty −1 rate remains negative.
+These are development results, not independent confirmation.
+
 ## Area and aggregation
 
 For logged evaluations `(s_i, r_i)`, normalized curve area is
