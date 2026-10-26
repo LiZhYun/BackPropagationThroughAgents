@@ -1,0 +1,315 @@
+{
+  "recorded_utc": "2026-10-26T19:01:36.840508+00:00",
+  "status": "passed",
+  "study_plan": "experiments/prey_recurrent_protocol_study_20261026.json",
+  "study_plan_sha256": "d152644214454e8bbaf81e62b68df36744bce99da18db32019d93b8b1a013f4b",
+  "manifest": "results/prey_recurrent_protocol_check10k_20261026T184954Z/manifest.json",
+  "manifest_sha256": "5b8a467d284e201ff5a32754afb44f0b9899ff6b29a89ca7d813c216eba37992",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "artifact_sha256": {
+    "config.json": "ed1cc8f8c5e6efb7aa58b70c8c21cdeb5e8d6d8011ec154e77d4ed4e3dd152f0",
+    "metrics.jsonl": "77a2faeee2f82d4ecfceb53b1b763a7b3b8a868e8dc8b553f57b773ea03780fe",
+    "summary.json": "79f0756c3a2f10ba2cd72d44715e3c04ffd579a7f5b5223a120108cfb5d78399",
+    "checkpoint.pt": "e37172aa83c5d6bec577bc8738b40b07fa786f2aad7929e159f74675553dc46f"
+  },
+  "replay_path": "results/prey_recurrent_protocol_check10k_20261026T184954Z/checkpoint_replay.json",
+  "replay_sha256": "004bf885d68ac6c90a35dcacc2aa8fcc90fb8cdc857f5ea09be2c08f959b98dc",
+  "evaluator_sha256": "58461f02290bcb0dde7da4e76c321fe0ddfc91e4b18e38213ec7aa842678585b",
+  "versions": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cpu",
+    "numpy": "2.4.6",
+    "smacv2": null,
+    "pysc2": null,
+    "mujoco-py": null,
+    "gym": null,
+    "gymnasium": null,
+    "gfootball": null
+  },
+  "training_steps": 10000,
+  "rollout_shape": [
+    200,
+    50
+  ],
+  "policy_updates": 15,
+  "critic_updates": 15,
+  "training_evaluation_episode_records": 40,
+  "training_evaluation_window_records": 200,
+  "window_seed_derivation_verified": true,
+  "training_evaluation_steps": 45120,
+  "checkpoint_replay_evaluation_steps": 22560,
+  "exact_replay": true,
+  "curves": {
+    "scope": "One recurrent factorized AgentMixer Prey penalty-1 run at10k:full50x200 rollout,15epochs,100x200 initial/final evaluation windows. Correctness,timing,memory and saved-policy replay gate; no benchmark claim.",
+    "metric": "fixed_window_reward_per_step",
+    "manifest_sha256": "5b8a467d284e201ff5a32754afb44f0b9899ff6b29a89ca7d813c216eba37992",
+    "reporter_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+    "uncertainty": {
+      "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+      "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+      "bootstrap_seed": 1729,
+      "bootstrap_samples": 10000
+    },
+    "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+    "runs": [
+      {
+        "variant": "agentmixer_gru_minus1",
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_recurrent_protocol_check10k_20261026T184954Z/agentmixer_gru_minus1_seed0",
+        "status": "completed",
+        "eligible": true,
+        "errors": [],
+        "points": [
+          {
+            "steps": 0,
+            "value": -0.053
+          },
+          {
+            "steps": 10000,
+            "value": -0.022149999999999948
+          }
+        ],
+        "full_budget_auc": {
+          "area": -375.7499999999997,
+          "normalized_by_training_steps": -0.03757499999999997
+        },
+        "budget": 10000,
+        "summary_sha256": "79f0756c3a2f10ba2cd72d44715e3c04ffd579a7f5b5223a120108cfb5d78399",
+        "environment_versions": {
+          "protocol": "legacy_predator_prey_5x5_2predators_1prey_v1",
+          "legacy_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+          "numpy": "2.4.6",
+          "seeding": "private_random_and_numpy_randomstate_v1"
+        },
+        "configuration_sha256_without_seed": "bcf34b45ab6e94d4d6657640d1d24606dfc09ce2b9f9cb514d29ffc5e9e6206c",
+        "metrics_snapshot_sha256": "77a2faeee2f82d4ecfceb53b1b763a7b3b8a868e8dc8b553f57b773ea03780fe",
+        "ignored_unfinished_tail": false,
+        "evaluation_protocol": {
+          "window_count": 100,
+          "steps_per_window": 200,
+          "scope": "all_steps_in_fixed_windows_including_unfinished_episodes",
+          "seed_scheme": "numpy_seed_sequence_bta_win_v1",
+          "seed": 1000000,
+          "deterministic": true,
+          "execution": "decentralized",
+          "window_seeds": [
+            1797459334,
+            4054434446,
+            3798108316,
+            16999917,
+            1860356754,
+            3766823438,
+            2758128749,
+            31038029,
+            1515212889,
+            3368389037,
+            3430472880,
+            1087978334,
+            3927970044,
+            3208542803,
+            2889839320,
+            3976237693,
+            1809397214,
+            125376817,
+            1591544671,
+            2350848001,
+            3973840649,
+            1664713833,
+            823245927,
+            3989451149,
+            3421309987,
+            378331089,
+            2270488444,
+            811180432,
+            241941088,
+            2442297355,
+            2809620729,
+            1700362551,
+            1330451425,
+            62421618,
+            2064893422,
+            2066331534,
+            2843784821,
+            2851744639,
+            1671826521,
+            893216026,
+            252465735,
+            1160499816,
+            741980354,
+            2978105932,
+            966272421,
+            711734674,
+            4087830797,
+            4007410482,
+            3835163551,
+            3922160879,
+            5494160,
+            3795292112,
+            3289629882,
+            1517751734,
+            1369430032,
+            1256072858,
+            2646371358,
+            2487769813,
+            3990166301,
+            1399618952,
+            98950956,
+            1245983906,
+            1498852108,
+            4013535722,
+            4192031135,
+            1721365218,
+            336243432,
+            3713165319,
+            3073339939,
+            1888639762,
+            884619291,
+            1515690504,
+            4095654632,
+            1715954368,
+            1571082747,
+            3777485990,
+            3947034827,
+            1155772482,
+            3202481499,
+            3641508635,
+            443405356,
+            2799308301,
+            940515464,
+            1012039142,
+            2738743841,
+            1033045678,
+            2504734391,
+            2816528874,
+            3227289813,
+            2167038840,
+            1806970047,
+            3013049494,
+            3547647410,
+            2090700463,
+            2052417917,
+            3240486623,
+            1031780449,
+            3969343043,
+            1134931841,
+            3831903232
+          ]
+        }
+      }
+    ],
+    "groups": [
+      {
+        "variant": "agentmixer_gru_minus1",
+        "declared_seeds": [
+          0
+        ],
+        "eligible_seeds": [
+          0
+        ],
+        "aggregation_errors": [],
+        "aggregate": {
+          "final": {
+            "seed_count": 1,
+            "mean": -0.022149999999999948,
+            "median": -0.022149999999999948,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "normalized_auc": {
+            "seed_count": 1,
+            "mean": -0.03757499999999997,
+            "median": -0.03757499999999997,
+            "sample_sd_across_training_seeds": null,
+            "bootstrap_95pct_mean": null,
+            "bootstrap_95pct_median": null
+          },
+          "curve": [
+            {
+              "steps": 0,
+              "seed_count": 1,
+              "mean": -0.053,
+              "median": -0.053,
+              "sample_sd_across_training_seeds": null
+            },
+            {
+              "steps": 10000,
+              "seed_count": 1,
+              "mean": -0.022149999999999948,
+              "median": -0.022149999999999948,
+              "sample_sd_across_training_seeds": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "slurm": [
+    {
+      "job_id": "21219646_0",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "112",
+      "max_rss": ""
+    },
+    {
+      "job_id": "21219646_0.batch",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "112",
+      "max_rss": "1393256K"
+    },
+    {
+      "job_id": "21219646_0.extern",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "112",
+      "max_rss": ""
+    }
+  ],
+  "timing_seconds": {
+    "initial_evaluation_and_setup": 28.840194541029632,
+    "rollout_and_update": 21.372453739866614,
+    "final_checkpoint_and_evaluation": 24.362487213220447,
+    "reported_training_run": 74.57633227482438,
+    "job_including_replay": 112
+  },
+  "cost_estimate": {
+    "method": "100 measured rollout/update blocks plus101 times the slower measured evaluation; four serial runs per worker;50percent wall-time margin,rounded up to a whole hour.",
+    "per_1m_run_seconds": 5050.105022630654,
+    "per_worker_seconds_before_margin": 20200.420090522617,
+    "requested_wall_minutes": 540,
+    "max_rss_kib": 1393256,
+    "memory_limit_gib": 8,
+    "limits": "Single10k developmental timing observation,not a guarantee; later learning changes episode/reset counts. No hidden retry if the time cap is reached."
+  },
+  "learning_release": "correctness,replay,runtime,memory gates pass; schedule must still preserve four chains"
+}

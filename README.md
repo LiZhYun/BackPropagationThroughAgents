@@ -136,8 +136,10 @@ The 1M development extension also completes with all 12 runs above the threshold
 its longer entropy schedule and reused development seeds remain separate evidence.
 A [five-seed 1M confirmation](docs/matrix_confirmation.md#independent-1m-confirmation)
 of that fixed setting now passes: all20 runs complete, and both methods solve both games in all five seeds. Paired endpoint intervals include zero; this validates the configuration without establishing BPPO superiority.
-[AgentMixer Climbing validation](docs/agentmixer_confirmation.md) is running on ten
-unused seeds at 200k, retaining central and local execution scores separately.
+[AgentMixer Climbing validation](docs/agentmixer_confirmation.md#completed-result)
+finishes all ten unused seeds at 200k: all greedy actions are optimal, but only 8/10
+meet the predeclared local expected-return threshold, so the criterion fails.
+Central and local scores remain separate.
 
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the
 frozen independent HalfCheetah study, recomputes scores from raw episodes and

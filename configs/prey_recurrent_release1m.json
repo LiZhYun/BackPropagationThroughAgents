@@ -1,0 +1,99 @@
+{
+  "label": "prey_recurrent_release1m",
+  "scope": "Matched FF/GRU and factorized AgentMixer/identity development controls on both Prey penalties at1M,seed0. Released50x200,15 epochs,one minibatch,value coefficient1 and10k evaluation cadence. Author-selected100x200 fixed-window local-greedy metric. Reconstructed networks remain documented differences.",
+  "wall_time_minutes": 1440,
+  "seeds": [
+    0
+  ],
+  "base_config": {
+    "environment": "prey",
+    "algorithm": "agentmixer",
+    "steps": 1000000,
+    "num_envs": 50,
+    "rollout_steps": 200,
+    "epochs": 15,
+    "num_minibatches": 1,
+    "hidden_dim": 64,
+    "learning_rate": 0.0005,
+    "modifier_learning_rate": 5e-05,
+    "critic_learning_rate": 0.0005,
+    "entropy_coef": 0.01,
+    "value_coef": 1.0,
+    "max_grad_norm": 10.0,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "eval_episodes": 20,
+    "eval_every_steps": 10000,
+    "eval_window_steps": 200,
+    "eval_windows": 100,
+    "checkpoint_every_updates": 10,
+    "threads": 1
+  },
+  "variants": {
+    "agentmixer_ff_zero": {
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      },
+      "modifier_enabled": true,
+      "recurrent_actor": false
+    },
+    "agentmixer_gru_zero": {
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      },
+      "modifier_enabled": true,
+      "recurrent_actor": true
+    },
+    "identity_ff_zero": {
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      },
+      "modifier_enabled": false,
+      "recurrent_actor": false
+    },
+    "identity_gru_zero": {
+      "env_config": {
+        "penalty": 0,
+        "episode_limit": 128
+      },
+      "modifier_enabled": false,
+      "recurrent_actor": true
+    },
+    "agentmixer_ff_minus1": {
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      },
+      "modifier_enabled": true,
+      "recurrent_actor": false
+    },
+    "agentmixer_gru_minus1": {
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      },
+      "modifier_enabled": true,
+      "recurrent_actor": true
+    },
+    "identity_ff_minus1": {
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      },
+      "modifier_enabled": false,
+      "recurrent_actor": false
+    },
+    "identity_gru_minus1": {
+      "env_config": {
+        "penalty": -1,
+        "episode_limit": 128
+      },
+      "modifier_enabled": false,
+      "recurrent_actor": true
+    }
+  }
+}

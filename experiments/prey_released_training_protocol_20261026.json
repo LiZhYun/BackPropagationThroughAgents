@@ -1,0 +1,186 @@
+{
+  "recorded_utc": "2026-10-26T18:49:52.570124+00:00",
+  "commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+  "scope": "Resolve selected released parser defaults and launcher arguments without executing upstream training code. Entry point only disables recurrence for MAT/MAT-dec, not temporal.",
+  "source_provenance": {
+    "commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+    "sources": [
+      {
+        "file": "train_predator_prey.sh",
+        "git_blob": "315297f2377e140d0388a0734f955c741eb15273",
+        "sha256": "466b50e804e514cc96981f89252407dc0ab2a3324527f656a89af903f8a6d5b2",
+        "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/scripts/temporal/predator_prey/lumi/train_predator_prey.sh"
+      },
+      {
+        "file": "train_predatorprey.py",
+        "git_blob": "b86e7f202a8110a7f58942b4bac773a82805de76",
+        "sha256": "2da98f2776e771081ae031833cbfa9ffca43146f6c855f10c5e674b8002aa9b7",
+        "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/scripts/train/train_predatorprey.py"
+      },
+      {
+        "file": "config.py",
+        "sha256": "beb9ea1518bea6177b79368e33ae2f52370b9de12b7cd02aa9fe763fbcb38109",
+        "previous_capture": "results/smac_release_audit_20261026/bta/config.py",
+        "url": "https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/bta/config.py"
+      }
+    ]
+  },
+  "definitions": {
+    "n_rollout_threads": {
+      "type": "int",
+      "default": 32
+    },
+    "n_eval_rollout_threads": {
+      "type": "int",
+      "default": 1
+    },
+    "num_env_steps": {
+      "type": "int",
+      "default": 10000000.0
+    },
+    "episode_length": {
+      "type": "int",
+      "default": 200
+    },
+    "hidden_size": {
+      "type": "int",
+      "default": 64
+    },
+    "layer_N": {
+      "type": "int",
+      "default": 1
+    },
+    "activation_id": {
+      "type": "int",
+      "default": 1
+    },
+    "use_valuenorm": {
+      "action": "store_false",
+      "default": true
+    },
+    "use_feature_normalization": {
+      "action": "store_false",
+      "default": true
+    },
+    "use_recurrent_policy": {
+      "action": "store_false",
+      "default": true
+    },
+    "recurrent_N": {
+      "type": "int",
+      "default": 1
+    },
+    "data_chunk_length": {
+      "type": "int",
+      "default": 1
+    },
+    "use_action_attention": {
+      "action": "store_true",
+      "default": false
+    },
+    "lr": {
+      "type": "float",
+      "default": 0.0005
+    },
+    "critic_lr": {
+      "type": "float",
+      "default": 0.0005
+    },
+    "attention_lr": {
+      "type": "float",
+      "default": 0.0005
+    },
+    "opti_eps": {
+      "type": "float",
+      "default": 1e-05
+    },
+    "ppo_epoch": {
+      "type": "int",
+      "default": 15
+    },
+    "num_mini_batch": {
+      "type": "int",
+      "default": 1
+    },
+    "entropy_coef": {
+      "type": "float",
+      "default": 0.01
+    },
+    "value_loss_coef": {
+      "type": "float",
+      "default": 1
+    },
+    "max_grad_norm": {
+      "type": "float",
+      "default": 10.0
+    },
+    "eval_interval": {
+      "type": "int",
+      "default": 25
+    },
+    "eval_episodes": {
+      "type": "int",
+      "default": 32
+    }
+  },
+  "resolved": {
+    "n_rollout_threads": 50,
+    "n_eval_rollout_threads": 100,
+    "num_env_steps": 1000000,
+    "episode_length": 200,
+    "hidden_size": 64,
+    "layer_N": 1,
+    "activation_id": 1,
+    "use_valuenorm": true,
+    "use_feature_normalization": true,
+    "use_recurrent_policy": true,
+    "recurrent_N": 1,
+    "data_chunk_length": 1,
+    "use_action_attention": true,
+    "lr": 0.0005,
+    "critic_lr": 0.0005,
+    "attention_lr": 5e-05,
+    "opti_eps": 1e-05,
+    "ppo_epoch": 15,
+    "num_mini_batch": 1,
+    "entropy_coef": 0.01,
+    "value_loss_coef": 1,
+    "max_grad_norm": 10.0,
+    "eval_interval": 10000,
+    "eval_episodes": 100
+  },
+  "launcher_other_arguments": [
+    "--env_name",
+    "predator_prey",
+    "--penalty",
+    "-1",
+    "--algorithm_name",
+    "temporal",
+    "--experiment_name",
+    "check",
+    "--seed",
+    "0",
+    "--save_interval",
+    "100000",
+    "--log_interval",
+    "10000",
+    "--use_eval",
+    "--user_name",
+    "zhiyuanli",
+    "--wandb_name",
+    "zhiyuanli",
+    "--mix_std_y_coef",
+    "0.95",
+    "--threshold",
+    "1.",
+    "--decay_id",
+    "1",
+    "--decay_factor",
+    "1.5",
+    "--temperature",
+    "1.0",
+    "--sigmoid_gain",
+    "1.0"
+  ],
+  "accepted_source_note": "Prey text and hyperparameter appendices in aaai25.tex are commented out; no active Prey-specific optimizer table was found. This is pinned released-code evidence, not historical run provenance."
+}

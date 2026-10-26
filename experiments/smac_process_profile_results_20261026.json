@@ -1,0 +1,388 @@
+{
+  "recorded_utc": "2026-10-26T19:20:04.306099+00:00",
+  "status": "passed",
+  "scope": "Independent raw native trace,action-schedule,cleanup and timing audit; no training backend or learning-speed claim.",
+  "study_plan": "experiments/smac_process_profile_study_20261026.json",
+  "study_plan_sha256": "e702fd1a8ccb5ed11627bf572ff988ecb2c19f1c327edb74ead35fb8d2f89a3d",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "profiler_sha256": "896813c97b4008482316c2b6da30a293e6b1e72c7802119e8fdb4fc87d184ffb",
+  "raw_environment_decisions_verified": 8192,
+  "conditions": [
+    {
+      "name": "normal",
+      "status": "passed",
+      "report_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/report.json",
+      "report_sha256": "ad0e1455906c4fd16a61b4089119bbd8544806a5ea296f13c614825e862340a4",
+      "all_full_trace_files_identical_across_modes_and_repeats": true,
+      "median_sequential_over_process_call_ratio": 1.2753280952007144,
+      "paired_ratios": [
+        1.2753280952007144,
+        1.2914392302619961,
+        1.2548286990352313
+      ],
+      "audited_runs": [
+        {
+          "trial": 0,
+          "mode": "sequential",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/trial0_sequential.jsonl",
+          "trace_sha256": "5e9434368d346ba659acce425a0045eb79f78978143c9c3fcf288c4eb4406b39",
+          "decisions": 1024,
+          "completed_episodes": [
+            12,
+            12
+          ],
+          "resets_including_initial": [
+            13,
+            13
+          ],
+          "max_planned_restarts": [
+            0,
+            0
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [],
+          "timings": {
+            "construction_seconds": 0.15901186224073172,
+            "initial_reset_seconds": 13.781627093907446,
+            "step_seconds": 5.789600819349289,
+            "subsequent_reset_seconds": 3.136942773591727,
+            "loop_seconds_including_trace_io": 9.515770017635077,
+            "close_seconds": 0.2066088169813156
+          }
+        },
+        {
+          "trial": 0,
+          "mode": "process",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/trial0_process.jsonl",
+          "trace_sha256": "5e9434368d346ba659acce425a0045eb79f78978143c9c3fcf288c4eb4406b39",
+          "decisions": 1024,
+          "completed_episodes": [
+            12,
+            12
+          ],
+          "resets_including_initial": [
+            13,
+            13
+          ],
+          "max_planned_restarts": [
+            0,
+            0
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [
+            {
+              "pid": 2740252,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            },
+            {
+              "pid": 2740251,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            }
+          ],
+          "timings": {
+            "construction_seconds": 0.3540240782313049,
+            "initial_reset_seconds": 8.181223862804472,
+            "step_seconds": 3.919712257105857,
+            "subsequent_reset_seconds": 3.079697248991579,
+            "loop_seconds_including_trace_io": 7.5989077049307525,
+            "close_seconds": 0.3283514599315822
+          }
+        },
+        {
+          "trial": 1,
+          "mode": "process",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/trial1_process.jsonl",
+          "trace_sha256": "5e9434368d346ba659acce425a0045eb79f78978143c9c3fcf288c4eb4406b39",
+          "decisions": 1024,
+          "completed_episodes": [
+            12,
+            12
+          ],
+          "resets_including_initial": [
+            13,
+            13
+          ],
+          "max_planned_restarts": [
+            0,
+            0
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [
+            {
+              "pid": 2740304,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            },
+            {
+              "pid": 2740303,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            }
+          ],
+          "timings": {
+            "construction_seconds": 0.33938172692433,
+            "initial_reset_seconds": 8.321823574136943,
+            "step_seconds": 3.909343210980296,
+            "subsequent_reset_seconds": 3.0718602016568184,
+            "loop_seconds_including_trace_io": 7.581833620090038,
+            "close_seconds": 0.3493020962923765
+          }
+        },
+        {
+          "trial": 1,
+          "mode": "sequential",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/trial1_sequential.jsonl",
+          "trace_sha256": "5e9434368d346ba659acce425a0045eb79f78978143c9c3fcf288c4eb4406b39",
+          "decisions": 1024,
+          "completed_episodes": [
+            12,
+            12
+          ],
+          "resets_including_initial": [
+            13,
+            13
+          ],
+          "max_planned_restarts": [
+            0,
+            0
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [],
+          "timings": {
+            "construction_seconds": 0.003277274314314127,
+            "initial_reset_seconds": 13.346330062951893,
+            "step_seconds": 5.743900720961392,
+            "subsequent_reset_seconds": 3.2718992405571043,
+            "loop_seconds_including_trace_io": 9.591255547013134,
+            "close_seconds": 0.2048962563276291
+          }
+        },
+        {
+          "trial": 2,
+          "mode": "sequential",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/trial2_sequential.jsonl",
+          "trace_sha256": "5e9434368d346ba659acce425a0045eb79f78978143c9c3fcf288c4eb4406b39",
+          "decisions": 1024,
+          "completed_episodes": [
+            12,
+            12
+          ],
+          "resets_including_initial": [
+            13,
+            13
+          ],
+          "max_planned_restarts": [
+            0,
+            0
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [],
+          "timings": {
+            "construction_seconds": 0.0024913563393056393,
+            "initial_reset_seconds": 13.772476754616946,
+            "step_seconds": 5.7249323832802474,
+            "subsequent_reset_seconds": 3.2107371371239424,
+            "loop_seconds_including_trace_io": 9.513759555760771,
+            "close_seconds": 0.20492986869066954
+          }
+        },
+        {
+          "trial": 2,
+          "mode": "process",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/normal/trial2_process.jsonl",
+          "trace_sha256": "5e9434368d346ba659acce425a0045eb79f78978143c9c3fcf288c4eb4406b39",
+          "decisions": 1024,
+          "completed_episodes": [
+            12,
+            12
+          ],
+          "resets_including_initial": [
+            13,
+            13
+          ],
+          "max_planned_restarts": [
+            0,
+            0
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [
+            {
+              "pid": 2740745,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            },
+            {
+              "pid": 2740744,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            }
+          ],
+          "timings": {
+            "construction_seconds": 0.3298699068836868,
+            "initial_reset_seconds": 8.210636103991419,
+            "step_seconds": 3.8969183336012065,
+            "subsequent_reset_seconds": 3.2241090442985296,
+            "loop_seconds_including_trace_io": 7.724718810990453,
+            "close_seconds": 0.32361717615276575
+          }
+        }
+      ],
+      "host": "milan4.int.triton.aalto.fi",
+      "cpu": "AMD EPYC 7713 64-Core Processor"
+    },
+    {
+      "name": "frequent_restart",
+      "status": "passed",
+      "report_path": "results/smac_process_profile_20261026T173908Z/profile_output/frequent_restart/report.json",
+      "report_sha256": "eb036060e970d41a50e10c528a68e805936c427c0dfcea5a274b2ddc044dc952",
+      "all_full_trace_files_identical_across_modes_and_repeats": true,
+      "median_sequential_over_process_call_ratio": 0.9979098513822495,
+      "paired_ratios": [
+        0.9979098513822495
+      ],
+      "audited_runs": [
+        {
+          "trial": 0,
+          "mode": "sequential",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/frequent_restart/trial0_sequential.jsonl",
+          "trace_sha256": "84de89c2c59ecf5ff88f7e5307572f43ec293d916af0f1e7075920780f57290f",
+          "decisions": 1024,
+          "completed_episodes": [
+            10,
+            12
+          ],
+          "resets_including_initial": [
+            11,
+            13
+          ],
+          "max_planned_restarts": [
+            10,
+            12
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [],
+          "timings": {
+            "construction_seconds": 0.11804058076813817,
+            "initial_reset_seconds": 13.607098076026887,
+            "step_seconds": 6.323109181132168,
+            "subsequent_reset_seconds": 154.2038509217091,
+            "loop_seconds_including_trace_io": 161.1218868480064,
+            "close_seconds": 0.20496399281546474
+          }
+        },
+        {
+          "trial": 0,
+          "mode": "process",
+          "trace_path": "results/smac_process_profile_20261026T173908Z/profile_output/frequent_restart/trial0_process.jsonl",
+          "trace_sha256": "84de89c2c59ecf5ff88f7e5307572f43ec293d916af0f1e7075920780f57290f",
+          "decisions": 1024,
+          "completed_episodes": [
+            10,
+            12
+          ],
+          "resets_including_initial": [
+            11,
+            13
+          ],
+          "max_planned_restarts": [
+            10,
+            12
+          ],
+          "independently_verified_action_schedule": true,
+          "cleanup": [
+            {
+              "pid": 2742063,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            },
+            {
+              "pid": 2742062,
+              "graceful": true,
+              "forced": false,
+              "exit_code": 0,
+              "still_alive": false
+            }
+          ],
+          "timings": {
+            "construction_seconds": 0.36656644893810153,
+            "initial_reset_seconds": 8.37838698271662,
+            "step_seconds": 4.979498678818345,
+            "subsequent_reset_seconds": 155.8836893942207,
+            "loop_seconds_including_trace_io": 161.4967186190188,
+            "close_seconds": 0.33744302298873663
+          }
+        }
+      ],
+      "host": "milan4.int.triton.aalto.fi",
+      "cpu": "AMD EPYC 7713 64-Core Processor"
+    }
+  ],
+  "slurm": [
+    {
+      "job_id": "21218609",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "467",
+      "max_rss": ""
+    },
+    {
+      "job_id": "21218609.batch",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "467",
+      "max_rss": "1813832K"
+    },
+    {
+      "job_id": "21218609.extern",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "467",
+      "max_rss": ""
+    }
+  ],
+  "peak_rss_kib": 1813832,
+  "decision": "Normal environment calls improve modestly with processes; frequent restart calls show no gain. A training prototype requires exact rollout,normalization,recurrent-memory,RNG,optimizer and failure-cleanup parity before adoption.",
+  "limits": [
+    "one native host,two fixed environment seeds",
+    "uniform legal-action controller,not a learned policy",
+    "call times exclude policy inference,optimization,normalization and trace I/O",
+    "standalone profiler memory does not measure full recurrent training memory",
+    "no production process backend implemented"
+  ]
+}

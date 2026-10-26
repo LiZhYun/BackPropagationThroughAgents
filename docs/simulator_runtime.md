@@ -186,12 +186,13 @@ the native Python 3.11.15 / NumPy 1.23.5 prefix. That cheap-environment probe ha
 a sequential/process call-time ratio of 0.383; IPC costs exceed the saved native
 work there. It supplies no SMAC speed claim.
 
-Job **21218609** is queued with 2CPUs/8GB and a 30-minute cap. It follows
-`21213860_0`, and the still-pending entropy worker `21211006_0` follows it.
+Job **21218609** was queued with 2CPUs/8GB and a 30-minute cap; it has now
+completed successfully. It follows
+`21213860_0`, and entropy worker `21211006_0` follows it.
 The [schedule proof](../experiments/smac_process_profile_schedule_20261026.json)
 records both held workers' verified edges/resources before release. The four
-serial chains and all active training jobs are preserved. Native trace,
-restart, timing and sampled-memory gates remain pending. Artifacts go into
+serial chains and all active training jobs were preserved. Native trace,
+restart, timing and sampled-memory gates passed as recorded below. Artifacts go into
 `profile_output/` inside the frozen experiment directory.
 
 ### Instrumentation files
@@ -209,3 +210,36 @@ restart, timing and sampled-memory gates remain pending. Artifacts go into
 The frozen directory also contains copied instrumentation, source/configurations
 and `submit.sbatch`. These profiling files can be removed after measurement
 without changing the trainer, but retain their evidence for reported timings.
+
+## Completed native process diagnostic
+
+The [independent audit](../experiments/smac_process_profile_results_20261026.json)
+passes all 8,192 recorded environment decisions. It recomputes each raw trace
+hash, every private legal-action RNG sequence, reset/episode counts, planned
+restart counters and paired timing ratios using the native NumPy version.
+Whole trace files, including observations, actions, rewards, endings and info,
+are byte-identical between sequential and process execution and across all
+repeats within each condition. All children exit gracefully without forced
+cleanup or close errors. The exact 19-module source and profiler hashes match
+the frozen plan.
+
+| Condition | Decisions across both modes | Sequential/process call-time ratios | Median ratio |
+| --- | ---: | --- | ---: |
+| Normal 480k native-loop restart threshold | 6,144 | 1.2753, 1.2914, 1.2548 | 1.2753 |
+| Diagnostic 128 native-loop threshold | 2,048 | 0.9979 | 0.9979 |
+
+Normal environment calls take about 21.6% less time with processes in these
+paired measurements. Frequent-restart calls show no gain: reset time dominates
+and the two environments usually reset at different decisions. Each mode
+records 10 and 12 planned restarts for its two environments in that condition.
+The job completes in 467s and peaks at 1.73GiB resident memory. This standalone
+profiler has no policy or optimizer; its memory use does not establish a full
+training bound.
+
+These measurements use one host, two fixed environment seeds and uniformly
+sampled legal actions. Call times exclude policy inference, optimization,
+normalization and trace I/O. They do not establish a training speedup. No
+process collector has been added to the training path; normalized-rollout,
+recurrent-memory, RNG, optimizer and failure-cleanup parity would be required
+first. The [released SMAC learning study](recurrent_actors.md#completed-native-gate-and-learning-release)
+keeps its sequential backend and uses bounded single-run tasks.

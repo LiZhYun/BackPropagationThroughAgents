@@ -1,0 +1,83 @@
+{
+  "recorded_utc": "2026-10-26T18:52:17.140619+00:00",
+  "integration_job_id": "21219646",
+  "before": {
+    "21213860_0": {
+      "JobId": "21213861",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21218175_0(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259649"
+    }
+  },
+  "verified_while_held": {
+    "21219646_0": {
+      "JobId": "21219646",
+      "ArrayJobId": "21219646",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21218175_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21213860_0": {
+      "JobId": "21213861",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21219646_0(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    }
+  },
+  "new_chain": [
+    "21209234_0",
+    "21218175_0",
+    "21219646_0",
+    "21213860_0",
+    "21218609",
+    "21211006_0",
+    "21212197_0"
+  ],
+  "resource_ceiling": "Four serial worker chains,each worker at most2CPU/8GB. New check30min,one worker.",
+  "learning_status": "prepared_not_submitted; release requires completed runtime/replay gate",
+  "verified_after_release": {
+    "21219646_0": {
+      "JobId": "21219646",
+      "ArrayJobId": "21219646",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21218175_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259649"
+    },
+    "21213860_0": {
+      "JobId": "21213861",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21219646_0(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259649"
+    }
+  },
+  "verification_note": "Immediate post-release assertion did not pass; fresh authoritative reads verify the desired pending states. No repeated submission or restart.",
+  "final_verification_utc": "2026-10-26T18:53:05.842608+00:00"
+}

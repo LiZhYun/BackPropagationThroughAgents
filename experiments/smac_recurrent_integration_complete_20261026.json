@@ -1,0 +1,226 @@
+{
+  "recorded_utc": "2026-10-26T19:12:13.492664+00:00",
+  "status": "passed",
+  "scope": "Complete five-method native recurrent integration; no benchmark or independent performance claim.",
+  "manifest": "results/smac_recurrent_batch_integration10k_20261026T125710Z/manifest.json",
+  "manifest_sha256": "2742cad38dd9cd3af708d47cb1da57719f5b948c546f62202af137c9a6b6ab5c",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+    "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "frozen_source_bytes_verified": true,
+  "raw_evaluation_episodes_verified": 40,
+  "rollout_updates_verified": 5,
+  "versions": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cpu",
+    "numpy": "1.23.5",
+    "smacv2": "1.0.0",
+    "pysc2": "4.0.0",
+    "mujoco-py": null,
+    "gym": null,
+    "gymnasium": null,
+    "gfootball": null
+  },
+  "runs": [
+    {
+      "variant": "mappo",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "actor_updates": 5.0,
+      "critic_updates": 5.0,
+      "elapsed_seconds": 161.94122427608818,
+      "evaluation_environment_steps": 637,
+      "timing_seconds": {
+        "initial_evaluation_and_setup": 19.28070534626022,
+        "rollout_and_update": 132.60195898870006,
+        "checkpoint_and_final_evaluation": 10.057847882155329
+      },
+      "artifact_sha256": {
+        "config.json": "eac5e458ac31d1317c28e42383a85a6917341e1410c2b44f35a7766a3d2859f2",
+        "metrics.jsonl": "8923c95e580b2142f9135a994d8bd5e33a0a49416a68110b62f77b3c4331645c",
+        "summary.json": "cded7df0300c2b5a3054aeb56053fe5f8c0651c0f69a0a3fb0a36b538aac511b",
+        "checkpoint.pt": "4f51b9f6afe1e63e86e5a2bc21ed01979baa0aee631d18b7ebf4d52fa6df8045"
+      }
+    },
+    {
+      "variant": "arppo",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "actor_updates": 5.0,
+      "critic_updates": 5.0,
+      "elapsed_seconds": 148.40819514798932,
+      "evaluation_environment_steps": 335,
+      "timing_seconds": {
+        "initial_evaluation_and_setup": 9.917443790007383,
+        "rollout_and_update": 129.2079933739733,
+        "checkpoint_and_final_evaluation": 9.282167232013308
+      },
+      "artifact_sha256": {
+        "config.json": "384313973a0456f0dab291e43dbfd653774d469c5a6dda1aa52786e2f66eccf0",
+        "metrics.jsonl": "fcd75251316ca1cdfe3da88a261fdff481b4d1fc62d9b41a567444cbd1623726",
+        "summary.json": "0a92bd94f8d27db4bfc17595e25bfec9800b92b4cfc458243572c9c521903782",
+        "checkpoint.pt": "faac2b3e38d316ba308e1a518c557d713f1eb9b1d9c808e8d4b140ad5fb50238"
+      }
+    },
+    {
+      "variant": "bppo",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "actor_updates": 25.0,
+      "critic_updates": 5.0,
+      "elapsed_seconds": 168.49600610276684,
+      "evaluation_environment_steps": 366,
+      "timing_seconds": {
+        "initial_evaluation_and_setup": 10.391650807112455,
+        "rollout_and_update": 148.5635677035898,
+        "checkpoint_and_final_evaluation": 9.54022448323667
+      },
+      "artifact_sha256": {
+        "config.json": "b547a1d883058bd2a3404594518579469ded2af0c7053929dac630674c22d62f",
+        "metrics.jsonl": "0f6c43f0dfec823dccfffa4b6e468b156f7b51458a6a9c0cf131026c26538d0e",
+        "summary.json": "02c234c74dabd578dea9401fe4558051e7b8399e09f4bfbe137d003ffacaedf9",
+        "checkpoint.pt": "85d4774857ee97687556dfcadad7ea557edda8c6548d129c6a1ca3305e433040"
+      }
+    },
+    {
+      "variant": "agentmixer",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "actor_updates": 5.0,
+      "critic_updates": 5.0,
+      "elapsed_seconds": 151.59674472699407,
+      "evaluation_environment_steps": 495,
+      "timing_seconds": {
+        "initial_evaluation_and_setup": 10.489260114962235,
+        "rollout_and_update": 132.36407903407235,
+        "checkpoint_and_final_evaluation": 8.742831656942144
+      },
+      "artifact_sha256": {
+        "config.json": "ea59467760af4aa02bca9a5c300e70d6070baefbcc8f6d58c66e76929f9233ea",
+        "metrics.jsonl": "594f64cabe16eae97dd0debb07f8b8a3425eb7995dae301009aa64890465c9be",
+        "summary.json": "3c5c46a27381f306d627f8265df5ae4aee2634d112b60ea22811eafe060c5874",
+        "checkpoint.pt": "ba60aa994b0fe0dbc952e68617ffef577fbef7e58782b7bc5ab7c3cd51873f6f"
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000,
+      "rollout_shape": [
+        5000,
+        2
+      ],
+      "actor_updates": 5.0,
+      "critic_updates": 5.0,
+      "elapsed_seconds": 166.90299069695175,
+      "evaluation_environment_steps": 495,
+      "timing_seconds": {
+        "initial_evaluation_and_setup": 10.976288602221757,
+        "rollout_and_update": 146.65031320462003,
+        "checkpoint_and_final_evaluation": 9.275803037919104
+      },
+      "artifact_sha256": {
+        "config.json": "2d21136c9bc118893229998495b89186714a0e4bdf845e3f854079c562ff9e2e",
+        "metrics.jsonl": "cc5a0382ef5920e828c583a04f4081e44db27037eb211e236509642a602de659",
+        "summary.json": "c5a2e281894348f78a307e88caf3100cae15cc61fcd8859663f00da1d9345c54",
+        "checkpoint.pt": "d7cba4f614af42b77eeef43a47c4fdf8b473fa6894dae19c202cb12d7521ae2c"
+      }
+    }
+  ],
+  "slurm": [
+    {
+      "job_id": "21213860_0",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "509",
+      "max_rss": ""
+    },
+    {
+      "job_id": "21213860_0.batch",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "509",
+      "max_rss": "4163040K"
+    },
+    {
+      "job_id": "21213860_0.extern",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "509",
+      "max_rss": ""
+    },
+    {
+      "job_id": "21213860_1",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "306",
+      "max_rss": ""
+    },
+    {
+      "job_id": "21213860_1.batch",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "306",
+      "max_rss": "3825900K"
+    },
+    {
+      "job_id": "21213860_1.extern",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": "306",
+      "max_rss": ""
+    }
+  ],
+  "max_rss_kib": 4163040,
+  "learning_cost_diagnostic": {
+    "method": "100 times largest10k rollout/update duration plus8 evaluations,each scaled from4 to32 episodes using largest evaluation/setup duration.",
+    "estimated_seconds_per_1m_run": 16090.321912519634,
+    "five_serial_runs_hours_before_margin": 22.347669322943936,
+    "five_serial_runs_hours_with_25pct_margin": 27.93458665367992,
+    "limitation": "Single initial rollout per method; episode lengths,reset costs and policy costs change during learning. This is a layout estimate,not a measured full-run runtime."
+  },
+  "learning_status": "Still prepared,not submitted: review the live process diagnostic and choose a worker layout that fits bounded runtime. Default five-runs-per-worker24h script is not released."
+}

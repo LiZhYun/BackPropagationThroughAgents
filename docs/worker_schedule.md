@@ -1,8 +1,8 @@
 # Recorded worker schedule
 
 This page retains successive scheduling snapshots. The [latest verified
-graph](#football-minibatch-integration-inserted-2026-10-26) adds the Football integration
-check before Ant/Walker while retaining four serial worker chains.
+graph](#smac-learning-with-single-run-tasks-2026-10-26) appends bounded SMAC learning
+tasks while retaining four serial worker chains.
 
 The current queued arrays use two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -229,3 +229,52 @@ chains still limit this project to four workers.
 The separate 1M Football development manifest remains prepared but unsubmitted
 until all ten integration runs pass correctness, runtime and memory gates.
 See the [optimization audit](football_optimization_audit.md).
+
+## Prey recurrent check and learning release, 2026-10-26
+
+One short Prey protocol check, `21219646_0`, was inserted after AgentMixer matrix
+confirmation `21218175_0` and before pending native GRU `21213860_0`. The initial
+post-release assertion required a fresh scheduler read; the saved
+[proof](../experiments/prey_recurrent_protocol_schedule_20261026.json) confirms
+the intended states. No repeated job submission or restart occurred. The check
+then completed successfully, including exact checkpoint replay and measured
+memory/runtime, and the native GRU worker started.
+
+The subsequent eight-run study `21219719` appends one worker to each existing
+Prey chain, after matching `21212197_i`. Each worker runs four fixed configurations
+serially with 2CPUs/8GB and a nine-hour cap. The
+[release record](../experiments/prey_recurrent_release_schedule_20261026.json)
+contains the measured estimate, immutable source/configuration checks and
+verified held/released scheduler states. The latest B chains are:
+
+```text
+B0: ... → 21218175_0 → 21219646_0 → 21213860_0 → 21218609 → 21211006_0 → 21212197_0 → 21219719_0
+B1: ... → 21211006_1 → 21218775_0 → 21212197_1 → 21219719_1
+```
+
+The A chains retain Football → Football integration → Ant/Walker → independent
+HalfCheetah confirmation. All four chains remain serial; at most four project
+workers can run. Every edge remains `afterany`, with failures recorded separately.
+
+## SMAC learning with single-run tasks, 2026-10-26
+
+After all five native recurrent integrations passed and runtime/memory were
+reviewed, the ten frozen 1M controls were released as job `21220264`. Each task
+executes one manifest index through the existing `run_simulator_array.py`.
+The new dispatch script retains the original source and configs, uses 2CPUs/8GB,
+a six-hour cap and `--no-requeue`. The original two-worker 24h script remains unchanged.
+The [release plan](../experiments/smac_batch1m_release_plan_20261026.json) explains
+the measured estimate and retains every configuration hash.
+
+```text
+B0: ... → 21219719_0 → 21220264_0 → 21220264_2 → 21220264_4 → 21220264_6 → 21220264_8
+B1: ... → 21219719_1 → 21220264_1 → 21220264_3 → 21220264_5 → 21220264_7 → 21220264_9
+```
+
+All ten tasks were submitted held, assigned these dependencies, and released
+after resource/dependency checks. The
+[proof](../experiments/smac_batch1m_release_schedule_20261026.json) records the
+scheduler states. Array concurrency is also capped at two. Each task names a
+unique output; no stride or repeated configuration is used. Together with the
+unchanged A0/A1 chains, at most four project workers can run. This is a
+scheduling change, with no changes to the training backend or experiments.

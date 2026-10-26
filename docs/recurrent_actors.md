@@ -57,3 +57,32 @@ full suite passed 691 tests with one CUDA-only skip after integration. Native
 SMAC validation is a separate scheduled experiment. Two additional evaluator
 trace checks explicitly verified fresh memory at episode boundaries and resets
 inside fixed windows; all 33 recurrent-focused tests passed afterwards.
+
+## Completed native gate and learning release
+
+All five recurrent SMAC terran5v5 integrations now complete at 10,000 decisions.
+The [full audit](../experiments/smac_recurrent_integration_complete_20261026.json)
+checks 40 raw evaluation episodes, five finite rollout updates, source bytes,
+resolved settings, budgets and final summaries. Each uses a 2×5000 rollout and
+five PPO epochs. Run times range 148.41–168.50s; batch peak resident memory is
+3.97GiB. The earlier partial record remains available.
+
+The previously frozen ten-run feed-forward/GRU comparison is now queued as
+job **21220264**, with **one 1M-step run per task**, two active tasks at most,
+and a six-hour cap per task. The [release plan](../experiments/smac_batch1m_release_plan_20261026.json)
+records exact source/configuration reuse and matched architecture settings.
+The largest observed collection/update duration, plus scaled 32-episode
+evaluations, estimates 4.47h per run. A 25% margin rounds to 6h. Five such runs in
+one task would need 27.93h with the margin, exceeding the previous 24h header.
+The new dispatch layout leaves the frozen configurations and source unchanged.
+
+Even-numbered tasks follow the preceding even task; odd-numbered tasks follow
+the preceding odd task. Their first tasks wait for recurrent Prey workers
+21219719_0/1. This preserves the four project chains. Automatic requeue is
+disabled, failures remain recorded, and the six-hour estimate is not a guarantee.
+
+The [native process diagnostic](simulator_runtime.md#completed-native-process-diagnostic)
+shows a modest call-time improvement under normal restart settings, with exact
+trace parity, but does not validate training-state or optimizer equivalence.
+This learning study retains the existing sequential backend. The 1M budget and
+single development seed remain below the paper-level evidence requirements.

@@ -1,0 +1,85 @@
+{
+  "study_id": "prey_recurrent_release_20261026",
+  "recorded_utc": "2026-10-26T18:51:40.416343+00:00",
+  "source_commit": "9de175b142da62ca3ffa8aba0387d5f344cb37c7",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "integration_manifest": "results/prey_recurrent_protocol_check10k_20261026T184954Z/manifest.json",
+  "integration_manifest_sha256": "5b8a467d284e201ff5a32754afb44f0b9899ff6b29a89ca7d813c216eba37992",
+  "learning_manifest": "results/prey_recurrent_release1m_20261026T184956Z/manifest.json",
+  "learning_manifest_sha256": "ada1b65eacbf60cc046da9d32fe4ca92a36e3871096033c3432e5ad9957ee8ac",
+  "learning_status": "prepared_not_submitted",
+  "training_steps": 1000000,
+  "training_seeds": [
+    0
+  ],
+  "scope": "Eight matched development controls:FF/GRU,factorized AgentMixer/identity,bothpenalties. Released training counts and author-selected evaluation; no independent or historical equivalence claim.",
+  "released_protocol": "experiments/prey_released_training_protocol_20261026.json",
+  "released_protocol_sha256": "bcc68dc2d3ae3e48b8af83b7a125252b68cdc84c1b0f6b7e09aef507bb9d510c",
+  "primary_metric": "final_evaluation.fixed_window.reward_per_environment_step",
+  "evaluation": {
+    "windows": 100,
+    "decisions_per_window": 200,
+    "cadence_training_steps": 10000,
+    "deterministic": true,
+    "execution": "local actors only",
+    "unfinished_rewards": "included",
+    "secondary_complete_episodes": 20,
+    "training_evaluation_steps_separate": true
+  },
+  "comparisons": [
+    "FF vs GRU within penalty and modifier choice",
+    "AgentMixer vs identity within penalty and architecture",
+    "No earlier-peak selection,no pooling different penalties or previous batches",
+    "Differences from old controls bundle epochs,value coefficient,cadence and optionally recurrence; not an isolated effect of any one setting"
+  ],
+  "remaining_differences": [
+    "tanh actor encoder and shared feed-forward critic vs released ReLU/LayerNorm and separate recurrent critics",
+    "positive gap-scale mode-preserving modifier reconstruction vs released attention implementation",
+    "independent seeded environments and explicit timeout bootstrapping correct released defects",
+    "one development seed per setting; later independent training seeds required",
+    "accepted source Prey appendix commented out; historical figure-to-logger linkage remains qualified"
+  ],
+  "release_gates": [
+    "10k check completes one50x200 rollout with15 actor and15 critic steps and finite metrics",
+    "Raw initial/final100x200 windows and20 complete episodes agree with summary and recorded step counts",
+    "Saved-policy replay exactly reproduces final episode and fixed-window records",
+    "Source,config,versions,budget and identity of the fixed learning variants verified",
+    "Inspect elapsed time and Slurm MaxRSS; bound per-worker cost before releasing1M study",
+    "Preserve four serial chains; no automatic retry or restart on observation timeout"
+  ],
+  "resource_limits": {
+    "integration_workers": 1,
+    "cpus_per_worker": 2,
+    "memory_gib_per_worker": 8,
+    "integration_wall_minutes": 30,
+    "learning_worker_wall_minutes_upper_bound": 1440,
+    "project_concurrent_workers": 4
+  },
+  "preflight": "experiments/prey_recurrent_protocol_preflight_20261026.json"
+}

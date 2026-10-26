@@ -1,8 +1,9 @@
 # AgentMixer Climbing configuration validation
 
 Ten unused training seeds test the selected joint-modifier configuration at
-200,000 decisions. The study is frozen and queued; no confirmation result is
-available yet. This tests local execution reliability on Climbing. It has no
+200,000 decisions. All ten runs now finish with valid records. The predeclared
+criterion fails: eight seeds meet the local expected-return threshold. This
+tests local execution reliability on Climbing. It has no
 matched ablation and cannot establish a modifier advantage.
 
 The setting uses actor learning rate 0.0125, modifier rate 0.0005, constant
@@ -49,7 +50,8 @@ python scripts/report_matrix_validation.py \
   --csv results/agentmixer_confirmation_report.csv
 ```
 
-Job **21218175** uses one serial worker, one CPU, 4GB and a 45-minute cap.
+Job **21218175** completed in 22m30s on one serial worker, one CPU and 4GB,
+within its 45-minute cap. Batch peak resident memory was 375,176KiB.
 Measured development Climbing runs took about 1.5 minutes each. It was submitted
 held, checked, and inserted between `21209234_0` and the pending
 `21213860_0`; the same four-worker ceiling applies. The
@@ -62,3 +64,29 @@ remain, and the payoff ceiling prevents return above 11. No cross-paper sample
 efficiency, Penalty reliability, population-perfect convergence or algorithm
 advantage follows from this study. Future tuning after these seeds are observed
 requires a new untouched seed set for independent validation.
+
+## Completed result
+
+The [complete audit](../experiments/matrix_agentmixer_confirmation200k_results_20261026.json)
+and [seed-level CSV](../experiments/matrix_agentmixer_confirmation200k_results_20261026.csv)
+retain all ten seeds and 210 evaluation points. Source bytes, frozen settings,
+software versions, exact budgets and probability-derived scores pass validation.
+The statistical criterion **fails**, with 8/10 successes and a Wilson 95% interval
+[0.4902, 0.9433]. No seed is replaced and the threshold remains 10.45.
+
+All ten greedy joint actions are optimal, returning 11. The two local expected
+returns below threshold are:
+
+| Training seed | Local expected return | Local optimal-action probability | Central expected return | Greedy return |
+| --- | ---: | ---: | ---: | ---: |
+| 2000 | −2.370520 | 0.673883 | 11.000000 | 11 |
+| 2008 | 8.919642 | 0.948357 | 11.000000 | 11 |
+
+Across all ten seeds, local expected return is 9.453557 ± 4.205604 (sample SD),
+with median 10.999149 and bootstrap 95% mean interval [6.777780, 10.999079].
+Central expected return is 10.625784 ± 0.788938; seeds 2005 and 2007 have central
+returns 9.141265 and 9.116576 despite local expected return 11. Local and central
+stochastic distributions can differ in either direction while preserving
+optimal greedy modes. The results do not establish reliable stochastic local
+execution or a modifier advantage. They also cannot replace the separate
+Predator–Prey or native-simulator evaluations.

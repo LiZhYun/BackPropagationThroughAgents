@@ -24,6 +24,10 @@ The wrapper blob is `fad0e85e9568fc86bdc281a6e0606dfac0d6f78a` and temporal runn
 blob is `252571af6412ac581b218ad0e57dfcd75fe5a2a3`. These are source identities,
 not evidence that the historical experiments used that commit or dependency set.
 
+The later [training-settings audit](prey_recurrent_control.md) resolves the
+launcher's inherited recurrence, 15 PPO epochs and value-loss coefficient 1.
+It defines matched feed-forward/GRU controls with the released evaluation cadence.
+
 ## Exact released mechanics
 
 | Item | Protocol |

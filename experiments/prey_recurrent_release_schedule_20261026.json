@@ -1,0 +1,160 @@
+{
+  "recorded_utc": "2026-10-26T19:03:13.608803+00:00",
+  "job_id": "21219719",
+  "parents_at_submission": {
+    "21212197_0": {
+      "JobId": "21212914",
+      "ArrayJobId": "21212197",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21211006_0(unfulfilled)",
+      "TimeLimit": "04:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "258088"
+    },
+    "21212197_1": {
+      "JobId": "21212197",
+      "ArrayJobId": "21212197",
+      "ArrayTaskId": "1",
+      "JobState": "RUNNING",
+      "Reason": "None",
+      "Dependency": "(null)",
+      "TimeLimit": "04:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "259649"
+    }
+  },
+  "verified_while_held": {
+    "21219719_0": {
+      "JobId": "21219720",
+      "ArrayJobId": "21219719",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21212197_0(unfulfilled)",
+      "TimeLimit": "09:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    },
+    "21219719_1": {
+      "JobId": "21219719",
+      "ArrayJobId": "21219719",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "JobHeldUser",
+      "Dependency": "afterany:21212197_1(unfulfilled)",
+      "TimeLimit": "09:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "0"
+    }
+  },
+  "release_gate": "experiments/prey_recurrent_protocol_check_20261026.json",
+  "release_gate_sha256": "8dc77cf6912099406a856a85080e80838c49a05e4e3f0afd7ff3ce11a9d3fd6c",
+  "study_plan_sha256": "d152644214454e8bbaf81e62b68df36744bce99da18db32019d93b8b1a013f4b",
+  "cost_estimate": {
+    "method": "100 measured rollout/update blocks plus101 times the slower measured evaluation; four serial runs per worker;50percent wall-time margin,rounded up to a whole hour.",
+    "per_1m_run_seconds": 5050.105022630654,
+    "per_worker_seconds_before_margin": 20200.420090522617,
+    "requested_wall_minutes": 540,
+    "max_rss_kib": 1393256,
+    "memory_limit_gib": 8,
+    "limits": "Single10k developmental timing observation,not a guarantee; later learning changes episode/reset counts. No hidden retry if the time cap is reached."
+  },
+  "chains": [
+    [
+      "21212197_0",
+      "21219719_0"
+    ],
+    [
+      "21212197_1",
+      "21219719_1"
+    ]
+  ],
+  "resource_ceiling": "Append to the two existing B chains; four total serial chains,each worker at most2CPU/8GB.",
+  "frozen_submission_script": "Unchanged24h upper-bound header; sbatch --time=09:00:00 applies measured bounded allocation.",
+  "post_release_observations": [
+    {
+      "21219719_0": {
+        "JobId": "21219720",
+        "ArrayJobId": "21219719",
+        "ArrayTaskId": "0",
+        "JobState": "PENDING",
+        "Reason": "None",
+        "Dependency": "afterany:21212197_0(unfulfilled)",
+        "TimeLimit": "09:00:00",
+        "NumCPUs": "2",
+        "MinMemoryNode": "8G",
+        "Priority": "258088"
+      },
+      "21219719_1": {
+        "JobId": "21219719",
+        "ArrayJobId": "21219719",
+        "ArrayTaskId": "1",
+        "JobState": "PENDING",
+        "Reason": "None",
+        "Dependency": "afterany:21212197_1(unfulfilled)",
+        "TimeLimit": "09:00:00",
+        "NumCPUs": "2",
+        "MinMemoryNode": "8G",
+        "Priority": "258088"
+      }
+    },
+    {
+      "21219719_0": {
+        "JobId": "21219720",
+        "ArrayJobId": "21219719",
+        "ArrayTaskId": "0",
+        "JobState": "PENDING",
+        "Reason": "Dependency",
+        "Dependency": "afterany:21212197_0(unfulfilled)",
+        "TimeLimit": "09:00:00",
+        "NumCPUs": "2",
+        "MinMemoryNode": "8G",
+        "Priority": "258088"
+      },
+      "21219719_1": {
+        "JobId": "21219719",
+        "ArrayJobId": "21219719",
+        "ArrayTaskId": "1",
+        "JobState": "PENDING",
+        "Reason": "Dependency",
+        "Dependency": "afterany:21212197_1(unfulfilled)",
+        "TimeLimit": "09:00:00",
+        "NumCPUs": "2",
+        "MinMemoryNode": "8G",
+        "Priority": "258088"
+      }
+    }
+  ],
+  "verified_after_release": {
+    "21219719_0": {
+      "JobId": "21219720",
+      "ArrayJobId": "21219719",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212197_0(unfulfilled)",
+      "TimeLimit": "09:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "258088"
+    },
+    "21219719_1": {
+      "JobId": "21219719",
+      "ArrayJobId": "21219719",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21212197_1(unfulfilled)",
+      "TimeLimit": "09:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "258088"
+    }
+  }
+}

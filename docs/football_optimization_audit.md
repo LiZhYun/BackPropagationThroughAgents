@@ -1,6 +1,6 @@
 # Football rollout and optimizer audit
 
-The first two completed 1M-step 3v1 pilots have zero final wins. Their positive
+The first three completed 1M-step 3v1 pilots have zero final wins. Their positive
 shaped returns do not establish task success. The accepted BPTA appendix and
 pinned release reveal concrete optimization differences worth testing.
 
@@ -60,3 +60,16 @@ across 68 cases, including optimizer and RNG state. The clean installed wheel
 passes 877 tests with one CUDA-only skip, including 32 minibatch checks and
 exact recurrent Prey checkpoint replay. These are correctness checks, not
 evidence of Football learning performance.
+
+
+## Updated pilot evidence
+
+The [partial audit](../experiments/football_3v1_1m_progress_20261026T194000Z.json)
+now verifies MAPPO, AR-PPO and BPPO at 1M: 300 raw evaluation episodes and
+3,750 finite rollout updates, with exact source/configuration/budget checks.
+All three final evaluations have 0 wins in 20 complete episodes. Final shaped
+returns are 0.8850, 0.7000 and 0.8850 respectively; normalized shaped-return
+curve areas are 0.6410, 0.6707 and 0.6850. The audit retains the earlier AR-PPO
+win without substituting it for the final endpoint. AgentMixer and its identity
+control remain unfinished at this snapshot. These are one-seed pilots below
+the paper budget, with no evidence of a method advantage.

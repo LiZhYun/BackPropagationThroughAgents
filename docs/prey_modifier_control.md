@@ -101,10 +101,36 @@ fixed-window evaluation. Existing policy tests cover masking, ties and extreme
 values. These checks establish implementation behavior, not learning success.
 
 The focused integration suite passes 182 tests; the full suite passes 621 with
-one CUDA-only skip (2026-10-26). Job **21212197** queues the eight frozen runs
+one CUDA-only skip (2026-10-26). Job **21212197** runs the eight frozen controls
 at `results/prey_modifier_bound1m_20261026T111603Z`, after entropy job 21211006.
-No learning result is available yet.
+Partial learning results are recorded below; the full study is still running.
 
 The current scheduler uses matching worker indices for this dependency; see
 the [verified worker schedule](worker_schedule.md). Each successor can start
 when its own preceding worker finishes, within the unchanged four-worker cap.
+
+
+## Partial learning results
+
+The [partial audit](../experiments/prey_modifier_bound1m_progress_20261026T194000Z.json)
+verifies three completed runs, 300 raw complete episodes, 1,500 fixed windows
+and 5,862 finite rollout updates. It checks source bytes, configurations,
+training/evaluation seed derivation, interaction counts and all logged window
+reductions. All eight declarations remain visible; the remaining controls are
+unfinished or pending at this snapshot.
+
+| Completed variant | Penalty | Final window reward per decision | Normalized curve area |
+| --- | ---: | ---: | ---: |
+| Bounded factorized modifier | 0 | 2.0705 | 1.8529 |
+| Bounded joint modifier | 0 | 2.0715 | 1.8772 |
+| Bounded factorized modifier | −1 | −0.0716 | −0.0425 |
+
+The two zero-penalty endpoints remain below the figure reading range
+[2.19, 2.23], with the historical metric linkage qualified. They do not improve
+on the earlier development best of 2.142. The completed penalty −1 control
+remains negative. The matching unbounded reruns and joint penalty −1 control
+must finish before a complete within-study comparison. One development seed
+cannot establish reliability or a modifier advantage.
+
+The separate [recurrent control](prey_recurrent_control.md) tests the released
+training counts and recurrence after this study. Its results are not yet available.

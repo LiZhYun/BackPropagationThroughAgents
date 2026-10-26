@@ -1,0 +1,1213 @@
+{
+  "study_id": "matrix_agentmixer_confirmation200k_20261026",
+  "scope": "Independent configuration validation of local AgentMixer execution on Climbing at200k decisions; no modifier-advantage or full-paper reproduction claim.",
+  "plan_sha256": "38e1c18fe449a0df9657be174325f202c7158d081d16a915200afb7f5b501f63",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2000,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2000",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "4a225fd74ea467aea4a362160c6444fdf0eaf2cf80954a389ff82abcd3352303",
+      "summary_sha256": "3f10cb290a34af76f1d557714ffebd012aed267be1fad119f4c739f37fc5a09c",
+      "final": {
+        "execution_policy_expected_return": -2.3705196380615234,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.6738830804824829,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 10.999999999999982,
+        "training_optimal_action_probability": 0.9999999999999996
+      },
+      "threshold_success": false,
+      "normalized_expected_return_auc": -3.107752047729492,
+      "first_observed_sustained_95pct_expected_return_step": null,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.457589626312256
+        },
+        {
+          "steps": 10240,
+          "expected_return": 3.2109224796295166
+        },
+        {
+          "steps": 20480,
+          "expected_return": 4.910598278045654
+        },
+        {
+          "steps": 30720,
+          "expected_return": -2.0522987842559814
+        },
+        {
+          "steps": 40960,
+          "expected_return": -24.35084342956543
+        },
+        {
+          "steps": 51200,
+          "expected_return": -4.196817874908447
+        },
+        {
+          "steps": 61440,
+          "expected_return": -3.8603086471557617
+        },
+        {
+          "steps": 71680,
+          "expected_return": -3.905613422393799
+        },
+        {
+          "steps": 81920,
+          "expected_return": -2.5721259117126465
+        },
+        {
+          "steps": 92160,
+          "expected_return": -2.373690605163574
+        },
+        {
+          "steps": 102400,
+          "expected_return": -2.370553970336914
+        },
+        {
+          "steps": 112640,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 122880,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 133120,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 143360,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 153600,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 163840,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 174080,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 184320,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 194560,
+          "expected_return": -2.3705196380615234
+        },
+        {
+          "steps": 200000,
+          "expected_return": -2.3705196380615234
+        }
+      ],
+      "metrics_sha256": "a2f153a4e8e0a0792e728934bf2e317fc8b5d542d9e867da9a44ad37c6cfbbf8"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2001,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2001",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "afb461199efa0042d447c417567d3f5e4c5f0c993da8e062462bfa298fb0a6fa",
+      "summary_sha256": "b19e76f003d790cea4d0f7401bbe7d1fc035234d54c894e59858357ba299c909",
+      "final": {
+        "execution_policy_expected_return": 10.999957084655762,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999961853027344,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 11.0,
+        "training_optimal_action_probability": 1.0
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 5.753809321165085,
+      "first_observed_sustained_95pct_expected_return_step": 71680,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.442397356033325
+        },
+        {
+          "steps": 10240,
+          "expected_return": 3.8436295986175537
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.7436044216156006
+        },
+        {
+          "steps": 30720,
+          "expected_return": 0.0146555220708251
+        },
+        {
+          "steps": 40960,
+          "expected_return": -16.97008514404297
+        },
+        {
+          "steps": 51200,
+          "expected_return": -29.251258850097656
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.376550674438477
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.999957084655762
+        },
+        {
+          "steps": 200000,
+          "expected_return": 10.999957084655762
+        }
+      ],
+      "metrics_sha256": "66338a95dfb6129c255dfde21f9e9c4337a05edc7d2dba51ccc3ae5b99353a70"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2002,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2002",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "6c21746fcae27ca5c42f1f12485119df6e38ddc25c63d67d8b2da396c0f2d1f4",
+      "summary_sha256": "71ab82c4ea9e64b7a59af23cab4c5c921497a435e153582245f83abbb35e81de",
+      "final": {
+        "execution_policy_expected_return": 11.0,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 1.0,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 10.999999999999332,
+        "training_optimal_action_probability": 0.9999999999999545
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 7.222845928955078,
+      "first_observed_sustained_95pct_expected_return_step": 51200,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.451099157333374
+        },
+        {
+          "steps": 10240,
+          "expected_return": -5.190318584442139
+        },
+        {
+          "steps": 20480,
+          "expected_return": -9.842306137084961
+        },
+        {
+          "steps": 30720,
+          "expected_return": -17.892915725708008
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.414772033691406
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.964371681213379
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.999417304992676
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.999988555908203
+        },
+        {
+          "steps": 81920,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 92160,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 102400,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 112640,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 122880,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 133120,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 143360,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 153600,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 163840,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 174080,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 184320,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 194560,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 200000,
+          "expected_return": 11.0
+        }
+      ],
+      "metrics_sha256": "b9c8bc578d0ba818a2416fd1cea28427443453b32aeb709d0217f3fa37c9a225"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2003,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2003",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "7293952912ad2a0c98ce6560feafcbf6173916eb8a8cb299d15630e8de931221",
+      "summary_sha256": "8e60a320dac40585bfb6e1225399a69d7b8cf5d6d7e044c30a5a250eae157797",
+      "final": {
+        "execution_policy_expected_return": 10.999658584594727,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.999969482421875,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 10.99999999975177,
+        "training_optimal_action_probability": 0.9999999999503666
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 6.728067031860352,
+      "first_observed_sustained_95pct_expected_return_step": 71680,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.449784278869629
+        },
+        {
+          "steps": 10240,
+          "expected_return": -5.568543434143066
+        },
+        {
+          "steps": 20480,
+          "expected_return": -6.4149250984191895
+        },
+        {
+          "steps": 30720,
+          "expected_return": -7.2697978019714355
+        },
+        {
+          "steps": 40960,
+          "expected_return": -3.418043613433838
+        },
+        {
+          "steps": 51200,
+          "expected_return": 3.6425819396972656
+        },
+        {
+          "steps": 61440,
+          "expected_return": 8.880881309509277
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.940688133239746
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.999626159667969
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.999658584594727
+        },
+        {
+          "steps": 200000,
+          "expected_return": 10.999658584594727
+        }
+      ],
+      "metrics_sha256": "fd20c0f4e39b33942dd2eebd245cb4650fc0eca2a03e4ab0f46ff277bf9f32a3"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2004,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2004",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "de624f5a4108425108ca97c2b39835400879353159b283844c9673fbf9c9a2ac",
+      "summary_sha256": "230cc656d8cf802b4c059dabbcc7781eea2cda4b25fe6af981246385e2e6e46d",
+      "final": {
+        "execution_policy_expected_return": 10.989907264709473,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9997249245643616,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 11.0,
+        "training_optimal_action_probability": 1.0
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 6.428388687896729,
+      "first_observed_sustained_95pct_expected_return_step": 102400,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4535610675811768
+        },
+        {
+          "steps": 10240,
+          "expected_return": 2.715618133544922
+        },
+        {
+          "steps": 20480,
+          "expected_return": 4.410771369934082
+        },
+        {
+          "steps": 30720,
+          "expected_return": 1.6979095935821533
+        },
+        {
+          "steps": 40960,
+          "expected_return": -0.029204517602920532
+        },
+        {
+          "steps": 51200,
+          "expected_return": 0.2388114482164383
+        },
+        {
+          "steps": 61440,
+          "expected_return": 4.651833534240723
+        },
+        {
+          "steps": 71680,
+          "expected_return": -0.03342194855213165
+        },
+        {
+          "steps": 81920,
+          "expected_return": 0.20188839733600616
+        },
+        {
+          "steps": 92160,
+          "expected_return": 3.184924840927124
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.989520072937012
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.989903450012207
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.989907264709473
+        },
+        {
+          "steps": 200000,
+          "expected_return": 10.989907264709473
+        }
+      ],
+      "metrics_sha256": "9bfeccea6a5e66868f124cb6e00905e79e90d6f9a3318f99fb3256ac4af2de5f"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2005,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2005",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "75f8ca682f7258db3688bf9dc09aac9b16478408c8dac7c912a6a4d05029fa1c",
+      "summary_sha256": "2db58362661c9ca64d3d54b896a0165bc9c581ab34413e88b4b00cfac75295ba",
+      "final": {
+        "execution_policy_expected_return": 11.0,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 1.0,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 9.141264603406917,
+        "training_optimal_action_probability": 0.5353161508517293
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 7.219927603912353,
+      "first_observed_sustained_95pct_expected_return_step": 61440,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.436490058898926
+        },
+        {
+          "steps": 10240,
+          "expected_return": -0.1593577116727829
+        },
+        {
+          "steps": 20480,
+          "expected_return": -3.7219300270080566
+        },
+        {
+          "steps": 30720,
+          "expected_return": -10.64110279083252
+        },
+        {
+          "steps": 40960,
+          "expected_return": -5.692111015319824
+        },
+        {
+          "steps": 51200,
+          "expected_return": 8.677525520324707
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.926158905029297
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.999523162841797
+        },
+        {
+          "steps": 81920,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 92160,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 102400,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 112640,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 122880,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 133120,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 143360,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 153600,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 163840,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 174080,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 184320,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 194560,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 200000,
+          "expected_return": 11.0
+        }
+      ],
+      "metrics_sha256": "a0649b514106d96cb52d4f390099a1413d670c99104427e0b79e32dc86108f65"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2006,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2006",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "bd3a34c95371f3d25ea80f1c562c267af2dc62d90838c39b0b82262e4fb4d9af",
+      "summary_sha256": "f8ef6a20ddc4c946b37d40836b889442013d4c146a87b004887a178d2a1e9af1",
+      "final": {
+        "execution_policy_expected_return": 10.998284339904785,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999537467956543,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 10.99999999647964,
+        "training_optimal_action_probability": 0.9999999996799638
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 10.62575254058838,
+      "first_observed_sustained_95pct_expected_return_step": 10240,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.45082426071167
+        },
+        {
+          "steps": 10240,
+          "expected_return": 10.946944236755371
+        },
+        {
+          "steps": 20480,
+          "expected_return": 10.998167991638184
+        },
+        {
+          "steps": 30720,
+          "expected_return": 10.998283386230469
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.998284339904785
+        },
+        {
+          "steps": 200000,
+          "expected_return": 10.998284339904785
+        }
+      ],
+      "metrics_sha256": "93788527af0a081cbcc0f3887eca7c9b6e5b8ddd3b7268d2c7478b7e15385932"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2007,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2007",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "3ae1032a47622966821cb7a041f8db4c3dd10084cb1e7e04f2d90486125f4cd6",
+      "summary_sha256": "563f07e70da2f8f0ee4e908b16294f7d3476c30b401b86da6cb16b3be378117c",
+      "final": {
+        "execution_policy_expected_return": 11.0,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 1.0,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 9.11657632553555,
+        "training_optimal_action_probability": 0.5291440813838876
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 9.14490013885498,
+      "first_observed_sustained_95pct_expected_return_step": 40960,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.4434661865234375
+        },
+        {
+          "steps": 10240,
+          "expected_return": 1.6580226421356201
+        },
+        {
+          "steps": 20480,
+          "expected_return": 0.3725143373012543
+        },
+        {
+          "steps": 30720,
+          "expected_return": 2.3263440132141113
+        },
+        {
+          "steps": 40960,
+          "expected_return": 10.634044647216797
+        },
+        {
+          "steps": 51200,
+          "expected_return": 10.998451232910156
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.999937057495117
+        },
+        {
+          "steps": 71680,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 81920,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 92160,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 102400,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 112640,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 122880,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 133120,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 143360,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 153600,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 163840,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 174080,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 184320,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 194560,
+          "expected_return": 11.0
+        },
+        {
+          "steps": 200000,
+          "expected_return": 11.0
+        }
+      ],
+      "metrics_sha256": "c74df41f327b81e23e9c2e495959649d4297d078f55085702690b80ff32185ec"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2008,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2008",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "b90dd4474d050216f572b4f462abd3dd749a421670fbafa4cee0ef3cdd00b5c9",
+      "summary_sha256": "1cf12507e49d0469522b5100a6d604c23889366b39096ade84efd9262029355f",
+      "final": {
+        "execution_policy_expected_return": 8.919642448425293,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9483572244644165,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 11.0,
+        "training_optimal_action_probability": 1.0
+      },
+      "threshold_success": false,
+      "normalized_expected_return_auc": -5.935293424797058,
+      "first_observed_sustained_95pct_expected_return_step": null,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.442868232727051
+        },
+        {
+          "steps": 10240,
+          "expected_return": 3.870844602584839
+        },
+        {
+          "steps": 20480,
+          "expected_return": 2.806811809539795
+        },
+        {
+          "steps": 30720,
+          "expected_return": 0.13469535112380981
+        },
+        {
+          "steps": 40960,
+          "expected_return": 0.8466235995292664
+        },
+        {
+          "steps": 51200,
+          "expected_return": 0.03260773792862892
+        },
+        {
+          "steps": 61440,
+          "expected_return": 0.5965975522994995
+        },
+        {
+          "steps": 71680,
+          "expected_return": -13.847371101379395
+        },
+        {
+          "steps": 81920,
+          "expected_return": -28.975749969482422
+        },
+        {
+          "steps": 92160,
+          "expected_return": -28.893775939941406
+        },
+        {
+          "steps": 102400,
+          "expected_return": -28.892091751098633
+        },
+        {
+          "steps": 112640,
+          "expected_return": -28.8710994720459
+        },
+        {
+          "steps": 122880,
+          "expected_return": -27.480506896972656
+        },
+        {
+          "steps": 133120,
+          "expected_return": -19.477352142333984
+        },
+        {
+          "steps": 143360,
+          "expected_return": 9.068201065063477
+        },
+        {
+          "steps": 153600,
+          "expected_return": 8.921966552734375
+        },
+        {
+          "steps": 163840,
+          "expected_return": 8.91966724395752
+        },
+        {
+          "steps": 174080,
+          "expected_return": 8.919642448425293
+        },
+        {
+          "steps": 184320,
+          "expected_return": 8.919642448425293
+        },
+        {
+          "steps": 194560,
+          "expected_return": 8.919642448425293
+        },
+        {
+          "steps": 200000,
+          "expected_return": 8.919642448425293
+        }
+      ],
+      "metrics_sha256": "237bcb17892d7a8e07b87701396a5cbafa290039197b1566726e97b214fe116c"
+    },
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "seed": 2009,
+      "output_path": "results/matrix_agentmixer_confirmation200k_20261026T170455Z/agentmixer_climbing_seed2009",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "metadata_sha256": "2583a11b518eaeeb8eebde623d99ae3982a1218cf8f77362eca4ce36e4d01239",
+      "summary_sha256": "d3ba79683144004a25fc1d9e13d116055f3761df4738b53d002ed58a557f510f",
+      "final": {
+        "execution_policy_expected_return": 10.998640060424805,
+        "greedy_return": 11.0,
+        "optimal_action_probability": 0.9999551773071289,
+        "greedy_actions": [
+          0,
+          0
+        ],
+        "training_policy_expected_return": 10.999999999998586,
+        "training_optimal_action_probability": 0.9999999999999509
+      },
+      "threshold_success": true,
+      "normalized_expected_return_auc": 6.714624096679687,
+      "first_observed_sustained_95pct_expected_return_step": 61440,
+      "curve": [
+        {
+          "steps": 0,
+          "expected_return": -3.446547746658325
+        },
+        {
+          "steps": 10240,
+          "expected_return": -5.768878936767578
+        },
+        {
+          "steps": 20480,
+          "expected_return": -6.006612777709961
+        },
+        {
+          "steps": 30720,
+          "expected_return": 0.8188842535018921
+        },
+        {
+          "steps": 40960,
+          "expected_return": -11.461925506591797
+        },
+        {
+          "steps": 51200,
+          "expected_return": 0.9819748997688293
+        },
+        {
+          "steps": 61440,
+          "expected_return": 10.98573112487793
+        },
+        {
+          "steps": 71680,
+          "expected_return": 10.991731643676758
+        },
+        {
+          "steps": 81920,
+          "expected_return": 10.99862289428711
+        },
+        {
+          "steps": 92160,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 102400,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 112640,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 122880,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 133120,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 143360,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 153600,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 163840,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 174080,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 184320,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 194560,
+          "expected_return": 10.998640060424805
+        },
+        {
+          "steps": 200000,
+          "expected_return": 10.998640060424805
+        }
+      ],
+      "metrics_sha256": "cb61080ca4f04337cb8074cc91137bc86e165e86244dcf41fe0076c38ceb5300"
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "agentmixer",
+      "game": "climbing",
+      "declared_seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009
+      ],
+      "eligible_seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009
+      ],
+      "threshold_successes": 8,
+      "declared_seed_count": 10,
+      "complete": true,
+      "aggregate": {
+        "expected_return": {
+          "seed_count": 10,
+          "mean": 9.453557014465332,
+          "median": 10.999149322509766,
+          "sample_sd_across_training_seeds": 4.205603809650564,
+          "bootstrap_95pct_mean": [
+            6.777780425548554,
+            10.999079496860505
+          ],
+          "bootstrap_95pct_median": [
+            9.958963394165039,
+            11.0
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 10,
+          "mean": 5.0795269877386096,
+          "median": 6.7213455642700195,
+          "sample_sd_across_training_seeds": 5.296604003525787,
+          "bootstrap_95pct_mean": [
+            1.7476785482894186,
+            7.8073470741490105
+          ],
+          "bootstrap_95pct_median": [
+            1.6603183200836185,
+            8.182413871383666
+          ]
+        },
+        "training_expected_return": {
+          "seed_count": 10,
+          "mean": 10.625784092517177,
+          "median": 10.999999999998959,
+          "sample_sd_across_training_seeds": 0.7889378624982165,
+          "bootstrap_95pct_mean": [
+            10.065694646104362,
+            10.99999999992533
+          ],
+          "bootstrap_95pct_median": [
+            10.070632301579344,
+            11.0
+          ]
+        }
+      },
+      "threshold_success_wilson_95pct": [
+        0.49016247153664183,
+        0.9433178485456247
+      ]
+    }
+  ],
+  "paired_comparisons": [],
+  "validation_decision": "failed",
+  "paper_reproduction": "not_established",
+  "unused_seeds_at_freeze": true
+}
