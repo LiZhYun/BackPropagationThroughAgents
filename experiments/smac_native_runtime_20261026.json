@@ -1,0 +1,206 @@
+{
+  "scope": "Two short native CPU timing diagnostics; all frozen measurement gates pass. No learning or speedup claim.",
+  "recorded_utc": "2026-10-26T16:10:43.568657+00:00",
+  "job_id": "21215880",
+  "study": "experiments/smac_runtime_profile_study_20261026.json",
+  "study_sha256": "8f934a70c22c7510698cbed6ad8fd3e82bf9793d76d27628e7660119a02ec41c",
+  "manifest_sha256": "de356b955bc9759803e15fd118303284905d43cf92586ed28458aafa9eb39e18",
+  "frozen_source_bytes_and_launchers_verified": true,
+  "profiler_sha256": "67597c5180fba9ef77e5ac44322a4d1ae150f77fe2a86dc0bbcf19e6a700ace0",
+  "accounting": {
+    "path": "results/smac_native_runtime_analysis_20261026/sacct.txt",
+    "sha256": "7ecfb3cc2457ee4ebd227f49309090596109f078dfd2909342325455d5c405a4"
+  },
+  "runs": [
+    {
+      "algorithm": "mappo",
+      "run": "results/smac_runtime_profile4096_20261026T150554Z/mappo_profile_seed0",
+      "task": "21215880_0",
+      "host": "milan2.int.triton.aalto.fi",
+      "cpu": "AMD EPYC 7713 64-Core Processor",
+      "steps": 4096,
+      "updates": 16,
+      "evaluation_steps": 61,
+      "wall_seconds": 71.2239257269539,
+      "collection_plus_update_seconds": 55.2827762872912,
+      "training_env_step_seconds": 21.99826794397086,
+      "training_env_reset_seconds": 28.478251612279564,
+      "training_env_reset_calls": 106,
+      "training_environment_fraction_of_collection_plus_update": 0.9130605035813718,
+      "collection_other_seconds": 4.104046884924173,
+      "update_seconds": 0.7022098461166024,
+      "evaluation_seconds": 14.166940080467612,
+      "reported_batch_step_max_rss_kib": 2594784,
+      "reported_batch_step_max_rss_gib": 2.474578857421875,
+      "slurm": {
+        "JobIDRaw": "21215881",
+        "JobID": "21215880_0",
+        "State": "COMPLETED",
+        "ExitCode": "0:0",
+        "Elapsed": "00:01:14",
+        "AllocCPUS": "2",
+        "ReqMem": "8G",
+        "MaxRSS": ""
+      },
+      "slurm_batch": {
+        "JobIDRaw": "21215881.batch",
+        "JobID": "21215880_0.batch",
+        "State": "COMPLETED",
+        "ExitCode": "0:0",
+        "Elapsed": "00:01:14",
+        "AllocCPUS": "2",
+        "ReqMem": "",
+        "MaxRSS": "2594784K"
+      },
+      "profile_sha256": "2e07aca7167b24be6328750790567e6419deaa164733d44f2f7c33462af753c7",
+      "metadata_sha256": "dae6a1be1b8b6a7b9bdde520740f807c31ca4afeec38cc078fb09aff8b2cbfa2",
+      "summary_sha256": "ba77446dfceb26bbbae424b26fd8cb66b55c492ddd800ba09ada151c9414e5b6",
+      "metrics_sha256": "0f238f7047e56ec670c31a7223a6ae0e12f4d59da76480a8b12aabacfa57e450",
+      "timings": {
+        "outside_updates.env_construct": {
+          "calls": 2,
+          "seconds": 0.18084658216685057
+        },
+        "evaluate.env_construct": {
+          "calls": 2,
+          "seconds": 0.0030524334870278835
+        },
+        "evaluate.env_reset": {
+          "calls": 2,
+          "seconds": 13.439454344566911
+        },
+        "evaluate.env_step": {
+          "calls": 61,
+          "seconds": 0.466366074513644
+        },
+        "evaluate.env_close": {
+          "calls": 2,
+          "seconds": 0.20428265910595655
+        },
+        "evaluate": {
+          "calls": 2,
+          "seconds": 14.166940080467612
+        },
+        "collect_rollout.env_reset": {
+          "calls": 106,
+          "seconds": 28.478251612279564
+        },
+        "collect_rollout.env_step": {
+          "calls": 4096,
+          "seconds": 21.99826794397086
+        },
+        "collect_rollout": {
+          "calls": 16,
+          "seconds": 54.5805664411746
+        },
+        "update_rollout": {
+          "calls": 16,
+          "seconds": 0.7022098461166024
+        },
+        "outside_updates.env_close": {
+          "calls": 2,
+          "seconds": 0.205663591157645
+        }
+      }
+    },
+    {
+      "algorithm": "bppo",
+      "run": "results/smac_runtime_profile4096_20261026T150554Z/bppo_profile_seed0",
+      "task": "21215880_1",
+      "host": "milan2.int.triton.aalto.fi",
+      "cpu": "AMD EPYC 7713 64-Core Processor",
+      "steps": 4096,
+      "updates": 16,
+      "evaluation_steps": 84,
+      "wall_seconds": 79.59110632585362,
+      "collection_plus_update_seconds": 60.248335557524115,
+      "training_env_step_seconds": 22.070310588926077,
+      "training_env_reset_seconds": 28.060102003160864,
+      "training_env_reset_calls": 103,
+      "training_environment_fraction_of_collection_plus_update": 0.8320630292636592,
+      "collection_other_seconds": 7.490074352361262,
+      "update_seconds": 2.627848613075912,
+      "evaluation_seconds": 14.873324782587588,
+      "reported_batch_step_max_rss_kib": 3092344,
+      "reported_batch_step_max_rss_gib": 2.9490890502929688,
+      "slurm": {
+        "JobIDRaw": "21215880",
+        "JobID": "21215880_1",
+        "State": "COMPLETED",
+        "ExitCode": "0:0",
+        "Elapsed": "00:01:30",
+        "AllocCPUS": "2",
+        "ReqMem": "8G",
+        "MaxRSS": ""
+      },
+      "slurm_batch": {
+        "JobIDRaw": "21215880.batch",
+        "JobID": "21215880_1.batch",
+        "State": "COMPLETED",
+        "ExitCode": "0:0",
+        "Elapsed": "00:01:30",
+        "AllocCPUS": "2",
+        "ReqMem": "",
+        "MaxRSS": "3092344K"
+      },
+      "profile_sha256": "5c765e4cd4f5c7bbafb89b674fd3e9f2f8004906d915f90a833a41423c41d97a",
+      "metadata_sha256": "f0f88e9d29e294f2eac6074622f468342be5e84addf18abc0a9e18f370f94163",
+      "summary_sha256": "0fd3852f58ca2ff788180ab3a8a4fd2b84abcb6fd5fa61ba28d15ac5f27b09dc",
+      "metrics_sha256": "d519527d2ac96da93c9d01fe62831d44d8b75b7e6b66bdb6920d6959a10cad71",
+      "timings": {
+        "outside_updates.env_construct": {
+          "calls": 2,
+          "seconds": 0.3266118122264743
+        },
+        "evaluate.env_construct": {
+          "calls": 2,
+          "seconds": 0.003660623449832201
+        },
+        "evaluate.env_reset": {
+          "calls": 2,
+          "seconds": 13.62113336334005
+        },
+        "evaluate.env_step": {
+          "calls": 84,
+          "seconds": 0.5511267627589405
+        },
+        "evaluate.env_close": {
+          "calls": 2,
+          "seconds": 0.2038869010284543
+        },
+        "evaluate": {
+          "calls": 2,
+          "seconds": 14.873324782587588
+        },
+        "collect_rollout.env_reset": {
+          "calls": 103,
+          "seconds": 28.060102003160864
+        },
+        "collect_rollout.env_step": {
+          "calls": 4096,
+          "seconds": 22.070310588926077
+        },
+        "collect_rollout": {
+          "calls": 16,
+          "seconds": 57.6204869444482
+        },
+        "update_rollout": {
+          "calls": 16,
+          "seconds": 2.627848613075912
+        },
+        "outside_updates.env_close": {
+          "calls": 2,
+          "seconds": 0.2048262683674693
+        }
+      }
+    }
+  ],
+  "interpretation": [
+    "Environment steps and resets account for91.3% of MAPPO and83.2% of BPPO collection-plus-update time in these short runs.",
+    "Nested environment timings are not added to their enclosing collection phase.",
+    "Short profiles include engine startup at first reset and frequent initial-policy episode resets; these are not steady-state timings.",
+    "Slurm batch-step MaxRSS is a sampled accounting statistic, not a guarantee for larger batches or process workers.",
+    "The existing global RNG lock means thread-wrapped backend calls would still serialize.",
+    "Any process-based rollout change needs native sequential/parallel trace parity, seed and episode-boundary checks, cleanup tests, and measured CPU/memory/throughput before adoption."
+  ]
+}

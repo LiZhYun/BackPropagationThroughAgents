@@ -1,5 +1,9 @@
 # Recorded worker schedule
 
+This page retains successive scheduling snapshots. The [latest verified
+graph](#short-diagnostics-first-2026-10-26) places short studies sequentially
+on the earlier-finishing SMAC chain, still within four concurrent workers.
+
 The current queued arrays use two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
 Each run writes to its own output directory and keeps its own model and RNG.
@@ -115,3 +119,33 @@ before releasing both arrays; the released workers report `PENDING/Dependency`.
 The A chains and running jobs are unchanged. Four serial chains still limit
 concurrency to four workers. The timing study measures execution cost, not
 learning performance.
+
+## Short diagnostics first, 2026-10-26
+
+Once SMAC worker 0 began its last 1M identity-control run, worker 1 was close to
+finishing its last run. Waiting for both long workers would delay the completed
+timing and matrix comparisons. Nine still-pending workers were therefore held,
+their dependencies updated, and all edges and unchanged resources checked
+before release. Active jobs, manifests, sources, assigned runs, seeds and
+budgets were unchanged. No additional jobs were submitted.
+
+The current four serial chains are:
+
+| Chain | Order |
+| --- | --- |
+| A0/A1 | HalfCheetah development → Football → Ant/Walker → HalfCheetah confirmation, with matching worker indices as before |
+| B0 | `21209234_0` SMAC → `21213860_0` GRU check → `21211006_0` entropy → `21212197_0` Prey |
+| B1 | `21209234_1` SMAC → both timing workers → both joint-matrix workers → both 100k matrix workers → both 1M matrix workers → `21213860_1` GRU check → `21211006_1` entropy → `21212197_1` Prey |
+
+Within each short study, worker **1 runs before worker 0**. Their array IDs are
+`21215880`, `21211813`, `21213329` and `21213330`, respectively. GRU worker 0
+also waits for matrix worker `21213330_0`: both that prerequisite and its own
+SMAC predecessor must finish. This extra cross-chain prerequisite cannot raise
+concurrency beyond four workers. Every edge still uses `afterany`; failures
+remain evidence and are never silently replaced.
+
+The [scheduling record](../experiments/short_diagnostic_schedule_20261026.json)
+contains all prior states, requested edges, the concurrency argument and a hash
+of the hold/update/release verification. The ledger records each array's full
+dependency map. Both timing workers subsequently completed with exit 0; the
+joint-matrix control began while the remaining native training continued.

@@ -1,0 +1,136 @@
+{
+  "recorded_utc": "2026-10-26T16:01:50.668665+00:00",
+  "scope": "Prioritize frozen short diagnostics after the earlier-finishing SMAC worker; pending dependencies only.",
+  "reason": "SMAC worker0 just began the identity1M run; worker1 is near the end of its last1M run. Both workers remain active.",
+  "before": {
+    "21215880_0": {
+      "JobId": "21215881",
+      "ArrayJobId": "21215880",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21209234_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "284614"
+    },
+    "21211813_1": {
+      "JobId": "21211813",
+      "ArrayJobId": "21211813",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21215880_1(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "284614"
+    },
+    "21211813_0": {
+      "JobId": "21212908",
+      "ArrayJobId": "21211813",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21215880_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "284614"
+    },
+    "21213329_1": {
+      "JobId": "21213329",
+      "ArrayJobId": "21213329",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21211813_1(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "284614"
+    },
+    "21213329_0": {
+      "JobId": "21213331",
+      "ArrayJobId": "21213329",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21211813_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "284614"
+    },
+    "21213330_1": {
+      "JobId": "21213330",
+      "ArrayJobId": "21213330",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21213329_1(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "284614"
+    },
+    "21213330_0": {
+      "JobId": "21213332",
+      "ArrayJobId": "21213330",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21213329_0(unfulfilled)",
+      "TimeLimit": "00:30:00",
+      "NumCPUs": "1",
+      "MinMemoryNode": "4G",
+      "Priority": "284614"
+    },
+    "21213860_1": {
+      "JobId": "21213860",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "1",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21213330_1(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "284614"
+    },
+    "21213860_0": {
+      "JobId": "21213861",
+      "ArrayJobId": "21213860",
+      "ArrayTaskId": "0",
+      "JobState": "PENDING",
+      "Reason": "Dependency",
+      "Dependency": "afterany:21213330_0(unfulfilled)",
+      "TimeLimit": "01:00:00",
+      "NumCPUs": "2",
+      "MinMemoryNode": "8G",
+      "Priority": "284614"
+    }
+  },
+  "requested_dependencies": {
+    "21215880_0": "afterany:21215880_1",
+    "21211813_1": "afterany:21215880_0",
+    "21211813_0": "afterany:21211813_1",
+    "21213329_1": "afterany:21211813_0",
+    "21213329_0": "afterany:21213329_1",
+    "21213330_1": "afterany:21213329_0",
+    "21213330_0": "afterany:21213330_1",
+    "21213860_1": "afterany:21213330_0",
+    "21213860_0": "afterany:21209234_0:21213330_0"
+  },
+  "cap_proof": [
+    "A0 and A1 remain separate serial chains.",
+    "B1 runs SMAC1, profile1, profile0, joint1, joint0, matrix-confirm1, matrix-confirm0, matrix-budget1, matrix-budget0, GRU1, entropy1, Prey1 in that order.",
+    "B0 runs SMAC0, GRU0, entropy0, Prey0 in that order; GRU0 additionally waits for matrix-budget0.",
+    "Four serial chains, with an additional cross-chain prerequisite, cannot exceed four concurrent workers. Every worker requests at most2CPUs/8GB."
+  ],
+  "status": "applied_and_verified",
+  "applied_utc": "2026-10-26T16:04:40.572924+00:00",
+  "application_record": "results/short_diagnostic_schedule_20261026.json",
+  "application_record_sha256": "58657805e6c8e1e31b1e6d77411349947404d565c68eb2b7b7366663e4464253"
+}

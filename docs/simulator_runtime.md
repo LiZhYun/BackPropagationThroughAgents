@@ -78,9 +78,37 @@ trained policies, different batch sizes and native restart frequency can change
 the result. No learning or paper-performance claim uses these profile rewards.
 
 Job `21215880` contains two workers requesting 2CPUs/8GB for at most 30 minutes.
-Each waits for the matching SMAC pilot worker (`21209234_i`), and the pending
-joint-matrix worker (`21211813_i`) waits for that profile. Both arrays were
-released after all four changed edges were verified, preserving four serial
-chains. Submission and verified dependencies are recorded in
-`experiments/jobs.jsonl`. Results are pending; no native timing fraction or
-speedup has been established by this study yet.
+The [latest schedule](worker_schedule.md#short-diagnostics-first-2026-10-26)
+runs worker 1 after SMAC worker 1, then worker 0, followed by the joint-matrix
+control. Both profiles completed with scheduler exit 0. The four-worker ceiling
+and all frozen measurement settings were preserved.
+
+## Native measurements
+
+The [measurement record](../experiments/smac_native_runtime_20261026.json)
+verifies the source, configuration, instrumentation and launcher hashes, all
+16 updates and 4,096 training steps per method, two evaluations, and separately
+counted evaluation interactions. Both ran on an AMD EPYC 7713 worker.
+
+| Method | Collect + update | Environment steps | Environment resets | Other collection | Updates | Environment fraction | Reported MaxRSS |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| MAPPO | 55.28s | 22.00s | 28.48s | 4.10s | 0.70s | 91.3% | 2.47 GiB |
+| BPPO | 60.25s | 22.07s | 28.06s | 7.49s | 2.63s | 83.2% | 2.95 GiB |
+
+The environment fraction is `(step seconds + reset seconds) / (collection
+seconds + update seconds)`. These four training components do not overlap.
+Evaluation adds 14.17s/14.87s respectively and is excluded from that denominator.
+The full instrumented wall times are 71.22s/79.59s; initialization, logging,
+checkpointing and final cleanup account for the remainder.
+
+These short runs include engine startup during first reset and frequent resets
+from initial policies: 106 MAPPO and 103 BPPO training reset calls. They are not
+steady-state timings, and larger batches or trained policies can change the
+fractions. MaxRSS is Slurm's sampled batch-step accounting, not a guaranteed
+memory ceiling for future process workers or larger rollouts.
+
+The result supports testing separate environment processes. A proposed change
+must first preserve sequential/parallel native traces, seed streams, episode
+endings and cleanup, then demonstrate throughput and memory within the same
+resource allocation. No process-based execution or measured speedup is claimed
+by these profiles.
