@@ -21,3 +21,10 @@ The [Prey audit](predator_prey_protocol.md) describes the released evaluator's
 complete a native 5v5 match. New evaluations retain explicit metrics while the
 historical reduction is resolved. The clarification does not change digitized
 values or their reading uncertainty.
+
+## 2026-10-26: pending Prey evaluation reduction
+
+A follow-up asks whether the confirmed evaluation return is summed per complete
+episode or averaged per decision over the released 100×200-step evaluation
+windows. No reply has been recorded yet. Both metrics remain logged, and no
+historical reduction is inferred from the absence of a reply.
