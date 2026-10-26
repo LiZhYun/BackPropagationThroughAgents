@@ -96,3 +96,22 @@ dependencies and resource limits were verified before release. The B chains
 are unchanged, and there are still four serial chains. Existing jobs, source
 snapshots and dependencies were not modified. The study record and submission
 ledger retain the frozen manifest, source, launcher and plan hashes.
+
+## Native timing insertion, 2026-10-26
+
+Job `21215880` adds the two short [native runtime profiles](simulator_runtime.md)
+between the running SMAC study and the pending joint-matrix control. The latest
+B chains are:
+
+```
+21209234_i → 21215880_i → 21211813_i → 21213329_i → 21213330_i → 21213860_i → 21211006_i → 21212197_i
+SMAC          timing        joint LR      100k check    1M matrix     GRU check     entropy       Prey
+```
+
+Each profiling worker requests 2CPUs/8GB for 30 minutes and runs one method for
+4,096 decisions. The matrix workers were still pending when held for this
+change. All four changed dependency edges and resource limits were verified
+before releasing both arrays; the released workers report `PENDING/Dependency`.
+The A chains and running jobs are unchanged. Four serial chains still limit
+concurrency to four workers. The timing study measures execution cost, not
+learning performance.

@@ -77,7 +77,10 @@ memory before changing execution. These are initial-policy, short-run timings;
 trained policies, different batch sizes and native restart frequency can change
 the result. No learning or paper-performance claim uses these profile rewards.
 
-The two workers request 2CPUs/8GB for at most 30 minutes. Their intended position
-is after the matching SMAC pilot worker and before the pending joint-matrix
-control, preserving four serial chains. Submission and verified dependencies
-are recorded in `experiments/jobs.jsonl`.
+Job `21215880` contains two workers requesting 2CPUs/8GB for at most 30 minutes.
+Each waits for the matching SMAC pilot worker (`21209234_i`), and the pending
+joint-matrix worker (`21211813_i`) waits for that profile. Both arrays were
+released after all four changed edges were verified, preserving four serial
+chains. Submission and verified dependencies are recorded in
+`experiments/jobs.jsonl`. Results are pending; no native timing fraction or
+speedup has been established by this study yet.
