@@ -22,6 +22,22 @@ reduction for the primary Prey reproduction comparison on 2026-10-26; the exact
 historical figure-to-logger mapping remains unverified. Success rates require a success
 record for every evaluated episode.
 
+For fixed-window scores, the reporter recomputes total reward and mean reward
+per decision from **every recorded window**, including unfinished segments.
+It checks the configured window count, length, evaluation seed, deterministic
+execution convention, ordered indices, distinct uint32 window seeds and
+episode-ending bookkeeping. The window seed list must remain identical across
+checkpoints and pooled runs. Initial and final raw window records must match
+the saved summary exactly. Missing or inconsistent evidence makes the run
+ineligible and prevents its entire seed group from being aggregated.
+
+These checks audit the recorded totals; they cannot independently reconstruct
+rewards without transition traces or verify NumPy seed derivation with only the
+standard library. Saved-policy replay tests the actual environment, policy and
+seed stream. The report also does not turn a 20-window development run into the
+author-selected 100-window comparison: its explicit protocol fields retain
+that distinction.
+
 ## Area and aggregation
 
 For logged evaluations `(s_i, r_i)`, normalized curve area is

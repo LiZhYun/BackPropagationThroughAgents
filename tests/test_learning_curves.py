@@ -16,8 +16,15 @@ def _evaluation(value, count=10):
             "win_rate": .5, "win_records": count, "capture_rate": .8, "capture_records": count,
             "fixed_window": {"reward_per_environment_step": value / 100, "window_count": 100,
                              "steps_per_window": 200, "environment_steps": 20_000,
-                             "scope": "including_unfinished", "seed_scheme": "test_v1",
-                             "seed": 1_000_000, "deterministic": True}}
+                             "scope": "all_steps_in_fixed_windows_including_unfinished_episodes",
+                             "seed_scheme": "numpy_seed_sequence_bta_win_v1",
+                             "seed": 1_000_000, "deterministic": True, "reward_sum": value * 200,
+                             "windows": [{"window": index, "seed": 1000 + index,
+                                          "steps": 200, "reward_sum": value * 2,
+                                          "completed_episodes": 1, "captures": 0, "timeouts": 1,
+                                          "unfinished_episode_steps": 72,
+                                          "unfinished_episode_return": value * .72}
+                                         for index in range(100)]}}
 
 
 def _manifest(tmp_path, curves=((0., 4., 10.), (0., 6., 20.))):
@@ -25,7 +32,9 @@ def _manifest(tmp_path, curves=((0., 4., 10.), (0., 6., 20.))):
     for seed, values in enumerate(curves):
         output = tmp_path / f"variant_seed{seed}"
         output.mkdir()
-        config = {"seed": seed, "algorithm": "agentmixer", "steps": 100, "hidden_dim": 64}
+        config = {"seed": seed, "algorithm": "agentmixer", "steps": 100, "hidden_dim": 64,
+                  "environment": "prey", "eval_windows": 100, "eval_window_steps": 200,
+                  "eval_seed": 1_000_000}
         config_path = tmp_path / f"seed{seed}.json"
         config_path.write_text(json.dumps(config))
         (output / "config.json").write_text(json.dumps({"config": config, "source_sha256": manifest["source_sha256"],
@@ -34,6 +43,7 @@ def _manifest(tmp_path, curves=((0., 4., 10.), (0., 6., 20.))):
                   for step, stage, value in zip((0, 20, 100), ("initial", "periodic", "final"), values)]
         (output / "metrics.jsonl").write_text("".join(json.dumps(point) + "\n" for point in points))
         (output / "summary.json").write_text(json.dumps({"status": "completed", "steps": 100,
+                                                         "initial_evaluation": _evaluation(values[0]),
                                                          "final_evaluation": _evaluation(values[-1])}))
         manifest["runs"].append({"variant": "variant", "algorithm": "agentmixer", "seed": seed,
                                  "output_path": str(output), "config_path": str(config_path)})
@@ -172,6 +182,127 @@ def test_fixed_window_rate_uses_its_own_denominator_and_checks_it(tmp_path):
     assert report["runs"][0]["evaluation_protocol"]["window_count"] == 100
     _edit_curve(tmp_path, lambda r: r[1]["evaluation"]["fixed_window"].update(environment_steps=200))
     assert not summarize_curves(path, "fixed_window_reward_per_step")["runs"][0]["eligible"]
+
+
+@pytest.mark.parametrize("defect,expected", [
+    ("missing_evaluation", "evaluation must be a JSON object"),
+    ("null_windows", "fixed_window must be a JSON object"),
+    ("nonobject_windows", "fixed_window must be a JSON object"),
+    ("missing_records", "windows"),
+    ("missing_window", "raw record count"),
+    ("duplicate_index", "indices"),
+    ("boolean_index", "window index"),
+    ("duplicate_seed", "distinct uint32"),
+    ("invalid_seed", "distinct uint32"),
+    ("changed_seed_schedule", "convention changed"),
+    ("wrong_length", "raw window length"),
+    ("nonfinite_reward", "finite number"),
+    ("boolean_reward", "finite number"),
+    ("wrong_total", "raw window totals"),
+    ("wrong_rate", "divided by all decisions"),
+    ("fractional_denominator", "positive integer"),
+    ("negative_partial_steps", "nonnegative integer"),
+    ("excess_partial_steps", "counts exceed"),
+    ("empty_partial_reward", "empty unfinished"),
+    ("unaccounted_partial", "retain all steps"),
+    ("extra_episodes", "counts exceed"),
+    ("missing_endings", "account for every"),
+    ("wrong_scope", "include unfinished"),
+    ("unknown_seed_scheme", "unsupported"),
+    ("wrong_execution", "execution disagrees"),
+    ("stochastic_windows", "deterministic execution"),
+    ("stochastic_episodes", "deterministic execution"),
+])
+def test_fixed_window_raw_corruption_blocks_aggregation(tmp_path, defect, expected):
+    path = _manifest(tmp_path)
+
+    def corrupt(records):
+        evaluation = records[1]["evaluation"]
+        window = evaluation["fixed_window"]
+        first = window["windows"][0]
+        changes = {
+            "missing_evaluation": lambda: records[1].update(evaluation=None),
+            "null_windows": lambda: evaluation.update(fixed_window=None),
+            "nonobject_windows": lambda: evaluation.update(fixed_window=[]),
+            "missing_records": lambda: window.pop("windows"),
+            "missing_window": lambda: window["windows"].pop(),
+            "duplicate_index": lambda: window["windows"][1].update(window=0),
+            "boolean_index": lambda: first.update(window=False),
+            "duplicate_seed": lambda: window["windows"][1].update(seed=first["seed"]),
+            "invalid_seed": lambda: first.update(seed=2**32),
+            "changed_seed_schedule": lambda: first.update(seed=3000),
+            "wrong_length": lambda: first.update(steps=199),
+            "nonfinite_reward": lambda: first.update(reward_sum=float("nan")),
+            "boolean_reward": lambda: first.update(reward_sum=True),
+            "wrong_total": lambda: window.update(reward_sum=999),
+            "wrong_rate": lambda: window.update(reward_per_environment_step=999),
+            "fractional_denominator": lambda: window.update(environment_steps=20000.0),
+            "negative_partial_steps": lambda: first.update(unfinished_episode_steps=-1),
+            "excess_partial_steps": lambda: first.update(unfinished_episode_steps=201),
+            "empty_partial_reward": lambda: first.update(unfinished_episode_steps=0),
+            "unaccounted_partial": lambda: first.update(completed_episodes=0, timeouts=0),
+            "extra_episodes": lambda: first.update(completed_episodes=200),
+            "missing_endings": lambda: first.update(timeouts=0),
+            "wrong_scope": lambda: window.update(scope="completed_episodes_only"),
+            "unknown_seed_scheme": lambda: window.update(seed_scheme="unspecified"),
+            "wrong_execution": lambda: evaluation.update(execution="centralized"),
+            "stochastic_windows": lambda: window.update(deterministic=False),
+            "stochastic_episodes": lambda: evaluation.update(deterministic=False),
+        }
+        changes[defect]()
+
+    _edit_curve(tmp_path, corrupt)
+    report = summarize_curves(path, "fixed_window_reward_per_step")
+    assert not report["runs"][0]["eligible"]
+    assert any(expected in error for error in report["runs"][0]["errors"])
+    assert report["runs"][1]["eligible"]
+    assert report["groups"][0]["aggregate"] is None
+
+
+@pytest.mark.parametrize("field,value", [("eval_windows", 99), ("eval_window_steps", 100),
+                                         ("eval_seed", 123), ("environment", "football")])
+def test_fixed_window_protocol_must_match_frozen_config(tmp_path, field, value):
+    path = _manifest(tmp_path)
+    _edit_json(tmp_path / "seed0.json", lambda c: c.update({field: value}))
+    _edit_json(tmp_path / "variant_seed0/config.json", lambda m: m["config"].update({field: value}))
+    report = summarize_curves(path, "fixed_window_reward_per_step")
+    assert not report["runs"][0]["eligible"] and report["runs"][0]["errors"]
+    assert report["groups"][0]["aggregate"] is None
+
+
+@pytest.mark.parametrize("stage", ["initial_evaluation", "final_evaluation"])
+def test_fixed_window_summary_must_retain_exact_raw_records(tmp_path, stage):
+    path = _manifest(tmp_path)
+
+    def exchange_rewards(summary):
+        windows = summary[stage]["fixed_window"]["windows"]
+        # Preserve the total and rate; only the underlying per-window evidence differs.
+        windows[0]["reward_sum"] += 1
+        windows[1]["reward_sum"] -= 1
+
+    _edit_json(tmp_path / "variant_seed0/summary.json", exchange_rewards)
+    report = summarize_curves(path, "fixed_window_reward_per_step")
+    assert not report["runs"][0]["eligible"]
+    assert "raw windows disagree" in report["runs"][0]["errors"][0]
+    assert report["groups"][0]["aggregate"] is None
+
+
+def test_fixed_windows_retain_reward_when_no_episode_finishes(tmp_path):
+    path = _manifest(tmp_path, curves=((-3., 4., 10.),))
+
+    def make_unfinished(evaluation):
+        for window in evaluation["fixed_window"]["windows"]:
+            window.update(completed_episodes=0, captures=0, timeouts=0,
+                          unfinished_episode_steps=200,
+                          unfinished_episode_return=window["reward_sum"])
+
+    _edit_curve(tmp_path, lambda records: [make_unfinished(r["evaluation"]) for r in records])
+    _edit_json(tmp_path / "variant_seed0/summary.json",
+               lambda s: [make_unfinished(s[stage]) for stage in ("initial_evaluation", "final_evaluation")])
+    report = summarize_curves(path, "fixed_window_reward_per_step")
+    assert report["runs"][0]["eligible"]
+    assert [p["value"] for p in report["runs"][0]["points"]] == [-.03, .04, .1]
+    assert report["groups"][0]["aggregate"]["final"]["mean"] == .1
 
 
 @pytest.mark.parametrize("metric", ["win_rate", "capture_rate"])

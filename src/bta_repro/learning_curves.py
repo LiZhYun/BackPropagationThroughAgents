@@ -27,6 +27,10 @@ def _canonical(value):
 
 
 def _metric(evaluation, metric):
+    if not isinstance(evaluation, dict):
+        raise ValueError("evaluation must be a JSON object")
+    if metric == "fixed_window_reward_per_step" and not isinstance(evaluation.get("fixed_window"), dict):
+        raise ValueError("fixed_window must be a JSON object")
     value = (evaluation.get("fixed_window", {}).get("reward_per_environment_step")
              if metric == "fixed_window_reward_per_step" else evaluation.get(metric))
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
@@ -42,16 +46,94 @@ def _positive_integer(value, name):
     return value
 
 
-def _evaluation_protocol(evaluation, metric):
+def _nonnegative_integer(value, name):
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ValueError(f"{name} must be a nonnegative integer")
+    return value
+
+
+def _finite_number(value, name):
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        raise ValueError(f"{name} must be a finite number")
+    return value
+
+
+def _fixed_window_protocol(evaluation, config):
+    """Recompute Prey reductions from all recorded windows, including partials.
+
+    This checks window bookkeeping and the recorded seed schedule. Without raw
+    transition traces it cannot independently reconstruct environment rewards;
+    NumPy seed derivation and policy execution require checkpoint replay.
+    """
+    window = evaluation["fixed_window"]
+    count = _positive_integer(window["window_count"], "window_count")
+    length = _positive_integer(window["steps_per_window"], "steps_per_window")
+    denominator = _positive_integer(window["environment_steps"], "window environment_steps")
+    if denominator != count * length:
+        raise ValueError("fixed-window denominator disagrees with count × length")
+    if (config["environment"] != "prey"
+            or _positive_integer(config["eval_windows"], "configured eval_windows") != count
+            or _positive_integer(config["eval_window_steps"], "configured eval_window_steps") != length):
+        raise ValueError("fixed-window protocol disagrees with the frozen training configuration")
+    seed = _nonnegative_integer(window["seed"], "fixed-window evaluation seed")
+    if (seed >= 2**32 or seed != _nonnegative_integer(config["eval_seed"], "configured evaluation seed")
+            or seed != _nonnegative_integer(evaluation["seed"], "episode evaluation seed")):
+        raise ValueError("fixed-window evaluation seed disagrees with configuration or episode evaluation")
+    execution = {"agentmixer": "decentralized", "bppo": "autoregressive",
+                 "arppo": "autoregressive", "mappo": "independent"}[config["algorithm"]]
+    if evaluation["execution"] != execution:
+        raise ValueError("fixed-window execution disagrees with the algorithm")
+    if window["deterministic"] is not True or evaluation["deterministic"] is not True:
+        raise ValueError("fixed-window comparison requires deterministic execution")
+    if window["scope"] != "all_steps_in_fixed_windows_including_unfinished_episodes":
+        raise ValueError("fixed-window scope must include unfinished episode rewards")
+    if window["seed_scheme"] != "numpy_seed_sequence_bta_win_v1":
+        raise ValueError("unsupported fixed-window seed scheme")
+    records = window["windows"]
+    if not isinstance(records, list) or len(records) != count:
+        raise ValueError("fixed-window raw record count disagrees with window_count")
+    seeds, rewards = [], []
+    for index, record in enumerate(records):
+        if _nonnegative_integer(record["window"], "window index") != index:
+            raise ValueError("fixed-window indices must be consecutive and ordered")
+        child_seed = _nonnegative_integer(record["seed"], "window seed")
+        if child_seed >= 2**32 or child_seed in seeds:
+            raise ValueError("window seeds must be distinct uint32 values")
+        seeds.append(child_seed)
+        if _positive_integer(record["steps"], "window steps") != length:
+            raise ValueError("raw window length disagrees with steps_per_window")
+        reward = _finite_number(record["reward_sum"], "window reward_sum")
+        rewards.append(reward)
+        partial_steps = _nonnegative_integer(record["unfinished_episode_steps"], "unfinished episode steps")
+        partial_reward = _finite_number(record["unfinished_episode_return"], "unfinished episode return")
+        completed = _nonnegative_integer(record["completed_episodes"], "completed window episodes")
+        captures = _nonnegative_integer(record["captures"], "window captures")
+        timeouts = _nonnegative_integer(record["timeouts"], "window timeouts")
+        if partial_steps > length or completed > length - partial_steps:
+            raise ValueError("window episode counts exceed the recorded decisions")
+        if captures + timeouts != completed:
+            raise ValueError("Prey window captures and timeouts must account for every completed episode")
+        if partial_steps == 0 and partial_reward != 0:
+            raise ValueError("an empty unfinished episode must have zero reward")
+        if completed == 0 and (partial_steps != length or not math.isclose(
+                partial_reward, reward, rel_tol=1e-10, abs_tol=1e-9)):
+            raise ValueError("a window with no completed episode must retain all steps and reward as unfinished")
+    total = math.fsum(rewards)
+    reported_total = _finite_number(window["reward_sum"], "total window reward_sum")
+    reported_rate = _finite_number(window["reward_per_environment_step"], "window reward rate")
+    if not math.isclose(total, reported_total, rel_tol=1e-10, abs_tol=1e-9):
+        raise ValueError("fixed-window reward_sum disagrees with raw window totals")
+    if not math.isclose(total / denominator, reported_rate, rel_tol=1e-10, abs_tol=1e-9):
+        raise ValueError("fixed-window reward rate disagrees with raw reward divided by all decisions")
+    protocol = {key: window[key] for key in (
+        "window_count", "steps_per_window", "scope", "seed_scheme", "seed", "deterministic")}
+    return {**protocol, "execution": execution, "window_seeds": seeds}
+
+
+def _evaluation_protocol(evaluation, metric, config):
     """Preserve the denominator, seed stream and execution convention."""
     if metric == "fixed_window_reward_per_step":
-        window = evaluation["fixed_window"]
-        count = _positive_integer(window["window_count"], "window_count")
-        length = _positive_integer(window["steps_per_window"], "steps_per_window")
-        if window["environment_steps"] != count * length:
-            raise ValueError("fixed-window denominator disagrees with count × length")
-        return {key: window[key] for key in (
-            "window_count", "steps_per_window", "scope", "seed_scheme", "seed", "deterministic")}
+        return _fixed_window_protocol(evaluation, config)
     count = _positive_integer(evaluation["count"], "evaluation episode count")
     if metric in ("win_rate", "capture_rate"):
         key = "win_records" if metric == "win_rate" else "capture_records"
@@ -124,6 +206,7 @@ def read_curve_run(entry, source_hashes, metric):
         lines = data.splitlines(keepends=True)
         protocol = None
         stage = None
+        first_evaluation = last_evaluation = None
         for index, line in enumerate(lines):
             try:
                 record = json.loads(line)
@@ -141,12 +224,15 @@ def read_curve_run(entry, source_hashes, metric):
                 raise ValueError("evaluation steps must strictly increase; duplicate checkpoints are not averaged")
             evaluation = record["evaluation"]
             value = _metric(evaluation, metric)
-            current_protocol = _evaluation_protocol(evaluation, metric)
+            current_protocol = _evaluation_protocol(evaluation, metric, config)
             if protocol is not None and current_protocol != protocol:
                 raise ValueError("evaluation denominator, seed or execution convention changed within run")
             protocol = current_protocol
             result["points"].append({"steps": step, "value": value})
             stage = record["stage"]
+            if first_evaluation is None:
+                first_evaluation = evaluation
+            last_evaluation = evaluation
         result["evaluation_protocol"] = protocol
         if result["status"] != "completed":
             return result
@@ -157,8 +243,13 @@ def read_curve_run(entry, source_hashes, metric):
             raise ValueError("full-budget curve needs initial step 0 and the final budget endpoint")
         if _metric(summary["final_evaluation"], metric) != points[-1]["value"]:
             raise ValueError("final metric disagrees between summary and curve")
-        if _evaluation_protocol(summary["final_evaluation"], metric) != protocol:
+        if _evaluation_protocol(summary["final_evaluation"], metric, config) != protocol:
             raise ValueError("final evaluation protocol disagrees between summary and curve")
+        if metric == "fixed_window_reward_per_step":
+            for name, recorded in (("initial_evaluation", first_evaluation), ("final_evaluation", last_evaluation)):
+                if (_evaluation_protocol(summary[name], metric, config) != protocol
+                        or summary[name]["fixed_window"] != recorded["fixed_window"]):
+                    raise ValueError(f"{name} raw windows disagree between summary and curve")
         area = math.fsum((right["steps"] - left["steps"]) * (left["value"] + right["value"]) / 2
                          for left, right in zip(points, points[1:]))
         if not math.isfinite(area):
