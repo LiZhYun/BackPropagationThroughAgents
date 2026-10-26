@@ -46,17 +46,19 @@ of the release objective.
 The plan is prepared with `scripts/prepare_simulator.py`, which freezes source,
 expanded configurations and a manifest. It uses at most two serial workers,
 each 2CPUs/8GB, with an eight-hour worker limit. Submission must follow the
-recorded Football job so that the combined project stays within four workers.
+recorded Football job. The current project ceiling is eight serial workers;
+the original submission used four.
 
 Job **21212297** follows the matching Football integration workers **21219475**,
 which follow the earlier Football pilot. It uses frozen manifest
 `results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json`. Expanded
-configurations and all source hashes were verified before submission. No
-complete method comparisons are available yet.
+configurations and all source hashes were verified before submission. The
+complete eleven-run comparison remains unfinished.
 
 The current scheduler uses matching worker indices for this dependency; see
 the [verified worker schedule](worker_schedule.md). Each successor can start
-when its own preceding worker finishes, within the unchanged four-worker cap.
+when its own preceding worker finishes. The later eight-worker revision
+leaves these two chains unchanged.
 
 
 ## First completed transfer run
@@ -69,10 +71,38 @@ configuration, seed derivation and training/evaluation accounting. Its final
 The run takes 792.92 seconds. These are one development seed's pilot results;
 they cannot establish performance at the paper's 10M budget or a method ranking.
 
-All eleven declarations remain visible. Worker 1 continues through its other
-controls, while worker 0 waits for its matching predecessor. The remaining
-methods must complete before selecting transfer follow-ups.
+At this earlier snapshot, worker 1 was continuing and worker 0 was waiting.
+The newer audit below supersedes those progress counts; all eleven
+declarations remain visible.
 
 The separate [HalfCheetah partition study](halfcheetah_partition_transfer.md)
 extends the selected BPPO/AR settings to3×2 and6×1, beginning with a native
 full-rollout gate. It does not replace these Ant/Walker controls.
+
+
+## Eight completed pilots, 2026-10-26
+
+The [new raw-log snapshot](../experiments/mujoco_transfer500k_progress_20261026T215200Z.json)
+verifies eight of eleven runs: 480 complete evaluation episodes and1,000 finite
+rollout updates, frozen source/configurations, optimizer and ValueNorm counts,
+seed derivation and exact500k budgets. Earlier audits remain unchanged.
+
+| Condition | Final return | Normalized curve area | Status |
+| --- | ---: | ---: | --- |
+| ant2x4_global_mappo | 993.14 | 992.35 | Complete |
+| ant2x4_global_arppo | 877.68 | 931.33 | Complete |
+| ant2x4_global_bppo | 989.34 | 951.57 | Complete |
+| ant2x4_local_mappo | 993.01 | 972.82 | Complete |
+| ant2x4_local_agentmixer | 978.27 | 970.45 | Complete |
+| ant2x4_local_identity | 1000.55 | 952.66 | Complete |
+| walker2x3_local_mappo | — | — | unfinished |
+| walker2x3_local_arppo | 365.30 | 342.39 | Complete |
+| walker2x3_local_bppo | — | — | not started |
+| walker2x3_local_agentmixer | 257.48 | 240.76 | Complete |
+| walker2x3_local_identity | — | — | not started |
+
+The six Ant endpoints remain between877.68 and1000.55; the two completed Walker
+endpoints are365.30 and257.48. These are single-seed observations below10M.
+They do not establish transfer success or an algorithm advantage. The
+unfinished Walker controls remain required before follow-up selection; no
+partial-study group aggregate or earlier-peak replacement is used.

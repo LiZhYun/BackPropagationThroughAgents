@@ -41,7 +41,7 @@ and [eight-configuration preflight](../experiments/hc_partitions_transfer_prefli
 fix the settings and preserve their selected source. The native check follows
 matrix identity job 21220500 and precedes recurrent Prey worker 21219719_1;
 the [schedule receipt](../experiments/hc_partitions_check_schedule_20261026.json)
-verifies this insertion within the existing four-worker ceiling.
+verifies this insertion within the four-worker ceiling used at that time.
 
 ## Pilot release
 
@@ -56,9 +56,28 @@ and the new dispatch script's hash. The original prepared script is unchanged.
 Even/odd task chains follow their matching Ant/Walker worker and precede the
 pending 2×3 confirmation worker. The
 [release receipt](../experiments/hc_partitions_transfer_release_schedule_20261026.json)
-verifies all dependencies while held and after release. Four project workers
-remain the maximum; the confirmation keeps its frozen source, seeds and
-configurations. No pilot learning result is available at release.
+verifies all dependencies while held and after release. That release used
+four project workers; the later [eight-worker revision](worker_schedule.md#eight-worker-schedule-2026-10-26)
+leaves these A-chain dependencies unchanged. The confirmation keeps its
+frozen source, seeds and configurations.
 
 Full 10M runs, independent final training seeds, AgentMixer comparisons and
 the other paper targets remain required.
+
+
+## First two learning pilots, 2026-10-26
+
+Both BPPO pilots complete500k steps. The
+[partial audit](../experiments/hc_partitions_transfer500k_progress_20261026T215200Z.json)
+verifies120 raw evaluation episodes,250 updates, exact selected source,
+configuration/seed accounting, local dimensions and optimizer/ValueNorm counts.
+All four declarations remain visible.
+
+| Partition | BPPO final return | BPPO normalized curve area | AR-PPO |
+| --- | ---: | ---: | --- |
+| 3×2 | 2506.77 | 1060.96 | Not started at snapshot |
+| 6×1 | 2174.01 | 934.51 | Not started at snapshot |
+
+No baseline aggregate or algorithm advantage is inferred from this partial
+study. All four pilots must finish validly before selecting the10M follow-up;
+one development seed also cannot establish independent performance.
