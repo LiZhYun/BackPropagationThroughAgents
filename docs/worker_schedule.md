@@ -444,3 +444,10 @@ The native gate **21251962** completed0:0 in1573s with21.24GiB peak. Its request
 Both **21252369** SMAC1M workers follow the completed diagnostic. Each uses2CPUs/32GiB/14h,at most2active. The measured memory ceiling is now **96GiB**, while the project remains capped at eight workers/sixteen CPUs. The scheduled maximum is eight workers/ten CPUs/96GiB: SMAC64GiB,Football16GiB,HC partitions8GiB,MuJoCo coverage8GiB. The [release record](../experiments/smac_layout25_learning_release_20261028.json) records current capacity, measured resource estimates and the autonomous allocation decision.
 
 The [nine-run entropy-zero study](../experiments/hc2x3_entropy0_10m_plan_20261028.json), **21252423**, has an `afterany:21251756_*` dependency on the complete MuJoCo coverage array. It then reuses those two1CPU/4GiB slots; the aggregate ceiling does not rise. All held-job settings and dependencies were verified before release.
+
+
+## Continuation on 29 October 2026
+
+MuJoCo coverage 21251756 (37/37) and SMAC layout 21252369 (5/5) completed 0:0. NewSMAC array **21272799** uses the same two 2 CPU/ 32 GiB slots, now 60 h/task for five full 10M controls. NewMuJoCo array **21272800** uses two 1 CPU/4 GiB/30 h slots only after the entire HC partition array 21251961 finishes. Both held allocations and dependencies were verified before release; no automatic requeue. Other project jobs remain untouched.
+
+The maximum schedule is still 8workers/10 CPUs/96 GiB, below the 16 CPU ceiling. Source-identical plans and resource projections: [SMAC](../experiments/smac_terran5_gru10m_plan_20261029.json), [MuJoCo](../experiments/mujoco_coverage10m_plan_20261029.json). Both are development studies; full batches take several days. [Latest dated state](progress_20261029.md).

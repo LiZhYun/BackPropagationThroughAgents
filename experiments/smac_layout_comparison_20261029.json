@@ -1,0 +1,119 @@
+{
+  "recorded_utc": "2026-10-28T22:21:54.702953+00:00",
+  "scope": "All five matched GRU conditions, seed0, 1M decisions. Descriptive layout control; no across-seed inference.",
+  "audits": {
+    "experiments/smac_batch1m_complete_20261028.json": "eaef62d5c4d2585993d11f55f43c9706406470864561f2b27823ff617c443e5f",
+    "experiments/smac_layout25_1m_complete_20261029.json": "6e06af0fde496d8744a80b3ac36b55dc6c55e98cfeecbfc56822e82ef6902584"
+  },
+  "auditor_sha256": "2799ab888ad0ea239806d9da3bb13373b3550d3890c16eefea8cb25f06bd3675",
+  "source_identical": true,
+  "versions_identical": true,
+  "runs": [
+    {
+      "variant": "mappo_gru",
+      "changed_fields": {
+        "num_envs": {
+          "old": 2,
+          "new": 25
+        },
+        "rollout_steps": {
+          "old": 5000,
+          "new": 400
+        }
+      },
+      "old_wins": 0,
+      "new_wins": 1,
+      "eval_episodes": 32,
+      "old_auc": 0.0375,
+      "new_auc": 0.01953125,
+      "old_elapsed_seconds": 13169.552143733017,
+      "new_elapsed_seconds": 13042.279504460981
+    },
+    {
+      "variant": "arppo_gru",
+      "changed_fields": {
+        "num_envs": {
+          "old": 2,
+          "new": 25
+        },
+        "rollout_steps": {
+          "old": 5000,
+          "new": 400
+        }
+      },
+      "old_wins": 1,
+      "new_wins": 1,
+      "eval_episodes": 32,
+      "old_auc": 0.0296875,
+      "new_auc": 0.03828125,
+      "old_elapsed_seconds": 10683.928148217034,
+      "new_elapsed_seconds": 10479.71594043402
+    },
+    {
+      "variant": "bppo_gru",
+      "changed_fields": {
+        "num_envs": {
+          "old": 2,
+          "new": 25
+        },
+        "rollout_steps": {
+          "old": 5000,
+          "new": 400
+        }
+      },
+      "old_wins": 3,
+      "new_wins": 2,
+      "eval_episodes": 32,
+      "old_auc": 0.04609375,
+      "new_auc": 0.0296875,
+      "old_elapsed_seconds": 12172.210124979028,
+      "new_elapsed_seconds": 10635.688179772114
+    },
+    {
+      "variant": "agentmixer_gru",
+      "changed_fields": {
+        "num_envs": {
+          "old": 2,
+          "new": 25
+        },
+        "rollout_steps": {
+          "old": 5000,
+          "new": 400
+        }
+      },
+      "old_wins": 4,
+      "new_wins": 2,
+      "eval_episodes": 32,
+      "old_auc": 0.0390625,
+      "new_auc": 0.0265625,
+      "old_elapsed_seconds": 11617.707561726915,
+      "new_elapsed_seconds": 13612.224392401986
+    },
+    {
+      "variant": "agentmixer_identity_gru",
+      "changed_fields": {
+        "num_envs": {
+          "old": 2,
+          "new": 25
+        },
+        "rollout_steps": {
+          "old": 5000,
+          "new": 400
+        }
+      },
+      "old_wins": 0,
+      "new_wins": 2,
+      "eval_episodes": 32,
+      "old_auc": 0.028125,
+      "new_auc": 0.04375,
+      "old_elapsed_seconds": 11710.31996469386,
+      "new_elapsed_seconds": 10596.898847898003
+    }
+  ],
+  "interpretation": "Final wins change by +1,0,-1,-2,+2 out of32; no consistent improvement. All methods still have low final win rates. Retain25x400 for a full10M budget test because it follows the released modifier collection layout, not because it won this pilot.",
+  "limitations": [
+    "One development training seed; episode counts are not independent training seeds.",
+    "25x400 is matched across methods, while released non-modifier configurations use50x200.",
+    "Tanh actors and shared feedforward critic still differ from released architecture."
+  ]
+}

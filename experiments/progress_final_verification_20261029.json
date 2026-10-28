@@ -1,0 +1,46 @@
+{
+  "recorded_utc": "2026-10-28T22:32:59.324491+00:00",
+  "running_owned_tasks": 8,
+  "running_owned_cpus": 10,
+  "running_owned_memory_gib": 96,
+  "new_smac_runs": [
+    {
+      "variant": "mappo_gru",
+      "updates": 2,
+      "training_steps": 20000,
+      "source_and_config_verified": true
+    },
+    {
+      "variant": "arppo_gru",
+      "updates": 2,
+      "training_steps": 20000,
+      "source_and_config_verified": true
+    }
+  ],
+  "mujoco_tasks_waiting_for_verified_dependency": 48,
+  "json_files_parsed": [
+    "configs/mujoco_coverage10m.json",
+    "configs/smac_terran5_gru10m.json",
+    "experiments/benchmark_coverage_20261029.provenance.json",
+    "experiments/football20m_progress_20261029.json",
+    "experiments/hc2x3_entropy0_10m_progress_20261029.json",
+    "experiments/hc2x3_entropy0_10m_progress_20261029_v2.json",
+    "experiments/hc_partitions10m_progress_20261029.json",
+    "experiments/mujoco_coverage10m_plan_20261029.json",
+    "experiments/mujoco_coverage10m_schedule_20261029.json",
+    "experiments/mujoco_remaining500k_complete_20261029.json",
+    "experiments/progress_audit_20261029.json",
+    "experiments/progress_audit_20261029_v2.json",
+    "experiments/progress_verification_20261029.json",
+    "experiments/smac_layout25_1m_complete_20261029.json",
+    "experiments/smac_layout_comparison_20261029.json",
+    "experiments/smac_terran5_gru10m_plan_20261029.json",
+    "experiments/smac_terran5_gru10m_schedule_20261029.json"
+  ],
+  "local_document_links_verified": 111,
+  "audit_report": "experiments/progress_audit_20261029_v2.json",
+  "audit_report_sha256": "3662254c523c2b0f64543b737a264e38c06c065d3282578dca276378b2cf7b04",
+  "correction": "Only copied entropy-audit scope was corrected in a new report; numeric evidence unchanged. Original remains retained.",
+  "training_package_changed": false,
+  "unrelated_jobs_modified": false
+}

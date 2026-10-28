@@ -1,0 +1,409 @@
+{
+  "recorded_utc": "2026-10-28T22:25:51.086707+00:00",
+  "scope": "Immutable live-log prefix audit, all five20M development declarations retained; no full-budget result or method comparison.",
+  "manifest": "results/football_3v1_gru20m_20261028T082219Z/manifest.json",
+  "manifest_sha256": "34dd3866f5c1d432ac5e9698dae9f9b96e73dd8a27da1695904d21e179007f00",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "auditor_sha256": "376d3c954eecca4835acc1e17359294ed10fac2161d956f633eede889a9aeaa1",
+  "raw_evaluation_episodes_verified": 4000,
+  "rollout_updates_verified": 1559,
+  "runs": [
+    {
+      "variant": "mappo_gru",
+      "algorithm": "mappo",
+      "seed": 0,
+      "status": "incomplete",
+      "eligible_for_final_comparison": false,
+      "last_training_steps": 7820000,
+      "updates_verified": 782,
+      "evaluation_episodes_verified": 2000,
+      "evaluation_environment_steps": 106361,
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -1.8499999523162838,
+          "wins": 0,
+          "episodes": 100,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1.5720001207292087,
+          "wins": 0,
+          "episodes": 100,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2.3100001585483545,
+          "wins": 10,
+          "episodes": 100,
+          "win_rate": 0.1
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 3.1600001683086143,
+          "wins": 30,
+          "episodes": 100,
+          "win_rate": 0.3
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 5.069000199437139,
+          "wins": 78,
+          "episodes": 100,
+          "win_rate": 0.78
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 5.576000209003686,
+          "wins": 90,
+          "episodes": 100,
+          "win_rate": 0.9
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 5.575000208988787,
+          "wins": 90,
+          "episodes": 100,
+          "win_rate": 0.9
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 5.55100021019578,
+          "wins": 89,
+          "episodes": 100,
+          "win_rate": 0.89
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 5.711000210791824,
+          "wins": 93,
+          "episodes": 100,
+          "win_rate": 0.93
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 5.700000209957363,
+          "wins": 93,
+          "episodes": 100,
+          "win_rate": 0.93
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 5.750000210925937,
+          "wins": 94,
+          "episodes": 100,
+          "win_rate": 0.94
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 5.660000210180877,
+          "wins": 92,
+          "episodes": 100,
+          "win_rate": 0.92
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 5.665000212043522,
+          "wins": 92,
+          "episodes": 100,
+          "win_rate": 0.92
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 4.552000189572573,
+          "wins": 65,
+          "episodes": 100,
+          "win_rate": 0.65
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 4.773000194802878,
+          "wins": 71,
+          "episodes": 100,
+          "win_rate": 0.71
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 5.32900019995868,
+          "wins": 84,
+          "episodes": 100,
+          "win_rate": 0.84
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 5.391000203043221,
+          "wins": 85,
+          "episodes": 100,
+          "win_rate": 0.85
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 5.443000205233694,
+          "wins": 86,
+          "episodes": 100,
+          "win_rate": 0.86
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 5.506000204980369,
+          "wins": 88,
+          "episodes": 100,
+          "win_rate": 0.88
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 5.593000208288434,
+          "wins": 90,
+          "episodes": 100,
+          "win_rate": 0.9
+        }
+      ],
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "metadata_sha256": "86f176f84945035fae79764a2a773e5d59a3ca7ca27e202c3556395d41b71f64",
+      "snapshot": "results/football_progress_20261029/mappo_gru_seed0.jsonl",
+      "snapshot_sha256": "6b6ca8a787ccf983b095ef44e82411bd40192972e00e3211ef945b9dad3abbd5",
+      "captured_prefix_bytes": 1691225,
+      "excluded_unfinished_line_bytes": 0
+    },
+    {
+      "variant": "arppo_gru",
+      "algorithm": "arppo",
+      "seed": 0,
+      "status": "incomplete",
+      "eligible_for_final_comparison": false,
+      "last_training_steps": 7770000,
+      "updates_verified": 777,
+      "evaluation_episodes_verified": 2000,
+      "evaluation_environment_steps": 143898,
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.3969999507069588,
+          "wins": 0,
+          "episodes": 100,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 400000,
+          "return_mean": 2.1160001669824116,
+          "wins": 2,
+          "episodes": 100,
+          "win_rate": 0.02
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2.1300001684576255,
+          "wins": 2,
+          "episodes": 100,
+          "win_rate": 0.02
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 2.2420001687109465,
+          "wins": 0,
+          "episodes": 100,
+          "win_rate": 0.0
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 2.2210001671314243,
+          "wins": 6,
+          "episodes": 100,
+          "win_rate": 0.06
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 1.9920001509785645,
+          "wins": 2,
+          "episodes": 100,
+          "win_rate": 0.02
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 2.5950001603364936,
+          "wins": 18,
+          "episodes": 100,
+          "win_rate": 0.18
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 3.6690001731365927,
+          "wins": 43,
+          "episodes": 100,
+          "win_rate": 0.43
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 2.874000161290168,
+          "wins": 26,
+          "episodes": 100,
+          "win_rate": 0.26
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 4.75800019092858,
+          "wins": 70,
+          "episodes": 100,
+          "win_rate": 0.7
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 4.7790001939982165,
+          "wins": 70,
+          "episodes": 100,
+          "win_rate": 0.7
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 3.777000174745918,
+          "wins": 47,
+          "episodes": 100,
+          "win_rate": 0.47
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 4.735000190213321,
+          "wins": 69,
+          "episodes": 100,
+          "win_rate": 0.69
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 4.461000197678803,
+          "wins": 63,
+          "episodes": 100,
+          "win_rate": 0.63
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 4.695000186935067,
+          "wins": 70,
+          "episodes": 100,
+          "win_rate": 0.7
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 3.975000173896552,
+          "wins": 50,
+          "episodes": 100,
+          "win_rate": 0.5
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 1.7340001036226749,
+          "wins": 9,
+          "episodes": 100,
+          "win_rate": 0.09
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 3.63700017504394,
+          "wins": 43,
+          "episodes": 100,
+          "win_rate": 0.43
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 4.388000174760821,
+          "wins": 62,
+          "episodes": 100,
+          "win_rate": 0.62
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 4.412000187858942,
+          "wins": 61,
+          "episodes": 100,
+          "win_rate": 0.61
+        }
+      ],
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": "0.23.1",
+        "gymnasium": null,
+        "gfootball": "2.10.2"
+      },
+      "environment_versions": {
+        "gfootball": "2.10.2",
+        "upstream_commit": "ba9952130898bde2879b01ff2b49d3d48d26ce81",
+        "seeding": "per_reset_native_seed_private_rng_episode_counter_v2"
+      },
+      "metadata_sha256": "4cc8dc842ccbddc9edd7c0f5606d7a8fd4982cfb301847fc62611f2a7708f8d9",
+      "snapshot": "results/football_progress_20261029/arppo_gru_seed0.jsonl",
+      "snapshot_sha256": "cabc50db15c377370cae99e82ec26aeba1016a5fb15153d319f4698b467e304b",
+      "captured_prefix_bytes": 1667180,
+      "excluded_unfinished_line_bytes": 0
+    },
+    {
+      "variant": "bppo_gru",
+      "algorithm": "bppo",
+      "seed": 0,
+      "status": "not_started"
+    },
+    {
+      "variant": "agentmixer_gru",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "status": "not_started"
+    },
+    {
+      "variant": "agentmixer_identity_gru",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "status": "not_started"
+    }
+  ],
+  "limitations": [
+    "Native match results and logged reductions verified; native transitions not independently replayed.",
+    "Partial steps are descriptive only; no incomplete group aggregation or peak substitution.",
+    "One development seed does not estimate training-seed uncertainty."
+  ]
+}

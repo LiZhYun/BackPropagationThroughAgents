@@ -127,3 +127,10 @@ The next [frozen layout study](../experiments/followup_studies_20261028.json) ch
 Job **21251962** completed all five native checks. The [audit](../experiments/smac_layout25_native_gate_complete_20261028.json) verifies 40 raw episodes, five updates, exact frozen source/configurations and seed/optimizer/ValueNorm counts. Scheduler exit is0:0 after26m13s; peak memory is21.24GiB.
 
 The [learning release](../experiments/smac_layout25_learning_release_20261028.json), **21252369**, runs all five frozen1M controls with two2CPU/32GiB/14h workers. Worst measured-phase projection is8.48h; this is an estimate, not a guarantee. Total project memory now allows96GiB while eight-worker/sixteen-CPU ceilings remain. The shared25×400 layout isolates stream count/grouping; it does not reproduce the no-modifier launcher's50×200 layout or the released per-agent recurrent critics.
+
+
+## Completed layout control and 10M continuation, 29 October 2026
+
+All five 25×4001M runs passed:1,280 raw battles/500 updates. Matched GRU final wins / 32 for MAPPO, AR, BPPO, AgentMixer, identity change from 0/1/3/4/0 to 1/1/2/2/2. Source/runtime/configuration comparisons confirm only num_envs and rollout_steps differ. No consistent improvement and no training-seed inference. [Paired audit](../experiments/smac_layout_comparison_20261029.json).
+
+Array 21272799 now tests the missing 10M budget for all five methods with exact 23-module source/settings; only steps changes.25×400 follows the released modifier layout but does not resolve architecture/shared-critic differences. At most two 2 CPU/ 32 GiB/60 h workers; observed 1M peak 22.00 GiB and 2.9–3.8 h durations support the allocation. [Frozen plan](../experiments/smac_terran5_gru10m_plan_20261029.json).

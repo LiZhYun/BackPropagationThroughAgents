@@ -1,47 +1,38 @@
 # Reproduction status
 
-Updated 2026-10-28. **Full reproduction and performance beyond the papers are not established.** The latest independent HalfCheetah BPPO confirmation fails its frozen performance criterion. All results, including failures, remain recorded.
+Updated 2026-10-29. **Full reproduction and performance beyond the papers are not established.** The independent HalfCheetah BPPO confirmation failed its frozen criterion; learned AgentMixer modifiers also underperformed identity in the completed 10M study. Both findings remain recorded.
 
-## Latest completed evidence
+## Latest progress
 
-All 127 runs in the eleven previously queued arrays completed with scheduler exit 0. The simulator audits verify 40,378 raw evaluation episodes, 84,800 Predator–Prey windows and 67,918 rollout updates; the paired matrix reporter validates all 20 matrix runs. Numerical validity does not establish learning success.
+- **37/37 MuJoCo 500k pilots and 5/5 SMAC 1M layout controls completed and passed raw audits.** Including finished runs from partial studies, 52 newly completed runs verify 10,896 raw episodes and 30,125 updates.
+- HalfCheetah partition 10M: **8/12 complete**. Matched AgentMixer entropy-zero 10M: **2/9 complete**. No aggregate from incomplete cohorts.
+- Football 20M: **0/5 complete**; first two runs are at about 7.8M. At 7.6M, MAPPO wins 90/100 matches and AR-PPO 61/100. These are partial baseline results; BPPO and AgentMixer are queued.
+- SMAC 25×400 ends at 1–2 wins / 32 across five methods, with no consistent improvement over 2×5000. The missing full budget is now being tested for all controls.
 
-| Study | Complete result | Interpretation |
-| --- | --- | --- |
-| HalfCheetah 2×3 BPPO/AR, 10M, five fresh seeds each | BPPO 5372.06±390.17; AR 5782.67±516.02 | BPPO below figure reading[5660,5740]; paired difference interval includes zero |
-| AgentMixer HalfCheetah 2×3, 10M, three development seeds | Bounded 3819.11±2315.14; residual 3560.85±679.86; identity 5569.45±372.68 | Learned modifiers underperform identity; no AgentMixer reproduction claim |
-| AgentMixer matrix learned/identity, 1M, five pairs/game | Learned threshold successes 4/5 Climbing, 3/5 Penalty; identity 0/5 | Climbing is 5× the paper budget; Penalty is additional; failed seeds retained |
-| Prey released-count FF/GRU, 1M, seed0 | Zero-penalty AgentMixer 1.9520/2.0515; identity 2.2160/2.2465 | Released 100×200-window reward/decision; identity score cannot establish AgentMixer success |
-| SMAC Terran5v5 FF/GRU, 1M, seed0 | Final wins 0–5/32 across ten controls | Low win rates; below 10M; collection-layout check follows |
-| Football3v1 FF/GRU, 1M, seed0 | Final wins 0–8/100 across ten controls | Below 20M; full-budget recurrent controls now running |
-| MuJoCo transfer and native checks | All15 pilots and37 native gates valid | Task coverage and integrity evidence; full budgets/seeds remain |
+See the [current progress report](docs/progress_20261029.md) for all 48 MuJoCo pilot endpoints, matched SMAC results, raw audits and limitations. The [previous completed studies](docs/progress_20261028.md) retain independent-confirmation failures and other negative results.
 
-Uncertainty above is sample SD across training seeds. See the [complete progress report](docs/progress_20261028.md), [independent confirmation](docs/halfcheetah_confirmation.md), [AgentMixer10M comparison](docs/agentmixer_halfcheetah10m.md) and [matrix ablation](docs/matrix_modifier_ablation.md).
-
-## Active work
+## Active and queued work
 
 | Job | Work | Allocation |
 | --- | --- | --- |
-| 21251756 | 37 frozen MuJoCo500k coverage pilots | At most2 tasks,1CPU/4GiB/90min each |
-| 21251961 | 12 HalfCheetah3×2/6×1 BPPO/AR development runs, 10M, seeds0–2 | At most2 tasks,1CPU/4GiB/7h each |
-| 21251960 | Five recurrent Football3v1 controls,20M,seed0 | At most2 tasks,1CPU/8GiB/60h each |
-| 21252369 | Five recurrent SMAC25×400 collection-layout controls, 1M, seed0 | At most2 tasks,2CPU/32GiB/14h each |
-| 21252423 | Nine matched AgentMixer HalfCheetah10M entropy-zero controls | At most2 tasks,1CPU/4GiB/7h each,after21251756 |
+| 21251960 | Five Football 3v1 recurrent 20M controls | At most 2 × 1 CPU/8 GiB/60 h |
+| 21251961 | Twelve HC 3×2/6×1 BPPO/AR 10M development runs | At most 2 × 1 CPU/4 GiB/7 h |
+| 21252423 | Nine matched AgentMixer HC 2×3 entropy-zero 10M runs | At most 2 × 1 CPU/4 GiB/7 h |
+| 21272799 | Five SMAC Terran 5v5 recurrent 10M controls | At most 2 × 2 CPU/ 32 GiB/60 h |
+| 21272800 | All 48 MuJoCo pilot conditions at 10M; after 21251961 | At most 2 × 1 CPU/4 GiB/30 h; reuses its worker slots |
 
-All five SMAC native checks passed: 40 raw episodes, five updates, 26m13s and 21.24 GiB peak memory. The [measured learning allocation](experiments/smac_layout25_learning_release_20261028.json) raises total project memory to **96 GiB**, retaining the eight-worker and sixteen-CPU ceilings. Current scheduled maximum is eight workers/ten CPUs/96 GiB. The entropy-zero study reuses the two MuJoCo coverage-worker slots after that array finishes.
-
-The [completed read-only diagnostic](experiments/hc_agentmixer_final_diagnostic_complete_20261028.json) exactly replays all nine AgentMixer final policies: 90 episodes and 90,000 additional evaluation decisions. Its original float32 assertion failure and corrected rerun are both retained; training artifacts were unchanged. Other reproduction jobs, files and environments remain untouched. Query recorded job IDs for live state; artifacts alone do not establish scheduler state.
+Both new studies change only the training budget from their audited pilots and retain every declared method/control. They use development seed 0, not independent final seeds. The batches require several days. Source, configurations, dependency and resources were verified before release; maximum schedule remains eight workers/ten CPUs/96 GiB. Other reproduction work is untouched. Query recorded jobs for live state; this is a dated snapshot.
 
 ## What is verified
 
 - Shared explicit implementations of MAPPO, AR-PPO, BPPO and AgentMixer; [BPPO guide](docs/bppo.md) and [AgentMixer guide](docs/agentmixer.md), independent rollout/evaluation seeds, legal-action and termination handling, checkpoint replay and optional private GRU actors.
-- All 96 initial MuJoCo/SMAC native integrations and 16 Football integrations pass. Predator–Prey matches10,240 pinned-release transitions. These short checks do not establish learned performance.
+- All 96 initial MuJoCo/SMAC native integrations and 16 Football integrations pass. Predator–Prey matches 10,240 pinned-release transitions. These short checks do not establish learned performance.
 - The clean installed-wheel check passed 899 tests with 1 CUDA-only skip before three later reporting-only budget tests. Training defaults and frozen snapshots were preserved. Hosted CI remains unverified; [clean-install evidence](docs/clean_checkout.md).
-- Independent BPPO/AR matrix1M confirmation passes all 20 runs near the games' return ceilings. Both methods succeed; the paired endpoint intervals include zero. [Evidence](docs/matrix_confirmation.md).
-- All 45 canonical targets are indexed. The [latest coverage snapshot](experiments/benchmark_coverage_20261028.provenance.json) contains715 runs / 63 manifests with zero provenance errors. Seven targets have exact-budget method artifacts, including unsuccessful outcomes;38 still lack them. Artifact counts are not success counts.
+- Independent BPPO/AR matrix 1M confirmation passes all 20 runs near the games' return ceilings. Both methods succeed; the paired endpoint intervals include zero. [Evidence](docs/matrix_confirmation.md).
+- All 45 canonical targets are indexed. The [latest coverage snapshot](experiments/benchmark_coverage_20261029.provenance.json) contains 782 runs/67 manifests with zero provenance errors. Eight targets have completed exact-budget method artifacts, including unsuccessful outcomes; 37 still lack them. Artifact counts are not success counts.
 
 ## Required before release
 
 Comparable full-budget results across all 45 targets; successful disjoint final training seeds and ablations; resolved or clearly qualified historical protocol differences; portable release artifacts with verified claims. Current failed configurations are retained. Any revised configuration needs new final seeds after development.
 
-Use the [simulator guide](docs/simulator_training.md) to run frozen configurations and the [tracker](refine-logs/EXPERIMENT_TRACKER.md) for the detailed evidence history. The previous status narrative is preserved in `refine-logs/STATUS_20261028_083812.md`.
+Use the [simulator guide](docs/simulator_training.md) to run frozen configurations and the [tracker](refine-logs/EXPERIMENT_TRACKER.md) for the detailed evidence history. Previous status snapshots are preserved under `refine-logs/STATUS_*.md`.

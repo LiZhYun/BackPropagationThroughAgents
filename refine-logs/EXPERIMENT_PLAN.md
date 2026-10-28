@@ -1,6 +1,6 @@
 # Experiment plan
 
-Updated: 2026-10-28. Status: active work; no full benchmark reproduction claimed. Earlier dated plans and allocations remain as history.
+Updated: 2026-10-29. Status: active work; no full benchmark reproduction claimed. Earlier dated plans and allocations remain as history.
 
 ## Claim map
 
@@ -179,3 +179,12 @@ All five25×400 native checks pass; sampled peak21.24GiB and worst1M phase proje
 ## Full-budget entropy control after final-policy diagnosis
 
 All nine AgentMixer final policies exactly replay under their frozen source. The complete diagnostic identifies scale/clamp behavior but does not establish causality. Test entropy0 versus0.01 at the same10M budget/source/configuration/grid for all three variants and development seeds0–2. Job21252423 reuses the two MuJoCo coverage-worker slots after21251756 completes;the8worker/16CPU/96GiB ceiling is unchanged. All18 old/new outcomes are required before paired interpretation. This does not replace independent final seeds or the failed BPPO confirmation. See [frozen plan](../experiments/hc2x3_entropy0_10m_plan_20261028.json).
+
+
+## Full-budget coverage continuation, 29 October 2026
+
+The 37 remaining MuJoCo 500k conditions and all five SMAC 25×4001M controls passed complete raw audits. SMAC shows no consistent layout gain. Extend all five methods to 10M without other setting/source changes:21272799,2 CPU/ 32 GiB/60 h each, max 2. Use 25×400 for released modifier-layout alignment, not pilot winner selection; architecture and non-modifier 50×200 differences remain.
+
+Extend all 48 audited Ant/Walker/remaining MuJoCo pilot conditions to 10M with every control retained and only budget changed:21272800,1 CPU/4 GiB/30 h each, max 2, after the entire HC partition array 21251961. Exact 20-module source. Both studies use seed 0 development first; no final confirmation claim. All declarations for each task must complete and validate before task-level comparisons, all study outcomes remain visible, no early-peak replacements. Current independent BPPO failure remains unchanged; later selected configurations require new final seeds.
+
+The two arrays reuse existing slots, preserving 8workers/16 CPU/96 GiB; scheduled maximum 8workers/10 CPU/96 GiB. No requeue or unrelated-job changes. Linear worst projections 37.81 h SMAC and 17.03 h MuJoCo have at least 50% wall-time headroom; full batches take several days. [Evidence and all endpoints](../docs/progress_20261029.md).

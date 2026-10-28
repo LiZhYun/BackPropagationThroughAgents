@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-28T22:28:50.473512+00:00",
+  "report": "results/benchmark_coverage_20261029.json",
+  "report_sha256": "877a0fbd98c1f615c8195356ae94d8149f53e8f0b8acedfa2c72cf07477084d5",
+  "csv": "experiments/benchmark_coverage_20261029.csv",
+  "csv_sha256": "e8c5def529332da3b61911018cca8970393d8fc617adb1c27e449cdbf467198d",
+  "reporter_sha256": "4bae78b2ce51e098a50bc485f443aa0265a8319fa23d90bd519064e2a6a26b33",
+  "library_sha256": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+  "runs": 782,
+  "manifests": 67,
+  "canonical_targets": 45,
+  "targets_with_exact_budget_method_artifacts": 8,
+  "targets_without_exact_budget_method_artifacts": 37,
+  "manifest_errors": 0,
+  "run_provenance_errors": 0,
+  "interpretation": "Artifact coverage only, including unsuccessful outcomes. No claim of successful reproduction or comparable historical protocols."
+}

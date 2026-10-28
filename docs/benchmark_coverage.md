@@ -86,3 +86,8 @@ Sixteen focused tests cover observation mismatches, identity controls, shortened
 horizons, short budgets, failed/missing runs, provenance changes, explicit older
 seed records, path aliases and all supported task families. Training code and
 running frozen experiments are unchanged by this report.
+
+
+## Snapshot 29 October 2026
+
+The [new snapshot](../experiments/benchmark_coverage_20261029.provenance.json) indexes 782 runs/67 manifests, all 45targets, and zero manifest/run-provenance errors. Eight targets have completed exact-budget method artifacts and 37 still lack them. This includes unsuccessful outcomes; it is not eight successful reproductions. The 53 newly queued full-budget follow-ups do not count as complete. [Current progress](progress_20261029.md).

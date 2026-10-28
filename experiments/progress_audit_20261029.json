@@ -1,0 +1,34 @@
+{
+  "recorded_utc": "2026-10-28T22:28:50.491331+00:00",
+  "reports": {
+    "mujoco_remaining500k_complete_20261029.json": "ac9e8f005180ff81133282c9eb0bc76c432ab1edc625490f319fcdcf581c0983",
+    "smac_layout25_1m_complete_20261029.json": "6e06af0fde496d8744a80b3ac36b55dc6c55e98cfeecbfc56822e82ef6902584",
+    "hc_partitions10m_progress_20261029.json": "cc510f098c1415b26e9a3e88d526c52a9c4e2cd1547c4955999b0e0b0e33a65c",
+    "hc2x3_entropy0_10m_progress_20261029.json": "42bd90d1876d39d871b3ee40b2200be7934c2a9472cc91bb6d05bbcc21b98198",
+    "football20m_progress_20261029.json": "9f5d7528c98a4fdf4759fa1686f95b1135af69c4d9c5affa21072996abaf4135"
+  },
+  "new_complete_runs_verified": 52,
+  "new_completed_raw_episodes_verified": 10896,
+  "new_completed_rollout_updates_verified": 30125,
+  "live_football_raw_episodes_verified": 4000,
+  "live_football_rollout_updates_verified": 1559,
+  "complete_studies": {
+    "remaining_mujoco500k": "37/37",
+    "smac_layout1m": "5/5"
+  },
+  "partial_studies": {
+    "hc_partitions10m": "8/12",
+    "entropy0_10m": "2/9",
+    "football20m": "0/5"
+  },
+  "auditor_guard": "First entropy auditor retained its all-nine completeness guard and correctly stopped. Separate partial auditor permits unfinished rows, does not aggregate, and retains the original script. No training failure or rerun.",
+  "training_source_changed": false,
+  "new_submissions": {
+    "21272799": "fiveSMAC10M",
+    "21272800": "48MuJoCo10M after21251961"
+  },
+  "limits": [
+    "Audits validate recorded native outcome reductions, source and interaction counts; they do not independently replay all simulator transitions.",
+    "Development results and partial runs cannot establish fresh-seed reproduction."
+  ]
+}

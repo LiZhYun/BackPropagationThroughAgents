@@ -1,0 +1,838 @@
+{
+  "recorded_utc": "2026-10-28T22:23:39.185601+00:00",
+  "scope": "All48 completed Ant/Walker and remaining MuJoCo pilot conditions extended from500k to10M, seed0. Exact shared20-module source, every resolved setting and evaluation protocol preserved; only budget changes. Covers the outstanding task/observation groups without selecting pilot winners. Full-budget development, not independent final confirmation.",
+  "decision_rationale": "All48 native pilots and raw audits pass, but500k is only5% of the canonical10M budget. Extend every declared condition, including poor outcomes and identity controls, to distinguish short-budget behavior from full-budget deficiencies. One seed first controls cost before broader development/fresh-seed confirmation. Existing HC partition and HC2x3 studies remain separate. Peak1.57GiB fits4GiB. Two1CPU/4GiB workers replace HC partition slots after that entire array finishes.",
+  "config_plan": "configs/mujoco_coverage10m.json",
+  "config_plan_sha256": "7cfcbb9da2f3260b80952666647dd2c489ef5501637d3d851906480e2a299f01",
+  "manifest": "results/mujoco_coverage10m_20261028T222337Z/manifest.json",
+  "manifest_sha256": "cfab5bfb663f0a49ff82d3b012803ee9933189b0ace512eb577276f734722f30",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "prior_audits": {
+    "experiments/mujoco_transfer500k_complete_20261028.json": "b6b1f2918862706b137691e5ee56a3c99a34ea44ada73fd659e62b1944182d37",
+    "experiments/mujoco_remaining500k_complete_20261029.json": "ac9e8f005180ff81133282c9eb0bc76c432ab1edc625490f319fcdcf581c0983"
+  },
+  "declared_runs": 48,
+  "all_pairs": [
+    {
+      "variant": "ant2x4_global_mappo",
+      "seed": 0,
+      "config_sha256": "fbd6625f02bd994ae9cf36beecac2ee51f794be3853fff53f5a468bdb0cecebf",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_mappo_seed0",
+      "prior_metadata_sha256": "c542f8c59538a9c6de02d0beb00c7105f9a7cde4a7e4d7857c642e8f2e7e39ec",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 782.4388756559929,
+      "linear_projected_seconds": 15648.777513119858
+    },
+    {
+      "variant": "ant2x4_global_arppo",
+      "seed": 0,
+      "config_sha256": "2e3681450894964ee83ab60a9887dfafc1729fd54047dfad33d47c34340eef5e",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_arppo_seed0",
+      "prior_metadata_sha256": "6a754e0fada41d16203a4543c78c28f8bb12d846532c89514d4705060d117cbd",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 792.9179811719805,
+      "linear_projected_seconds": 15858.35962343961
+    },
+    {
+      "variant": "ant2x4_global_bppo",
+      "seed": 0,
+      "config_sha256": "7b9419d9397e0f01b6400448b53dd8f60124e798da7af42f62ee480ba8f2a4c8",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_global_bppo_seed0",
+      "prior_metadata_sha256": "ebfb3a6457c123f4bab4db2efd7310a216ce68819a761c1c1807bf7cda0be9d8",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 667.5442545759724,
+      "linear_projected_seconds": 13350.885091519449
+    },
+    {
+      "variant": "ant2x4_local_mappo",
+      "seed": 0,
+      "config_sha256": "3ee1ae0177deb847e92ac3aa767f863a1b3a4e66badf849dd6c6a2ab604daff8",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_local_mappo_seed0",
+      "prior_metadata_sha256": "d9c036d8336803cab527b034936a1d87260749c30afa9d6df6a513cfc146ac06",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1031.166985354037,
+      "linear_projected_seconds": 20623.33970708074
+    },
+    {
+      "variant": "ant2x4_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "0d6b93890b6c992371ccbdab36aa3c5ee5f7151b9f75719b6d8fad46ebded626",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_local_agentmixer_seed0",
+      "prior_metadata_sha256": "2df70f5c635d25ad770cd7714f050eae4834ab4ec8d571404e29a1447a8f5ce5",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 988.7420886670006,
+      "linear_projected_seconds": 19774.841773340013
+    },
+    {
+      "variant": "ant2x4_local_identity",
+      "seed": 0,
+      "config_sha256": "5de8313bf3be1f0608c10562dfa605bd2ef73395194aacce184c120b8998b256",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/ant2x4_local_identity_seed0",
+      "prior_metadata_sha256": "75e1de2176b13d85aa5941706516d9699ab95b450827c88e82fa034f4c2d973b",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1163.4647908949992,
+      "linear_projected_seconds": 23269.295817899983
+    },
+    {
+      "variant": "walker2x3_local_mappo",
+      "seed": 0,
+      "config_sha256": "d90da70e6168a0076134488d6b0e65737b927b0c9862ae27f4e8add78fef9f32",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_mappo_seed0",
+      "prior_metadata_sha256": "b812eef8ae391f7526dde99545b833b8fc51f6fc404a6276af035a0ee78acd09",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 532.4403035220457,
+      "linear_projected_seconds": 10648.806070440914
+    },
+    {
+      "variant": "walker2x3_local_arppo",
+      "seed": 0,
+      "config_sha256": "4a9c0b808a251c0517989e5182c1e6461d68914933d956b222d4cbbb84006300",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_arppo_seed0",
+      "prior_metadata_sha256": "5af16b0040866d0b6c08962f04e5b9b479b2340a96ccb8434e0efb5c031b4ad1",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 634.787477876991,
+      "linear_projected_seconds": 12695.74955753982
+    },
+    {
+      "variant": "walker2x3_local_bppo",
+      "seed": 0,
+      "config_sha256": "af272ef23ee57e3690669342863c666c82f6c3934b6ae95473e42a3b06a5b739",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_bppo_seed0",
+      "prior_metadata_sha256": "ceccc1ba1a21b4019ae46b6be1418376da9ea25c227d9627ab8be5c0c100271b",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 479.90854371292517,
+      "linear_projected_seconds": 9598.170874258503
+    },
+    {
+      "variant": "walker2x3_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "73e7797a8a8b4bb8d7bdfdaf09cd0d802e8bcb568603ee532d5ef821c8baf0d1",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_agentmixer_seed0",
+      "prior_metadata_sha256": "12e88454255d25aa5cc0fa4ce458a30ea2921a297ed6add07000ee75e63dc4f6",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1001.361579360906,
+      "linear_projected_seconds": 20027.23158721812
+    },
+    {
+      "variant": "walker2x3_local_identity",
+      "seed": 0,
+      "config_sha256": "af9bb1d31bec0c00240bee4844e63cfb70d8b5b1eafebfcb74a3898e396b0aed",
+      "prior_manifest": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/manifest.json",
+      "prior_output": "results/mujoco_ant_walker_transfer500k_20261026T112325Z/walker2x3_local_identity_seed0",
+      "prior_metadata_sha256": "846272ecf9b91b77612501cd41132bfd73ad5b52e34457d5cc22132388886eb2",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 571.9817041310016,
+      "linear_projected_seconds": 11439.634082620032
+    },
+    {
+      "variant": "ant4x2_global_mappo",
+      "seed": 0,
+      "config_sha256": "a2f58cde83dd42b0ad91ff9871c4c4c6b713a17650dbe0d63ce6b377c5ddcba6",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_global_mappo_seed0",
+      "prior_metadata_sha256": "f4845f445a64a9c787ec14894bdfe001a91c66f7ac98269471b4780216f2300c",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 832.4835358300479,
+      "linear_projected_seconds": 16649.67071660096
+    },
+    {
+      "variant": "ant4x2_global_arppo",
+      "seed": 0,
+      "config_sha256": "7b782a5a74c40d874c250cc928df0ef895444217449b39799030f5647403d33f",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_global_arppo_seed0",
+      "prior_metadata_sha256": "454789a7b8549091149b9f1799405e6841520d85fabe702df575be7f4743b4b4",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 882.573989372002,
+      "linear_projected_seconds": 17651.47978744004
+    },
+    {
+      "variant": "ant4x2_global_bppo",
+      "seed": 0,
+      "config_sha256": "4eac78fa4d72e0f0970fb8cedeb8bd64292a09d29172bea2c21271c226b9fb1e",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_global_bppo_seed0",
+      "prior_metadata_sha256": "558083b7fe6f62cb1783ba1a2eb2948d53c1f63fc9dc4258cb51f8f7266aeab5",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 835.7812981489114,
+      "linear_projected_seconds": 16715.62596297823
+    },
+    {
+      "variant": "ant8x1_global_mappo",
+      "seed": 0,
+      "config_sha256": "639390ecae86aa38282a4433b4ac896f016042514beb5d8084fbca2cea1da5cc",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_global_mappo_seed0",
+      "prior_metadata_sha256": "034a562161009b9be44d622683b1b6a9d3e13d34e17525b84dfd9467cf9ad11f",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 845.2016160340281,
+      "linear_projected_seconds": 16904.032320680562
+    },
+    {
+      "variant": "ant8x1_global_arppo",
+      "seed": 0,
+      "config_sha256": "13ca06944f92134243d80ab0e848b13cf6beb87aeabc620ee5c788059638f949",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_global_arppo_seed0",
+      "prior_metadata_sha256": "fed7e1e4fe787a0e91301036572df54f64435428b42d674f674bd63640214599",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1083.8857444759924,
+      "linear_projected_seconds": 21677.714889519848
+    },
+    {
+      "variant": "ant8x1_global_bppo",
+      "seed": 0,
+      "config_sha256": "5d1e51bbdee9bccc358ad7f491fe66f93d8e74246f795b2bd1da01b4a114af47",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_global_bppo_seed0",
+      "prior_metadata_sha256": "4efe6165a19ee023e0ec18e6181533ec78d88ea1cdd25446e93c599ed88abb0d",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1118.6170008860063,
+      "linear_projected_seconds": 22372.340017720126
+    },
+    {
+      "variant": "hc3x2_local_mappo",
+      "seed": 0,
+      "config_sha256": "30d61b7b9abdd498b8437e80ff68b097676e4a6cd69d34602ac85aef6aa8b00c",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc3x2_local_mappo_seed0",
+      "prior_metadata_sha256": "e571c3dc7863d2a3bd64d633d263cbefaab1f9ef73dc6e7dc45de2c9d06c27e1",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 522.9364027889678,
+      "linear_projected_seconds": 10458.728055779357
+    },
+    {
+      "variant": "hc3x2_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "5b8f8d580a4160d34018c9b243d80b6750651a32c1072ed51068a70e686abbc0",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc3x2_local_agentmixer_seed0",
+      "prior_metadata_sha256": "0b935b443342fc0af07e7105e965a4095c2b7293dd748de63890faf15a78e4b8",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 784.5516968090087,
+      "linear_projected_seconds": 15691.033936180174
+    },
+    {
+      "variant": "hc3x2_local_identity",
+      "seed": 0,
+      "config_sha256": "7030b07e89283c7da0786ca80470f47b99eba6a47bab2eb8933ade180cc15c85",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc3x2_local_identity_seed0",
+      "prior_metadata_sha256": "2a3dfb917ed2c23573ac0ebee2b330cf1e80a6aff217c06948b8b2b8f6a77d32",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 715.1492206109688,
+      "linear_projected_seconds": 14302.984412219375
+    },
+    {
+      "variant": "hc6x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "e675a7a89c7d37da431ea5a1dddfedb2cbdb809ca9ed13bf569ba137997aabc7",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc6x1_local_mappo_seed0",
+      "prior_metadata_sha256": "82f90f476a01b5520a5d2b94ae69894dcfb12a88dff0099b630290ff428b84ee",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 550.192530605942,
+      "linear_projected_seconds": 11003.85061211884
+    },
+    {
+      "variant": "hc6x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "7894d2a91f7afeb7d557b35840b1cb7aacd8a3b1c34e89115a423e69e48d02b0",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc6x1_local_agentmixer_seed0",
+      "prior_metadata_sha256": "eed54207d37024e4023c586e8d13ff4945c2c36d706076a7bacb22a6920e5970",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 946.9470834010281,
+      "linear_projected_seconds": 18938.94166802056
+    },
+    {
+      "variant": "hc6x1_local_identity",
+      "seed": 0,
+      "config_sha256": "774825a0902cb86d0b5166bbd70dc546f878e7a6b1d0bf2781fd576fd8439024",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/hc6x1_local_identity_seed0",
+      "prior_metadata_sha256": "5a99502f841669e832d1926edc666d27d70813bd788baf427d6d34f6113e5b8c",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 852.7977092849324,
+      "linear_projected_seconds": 17055.954185698647
+    },
+    {
+      "variant": "walker3x2_local_mappo",
+      "seed": 0,
+      "config_sha256": "361e9754590ad1a23c471118227722f1e6f7c59710b16b4999e42243160d3cd4",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_mappo_seed0",
+      "prior_metadata_sha256": "3662c894a6a28b48c4d52946b32f1c86e52cbd3a3a23885c1c0c4009660a7261",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 559.6978020350216,
+      "linear_projected_seconds": 11193.956040700432
+    },
+    {
+      "variant": "walker3x2_local_arppo",
+      "seed": 0,
+      "config_sha256": "d6b673603f99d106a47c2b0da3aab7eba78dd0fa189c13811147d98e59b71140",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_arppo_seed0",
+      "prior_metadata_sha256": "09cafeaa601067c00286810166b920d6fbac3cde1fc6e571020b568a7333fa48",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 567.7294175369898,
+      "linear_projected_seconds": 11354.588350739796
+    },
+    {
+      "variant": "walker3x2_local_bppo",
+      "seed": 0,
+      "config_sha256": "fe62bb5862dde7aa4c9f065647c7f6fd2f139af58b421203096e8e26a1e4d396",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_bppo_seed0",
+      "prior_metadata_sha256": "841cb16479ae987450ba479f881e4c230f2917251793852bee905541fab4c8e2",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 581.0446696239524,
+      "linear_projected_seconds": 11620.893392479047
+    },
+    {
+      "variant": "walker3x2_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "0946fe2c4402af18a88cd1818c34ba44ff39cfe3c5fd8d567cc1d1875c201c5a",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_agentmixer_seed0",
+      "prior_metadata_sha256": "b5d5a97bef4b106b04046a086d2a01b61f743261a5cc990c97afb6bec7b5334e",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 841.9539940760005,
+      "linear_projected_seconds": 16839.07988152001
+    },
+    {
+      "variant": "walker3x2_local_identity",
+      "seed": 0,
+      "config_sha256": "047bcd90dddcea55ddf364af8d5f6fef2e9b63090f8fee2ed50398ec26857b2e",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker3x2_local_identity_seed0",
+      "prior_metadata_sha256": "5f6055d4baa375cae37f4e04d009af99789058ec090fd4fec759d86e6e31acf4",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 742.8079826509347,
+      "linear_projected_seconds": 14856.159653018694
+    },
+    {
+      "variant": "walker6x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "7a85e4dcca7499cb568ff4ec35772ff179300b318c2b7ef2cd96c0a7c30ac8e9",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_mappo_seed0",
+      "prior_metadata_sha256": "cd10b391e473353681d384aea919869252588748bcca29a5e96b996fcca4d2ff",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 548.8889684209134,
+      "linear_projected_seconds": 10977.779368418269
+    },
+    {
+      "variant": "walker6x1_local_arppo",
+      "seed": 0,
+      "config_sha256": "6028bc8604377d948d2bd354564d357dfc3d4d5915b908d5295e85435def69dc",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_arppo_seed0",
+      "prior_metadata_sha256": "45b14d01a590a229667a1951f6d6b0b1fc2347858e7138864bce173b1b1df278",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 601.9909508180572,
+      "linear_projected_seconds": 12039.819016361143
+    },
+    {
+      "variant": "walker6x1_local_bppo",
+      "seed": 0,
+      "config_sha256": "abeb7152ca86ead36f541913f61c8fd3f8528a694a2a7277f44d0a00a8d13388",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_bppo_seed0",
+      "prior_metadata_sha256": "2711fa49710b08e31e5df3a79fa8718e3523fc160edb35c0b7e4e223e6f30c13",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 598.647958024987,
+      "linear_projected_seconds": 11972.95916049974
+    },
+    {
+      "variant": "walker6x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "ea7e7ec306883ebf0cabbfa6e9587492267e03a324afeafd5d63711a2297729e",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_agentmixer_seed0",
+      "prior_metadata_sha256": "639841aa029262757b48bb70d9f5ad4ca28db2e7272723d64a75281b1eb4b2e3",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 947.2503430100624,
+      "linear_projected_seconds": 18945.006860201247
+    },
+    {
+      "variant": "walker6x1_local_identity",
+      "seed": 0,
+      "config_sha256": "76812b9ed6c0e1a287cea6ba781c856136d6bac31ff53b05a21f31cddc00ba0d",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/walker6x1_local_identity_seed0",
+      "prior_metadata_sha256": "30695eb3596cdf4809bca08a5845e67a0c8a6e58fdb09eae4ab8c6b113da765f",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 861.8171981850173,
+      "linear_projected_seconds": 17236.343963700347
+    },
+    {
+      "variant": "ant4x2_local_mappo",
+      "seed": 0,
+      "config_sha256": "2a1031f28c96398c0a76a61ce395270abefba69862fd87465839b6862107b47a",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_local_mappo_seed0",
+      "prior_metadata_sha256": "41ca47789955bdf0c2a700393efdecde0a6bfe723e0c7a982813b26271c00fdf",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 927.1444612599444,
+      "linear_projected_seconds": 18542.889225198887
+    },
+    {
+      "variant": "ant4x2_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "a939d2346edcd226c51fbb9b274433fb752665abc5a0ff06f93f56fe86b72541",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_local_agentmixer_seed0",
+      "prior_metadata_sha256": "d34bf837b51fab2516619fe5b42471806849d6913e29c3297b71923872a2c500",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1247.5971291949973,
+      "linear_projected_seconds": 24951.942583899945
+    },
+    {
+      "variant": "ant4x2_local_identity",
+      "seed": 0,
+      "config_sha256": "466605e7c220d0129d1695e2e6915e64f004ef8e15eaa9c40373fde36e519d42",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant4x2_local_identity_seed0",
+      "prior_metadata_sha256": "5a0ff6ac45bf4d91c0574fef35fdcd25441f08b8199361ac3b6f934e7a46dc6e",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1186.407117334078,
+      "linear_projected_seconds": 23728.14234668156
+    },
+    {
+      "variant": "ant8x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "d69df6be86c83135e341f3a46fed2b4bf247618732135bf0ce92b45b1976c021",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_local_mappo_seed0",
+      "prior_metadata_sha256": "845b4fae97817d2edeaed12c195c78bdfa1fa6e382e6fdd74334ea98f7df9ac5",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 993.3086365039926,
+      "linear_projected_seconds": 19866.172730079852
+    },
+    {
+      "variant": "ant8x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "bed8a9fc410718f0e024f856d3b8908fb5997dffab294b63ec2c4cb70f832665",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_local_agentmixer_seed0",
+      "prior_metadata_sha256": "011abf0a49f5864c09abeaa7b7171fa025163eeb5b7857967eef3120b15fdcbb",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1448.4210442089243,
+      "linear_projected_seconds": 28968.420884178486
+    },
+    {
+      "variant": "ant8x1_local_identity",
+      "seed": 0,
+      "config_sha256": "7e37f00bf80ad6dc471730ed078afef4ebc44a6a42a8dc11bcc2a47d3931a2d0",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant8x1_local_identity_seed0",
+      "prior_metadata_sha256": "b3f5fc7de5a0c139bb303e90452cb7de26a73711dc01449d7fe5d82391301e2b",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1330.4695994730573,
+      "linear_projected_seconds": 26609.391989461146
+    },
+    {
+      "variant": "ant2x4d_local_mappo",
+      "seed": 0,
+      "config_sha256": "59d35bf844043b85b2dc3d0ca7112e05177cc54e3adadcc1a53288ed82999bc2",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant2x4d_local_mappo_seed0",
+      "prior_metadata_sha256": "035cdba2d4dae0e26df529812b2a6fa0c5d4819a89eddf980b089e28849629e2",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1019.6719276949298,
+      "linear_projected_seconds": 20393.438553898595
+    },
+    {
+      "variant": "ant2x4d_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "d1c025f92086feb244f6f3e9d88fc8aeb2fc89d4272c1a368c0d859950bae637",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant2x4d_local_agentmixer_seed0",
+      "prior_metadata_sha256": "01130912fabcdfd6f0280f0560b6eab447a35ca8a740b10538d37f7e78f6816b",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1383.834897947032,
+      "linear_projected_seconds": 27676.69795894064
+    },
+    {
+      "variant": "ant2x4d_local_identity",
+      "seed": 0,
+      "config_sha256": "0bfdf1bfefca6f9981e2ecbcc93e88b7ec7845c61329692f9c5ce5334fd4510b",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/ant2x4d_local_identity_seed0",
+      "prior_metadata_sha256": "f9ea9cf9c58dd7b7c2af565d5b75ba71f1b6c7a7df93a2a640294094c9b03434",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1375.2391037400812,
+      "linear_projected_seconds": 27504.782074801624
+    },
+    {
+      "variant": "humanoid17x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "11327285fcc00003e724d4cbd4b6c221692ed19ecad3303569c76bee47e15be7",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoid17x1_local_mappo_seed0",
+      "prior_metadata_sha256": "2254b71d3268ed12532f4976515368b31af76f896dddfcf18ea9d403e8adb106",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1199.9236781740328,
+      "linear_projected_seconds": 23998.473563480657
+    },
+    {
+      "variant": "humanoid17x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "e9695e4b69e74e2dfc799e0a8e5b3fb4586acf1597a0a583ce2e53bb371824d2",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoid17x1_local_agentmixer_seed0",
+      "prior_metadata_sha256": "18c3dab8f3f5ebed57ebba9a4fc24f0cdfb0bf03324000da1700e21b7cefba51",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 2763.881919627078,
+      "linear_projected_seconds": 55277.63839254156
+    },
+    {
+      "variant": "humanoid17x1_local_identity",
+      "seed": 0,
+      "config_sha256": "88e502660a3a0dc6659abcd6b2b3f3e5aed1c585df2ae57ce0d67abd5e0b559a",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoid17x1_local_identity_seed0",
+      "prior_metadata_sha256": "716e2a99b35bd0240240ac76c205c269e35c9b0098798b4176f69007835d167a",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 2393.1832443349995,
+      "linear_projected_seconds": 47863.66488669999
+    },
+    {
+      "variant": "humanoidstandup17x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "6f18f20fc90f5ec8c1013014395d8ba5f7c984be70ba7466a93af351dc1e5b0d",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoidstandup17x1_local_mappo_seed0",
+      "prior_metadata_sha256": "564c4574405edfc315f2c969e088f16f48e31dd88f004e83d3a370388ec1c3b5",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 1552.518730573007,
+      "linear_projected_seconds": 31050.374611460138
+    },
+    {
+      "variant": "humanoidstandup17x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "0f98f2a07851ab375ef8b5a3128a08806ee5724db9bc9628b84038e95f8a8014",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoidstandup17x1_local_agentmixer_seed0",
+      "prior_metadata_sha256": "66c22fb6df8633620dff46affa7861601f25456bccd7712f948b1a3e0113dabb",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 3066.2348307310604,
+      "linear_projected_seconds": 61324.69661462121
+    },
+    {
+      "variant": "humanoidstandup17x1_local_identity",
+      "seed": 0,
+      "config_sha256": "3eb7b2688fae100a97d40e33e0f2c716e0b9f9351e683fe6dcff7563fd708d62",
+      "prior_manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+      "prior_output": "results/mujoco_remaining_transfer500k_20261026T215632Z/humanoidstandup17x1_local_identity_seed0",
+      "prior_metadata_sha256": "a09aaa1277f9d3f9e03acad034c160083db8e0e4919d2ac51a0c965df860bdf1",
+      "changed_fields": {
+        "steps": {
+          "old": 500000,
+          "new": 10000000
+        }
+      },
+      "prior_elapsed_seconds": 2675.062315952964,
+      "linear_projected_seconds": 53501.24631905928
+    }
+  ],
+  "frozen_parser_passed": true,
+  "endpoints": {
+    "primary": "Final10M evaluation for every declared method/task; all outcomes retained",
+    "secondary": "Full0\u201310M normalized learning-curve area",
+    "aggregation": "Seed0 development only; no training-seed uncertainty or independent-final claim. For task comparisons all declared controls for that task must finish and validate. No ranking from incomplete arms or early peak replacement."
+  },
+  "allocation": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 4,
+    "wall_hours_per_task": 30,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "max_projected_hours": 17.034637948505893,
+  "sum_projected_worker_hours": 277.9588907461322,
+  "runtime_rationale": "Linear scaling of complete pilot including all evaluation overhead; new evaluation count per training step is no larger. Wall cap exceeds1.5x every measured projection. Longer-lived policies may alter simulator throughput; estimates are not guarantees.",
+  "dependency": "afterany:21251961",
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  },
+  "scheduled_maximum": {
+    "workers": 8,
+    "cpus": 10,
+    "memory_gib": 96
+  },
+  "dispatch_script": "results/mujoco_coverage10m_dispatch_20261029/submit.sbatch",
+  "dispatch_script_sha256": "3789576fc2ca4de154bfc3717c4ce28736d2e70d09ffe19145cd7f3e98c240dc",
+  "accounting_snapshot": "results/completion_audits_20261029/accounting_initial.txt",
+  "accounting_sha256": "6ed89582cd88eef0a94f5153e9fd58c13c8c44dde477bef45b1371279a5fec62",
+  "authorizer": "Standing user authorization to continue reproduction and approve nonrisky commands; no new paid services."
+}

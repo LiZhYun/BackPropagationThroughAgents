@@ -1,0 +1,41 @@
+{
+  "json_files_parsed": [
+    "configs/mujoco_coverage10m.json",
+    "configs/smac_terran5_gru10m.json",
+    "experiments/benchmark_coverage_20261029.provenance.json",
+    "experiments/football20m_progress_20261029.json",
+    "experiments/hc2x3_entropy0_10m_progress_20261029.json",
+    "experiments/hc_partitions10m_progress_20261029.json",
+    "experiments/mujoco_coverage10m_plan_20261029.json",
+    "experiments/mujoco_coverage10m_schedule_20261029.json",
+    "experiments/mujoco_remaining500k_complete_20261029.json",
+    "experiments/progress_audit_20261029.json",
+    "experiments/smac_layout25_1m_complete_20261029.json",
+    "experiments/smac_layout_comparison_20261029.json",
+    "experiments/smac_terran5_gru10m_plan_20261029.json",
+    "experiments/smac_terran5_gru10m_schedule_20261029.json"
+  ],
+  "local_links_verified": 111,
+  "backup_link_rule": "Verbatim STATUS backups retain original repository-root-relative links; interpreted from original context, not rewritten.",
+  "source_config_verifications": [
+    {
+      "label": "smac_terran5_gru10m",
+      "configs": 5,
+      "frozen_source_verified": true
+    },
+    {
+      "label": "mujoco_coverage10m",
+      "configs": 48,
+      "frozen_source_verified": true
+    }
+  ],
+  "canonical_targets": {
+    "total": 45,
+    "numeric": 6,
+    "digitized": 39,
+    "errors": []
+  },
+  "training_package_changes": false,
+  "full_test_suite_rerun": false,
+  "reason": "Only experiment plans, evidence and documentation changed; raw numerical audits and frozen-parser/hash checks cover the work."
+}
