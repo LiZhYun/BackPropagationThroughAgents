@@ -81,3 +81,10 @@ All four declarations remain visible.
 No baseline aggregate or algorithm advantage is inferred from this partial
 study. All four pilots must finish validly before selecting the10M follow-up;
 one development seed also cannot establish independent performance.
+
+
+## Complete pilots and full-budget development — 2026-10-28
+
+All four 500k pilots pass the [complete audit](../experiments/hc_partitions_transfer500k_complete_20261028.json): 240 raw episodes and 500 updates. Final AR/BPPO returns are 3180.88/2506.77 at 3×2 and 2766.72/2174.01 at 6×1. These short results do not establish the 10M target.
+
+Job **21251961** runs both methods at both partitions with development seeds 0–2: **12 runs at 10M**. Source and optimization settings are unchanged; evaluation uses 32 complete episodes every 500k. Each task requests one CPU/4 GiB/seven hours, at most two active. The worst measured-phase projection is 3.59 hours. [Frozen study](../experiments/followup_studies_20261028.json), [resource plan](../experiments/followup_release_plan_20261028.json). The independent 2×3 BPPO confirmation failed and remains separate; these development runs do not replace it.

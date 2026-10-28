@@ -1,5 +1,25 @@
 # HalfCheetah 2×3 independent confirmation
 
+## Completed independent result — 2026-10-28
+
+All ten runs are valid, but the frozen BPPO confirmation **fails** its figure-reading criterion. Five fresh BPPO seeds average **5372.06 ± 390.17** (sample SD), compared with the digitized range [5660, 5740]. The whole-seed bootstrap 95% mean interval is [5152.38, 5722.81]. AR-PPO averages **5782.67 ± 516.02**. Paired BPPO minus AR-PPO is −410.62, with interval [−997.55, 304.16]; normalized curve-area difference is −130.65, with interval [−343.60, 37.38]. These intervals do not establish a peer-feedback advantage.
+
+| Fresh training seed | BPPO final return | AR-PPO final return |
+| --- | ---: | ---: |
+| 1000 | 5202.87 | 5911.78 |
+| 1001 | 6055.81 | 5190.83 |
+| 1002 | 5080.14 | 6308.34 |
+| 1003 | 5223.31 | 5293.04 |
+| 1004 | 5298.16 | 6209.38 |
+
+The [frozen-rule report](../experiments/hc2x3_confirmation10m_complete_20261028.json) and [CSV](../experiments/hc2x3_confirmation10m_complete_20261028.csv) retain all seeds. The separate [raw audit](../experiments/hc2x3_confirmation10m_raw_audit_20261028.json) verifies 6,720 evaluation episodes and 25,000 updates, including source/configuration hashes, seeds, optimizer counts and ValueNorm accounting. Both scheduler workers completed with exit 0.
+
+![Complete independent confirmation curves](figures/confirmation10m_20261028.png)
+
+[PDF](figures/confirmation10m_20261028.pdf). Lines are five-training-seed means; shading is one sample SD, not a confidence interval. Development results below remain separate. Failed confirmation seeds are neither replaced nor pooled with development seeds. Any revised configuration requires a new disjoint final seed set.
+
+## Earlier development evidence and frozen protocol
+
 All six development runs complete the 10M-step budget. The
 [full audited comparison](../experiments/hc2x3_10m_complete_20261026.json)
 verifies the frozen source, 4,032 raw evaluation episodes and 15,000 rollout
@@ -76,8 +96,7 @@ serial chains. Scheduler IDs and verified edges belong to
 
 The frozen study was subsequently submitted as **21214776**. Both workers were
 held until their respective `afterany:21212297_0` and `afterany:21212297_1`
-dependencies and resource limits were verified, then released. They remain
-queued behind those predecessors; no active experiment was changed.
+dependencies and resource limits were verified, then released. At submission they were queued behind those predecessors; both workers have now completed.
 
 This is one target's confirmation study. It does not complete the remaining
 MuJoCo, SMAC, Football, Predator–Prey or matrix-game release requirements.

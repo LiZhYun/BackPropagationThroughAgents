@@ -1,7 +1,17 @@
 # Remaining MuJoCo learning coverage
 
-Job **21221614** runs37 native checks for the remaining task/method gaps.
-The paired500k learning plans are frozen but **not submitted**. This work
+## Native checks complete; learning released — 2026-10-28
+
+All **37/37** native gates pass: **148 raw evaluation episodes and 111 rollout updates** are verified against frozen configurations, source, seeds, environment dimensions and optimizer/ValueNorm counts. Both workers exit 0; sampled batch peak memory is **1.58 GiB**. See the [complete audit](../experiments/mujoco_remaining_native_gate_complete_20261028.json).
+
+All 37 previously frozen 500k learning pilots are now released as **21251756**, with one CPU, 4 GiB, 90 minutes per run and at most two active tasks. The slowest phase-based estimate is 41.7 minutes; the allocation includes more than double that time. No training configuration or source changed. [Resource plan](../experiments/mujoco_remaining_pilot_release_20261028.json), [scheduler receipt](../experiments/mujoco_remaining_pilot_schedule_20261028.json).
+
+The original gate design below is retained as history. The provisional two-hour pilot header was superseded by the measured allocation above. Full 10M budgets and independent training seeds remain outstanding.
+
+## Original frozen preparation
+
+Job **21221614** ran37 native checks for the remaining task/method gaps.
+At preparation, the paired500k learning plans were frozen but unsubmitted; they are now released as described above. This work
 covers nine task/observation groups without learning pilots, plus the missing
 MAPPO/AgentMixer/identity controls for HalfCheetah3×2 and6×1.
 

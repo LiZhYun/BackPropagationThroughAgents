@@ -1,6 +1,6 @@
 # Experiment plan
 
-Date: 2026-10-25. Status: active; no full benchmark reproduction claimed.
+Updated: 2026-10-28. Status: active work; no full benchmark reproduction claimed. Earlier dated plans and allocations remain as history.
 
 ## Claim map
 
@@ -164,3 +164,18 @@ scheduler resource audits; the pilot allocation remains provisional until
 measured. Two2CPU/8GiB/two-hour gate workers insert into A0/B0 without changing
 the eight-worker ceiling. These are development studies below10M,not final
 confirmation. See [the coverage guide](../docs/mujoco_remaining_transfer.md).
+
+## 2026-10-28 measured follow-ups
+
+All eleven earlier arrays completed. The independent HalfCheetah confirmation fails the paper-reading criterion and is retained. Full-budget Football and HalfCheetah partition development studies follow completed pilots; SMAC first tests the released25×400 collection layout. See [frozen studies](../experiments/followup_studies_20261028.json) and [resource plan](../experiments/followup_release_plan_20261028.json).
+
+The aggregate ceiling remains eight workers,16 CPUs and64GiB. One30-minute native SMAC gate may request32GiB, replacing the earlier8GiB per-worker limit for this diagnostic only. With two4GiB MuJoCo pilots,two4GiB HC runs and two8GiB Football runs,maximum concurrency is seven workers/eight CPUs/64GiB. This is an autonomous bounded allocation under standing authorization; no GPU or paid service. SMAC learning remains unsubmitted pending all five native checks and measured memory.
+
+## SMAC measured memory allocation,2026-10-28
+
+All five25×400 native checks pass; sampled peak21.24GiB and worst1M phase projection8.48h. Release the five frozen1M controls with two2CPU/32GiB/14h workers. The total memory ceiling rises64→96GiB,while eight workers and16CPUs remain the ceiling;actual scheduled maximum8workers/10CPUs/96GiB. This measured,autonomous allocation runs the same declared study faster. No GPU,paidcompute,unrelatedjob changes or extra experimental trials. [Release record](../experiments/smac_layout25_learning_release_20261028.json). Both tasks follow diagnostic21252362 so the temporary2GiB diagnostic cannot overlap the full96GiB reservation.
+
+
+## Full-budget entropy control after final-policy diagnosis
+
+All nine AgentMixer final policies exactly replay under their frozen source. The complete diagnostic identifies scale/clamp behavior but does not establish causality. Test entropy0 versus0.01 at the same10M budget/source/configuration/grid for all three variants and development seeds0–2. Job21252423 reuses the two MuJoCo coverage-worker slots after21251756 completes;the8worker/16CPU/96GiB ceiling is unchanged. All18 old/new outcomes are required before paired interpretation. This does not replace independent final seeds or the failed BPPO confirmation. See [frozen plan](../experiments/hc2x3_entropy0_10m_plan_20261028.json).

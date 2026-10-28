@@ -1,0 +1,1415 @@
+{
+  "study_id": "hc2x3_confirmation10m_20261026",
+  "scope": "Independent validation of corrected BPPO and its matched AR-PPO control under the pinned HalfCheetah2x3 reconstruction. Not certification of the original historical plotting protocol or other paper targets.",
+  "plan_sha256": "9e9bf7a1036c248ba4f39dfbb2c9334a1397886cb5f32083e5b8c29db5d8b29a",
+  "reporter_sha256": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+  "curve_reader_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1000,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1000",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.3066922951361782
+        },
+        {
+          "steps": 500000,
+          "value": 2133.66423095112
+        },
+        {
+          "steps": 1000000,
+          "value": 3113.2435951162634
+        },
+        {
+          "steps": 1500000,
+          "value": 4429.524400559469
+        },
+        {
+          "steps": 2000000,
+          "value": 4697.351328378398
+        },
+        {
+          "steps": 2500000,
+          "value": 4843.725137913405
+        },
+        {
+          "steps": 3000000,
+          "value": 5140.946115622251
+        },
+        {
+          "steps": 3500000,
+          "value": 5321.80645409597
+        },
+        {
+          "steps": 4000000,
+          "value": 5295.485546666332
+        },
+        {
+          "steps": 4500000,
+          "value": 5414.48042486795
+        },
+        {
+          "steps": 5000000,
+          "value": 5483.8837238915485
+        },
+        {
+          "steps": 5500000,
+          "value": 5507.458464951274
+        },
+        {
+          "steps": 6000000,
+          "value": 5700.5260291024415
+        },
+        {
+          "steps": 6500000,
+          "value": 5345.279131228357
+        },
+        {
+          "steps": 7000000,
+          "value": 5670.597294137101
+        },
+        {
+          "steps": 7500000,
+          "value": 5547.873615490246
+        },
+        {
+          "steps": 8000000,
+          "value": 5831.1350206428515
+        },
+        {
+          "steps": 8500000,
+          "value": 5771.779597005344
+        },
+        {
+          "steps": 9000000,
+          "value": 5742.2897172399935
+        },
+        {
+          "steps": 9500000,
+          "value": 5122.871332313909
+        },
+        {
+          "steps": 10000000,
+          "value": 5202.871747943873
+        }
+      ],
+      "full_budget_auc": {
+        "area": 49357601843.9993,
+        "normalized_by_training_steps": 4935.76018439993
+      },
+      "budget": 10000000,
+      "summary_sha256": "d36ecce2fa1a7ee7a7b58b3e76eb608ec99a681b7eb9eb82495b40915f27b5fd",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "314a2659b81ae36cd6236e748fdd183b70be42c980e9d8763691865f7628d060",
+      "metrics_snapshot_sha256": "3d9c20c308318fe7d443c8cc4ed92da9a442209b5fc28cdc1a86ce1035692ab6",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "f23541d712eb1553337c70211c4060efb7d16425822ac4ebd4543579bbb01fce",
+      "checkpoint_sha256": "d79653cbf3861b706f4d4fd9ee0208a558f8b17de5b771380b860a26af42b788",
+      "final_return": 5202.871747943873,
+      "normalized_auc": 4935.76018439993
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1001,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1001",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.31169768637777184
+        },
+        {
+          "steps": 500000,
+          "value": 1299.3273018147224
+        },
+        {
+          "steps": 1000000,
+          "value": 4020.6235290862955
+        },
+        {
+          "steps": 1500000,
+          "value": 4892.104257731366
+        },
+        {
+          "steps": 2000000,
+          "value": 5092.028685479994
+        },
+        {
+          "steps": 2500000,
+          "value": 4915.3882265795255
+        },
+        {
+          "steps": 3000000,
+          "value": 5573.246187156949
+        },
+        {
+          "steps": 3500000,
+          "value": 5441.124493348287
+        },
+        {
+          "steps": 4000000,
+          "value": 5664.001044221963
+        },
+        {
+          "steps": 4500000,
+          "value": 5776.098100670334
+        },
+        {
+          "steps": 5000000,
+          "value": 5564.974394933763
+        },
+        {
+          "steps": 5500000,
+          "value": 5253.209025659373
+        },
+        {
+          "steps": 6000000,
+          "value": 5595.535175905697
+        },
+        {
+          "steps": 6500000,
+          "value": 5968.583375213106
+        },
+        {
+          "steps": 7000000,
+          "value": 5635.540476222353
+        },
+        {
+          "steps": 7500000,
+          "value": 5937.912301880666
+        },
+        {
+          "steps": 8000000,
+          "value": 5711.423383630432
+        },
+        {
+          "steps": 8500000,
+          "value": 6175.663417959155
+        },
+        {
+          "steps": 9000000,
+          "value": 6107.2182525846865
+        },
+        {
+          "steps": 9500000,
+          "value": 6012.562786424711
+        },
+        {
+          "steps": 10000000,
+          "value": 6055.810111939962
+        }
+      ],
+      "full_budget_auc": {
+        "area": 51832156811.81509,
+        "normalized_by_training_steps": 5183.215681181508
+      },
+      "budget": 10000000,
+      "summary_sha256": "edf6065759b64c98078dc825a018cd76fdb3dce5da1b2e90c19097f3dfb0d20b",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "314a2659b81ae36cd6236e748fdd183b70be42c980e9d8763691865f7628d060",
+      "metrics_snapshot_sha256": "09b90d88d1ef146df60ffbe3d91ec13ab8519d475c533631fe1c702ddb82740f",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "4a7e296320be6c3f70f2546160a7ce9a1500936ccc8f3187cb2ea8f406c1fd72",
+      "checkpoint_sha256": "732b10a64b26e99be5259832c0cff4490affca07604d0fe10c43b440edb6c641",
+      "final_return": 6055.810111939962,
+      "normalized_auc": 5183.215681181508
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1002,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1002",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.32612758148424614
+        },
+        {
+          "steps": 500000,
+          "value": 1263.9618714734788
+        },
+        {
+          "steps": 1000000,
+          "value": 4194.156136578258
+        },
+        {
+          "steps": 1500000,
+          "value": 4859.4659960662075
+        },
+        {
+          "steps": 2000000,
+          "value": 5317.007294647892
+        },
+        {
+          "steps": 2500000,
+          "value": 5364.109870320194
+        },
+        {
+          "steps": 3000000,
+          "value": 5316.481145056872
+        },
+        {
+          "steps": 3500000,
+          "value": 5590.601887070064
+        },
+        {
+          "steps": 4000000,
+          "value": 5622.873837342768
+        },
+        {
+          "steps": 4500000,
+          "value": 5677.587225716712
+        },
+        {
+          "steps": 5000000,
+          "value": 5428.944118735266
+        },
+        {
+          "steps": 5500000,
+          "value": 5405.71500331095
+        },
+        {
+          "steps": 6000000,
+          "value": 5754.2904405777945
+        },
+        {
+          "steps": 6500000,
+          "value": 5220.243878508302
+        },
+        {
+          "steps": 7000000,
+          "value": 5573.534108658317
+        },
+        {
+          "steps": 7500000,
+          "value": 5712.296253709802
+        },
+        {
+          "steps": 8000000,
+          "value": 5469.419199906693
+        },
+        {
+          "steps": 8500000,
+          "value": 5823.246996186029
+        },
+        {
+          "steps": 9000000,
+          "value": 5372.679711049129
+        },
+        {
+          "steps": 9500000,
+          "value": 6039.438225146187
+        },
+        {
+          "steps": 10000000,
+          "value": 5080.1397966889945
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50772980017.307335,
+        "normalized_by_training_steps": 5077.298001730734
+      },
+      "budget": 10000000,
+      "summary_sha256": "e653d9427741058e62f5fc787f82775b3d9cd05e435183cf905ca25a1a8a80c8",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "314a2659b81ae36cd6236e748fdd183b70be42c980e9d8763691865f7628d060",
+      "metrics_snapshot_sha256": "67f353ae595ba497a2f572f99008e9153bfdc590a563023fd3f182094b707caa",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "f9257314bc980f66cc13085b7f9ed55fda2c6917091198dc2ffe770ea5a5ce5f",
+      "checkpoint_sha256": "c0c47c3d380da2fdbda6835e8b59b5a4a6628284d615675582727c7188b139af",
+      "final_return": 5080.1397966889945,
+      "normalized_auc": 5077.298001730734
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1003,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1003",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.3129720648201094
+        },
+        {
+          "steps": 500000,
+          "value": 1608.0424067084766
+        },
+        {
+          "steps": 1000000,
+          "value": 4065.655196047422
+        },
+        {
+          "steps": 1500000,
+          "value": 4128.086322326833
+        },
+        {
+          "steps": 2000000,
+          "value": 4222.759214392005
+        },
+        {
+          "steps": 2500000,
+          "value": 4668.0910670171825
+        },
+        {
+          "steps": 3000000,
+          "value": 4900.018145998139
+        },
+        {
+          "steps": 3500000,
+          "value": 5186.575089423861
+        },
+        {
+          "steps": 4000000,
+          "value": 5299.568111941862
+        },
+        {
+          "steps": 4500000,
+          "value": 5318.84635421605
+        },
+        {
+          "steps": 5000000,
+          "value": 5438.893873568296
+        },
+        {
+          "steps": 5500000,
+          "value": 5590.329617563459
+        },
+        {
+          "steps": 6000000,
+          "value": 5508.034537615603
+        },
+        {
+          "steps": 6500000,
+          "value": 5706.2425677323345
+        },
+        {
+          "steps": 7000000,
+          "value": 5635.564094678569
+        },
+        {
+          "steps": 7500000,
+          "value": 5547.7044927186835
+        },
+        {
+          "steps": 8000000,
+          "value": 5750.083041626013
+        },
+        {
+          "steps": 8500000,
+          "value": 5918.198667503085
+        },
+        {
+          "steps": 9000000,
+          "value": 5974.289965034365
+        },
+        {
+          "steps": 9500000,
+          "value": 5805.453964078546
+        },
+        {
+          "steps": 10000000,
+          "value": 5223.307075659677
+        }
+      ],
+      "full_budget_auc": {
+        "area": 49441966890.99411,
+        "normalized_by_training_steps": 4944.196689099411
+      },
+      "budget": 10000000,
+      "summary_sha256": "71c743dd752fcfea14d4d4a0820bc70160ae0135658dd834cc4e122a42d44d05",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "314a2659b81ae36cd6236e748fdd183b70be42c980e9d8763691865f7628d060",
+      "metrics_snapshot_sha256": "6a6c1f60d8cb9284e7ba333aa3e744f667e572a82a5b5b2917e542c7968f4cc1",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "5225a45c9f7618b2d0a7a8d3019f18744131303a427179a142a7243ef76acd01",
+      "checkpoint_sha256": "e7d0b1fa7009796250366b788eeca3d0afddd4640bb276a7b1c3c1651d29aeea",
+      "final_return": 5223.307075659677,
+      "normalized_auc": 4944.196689099411
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo_protocol",
+      "seed": 1004,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/bppo_protocol_seed1004",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.3344029573033071
+        },
+        {
+          "steps": 500000,
+          "value": 2424.0377279372874
+        },
+        {
+          "steps": 1000000,
+          "value": 3319.4291954869655
+        },
+        {
+          "steps": 1500000,
+          "value": 3520.618569933135
+        },
+        {
+          "steps": 2000000,
+          "value": 4193.472215485345
+        },
+        {
+          "steps": 2500000,
+          "value": 4690.21807745307
+        },
+        {
+          "steps": 3000000,
+          "value": 4772.973945143652
+        },
+        {
+          "steps": 3500000,
+          "value": 4189.423103092282
+        },
+        {
+          "steps": 4000000,
+          "value": 4669.038472501691
+        },
+        {
+          "steps": 4500000,
+          "value": 4927.4737570151
+        },
+        {
+          "steps": 5000000,
+          "value": 5102.028702709486
+        },
+        {
+          "steps": 5500000,
+          "value": 4931.58189246755
+        },
+        {
+          "steps": 6000000,
+          "value": 5113.385427624445
+        },
+        {
+          "steps": 6500000,
+          "value": 5232.111430696287
+        },
+        {
+          "steps": 7000000,
+          "value": 5160.562679475644
+        },
+        {
+          "steps": 7500000,
+          "value": 4959.963278331724
+        },
+        {
+          "steps": 8000000,
+          "value": 5140.629098706975
+        },
+        {
+          "steps": 8500000,
+          "value": 5048.354517495649
+        },
+        {
+          "steps": 9000000,
+          "value": 5210.183589563835
+        },
+        {
+          "steps": 9500000,
+          "value": 5191.559572720971
+        },
+        {
+          "steps": 10000000,
+          "value": 5298.15820205008
+        }
+      ],
+      "full_budget_auc": {
+        "area": 45222978576.69374,
+        "normalized_by_training_steps": 4522.297857669374
+      },
+      "budget": 10000000,
+      "summary_sha256": "ad2ee5b8030dc120b4c8ec733cc88839c627e2b5227cbc18fd41306a71bb146e",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "314a2659b81ae36cd6236e748fdd183b70be42c980e9d8763691865f7628d060",
+      "metrics_snapshot_sha256": "00904ef86fe538d015953bcc4c590765253b4570c4010cc2e7d1cc0bb6fa68a2",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "6e2683d6653ca29af0c2ce232344f9ce78e24845e44298749c09ad80566b3636",
+      "checkpoint_sha256": "407793a4f51dc977a2107ebd958a2ffefb9ec95388ebb1ac62e96c365d2b79b4",
+      "final_return": 5298.15820205008,
+      "normalized_auc": 4522.297857669374
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1000,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1000",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.3066922951361782
+        },
+        {
+          "steps": 500000,
+          "value": 1307.5829083613953
+        },
+        {
+          "steps": 1000000,
+          "value": 3228.0430652366513
+        },
+        {
+          "steps": 1500000,
+          "value": 4931.223332689867
+        },
+        {
+          "steps": 2000000,
+          "value": 5073.408858868153
+        },
+        {
+          "steps": 2500000,
+          "value": 4888.420941833427
+        },
+        {
+          "steps": 3000000,
+          "value": 4780.596755050958
+        },
+        {
+          "steps": 3500000,
+          "value": 5225.215447439218
+        },
+        {
+          "steps": 4000000,
+          "value": 5624.005407662713
+        },
+        {
+          "steps": 4500000,
+          "value": 5713.582081472009
+        },
+        {
+          "steps": 5000000,
+          "value": 5641.459433069729
+        },
+        {
+          "steps": 5500000,
+          "value": 5739.167067148072
+        },
+        {
+          "steps": 6000000,
+          "value": 5745.9908993917425
+        },
+        {
+          "steps": 6500000,
+          "value": 5830.995201529103
+        },
+        {
+          "steps": 7000000,
+          "value": 5697.958187131717
+        },
+        {
+          "steps": 7500000,
+          "value": 5873.167311005123
+        },
+        {
+          "steps": 8000000,
+          "value": 5242.757628563986
+        },
+        {
+          "steps": 8500000,
+          "value": 5896.683129185692
+        },
+        {
+          "steps": 9000000,
+          "value": 6127.394520132346
+        },
+        {
+          "steps": 9500000,
+          "value": 5750.131850643782
+        },
+        {
+          "steps": 10000000,
+          "value": 5911.779273075006
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50636760158.40281,
+        "normalized_by_training_steps": 5063.676015840281
+      },
+      "budget": 10000000,
+      "summary_sha256": "f9549d7f29b9b91538024d28f16583bb5fa60906ea6f5552b196845ebdabc9a7",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "e6a7b31ce62a8884e135382aa1024d7394a9c4cc1a1e500aa0c471e772872849",
+      "metrics_snapshot_sha256": "f9941ea377b89926b3e33c73a7021bac85b245febd74d4899e3bd62275c2ab5d",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "ac6a5139cf608a3cafffef64a447fe0a7b5ca3c2b8cc79575c3c6952eda59273",
+      "checkpoint_sha256": "109df7792266e367aae661923b864e76303c8816b194646a23a3e86c7e646fdd",
+      "final_return": 5911.779273075006,
+      "normalized_auc": 5063.676015840281
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1001,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1001",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.31169768637777184
+        },
+        {
+          "steps": 500000,
+          "value": 3424.5581320973947
+        },
+        {
+          "steps": 1000000,
+          "value": 4106.387599133768
+        },
+        {
+          "steps": 1500000,
+          "value": 4411.351129499414
+        },
+        {
+          "steps": 2000000,
+          "value": 4804.413313847336
+        },
+        {
+          "steps": 2500000,
+          "value": 5261.792230450616
+        },
+        {
+          "steps": 3000000,
+          "value": 5319.112669573149
+        },
+        {
+          "steps": 3500000,
+          "value": 5042.045678116514
+        },
+        {
+          "steps": 4000000,
+          "value": 5483.083103987517
+        },
+        {
+          "steps": 4500000,
+          "value": 5707.891149139684
+        },
+        {
+          "steps": 5000000,
+          "value": 4881.513114917512
+        },
+        {
+          "steps": 5500000,
+          "value": 5473.789150663847
+        },
+        {
+          "steps": 6000000,
+          "value": 5435.6983455566115
+        },
+        {
+          "steps": 6500000,
+          "value": 5307.341907620978
+        },
+        {
+          "steps": 7000000,
+          "value": 5829.209195094252
+        },
+        {
+          "steps": 7500000,
+          "value": 5510.908888309235
+        },
+        {
+          "steps": 8000000,
+          "value": 5144.005887246347
+        },
+        {
+          "steps": 8500000,
+          "value": 5606.808023937419
+        },
+        {
+          "steps": 9000000,
+          "value": 5629.7833243141085
+        },
+        {
+          "steps": 9500000,
+          "value": 6043.2792443226135
+        },
+        {
+          "steps": 10000000,
+          "value": 5190.826018209487
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50509114624.04494,
+        "normalized_by_training_steps": 5050.911462404494
+      },
+      "budget": 10000000,
+      "summary_sha256": "98173d711dcbffe99cdedaad13062d6a72ac80786882cb9938f608c0172ec58e",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "e6a7b31ce62a8884e135382aa1024d7394a9c4cc1a1e500aa0c471e772872849",
+      "metrics_snapshot_sha256": "ab25515b1d08397d39ad32d84072fa956ea61bc92f26df39a6b5a5f6caa7d24e",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "c4a5d053d68152711ab4795ab5d2174af1373eb4f9681ffd68b44a5db2fdfe33",
+      "checkpoint_sha256": "9b36ae60e3a8edd2bfac2e54a563fd7516da0daf400344771ddbf422a59a0a48",
+      "final_return": 5190.826018209487,
+      "normalized_auc": 5050.911462404494
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1002,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1002",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.32612758148424614
+        },
+        {
+          "steps": 500000,
+          "value": 2908.2472039800455
+        },
+        {
+          "steps": 1000000,
+          "value": 3851.991297490593
+        },
+        {
+          "steps": 1500000,
+          "value": 3777.763826496388
+        },
+        {
+          "steps": 2000000,
+          "value": 4445.174816613121
+        },
+        {
+          "steps": 2500000,
+          "value": 5076.727537915205
+        },
+        {
+          "steps": 3000000,
+          "value": 5235.202719504549
+        },
+        {
+          "steps": 3500000,
+          "value": 5305.665812009528
+        },
+        {
+          "steps": 4000000,
+          "value": 5341.227560082756
+        },
+        {
+          "steps": 4500000,
+          "value": 5308.732296192744
+        },
+        {
+          "steps": 5000000,
+          "value": 5793.860898621894
+        },
+        {
+          "steps": 5500000,
+          "value": 5508.703509480023
+        },
+        {
+          "steps": 6000000,
+          "value": 5800.548446696837
+        },
+        {
+          "steps": 6500000,
+          "value": 5939.966036322388
+        },
+        {
+          "steps": 7000000,
+          "value": 5714.730717320363
+        },
+        {
+          "steps": 7500000,
+          "value": 5864.940549054868
+        },
+        {
+          "steps": 8000000,
+          "value": 5964.6513132987575
+        },
+        {
+          "steps": 8500000,
+          "value": 6060.590437284803
+        },
+        {
+          "steps": 9000000,
+          "value": 6109.38606297959
+        },
+        {
+          "steps": 9500000,
+          "value": 6025.6054783315985
+        },
+        {
+          "steps": 10000000,
+          "value": 6308.33864031919
+        }
+      ],
+      "full_budget_auc": {
+        "area": 51593861388.02245,
+        "normalized_by_training_steps": 5159.386138802245
+      },
+      "budget": 10000000,
+      "summary_sha256": "438afcc393514f75be797308b6345278579a8bd820eb2cf18f0649c1dd0c0c27",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "e6a7b31ce62a8884e135382aa1024d7394a9c4cc1a1e500aa0c471e772872849",
+      "metrics_snapshot_sha256": "287fd7aa57c08f311a5b0ca6c22f0e712dc29a2f793bd6dd9a5ae9950eccfd5c",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "7cd48441d80ed69bec07beb9348b371464e7b97d8e11a11cdff86d2330ce1f0a",
+      "checkpoint_sha256": "fa81774c0c84f22b1ff894451f2bc3998054d2e635ee3801e7789d1c41e0ca31",
+      "final_return": 6308.33864031919,
+      "normalized_auc": 5159.386138802245
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1003,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1003",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.3129720648201094
+        },
+        {
+          "steps": 500000,
+          "value": 2270.761914662571
+        },
+        {
+          "steps": 1000000,
+          "value": 3452.7096540490247
+        },
+        {
+          "steps": 1500000,
+          "value": 3664.072070066019
+        },
+        {
+          "steps": 2000000,
+          "value": 4169.416589183337
+        },
+        {
+          "steps": 2500000,
+          "value": 4614.191059764398
+        },
+        {
+          "steps": 3000000,
+          "value": 5080.33011042026
+        },
+        {
+          "steps": 3500000,
+          "value": 5050.545278319587
+        },
+        {
+          "steps": 4000000,
+          "value": 5370.303662698666
+        },
+        {
+          "steps": 4500000,
+          "value": 5196.55822590561
+        },
+        {
+          "steps": 5000000,
+          "value": 5651.2551243553435
+        },
+        {
+          "steps": 5500000,
+          "value": 5524.916863697776
+        },
+        {
+          "steps": 6000000,
+          "value": 5415.01188496242
+        },
+        {
+          "steps": 6500000,
+          "value": 5813.691157076424
+        },
+        {
+          "steps": 7000000,
+          "value": 5977.251971050393
+        },
+        {
+          "steps": 7500000,
+          "value": 5888.007137690186
+        },
+        {
+          "steps": 8000000,
+          "value": 6150.981506348327
+        },
+        {
+          "steps": 8500000,
+          "value": 5999.019520891566
+        },
+        {
+          "steps": 9000000,
+          "value": 5913.661438382445
+        },
+        {
+          "steps": 9500000,
+          "value": 5942.838515545281
+        },
+        {
+          "steps": 10000000,
+          "value": 5293.036505181011
+        }
+      ],
+      "full_budget_auc": {
+        "area": 49895942725.813866,
+        "normalized_by_training_steps": 4989.594272581387
+      },
+      "budget": 10000000,
+      "summary_sha256": "6d16e2a62091e208f391281e8377b8a88532f154e70bf18719f277902f12cb5a",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "e6a7b31ce62a8884e135382aa1024d7394a9c4cc1a1e500aa0c471e772872849",
+      "metrics_snapshot_sha256": "dd25814ebd6f8fc81fcd62723deb8a49694dcaeec165ebb0d14dddf786fafb95",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "111fe113849ddf5258124fa42af4d6f237012be2635710444baa2e019891194f",
+      "checkpoint_sha256": "4d6ea3f2814795f1348ecd117167fc5194a1d8147d1c8c93da284fc952d7096e",
+      "final_return": 5293.036505181011,
+      "normalized_auc": 4989.594272581387
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo_protocol",
+      "seed": 1004,
+      "output_path": "results/mujoco_hc2x3_confirmation10m_20261026T135643Z/arppo_protocol_seed1004",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.3344029573033071
+        },
+        {
+          "steps": 500000,
+          "value": 1268.3052305163978
+        },
+        {
+          "steps": 1000000,
+          "value": 4027.8178005663385
+        },
+        {
+          "steps": 1500000,
+          "value": 4463.148795784121
+        },
+        {
+          "steps": 2000000,
+          "value": 5083.725771083008
+        },
+        {
+          "steps": 2500000,
+          "value": 5234.764755118406
+        },
+        {
+          "steps": 3000000,
+          "value": 5286.686639402922
+        },
+        {
+          "steps": 3500000,
+          "value": 5648.95569094247
+        },
+        {
+          "steps": 4000000,
+          "value": 5808.898285838164
+        },
+        {
+          "steps": 4500000,
+          "value": 5715.735182443216
+        },
+        {
+          "steps": 5000000,
+          "value": 5187.326324300936
+        },
+        {
+          "steps": 5500000,
+          "value": 5990.406727087042
+        },
+        {
+          "steps": 6000000,
+          "value": 5491.110278165911
+        },
+        {
+          "steps": 6500000,
+          "value": 6157.3713918711455
+        },
+        {
+          "steps": 7000000,
+          "value": 5520.489724006684
+        },
+        {
+          "steps": 7500000,
+          "value": 5044.512439741417
+        },
+        {
+          "steps": 8000000,
+          "value": 4880.602850787723
+        },
+        {
+          "steps": 8500000,
+          "value": 5304.023960657933
+        },
+        {
+          "steps": 9000000,
+          "value": 5997.613435976405
+        },
+        {
+          "steps": 9500000,
+          "value": 5833.300164245527
+        },
+        {
+          "steps": 10000000,
+          "value": 6209.383987086382
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50524660120.300156,
+        "normalized_by_training_steps": 5052.466012030016
+      },
+      "budget": 10000000,
+      "summary_sha256": "77f9652b825487d351b2c5147098a16385d815a6d72e54c0cfba4cfe5d61bd94",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "configuration_sha256_without_seed": "e6a7b31ce62a8884e135382aa1024d7394a9c4cc1a1e500aa0c471e772872849",
+      "metrics_snapshot_sha256": "8300d992671bd9733a50a0b52a8c597f70d8a25e473294fa890a7ef4601756fe",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 2000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "3760d41cce33fbadd8250b7b0368ac56aef6c5032152a8c42526a3e6edf75465",
+      "checkpoint_sha256": "2d4e8f0f0006a8846842cfa2e3efcc03132523e08883e82b64ddcf83be0745bf",
+      "final_return": 6209.383987086382,
+      "normalized_auc": 5052.466012030016
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "bppo",
+      "declared_seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004
+      ],
+      "eligible_seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004
+      ],
+      "complete": true,
+      "aggregate": {
+        "final": {
+          "seed_count": 5,
+          "mean": 5372.057386856517,
+          "median": 5223.307075659677,
+          "sample_sd_across_training_seeds": 390.17470238302946,
+          "bootstrap_95pct_mean": [
+            5152.376933555348,
+            5722.808897427848
+          ],
+          "bootstrap_95pct_median": [
+            5080.1397966889945,
+            6055.810111939962
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 5,
+          "mean": 4932.553682816191,
+          "median": 4944.196689099411,
+          "sample_sd_across_training_seeds": 251.11652603778515,
+          "bootstrap_95pct_mean": [
+            4717.635470244156,
+            5093.044810984779
+          ],
+          "bootstrap_95pct_median": [
+            4522.297857669374,
+            5183.215681181508
+          ]
+        }
+      }
+    },
+    {
+      "algorithm": "arppo",
+      "declared_seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004
+      ],
+      "eligible_seeds": [
+        1000,
+        1001,
+        1002,
+        1003,
+        1004
+      ],
+      "complete": true,
+      "aggregate": {
+        "final": {
+          "seed_count": 5,
+          "mean": 5782.672884774215,
+          "median": 5911.779273075006,
+          "sample_sd_across_training_seeds": 516.0188486317228,
+          "bootstrap_95pct_mean": [
+            5375.900863971201,
+            6189.44490557723
+          ],
+          "bootstrap_95pct_median": [
+            5190.826018209487,
+            6308.33864031919
+          ]
+        },
+        "normalized_auc": {
+          "seed_count": 5,
+          "mean": 5063.206780331685,
+          "median": 5052.466012030016,
+          "sample_sd_across_training_seeds": 61.10652465510458,
+          "bootstrap_95pct_mean": [
+            5016.674059197787,
+            5116.618088093353
+          ],
+          "bootstrap_95pct_median": [
+            4989.594272581387,
+            5159.386138802245
+          ]
+        }
+      }
+    }
+  ],
+  "paired_comparison": {
+    "direction": "BPPO minus AR-PPO",
+    "pairs": [
+      {
+        "seed": 1000,
+        "final_return": -708.9075251311333,
+        "normalized_auc": -127.91583144035121
+      },
+      {
+        "seed": 1001,
+        "final_return": 864.9840937304743,
+        "normalized_auc": 132.30421877701428
+      },
+      {
+        "seed": 1002,
+        "final_return": -1228.1988436301954,
+        "normalized_auc": -82.08813707151148
+      },
+      {
+        "seed": 1003,
+        "final_return": -69.72942952133417,
+        "normalized_auc": -45.397583481975744
+      },
+      {
+        "seed": 1004,
+        "final_return": -911.2257850363021,
+        "normalized_auc": -530.1681543606419
+      }
+    ],
+    "final_return": {
+      "seed_count": 5,
+      "mean": -410.6154979176981,
+      "median": -708.9075251311333,
+      "sample_sd_across_training_seeds": 829.3655632611935,
+      "bootstrap_95pct_mean": [
+        -997.5513564928257,
+        304.1559797793892
+      ],
+      "bootstrap_95pct_median": [
+        -1228.1988436301954,
+        864.9840937304743
+      ]
+    },
+    "normalized_auc": {
+      "seed_count": 5,
+      "mean": -130.65309751549322,
+      "median": -82.08813707151148,
+      "sample_sd_across_training_seeds": 244.1277234970207,
+      "bootstrap_95pct_mean": [
+        -343.59803672708256,
+        37.38173756383603
+      ],
+      "bootstrap_95pct_median": [
+        -530.1681543606419,
+        132.30421877701428
+      ]
+    }
+  },
+  "figure_comparison": {
+    "reading_range": [
+      5660,
+      5740
+    ],
+    "seed_mean": 5372.057386856517,
+    "mean_above_upper_reading_bound": false,
+    "lower_bootstrap_mean_endpoint_above_bound": false,
+    "mean_margin_over_upper_bound": -367.94261314348296
+  },
+  "validation_decision": "mean_not_above_reading_bound",
+  "paper_reproduction": "not_established",
+  "uncertainty": {
+    "unit": "whole training seed; paired differences retain the same seed pairs",
+    "method": "two-sided 95% percentile bootstrap with linear percentile interpolation",
+    "resamples": 10000,
+    "rng_seed": 1729
+  },
+  "interpretation": "Intervals describe independent training-seed scores under the frozen reconstruction. Historical evaluation, smoothing and simulator equivalence remain unverified. Figure comparison and paired peer-feedback evidence are separate conclusions."
+}

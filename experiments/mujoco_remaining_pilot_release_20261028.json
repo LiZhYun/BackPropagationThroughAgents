@@ -1,0 +1,444 @@
+{
+  "recorded_utc": "2026-10-28T08:17:27.219675+00:00",
+  "scope": "Release all37 frozen500k development pilots after complete native audit. No new training settings or result selection.",
+  "study": "experiments/mujoco_remaining_transfer_study_20261026.json",
+  "study_sha256": "4738cec18309e7cdf782f29dc6c1d00f17ae777143be0f7cf05617c56680a4c2",
+  "native_gate_audit": "experiments/mujoco_remaining_native_gate_complete_20261028.json",
+  "native_gate_audit_sha256": "28b99eae1ab31d164bb44092c17f8811031c2193bfdd4cd6a27a3e28dbab89c9",
+  "gate_accounting": "results/mujoco_remaining_dispatch_20261028/gate_accounting.txt",
+  "gate_accounting_sha256": "82c36abf66b5ffae56d7d7ab15db528889ca8e47b5dc5ef7e74d2b29a33b7794",
+  "gate_batch_records": [
+    {
+      "JobID": "21221614_0.batch",
+      "State": "COMPLETED",
+      "ExitCode": "0:0",
+      "ElapsedRaw": "660",
+      "TotalCPU": "10:52.410",
+      "MaxRSS": "1651652K"
+    },
+    {
+      "JobID": "21221614_1.batch",
+      "State": "COMPLETED",
+      "ExitCode": "0:0",
+      "ElapsedRaw": "476",
+      "TotalCPU": "07:51.695",
+      "MaxRSS": "1625156K"
+    }
+  ],
+  "manifest": "results/mujoco_remaining_transfer500k_20261026T215632Z/manifest.json",
+  "manifest_sha256": "009a5cf8d326ef0dbfea5d073dd7a35c4cf356b87c2b0219b7c01ff85274165d",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "dispatch_script": "results/mujoco_remaining_dispatch_20261028/submit.sbatch",
+  "dispatch_script_sha256": "0497fb5c81780029f4355b039d548f8fa094e2d8a70f65486bc154f0aed35d43",
+  "all_configurations": [
+    {
+      "index": 0,
+      "variant": "ant4x2_global_mappo",
+      "config_sha256": "326201d7070ba348322d8a54518a0024e7040f384772c55dccdacaa6f66870a7",
+      "unstarted_at_release": true,
+      "gate_seconds": 24.378148557036184,
+      "max_update_seconds": 5.61836605402641,
+      "max_two_episode_phase_seconds": 4.930894116056152,
+      "projected_seconds": 850.2225802349858
+    },
+    {
+      "index": 1,
+      "variant": "ant4x2_global_arppo",
+      "config_sha256": "025b1153137aae8d2a4fae99f5ddbcb146b842fc73314340ae43fd0f5d19115c",
+      "unstarted_at_release": true,
+      "gate_seconds": 23.4149874181021,
+      "max_update_seconds": 4.707203609985299,
+      "max_two_episode_phase_seconds": 5.606998074101284,
+      "projected_seconds": 756.610393471201
+    },
+    {
+      "index": 2,
+      "variant": "ant4x2_global_bppo",
+      "config_sha256": "eaecdec7dba40f1ae7cdb6acf066a8a5297051834f13988a14e2c90094b3f4aa",
+      "unstarted_at_release": true,
+      "gate_seconds": 29.39768717403058,
+      "max_update_seconds": 5.918933411012404,
+      "max_two_episode_phase_seconds": 7.430494993925095,
+      "projected_seconds": 962.7815261943033
+    },
+    {
+      "index": 3,
+      "variant": "ant8x1_global_mappo",
+      "config_sha256": "8d8607a059b6170ae3340b8e31eecd3e41113b12c43bd6eb9beefe7c9ce1b8b7",
+      "unstarted_at_release": true,
+      "gate_seconds": 22.906421917956322,
+      "max_update_seconds": 5.160907028010115,
+      "max_two_episode_phase_seconds": 4.7133445199579,
+      "projected_seconds": 786.5137141000014
+    },
+    {
+      "index": 4,
+      "variant": "ant8x1_global_arppo",
+      "config_sha256": "773dde6b9828799ecffb7d4b86e4566e576389ab644472beb68fcd30e957fd5d",
+      "unstarted_at_release": true,
+      "gate_seconds": 35.80245394795202,
+      "max_update_seconds": 6.852862396975979,
+      "max_two_episode_phase_seconds": 9.411049016052857,
+      "projected_seconds": 1138.939270103583
+    },
+    {
+      "index": 5,
+      "variant": "ant8x1_global_bppo",
+      "config_sha256": "a1c01d4bfc7a2b06c7ff4f2aebade1a06160bf030f2dd2f3bc2c5263424fa9f7",
+      "unstarted_at_release": true,
+      "gate_seconds": 29.89537405606825,
+      "max_update_seconds": 5.786976367002353,
+      "max_two_episode_phase_seconds": 7.289349643047899,
+      "projected_seconds": 942.0525351667311
+    },
+    {
+      "index": 6,
+      "variant": "hc3x2_local_mappo",
+      "config_sha256": "ea7715f4ae3fcb5f0e530f1c8e038d66fc35ceaaa1cb9d2882153360824d30e5",
+      "unstarted_at_release": true,
+      "gate_seconds": 18.54224710597191,
+      "max_update_seconds": 3.8876039719907567,
+      "max_two_episode_phase_seconds": 5.093451851978898,
+      "projected_seconds": 638.7540520582115
+    },
+    {
+      "index": 7,
+      "variant": "hc3x2_local_agentmixer",
+      "config_sha256": "5cce22ffcec2d02ed2c9e42c4e907e3b4343a04878d2f90256d2e72e39357d3c",
+      "unstarted_at_release": true,
+      "gate_seconds": 20.13077115791384,
+      "max_update_seconds": 5.038533253013156,
+      "max_two_episode_phase_seconds": 3.5122702589724213,
+      "projected_seconds": 735.1847643958172
+    },
+    {
+      "index": 8,
+      "variant": "hc3x2_local_identity",
+      "config_sha256": "caf65b74a9babaa2cfd127f4726ef6f42ac0f99f075c84ae7fa1105febb81e0c",
+      "unstarted_at_release": true,
+      "gate_seconds": 23.401608637999743,
+      "max_update_seconds": 5.7149107119766995,
+      "max_two_episode_phase_seconds": 4.922261581989005,
+      "projected_seconds": 862.0316864567576
+    },
+    {
+      "index": 9,
+      "variant": "hc6x1_local_mappo",
+      "config_sha256": "9bee7f9122d543a204f3895d37d55642a036382ab18978f78e9a47fbf660c475",
+      "unstarted_at_release": true,
+      "gate_seconds": 15.476609349949285,
+      "max_update_seconds": 3.2916732889134437,
+      "max_two_episode_phase_seconds": 3.752879571984522,
+      "projected_seconds": 524.0455482737161
+    },
+    {
+      "index": 10,
+      "variant": "hc6x1_local_agentmixer",
+      "config_sha256": "f18a0b9cda4e45bee19061623d2dc39d3b0b50ef718f0fde9d58cfe07e66971e",
+      "unstarted_at_release": true,
+      "gate_seconds": 30.501086763921194,
+      "max_update_seconds": 7.96788092807401,
+      "max_two_episode_phase_seconds": 4.5269482779549435,
+      "projected_seconds": 1131.7935643478995
+    },
+    {
+      "index": 11,
+      "variant": "hc6x1_local_identity",
+      "config_sha256": "7a7d9a6a673f7b60f5d94360e07b958c4598df12ba88d158b84a145e0b40cea1",
+      "unstarted_at_release": true,
+      "gate_seconds": 21.94221851695329,
+      "max_update_seconds": 5.383803628967144,
+      "max_two_episode_phase_seconds": 3.814524132059887,
+      "projected_seconds": 787.4111775826896
+    },
+    {
+      "index": 12,
+      "variant": "walker3x2_local_mappo",
+      "config_sha256": "c39d4e8579727969db2b8666bacf7e0598625027ff84b411750bca9af2775aad",
+      "unstarted_at_release": true,
+      "gate_seconds": 17.204227983020246,
+      "max_update_seconds": 4.5871751620434225,
+      "max_two_episode_phase_seconds": 2.7925489890621975,
+      "projected_seconds": 657.1733649272937
+    },
+    {
+      "index": 13,
+      "variant": "walker3x2_local_arppo",
+      "config_sha256": "7736b1732e588658a9573faa7c585d7e37ccca7ef9c1c68d066ee4b7180d2044",
+      "unstarted_at_release": true,
+      "gate_seconds": 13.180381958023645,
+      "max_update_seconds": 3.6926166811026633,
+      "max_two_episode_phase_seconds": 2.1166197690181434,
+      "projected_seconds": 525.0756782083772
+    },
+    {
+      "index": 14,
+      "variant": "walker3x2_local_bppo",
+      "config_sha256": "12c58714fb4640f3d3850625fbdeba1b5039262db8a6a7bfddee0f60a96cfca6",
+      "unstarted_at_release": true,
+      "gate_seconds": 17.00250019901432,
+      "max_update_seconds": 4.744226322043687,
+      "max_two_episode_phase_seconds": 2.948438348947093,
+      "projected_seconds": 681.4814407238737
+    },
+    {
+      "index": 15,
+      "variant": "walker3x2_local_agentmixer",
+      "config_sha256": "d14548ff08935d6b81535b0a1c36486855d817398702f8c0d132a7ed03ab13cb",
+      "unstarted_at_release": true,
+      "gate_seconds": 18.478506805957295,
+      "max_update_seconds": 5.499251825036481,
+      "max_two_episode_phase_seconds": 2.0648930269526318,
+      "projected_seconds": 749.3532689381391
+    },
+    {
+      "index": 16,
+      "variant": "walker3x2_local_identity",
+      "config_sha256": "77abba0136622d3434044f55ea15f19334c2767a4ea9f76031bc32d1cdadfc5e",
+      "unstarted_at_release": true,
+      "gate_seconds": 23.169925951049663,
+      "max_update_seconds": 6.81705991004128,
+      "max_two_episode_phase_seconds": 3.235219237045385,
+      "projected_seconds": 949.1890658665216
+    },
+    {
+      "index": 17,
+      "variant": "walker6x1_local_mappo",
+      "config_sha256": "bec37f164b218e791aff6a19c31c787b899b80726324deebd28a402c975a7261",
+      "unstarted_at_release": true,
+      "gate_seconds": 13.196585261030123,
+      "max_update_seconds": 3.685828829999082,
+      "max_two_episode_phase_seconds": 2.0572533080121502,
+      "projected_seconds": 522.4462029902497
+    },
+    {
+      "index": 18,
+      "variant": "walker6x1_local_arppo",
+      "config_sha256": "00cbcc61c48ad7c6253b96b3c028df390cae474be7f62e4e395e2b525b71a562",
+      "unstarted_at_release": true,
+      "gate_seconds": 18.07372217089869,
+      "max_update_seconds": 4.844612799002789,
+      "max_two_episode_phase_seconds": 3.314591056900099,
+      "projected_seconds": 705.0143315823516
+    },
+    {
+      "index": 19,
+      "variant": "walker6x1_local_bppo",
+      "config_sha256": "dcf7558a1445d85081e32b22e210aa0e25471b6f39d1ff4340ee13a629b3d485",
+      "unstarted_at_release": true,
+      "gate_seconds": 14.487690023030154,
+      "max_update_seconds": 3.9936044639907777,
+      "max_two_episode_phase_seconds": 2.2593339460436255,
+      "projected_seconds": 566.980576380156
+    },
+    {
+      "index": 20,
+      "variant": "walker6x1_local_agentmixer",
+      "config_sha256": "1b0e329a93f95dc7c822eb1b186f599d5973daa739a82d564d93f60920caaf26",
+      "unstarted_at_release": true,
+      "gate_seconds": 31.321710346033797,
+      "max_update_seconds": 9.427654472994618,
+      "max_two_episode_phase_seconds": 3.116615453036502,
+      "projected_seconds": 1271.9552727154223
+    },
+    {
+      "index": 21,
+      "variant": "walker6x1_local_identity",
+      "config_sha256": "806f54a460a600ec934c1965e4c71efd6be2f07e0d82843e579cef7736044adb",
+      "unstarted_at_release": true,
+      "gate_seconds": 19.464352083043195,
+      "max_update_seconds": 5.7740629280451685,
+      "max_two_episode_phase_seconds": 2.1165554319741204,
+      "projected_seconds": 785.2545289648697
+    },
+    {
+      "index": 22,
+      "variant": "ant4x2_local_mappo",
+      "config_sha256": "75b03b0ff45a0ed340b5c82e92853ee483ee8267c57b2e985a02753611af1ccd",
+      "unstarted_at_release": true,
+      "gate_seconds": 30.64221115305554,
+      "max_update_seconds": 7.0175640570232645,
+      "max_two_episode_phase_seconds": 6.335277853067964,
+      "projected_seconds": 1067.253842719947
+    },
+    {
+      "index": 23,
+      "variant": "ant4x2_local_agentmixer",
+      "config_sha256": "7283861afde99cf285921ea6dd45c8cb743654268ccb6e4c56b721395dc7dd22",
+      "unstarted_at_release": true,
+      "gate_seconds": 30.306636127992533,
+      "max_update_seconds": 7.549920686054975,
+      "max_two_episode_phase_seconds": 4.7823356030276045,
+      "projected_seconds": 1087.2101538477
+    },
+    {
+      "index": 24,
+      "variant": "ant4x2_local_identity",
+      "config_sha256": "8d93764e66022449c45d6c4b8d1f11bc15e29f2aa6a2b7357083046edbe65c94",
+      "unstarted_at_release": true,
+      "gate_seconds": 37.259109109058045,
+      "max_update_seconds": 9.286703521036543,
+      "max_two_episode_phase_seconds": 6.362991543021053,
+      "projected_seconds": 1351.7276864201995
+    },
+    {
+      "index": 25,
+      "variant": "ant8x1_local_mappo",
+      "config_sha256": "437d45bc431a8c4a798dd7812d467f3d8cdac66922aaed10c9351d35b97de9d8",
+      "unstarted_at_release": true,
+      "gate_seconds": 26.274605990969576,
+      "max_update_seconds": 5.974190376000479,
+      "max_two_episode_phase_seconds": 5.247620561975054,
+      "projected_seconds": 904.2024138593115
+    },
+    {
+      "index": 26,
+      "variant": "ant8x1_local_agentmixer",
+      "config_sha256": "8614f3da3bd759b193eb7e20f3f05212f9e343b8762d7f8b6f7baa969b4e0c39",
+      "unstarted_at_release": true,
+      "gate_seconds": 48.50448789598886,
+      "max_update_seconds": 12.422326314961538,
+      "max_two_episode_phase_seconds": 6.988747269962914,
+      "projected_seconds": 1762.4532074690796
+    },
+    {
+      "index": 27,
+      "variant": "ant8x1_local_identity",
+      "config_sha256": "9a653f9b26bf014c99ed03447e6095da57ee295621731bcbb4a79e3baa56daef",
+      "unstarted_at_release": true,
+      "gate_seconds": 34.439468930941075,
+      "max_update_seconds": 8.617062297067605,
+      "max_two_episode_phase_seconds": 5.465011752909049,
+      "projected_seconds": 1241.083139720722
+    },
+    {
+      "index": 28,
+      "variant": "ant2x4d_local_mappo",
+      "config_sha256": "6a2f93a47ab52a6a06a6bcf4f3c1eb646e5507e3b3641d71ea27f7b88b331758",
+      "unstarted_at_release": true,
+      "gate_seconds": 28.582494138972834,
+      "max_update_seconds": 6.649335406953469,
+      "max_two_episode_phase_seconds": 5.52268669498153,
+      "projected_seconds": 996.8475267186295
+    },
+    {
+      "index": 29,
+      "variant": "ant2x4d_local_agentmixer",
+      "config_sha256": "06821e5bc6a3d170723ccf11492341828be4f391ec689385b17ef8e2d7bd0ce8",
+      "unstarted_at_release": true,
+      "gate_seconds": 27.3643981780624,
+      "max_update_seconds": 6.772037513088435,
+      "max_two_episode_phase_seconds": 4.5772399379638955,
+      "projected_seconds": 983.8218872749712
+    },
+    {
+      "index": 30,
+      "variant": "ant2x4d_local_identity",
+      "config_sha256": "580bb0d7bd3ffdbadc2a794ba48df221d517c34327a639ab4cd22d7ced60e7a7",
+      "unstarted_at_release": true,
+      "gate_seconds": 32.48994347604457,
+      "max_update_seconds": 7.873773360974155,
+      "max_two_episode_phase_seconds": 6.030542845022865,
+      "projected_seconds": 1165.1379554724554
+    },
+    {
+      "index": 31,
+      "variant": "humanoid17x1_local_mappo",
+      "config_sha256": "f95a627fbc5d95af0d60dd0e3626cb49cad45a7db0dfcc3bb122c1b2c0481932",
+      "unstarted_at_release": true,
+      "gate_seconds": 19.12583721394185,
+      "max_update_seconds": 5.666358996066265,
+      "max_two_episode_phase_seconds": 2.1008007859345526,
+      "projected_seconds": 771.3188980863197
+    },
+    {
+      "index": 32,
+      "variant": "humanoid17x1_local_agentmixer",
+      "config_sha256": "14a2fe56a42667ceed6c20d456603573e93331e4704154615b802a30693e8515",
+      "unstarted_at_release": true,
+      "gate_seconds": 59.467021686024964,
+      "max_update_seconds": 19.24358723592013,
+      "max_two_episode_phase_seconds": 3.1760290540987626,
+      "projected_seconds": 2500.7292761129793
+    },
+    {
+      "index": 33,
+      "variant": "humanoid17x1_local_identity",
+      "config_sha256": "14bff40cbda7b176d2acfc4fff56837c6912f3c7893cb2db6a09053b5029649f",
+      "unstarted_at_release": true,
+      "gate_seconds": 37.04882990499027,
+      "max_update_seconds": 11.547668332932517,
+      "max_two_episode_phase_seconds": 2.123473813990131,
+      "projected_seconds": 1507.1627560362685
+    },
+    {
+      "index": 34,
+      "variant": "humanoidstandup17x1_local_mappo",
+      "config_sha256": "41da84b0e8dadcd94c0771f7f306e72d24381f2526ebb4b71fdf08d216cdd95b",
+      "unstarted_at_release": true,
+      "gate_seconds": 34.283018858055584,
+      "max_update_seconds": 7.3393841868964955,
+      "max_two_episode_phase_seconds": 7.4876048060832545,
+      "projected_seconds": 1142.0511675445596
+    },
+    {
+      "index": 35,
+      "variant": "humanoidstandup17x1_local_agentmixer",
+      "config_sha256": "210ea4164abc9ac6b549735590a63b3eb2b99666ca8bf4b9431f913821798951",
+      "unstarted_at_release": true,
+      "gate_seconds": 53.971427725977264,
+      "max_update_seconds": 14.286398875992745,
+      "max_two_episode_phase_seconds": 6.658188048982993,
+      "projected_seconds": 1985.545500968583
+    },
+    {
+      "index": 36,
+      "variant": "humanoidstandup17x1_local_identity",
+      "config_sha256": "c488b1453f21786e875feb75411d4bfa9a55b86cca17a981783084332dcbbcc0",
+      "unstarted_at_release": true,
+      "gate_seconds": 63.27711674699094,
+      "max_update_seconds": 16.746467132936232,
+      "max_two_episode_phase_seconds": 8.703779930016026,
+      "projected_seconds": 2354.4217895175098
+    }
+  ],
+  "runtime_formula": "125 times maximum native4000-step update phase +30 times maximum two-episode evaluation phase. Initialization included conservatively in phase maximum.",
+  "max_projected_seconds": 2500.7292761129793,
+  "summed_projected_cpu_hours": 10.65311992929233,
+  "allocation": {
+    "cpu_per_task": 1,
+    "memory_gib": 4,
+    "wall_minutes": 90,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "allocation_rationale": "Single-threaded gate CPU approximately wall time; batch peak below1.58GiB. Worst projected duration41.7min;90min allows more than2x headroom. These are short-gate estimates, not runtime guarantees.",
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 64
+  },
+  "queue_before": [],
+  "other_jobs_untouched": true
+}

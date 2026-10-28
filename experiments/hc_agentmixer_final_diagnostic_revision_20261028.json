@@ -1,0 +1,35 @@
+{
+  "recorded_utc": "2026-10-28T08:54:30.650527+00:00",
+  "original_job": "21252012",
+  "original_status": "FAILED diagnostic assertion;training results unchanged",
+  "original_plan": "experiments/hc_agentmixer_final_diagnostic_plan_20261028.json",
+  "original_plan_sha256": "c36e150cf3111be724f55b7edc0e35af1ccee4366b5d17fa9d916ff7c6c4e360",
+  "original_partial_replays": [
+    {
+      "path": "results/hc_agentmixer_final_diagnostic_20261028/agentmixer_bounded_seed0_replay.json",
+      "sha256": "54bb160c88c5adec0554531d554e8f3729b3e44b224cc3a175e783cbdf6b8c0f"
+    },
+    {
+      "path": "results/hc_agentmixer_final_diagnostic_20261028/agentmixer_bounded_seed1_replay.json",
+      "sha256": "8d3fb6df714d7082a4d671c28c29ac26ed7119aaa2b34a06b76367890e0971d0"
+    },
+    {
+      "path": "results/hc_agentmixer_final_diagnostic_20261028/agentmixer_bounded_seed2_replay.json",
+      "sha256": "88cd4d39d64a8c3d3bd2f03f1be9ba010548b1eb6f7abbbdd80f9b08fd5d6eca"
+    }
+  ],
+  "failure_log": "results/hc_agentmixer_final_diagnostic_20261028/slurm_21252012.err",
+  "failure_log_sha256": "129962ae545b7a4c734807471e4c0a501d259ecc8d418a529b77d232c2186fba",
+  "cause": "Identity std comparison used exact equality across float32 log/exp roundtrip. Deterministic10001-value probe finds one mismatch,maxrelative6.14e-8. Three bounded policies exactly replayed before first identity assertion stopped the diagnostic.",
+  "correction": "Use rtol1e-6/atol1e-8 only for identity std roundtrip. Local/central means,executed actions and all raw final evaluation records still require exact equality.",
+  "repeat_scope": "All nine policies rerun into a new immutable output directory. Original failure and three partial replay files retained;no training reruns or selected endpoints.",
+  "script": "results/hc_agentmixer_final_diagnostic_v2_20261028/diagnose.py",
+  "script_sha256": "48dcfc6fecb91eb9476d40efe14d9f95bf7a2a5c967844243aec3744663c69c9",
+  "submit_script": "results/hc_agentmixer_final_diagnostic_v2_20261028/submit.sbatch",
+  "submit_script_sha256": "250ab8f82665a71a58c4101681cfea59f7fca9540ca16259c4ac5f634d5244d4",
+  "resources": {
+    "cpus": 1,
+    "memory_gib": 2,
+    "wall_minutes": 30
+  }
+}

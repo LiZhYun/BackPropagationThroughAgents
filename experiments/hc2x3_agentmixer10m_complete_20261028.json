@@ -1,0 +1,5436 @@
+{
+  "recorded_utc": "2026-10-28T08:15:35.181783+00:00",
+  "scope": "Complete raw audit of full-budget positive-entropy development controls, seeds0-2. All nine declarations retained; compare to the separately audited matched zero-entropy baseline. No independent confirmation or paper-level performance claim.",
+  "manifest": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/manifest.json",
+  "manifest_sha256": "643275e8836d33c092fd7072433a19e9d24dff7b78684b7583b84285e51511d5",
+  "audit_script": "results/completion_audits_20261028/agentmixer.py",
+  "audit_script_sha256": "476801140eb1cf83570907b67e105e45a070806c0e74e708ab5d7f9a631ca2ce",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "frozen_source_bytes_verified": true,
+  "metric": "return_mean",
+  "raw_evaluation_episodes_verified": 9090,
+  "raw_evaluation_windows_verified": 0,
+  "rollout_updates_verified": 22500,
+  "runs": [
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 15590.412893343018,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 5.092555999755859,
+      "final_training_update_geometric_mean_scale": 0.5654241056703778,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "bounded",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "41162fd8dbf2f8d5a988a65cd783721ccfa90e8d4be2951fa31e27015da7e2d1",
+        "metrics.jsonl": "d0e62fef9759e648f47f444ef9cd8c84ba5a28ed81f25b5cc1644b90c4c49e91",
+        "summary.json": "6865f82b0919be06dc4e5ceb8669e72123a943a6294e6f12b50db1e40e1d7def",
+        "checkpoint.pt": "f7c614ac9310e0cf5b3949708608058d45e1a0e8dede848e6013ccac86dfe9c5"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.027213632423737883,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 923.1656833613179,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 437.7398399261108,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 562.5757707911619,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1157.311151471428,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1240.2316888226264,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 1625.5025580746951,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 2338.0830125287794,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2738.41041931764,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 3148.029415053719,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3593.7664605621603,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 3860.6755767625455,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 4015.7726836201623,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 4143.924766644014,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 4339.234745844155,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 4291.326260550887,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 4202.303302511651,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 4492.1386878728135,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 4547.804767876482,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 4531.304609580531,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 4230.373902080918,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 4553.750943351393,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 4675.125700928992,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 4850.371792463894,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 4898.774323912243,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 5002.773387909277,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 5023.788812416142,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 5086.828882621526,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 5149.71831293962,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 5169.296000437695,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 5188.345404506615,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 5083.49222955374,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 4915.487985063361,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 4890.709161832395,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 5309.692386194555,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 4817.284271761517,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 5022.095976337953,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 5174.866523726534,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 5261.054014767691,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4964.747999689916,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 5157.185543302424,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 5041.553735899587,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 5121.896792476796,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 4164.824825125654,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 4735.418153368135,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 5292.104536542409,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 5533.25274259317,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 4315.981034910277,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 4641.19922960254,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 5394.261240866379,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 4825.233517009617,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 4793.014657833581,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 4171.4565758375165,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 4832.397366508946,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 5392.972023747932,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 4732.643928663281,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 5224.196665821011,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 5267.419346086329,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 1903.2344252075911,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 3922.5303023943325,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 4589.905082578338,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 4302.616592361717,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 4938.961484233304,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 4972.711851107098,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 4362.837477203565,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 4283.554154545677,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 3157.7222135637508,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 3595.3079581585894,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 4878.056315486932,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 3206.778957776543,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 3294.598879577892,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 5293.558667115679,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 4966.55054539868,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 4999.202973534032,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 4133.965819880791,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 2073.9434375853903,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 3808.45185849458,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 4486.979269490889,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 3301.3846039986656,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 2647.169107343246,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 3818.0035207565343,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 3848.0273372145903,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 3801.841713174111,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 2024.0941909388598,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 3765.1633922049646,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 4182.087041915936,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 3205.805940161171,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 4799.3011035192485,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 3174.6975783700664,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 3832.5123914815417,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 3738.818029248838,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 2486.622036872199,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 3644.2733976046293,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 3538.943244338458,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 1433.0025109416556,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 2628.1038013570846,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 1957.1117047760667,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 2517.283329662284,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 4206.862240963256,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 3162.9537011418424,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 1438.9311780706469,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 3976.998734957642
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed1",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 15322.169034147984,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 5.0814032554626465,
+      "final_training_update_geometric_mean_scale": 0.5643740767867176,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 1,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "bounded",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "654c1568a404c7d349e870d90e6fbdab873919293a3e3ba05ca27c98b469ad3c",
+        "metrics.jsonl": "8e37aba0f50af038ad1f5d920f584c5330994aae4f0ce28b336fac3d25199cc2",
+        "summary.json": "d335d94fd9d60c9feac22f813772abec8e59db9cdd01e7ab0556a9ca8e28e056",
+        "checkpoint.pt": "c7a05d340e2db926dd26439d980189d8eafa9c2114ce272941054b44bf5fdcdc"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.019372146998947376,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 636.5691646414895,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 167.68783449658358,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 885.5318390074756,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1049.6427292387068,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 2422.0443075295307,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 2906.2991671083355,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 3144.631724034985,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 3371.85780862167,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 3409.475369174703,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3705.57288261755,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 4493.447596790941,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 4500.664403035447,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 4655.302301406664,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 4791.032278807637,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 4794.891099370905,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 4784.463796150691,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 4794.277750537045,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 4708.808962417451,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 4674.466505096825,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 4831.80388715556,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 4414.225260292619,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 4027.7570264411156,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 5001.127255381312,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 4964.0508682363725,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 3181.349660319993,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 4842.406088651478,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 4890.36028483912,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 4942.831080531399,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 4822.363745551825,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 993.4052389778731,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 4110.873025948233,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 5243.791708065448,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 4780.465001339821,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 4768.435282017452,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 1656.395607728804,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 5504.088086349522,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 5390.873080109176,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 5399.27487162416,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4533.520496483871,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 4068.4809810756324,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 5126.918850478582,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 5037.268699518514,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 5399.372263999917,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 5078.216059897329,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 5451.95284228725,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 5524.949906303368,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 4576.658512830362,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 4769.441778063914,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 4881.294082976385,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 5532.007418369966,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 4743.675224787354,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 4632.711469546639,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 5127.8701413551635,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 5351.872681382621,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 5426.723584751102,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 5567.365661996745,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 5573.088027243314,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 5637.650877279517,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 5668.744147205072,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 5171.522789404063,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 4797.361268793528,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 4429.062505993893,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 5445.789156476681,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 5379.313985334374,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 5388.989949424799,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 5494.362762456812,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 5244.2557887954745,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 4683.588290708493,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 5459.696273892125,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 5509.17873389245,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 5712.386453087933,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 5382.138400480047,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 4970.680637745564,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 4695.942105369015,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 5490.730568228223,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 5046.5563145760925,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 5537.240772147124,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 5371.268172688572,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 5171.259286326433,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 3895.406398300234,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 5439.349370061998,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 5269.349771448124,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 5197.4074262099775,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 5529.297090706805,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 4906.646679880745,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 5211.233945662377,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 4754.12019785407,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 5398.275219233176,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 5585.065006483114,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 5690.598661025285,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 5599.681129677595,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 5829.256801979133,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 3818.890468138088,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 4443.433565393908,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 5839.739775237891,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 4697.559585923209,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 4633.959527572608,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 4125.672187816689,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 4335.799011721886,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 3955.1951809332336,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 4619.319822280202
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed2",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 15243.92216572701,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 2.4456955909729006,
+      "final_training_update_geometric_mean_scale": 0.3637375814671016,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 2,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "bounded",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "a6c69574528dcdd7af5f8605daa9bacd84c38e59b1546bbaea562db3f284878e",
+        "metrics.jsonl": "b2a5a2508bc27414f259f847737d512a17657a4a41cd6afb692f7685dbab84a5",
+        "summary.json": "d4973c80de922579c8322e3707ee3ad8686e020d7aacacee5af1eb5d7080e712",
+        "checkpoint.pt": "93bd887623173b1a761d3b1f5b965cce5eff85eb8adcca6232a4713f14863f6c"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.0268451226458107,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 842.136512505609,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 707.0097673773089,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 1145.0071458805342,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1321.031535014068,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1381.1579690751776,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 2174.9208486475145,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 2520.091920338647,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2855.250647407018,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 3105.809420640738,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3248.2906013143233,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 3440.6129578973005,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 3274.2119856293866,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 3453.418835001388,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 3537.0732393796216,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 3495.8052743192793,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 3529.3592257252353,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 3523.305350606039,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 3575.19899635823,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 3930.314433157556,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 2857.5567459223003,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3898.3191197242886,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 3941.5921266247565,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 4054.3814108746274,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 3422.6896319623293,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 3879.5574020430436,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 3711.532785282723,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 3997.622999528538,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 4250.328801785637,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 3999.6482895598,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 4632.071081762188,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 4548.088489859489,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 4215.848000546483,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 4551.785458258134,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 4705.514983678756,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 4671.108365140623,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 4667.419065685183,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 4570.584012927336,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 4775.006863888593,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4681.925060200862,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 4839.407464352192,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 4263.254366172464,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 4728.161098493023,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 5104.9367219006135,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 5035.146845186392,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 5007.927192922983,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 4960.38662994257,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 4792.004280993975,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 4128.399068905165,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 4140.455748359294,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 5302.305566226837,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 5280.951363485331,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 5307.438363548706,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 5069.071946155792,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 5185.494335751687,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 5134.497853962086,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 5602.3739848037885,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 5054.87984567056,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 5204.337935425919,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 5436.166110954734,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 5129.451897528293,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 5666.090309602665,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 5635.787525215978,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 5827.300720958105,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 5860.236930799351,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 6002.074224828785,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 5960.140884561225,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 5909.159869041184,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 6039.513853343685,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 5755.340700038631,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 5221.2140365778305,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 5995.049654264037,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 5870.3801982469995,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 5546.114335460567,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 6027.327853823636,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 6037.999660485684,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 5882.347666006542,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 5740.426558761142,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 5884.283290901478,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 6010.364681455746,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 6034.375258099089,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 5991.076100025996,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 5034.024006282929,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 5826.908540829689,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 5846.457450629626,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 5800.336372995942,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 5564.067252976569,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 5555.884978710361,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 4465.219665826578,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 5420.096190179685,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 5461.876059725105,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 4597.773508647181,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 5746.348127698801,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 5841.378619737066,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 4724.587090512106,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 4967.476287243735,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 5391.577712148601,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 5469.811936944269,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 6097.12040452643,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 6132.9593580323,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 6063.214206989285,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 4636.717375393518
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 13656.13586101099,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 4.436993408203125,
+      "final_training_update_geometric_mean_scale": 0.5069009639555885,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "79522f8ba3772d8d429db40f7b8eb9f46c4e091350d89122f8272915c8d220b6",
+        "metrics.jsonl": "43f20147fdde9c4b3c370345abb66eddae854e3a88dfcd52fe1dc76a2acd5ba7",
+        "summary.json": "8314bcaf55087c3a7d09a63c4663ebcaf69e87dd137e73a1030b5d5d47e9ef5a",
+        "checkpoint.pt": "00864877a52e2f4d878f1827f86e86eed5c1792e41cd9b6cdda2098df77605dc"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.027213632423737883,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 837.2176290527974,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 564.2929390512226,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 949.2564676577746,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1207.461033901635,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1456.4668087851878,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 2482.107719237854,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 2901.568427901507,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2865.315416412166,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 2964.864776874499,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3251.9317753432256,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 3387.275443219019,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 3238.81479688923,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 3355.6201140938474,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 3595.3944539898084,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 3386.1388962136743,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 3792.619960041502,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 3466.1564384778508,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 3699.4253343216556,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 3904.6333555842734,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 2789.115343649921,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3174.715405651588,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 2694.41467450224,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 2206.802935264413,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 3885.602525071865,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 3399.127171601436,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 2204.011785518788,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 4321.882432514951,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 2878.27704983728,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 3700.308307387838,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 2782.3669817073546,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 3843.454160052022,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 2571.1546401301043,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 2898.4483728420782,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 4151.799177887204,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 4359.691834698876,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 4239.024986269967,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 4266.815782466165,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 4068.99600758617,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4539.517239860217,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 4921.120882156259,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 5256.261912167308,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 5546.741673587778,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 5587.675014808273,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 5674.707739031617,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 5815.977040711706,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 5402.690290255529,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 5813.066510970969,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 5396.840709929241,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 5160.422867269136,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 5602.341933610862,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 5132.691553646732,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 3701.273213611009,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 5182.810913134298,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 5674.674705576406,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 5715.451981562666,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 5421.771668234941,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 5782.873515048074,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 5883.711346511478,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 5955.92265658273,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 5989.310892731402,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 6081.739340809908,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 5980.274302304592,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 6010.66687002841,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 6080.522366497764,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 5622.008666069048,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 5994.745767809898,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 6055.950249056588,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 6099.808509827529,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 5482.049836151242,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 6076.606729809589,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 6046.634647929553,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 6110.127264959858,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 6142.7334660973665,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 6145.925504951708,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 6145.39254291077,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 6110.361076106625,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 6096.172734099902,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 6173.106156204357,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 6129.233702082958,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 6127.7682067783235,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 6137.282990420485,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 6106.386797068091,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 6115.730084865072,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 5685.373704567459,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 6131.9435974474945,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 6136.115949462144,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 6119.622740459338,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 6126.341795220412,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 6130.923000285089,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 6074.475954728843,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 6171.724454438562,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 5528.252665981057,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 6132.027362959902,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 6161.657377059364,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 5969.723459393726,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 5493.476067328712,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 6063.332481615904,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 6125.477034631705,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 5499.386930347508,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 5376.612533132643,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 4722.098026712046
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_identity_seed1",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 13544.16416444903,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 3.2716185569763185,
+      "final_training_update_geometric_mean_scale": 0.4174173268967588,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 1,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "a399d751a5bd874f6eba9390b10183a5645b27ff3b9f057ffae3598a1a6476e7",
+        "metrics.jsonl": "98209a24a2db6321d81a374bdcd3a55891531dd25953ab00bd940669b16db056",
+        "summary.json": "6658e9a0a021b85262b72145f901dc05969f648e2f0c1b06a05dc0b2b81b9960",
+        "checkpoint.pt": "eccc51a2bd07ef8ffa641daf6da10cffa8f7fd24c310b93d41df4255372fc07c"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.019372146998947376,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 343.62215279705435,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 410.91275877785324,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 1093.6632821613894,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 943.1431163225109,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1052.0516999185782,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 1477.5099525234646,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 1792.8979928990389,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2349.7214977285093,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 2697.302423722422,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 3062.648687989906,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 3131.2709124638695,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 3450.7290895889114,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 3505.656394176529,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 3289.873069560542,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 3831.5438783189775,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 3828.2721339050427,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 3810.0729423415887,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 3763.1715519313793,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 4033.955323668816,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 2948.0858283138505,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3928.9153021711427,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 3731.4329641435743,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 4186.16564476529,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 4648.923358039477,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 4702.3419795415575,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 4698.833974508344,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 4772.3895361017785,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 4712.356130782814,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 4787.441224261833,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 4884.487468859578,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 4468.151524395091,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 5018.8901240962505,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 4789.030863341514,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 5050.95698842036,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 5079.954024266997,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 5092.596450280657,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 4545.295233062342,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 5152.588771493486,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4739.280381268296,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 4944.987236828781,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 5272.606244508625,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 5257.821188580109,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 4998.738927995237,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 5471.931405829514,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 4932.617326876727,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 5191.611690298234,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 5369.768679539688,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 4798.654380679294,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 4915.511208539731,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 5004.4157556957125,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 5212.028092811012,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 5626.409375468592,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 5393.668587471446,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 5254.086587635894,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 4906.30143263357,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 5633.407531850304,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 5590.102790875604,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 5417.098087138948,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 5355.001068590552,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 5767.469813844013,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 5562.2273944813805,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 4655.724351675595,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 5169.059285693429,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 5611.464162387434,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 5672.557166394877,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 5575.379766107235,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 5425.8397623243945,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 5092.693239111644,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 5652.618611222441,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 5343.140002228174,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 5234.497868088021,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 5863.709056569007,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 5197.650309785522,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 4959.828850240038,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 5875.233795220673,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 5836.088012618634,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 5846.16881750516,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 5358.039748293737,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 5882.609763768049,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 5902.988600956074,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 5229.404453567073,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 5856.201507530868,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 5433.512408257198,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 5334.426450528282,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 5956.8185259895645,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 5940.5201789874245,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 5925.6530630799825,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 5908.997721307169,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 5922.890741119234,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 5926.297953396315,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 5271.6089257272,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 5745.377477121588,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 5690.307108640566,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 5598.332000160927,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 6006.86167696044,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 5985.1341548850105,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 5978.090827597549,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 5949.908445850977,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 5988.082745394429,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 5999.042101704585,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 4724.8583034215435
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_identity_seed2",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 13857.677788357018,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 8.17619457244873,
+      "final_training_update_geometric_mean_scale": 0.9453127651850789,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 2,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "8336eafe76499942c1ae5fad2d1eeb0c9386e366a2bfc745722ac01fdf44560b",
+        "metrics.jsonl": "6ff4a102d6916007eb373c710f61cf48cef29bae5d36b35da9db3582d29824c0",
+        "summary.json": "e58c6879c771f753ba5b983c7cd9d2c6c6c12a56bbf3902f0cce999e5cc41dc0",
+        "checkpoint.pt": "7a91c69f76c6fe673ab13325c9d23bbbfe55c931d0d7656aee676f85a93d05ac"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.0268451226458107,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 744.986061805847,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 589.1302876010004,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 960.2693765231205,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1337.8681915738293,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1556.5289198115463,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 1602.456231502381,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 1740.005687529932,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 1943.9500547968935,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 2039.1764933071447,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2121.560813902083,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 2230.167843220239,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 2273.932115122106,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 2343.874389285231,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 2432.0643819967877,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 2336.1052578697104,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 2358.527688972616,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 2405.5950000880334,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 2522.1862175293536,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 2713.8862289450885,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 2954.2837523480985,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3305.538298105461,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 3498.64191130023,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 3543.2532839673636,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 3509.589381365568,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 3722.7216936782243,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 3781.9745356460708,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 3841.8671445680693,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 3875.0362027038345,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 3919.207407759585,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 3993.4401949319886,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 4073.5979832219587,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 4259.511602995909,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 3628.2108980034577,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 4171.889567970123,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 4273.733400490197,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 3590.692240905154,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 4407.777596802411,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 4357.7688795883,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4475.804228724089,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 3993.8907881462465,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 4633.814859064961,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 4479.720755142757,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 4522.633196022514,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 3698.932229664075,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 4178.410611246674,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 4160.165766610914,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 4255.928303765198,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 4393.837664336108,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 4323.295684702851,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 4165.798068919903,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 4135.689338245221,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 4214.43055667561,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 4292.687855963311,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 4467.477602908349,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 4061.31314822311,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 4761.75746647998,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 4765.06409020329,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 4345.111088163564,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 4604.249661798449,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 4265.7255819179345,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 4834.647486766083,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 4995.784663246184,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 4260.942919409474,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 4419.622807745112,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 4053.9327900653366,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 4857.363087582098,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 4216.022536235295,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 4718.094967702231,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 4812.032563501464,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 4731.85452255891,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 4679.198574604331,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 4457.390123538155,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 4614.278068325228,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 4383.234263179216,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 4756.268393670457,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 4579.203483476058,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 4783.1133831553325,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 4722.717191988375,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 4473.612228170573,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 4849.278257956798,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 4583.697683351939,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 4824.33412170936,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 4559.446993262489,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 4151.577432517782,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 4404.125554002991,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 4346.170568212663,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 4682.249083169177,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 4729.361445034453,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 4517.324466423462,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 4773.685853942711,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 3827.954263016343,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 3985.5226603941837,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 4624.218260354134,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 4660.8698312468005,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 4750.7091490122375,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 4836.636656493408,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 4727.460771447073,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 4639.534856497411,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 5342.145899230215,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 5332.700317977428,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 3859.88700363283
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_residual_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 12468.671246758022,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 14.217594337463378,
+      "final_training_update_geometric_mean_scale": 2.587418144303299,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "df26824916bccf5b941bd5ab398288fd8a10a555a000406542a3d426a6aa4b42",
+        "metrics.jsonl": "5c006563e359ff4a063668220c5cde9bffd003d078d61c7b772a044092b7ebff",
+        "summary.json": "ce231b800889c44565e8d38fcef4e30ea5f4b6d50def4df29ad0b5b79f1a6935",
+        "checkpoint.pt": "a6510f0782420c62273087aaedc0c07980c66c787b640f3bd38debc393abecca"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.027213632423737883,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 817.4197166507105,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 369.5996808149602,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 1303.7372627054424,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1716.260555945842,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1759.56636878175,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 1965.0778599224109,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 2042.2629345969783,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2692.709689960146,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 2898.3990273112204,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2733.134987510073,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 2790.348680813963,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 2598.143414252028,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 2545.2227063337564,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 1617.0882517019793,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 1796.4720346009417,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 3075.7572532289514,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 3224.236331848725,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 3282.314315331511,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 2642.374430159152,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 3425.4125212011018,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3415.2468556941553,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 3632.9129017620944,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 3223.8993228874224,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 3691.50097081134,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 3515.8210046383365,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 3080.802109214551,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 3393.283826117707,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 3635.938177380374,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 3810.8501524402886,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 3443.5986870185775,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 3172.5617965292226,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 3684.4751427824654,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 3892.9853452133293,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 3806.4172230606564,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 4144.851524719794,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 3946.7016494513277,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 4069.7796738611696,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 4248.65466816829,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 4256.8518504856365,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 3652.6588341006473,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 3966.067191089714,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 3736.005683149725,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 4091.420215106131,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 4241.112626897242,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 3499.086589793842,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 3909.1682214167895,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 3792.8571427785855,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 3591.0579874474715,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 4169.1491781649875,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 3625.54881533798,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 4185.448202826836,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 3841.7967840904694,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 4047.3239540282952,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 4034.0040680875336,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 4254.24499322135,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 3785.47626144044,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 3857.759746967676,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 3390.8090155450545,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 3887.631490415126,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 3792.6924335387566,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 4349.988027961397,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 4577.841557592873,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 3329.832166130331,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 4234.90694783791,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 4433.372958859676,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 3692.166878568164,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 4313.6797524332615,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 3544.533567346326,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 2612.6216640012203,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 4074.5346377626174,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 3504.2207979483396,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 4337.380623723134,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 3754.281812575647,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 3243.7567173887683,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 4123.359727961737,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 3839.341860348733,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 3810.890293321802,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 4204.365142688418,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 3604.4290062333966,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 2938.101269822852,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 3692.773580071883,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 3729.820319821341,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 3797.96680765947,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 3416.6548390665157,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 4230.829444107523,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 3437.157541250929,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 3596.3164518162757,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 3499.822213592699,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 3437.1185973995457,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 3465.2316577525044,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 3613.5111901889986,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 3594.174101701359,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 3053.3250601969066,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 2970.780434692409,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 3049.83408851557,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 3131.419126366464,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 3130.1575752082995,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 3470.387134757307,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 3602.528045325976,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 3623.196867452071,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 3409.6898878826146
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_residual_seed1",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 12632.128154416045,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 14.36755828857422,
+      "final_training_update_geometric_mean_scale": 2.6529030073911395,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 1,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "84fa3735826a734e131838564891ac7b11fb80bc976970bb31f45232f822ba8b",
+        "metrics.jsonl": "7e2fde189af67d3b94a4b79a88391542121f27254e94631adc67403c940922d6",
+        "summary.json": "696472e37187dcd324d88e915a9d524e60eccd9c74ef5a74ed3f55714b84e2e4",
+        "checkpoint.pt": "e990ac33eaeb4245ecb9d94f04dba48d6cc414bc74e06f21c45ceba7664a05b9"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.019372146998947376,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 774.229129946516,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 1021.7853473850978,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 878.4182110592219,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1452.9870074775254,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1933.5694108143873,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 2136.1648322096703,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 2363.3030108762296,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2522.956503519879,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 2645.964243095167,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2632.5037517851215,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 2654.0591598413475,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 2825.0902253195895,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 2878.3864649700304,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 2861.3297411510066,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 2880.328970676562,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 2936.004526060507,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 3002.5146928257122,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 2977.690842982341,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 3008.5263205868696,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 3138.0906707700447,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3192.5154493650334,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 3309.451108858358,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 3347.2522342507377,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 3318.950576780327,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 3439.962875897513,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 3358.228985584192,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 3400.1179312321947,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 3351.669686441565,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 3379.6793195646783,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 3335.1982777319845,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 3476.4182596221344,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 3278.486915401277,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 3564.633913876728,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 3266.69706671988,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 3505.100548413193,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 3208.984687078924,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 2988.9480352683004,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 3357.9994570991203,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 3364.2299872185995,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 3155.937617884859,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 3134.4719283492077,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 3329.9689989705303,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 2990.601106969537,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 3681.3442725319574,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 3268.150988151311,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 3225.6769097174515,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 3590.7527600965195,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 3123.931843005452,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 3218.780608162832,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 3785.453536913762,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 3586.8751909356542,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 3659.8444078058424,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 3280.2849154745277,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 2976.2796743716362,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 2836.835352952067,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 3255.9327373142564,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 3195.71181282275,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 3069.5847792804007,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 3040.3398028635756,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 3172.8406104218852,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 3328.1477541652343,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 3274.2737615596093,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 3368.7821858009993,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 1768.611756206034,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 1761.733056927422,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 3352.072591047638,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 3272.3698884694195,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 3136.868162374435,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 3120.9605507200895,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 2613.6665382359383,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 2616.5650433393484,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 3327.9710725926416,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 3311.103011678095,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 3364.3715518786444,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 3429.269108490296,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 3241.9489315706514,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 3438.3393292469887,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 2801.8192978370835,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 3329.6653880120157,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 3423.228852119061,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 2457.2143553648702,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 3035.5785387072992,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 3323.2007430232425,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 3171.5973169229055,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 2864.614212190828,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 1530.0016204508188,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 2739.0150716846038,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 2369.36703325772,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 2121.35998470034,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 2896.042462078839,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 3457.35755475919,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 3618.435565718494,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 3103.426063840525,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 2763.473241416118,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 2949.0631780002655,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 2876.5297608816754,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 3545.5794299743998,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 3460.379141071138,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 3072.1631393101293,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 2851.9607763934546,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 2976.1016518250185
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "output_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_residual_seed2",
+      "status": "completed",
+      "eligible": true,
+      "steps": 10000000,
+      "updates": 2500,
+      "elapsed_seconds": 12982.47677555692,
+      "evaluation_environment_steps": 1010000,
+      "final_training_update_joint_entropy": 13.395537567138671,
+      "final_training_update_geometric_mean_scale": 2.256130237411122,
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "2x3",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 2,
+        "steps": 10000000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.01,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 10,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 100000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 125,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "3116d29f3f8cc98f2fdf78a82170fd4d3e35e9cd16a90f6159514ce53cca3966",
+        "metrics.jsonl": "e09b1d1d325ba3d38f5398c96981c1a859d14aecb7a324010fed3bb4012f69dd",
+        "summary.json": "7f5db8425ece5b4eecb6f6862e2bde94793abbbea9ee4e90fb2ec1c045b5bcd9",
+        "checkpoint.pt": "51e25ee09e5ac915037011186361006543e4b591706227d71e9b799dbe459f25"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.0268451226458107,
+          "episodes": 10
+        },
+        {
+          "steps": 100000,
+          "return_mean": 628.2281801538345,
+          "episodes": 10
+        },
+        {
+          "steps": 200000,
+          "return_mean": 756.7025393681956,
+          "episodes": 10
+        },
+        {
+          "steps": 300000,
+          "return_mean": 1071.5572005556016,
+          "episodes": 10
+        },
+        {
+          "steps": 400000,
+          "return_mean": 1002.8971098521688,
+          "episodes": 10
+        },
+        {
+          "steps": 500000,
+          "return_mean": 1654.5749213483596,
+          "episodes": 10
+        },
+        {
+          "steps": 600000,
+          "return_mean": 2394.532288761139,
+          "episodes": 10
+        },
+        {
+          "steps": 700000,
+          "return_mean": 2695.596756455105,
+          "episodes": 10
+        },
+        {
+          "steps": 800000,
+          "return_mean": 2774.8324290482133,
+          "episodes": 10
+        },
+        {
+          "steps": 900000,
+          "return_mean": 2788.2950558480693,
+          "episodes": 10
+        },
+        {
+          "steps": 1000000,
+          "return_mean": 2945.2628291606916,
+          "episodes": 10
+        },
+        {
+          "steps": 1100000,
+          "return_mean": 2925.082912039983,
+          "episodes": 10
+        },
+        {
+          "steps": 1200000,
+          "return_mean": 2524.8280797523057,
+          "episodes": 10
+        },
+        {
+          "steps": 1300000,
+          "return_mean": 3007.992597908011,
+          "episodes": 10
+        },
+        {
+          "steps": 1400000,
+          "return_mean": 3003.161983180755,
+          "episodes": 10
+        },
+        {
+          "steps": 1500000,
+          "return_mean": 3285.619248621243,
+          "episodes": 10
+        },
+        {
+          "steps": 1600000,
+          "return_mean": 3445.6348388620277,
+          "episodes": 10
+        },
+        {
+          "steps": 1700000,
+          "return_mean": 3393.602644413461,
+          "episodes": 10
+        },
+        {
+          "steps": 1800000,
+          "return_mean": 2840.620709969042,
+          "episodes": 10
+        },
+        {
+          "steps": 1900000,
+          "return_mean": 2961.1962073784553,
+          "episodes": 10
+        },
+        {
+          "steps": 2000000,
+          "return_mean": 3174.5970519830125,
+          "episodes": 10
+        },
+        {
+          "steps": 2100000,
+          "return_mean": 3311.645730242582,
+          "episodes": 10
+        },
+        {
+          "steps": 2200000,
+          "return_mean": 3225.517780005434,
+          "episodes": 10
+        },
+        {
+          "steps": 2300000,
+          "return_mean": 3202.849994711184,
+          "episodes": 10
+        },
+        {
+          "steps": 2400000,
+          "return_mean": 3059.312190974605,
+          "episodes": 10
+        },
+        {
+          "steps": 2500000,
+          "return_mean": 2492.3010607753054,
+          "episodes": 10
+        },
+        {
+          "steps": 2600000,
+          "return_mean": 3271.922514526598,
+          "episodes": 10
+        },
+        {
+          "steps": 2700000,
+          "return_mean": 2241.8557796781847,
+          "episodes": 10
+        },
+        {
+          "steps": 2800000,
+          "return_mean": 3168.125521035244,
+          "episodes": 10
+        },
+        {
+          "steps": 2900000,
+          "return_mean": 1494.3569688061839,
+          "episodes": 10
+        },
+        {
+          "steps": 3000000,
+          "return_mean": 3135.3202549597436,
+          "episodes": 10
+        },
+        {
+          "steps": 3100000,
+          "return_mean": 2818.794124539422,
+          "episodes": 10
+        },
+        {
+          "steps": 3200000,
+          "return_mean": 2836.4983836932074,
+          "episodes": 10
+        },
+        {
+          "steps": 3300000,
+          "return_mean": 3303.803325983442,
+          "episodes": 10
+        },
+        {
+          "steps": 3400000,
+          "return_mean": 3562.5048270877437,
+          "episodes": 10
+        },
+        {
+          "steps": 3500000,
+          "return_mean": 3834.7096066750455,
+          "episodes": 10
+        },
+        {
+          "steps": 3600000,
+          "return_mean": 3805.9674712585183,
+          "episodes": 10
+        },
+        {
+          "steps": 3700000,
+          "return_mean": 2763.394833743723,
+          "episodes": 10
+        },
+        {
+          "steps": 3800000,
+          "return_mean": 3391.8972890198993,
+          "episodes": 10
+        },
+        {
+          "steps": 3900000,
+          "return_mean": 3555.1600632535756,
+          "episodes": 10
+        },
+        {
+          "steps": 4000000,
+          "return_mean": 3331.1348889162537,
+          "episodes": 10
+        },
+        {
+          "steps": 4100000,
+          "return_mean": 3678.4587809935065,
+          "episodes": 10
+        },
+        {
+          "steps": 4200000,
+          "return_mean": 3622.7671861185718,
+          "episodes": 10
+        },
+        {
+          "steps": 4300000,
+          "return_mean": 3603.5055332340926,
+          "episodes": 10
+        },
+        {
+          "steps": 4400000,
+          "return_mean": 3019.1840595652893,
+          "episodes": 10
+        },
+        {
+          "steps": 4500000,
+          "return_mean": 3485.763630855279,
+          "episodes": 10
+        },
+        {
+          "steps": 4600000,
+          "return_mean": 2746.5352705884306,
+          "episodes": 10
+        },
+        {
+          "steps": 4700000,
+          "return_mean": 3751.1606156203434,
+          "episodes": 10
+        },
+        {
+          "steps": 4800000,
+          "return_mean": 2858.185479549727,
+          "episodes": 10
+        },
+        {
+          "steps": 4900000,
+          "return_mean": 3169.73994203094,
+          "episodes": 10
+        },
+        {
+          "steps": 5000000,
+          "return_mean": 3696.7200768861935,
+          "episodes": 10
+        },
+        {
+          "steps": 5100000,
+          "return_mean": 3670.6435445191078,
+          "episodes": 10
+        },
+        {
+          "steps": 5200000,
+          "return_mean": 3539.5557222036027,
+          "episodes": 10
+        },
+        {
+          "steps": 5300000,
+          "return_mean": 3182.61924062736,
+          "episodes": 10
+        },
+        {
+          "steps": 5400000,
+          "return_mean": 3094.809623200727,
+          "episodes": 10
+        },
+        {
+          "steps": 5500000,
+          "return_mean": 3874.3231866053097,
+          "episodes": 10
+        },
+        {
+          "steps": 5600000,
+          "return_mean": 3204.5382411250494,
+          "episodes": 10
+        },
+        {
+          "steps": 5700000,
+          "return_mean": 3689.1597669841617,
+          "episodes": 10
+        },
+        {
+          "steps": 5800000,
+          "return_mean": 3831.355219298131,
+          "episodes": 10
+        },
+        {
+          "steps": 5900000,
+          "return_mean": 3839.38676751776,
+          "episodes": 10
+        },
+        {
+          "steps": 6000000,
+          "return_mean": 2984.8909781901193,
+          "episodes": 10
+        },
+        {
+          "steps": 6100000,
+          "return_mean": 3798.395525359547,
+          "episodes": 10
+        },
+        {
+          "steps": 6200000,
+          "return_mean": 3299.467623216342,
+          "episodes": 10
+        },
+        {
+          "steps": 6300000,
+          "return_mean": 3639.19108522386,
+          "episodes": 10
+        },
+        {
+          "steps": 6400000,
+          "return_mean": 3791.9243710102405,
+          "episodes": 10
+        },
+        {
+          "steps": 6500000,
+          "return_mean": 3514.26766838851,
+          "episodes": 10
+        },
+        {
+          "steps": 6600000,
+          "return_mean": 3691.686674544448,
+          "episodes": 10
+        },
+        {
+          "steps": 6700000,
+          "return_mean": 3345.6234629078017,
+          "episodes": 10
+        },
+        {
+          "steps": 6800000,
+          "return_mean": 3939.8021407670835,
+          "episodes": 10
+        },
+        {
+          "steps": 6900000,
+          "return_mean": 3626.374218089263,
+          "episodes": 10
+        },
+        {
+          "steps": 7000000,
+          "return_mean": 3822.1929140380853,
+          "episodes": 10
+        },
+        {
+          "steps": 7100000,
+          "return_mean": 3777.378735320565,
+          "episodes": 10
+        },
+        {
+          "steps": 7200000,
+          "return_mean": 3720.8831718871065,
+          "episodes": 10
+        },
+        {
+          "steps": 7300000,
+          "return_mean": 3802.282598538572,
+          "episodes": 10
+        },
+        {
+          "steps": 7400000,
+          "return_mean": 3740.546626732387,
+          "episodes": 10
+        },
+        {
+          "steps": 7500000,
+          "return_mean": 3940.825692734607,
+          "episodes": 10
+        },
+        {
+          "steps": 7600000,
+          "return_mean": 3721.8200953408987,
+          "episodes": 10
+        },
+        {
+          "steps": 7700000,
+          "return_mean": 3042.8404650284756,
+          "episodes": 10
+        },
+        {
+          "steps": 7800000,
+          "return_mean": 3006.9845971926397,
+          "episodes": 10
+        },
+        {
+          "steps": 7900000,
+          "return_mean": 2979.5417052454222,
+          "episodes": 10
+        },
+        {
+          "steps": 8000000,
+          "return_mean": 2791.796149101354,
+          "episodes": 10
+        },
+        {
+          "steps": 8100000,
+          "return_mean": 2690.923603122273,
+          "episodes": 10
+        },
+        {
+          "steps": 8200000,
+          "return_mean": 2717.024703640336,
+          "episodes": 10
+        },
+        {
+          "steps": 8300000,
+          "return_mean": 3230.380115872637,
+          "episodes": 10
+        },
+        {
+          "steps": 8400000,
+          "return_mean": 2831.0235049715216,
+          "episodes": 10
+        },
+        {
+          "steps": 8500000,
+          "return_mean": 2679.8369205475633,
+          "episodes": 10
+        },
+        {
+          "steps": 8600000,
+          "return_mean": 3742.616962656816,
+          "episodes": 10
+        },
+        {
+          "steps": 8700000,
+          "return_mean": 3529.39703091883,
+          "episodes": 10
+        },
+        {
+          "steps": 8800000,
+          "return_mean": 2804.437149376702,
+          "episodes": 10
+        },
+        {
+          "steps": 8900000,
+          "return_mean": 3613.6387199962865,
+          "episodes": 10
+        },
+        {
+          "steps": 9000000,
+          "return_mean": 4134.355976923755,
+          "episodes": 10
+        },
+        {
+          "steps": 9100000,
+          "return_mean": 3920.5284196093035,
+          "episodes": 10
+        },
+        {
+          "steps": 9200000,
+          "return_mean": 4364.0723272389705,
+          "episodes": 10
+        },
+        {
+          "steps": 9300000,
+          "return_mean": 4115.892801553386,
+          "episodes": 10
+        },
+        {
+          "steps": 9400000,
+          "return_mean": 3299.034271145813,
+          "episodes": 10
+        },
+        {
+          "steps": 9500000,
+          "return_mean": 2801.0167848821375,
+          "episodes": 10
+        },
+        {
+          "steps": 9600000,
+          "return_mean": 2609.4840592009705,
+          "episodes": 10
+        },
+        {
+          "steps": 9700000,
+          "return_mean": 4176.112445573272,
+          "episodes": 10
+        },
+        {
+          "steps": 9800000,
+          "return_mean": 4240.629774836404,
+          "episodes": 10
+        },
+        {
+          "steps": 9900000,
+          "return_mean": 4368.164544408964,
+          "episodes": 10
+        },
+        {
+          "steps": 10000000,
+          "return_mean": 4207.391593339601,
+          "episodes": 10
+        }
+      ],
+      "normalized_auc": 3185.912690715109
+    }
+  ],
+  "completed_runs": 9,
+  "declared_runs": 9,
+  "integrity_errors": [],
+  "limitations": [
+    "Raw episode/window reductions are checked; native transition rewards are not independently replayed in this audit.",
+    "Incomplete methods remain in the report; three development seeds do not provide independent final confirmation.",
+    "No early peak replaces a final endpoint; budgets and protocols must match before comparisons."
+  ]
+}

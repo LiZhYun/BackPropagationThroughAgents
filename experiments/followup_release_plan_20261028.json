@@ -1,0 +1,417 @@
+{
+  "recorded_utc": "2026-10-28T08:24:51.098573+00:00",
+  "study": "experiments/followup_studies_20261028.json",
+  "study_sha256": "8b0664362deb2d60ab1c3bdbc12f44419ceb952bb6bd0235050bdfd52e84e711",
+  "resources": {
+    "football20m": {
+      "cpus": 1,
+      "memory_gib": 8,
+      "wall_minutes": 3600,
+      "active": 2,
+      "name": "football20m",
+      "dispatch_script": "results/followups_dispatch_20261028/football20m.sbatch",
+      "dispatch_script_sha256": "f362c7d0a2e6695b065d0b2b5e5cc52eb2761f5ccc3f94c8a3e16cf70932ede7"
+    },
+    "hc_partitions10m": {
+      "cpus": 1,
+      "memory_gib": 4,
+      "wall_minutes": 420,
+      "active": 2,
+      "name": "hc-partitions10m",
+      "dispatch_script": "results/followups_dispatch_20261028/hc_partitions10m.sbatch",
+      "dispatch_script_sha256": "ecea49c53b21563a9ddbc6c25810a481a1bef36168e8a84f304428b95a3d8ef3"
+    },
+    "smac_layout_gate": {
+      "cpus": 2,
+      "memory_gib": 32,
+      "wall_minutes": 30,
+      "active": 1,
+      "name": "smac-layout-gate",
+      "dispatch_script": "results/followups_dispatch_20261028/smac_layout_gate.sbatch",
+      "dispatch_script_sha256": "33e26c0513aecceff0f4aba2197f240effee15e4a449b7859d52a61e9667ec62"
+    }
+  },
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 64
+  },
+  "scheduled_maximum": {
+    "workers": 7,
+    "cpus": 8,
+    "memory_gib": 64
+  },
+  "resource_exception": "The earlier8GiB per-worker pilot ceiling is revised only for one bounded32GiB native SMAC25-stream gate. Total project64GiB is unchanged. All five gates must pass and sampled memory be reviewed before any learning release;32GiB is a diagnostic cap,not a measured requirement.",
+  "runtime_estimates": {
+    "football20m": {
+      "audit": "experiments/football_batch1m_complete_20261028.json",
+      "audit_sha256": "f532d111743a3a5eb9de941431f213ad8b8374a3337a4ab7ae5f0e9518d8a1cd",
+      "formula": "2000 times max update phase +51 times max evaluation phase x1",
+      "per_condition": [
+        {
+          "variant": "mappo_gru",
+          "max_update_seconds": 56.416616722999606,
+          "max_evaluation_seconds": 134.137079804088,
+          "projected_seconds": 119674.2245160077
+        },
+        {
+          "variant": "arppo_gru",
+          "max_update_seconds": 53.49098364706151,
+          "max_evaluation_seconds": 170.6088339140406,
+          "projected_seconds": 115683.0178237391
+        },
+        {
+          "variant": "bppo_gru",
+          "max_update_seconds": 64.8623787460383,
+          "max_evaluation_seconds": 162.79694866307545,
+          "projected_seconds": 138027.40187389345
+        },
+        {
+          "variant": "agentmixer_gru",
+          "max_update_seconds": 76.43382866191678,
+          "max_evaluation_seconds": 124.79892881400883,
+          "projected_seconds": 159232.402693348
+        },
+        {
+          "variant": "agentmixer_identity_gru",
+          "max_update_seconds": 63.65346652001608,
+          "max_evaluation_seconds": 102.28976803703699,
+          "projected_seconds": 132523.71120992105
+        }
+      ]
+    },
+    "hc_partitions10m": {
+      "audit": "experiments/hc_partitions_transfer500k_complete_20261028.json",
+      "audit_sha256": "48bd5ca09d5668f2e36ac327235eaf9275c4287b5c3faa76c504a1e11f13b9e3",
+      "formula": "2500 times max update phase +21 times max evaluation phase x3.2",
+      "per_condition": [
+        {
+          "variant": "hc3x2_arppo",
+          "max_update_seconds": 4.395073166990187,
+          "max_evaluation_seconds": 18.066139862989075,
+          "projected_seconds": 12201.727516268333
+        },
+        {
+          "variant": "hc3x2_bppo",
+          "max_update_seconds": 4.320192800019868,
+          "max_evaluation_seconds": 21.937382843985688,
+          "projected_seconds": 12274.674127165508
+        },
+        {
+          "variant": "hc6x1_arppo",
+          "max_update_seconds": 4.367727353994269,
+          "max_evaluation_seconds": 25.941989791986998,
+          "projected_seconds": 12662.6200990072
+        },
+        {
+          "variant": "hc6x1_bppo",
+          "max_update_seconds": 4.494670504005626,
+          "max_evaluation_seconds": 24.67511191201629,
+          "projected_seconds": 12894.84378050156
+        }
+      ]
+    }
+  },
+  "runtime_qualification": "Phase maxima projected from complete pilots,not runtime guarantees. Football60h exceeds worst44.24h projection by35%;HC7h exceeds worst3.59h projection by95%. Native SMAC30min cap is a bounded diagnostic.",
+  "prior_accounting": "results/followups_dispatch_20261028/prior_accounting.txt",
+  "prior_accounting_sha256": "ee3da8db6d07f4a92efcc44f43e196c40021c78065f4d61a410b24b95eaec1c5",
+  "queue_before": [
+    {
+      "id": "21251756_0",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "RUNNING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_1",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "RUNNING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_2",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_3",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_4",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_5",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_6",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_7",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_8",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_9",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_10",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_11",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_12",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_13",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_14",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_15",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_16",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_17",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_18",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_19",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_20",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_21",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_22",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_23",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_24",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_25",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_26",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_27",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_28",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_29",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_30",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_31",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_32",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_33",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_34",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_35",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "id": "21251756_36",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpu": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    }
+  ],
+  "smac_learning_status": "prepared_unsubmitted"
+}

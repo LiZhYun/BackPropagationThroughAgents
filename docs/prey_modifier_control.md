@@ -135,3 +135,8 @@ cannot establish reliability or a modifier advantage.
 
 The separate [recurrent control](prey_recurrent_control.md) tests the released
 training counts and recurrence after this study. Its results are not yet available.
+
+
+## Complete bound control — 2026-10-28
+
+All eight controls pass [raw audit](../experiments/prey_modifier_bound1m_complete_20261028.json): 800 episodes, 4,000 windows and 15,632 rollout updates. At penalty 0, unbounded→bounded final window rates are 2.0635→2.0705 for factorized and 1.9655→2.0715 for joint AgentMixer. At penalty −1 they are −0.0100→−0.0716 and −0.0100→−0.0100. The bound does not reliably fix the penalty task. All runs use development seed 0; no across-seed improvement is established.

@@ -116,3 +116,14 @@ accounting, not a separate per-method peak or a guarantee for longer training.
 The remaining worker follows AgentMixer matrix validation `21218175_0` in the
 existing B0 chain. The larger learning study remains unsubmitted until all five
 native checks and the full runtime/memory review pass.
+
+
+## Complete batch/history control and layout check — 2026-10-28
+
+All ten 1M FF/GRU runs pass [raw audit](../experiments/smac_batch1m_complete_20261028.json): 2,560 complete episodes and 1,000 updates. Final wins out of 32, FF/GRU respectively: MAPPO 1/0, AR-PPO 2/1, BPPO 1/3, AgentMixer 5/4, identity 2/0. The larger batch/history control still has low win rates; one seed does not establish a recurrence benefit.
+
+The next [frozen layout study](../experiments/followup_studies_20261028.json) changes only collection from 2×5000 to 25×400 for all five recurrent methods at 1M. This matches the released modifier layout and keeps 10,000 samples/update. Using the same layout for every method isolates that variable; the released no-modifier launcher instead uses 50×200. Architecture and centralized-state differences remain explicit.
+
+Job **21251962** completed all five native checks. The [audit](../experiments/smac_layout25_native_gate_complete_20261028.json) verifies 40 raw episodes, five updates, exact frozen source/configurations and seed/optimizer/ValueNorm counts. Scheduler exit is0:0 after26m13s; peak memory is21.24GiB.
+
+The [learning release](../experiments/smac_layout25_learning_release_20261028.json), **21252369**, runs all five frozen1M controls with two2CPU/32GiB/14h workers. Worst measured-phase projection is8.48h; this is an estimate, not a guarantee. Total project memory now allows96GiB while eight-worker/sixteen-CPU ceilings remain. The shared25×400 layout isolates stream count/grouping; it does not reproduce the no-modifier launcher's50×200 layout or the released per-agent recurrent critics.

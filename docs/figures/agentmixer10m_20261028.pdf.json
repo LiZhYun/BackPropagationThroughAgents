@@ -1,0 +1,10 @@
+{
+  "report": "results/progress_curves_20261028/agentmixer10m.json",
+  "report_sha256": "382751101b697f66029d9abebc50593bef24694bcaa6b97f8e292ca8607309fe",
+  "plotter_sha256": "d6d136c358f1d41d72ceaa0f57165de080683ce2e82c312927b454d835be89e5",
+  "matplotlib": "3.7.1",
+  "statistic": "mean",
+  "band": "sample standard deviation across training seeds",
+  "omitted_groups": [],
+  "title": "AgentMixer HalfCheetah 2x3: complete development study"
+}

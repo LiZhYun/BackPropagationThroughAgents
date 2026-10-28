@@ -1,6 +1,28 @@
 # AgentMixer HalfCheetah 10M development study
 
-Job **21221384** extends the completed positive-entropy comparison to the
+## Complete result — 2026-10-28
+
+All nine runs complete validly. The learned modifiers underperform the identity control at the final scheduled checkpoint:
+
+| Variant | Final return, mean ± sample SD | Normalized curve area, mean ± sample SD | Secondary 9.9M mean |
+| --- | ---: | ---: | ---: |
+| Bounded modifier | 3819.11 ± 2315.14 | 4411.01 ± 375.97 | 4543.90 |
+| Residual modifier | 3560.85 ± 679.86 | 3190.57 ± 216.83 | 3680.95 |
+| Identity control | 5569.45 ± 372.68 | 4435.61 ± 498.60 | 5609.87 |
+
+Each row retains development seeds 0–2. The [comparison](../experiments/hc2x3_agentmixer10m_comparison_20261028.json) includes every endpoint and paired difference. The [raw audit](../experiments/hc2x3_agentmixer10m_complete_20261028.json) verifies 9,090 evaluation episodes and 22,500 updates. Both learned-modifier means remain below the figure range [5000, 5070]; the identity result cannot establish AgentMixer reproduction. The secondary 9.9M values do not replace 10M endpoints.
+
+![Complete AgentMixer development curves](figures/agentmixer10m_20261028.png)
+
+[PDF](figures/agentmixer10m_20261028.pdf). Shading is one sample SD across three development seeds. The bounded seed-0 endpoint is 1438.93; its decline remains included. Residual training distributions end with geometric standard deviations 2.26–2.65, versus 0.36–0.57 for bounded and 0.42–0.95 for identity. These observations motivate diagnosis; they do not prove the cause of the return gap.
+
+The [completed diagnostic](../experiments/hc_agentmixer_final_diagnostic_complete_20261028.json) exactly replays all nine final policies and 90 raw episodes. Residual central scales hit their upper limit on 12.96–20.64% of evaluation action coordinates; identity seed2 hits it on 4.18%. Mean-action clipping is common in both learned and identity controls, so these observations do not prove the cause of the return gap. The original diagnostic's overstrict float32 scale assertion and the corrected rerun are both retained; no training artifacts changed.
+
+Job **21252423** queues the [matched entropy-zero control](../experiments/hc2x3_entropy0_10m_plan_20261028.json): all nine 10M conditions, exact source/settings except entropy 0.01→0. It follows the entire37-run MuJoCo coverage array and reuses its two1CPU/4GiB slots. All old/new outcomes and final checkpoints remain in the comparison. This is development, not independent confirmation.
+
+## Frozen development design
+
+Completed job **21221384** extended the completed positive-entropy comparison to the
 archived 10M HalfCheetah 2×3 budget. The bounded modifier was strongest at 1M;
 all three variants remain in this study: bounded, residual and identity,
 each with development seeds 0–2. This is configuration development, not
@@ -48,7 +70,7 @@ The [post-release check](../experiments/entropy_fullbudget_release_verification_
 verifies all20 frozen modules,all nine resolved configurations,their evidence
 hashes and document links. All eight project workers started within the
 ceiling (14 CPUs/56 GiB in the recorded snapshot). This validates execution
-and provenance; learning results remain pending.
+and provenance at submission; complete learning results are reported above.
 
 
 A [prefix comparison](../experiments/hc2x3_eval_cadence_prefix_parity_20261026.json)

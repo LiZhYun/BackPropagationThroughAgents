@@ -1,0 +1,801 @@
+{
+  "recorded_utc": "2026-10-28T08:22:29.776492+00:00",
+  "scope": "Evidence-driven follow-ups after all previously declared comparisons complete. Preserve every original failure and study. No independent final seed reused for tuning runs.",
+  "selection": {
+    "football": "Same GRU architecture for all five methods, consistent with released actor history; mixed1M outcomes do not prove a GRU advantage. Budget extended to canonical20M.",
+    "hc_partitions": "Both BPPO and matched AR at both partitions; all3 development seeds. Canonical10M, native gates and500k pilots already complete.",
+    "smac": "Test stream layout before longer training, because2x5000 differs from released25x400. Do not infer recurrence or layout benefit from low1M win counts."
+  },
+  "studies": {
+    "football20m": {
+      "config_plan": "configs/football_3v1_gru20m.json",
+      "config_plan_sha256": "0f3261bb2dba3b153a915533013e65d3477751812ec257e44acd688869c7b4e6",
+      "manifest": "results/football_3v1_gru20m_20261028T082219Z/manifest.json",
+      "manifest_sha256": "34dd3866f5c1d432ac5e9698dae9f9b96e73dd8a27da1695904d21e179007f00",
+      "submit_script": "results/football_3v1_gru20m_20261028T082219Z/submit.sbatch",
+      "submit_script_sha256": "0d78e927ee9ed780dde29f9992a5e9f1cadc6f874ef55543337b7a623372a060",
+      "source_manifest": "results/football_3v1_batch1m_20261026T183032Z/manifest.json",
+      "source_manifest_sha256": "48b6ea39c97dfc1b841abb3aed4279298c5c7cb0b06842dd1da577fe0b8caef1",
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+        "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+        "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+        "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+        "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "configs": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "config_path": "results/football_3v1_gru20m_20261028T082219Z/mappo_gru_seed0.json",
+          "config_sha256": "368b5e09b8122cad35a31382abd1ea1aaddfd7d6ba5eaead670b4aef4696a5de",
+          "prior_resolved_config": "results/football_3v1_batch1m_20261026T183032Z/mappo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "c6569dc93d1d27d80a5361c9cda400173736e4ec72feb810554368838b7fb398",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 20000000
+            }
+          }
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "config_path": "results/football_3v1_gru20m_20261028T082219Z/arppo_gru_seed0.json",
+          "config_sha256": "ec085a0fde85b6d94c5efc6c993684f2be9481f0ff730607c29f33c0af5816a9",
+          "prior_resolved_config": "results/football_3v1_batch1m_20261026T183032Z/arppo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "7b7d37eb43909dd4e4123089e9deca76d7431f4ec44182d794cfd455a3ec999b",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 20000000
+            }
+          }
+        },
+        {
+          "variant": "bppo_gru",
+          "seed": 0,
+          "config_path": "results/football_3v1_gru20m_20261028T082219Z/bppo_gru_seed0.json",
+          "config_sha256": "05f822f1f65da5351c52bc02528696b82ea67550dcb0111151984c870f088755",
+          "prior_resolved_config": "results/football_3v1_batch1m_20261026T183032Z/bppo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "218c88081813f00b48032018ac09bb737d20fa98c1964ccd5ef6c3b423a7af09",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 20000000
+            }
+          }
+        },
+        {
+          "variant": "agentmixer_gru",
+          "seed": 0,
+          "config_path": "results/football_3v1_gru20m_20261028T082219Z/agentmixer_gru_seed0.json",
+          "config_sha256": "84990c714e6d59c742e79f62c106240cb03ee9e9a3a867ffe070446a25e2afa5",
+          "prior_resolved_config": "results/football_3v1_batch1m_20261026T183032Z/agentmixer_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "18a1d7f43f2e93164ef4dda99e2f68dc0e8afb348ab1d4211173f068da032f55",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 20000000
+            }
+          }
+        },
+        {
+          "variant": "agentmixer_identity_gru",
+          "seed": 0,
+          "config_path": "results/football_3v1_gru20m_20261028T082219Z/agentmixer_identity_gru_seed0.json",
+          "config_sha256": "18a5888bcfc2b09dfeee6ee09ab76404fcc4093d7e90b73a6d430016e390a5cb",
+          "prior_resolved_config": "results/football_3v1_batch1m_20261026T183032Z/agentmixer_identity_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "7af0c1df5d899b81d8d43dd6bff3dd92011177dce8d69a336162a7c607272055",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 20000000
+            }
+          }
+        }
+      ],
+      "frozen_parser_validated": true,
+      "source_and_resolved_config_verified": true,
+      "status": "prepared_not_submitted"
+    },
+    "hc_partitions10m": {
+      "config_plan": "configs/mujoco_hc_partitions10m.json",
+      "config_plan_sha256": "81e40c6953055d33272d7dd1b76a6cdb81ed6ae81a5d6e06722e0635acce7649",
+      "manifest": "results/mujoco_hc_partitions10m_20261028T082222Z/manifest.json",
+      "manifest_sha256": "89304521b293a68616a248da6e64ded7c26d0fe30ee44c52f3bb536de473cb60",
+      "submit_script": "results/mujoco_hc_partitions10m_20261028T082222Z/submit.sbatch",
+      "submit_script_sha256": "f4005879561bd4e0e901a5ee158cdf55fe270d25df6a972ef8e90af4fcd5576f",
+      "source_manifest": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/manifest.json",
+      "source_manifest_sha256": "23737dfa6093f1b6b373b4a5ed8b13e6b238b082d4183dae0d73048d7d756d64",
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+        "agentmixer_continuous.py": "6b5e64b81ba85050efe285e9813ad2c1ccfe8bede3bd074da6de139a3b4add8c",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+        "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+        "simulator_train.py": "ddaecd74f68997c67b0577f320a61e425c6167a8d7c10651100fca64ec97998d",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "configs": [
+        {
+          "variant": "hc3x2_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_arppo_seed0.json",
+          "config_sha256": "18ee6f61f6d816f68dec68c26bf5fbf9a5c18b84bb3cf7931a421efdfcd57599",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc3x2_arppo_seed0/config.json",
+          "prior_resolved_config_sha256": "91e3189538c8e25ca5c7300f1a1feae1673bb44d720faa3202c03607c5b3ef9a",
+          "changed_fields": {
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc3x2_arppo",
+          "seed": 1,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_arppo_seed1.json",
+          "config_sha256": "cfd262d5aa85a58f78d6f99f209380d88484de3fc5816b2ebe9add541e479cf8",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc3x2_arppo_seed0/config.json",
+          "prior_resolved_config_sha256": "91e3189538c8e25ca5c7300f1a1feae1673bb44d720faa3202c03607c5b3ef9a",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 1
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc3x2_arppo",
+          "seed": 2,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_arppo_seed2.json",
+          "config_sha256": "2a8a61326746b2532dde42df931ec8f274bbcd4b1979ced1830bdb6b7f05f2a8",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc3x2_arppo_seed0/config.json",
+          "prior_resolved_config_sha256": "91e3189538c8e25ca5c7300f1a1feae1673bb44d720faa3202c03607c5b3ef9a",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 2
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc3x2_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_bppo_seed0.json",
+          "config_sha256": "0719a1f4ae3791bd8938b786ed24f190eb7dc79edd4ad184b558263b4ce1f2a4",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc3x2_bppo_seed0/config.json",
+          "prior_resolved_config_sha256": "7e28258af1e10bf9da52e12c9d4335ef5c7cf18042c66baf4ccdf306cf9cc462",
+          "changed_fields": {
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc3x2_bppo",
+          "seed": 1,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_bppo_seed1.json",
+          "config_sha256": "4dcdaef91243c2f132aec4282207aa0da42eb0d6a3f1de5a1ef887e6c85f221d",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc3x2_bppo_seed0/config.json",
+          "prior_resolved_config_sha256": "7e28258af1e10bf9da52e12c9d4335ef5c7cf18042c66baf4ccdf306cf9cc462",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 1
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc3x2_bppo",
+          "seed": 2,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_bppo_seed2.json",
+          "config_sha256": "f7acac72cf5cb63d1d543f7b6aa7a1459b172d63f2b737ed610c421b31a66e2d",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc3x2_bppo_seed0/config.json",
+          "prior_resolved_config_sha256": "7e28258af1e10bf9da52e12c9d4335ef5c7cf18042c66baf4ccdf306cf9cc462",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 2
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc6x1_arppo",
+          "seed": 0,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc6x1_arppo_seed0.json",
+          "config_sha256": "5d1c82efe3a5a44d89ba1affb6ece7b1cdb0292cb13609ac5717cc58c9cfba83",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc6x1_arppo_seed0/config.json",
+          "prior_resolved_config_sha256": "21bc1007547f32cb83da6034c6e7080b2bc2307f6e6dec0282e384d62d34176b",
+          "changed_fields": {
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc6x1_arppo",
+          "seed": 1,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc6x1_arppo_seed1.json",
+          "config_sha256": "0ba90948698af2f767d6e5f1b0b7cbca211f9c0c12cafd48dad25033376d8d19",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc6x1_arppo_seed0/config.json",
+          "prior_resolved_config_sha256": "21bc1007547f32cb83da6034c6e7080b2bc2307f6e6dec0282e384d62d34176b",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 1
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc6x1_arppo",
+          "seed": 2,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc6x1_arppo_seed2.json",
+          "config_sha256": "a3e180b4c0dada4d974aac93dde3e0650f76f42bdd637ed2e0e0b2079756c962",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc6x1_arppo_seed0/config.json",
+          "prior_resolved_config_sha256": "21bc1007547f32cb83da6034c6e7080b2bc2307f6e6dec0282e384d62d34176b",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 2
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc6x1_bppo",
+          "seed": 0,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc6x1_bppo_seed0.json",
+          "config_sha256": "c6f8e49dee631c97c85eaa7674f128cca6ad27c7b1cba8f573b103d8fe2d96ab",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc6x1_bppo_seed0/config.json",
+          "prior_resolved_config_sha256": "c1e427a77af4aefd8f9fb30059e089affb7b704bc62b0149a585b11e4a195ddc",
+          "changed_fields": {
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc6x1_bppo",
+          "seed": 1,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc6x1_bppo_seed1.json",
+          "config_sha256": "f8c92a3dd27906d03da7a8c6094a6acca206db00e461cb1d6ecedd802c92000c",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc6x1_bppo_seed0/config.json",
+          "prior_resolved_config_sha256": "c1e427a77af4aefd8f9fb30059e089affb7b704bc62b0149a585b11e4a195ddc",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 1
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        },
+        {
+          "variant": "hc6x1_bppo",
+          "seed": 2,
+          "config_path": "results/mujoco_hc_partitions10m_20261028T082222Z/hc6x1_bppo_seed2.json",
+          "config_sha256": "091964795ce5ab1dfca0f1f951c58c7d6089f6878f05b30b5fe76d93c6ee79a9",
+          "prior_resolved_config": "results/mujoco_hc_partitions_transfer500k_20261026T204220Z/hc6x1_bppo_seed0/config.json",
+          "prior_resolved_config_sha256": "c1e427a77af4aefd8f9fb30059e089affb7b704bc62b0149a585b11e4a195ddc",
+          "changed_fields": {
+            "seed": {
+              "prior": 0,
+              "new": 2
+            },
+            "steps": {
+              "prior": 500000,
+              "new": 10000000
+            },
+            "eval_episodes": {
+              "prior": 10,
+              "new": 32
+            },
+            "eval_every_steps": {
+              "prior": 100000,
+              "new": 500000
+            }
+          }
+        }
+      ],
+      "frozen_parser_validated": true,
+      "source_and_resolved_config_verified": true,
+      "status": "prepared_not_submitted"
+    },
+    "smac_layout_gate": {
+      "config_plan": "configs/smac_terran5_layout25_check10k.json",
+      "config_plan_sha256": "882a793e6d8a988f21ea4145a8d340536d18954d8d95f206ba17872f67844dc3",
+      "manifest": "results/smac_terran5_layout25_check10k_20261028T082224Z/manifest.json",
+      "manifest_sha256": "c05f082393b262a2bf5d1c7ab7a02b3055c433b9067cc04ac89ceafba58c5778",
+      "submit_script": "results/smac_terran5_layout25_check10k_20261028T082224Z/submit.sbatch",
+      "submit_script_sha256": "f30f555ee18b41ca28d92be2dceb7330829aa597ef08f3d9a4b144a20ba92d5f",
+      "source_manifest": "results/smac_terran5_batch1m_20261026T125713Z/manifest.json",
+      "source_manifest_sha256": "c5785e9ab6f5b297ac1d6befc693206b40eaf464e2fc97550b40816a649f0b86",
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+        "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+        "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+        "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "configs": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_check10k_20261028T082224Z/mappo_gru_seed0.json",
+          "config_sha256": "3c937d508dcb46ec55d8e24a1468e13a85d16c7781e400bfe7136ded06578c77",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/mappo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "7a5fe19ca099f3ddfb4367a6953f57a7c32b0bf048caf1702e70fca1216ff441",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 10000
+            },
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            },
+            "eval_episodes": {
+              "prior": 32,
+              "new": 4
+            },
+            "eval_every_steps": {
+              "prior": 150000,
+              "new": 10000
+            },
+            "checkpoint_every_updates": {
+              "prior": 250,
+              "new": 0
+            }
+          }
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_check10k_20261028T082224Z/arppo_gru_seed0.json",
+          "config_sha256": "57f90e10bf7b591969607db83c9da28ab4baf35e33213c6983cb52d13b4d9c18",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/arppo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "91b99c5c18c31ab937eca18899b2f8c159d16030abf55be913b7059ad1de7292",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 10000
+            },
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            },
+            "eval_episodes": {
+              "prior": 32,
+              "new": 4
+            },
+            "eval_every_steps": {
+              "prior": 150000,
+              "new": 10000
+            },
+            "checkpoint_every_updates": {
+              "prior": 250,
+              "new": 0
+            }
+          }
+        },
+        {
+          "variant": "bppo_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_check10k_20261028T082224Z/bppo_gru_seed0.json",
+          "config_sha256": "693d5de92059940cc1b8245de9abd0b999dc84e73b6523de32901525df3e08f8",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/bppo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "aa71eb42b507c3b15bb4dc2eff8bacf098478dbe20aed09a7d194cdcb0f10701",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 10000
+            },
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            },
+            "eval_episodes": {
+              "prior": 32,
+              "new": 4
+            },
+            "eval_every_steps": {
+              "prior": 150000,
+              "new": 10000
+            },
+            "checkpoint_every_updates": {
+              "prior": 250,
+              "new": 0
+            }
+          }
+        },
+        {
+          "variant": "agentmixer_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_check10k_20261028T082224Z/agentmixer_gru_seed0.json",
+          "config_sha256": "aee5d097772ad80a2b6dd45a2284668be5d7ed348c41e0730d71d3aed6f01a97",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/agentmixer_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "f12ee9ab56319c817b40c7c7fba0ea294176f49c175aa19c0f16c5078952d1d8",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 10000
+            },
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            },
+            "eval_episodes": {
+              "prior": 32,
+              "new": 4
+            },
+            "eval_every_steps": {
+              "prior": 150000,
+              "new": 10000
+            },
+            "checkpoint_every_updates": {
+              "prior": 250,
+              "new": 0
+            }
+          }
+        },
+        {
+          "variant": "agentmixer_identity_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_check10k_20261028T082224Z/agentmixer_identity_gru_seed0.json",
+          "config_sha256": "dfd284b83205269f2e4d702d5382b1ec66a3cc262e21ca9ee909f83315b0ce74",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/agentmixer_identity_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "8496d8b154d4ae5f45146d64ded4a2e973aa6c24aebce9b1ce9ac9e3a7f6b1b5",
+          "changed_fields": {
+            "steps": {
+              "prior": 1000000,
+              "new": 10000
+            },
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            },
+            "eval_episodes": {
+              "prior": 32,
+              "new": 4
+            },
+            "eval_every_steps": {
+              "prior": 150000,
+              "new": 10000
+            },
+            "checkpoint_every_updates": {
+              "prior": 250,
+              "new": 0
+            }
+          }
+        }
+      ],
+      "frozen_parser_validated": true,
+      "source_and_resolved_config_verified": true,
+      "status": "prepared_not_submitted"
+    },
+    "smac_layout_pilot": {
+      "config_plan": "configs/smac_terran5_layout25_1m.json",
+      "config_plan_sha256": "242e63047161a14f9e167223d8e19e811d2f26924fa733711242fe6747d3196d",
+      "manifest": "results/smac_terran5_layout25_1m_20261028T082227Z/manifest.json",
+      "manifest_sha256": "379e580da7855e711119ddad7241e8d54dce2f57965f0ea86c2e8ad3721de9b9",
+      "submit_script": "results/smac_terran5_layout25_1m_20261028T082227Z/submit.sbatch",
+      "submit_script_sha256": "29f2401c4f6d5283eca2034c1ecc12bfb5b51c7c2d93adbe16bc2b556437c060",
+      "source_manifest": "results/smac_terran5_batch1m_20261026T125713Z/manifest.json",
+      "source_manifest_sha256": "c5785e9ab6f5b297ac1d6befc693206b40eaf464e2fc97550b40816a649f0b86",
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+        "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+        "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+        "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "configs": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_1m_20261028T082227Z/mappo_gru_seed0.json",
+          "config_sha256": "4998358e792a994ab42938be1a0e9dc7a9459c8fbb2779d06d42c39a14d175b0",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/mappo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "7a5fe19ca099f3ddfb4367a6953f57a7c32b0bf048caf1702e70fca1216ff441",
+          "changed_fields": {
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            }
+          }
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_1m_20261028T082227Z/arppo_gru_seed0.json",
+          "config_sha256": "c1e680599068709c42eecb37ae663ef354780427926719cf10bfb862171b7fde",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/arppo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "91b99c5c18c31ab937eca18899b2f8c159d16030abf55be913b7059ad1de7292",
+          "changed_fields": {
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            }
+          }
+        },
+        {
+          "variant": "bppo_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_1m_20261028T082227Z/bppo_gru_seed0.json",
+          "config_sha256": "72c0d781c41dc26a161b852efe3e3bb12eb11b071653d2fd1fe7f0a213cd8fef",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/bppo_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "aa71eb42b507c3b15bb4dc2eff8bacf098478dbe20aed09a7d194cdcb0f10701",
+          "changed_fields": {
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            }
+          }
+        },
+        {
+          "variant": "agentmixer_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_1m_20261028T082227Z/agentmixer_gru_seed0.json",
+          "config_sha256": "02b0efa0c7d6d7eb35facd0479dc9217cae474a4a5882e0922a44a4fed9c0d7a",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/agentmixer_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "f12ee9ab56319c817b40c7c7fba0ea294176f49c175aa19c0f16c5078952d1d8",
+          "changed_fields": {
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            }
+          }
+        },
+        {
+          "variant": "agentmixer_identity_gru",
+          "seed": 0,
+          "config_path": "results/smac_terran5_layout25_1m_20261028T082227Z/agentmixer_identity_gru_seed0.json",
+          "config_sha256": "58e43532ae04e254561e08466df7b89022e8538daa00aeb298d3b8944c077489",
+          "prior_resolved_config": "results/smac_terran5_batch1m_20261026T125713Z/agentmixer_identity_gru_seed0/config.json",
+          "prior_resolved_config_sha256": "8496d8b154d4ae5f45146d64ded4a2e973aa6c24aebce9b1ce9ac9e3a7f6b1b5",
+          "changed_fields": {
+            "num_envs": {
+              "prior": 2,
+              "new": 25
+            },
+            "rollout_steps": {
+              "prior": 5000,
+              "new": 400
+            }
+          }
+        }
+      ],
+      "frozen_parser_validated": true,
+      "source_and_resolved_config_verified": true,
+      "status": "prepared_not_submitted"
+    }
+  },
+  "required_reporting": [
+    "Final endpoints and whole-budget curve areas;no best-checkpoint replacement.",
+    "No group aggregate unless all declared outcomes validated; retain any failure.",
+    "Independent2x3 BPPO negative confirmation remains final evidence for that frozen configuration.",
+    "Full45-task coverage and disjoint final seeds remain required."
+  ]
+}

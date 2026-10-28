@@ -1,0 +1,519 @@
+{
+  "recorded_utc": "2026-10-28T09:11:37.772120+00:00",
+  "scope": "Post-release documentation,JSON,figure and scheduler checks;not a benchmark-success or unchanged full-test-suite claim.",
+  "local_markdown_links_checked": 148,
+  "broken_links": [],
+  "new_or_changed_json_parsed": 39,
+  "figures": "FourPNG/PDF exports,all completed validated groups,report/plotter hashes match;sampleSD bands correctly labeled.",
+  "canonical_targets": "check_paper_targets.py passes45targets,6numeric39digitized",
+  "training_package_changed_this_turn": false,
+  "frozen_config_preflights": "All new prepared configurations validated against their actual frozen trainer;source/config comparisons recorded in each study plan.",
+  "queue_snapshot": [
+    {
+      "job": "21251756_7",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_6",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21252369_0",
+      "name": "bpta-agentmixer-smac-layout1m",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "32G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21252369_1",
+      "name": "bpta-agentmixer-smac-layout1m",
+      "state": "RUNNING",
+      "cpus": "2",
+      "memory": "32G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251960_0",
+      "name": "bpta-agentmixer-football20m",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_0",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251960_1",
+      "name": "bpta-agentmixer-football20m",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_1",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "RUNNING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_8",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_9",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_10",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_11",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_12",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_13",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_14",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_15",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_16",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_17",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_18",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_19",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_20",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_21",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_22",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_23",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_24",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_25",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_26",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_27",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_28",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_29",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_30",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_31",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_32",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_33",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_34",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_35",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251756_36",
+      "name": "bpta-agentmixer-mujoco-transfer",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_2",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_3",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_4",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_5",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_6",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_7",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_8",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_9",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_10",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251961_11",
+      "name": "bpta-agentmixer-hc-partitions10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251960_2",
+      "name": "bpta-agentmixer-football20m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251960_3",
+      "name": "bpta-agentmixer-football20m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21251960_4",
+      "name": "bpta-agentmixer-football20m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "8G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21252369_2",
+      "name": "bpta-agentmixer-smac-layout1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "32G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21252369_3",
+      "name": "bpta-agentmixer-smac-layout1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "32G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21252369_4",
+      "name": "bpta-agentmixer-smac-layout1m",
+      "state": "PENDING",
+      "cpus": "2",
+      "memory": "32G",
+      "dependency": "(null)"
+    },
+    {
+      "job": "21252423_0",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_1",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_2",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_3",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_4",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_5",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_6",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_7",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    },
+    {
+      "job": "21252423_8",
+      "name": "bpta-agentmixer-entropy0-10m",
+      "state": "PENDING",
+      "cpus": "1",
+      "memory": "4G",
+      "dependency": "afterany:21251756_*(unfulfilled)"
+    }
+  ],
+  "active_workers": 8,
+  "active_cpus": 10,
+  "active_memory_gib": 96,
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  },
+  "other_workspace_projects_modified": false,
+  "reproduction_ready": false
+}

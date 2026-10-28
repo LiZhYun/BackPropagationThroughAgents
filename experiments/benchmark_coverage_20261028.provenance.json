@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-28T08:34:33.482177+00:00",
+  "report_path": "results/benchmark_coverage_20261028.json",
+  "report_sha256": "78b0e534f2d41e2bf4ce2b56902741f33c6edb457eaa027dd6cb5e716b524fe7",
+  "csv_sha256": "012e2cf055315c9f7674aad7cfa66d00960bd4225e548427a3019653bb5bb0c1",
+  "target_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+  "ledger_sha256": "93303044aa171a90893344abc31a4822fc21cf9209ed47b500a211f86d17a5ca",
+  "reporter_sha256": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+  "indexed_manifests": 63,
+  "indexed_runs": 715,
+  "benchmark_count": 45,
+  "targets_with_exact_paper_budget_method_artifact": 7,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Counts describe indexed artifacts only. Basic task checks are not full protocol equivalence. No scores are compared, seeds pooled, or release claims certified. Incomplete is an artifact state, not a scheduler query.",
+  "qualification": "Seven targets have exact-budget artifacts,including failed independent confirmation and below-target AgentMixer outcomes.38 still lack such artifacts. No performance success count."
+}

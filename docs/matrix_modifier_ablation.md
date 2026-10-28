@@ -1,10 +1,18 @@
 # AgentMixer matrix modifier ablation
 
+## Complete paired result — 2026-10-28
+
+All 20 declared runs validate. For Climbing, the learned-minus-identity local expected-return difference averages **+3.2026**, with paired bootstrap 95% interval **[0.2552, 4.9152]**; the normalized curve-area difference is +2.8944 [0.0786, 4.5273]. Learned threshold success is **4/5**, versus **0/5** at identity. For Penalty, the local-return difference is **+0.3178 [−9.6634, 7.9918]**, with success **3/5** versus **0/5**. The Penalty curve-area interval also includes zero.
+
+All learned greedy policies reach their game's optimum; stochastic local returns retain the failed seeds. These small-sample, pointwise intervals do not establish general superiority. Climbing uses five times the AgentMixer paper budget and Penalty is an additional AgentMixer task. The earlier 200k confirmation failure remains unchanged. See the [complete report](../experiments/matrix_agentmixer_ablation1m_complete_20261028.json).
+
+## Study design
+
 The paired study asks whether learning the joint modifier improves local
 execution compared with fixing the same initialized modifier at identity.
 It uses **both matrix games, 1M decisions and five fresh training seeds**.
 This extends AgentMixer Climbing to five times its archived 200k budget;
-Penalty is an additional AgentMixer task. The study is in progress. The earlier 200k Climbing study's
+Penalty is an additional AgentMixer task. The study is complete. The earlier 200k Climbing study's
 failed stochastic-return criterion remains separate evidence.
 
 ## One controlled difference

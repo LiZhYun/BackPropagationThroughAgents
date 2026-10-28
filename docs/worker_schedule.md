@@ -428,3 +428,19 @@ The [receipt](../experiments/mujoco_remaining_gate_schedule_20261026.json)
 records40 project-owned jobs and eight active workers at release. Other
 chains, active jobs, configurations and the unrelated reproduction remain
 unchanged. The project ceiling stays eight workers,16 CPUs and64 GiB.
+
+
+## Completed arrays and new studies — 2026-10-28
+
+All eleven arrays from the previous schedule finish with exit 0. The [new verified schedule](../experiments/followup_schedule_20261028.json) contains independent arrays capped at two active tasks each: MuJoCo coverage **21251756** (37×500k,1CPU/4GiB/90min), HalfCheetah partitions **21251961** (12×10M,1CPU/4GiB/7h), Football **21251960** (5×20M,1CPU/8GiB/60h). Sources and configurations are frozen before submission.
+
+One native SMAC25-stream gate **21251962** uses 2CPUs/32GiB/30min and one serial worker. This revises the earlier per-worker8GiB limit for that bounded diagnostic only; the total ceiling stays eight workers,16CPUs/64GiB. The scheduled maximum is seven workers,eight CPUs and64GiB. The read-only AgentMixer diagnostic **21252362** (1CPU/2GiB/30min) follows the gate's entire single-element array. Slurm expands that dependency to `afterany:21251962_*`; task0 and throttle1 were verified before release. A future32GiB SMAC learning worker must also follow the diagnostic. No unrelated job was changed.
+
+
+## Current measured schedule after the SMAC gate
+
+The native gate **21251962** completed0:0 in1573s with21.24GiB peak. Its requested wall-time increase was denied by the cluster; it finished within the original30min cap. Diagnostic **21252012** failed on an overstrict float32 scale assertion; corrected read-only job **21252362** completed0:0 in247s and exactly replayed all nine policies. Neither event changed any training source/configuration/checkpoint.
+
+Both **21252369** SMAC1M workers follow the completed diagnostic. Each uses2CPUs/32GiB/14h,at most2active. The measured memory ceiling is now **96GiB**, while the project remains capped at eight workers/sixteen CPUs. The scheduled maximum is eight workers/ten CPUs/96GiB: SMAC64GiB,Football16GiB,HC partitions8GiB,MuJoCo coverage8GiB. The [release record](../experiments/smac_layout25_learning_release_20261028.json) records current capacity, measured resource estimates and the autonomous allocation decision.
+
+The [nine-run entropy-zero study](../experiments/hc2x3_entropy0_10m_plan_20261028.json), **21252423**, has an `afterany:21251756_*` dependency on the complete MuJoCo coverage array. It then reuses those two1CPU/4GiB slots; the aggregate ceiling does not rise. All held-job settings and dependencies were verified before release.

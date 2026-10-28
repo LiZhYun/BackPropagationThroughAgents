@@ -1,0 +1,105 @@
+{
+  "recorded_utc": "2026-10-28T08:40:59.248088+00:00",
+  "scope": "Complete evidence snapshot of the eleven arrays queued before2026-10-28; subsequent jobs are separate. All original seeds/outcomes retained.",
+  "completed_arrays": [
+    "21212197",
+    "21212297",
+    "21214776",
+    "21219719",
+    "21220264",
+    "21220499",
+    "21220500",
+    "21220995",
+    "21221161",
+    "21221384",
+    "21221614"
+  ],
+  "completed_runs": 127,
+  "simulator_runs": 107,
+  "matrix_runs": 20,
+  "raw_evaluation_episodes_verified": 40378,
+  "raw_evaluation_windows_verified": 84800,
+  "rollout_updates_verified": 67918,
+  "raw_audits": [
+    {
+      "audit": "experiments/hc2x3_confirmation10m_raw_audit_20261028.json",
+      "audit_sha256": "159f7b37f475a55abbb19d6bdf6797ee45f1ccc1d35c60adae586d424f75408e",
+      "runs": 10,
+      "raw_episodes": 6720,
+      "raw_windows": 0,
+      "updates": 25000
+    },
+    {
+      "audit": "experiments/hc2x3_agentmixer10m_complete_20261028.json",
+      "audit_sha256": "fd77ed129663b72b05ccbf382672377cb2604bc7ef7ae3ef7bc2976a950028a8",
+      "runs": 9,
+      "raw_episodes": 9090,
+      "raw_windows": 0,
+      "updates": 22500
+    },
+    {
+      "audit": "experiments/football_batch1m_complete_20261028.json",
+      "audit_sha256": "f532d111743a3a5eb9de941431f213ad8b8374a3337a4ab7ae5f0e9518d8a1cd",
+      "runs": 10,
+      "raw_episodes": 4000,
+      "raw_windows": 0,
+      "updates": 1000
+    },
+    {
+      "audit": "experiments/smac_batch1m_complete_20261028.json",
+      "audit_sha256": "eaef62d5c4d2585993d11f55f43c9706406470864561f2b27823ff617c443e5f",
+      "runs": 10,
+      "raw_episodes": 2560,
+      "raw_windows": 0,
+      "updates": 1000
+    },
+    {
+      "audit": "experiments/prey_modifier_bound1m_complete_20261028.json",
+      "audit_sha256": "d84dfb643260348f044cbea2902bba1fee29e186b5993738fb298f2e2acd3860",
+      "runs": 8,
+      "raw_episodes": 800,
+      "raw_windows": 4000,
+      "updates": 15632
+    },
+    {
+      "audit": "experiments/prey_recurrent_release1m_complete_20261028.json",
+      "audit_sha256": "f009424a71e94109e7d82d83119b01ac61bba14bbce670248bc6f100a24431e8",
+      "runs": 8,
+      "raw_episodes": 16160,
+      "raw_windows": 80800,
+      "updates": 800
+    },
+    {
+      "audit": "experiments/mujoco_transfer500k_complete_20261028.json",
+      "audit_sha256": "b6b1f2918862706b137691e5ee56a3c99a34ea44ada73fd659e62b1944182d37",
+      "runs": 11,
+      "raw_episodes": 660,
+      "raw_windows": 0,
+      "updates": 1375
+    },
+    {
+      "audit": "experiments/hc_partitions_transfer500k_complete_20261028.json",
+      "audit_sha256": "48bd5ca09d5668f2e36ac327235eaf9275c4287b5c3faa76c504a1e11f13b9e3",
+      "runs": 4,
+      "raw_episodes": 240,
+      "raw_windows": 0,
+      "updates": 500
+    },
+    {
+      "audit": "experiments/mujoco_remaining_native_gate_complete_20261028.json",
+      "audit_sha256": "28b99eae1ab31d164bb44092c17f8811031c2193bfdd4cd6a27a3e28dbab89c9",
+      "runs": 37,
+      "raw_episodes": 148,
+      "raw_windows": 0,
+      "updates": 111
+    }
+  ],
+  "matrix_audit": "experiments/matrix_agentmixer_ablation1m_complete_20261028.json",
+  "matrix_audit_sha256": "a705b6c73586b9400678eb8347f29cd5181193fcd5d64c53b994d351421211c3",
+  "scheduler_accounting": "results/completion_audits_20261028/completed_accounting.txt",
+  "scheduler_accounting_sha256": "2d0ccad8022375fd121379368fce284e1abbcf9b9f6d0659584c89562ad5217d",
+  "independent_hc_confirmation": "valid_runs_failed_frozen_performance_criterion",
+  "agentmixer_hc_development": "both_learned_modifier_means_below_identity_and_figure_reading",
+  "complete_reproduction": false,
+  "audit_note": "The first Prey audit script completed its intended8-run report,then stopped on an existing unrelated output guard. Prior output was not overwritten. The initial generated report/script are preserved under results/completion_audits_20261028;the isolated final audit was rerun and is linked above."
+}

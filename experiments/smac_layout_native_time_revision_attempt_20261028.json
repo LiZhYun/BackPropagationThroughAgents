@@ -1,0 +1,10 @@
+{
+  "recorded_utc": "2026-10-28T08:46:33.310216+00:00",
+  "job_id": "21251962_0",
+  "reason": "Native worker includes simulator startup/teardown overhead beyond trainer elapsed. Requested45min after first three conditions completed,without changing CPU,memory or experiment.",
+  "requested_wall_minutes": 45,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "21251962_[0]: Access/permission denied\n",
+  "action_if_denied": "Keep existing job running unchanged. If scheduler actually times out,retain partial artifacts and submit only missing native checks under new explicit provenance. Do not restart on observation timeout."
+}

@@ -1,0 +1,22 @@
+{
+  "recorded_utc": "2026-10-28T08:55:46.677443+00:00",
+  "job_id": "21252369",
+  "status": "released",
+  "manifest": "results/smac_terran5_layout25_1m_20261028T082227Z/manifest.json",
+  "manifest_sha256": "379e580da7855e711119ddad7241e8d54dce2f57965f0ea86c2e8ad3721de9b9",
+  "release_plan": "experiments/smac_layout25_learning_release_20261028.json",
+  "release_plan_sha256": "535c7cb1ef033d728b4c8fa4d325176f5c6f035318a3e164164da99fe4492612",
+  "resources": {
+    "cpus_per_task": 2,
+    "memory_gib_per_task": 32,
+    "wall_hours_per_task": 14,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "held_verification": "JobId=21252369 ArrayJobId=21252369 ArrayTaskId=0-4%2 ArrayTaskThrottle=2 JobName=bpta-agentmixer-smac-layout1m UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21252362(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=14:00:00 TimeMin=N/A SubmitTime=2026-10-28T10:55:46 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-28T10:55:46 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2881189 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=2,mem=32G,node=1,billing=6 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=32G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_layout25_dispatch_20261028/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21252362 /scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_layout25_dispatch_20261028/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_layout25_1m_20261028T082227Z/slurm_21252369_4294967294.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_layout25_1m_20261028T082227Z/slurm_21252369_4294967294.out TresPerTask=cpu=2",
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  }
+}

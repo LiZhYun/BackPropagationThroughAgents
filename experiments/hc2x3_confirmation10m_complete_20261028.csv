@@ -1,0 +1,11 @@
+algorithm,variant,seed,status,eligible,final_return,normalized_auc,errors
+bppo,bppo_protocol,1000,completed,True,5202.871747943873,4935.76018439993,
+bppo,bppo_protocol,1001,completed,True,6055.810111939962,5183.215681181508,
+bppo,bppo_protocol,1002,completed,True,5080.1397966889945,5077.298001730734,
+bppo,bppo_protocol,1003,completed,True,5223.307075659677,4944.196689099411,
+bppo,bppo_protocol,1004,completed,True,5298.15820205008,4522.297857669374,
+arppo,arppo_protocol,1000,completed,True,5911.779273075006,5063.676015840281,
+arppo,arppo_protocol,1001,completed,True,5190.826018209487,5050.911462404494,
+arppo,arppo_protocol,1002,completed,True,6308.33864031919,5159.386138802245,
+arppo,arppo_protocol,1003,completed,True,5293.036505181011,4989.594272581387,
+arppo,arppo_protocol,1004,completed,True,6209.383987086382,5052.466012030016,

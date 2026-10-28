@@ -132,3 +132,15 @@ this one run cannot establish a recurrence or modifier advantage.
 
 The current [worker schedule](worker_schedule.md#remaining-mujoco-native-gates-2026-10-26)
 keeps this study in the B chains under the eight-worker project ceiling.
+
+
+## Complete eight-condition comparison — 2026-10-28
+
+All eight 1M runs pass the [complete audit](../experiments/prey_recurrent_release1m_complete_20261028.json): 16,160 raw complete episodes, 80,800 released 100×200 windows and 800 updates. The primary metric includes unfinished-window rewards and counts team reward once, as selected by the author.
+
+| Penalty | AgentMixer FF | AgentMixer GRU | Identity FF | Identity GRU |
+| --- | ---: | ---: | ---: | ---: |
+| 0 | 1.9520 | 2.0515 | 2.2160 | 2.2465 |
+| −1 | 0.07125 | 0.04055 | −0.00875 | 0.26760 |
+
+These are final window reward/decision values, not episode returns. Learned-modifier zero-penalty endpoints remain below the figure reading [2.19, 2.23]. Identity GRU exceeding that interval does not establish AgentMixer reproduction. One development seed cannot establish recurrence or modifier superiority. The earlier exact checkpoint replay covers only AgentMixer GRU at penalty 0; the complete audit checks all logged reductions, not all native trajectories.

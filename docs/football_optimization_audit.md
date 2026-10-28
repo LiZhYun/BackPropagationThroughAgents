@@ -119,3 +119,9 @@ estimate is 3.16 hours per run. Eight GiB exceeds twice the measured peak memory
 These are allocation estimates, not guaranteed runtimes or learning results.
 The original prepared two-worker script and all experiment configurations remain
 unchanged; a separately hashed dispatch script executes the frozen manifest.
+
+## Completed 1M comparison and 20M follow-up, 2026-10-28
+
+All ten FF/GRU controls pass the [complete audit](../experiments/football_batch1m_complete_20261028.json): 4,000 complete-match evaluation episodes and 1,000 rollout updates, with native score/win flags and optimizer/ValueNorm counts verified. Final wins out of 100, FF/GRU respectively, are MAPPO 0/1, AR-PPO 1/8, BPPO 3/2, AgentMixer 4/4 and identity 3/1. Positive shaped rewards do not replace win rates. One training seed below 20M does not establish an architecture or algorithm advantage.
+
+Job **21251960** extends all five recurrent methods/controls to **20M**, retaining the exact completed source and resolved training/evaluation settings except training budget. GRU is selected consistently for released actor-history alignment, not separately by each method's best 1M endpoint. Evaluation retains 100 complete matches every 400k. The [frozen study](../experiments/followup_studies_20261028.json) and [resource plan](../experiments/followup_release_plan_20261028.json) retain all outcomes: one CPU/8 GiB/60 hours per task, maximum two active, no automatic requeue. The slowest phase-based projection is 44.24 hours, not a guarantee. Full results and independent seeds remain outstanding.

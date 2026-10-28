@@ -106,3 +106,8 @@ endpoints are365.30 and257.48. These are single-seed observations below10M.
 They do not establish transfer success or an algorithm advantage. The
 unfinished Walker controls remain required before follow-up selection; no
 partial-study group aggregate or earlier-peak replacement is used.
+
+
+## All eleven pilots complete — 2026-10-28
+
+The [complete audit](../experiments/mujoco_transfer500k_complete_20261028.json) verifies 660 raw episodes and 1,375 updates. Ant2×4 global final MAPPO/AR/BPPO returns are 993.14/877.68/989.34; local MAPPO/AgentMixer/identity are 993.01/978.27/1000.55. Walker2×3 final MAPPO/AR/BPPO/AgentMixer/identity returns are 251.89/365.30/251.73/257.48/292.51. All declared methods are retained. These seed-0 500k pilots remain far short of the 10M and independent-seed evidence required.

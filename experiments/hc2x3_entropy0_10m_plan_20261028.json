@@ -1,0 +1,154 @@
+{
+  "recorded_utc": "2026-10-28T09:02:49.291297+00:00",
+  "scope": "Matched full10M entropy control after completed positive-entropy AgentMixer study:three variants x development seeds0-2,all nine retained. Exact20-module source,settings,evaluation grid and endpoints;only entropy coefficient0.01\u21920 changes. Zero matches the audited MuJoCo release coefficient. Tests a descriptive scale/late-instability hypothesis;no promised gain or independent confirmation.",
+  "config_plan": "configs/mujoco_hc2x3_entropy0_10m.json",
+  "config_plan_sha256": "29b40318feac14ad4e0e7283f213733e1988c5b32cc107e8836898b33e9bce85",
+  "manifest": "results/mujoco_hc2x3_entropy0_10m_20261028T090245Z/manifest.json",
+  "manifest_sha256": "d9029bd53c7aedde1ac5b6651d1f350dc5b352a5df11bd8ff8301a6e37d8837f",
+  "positive_source_manifest": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/manifest.json",
+  "positive_source_manifest_sha256": "643275e8836d33c092fd7072433a19e9d24dff7b78684b7583b84285e51511d5",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "55f1f21b2cece865a35b126ebb6e6de3a100f8b1a7724ca3909aee321135877d",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "positive_full_audit": "experiments/hc2x3_agentmixer10m_complete_20261028.json",
+  "positive_full_audit_sha256": "fd77ed129663b72b05ccbf382672377cb2604bc7ef7ae3ef7bc2976a950028a8",
+  "diagnostic": "results/hc_agentmixer_final_diagnostic_v2_20261028/report.json",
+  "diagnostic_sha256": "a1085d2d0eac406dc891b7cb949fce170d40c6d99830a7dc274f10efa44ebf0f",
+  "all_pairs": [
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "config_sha256": "55c22f700eec454dab44bf8118a3525fcbe95c5f9e157a3b6e451d732e7d7bc3",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed0.json",
+      "positive_config_sha256": "4f107e2bb126dcb981ae8287c948806ccec69098f2e758d61d71007de089e8ed",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 1438.9311780706469,
+      "positive_elapsed_seconds": 15590.412893343018
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "config_sha256": "9cd1ea3a5de42fc942a27ccd91c464d4c5cbffd7952103a373fe0d132bfb5b60",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed1.json",
+      "positive_config_sha256": "170003f71b49267e424292811bd939e7352d014b68bf2c0968aa7887ba604839",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 3955.1951809332336,
+      "positive_elapsed_seconds": 15322.169034147984
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "config_sha256": "3d3b1707bcde8808affbd2c9f8608343cd44cc918af078329cbdc8e72ccab77f",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_bounded_seed2.json",
+      "positive_config_sha256": "30139335326de00f697235d942d491e6f0aaa9f69d371cd037fce397ee23ce19",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 6063.214206989285,
+      "positive_elapsed_seconds": 15243.92216572701
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "config_sha256": "afc4ecab057593b507a407420ff6a003ebed829bfa394442eda68c2e5dc4711c",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_identity_seed0.json",
+      "positive_config_sha256": "d4a8f7a7e32fe2725f3ca1f597e3fda54de882457ebb77141b2e44627e612be4",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 5376.612533132643,
+      "positive_elapsed_seconds": 13656.13586101099
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "config_sha256": "f8b9079384e1407df792c7a2deb0019949c22280112cacc346c9d108b4a8116c",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_identity_seed1.json",
+      "positive_config_sha256": "06c8e54ea2c562a5c4f24f1789ceb8e518179f929bbe7b52714700e27b3517da",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 5999.042101704585,
+      "positive_elapsed_seconds": 13544.16416444903
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "config_sha256": "de088486831ccebf8597562ccdb77e22a6b72817f07dbe353fbc57e609c32bf4",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_identity_seed2.json",
+      "positive_config_sha256": "02eebe0633322ecb25f3d7c1a47f7ad0a46ffd265f44fb2bed2df1456ed70897",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 5332.700317977428,
+      "positive_elapsed_seconds": 13857.677788357018
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "config_sha256": "4cdcfcd1c9021ad5ade82954936eb62089bafa85e34420efd6db91aab6e796d2",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_residual_seed0.json",
+      "positive_config_sha256": "6f9e6e17da59d6ffc8ef54035a3fa9554c2a4cbdcc0fbcef964dac75eaa886cd",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 3623.196867452071,
+      "positive_elapsed_seconds": 12468.671246758022
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "config_sha256": "a73b38d946135a23a5ddab76f41cd10b1f79eafc3f3279617359791dbaca1f05",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_residual_seed1.json",
+      "positive_config_sha256": "18fa2f2810b1629bdd240c9072234d67f3ecb26776f111b24360a861e84cf26e",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 2851.9607763934546,
+      "positive_elapsed_seconds": 12632.128154416045
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "config_sha256": "7ffad44de7779df3dd070d5de36cd8c635b9ec3cedc7cbb86c2bc9ead3fc3a6a",
+      "positive_config_path": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/agentmixer_residual_seed2.json",
+      "positive_config_sha256": "dd38644328d340058ebfa2e302090ed24b85f9f9e51263ffe727005764679d74",
+      "changed_field": "entropy_coef",
+      "positive_final_return": 4207.391593339601,
+      "positive_elapsed_seconds": 12982.47677555692
+    }
+  ],
+  "frozen_parser_passed": true,
+  "hypothesis": "Residual training scales became large and learned variants underperform identity at10M. A matched entropy0 control tests whether persistent entropy pressure contributes;observed scales alone do not prove causality. Bounded/identity stay in the comparison.",
+  "endpoints": {
+    "primary": "10M final local-mean evaluation return across all3 development seeds per variant",
+    "secondary": [
+      "full0\u201310M normalized curve area",
+      "9.9M aligned endpoint",
+      "paired entropy0 minus0.01 by seed and variant"
+    ],
+    "policy": "No best-checkpoint replacement,seeds dropped,or pooling with independent confirmation. All18 old/new runs must validate before overall paired comparison."
+  },
+  "qualification": "Same selected development seeds,not independent final confirmation. Any selected setting needs fresh final training seeds.",
+  "allocation": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 4,
+    "wall_hours_per_task": 7,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "max_prior_seconds": 15590.412893343018,
+  "max_prior_times_1_5_seconds": 23385.619340014528,
+  "resource_rationale": "Same full budget,source,evaluation and shapes as measured9-run positive study;prior entire training peak<1.22GiB.7h exceeds1.5x all recorded runtimes.",
+  "dependency": "afterany:21251756",
+  "scheduling": "Replaces the two4GiB coverage-pilot slots only after the entire37-task array finishes;no increase beyond8workers/16CPUs/96GiB.",
+  "dispatch_script": "results/entropy0_10m_dispatch_20261028/submit.sbatch",
+  "dispatch_script_sha256": "e583562220bd1ad01a5637ff2b27d6b07fa4ac407f14f4733258b29df6b985ec"
+}

@@ -1,0 +1,22 @@
+{
+  "recorded_utc": "2026-10-28T08:30:30.783035+00:00",
+  "scope": "All nine final10M AgentMixer policies,exact original10-episode evaluation plus deterministic scale observations on those same trajectories. No retraining or checkpoint selection.",
+  "manifest": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/manifest.json",
+  "script": "results/hc_agentmixer_final_diagnostic_20261028/diagnose.py",
+  "script_sha256": "1c3b602213e791b132fdb733de0732fe4623ee9fc4ed21d8338d99cb71134b04",
+  "submit_script": "results/hc_agentmixer_final_diagnostic_20261028/submit.sbatch",
+  "submit_script_sha256": "527b9fbe3cc0a4b724c3d253b15a9011beab587912e6786882b2dde81cdfc75b",
+  "resources": {
+    "cpus": 1,
+    "memory_gib": 2,
+    "wall_minutes": 30
+  },
+  "dependency": "afterany:21251962",
+  "resource_rationale": "Only one evaluation environment. Prior entire training peaks below1.22GiB. Runs after32GiB native gate so project64GiB ceiling remains valid. Future SMAC learning must follow this diagnostic if requesting32GiB.",
+  "conditions": 9,
+  "limitations": [
+    "evaluation-state scale statistics are descriptive,not proof of cause",
+    "same original evaluation seeds;not independent training confirmation",
+    "any failed replay retained;all nine required for complete report"
+  ]
+}

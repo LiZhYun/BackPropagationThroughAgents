@@ -1,0 +1,5189 @@
+{
+  "recorded_utc": "2026-10-28T08:15:11.145842+00:00",
+  "scope": "Complete 37-condition native gate. Exact source, configurations, seeds, rollout counts and raw evaluations checked. No learning or performance claim.",
+  "manifest": "results/mujoco_remaining_check12k_20261026T215632Z/manifest.json",
+  "manifest_sha256": "55ec0b3d64b01500403158221fb1d3940336b474e3f412dc7aadfb3301b520ce",
+  "audit_script": "results/completion_audits_20261028/gate.py",
+  "audit_script_sha256": "560e7d5bd307c541fe5a23619bf0db946b4f4f4982b44ded579379178152579c",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "frozen_source_bytes_verified": true,
+  "metric": "return_mean",
+  "raw_evaluation_episodes_verified": 148,
+  "raw_evaluation_windows_verified": 0,
+  "rollout_updates_verified": 111,
+  "runs": [
+    {
+      "algorithm": "mappo",
+      "variant": "ant4x2_global_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_global_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 24.378148557036184,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 4.930894116056152
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 10.409218971035443
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 16.013820938998833
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 21.632186993025243
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 24.3774180309847
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 4,
+        "obs_dim": 111,
+        "state_dim": 111,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "4x2",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "cd8d84bee63f92e029fd6050a2bd08b50f20024205c45cc275da35d0e96653ec",
+        "metrics.jsonl": "abcfcfae5354f4d1dbeda7fff14d608f81ab8f9d82efa62d5858dc46bd7e12df",
+        "summary.json": "53ac4e61d473ac01d684a4192b687826b9500b7421ac0676f91fd38985fc5475",
+        "checkpoint.pt": "faacf06635b3bc22cbe7b986670c3fe9401e089dea7b497023c9d6741c14ccc1"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 1000.589751499509,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 996.649828412265,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 998.619789955887
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "ant4x2_global_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_global_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 23.4149874181021,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 5.606998074101284
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 10.314201684086584
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 14.97616082301829
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 19.641143628046848
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 23.41441173304338
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 4,
+        "obs_dim": 111,
+        "state_dim": 111,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "4x2",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "f577c56214831d4d995f641d8e0a56967f8dc44f95031a1fb011034aea28f67a",
+        "metrics.jsonl": "edfebfa99be262b639bdef89bc0bf2cb697c0c76e091ffcb57ddbdac666c120d",
+        "summary.json": "8943fa439e67a043cd09d533a68250d3aaf871b23e0363b7e57765cad1d1ee79",
+        "checkpoint.pt": "187d402eb51b8581b442d42f3fca0ec30cf0635dbafdb6dc0e5ba905ebcf5e0a"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 994.9872884573815,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 1006.2910020859199,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 1000.6391452716507
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "ant4x2_global_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_global_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 29.39768717403058,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 7.430494993925095
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.344341930001974
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 19.247974728932604
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 25.166908139945008
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 29.397015037946403
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 4,
+        "obs_dim": 111,
+        "state_dim": 111,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "4x2",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "0f73f4b9b2441109050ae05d07c2f9a149b2cbd79328ee47eb7aa69253cae5a8",
+        "metrics.jsonl": "298ad7a3082b29285f82e5db67a7bf8067f59109a00117a33facddbfb974d047",
+        "summary.json": "fec445bfede5be631b71ee832ec98e198a1473e9c77c3eace71809b2a99675e6",
+        "checkpoint.pt": "84198c1cb3d1f1c5a4c678595d0f4fa26f5c334544bb5d5c1fb2b8c96fa2cf64"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 994.9872884573815,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 995.5934766507112,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 995.2903825540463
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "ant8x1_global_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_global_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 22.906421917956322,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 4.7133445199579
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 9.874251547968015
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 14.923949236050248
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 19.963765035034157
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 22.90583121601958
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 8,
+        "obs_dim": 111,
+        "state_dim": 111,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "8x1",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "3eb62476340a30af655904f3c9a68cb033a47d3709ed599967bb820d2c68faf2",
+        "metrics.jsonl": "c8ac3be02b6407ea2baba2f7cd3db4877d60706815b8cf1349984013e69f772e",
+        "summary.json": "88c9251e5100bdfd2c9e76d63964afb65c7876d9a09398e76ddbfdc90a4b22ba",
+        "checkpoint.pt": "0e99c87e895683dcb00f366ff774362e50f0a52d0c57d840cff6bbc516a5dce1"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 996.8162002868523,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 1001.5512445895964,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 999.1837224382243
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "ant8x1_global_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_global_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 35.80245394795202,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 9.411049016052857
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 16.263911413028836
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 22.799190248013474
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 29.35959334601648
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 35.80099084204994
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 8,
+        "obs_dim": 111,
+        "state_dim": 111,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "8x1",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "1ce96ed874a79f62b67f42de3f5c84117da3c54921e1044d1ee92c1888cfc725",
+        "metrics.jsonl": "a181606bdec4dc891bbbab8a4796962c05173a39941962d45c1e187365288ee4",
+        "summary.json": "d9676fa9e81a0f2cab5e12433cc88b68d4cc4a04137a8144f24a7e8e5256296f",
+        "checkpoint.pt": "f9a5a32bd09d06a92697cdc7945cb981f61098d3c3383e6390a38df76a051215"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 994.6181776385741,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 996.3216734758653,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 995.4699255572198
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "ant8x1_global_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_global_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 29.89537405606825,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 7.289349643047899
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.076326010050252
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 18.694869967061095
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 24.333308045053855
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 29.8948005749844
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 8,
+        "obs_dim": 111,
+        "state_dim": 111,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "8x1",
+          "agent_obsk": null,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "a718bb50c70ea36b44112b67ee29fb246d62817ab293163e94b1a2d112683c5f",
+        "metrics.jsonl": "42a846a7aa15fa2d9dce69f4a5a0f4fd36e3a0d46e09b93391f3e34d84956510",
+        "summary.json": "ffdfaf957fd725a2ff7b48c10406bf3174c1d6cfd8dc57aced2188cdaeead3f9",
+        "checkpoint.pt": "0b0e295eb2f6711e5de2120fb25e37e3102a58bb1eeecb72ca22d90d23814250"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 994.6181776385741,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 999.930867632752,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 997.2745226356631
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "hc3x2_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc3x2_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 18.54224710597191,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 5.093451851978898
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 8.981055823969655
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 12.809776562964544
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 16.65027351095341
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 18.541655720910057
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "eff6fc8ab0022d54446adf803baf7e3f38b36c52c5e8ad07995e47e96fbaf49b",
+        "metrics.jsonl": "2abb24bf782f8888072cc5713455e8648f1eddff9df0de1eb3ed0725d13991dc",
+        "summary.json": "381c376122cb76b94bb50ce9ddeb319ee8b42e250e2734cf069c932d2049d1c1",
+        "checkpoint.pt": "d5d70a45ed85c072b7095c37f14330d350ad7767f6ad0bd050f2ead1a51b136f"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.2699052956943263,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 0.026481843298420182,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.12171172619795305
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "hc3x2_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc3x2_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 20.13077115791384,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.5122702589724213
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 8.550803511985578
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 13.51418193092104
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 18.45689119992312
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 20.130287867970765
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "5838fcaea7aa2e909af4f5c95cd3b738c365126fcb398c4ff84887a747079301",
+        "metrics.jsonl": "fb77705be7c77dfe8f38d69b4321a8ff9e78a872ad4640ced23048a8246cd6f0",
+        "summary.json": "c4fa55739f8a808522d0daa48e452d6ca30bdacf9d3365399b563508fc7b58de",
+        "checkpoint.pt": "fe4df323157b4069070a775e183e68c99bddb5421a9eab7cb8f9d6db1dc47b99"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.2689293870059354,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 0.12921064008007127,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.06985937346293206
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "hc3x2_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc3x2_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 23.401608637999743,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 4.922261581989005
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 10.637172293965705
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 16.01492148602847
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 21.513425996061414
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 23.400962469982915
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "725472d8e3b286739eba906a1212c82194cdc1c28473ff10a7986d65cdfbbf70",
+        "metrics.jsonl": "e5292e8586d060ac381c03cae31d8ea6974a905d023854b833119851ffda84af",
+        "summary.json": "593ff39ccc229eb616cbad5876e56bea4cc6fb6e4ec4b174665c8fb7cbf2a485",
+        "checkpoint.pt": "8482ab71631c4e13426d8f24a36135a47eb6f889a0683514ebb8bb5860ab7904"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.2689293870059354,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 0.12747194949949223,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.07072871875322158
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "hc6x1_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc6x1_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 15.476609349949285,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.752879571984522
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 7.044552860897966
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 10.288093085982837
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 13.526342091965489
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 15.476186162908562
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "3ae634bdc71b3aa7013a3b158a188884b78738481a006d941cbaa62a1277d2de",
+        "metrics.jsonl": "1b3b5caf4c7e972ff6f5f54e30268098893975ef36ccaab47e9c668d7d40d69a",
+        "summary.json": "6d71bc14afec3a709b7b61f176cea07e5691d4543b8d4edad8bfa1504c79b85b",
+        "checkpoint.pt": "23b820ddda705d47efb9006cf3f123202db1393377a8e898aad16bf7fee44b96"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.2700965183639429,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.34392140189396414,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.3070089601289535
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "hc6x1_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc6x1_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 30.501086763921194,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 4.5269482779549435
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 12.141885347897187
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 20.109766275971197
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 28.03068741899915
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 30.500110844965093
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "f282207d7f3d4cdefb7e23681b3e2b40e4f79576a37682846acf4e41aca6903b",
+        "metrics.jsonl": "c930bd2e2f6ab87fa98ae00f9be047a6989866bb320106c354727149b8f859f2",
+        "summary.json": "b3f0aeb5dfabe1dafd60c7f306354bfe9d9ebb0ce0d08ac2f770ab2132b29167",
+        "checkpoint.pt": "bd3b079a5c191305f75be0fe093c7008bd51ff4a135374ee5f8909353e333d73"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.275334043522947,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.35788182560601195,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.31660793456447944
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "hc6x1_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/hc6x1_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 21.94221851695329,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.814524132059887
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 9.159116566064768
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 14.542920195031911
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 19.861792471958324
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 21.941738683031872
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HalfCheetah-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "5e0256b13c1542251ed8a18935bde39dac3113f06dda136a3b94b0584d35f0f8",
+        "metrics.jsonl": "8e2b2260975505260539c3f8a370bbcc80abf0014a89b25c94743cebdc9f159a",
+        "summary.json": "973beb0fc65e7ee009c3fccea6f54b2a06819c37c4ae3e3a7ed2c26e04dc43f7",
+        "checkpoint.pt": "9fb3eec38490ad83e43b3e43d22e0ccbd0458e252ad4b623cdf6fc030d71ba4f"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": -0.275334043522947,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": -0.37183117699726004,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": -0.3235826102601035
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "walker3x2_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 17.204227983020246,
+      "evaluation_environment_steps": 766,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.7925489890621975
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 7.354019517078996
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 11.913958208053373
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 16.501133370096795
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 17.203615720034577
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "9509f16dbdb2455fffc48056a098de97016eab715a38d78fe09f85a6fa3a1891",
+        "metrics.jsonl": "1af43075c3720ea1004239053e01c4b945a99477f25a8f475e860ba4581668f2",
+        "summary.json": "d8756c0203084f97f4cfdcd0afe92f99c56d4dc592214001d481c391458ebb90",
+        "checkpoint.pt": "c93c8e5dd614018eea367a692f7ffcd09945e0b8c8489a0989719c8cb4b6b15d"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 100.71072627086932,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 388.9841444228398,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 244.84743534685455
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "walker3x2_local_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 13.180381958023645,
+      "evaluation_environment_steps": 344,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.1166197690181434
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 5.748850213014521
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 9.332628013915382
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 13.025244695018046
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 13.180084266932681
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "3f880a15d7869a39c6ce7c033d5b9d96875d1d356ff4aa1126df0b6823186810",
+        "metrics.jsonl": "60d936bfeaec403aa1df93c5b5044af0aec81d8da4104bd97fe46ee5d31bfdee",
+        "summary.json": "46fa3f77ffd20c75c492badc7fce5fedc637d936d9b19ad663996b72778e0689",
+        "checkpoint.pt": "105926bdb9c4c05cc4f2a23057a6c4dca20819eace27fe3f2851b82aa5fc3000"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 107.78924013269604,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 35.3562425160671,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 71.57274132438157
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "walker3x2_local_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 17.00250019901432,
+      "evaluation_environment_steps": 350,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.948438348947093
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 7.69266467099078
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 12.414303572033532
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 16.80719325505197
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 16.983969631954096
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "601de3edb60a846740b12ef991d9a85b238b6f369138e1994dddc4ea4181a99c",
+        "metrics.jsonl": "492499c0196318d88b22ffada8bb1c1f6d0e6ec5358752f3750e9bae05f0fefd",
+        "summary.json": "3974a34ade1da9222945f22441768dbdf2d3f4ce38a29e7133d207983e83cd01",
+        "checkpoint.pt": "2fa3e9102e49cce93cada268dcb755d84b7a82ddd33e67e799d0110e56f61815"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 107.78924013269604,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 38.45722139981636,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 73.1232307662562
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "walker3x2_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 18.478506805957295,
+      "evaluation_environment_steps": 408,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.0648930269526318
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 7.564144851989113
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 12.945780469919555
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 18.280120202922262
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 18.47818015993107
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "246eea3bea6108c6715284ba13eed7400391e95f3e3d9fbfeb5f8bf0b00f7895",
+        "metrics.jsonl": "973e60997609db139237f554c7cedd9685c7a057443553577327395945f16894",
+        "summary.json": "5a931a0663f62f0425499d7548a2b01c79c523e9e791b75092b92644e8656d33",
+        "checkpoint.pt": "0ffe379dc8be0f04498a9c48d62ff2af0469a3d5221fd06c0125216a6f7f0f5b"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 94.36550334764772,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 89.76063203998382,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 92.06306769381577
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "walker3x2_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker3x2_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 23.169925951049663,
+      "evaluation_environment_steps": 430,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.235219237045385
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 10.052279147086665
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 16.372982417000458
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 22.89151757908985
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 23.168188647017814
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 3,
+        "obs_dim": 4,
+        "state_dim": 17,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "3x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "cbffc71f4f18ab9b98f2dde481d29384d3ec53bef8ec6280dddd4f9e4b519ce5",
+        "metrics.jsonl": "b6e8fb148b7d1e463ebdc9d728e34f09e013dd4899f28e52a709e63716e078c6",
+        "summary.json": "e68dc98ab1323f0ff753ecc020fde6a355c97d0c455813b3abed65d2ea60295e",
+        "checkpoint.pt": "1db6926f35b240639d52c4788af19dc46e26c05d4899abb6e12c91195f0b8e19"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 94.36550334764772,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 106.63773546178044,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 100.50161940471406
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "walker6x1_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 13.196585261030123,
+      "evaluation_environment_steps": 325,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.0572533080121502
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 5.743082138011232
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 9.389616630971432
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 13.03387608495541
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 13.19624145294074
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "5d30de69ca71cc6348bcd95adf9819b9b996f2f06425b9510da63589df2b2221",
+        "metrics.jsonl": "d90c6b230f986cb3c45faf64da0b4ab4e7eff18ef4eb93b919ab55e4e1b2e0fb",
+        "summary.json": "2f2c87bf7959619c9616e2a3c21ed62dc57f1303923a996d293c1f535402bc54",
+        "checkpoint.pt": "896006b7d9bf517b0e27abd4c36ea38c45215a078804a90be7c5009d6efca585"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 85.63260460958551,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 46.584254364727556,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 66.10842948715654
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "walker6x1_local_arppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 18.07372217089869,
+      "evaluation_environment_steps": 329,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.314591056900099
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 8.159203855902888
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 12.969828431960195
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 17.753198140999302
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 18.072621987899765
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "arppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "ea5d6f01143cd9b5c35f05932767f60d160a2266e011090e9547f021ce1cb3b9",
+        "metrics.jsonl": "287aa8e07c1d2101c6bc5c0092f6facf054093c12389a99a1031df5f781d2540",
+        "summary.json": "cdbd3954ea6b2623a94510f417cc8c3a7166d1d43a0f69837483f3666c24a89d",
+        "checkpoint.pt": "a7d7fcc68c2c71c8e7e9b59d2447dd327e3c1b40397929662f2110174eba701d"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 88.46616086298476,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 45.80839026745292,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 67.13727556521884
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "walker6x1_local_bppo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 14.487690023030154,
+      "evaluation_environment_steps": 327,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.2593339460436255
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 6.252938410034403
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 10.231426039012149
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 14.207019350025803
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 14.48725512297824
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "bppo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "b22b5e1b03ea5869f94aa798f75e793b5d160905fea84ac615359b5c0e305aa6",
+        "metrics.jsonl": "427253b529dfd73a5f76e189b95b4eb8b10e73e506fcc27966c25f1bf81e0525",
+        "summary.json": "f4e808074016bc6f3b0aad847daf963080d57c40ec050dacfe1f4e0d326e9acb",
+        "checkpoint.pt": "d0dcfb12cbbebda0c71c4c409849a1f148444a3d62d72d9f91730f2f428af6eb"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 88.46616086298476,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 46.13346780708471,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 67.29981433503474
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "walker6x1_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 31.321710346033797,
+      "evaluation_environment_steps": 335,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.116615453036502
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 12.54426992603112
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 21.812237403006293
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 31.11090140102897
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 31.32089433807414
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "873cacdc2ce477baf1c1b5429d470c93028e2ecadf3a01bb473a41d9f6a6e07a",
+        "metrics.jsonl": "408fc3cf7089386101c983d4ddac28c51034d9e47ed3c1911aecde0216186ec2",
+        "summary.json": "78a573db77a28086b269b05a3194caa52c971160da557cb8f1f6932c56587c19",
+        "checkpoint.pt": "bc26e843f24582d8d59383c8b730f71066c770e70ee8564bc819e313bba3676d"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 101.65643593427751,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 38.65291349831085,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 70.15467471629418
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "walker6x1_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/walker6x1_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 19.464352083043195,
+      "evaluation_environment_steps": 336,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.1165554319741204
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 7.890618360019289
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 13.60851404396817
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 19.31125031306874
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 19.463973128004
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 6,
+        "obs_dim": 2,
+        "state_dim": 17,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Walker2d-v2",
+          "agent_conf": "6x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "f1b7dc251abbc17ce6bf058509739bf9a44e7fc296c533a0db3fa09c4d0ad40a",
+        "metrics.jsonl": "c0ec662734fc27a8e97086a97fd53c6845eec109055ff01ccb5d67caa8c31ff7",
+        "summary.json": "10e9006738790facd28cc5bbc1c56dcb0f63729648c6146228e2b89697e16d3f",
+        "checkpoint.pt": "c1ecbb8e21e770e019a53d964bccac0b951e4daafa21bf4607ff48384b66f06d"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 101.65643593427751,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 39.76048652292819,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 70.70846122860286
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "ant4x2_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 30.64221115305554,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 6.335277853067964
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.253228169050999
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 20.02314220101107
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 27.040706258034334
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 30.64145166205708
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 4,
+        "obs_dim": 28,
+        "state_dim": 111,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "4x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "e4fb7a3fb174c2521b926b8beda143f8735a88100990169cf6f9bc7b10fd0c6a",
+        "metrics.jsonl": "f53e1e3eed8b5513f7d0bdc6b608b2317104a59a23624e862683e5ed4022efd9",
+        "summary.json": "800e9dbf4285e272a07c8d2917195e3c798c1063e974596b7e12a4ecf91b66fe",
+        "checkpoint.pt": "c1b917abef0b787d801a6ccce7be2f9dc060d4cf00a285d5ddfe36948c423184"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 997.8089911857847,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 999.2138544198208,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 998.5114228028028
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant4x2_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 30.306636127992533,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 4.7823356030276045
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 12.33225628908258
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 19.85334445000626
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 27.30905064404942
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 30.306148207979277
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 4,
+        "obs_dim": 28,
+        "state_dim": 111,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "4x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "05be4cd36e6268d5e87d67bc56d529e73b0f2d5a684cbcf9893a61ce791d3cee",
+        "metrics.jsonl": "9d695e1a4995a621d59d31080c3215d95e03c3bd680907a85b80e51aac67c571",
+        "summary.json": "0f84b40dffa597b61f6dcf5ede641ed8dcf6d60908a780bba7707777d5f1986c",
+        "checkpoint.pt": "37a88ca254dfa6a1af3d8081a7ad592b7fa284c78e5b0748d054709f6babd210"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 996.5668195729963,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 1026.0904674007515,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 1011.3286434868738
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant4x2_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant4x2_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 37.259109109058045,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 6.362991543021053
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 15.649695064057596
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 24.653072135988623
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 33.50317845097743
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 37.25710473197978
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 4,
+        "obs_dim": 28,
+        "state_dim": 111,
+        "action_dim": 2
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "4x2",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "91eb3c258df566a8a43ee0f8fe096ca626ec76fc9d29f9aa8e3cf56b9ed1be4e",
+        "metrics.jsonl": "ce5e54221032e11d57b769f2041a9894089150758597952170edea741b45ace2",
+        "summary.json": "af55e9103fcb8e605826494d455316d40cd4c2c3607e393b20137000b2c952a9",
+        "checkpoint.pt": "469b9b8b7144d3f543238f2a57adb9f3f73c188a22a50734582dfea215ffbd6e"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 996.5668195729963,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 1033.8992904198115,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 1015.2330549964039
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "ant8x1_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 26.274605990969576,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 5.247620561975054
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 11.221810937975533
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 17.02583523094654
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 22.844944345997646
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 26.274161053006537
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 8,
+        "obs_dim": 20,
+        "state_dim": 111,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "8x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "ac02506957beeba6bcaba955f0b19d6b89b10624e868213d888ec31598495f79",
+        "metrics.jsonl": "4dc0f628b428a992ef48878d6ad820582567d522de25d1991b81b959fb0980b2",
+        "summary.json": "b4cb6774c617232223ae88325d9149ce368807e066fb1adc619e95b897f68a6e",
+        "checkpoint.pt": "45e9611bf8f5f131bae80b7f8b338f530e82b1a591340d3ad3299d2ca1269f6e"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 997.8319760856997,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 992.9053399502727,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 995.3686580179863
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant8x1_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 48.50448789598886,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 6.988747269962914
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 19.33447779598646
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 31.64689587301109
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 44.06922218797263
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 48.503807964967564
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 8,
+        "obs_dim": 20,
+        "state_dim": 111,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "8x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "5d2f2f21406001b1456c5a0269cfad36d194a21c7cb413314d632aa59a093f5f",
+        "metrics.jsonl": "08bf59aaa570ea8aedbf8119a2a9f1ac8a0c286b7247e78b24347120d47c0a2f",
+        "summary.json": "1c561a69b8dcc6c73daf22513d8f13caceb9e978b71175714ab3fb48f373da76",
+        "checkpoint.pt": "1f074c1674d63c16c1f9899c10563aff78c51d1211f6a198b05dae0d9883d234"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 997.7911233698151,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 997.8516788792774,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 997.8214011245464
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant8x1_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant8x1_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 34.439468930941075,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 5.465011752909049
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 14.082074049976654
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 22.425835024914704
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 30.839695023954846
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 34.439018822973594
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 8,
+        "obs_dim": 20,
+        "state_dim": 111,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "8x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "91a537a6d31e0b37509ca62083bbe40619b2d29dd038e5fe1bfb943a0618dbb0",
+        "metrics.jsonl": "559a059bfa0d87975bccad72dbd7753e0215be1da3a1632d417de072074ea310",
+        "summary.json": "3252c763d245ccbf2b3dbafe953025dd1e597c7868abc6a1ffc10a7825641edb",
+        "checkpoint.pt": "cb9b307497b8302735c6e3f75414650b18401b2ca8a3f6db1097f0300a924b6a"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 997.7911233698151,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 993.5406007269814,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 995.6658620483983
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "ant2x4d_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant2x4d_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 28.582494138972834,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 5.52268669498153
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 12.16601146699395
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 18.776119570015
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 25.425454976968467
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 28.581833122996613
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 2,
+        "obs_dim": 50,
+        "state_dim": 111,
+        "action_dim": 4
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "2x4d",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "d5e36be86442cee37a06c185aa9723851b217cb704dcb7e0726994a4fa8afe1f",
+        "metrics.jsonl": "93f5ad04eb12ea8d7b26c02d0daa6a7d475833368a48906379b64a435e2a66e5",
+        "summary.json": "61a34c80ac4c07b759f1a73e2997d2a391c104ccc6ed4db653af8b4fbcdaaa35",
+        "checkpoint.pt": "6425edb19d7637b64cb99f3a601ed2e9f207c24d054403c89231522feec78dc0"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 998.0578960053942,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 999.0895371254841,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 998.5737165654392
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant2x4d_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant2x4d_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 27.3643981780624,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 4.5772399379638955
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 11.34927745105233
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 17.991966085974127
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 24.67272650299128
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 27.36380797601305
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 2,
+        "obs_dim": 50,
+        "state_dim": 111,
+        "action_dim": 4
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "2x4d",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "4b50ccb335b1446ace034f9207c53af0946f186d318fe75306c142aef1b53965",
+        "metrics.jsonl": "5be3c888851243b3a6de01712bdd4b6c5d91074053ec4554fe2805236fac9fd5",
+        "summary.json": "e1c4b6a673a0fac320775dd2fd474494d871bff405430fb65e81cc39c70cb22a",
+        "checkpoint.pt": "acaf81307c23a59297219e66af20ea4e39231d7df27207e898dcb42b52ddac03"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 994.3340606487225,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 996.1819379993906,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 995.2579993240565
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "ant2x4d_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/ant2x4d_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 32.48994347604457,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 6.030542845022865
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.90431620599702
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 21.715702574001625
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 29.533000019961037
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 32.48889871803112
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 2,
+        "obs_dim": 50,
+        "state_dim": 111,
+        "action_dim": 4
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Ant-v2",
+          "agent_conf": "2x4d",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5"
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "3f359cf7c33da7bb47adbcce8c5cf33416745f77f9544d69b538d69b7b52598a",
+        "metrics.jsonl": "6a6538d3772bebfa6ca04b4c6209abfbebde897cfdecdcd4ecec1b8d5dd37bea",
+        "summary.json": "11b96eb4321136fbb705332bb46e20c1a6c532b511ab6d87b75cb7448c685f65",
+        "checkpoint.pt": "fb3df8754da77699cf3fd85b8b2444eafd534bdf818eb5569b96e31e133562cf"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 994.3340606487225,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 998.3661393734665,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 996.3501000110945
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "humanoid17x1_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoid17x1_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 19.12583721394185,
+      "evaluation_environment_steps": 200,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.1008007859345526
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 7.767159782000817
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 13.324993242975324
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 18.862601096974686
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 19.125408445950598
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 17,
+        "obs_dim": 3,
+        "state_dim": 376,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Humanoid-v2",
+          "agent_conf": "17x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "24c3ec0240ae29a25b9d1781e492402ea30de04274472dab9e23bb2bc2711b33",
+        "metrics.jsonl": "afa2725b5a83f54ac30ce7a739657861f4c6a77009f259715c4c409ec4cb28a5",
+        "summary.json": "b81c31644bde4fe3c56668fbfd546fc5cb91915dc8f82be1ebee2abc7561ff08",
+        "checkpoint.pt": "a434bd466e9ad56e89746d411f554fbf5df94a903bc24a33c761291c4cb3bcf4"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 217.1800410344611,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 293.1978556502031,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 255.1889483423321
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "humanoid17x1_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoid17x1_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 59.467021686024964,
+      "evaluation_environment_steps": 200,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 3.1760290540987626
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 22.419616290018894
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 41.47885505401064
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 59.09095336101018
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 59.46618434903212
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 17,
+        "obs_dim": 3,
+        "state_dim": 376,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Humanoid-v2",
+          "agent_conf": "17x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "084087839cd523d5e9a4c93b8562c9020ccb58b257a2b9bc136c82d13b1945f8",
+        "metrics.jsonl": "082bc9223be1c0eac3e3604253ad9b854c33741761c2ec145a6948c9a59c24fb",
+        "summary.json": "3ae0fb9379b2f86feaec0aea079f5b30f35f2be000ff356c90671c4ca4da1e1a",
+        "checkpoint.pt": "9609206e40fc05e4b76dc9f3594610aefbbbbcca2b6c6f3788b60d9801c90420"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 206.79746489962287,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 305.3055317014746,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 256.0514983005487
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "humanoid17x1_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoid17x1_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 37.04882990499027,
+      "evaluation_environment_steps": 200,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 2.123473813990131
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 13.671142146922648
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 25.210078086936846
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 36.742385266930796
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 37.04846553795505
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 17,
+        "obs_dim": 3,
+        "state_dim": 376,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "Humanoid-v2",
+          "agent_conf": "17x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "dbddd088dc5fac89a0ae55c4e486587cfdc4256df0c2cfe753a3cdfd91b71880",
+        "metrics.jsonl": "678dd08e7b071aa106a2b0d5c64177ae7b22418c2aed79ae75eb96e8d34cc532",
+        "summary.json": "03ab0137eaf96b1af6ae1f9c17a3b89480917e6f792c4e7215369d8f2bd5d4e1",
+        "checkpoint.pt": "55eaa4f444ad1351ce9ba80193c28755de8f0a7fc2e2dd39ea9ee5a4a1d627dd"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 206.79746489962287,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 305.09687438565544,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 255.94716964263915
+    },
+    {
+      "algorithm": "mappo",
+      "variant": "humanoidstandup17x1_local_mappo",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoidstandup17x1_local_mappo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 34.283018858055584,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 7.4876048060832545
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 14.82698899297975
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 22.096501774038188
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 29.393243481055833
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 34.282392889028415
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 17,
+        "obs_dim": 3,
+        "state_dim": 376,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HumanoidStandup-v2",
+          "agent_conf": "17x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "mappo",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "88f3931b0944e85ca1f979218815c1504431272e5eb07bcc0ab2e9b628f13cd5",
+        "metrics.jsonl": "69fd0fe0952df1cedc0b2a0a60a68c8c0b3ff97249f5cd74f53561d323ff3dae",
+        "summary.json": "1847ce9778a4e8a824a2c610900672e19161ed410eaf5ea1414b1f5a61c6795f",
+        "checkpoint.pt": "68341afc5b73853ce86457cbbcea7a430f8f2e99f6f465a9d4153a490b8e1df2"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 29692.07450740465,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 30007.702165753282,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 29849.888336578966
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "humanoidstandup17x1_local_agentmixer",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoidstandup17x1_local_agentmixer_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 53.971427725977264,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 6.658188048982993
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 20.77877794089727
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 35.065176816890016
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 49.09793578693643
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 53.970818016910926
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 17,
+        "obs_dim": 3,
+        "state_dim": 376,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HumanoidStandup-v2",
+          "agent_conf": "17x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": true,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "afab34914f178f6ee66089357a49bb4a0108a94df6ca5d4a32751e70ce08bf76",
+        "metrics.jsonl": "5af7b8bb2bad2f70643e6ed07c36f322d79f4d32c64cd9e891dc36d2c7f063f6",
+        "summary.json": "b285e80bcf7bf024ad6cced399d1d0b58b5a4c37f390f16589035fda60813b95",
+        "checkpoint.pt": "b22f781cfb13443f452df228823a0ee85788d201b966a729a0a3f12cf44fe15e"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 29674.923977315644,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 28578.54819452356,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 29126.736085919605
+    },
+    {
+      "algorithm": "agentmixer",
+      "variant": "humanoidstandup17x1_local_identity",
+      "seed": 0,
+      "output_path": "results/mujoco_remaining_check12k_20261026T215632Z/humanoidstandup17x1_local_identity_seed0",
+      "status": "completed",
+      "eligible": true,
+      "steps": 12000,
+      "updates": 3,
+      "elapsed_seconds": 63.27711674699094,
+      "evaluation_environment_steps": 4000,
+      "phase_timestamps": [
+        {
+          "event": "evaluation",
+          "steps": 0,
+          "elapsed_seconds": 8.703779930016026
+        },
+        {
+          "event": "update",
+          "steps": 4000,
+          "elapsed_seconds": 24.48921640892513
+        },
+        {
+          "event": "update",
+          "steps": 8000,
+          "elapsed_seconds": 40.79826353199314
+        },
+        {
+          "event": "update",
+          "steps": 12000,
+          "elapsed_seconds": 57.544730664929375
+        },
+        {
+          "event": "evaluation",
+          "steps": 12000,
+          "elapsed_seconds": 63.27652406995185
+        }
+      ],
+      "environment_spec": {
+        "is_discrete": false,
+        "num_agents": 17,
+        "obs_dim": 3,
+        "state_dim": 376,
+        "action_dim": 1
+      },
+      "config": {
+        "environment": "mujoco",
+        "env_config": {
+          "scenario": "HumanoidStandup-v2",
+          "agent_conf": "17x1",
+          "agent_obsk": 0,
+          "episode_limit": 1000,
+          "action_units": "normalized"
+        },
+        "algorithm": "agentmixer",
+        "seed": 0,
+        "steps": 12000,
+        "num_envs": 40,
+        "rollout_steps": 100,
+        "hidden_dim": 64,
+        "initial_std": 0.36552928931500245,
+        "action_embed_dim": 0,
+        "agentmixer_correlation": "factorized",
+        "joint_distribution_float64": false,
+        "modifier_enabled": false,
+        "modifier_log_scale_bound": null,
+        "learning_rate": 0.0003,
+        "modifier_learning_rate": 3e-05,
+        "critic_learning_rate": 0.0003,
+        "epochs": 5,
+        "clip_coef": 0.2,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "normalize_value_targets": true,
+        "value_clip_coef": 0.2,
+        "value_huber_delta": 10.0,
+        "max_grad_norm": 10.0,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "normalize_advantages": true,
+        "normalize_observations": true,
+        "observation_clip": 10.0,
+        "temperature": 1.0,
+        "continuous_peer_noise": "fresh",
+        "continuous_modifier_scale": "residual",
+        "eval_seed": 1000000,
+        "eval_episodes": 2,
+        "eval_max_steps": 10000,
+        "eval_every_steps": 12000,
+        "eval_window_steps": 0,
+        "eval_windows": 0,
+        "checkpoint_every_updates": 0,
+        "device": "cpu",
+        "threads": 1
+      },
+      "versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      },
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "training_seed_derivation_verified": true,
+      "window_seed_derivation_verified": false,
+      "artifact_sha256": {
+        "config.json": "ae5a89b09e64fb0dab683e5b8cf9db4f9403264717444798820ecf501d0fcdbd",
+        "metrics.jsonl": "960ba1677e91f51b016e90b38e61fc4d60d4166b63f95f7756959b68b0a32350",
+        "summary.json": "9bb9ff6a8bb553e11278a4e30a59ec79a8b1de4ee77221b2e99ab8d018308a91",
+        "checkpoint.pt": "98d20c39b00ab3285dcd30ca64892268f3a6dc801ec58dd12b6834a4a31752b4"
+      },
+      "evaluation_curve": [
+        {
+          "steps": 0,
+          "return_mean": 29674.923977315644,
+          "episodes": 2
+        },
+        {
+          "steps": 12000,
+          "return_mean": 28298.904837554946,
+          "episodes": 2
+        }
+      ],
+      "normalized_auc": 28986.91440743529
+    }
+  ],
+  "completed_runs": 37,
+  "declared_runs": 37,
+  "integrity_errors": [],
+  "limitations": [
+    "Raw episode/window reductions are checked; native transition rewards are not independently replayed in this audit.",
+    "All declared methods are complete; development seed 0 cannot estimate training-seed uncertainty.",
+    "No early peak replaces a final endpoint; budgets and protocols must match before comparisons."
+  ]
+}

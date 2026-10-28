@@ -1,0 +1,13 @@
+{
+  "recorded_utc": "2026-10-28T08:54:30.650527+00:00",
+  "job_id": "21252362",
+  "status": "released",
+  "revision": "experiments/hc_agentmixer_final_diagnostic_revision_20261028.json",
+  "revision_sha256": "f05aa6896744442353c19c2b54524d790e0ddd8ce31af827eb17df6818126b1c",
+  "resources": {
+    "cpus": 1,
+    "memory_gib": 2,
+    "wall_minutes": 30
+  },
+  "held_verification": "JobId=21252362 JobName=bpta-agentmixer-hc-final-diagnostic UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-28T10:54:30 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-28T10:54:30 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2848577 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_agentmixer_final_diagnostic_v2_20261028/submit.sbatch SubmitLine=sbatch --hold --parsable /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_agentmixer_final_diagnostic_v2_20261028/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_agentmixer_final_diagnostic_v2_20261028/slurm_21252362.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc_agentmixer_final_diagnostic_v2_20261028/slurm_21252362.out TresPerTask=cpu=1"
+}

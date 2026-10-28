@@ -1,0 +1,651 @@
+{
+  "recorded_utc": "2026-10-28T08:27:23.280440+00:00",
+  "scope": "Complete9-run10M development comparison;all endpoints retained. This post-completion analysis is exploratory,not independent confirmation.",
+  "audit": "experiments/hc2x3_agentmixer10m_complete_20261028.json",
+  "audit_sha256": "fd77ed129663b72b05ccbf382672377cb2604bc7ef7ae3ef7bc2976a950028a8",
+  "comparison_script": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/completion_audits_20261028/compare_agentmixer.py",
+  "comparison_script_sha256": "39069ddc9861f15d9f6333c2dcfc3f4b2e5e1146a7d9832ca1354eb79cf87f7d",
+  "groups": [
+    {
+      "variant": "agentmixer_bounded",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            1438.9311780706469,
+            3955.1951809332336,
+            6063.214206989285
+          ],
+          "mean": 3819.113521997722,
+          "median": 3955.1951809332336,
+          "sample_sd": 2315.1429861479864
+        },
+        "secondary_aligned_9_9m_return": {
+          "seed_values": [
+            3162.9537011418424,
+            4335.799011721886,
+            6132.9593580323
+          ],
+          "mean": 4543.90402363201,
+          "median": 4335.799011721886,
+          "sample_sd": 1495.899118415715
+        },
+        "normalized_auc": {
+          "seed_values": [
+            3976.998734957642,
+            4619.319822280202,
+            4636.717375393518
+          ],
+          "mean": 4411.011977543787,
+          "median": 4619.319822280202,
+          "sample_sd": 375.96713921390506
+        },
+        "final_training_geometric_std": {
+          "seed_values": [
+            0.5654241056703778,
+            0.5643740767867176,
+            0.3637375814671016
+          ],
+          "mean": 0.497845254641399,
+          "median": 0.5643740767867176,
+          "sample_sd": 0.11614183847060565
+        }
+      },
+      "final_mean_above_5070": false
+    },
+    {
+      "variant": "agentmixer_residual",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            3623.196867452071,
+            2851.9607763934546,
+            4207.391593339601
+          ],
+          "mean": 3560.8497457283756,
+          "median": 3623.196867452071,
+          "sample_sd": 679.8628888035046
+        },
+        "secondary_aligned_9_9m_return": {
+          "seed_values": [
+            3602.528045325976,
+            3072.1631393101293,
+            4368.164544408964
+          ],
+          "mean": 3680.95190968169,
+          "median": 3602.528045325976,
+          "sample_sd": 651.550180247002
+        },
+        "normalized_auc": {
+          "seed_values": [
+            3409.6898878826146,
+            2976.1016518250185,
+            3185.912690715109
+          ],
+          "mean": 3190.568076807581,
+          "median": 3185.912690715109,
+          "sample_sd": 216.8316030394022
+        },
+        "final_training_geometric_std": {
+          "seed_values": [
+            2.587418144303299,
+            2.6529030073911395,
+            2.256130237411122
+          ],
+          "mean": 2.4988171297018535,
+          "median": 2.587418144303299,
+          "sample_sd": 0.21270816296209258
+        }
+      },
+      "final_mean_above_5070": false
+    },
+    {
+      "variant": "agentmixer_identity",
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            5376.612533132643,
+            5999.042101704585,
+            5332.700317977428
+          ],
+          "mean": 5569.451650938218,
+          "median": 5376.612533132643,
+          "sample_sd": 372.6835617547367
+        },
+        "secondary_aligned_9_9m_return": {
+          "seed_values": [
+            5499.386930347508,
+            5988.082745394429,
+            5342.145899230215
+          ],
+          "mean": 5609.871858324051,
+          "median": 5499.386930347508,
+          "sample_sd": 336.8438685661792
+        },
+        "normalized_auc": {
+          "seed_values": [
+            4722.098026712046,
+            4724.8583034215435,
+            3859.88700363283
+          ],
+          "mean": 4435.614444588807,
+          "median": 4722.098026712046,
+          "sample_sd": 498.5964996709928
+        },
+        "final_training_geometric_std": {
+          "seed_values": [
+            0.5069009639555885,
+            0.4174173268967588,
+            0.9453127651850789
+          ],
+          "mean": 0.6232103520124754,
+          "median": 0.5069009639555885,
+          "sample_sd": 0.28251425407230346
+        }
+      },
+      "final_mean_above_5070": true
+    }
+  ],
+  "contrasts": [
+    {
+      "left": "agentmixer_bounded",
+      "right": "agentmixer_identity",
+      "config_differences": [
+        "continuous_modifier_scale",
+        "modifier_enabled"
+      ],
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            -3937.6813550619963,
+            -2043.846920771351,
+            730.5138890118569
+          ],
+          "mean": -1750.3381289404967,
+          "median": -2043.846920771351,
+          "sample_sd": 2347.8974141473773
+        },
+        "secondary_aligned_9_9m_return": {
+          "seed_values": [
+            -2336.433229205665,
+            -1652.2837336725433,
+            790.8134588020848
+          ],
+          "mean": -1065.9678346920412,
+          "median": -1652.2837336725433,
+          "sample_sd": 1644.002041349659
+        },
+        "normalized_auc": {
+          "seed_values": [
+            -745.099291754404,
+            -105.53848114134144,
+            776.8303717606877
+          ],
+          "mean": -24.60246704501924,
+          "median": -105.53848114134144,
+          "sample_sd": 764.1861382903645
+        },
+        "final_training_geometric_std": {
+          "seed_values": [
+            0.05852314171478934,
+            0.14695674988995877,
+            -0.5815751837179772
+          ],
+          "mean": -0.12536509737107637,
+          "median": 0.05852314171478934,
+          "sample_sd": 0.3975561066405658
+        }
+      },
+      "qualification": "Bounded contrast also changes initial central std and scale map."
+    },
+    {
+      "left": "agentmixer_residual",
+      "right": "agentmixer_identity",
+      "config_differences": [
+        "modifier_enabled"
+      ],
+      "metrics": {
+        "final_return": {
+          "seed_values": [
+            -1753.4156656805721,
+            -3147.08132531113,
+            -1125.3087246378273
+          ],
+          "mean": -2008.6019052098432,
+          "median": -1753.4156656805721,
+          "sample_sd": 1034.7613854614697
+        },
+        "secondary_aligned_9_9m_return": {
+          "seed_values": [
+            -1896.8588850215315,
+            -2915.9196060843,
+            -973.9813548212514
+          ],
+          "mean": -1928.919948642361,
+          "median": -1896.8588850215315,
+          "sample_sd": 971.3660364558878
+        },
+        "normalized_auc": {
+          "seed_values": [
+            -1312.4081388294312,
+            -1748.756651596525,
+            -673.9743129177209
+          ],
+          "mean": -1245.0463677812256,
+          "median": -1312.4081388294312,
+          "sample_sd": 540.5483096199941
+        },
+        "final_training_geometric_std": {
+          "seed_values": [
+            2.0805171803477105,
+            2.2354856804943806,
+            1.3108174722260433
+          ],
+          "mean": 1.8756067776893781,
+          "median": 2.0805171803477105,
+          "sample_sd": 0.4952211916747346
+        }
+      },
+      "qualification": "Only modifier learning is disabled in identity."
+    }
+  ],
+  "runs": [
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "final_return": 1438.9311780706469,
+      "secondary_aligned_9_9m_return": 3162.9537011418424,
+      "normalized_auc": 3976.998734957642,
+      "final_training_geometric_std": 0.5654241056703778,
+      "final_losses": {
+        "policy_loss": -0.0014034442818723568,
+        "entropy": 5.092555999755859,
+        "approx_kl": 0.0018738015294075012,
+        "clip_fraction": 0.0193,
+        "grad_norm": 0.9501850128173828,
+        "num_updates": 5.0,
+        "value_loss": 0.0005510204820893704,
+        "value_mse": 122.53533630371095,
+        "value_regression_loss": 0.0011020409641787408,
+        "critic_grad_norm": 0.00782991386950016,
+        "raw_value_mse": 122.53533630371095,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 303.72919085080883,
+        "value_target_scale": 235.78534857621352,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 196.0142000248432,
+        "return_std": 297.0238807720079,
+        "prediction_mean": 195.3742849496603,
+        "prediction_std": 295.59848694038175,
+        "explained_variance": 0.9985938971613187
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 4.815033288002014,
+        "approx_kl": 0.0031934597929120065,
+        "clip_fraction": 0.033410999999999996,
+        "grad_norm": 1.0001427756547927,
+        "value_loss": 0.0046143685296410695
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "final_return": 3955.1951809332336,
+      "secondary_aligned_9_9m_return": 4335.799011721886,
+      "normalized_auc": 4619.319822280202,
+      "final_training_geometric_std": 0.5643740767867176,
+      "final_losses": {
+        "policy_loss": -0.0019924870014190964,
+        "entropy": 5.0814032554626465,
+        "approx_kl": 0.002084084990620613,
+        "clip_fraction": 0.024,
+        "grad_norm": 0.807686960697174,
+        "num_updates": 5.0,
+        "value_loss": 0.004573317803442479,
+        "value_mse": 1187.1949462890625,
+        "value_regression_loss": 0.009146635606884957,
+        "critic_grad_norm": 0.011938041634857656,
+        "raw_value_mse": 1187.1949462890625,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 275.34481081671294,
+        "value_target_scale": 254.75066635340318,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 254.09102946609258,
+        "return_std": 312.5985848023604,
+        "prediction_mean": 255.02531772996392,
+        "prediction_std": 310.91350537545895,
+        "explained_variance": 0.9878626094006693
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 4.361919776916504,
+        "approx_kl": 0.00399664641264081,
+        "clip_fraction": 0.044413,
+        "grad_norm": 0.9253737971186637,
+        "value_loss": 0.004992423804011196
+      }
+    },
+    {
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "final_return": 6063.214206989285,
+      "secondary_aligned_9_9m_return": 6132.9593580323,
+      "normalized_auc": 4636.717375393518,
+      "final_training_geometric_std": 0.3637375814671016,
+      "final_losses": {
+        "policy_loss": 0.0010767173631116567,
+        "entropy": 2.4456955909729006,
+        "approx_kl": 0.01419021167755127,
+        "clip_fraction": 0.13715,
+        "grad_norm": 3.154372763633728,
+        "num_updates": 5.0,
+        "value_loss": 0.003939306642860174,
+        "value_mse": 698.4569458007813,
+        "value_regression_loss": 0.007878613285720348,
+        "critic_grad_norm": 0.014448374509811401,
+        "raw_value_mse": 698.4569458007813,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 379.4058530944024,
+        "value_target_scale": 210.53772889842006,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 540.8255864270925,
+        "return_std": 184.89149963275344,
+        "prediction_mean": 541.8185781562962,
+        "prediction_std": 183.37977270422263,
+        "explained_variance": 0.9795762035298011
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 2.8962778749465943,
+        "approx_kl": 0.006516065015256405,
+        "clip_fraction": 0.07784,
+        "grad_norm": 2.5996286672353746,
+        "value_loss": 0.003617539762024535
+      }
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "final_return": 3623.196867452071,
+      "secondary_aligned_9_9m_return": 3602.528045325976,
+      "normalized_auc": 3409.6898878826146,
+      "final_training_geometric_std": 2.587418144303299,
+      "final_losses": {
+        "policy_loss": -0.002761991159059107,
+        "entropy": 14.217594337463378,
+        "approx_kl": 0.003740981769561767,
+        "clip_fraction": 0.04325,
+        "grad_norm": 0.9810433387756348,
+        "num_updates": 5.0,
+        "value_loss": 0.007774790562689305,
+        "value_mse": 946.7527099609374,
+        "value_regression_loss": 0.01554958112537861,
+        "critic_grad_norm": 0.025809657946228977,
+        "raw_value_mse": 946.7527099609374,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 270.14804931464454,
+        "value_target_scale": 174.4793092931026,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 194.9460954502225,
+        "return_std": 214.79090713269431,
+        "prediction_mean": 198.36796411501615,
+        "prediction_std": 214.91372464001515,
+        "explained_variance": 0.9795307470564792
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 12.457236171722412,
+        "approx_kl": 0.0035480862555205823,
+        "clip_fraction": 0.0404015,
+        "grad_norm": 1.026444406747818,
+        "value_loss": 0.005110744110192173
+      }
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "final_return": 2851.9607763934546,
+      "secondary_aligned_9_9m_return": 3072.1631393101293,
+      "normalized_auc": 2976.1016518250185,
+      "final_training_geometric_std": 2.6529030073911395,
+      "final_losses": {
+        "policy_loss": -0.002818392590619645,
+        "entropy": 14.36755828857422,
+        "approx_kl": 0.0012226340383291244,
+        "clip_fraction": 0.01105,
+        "grad_norm": 0.8817510843276978,
+        "num_updates": 5.0,
+        "value_loss": 0.0009104218799620866,
+        "value_mse": 88.47825164794922,
+        "value_regression_loss": 0.0018208437599241732,
+        "critic_grad_norm": 0.01937524527311325,
+        "raw_value_mse": 88.47825164794922,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 175.57392411249913,
+        "value_target_scale": 155.87156880868616,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 117.08346986103058,
+        "return_std": 183.0885802944365,
+        "prediction_mean": 115.82150486850739,
+        "prediction_std": 180.8558907072378,
+        "explained_variance": 0.9973111843531385
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 11.075582953453065,
+        "approx_kl": 0.0036094895161390304,
+        "clip_fraction": 0.0418075,
+        "grad_norm": 1.119967493057251,
+        "value_loss": 0.005090466237976216
+      }
+    },
+    {
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "final_return": 4207.391593339601,
+      "secondary_aligned_9_9m_return": 4368.164544408964,
+      "normalized_auc": 3185.912690715109,
+      "final_training_geometric_std": 2.256130237411122,
+      "final_losses": {
+        "policy_loss": -0.0021396782159805116,
+        "entropy": 13.395537567138671,
+        "approx_kl": 0.0017940795719623565,
+        "clip_fraction": 0.01765,
+        "grad_norm": 1.0612803816795349,
+        "num_updates": 5.0,
+        "value_loss": 0.000785374129191041,
+        "value_mse": 79.93563079833984,
+        "value_regression_loss": 0.001570748258382082,
+        "critic_grad_norm": 0.017587720416486263,
+        "raw_value_mse": 79.93563079833984,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 244.31799740712776,
+        "value_target_scale": 159.5151374330835,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 231.16199213838578,
+        "return_std": 207.35179247458282,
+        "prediction_mean": 230.36501468014717,
+        "prediction_std": 205.92660782392446,
+        "explained_variance": 0.9981539209911798
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 10.319681213378907,
+        "approx_kl": 0.00446044395378232,
+        "clip_fraction": 0.051963,
+        "grad_norm": 1.2794918096065522,
+        "value_loss": 0.004010203518439085
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "final_return": 5376.612533132643,
+      "secondary_aligned_9_9m_return": 5499.386930347508,
+      "normalized_auc": 4722.098026712046,
+      "final_training_geometric_std": 0.5069009639555885,
+      "final_losses": {
+        "policy_loss": -0.001841806078609043,
+        "entropy": 4.436993408203125,
+        "approx_kl": 0.004309859800338745,
+        "clip_fraction": 0.0486,
+        "grad_norm": 6.152937316894532,
+        "num_updates": 5.0,
+        "value_loss": 0.00012697828060481697,
+        "value_mse": 22.752949142456053,
+        "value_regression_loss": 0.00025395656120963395,
+        "critic_grad_norm": 0.003837773902341723,
+        "raw_value_mse": 22.752949142456053,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 421.4850787725799,
+        "value_target_scale": 211.65284944890425,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 622.8158560333252,
+        "return_std": 7.711972230790925,
+        "prediction_mean": 622.2532539367676,
+        "prediction_std": 7.630819580702419,
+        "explained_variance": 0.6187433533675225
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 4.290718311786652,
+        "approx_kl": 0.00799520004081726,
+        "clip_fraction": 0.088316,
+        "grad_norm": 7.183691390275955,
+        "value_loss": 0.0012471520378894638
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "final_return": 5999.042101704585,
+      "secondary_aligned_9_9m_return": 5988.082745394429,
+      "normalized_auc": 4724.8583034215435,
+      "final_training_geometric_std": 0.4174173268967588,
+      "final_losses": {
+        "policy_loss": -0.0007936590378172514,
+        "entropy": 3.2716185569763185,
+        "approx_kl": 0.005054611539840698,
+        "clip_fraction": 0.061149999999999996,
+        "grad_norm": 1.8698899269104003,
+        "num_updates": 5.0,
+        "value_loss": 0.0010775522096082568,
+        "value_mse": 153.1344940185547,
+        "value_regression_loss": 0.0021551044192165136,
+        "critic_grad_norm": 0.004981102142482996,
+        "raw_value_mse": 153.1344940185547,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 432.0304810337636,
+        "value_target_scale": 188.48958555960928,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 567.6320854340792,
+        "return_std": 136.32084977334424,
+        "prediction_mean": 568.4085237140059,
+        "prediction_std": 134.5964224878137,
+        "explained_variance": 0.9917343040934845
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 3.171318145751953,
+        "approx_kl": 0.0061259450932145115,
+        "clip_fraction": 0.0793785,
+        "grad_norm": 2.2124475977420808,
+        "value_loss": 0.001392795225197915
+      }
+    },
+    {
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "final_return": 5332.700317977428,
+      "secondary_aligned_9_9m_return": 5342.145899230215,
+      "normalized_auc": 3859.88700363283,
+      "final_training_geometric_std": 0.9453127651850789,
+      "final_losses": {
+        "policy_loss": -0.0036093544125556766,
+        "entropy": 8.17619457244873,
+        "approx_kl": 0.0037323221206665034,
+        "clip_fraction": 0.04575,
+        "grad_norm": 0.9169484615325928,
+        "num_updates": 5.0,
+        "value_loss": 0.0034826009534299376,
+        "value_mse": 388.5891357421875,
+        "value_regression_loss": 0.006965201906859875,
+        "critic_grad_norm": 0.017993956059217456,
+        "raw_value_mse": 388.5891357421875,
+        "value_targets_normalized": 1.0,
+        "value_target_mean": 277.7035453884874,
+        "value_target_scale": 167.01807204492056,
+        "value_target_count": 10000000.0,
+        "value_normalizer_updates": 2500.0,
+        "value_coef": 0.5,
+        "critic_updates": 5.0,
+        "active_fraction": 1.0
+      },
+      "final_critic_diagnostics": {
+        "return_mean": 348.3669960486293,
+        "return_std": 203.4029153322311,
+        "prediction_mean": 346.4327066171467,
+        "prediction_std": 202.86061000869745,
+        "explained_variance": 0.9906131153778065
+      },
+      "final_100_update_mean_losses": {
+        "entropy": 8.023867210388184,
+        "approx_kl": 0.0034727763304412363,
+        "clip_fraction": 0.03955,
+        "grad_norm": 0.952538870215416,
+        "value_loss": 0.006019515558611602
+      }
+    }
+  ],
+  "figure_reading_interval": [
+    5000,
+    5070
+  ],
+  "figure_qualification": "Commented appendix asset;historical aggregation/evaluation/smoothing unresolved. Reading range is digitization uncertainty,not training-seed CI.",
+  "interpretation": "Both learned modifier group means are below identity and below the figure upper reading bound. Identity performance cannot establish AgentMixer reproduction. No checkpoint peak substitutes for10M. Secondary9.9M remains separate.",
+  "limitations": [
+    "three development seeds;no independent-final uncertainty claim",
+    "final-update entropy describes training distribution;not native-trajectory causal diagnosis",
+    "no failures discarded or source/seed settings changed"
+  ]
+}
