@@ -1,6 +1,38 @@
 # Clean installation verification
 
-## Latest committed export: 29 October 2026
+## Current wheel: 29 October 2026
+
+The exact committed export of `f7f9de3` passes **1,044 installed-package tests
+and one CUDA-only skip** in 54.93 seconds, with pytest source-path injection
+disabled. The package imports from `site-packages`; all 25 installed module
+files match the export byte for byte. The packaged README and MIT notice
+match. This includes all 28 local-distillation tests and 41 continuous-memory tests; the continuous
+checkpoint tests use synthetic environments.
+
+The dependency lock is unchanged from the fresh check below. This run reuses
+its inactive CPU validation prefix: Python 3.11.15, PyTorch 2.6.0+cpu, NumPy
+2.4.6 and pytest 8.4.2. Only this project's wheel is temporarily replaced,
+using an offline build and reinstall without resolving dependencies. The
+dependency check passes, all installed package versions remain unchanged, and the original
+wheel, module bytes and packaged README are restored afterward. No new
+validation environment is built and no training environment changes.
+
+Both matrix console commands and the original recurrent Predator–Prey replay
+pass outside the export. An additional recurrent Prey CLI run with
+`agentmixer_distillation_coef=0.1` completes with finite auxiliary metrics and
+exact final episode/window replay. The matrix runs use 64 decisions each;
+each Prey run uses 16. These budgets check integration. All three public
+standard-library reports pass, keeping the 74 absent local manifests explicit
+in the clean export. They do not certify achieved performance.
+
+The [current verification record](../experiments/core_wheel_controls_verification_20261029.json)
+retains the exact commit, archive, wheel, modules, JUnit report, fourteen
+command logs, replay evidence and restoration checks. This is a current-wheel
+check in reused locked dependencies. A fresh or uncached online installation
+is not repeated; optional native engines are absent and hosted GitHub Actions
+remains untested.
+
+## Fresh installation: 29 October 2026
 
 Commit `ddde9dc` now passes a fresh, non-editable wheel installation with
 **975 tests passed and one CUDA-only skip**, in about 65 seconds. Pytest's

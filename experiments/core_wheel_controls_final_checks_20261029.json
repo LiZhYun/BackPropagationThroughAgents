@@ -1,0 +1,28 @@
+{
+  "recorded_utc": "2026-10-29T14:07:19.303373+00:00",
+  "scope": "Current wheel, preserved prefix and evidence checks only; benchmark reproduction remains unfinished.",
+  "verification_record": "experiments/core_wheel_controls_verification_20261029.json",
+  "verification_record_sha256": "a281ed0186048e0441833f138437d5ef976d9fc917f896ec8768ca6bd9dbc25c",
+  "current_modules_match_export": 25,
+  "installed_tests_passed": 1044,
+  "cuda_only_skips": 1,
+  "successful_top_level_commands": 14,
+  "positive_objective_cli_episode_window_replay_exact": true,
+  "original_validation_module_bytes_restored": true,
+  "dependency_inventory_restored": true,
+  "public_local_links_checked": 49,
+  "production_source_tests_configs_environment_ledger_jobs_unchanged": true,
+  "authoritatively_running_training_workers": [
+    "21251960_0|21251965|RUNNING",
+    "21251960_1|21251966|RUNNING",
+    "21272799_0|21272803|RUNNING",
+    "21272799_1|21272804|RUNNING",
+    "21272800_4|21282252|RUNNING",
+    "21272800_5|21284380|RUNNING",
+    "21279129_2|21282391|RUNNING",
+    "21279129_3|21282437|RUNNING"
+  ],
+  "new_training_runs": 0,
+  "checker": "results/core_wheel_controls_20261029/final_checks.py",
+  "checker_sha256": "b95938c0c2c99b08b3b3d424ec0e1987e06d783b8727c824bba325025fd786b2"
+}

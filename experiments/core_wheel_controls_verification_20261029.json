@@ -1,0 +1,345 @@
+{
+  "recorded_utc": "2026-10-29T14:04:15.462672+00:00",
+  "scope": "Current core wheel/package verification from an exact committed export in a reused inactive CPU validation prefix. No native simulator or benchmark-performance claim; original wheel restored afterward.",
+  "commit": "f7f9de3b6277511863d04189cb9b322dc5b0e65a",
+  "clean_source_export": "results/core_wheel_controls_20261029/source",
+  "archive": "results/core_wheel_controls_20261029/source.tar",
+  "archive_sha256": "0fde5925186566998b72bd16dce8522cac1606bf863ff47c9ebfda00bc17eb7d",
+  "uv_lock_sha256": "139e1590232063463ec0b6d264da50975e12d498127ac0d5e657b1369e4841a2",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "a708dbf0355b2e84c9af2e516719b21806338172897c7792db77e32a864454f9",
+    "recurrent.py": "e179cf4e0250097719e0837728103142e8e5e9cd7ac37cef17fe47310c4feb01",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "agentmixer_continuous.py": "aff393cb30af7c89d5a1d61beabbf8fa231df37465f5c4a5fc2318b8247a001c",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "wheel": "results/core_wheel_controls_20261029/dist/bta_repro-0.1.0-py3-none-any.whl",
+  "wheel_sha256": "96c0b9cd2c51793513c086d1bdebe2e554e7ba64b94d17997deb5ef71c974273",
+  "offline_build_and_install": true,
+  "new_environment_created": false,
+  "dependency_inventory_unchanged": true,
+  "validation_prefix": "results/core_wheel_20261029/source/.venv",
+  "commands": [
+    {
+      "name": "environment_before",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-c",
+        "from pathlib import Path\nfrom importlib.metadata import distributions,distribution\nfrom importlib.util import find_spec\nimport hashlib,json,platform\nimport bta_repro\nfolder=Path(bta_repro.__file__).resolve().parent\nprint(json.dumps({'python':platform.python_version(),'package_path':str(folder),'versions':{d.metadata['Name']:d.version for d in distributions()},'module_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.glob('*.py')},'readme':distribution('bta-repro').metadata.get_payload().strip(),'optional_simulators_present':{name:find_spec(name) is not None for name in ('smacv2','mujoco_py','gfootball')}},sort_keys=True))\n"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "c1a6cdae6e45e7993ee56be2a66a5b00d77a332aa427ce7989dce963fcd71d4b"
+    },
+    {
+      "name": "build",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "build",
+        "--offline",
+        "--wheel",
+        "--python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "--out-dir",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/dist"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source",
+      "exit_code": 0,
+      "log_sha256": "464b809e2cc92018e4e73ecef31017fadc418c374739888c3211f33ae33220a3"
+    },
+    {
+      "name": "install",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "--no-deps",
+        "--reinstall-package",
+        "bta-repro",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/dist/bta_repro-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "3d6281b06bc11a224367949c723553e113d57380d5f992da7df85c20754cd704"
+    },
+    {
+      "name": "environment_current",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-c",
+        "from pathlib import Path\nfrom importlib.metadata import distributions,distribution\nfrom importlib.util import find_spec\nimport hashlib,json,platform\nimport bta_repro\nfolder=Path(bta_repro.__file__).resolve().parent\nprint(json.dumps({'python':platform.python_version(),'package_path':str(folder),'versions':{d.metadata['Name']:d.version for d in distributions()},'module_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.glob('*.py')},'readme':distribution('bta-repro').metadata.get_payload().strip(),'optional_simulators_present':{name:find_spec(name) is not None for name in ('smacv2','mujoco_py','gfootball')}},sort_keys=True))\n"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "fe4e1ea3e82b807f42738b00d1ebf3f7cd8d79c9b45ab9897dfc7193eec36322"
+    },
+    {
+      "name": "dependency_check",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "pip",
+        "check",
+        "--offline",
+        "--python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "840b66c3490fa379f20d146521867a3f63a37a3ae14897e4bb42e8dbc60f5dfb"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-o",
+        "pythonpath=",
+        "--junitxml=/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/tests.xml"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source",
+      "exit_code": 0,
+      "log_sha256": "d87589a868b31b1fa8943cdb88edbff0e451d76f53b77c737600645a3358cfad"
+    },
+    {
+      "name": "installed_commands",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source/scripts/check_installed_package.py",
+        "--output",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/installed-check"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "fb45cb816298f19e31a7e6bef130ec0c4209aa7e975786001151dd2427160b21"
+    },
+    {
+      "name": "distillation_command",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/bta-train-simulator",
+        "--config",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/distillation_config.json",
+        "--output",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/distillation_run"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "39a4562dff03f5db66fa1441dc57892ac475947ecee3f127d86de18c1cf4d52e"
+    },
+    {
+      "name": "distillation_replay",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source/scripts/evaluate_simulator.py",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/distillation_run",
+        "--output",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/distillation_replay.json"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "10a6d62b656072d243b1e1c6c7c4dc5f377eda40d3ee4bfc29d43488d9532665"
+    },
+    {
+      "name": "targets",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-S",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source/scripts/check_paper_targets.py"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source",
+      "exit_code": 0,
+      "log_sha256": "1225a971a5576d8ff24b5270b7d44d61bcbb138dbbef48fe92012a452eac4388"
+    },
+    {
+      "name": "progress",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-S",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source/scripts/report_progress.py",
+        "--latest",
+        "1"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source",
+      "exit_code": 0,
+      "log_sha256": "68f066c2917f8cb9dc3ab10ef194a4034859aea2bdb507bbbf99f1bdfb9440bf"
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-S",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source/scripts/report_benchmark_coverage.py"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029/source",
+      "exit_code": 0,
+      "log_sha256": "9901403b6fa75db5c92c7c8cd95ec949c8c4b0f24708e9e67fad61498fe24f11"
+    },
+    {
+      "name": "restore_original_wheel",
+      "command": [
+        "/home/liz23/.local/bin/uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "--no-deps",
+        "--reinstall-package",
+        "bta-repro",
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/dist/bta_repro-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "5e63aa06243ce785301741f051f0819d432226a11a0efc68b4fa534ea3ba895f"
+    },
+    {
+      "name": "environment_restored",
+      "command": [
+        "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/bin/python",
+        "-c",
+        "from pathlib import Path\nfrom importlib.metadata import distributions,distribution\nfrom importlib.util import find_spec\nimport hashlib,json,platform\nimport bta_repro\nfolder=Path(bta_repro.__file__).resolve().parent\nprint(json.dumps({'python':platform.python_version(),'package_path':str(folder),'versions':{d.metadata['Name']:d.version for d in distributions()},'module_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.glob('*.py')},'readme':distribution('bta-repro').metadata.get_payload().strip(),'optional_simulators_present':{name:find_spec(name) is not None for name in ('smacv2','mujoco_py','gfootball')}},sort_keys=True))\n"
+      ],
+      "cwd": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_controls_20261029",
+      "exit_code": 0,
+      "log_sha256": "c1a6cdae6e45e7993ee56be2a66a5b00d77a332aa427ce7989dce963fcd71d4b"
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Reuses the previously validated locked CPU dependency prefix; not a fresh-environment or uncached online-install check.",
+    "Optional native engines are absent; continuous-memory replay coverage in this suite uses synthetic continuous environments.",
+    "Short console runs verify integration only; hosted CI and full paper-matched benchmark performance remain unproven."
+  ],
+  "suite": {
+    "passed": 1044,
+    "skipped": 1,
+    "skip_reason": "CUDA-only test in CPU environment",
+    "seconds": 54.926,
+    "source_path_injection": false
+  },
+  "junit": "results/core_wheel_controls_20261029/tests.xml",
+  "junit_sha256": "2dc1c4b47fd0ceed53f2022eba810516f62a95cd86e4081b95435b2bc81bee00",
+  "installed_verification": "results/core_wheel_controls_20261029/installed-check/verification.json",
+  "installed_verification_sha256": "8808abf99969d707f2fc3c113f74a5c41a2c74f0b86651d709fac0ef65c60adc",
+  "distillation_interface": {
+    "steps": 16,
+    "recurrent": true,
+    "coefficient": 0.1,
+    "finite_auxiliary_metrics": true,
+    "exact_complete_episode_and_window_replay": true,
+    "replay_sha256": "6600693f11ff31f621bed5d91c3d44e974f1f42cf701f5a2f6d436870d7f97d2"
+  },
+  "current_environment": {
+    "module_sha256": {
+      "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+      "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+      "agentmixer_continuous.py": "aff393cb30af7c89d5a1d61beabbf8fa231df37465f5c4a5fc2318b8247a001c",
+      "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+      "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+      "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+      "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+      "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+      "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+      "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+      "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+      "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+      "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+      "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+      "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+      "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+      "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+      "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+      "recurrent.py": "e179cf4e0250097719e0837728103142e8e5e9cd7ac37cef17fe47310c4feb01",
+      "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+      "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+      "simulator_train.py": "a708dbf0355b2e84c9af2e516719b21806338172897c7792db77e32a864454f9",
+      "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+      "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+      "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+    },
+    "optional_simulators_present": {
+      "gfootball": false,
+      "mujoco_py": false,
+      "smacv2": false
+    },
+    "package_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/core_wheel_20261029/source/.venv/lib/python3.11/site-packages/bta_repro",
+    "python": "3.11.15",
+    "versions": {
+      "Jinja2": "3.1.6",
+      "MarkupSafe": "3.0.4",
+      "Pygments": "2.21.0",
+      "bta-repro": "0.1.0",
+      "filelock": "4.2.4",
+      "fsspec": "2026.9.0",
+      "iniconfig": "2.3.1",
+      "mpmath": "1.3.0",
+      "networkx": "3.6.1",
+      "numpy": "2.4.6",
+      "packaging": "26.3",
+      "pluggy": "1.7.0",
+      "pytest": "8.4.2",
+      "sympy": "1.13.1",
+      "torch": "2.6.0+cpu",
+      "typing_extensions": "4.16.0"
+    }
+  },
+  "original_validation_prefix_restored": true,
+  "platform": "Linux-5.14.0-687.54.1.el9_8.x86_64-x86_64-with-glibc2.34",
+  "verification_script": "results/core_wheel_controls_20261029/verify.py",
+  "verification_script_sha256": "24704b7cbf23f418e32025ff4bdf9b485e7962fcb39efd198359bdb5aae73ce7",
+  "completion_record": "results/core_wheel_controls_20261029/complete.json",
+  "completion_record_sha256": "811dc709d0b9f352db27d2e2af99bb51011ccf7e13d1b12b10a54ef25848610c",
+  "installed_feature_test_counts": {
+    "discrete_local_distillation": 28,
+    "continuous_local_memory": 41
+  },
+  "public_reports": {
+    "target_index": "45 targets checked with the standard library",
+    "progress": "Missing local manifests reported as unknown",
+    "coverage": "74 absent local manifests reported explicitly; zero run errors; no successful-performance claim"
+  },
+  "console_and_checkpoint_checks": {
+    "matrix_methods": [
+      "bppo",
+      "agentmixer"
+    ],
+    "matrix_steps_each": 64,
+    "recurrent_prey_steps": 16,
+    "positive_distillation_recurrent_prey_steps": 16,
+    "positive_distillation_coefficient": 0.1,
+    "exact_original_and_positive_objective_replay": true
+  },
+  "environment_reuse": {
+    "prefix": "results/core_wheel_20261029/source/.venv",
+    "previous_record": "experiments/core_wheel_verification_20261029.json",
+    "uv_lock_unchanged": true,
+    "dependency_inventory_unchanged": true,
+    "inactive_before_validation": true,
+    "original_wheel_and_module_bytes_restored": true,
+    "no_training_environment_changed": true
+  }
+}
