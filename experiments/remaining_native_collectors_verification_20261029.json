@@ -1,0 +1,26 @@
+{
+  "recorded_utc": "2026-10-29T15:51:31.683257+00:00",
+  "scope": "Read-only native collector preparation/submission evidence only; all61gates remain unstarted.",
+  "plan": "experiments/remaining_native_collectors_plan_20261029.json",
+  "plan_sha256": "cde52508b5f6dc0774462ce9efcbbec5687cdaf383415e633bd020f16600fb33",
+  "schedules": "experiments/remaining_native_collectors_schedules_20261029.json",
+  "schedules_sha256": "bd6da9dc16640f2a4cfbf35e96df0dbd94e8b5eaec065672812e7b368df1f111",
+  "collector_jobs": [
+    "21288137",
+    "21288138"
+  ],
+  "configurations_preserved": 61,
+  "ledger_prefix_preserved": true,
+  "new_ledger_events": 4,
+  "new_training_runs": 0,
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "prior18ff_learning_reservation_preserved_after": "21288137",
+  "production_source_tests_configs_and_environments_unchanged": true,
+  "local_document_links_checked": 124,
+  "other_reproduction_modified": false,
+  "errors": []
+}

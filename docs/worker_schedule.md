@@ -559,3 +559,10 @@ Ant seeds 6000/6001 run with their registered twenty-module trainer, native vers
 ## Prey learning completion collector, 29 October 2026
 
 The Prey branch now continues **21287360 → 21288041**. The collector replaces completed learning workers with one CPU/4 GiB for 45 minutes; the maximum remains fourteen workers/sixteen CPUs/120 GiB. It audits all 24 complete curves and performs all 24 full-protocol final replays before the frozen common-coefficient rule. It cannot release new training. [Plan](../experiments/prey_distillation_learning_audit_plan_20261029_v2.json); [submission](../experiments/prey_distillation_learning_audit_schedule_20261029.json). Every other allocation, data dependency and unsubmitted study reservation remains as above.
+
+
+## Remaining native-family collectors, 29 October 2026
+
+The HC branch now ends **21284586 → 21288137**, and the SMAC branch ends **21281002 → 21288138**. The HC collector additionally waits directly for **21280689** and **21281001**. It audits the six local-scale and fifteen Football gates independently. The SMAC collector audits all forty remaining gates. These are artifact-only tasks: no simulator starts and no training is submitted.
+
+Each requests one CPU/2 GiB/10 minutes after its branch ends; the maximum stays fourteen workers/sixteen CPUs/120 GiB. The unsubmitted eighteen-run local-scale learning study keeps its reserved HC allocation after **21288137**, or may use separately verified free capacity. Every existing job, configuration, source, seed, resource limit and dependency remains unchanged. [Plan](../experiments/remaining_native_collectors_plan_20261029.json); [verified jobs](../experiments/remaining_native_collectors_schedules_20261029.json).

@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-29T15:53:02.571706+00:00",
+  "scope": "Latest inventory/resource and frozen-auditor-copy verification; no performance acceptance.",
+  "coverage": "experiments/benchmark_coverage_20261029_native_collectors.provenance.json",
+  "coverage_sha256": "65fbcd32f0862c5cd9a134d9b430420d61e2994db9a5e9152007bc6873383bb7",
+  "resource_snapshot": "experiments/live_resource_check_20261029_native_collectors.json",
+  "resource_snapshot_sha256": "929eacc9783bbc6acbe1744e8b396dc312ee9da059ed3dea71b48be0d80724cc",
+  "coverage_runs": 907,
+  "coverage_manifests": 75,
+  "coverage_targets": 45,
+  "training_declarations_added": 0,
+  "native_conditions_still_pending": 61,
+  "original_audit_logic_preserved": true,
+  "reporting_import_only_frozen": true,
+  "local_document_links_checked": 106,
+  "errors": []
+}

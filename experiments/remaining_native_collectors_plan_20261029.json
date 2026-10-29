@@ -1,0 +1,890 @@
+{
+  "recorded_utc": "2026-10-29T15:46:28.596566+00:00",
+  "scope": "Attach frozen read-only whole-family auditors to61already registered pending native conditions. No native configuration,source,seed,resource limit,dependency or acceptance change; no new training or automatic learning release.",
+  "local_scale_study": "experiments/hc2x3_local_scale_study_20261029.json",
+  "discrete_study": "experiments/remaining_discrete_native_study_20261029.json",
+  "collector": "results/remaining_native_collectors_20261029/collect.py",
+  "local_scale_auditor": "results/remaining_native_collectors_20261029/audit_local_scale.py",
+  "discrete_auditor": "results/remaining_native_collectors_20261029/audit_discrete.py",
+  "original_auditor_copies": [
+    {
+      "original": "results/local_scale_control_20261029/audit_native_gate.py",
+      "original_sha256": "df69ea48b2012a8483113c07e586e8ed8e1e79c120e2342453c01e950c8d7383",
+      "frozen_copy": "results/remaining_native_collectors_20261029/audit_local_scale.py",
+      "frozen_copy_sha256": "a3d5a7fb3f88c2c79f07a22723b21b9741eda2b015c368a0152a152e25308a70",
+      "only_change": "Resolve reporter imports from this collector frozen source instead of the mutable checkout."
+    },
+    {
+      "original": "results/remaining_discrete_gate_20261029/audit.py",
+      "original_sha256": "d18d630723d72e2e8b2c2f2b139a685f0934c448f209ecd3d41dd25ffb6eb27e",
+      "frozen_copy": "results/remaining_native_collectors_20261029/audit_discrete.py",
+      "frozen_copy_sha256": "13ea3c9fd2f1e64a5b4b6c55de95c995f1354f4d2102885b1efdb512f6a8c96c",
+      "only_change": "Resolve reporter imports from this collector frozen source instead of the mutable checkout."
+    }
+  ],
+  "reporter_source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "a708dbf0355b2e84c9af2e516719b21806338172897c7792db77e32a864454f9",
+    "recurrent.py": "e179cf4e0250097719e0837728103142e8e5e9cd7ac37cef17fe47310c4feb01",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "agentmixer_continuous.py": "aff393cb30af7c89d5a1d61beabbf8fa231df37465f5c4a5fc2318b8247a001c",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "families": {
+    "local_scale": {
+      "environment": "local_scale",
+      "manifest": "results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/manifest.json",
+      "manifest_sha256": "10be4e71969c7a4cd3fa43b2aad67536a1ded56083a10da8365e7a92d26a0877",
+      "training_source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+        "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+        "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+        "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+        "simulator_train.py": "ef4aab278aa8280e833843469ca73c125db75e533221e46f9f545707aab817a3",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "declared_runs": 6,
+      "raw_episodes": 24,
+      "replay_episodes": 12,
+      "updates": 18,
+      "output": "experiments/hc2x3_local_scale_native_complete_20261029.json",
+      "conditions": [
+        {
+          "entry": {
+            "environment": "mujoco",
+            "algorithm": "agentmixer",
+            "variant": "agentmixer_bounded_observation",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_bounded_observation_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_bounded_observation_seed0"
+          },
+          "config_sha256": "7d68e521b70b964cbcd5ce31576427d5eaae7fbd0d975ec621d82b2843a611b0"
+        },
+        {
+          "entry": {
+            "environment": "mujoco",
+            "algorithm": "agentmixer",
+            "variant": "agentmixer_bounded_state_independent",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_bounded_state_independent_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_bounded_state_independent_seed0"
+          },
+          "config_sha256": "434dc7f6b32619e483906a7bcde75fcd652a365959947320ebfc60ab90e86c82"
+        },
+        {
+          "entry": {
+            "environment": "mujoco",
+            "algorithm": "agentmixer",
+            "variant": "agentmixer_identity_observation",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_identity_observation_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_identity_observation_seed0"
+          },
+          "config_sha256": "a83755795630c82857eeb8911f7336b190a379ab404b7b499815b174fb18000d"
+        },
+        {
+          "entry": {
+            "environment": "mujoco",
+            "algorithm": "agentmixer",
+            "variant": "agentmixer_identity_state_independent",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_identity_state_independent_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_identity_state_independent_seed0"
+          },
+          "config_sha256": "fd8a1042813148d688157dbf5c8bc100af5020b43514c7c7c4564ce3ff12ee1a"
+        },
+        {
+          "entry": {
+            "environment": "mujoco",
+            "algorithm": "agentmixer",
+            "variant": "agentmixer_residual_observation",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_residual_observation_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_residual_observation_seed0"
+          },
+          "config_sha256": "a9b5343d25c018d8de74f898d689ebcfb1064af44233160c7a93291e1b0ba311"
+        },
+        {
+          "entry": {
+            "environment": "mujoco",
+            "algorithm": "agentmixer",
+            "variant": "agentmixer_residual_state_independent",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_residual_state_independent_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_residual_state_independent_seed0"
+          },
+          "config_sha256": "c77c965e290e30a85705f475f1d9a79e81060fd581b2e3828814ad9b363c84c6"
+        }
+      ]
+    },
+    "football": {
+      "environment": "football",
+      "manifest": "results/football_remaining_gru_check10k_20261029T102335Z/manifest.json",
+      "manifest_sha256": "fec9e584292938e1f2c2b04edc24d23e0b21e4a805535e2ffc8f933760ff5f4d",
+      "training_source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+        "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+        "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+        "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+        "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "declared_runs": 15,
+      "raw_episodes": 120,
+      "replay_episodes": 60,
+      "updates": 15,
+      "output": "experiments/football_remaining_native_complete_20261029.json",
+      "conditions": [
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "mappo",
+            "variant": "5_vs_5_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0"
+          },
+          "config_sha256": "67ecea77ab70db74f10590a1558b4d30445bc1833ed6607e102caa88b3fcd131"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "arppo",
+            "variant": "5_vs_5_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_arppo_gru_seed0"
+          },
+          "config_sha256": "317f238a29da6ec2d07fe6bf2e93f656d311f64bdd2872105d21efafc8b68de8"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "bppo",
+            "variant": "5_vs_5_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_bppo_gru_seed0"
+          },
+          "config_sha256": "6cb2e78e5499cce7ea96d48baf931ba78106f9289566cdc76455fb09636be0a6"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "agentmixer",
+            "variant": "5_vs_5_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_gru_seed0"
+          },
+          "config_sha256": "9a3488ca58c37af025e8ece3c78a76decdf7542f86f8c62b3c5695ba59b8e1c7"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "agentmixer",
+            "variant": "5_vs_5_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "35a154d3470ca293ae27175afeb01525a78724aa75560ec5fbcd56fd3ab18451"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "mappo",
+            "variant": "academy_corner_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_mappo_gru_seed0"
+          },
+          "config_sha256": "bf7e421f7def4053551d3ff667c880018afc4ea54a8ae770c8101046dd134227"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "arppo",
+            "variant": "academy_corner_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_arppo_gru_seed0"
+          },
+          "config_sha256": "aa2b4a8dec82b4b174469fefd126e473c21ace693e672d5b56f02ba7f31c74ce"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "bppo",
+            "variant": "academy_corner_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_bppo_gru_seed0"
+          },
+          "config_sha256": "b6c5891194bf885e2409c0d603bf4e4c924675523fb8d06c5c4696b5b2f86462"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "agentmixer",
+            "variant": "academy_corner_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_gru_seed0"
+          },
+          "config_sha256": "f9ea21197cb9c5bbf6c2277b35c1d912973423452637464d97ed235a393ff19d"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "agentmixer",
+            "variant": "academy_corner_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "2774afb1af0ae9ae66d277b481bf37743b619758436ff3463d265b01109e73b8"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "mappo",
+            "variant": "academy_counterattack_hard_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_mappo_gru_seed0"
+          },
+          "config_sha256": "4662644d862fd279a8869ad94def66f7427bf3b122296f4e9f77d7ab370f433a"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "arppo",
+            "variant": "academy_counterattack_hard_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_arppo_gru_seed0"
+          },
+          "config_sha256": "6c8f45d2287aca26ce129e58699593ef650e47beea65f21666df40b00e40b390"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "bppo",
+            "variant": "academy_counterattack_hard_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_bppo_gru_seed0"
+          },
+          "config_sha256": "9520c11e1091727df568e55dc51a2b3b3d8f45c524510ecd471876ef65569ef1"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "agentmixer",
+            "variant": "academy_counterattack_hard_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_gru_seed0"
+          },
+          "config_sha256": "0bfaa0bfe9b7c0bdfbf00acc0139bcebace45595fdff639546b183c13eea451d"
+        },
+        {
+          "entry": {
+            "environment": "football",
+            "algorithm": "agentmixer",
+            "variant": "academy_counterattack_hard_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "f5363b8f0c71f5b2ba8cd983dd8c01338d8d314a36d80fc79af7217bdef4e1f4"
+        }
+      ]
+    },
+    "smac": {
+      "environment": "smac",
+      "manifest": "results/smac_remaining_gru_check10k_20261029T102338Z/manifest.json",
+      "manifest_sha256": "e6a909a88b90e992b9dd51ba96102945d67414b13a490c7b394692c0949c688a",
+      "training_source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+        "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+        "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+        "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "declared_runs": 40,
+      "raw_episodes": 320,
+      "replay_episodes": 160,
+      "updates": 40,
+      "output": "experiments/smac_remaining_native_complete_20261029.json",
+      "conditions": [
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "protoss_10v10_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0"
+          },
+          "config_sha256": "139b27c0fb2f9075168e366379a45eda5403e301a77d829ab05e808cc3c418cb"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "protoss_10v10_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0"
+          },
+          "config_sha256": "5905d3fa431d888e68aee87bb66d5f78d605837e7a651ef1a906c64a637b260d"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "protoss_10v10_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0"
+          },
+          "config_sha256": "8c65fc42afdd36280dd08e076db27cfda2570cea02ec7034882502213c84e8b4"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "protoss_10v10_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0"
+          },
+          "config_sha256": "1279b549dbe16918700887864af978f0ce0df5bcc149e39d306e51caded0bf67"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "protoss_10v10_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "9ba3c7a9377bdc3b53e2039bbb23ab492f2d3de0e090ab19c758885cdf241c56"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "protoss_10v11_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_mappo_gru_seed0"
+          },
+          "config_sha256": "65b7a2cdcf5e6366cc000a85635f80d83f36fcad6bda6e5849b790204b599493"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "protoss_10v11_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_arppo_gru_seed0"
+          },
+          "config_sha256": "9424e54e990bff4796fde4bb67dc8eb29814357a7b2612752baeeb00c4f40c14"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "protoss_10v11_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_bppo_gru_seed0"
+          },
+          "config_sha256": "d47c6959f1c2e43fc80c18a527c1a4477c4c1207c17384762e0d9b5127047b45"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "protoss_10v11_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_gru_seed0"
+          },
+          "config_sha256": "3b35f0d390abd9f34e0917d643146b955e7ec3cd7a1a09876c5043d0b0291555"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "protoss_10v11_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "c70bbbca03d4d92f142a88f1d172a42fb22673822b00e3675cb7606f56fb46b6"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "protoss_5v5_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_mappo_gru_seed0"
+          },
+          "config_sha256": "09946cf4d11039d00aeb69c8d249b91ad85549da06337d37602cb38a1e0fa9da"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "protoss_5v5_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_arppo_gru_seed0"
+          },
+          "config_sha256": "9c6acdb8f443ce02d5d53b3894c1037bb4ae0e1fa21779f63fac3c27890f51be"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "protoss_5v5_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_bppo_gru_seed0"
+          },
+          "config_sha256": "7083c420b757b246f59272786cff207772cae3debd4bbfc764134f099c8d2fdd"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "protoss_5v5_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_gru_seed0"
+          },
+          "config_sha256": "196d7585c03fe8d29cf176150ed1ae8d9805a5713fcab72f7554a387a12e40b3"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "protoss_5v5_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "d3fe6b4a74f7e4a3d09d4ba0a8e55f41e5c3d70acd7dce436e72779a1d4a33c7"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "terran_10v10_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_mappo_gru_seed0"
+          },
+          "config_sha256": "1662287d9dfa2ff3c75af795d34fde26f212b10b82be8e0937593b7295e5200e"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "terran_10v10_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_arppo_gru_seed0"
+          },
+          "config_sha256": "d0bb1a6704258919b46b03ebc955ddebcaf898ca97b6e43e51e104d9b7f3cead"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "terran_10v10_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_bppo_gru_seed0"
+          },
+          "config_sha256": "da9443b155ab54d8077dd9560ef371faaa74307c817ec15599b7bccd71ffacaf"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "terran_10v10_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_gru_seed0"
+          },
+          "config_sha256": "3bb23aace738fbad92cc8e6a9be627f7ca06dbfb45de808ed1dd03ff3b43cf2a"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "terran_10v10_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "e91a4e92fcd745f306173c0feac7ab9c8b71a9dc6f5fe244c3fc1e2541c39ef4"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "terran_10v11_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_mappo_gru_seed0"
+          },
+          "config_sha256": "efe45852c3f020c759bb4ad9305ae0735217e7df52d0ffa15da16a7cc7b8dc23"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "terran_10v11_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_arppo_gru_seed0"
+          },
+          "config_sha256": "b8e15cea9bccc543a3a696f63d2e817f3efad9d4feb0fcd1d15429ded288e38a"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "terran_10v11_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_bppo_gru_seed0"
+          },
+          "config_sha256": "b8830cb8eeaaa65263354b80a2764fdf44f1311c29032e94be7d7d0574455e03"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "terran_10v11_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_gru_seed0"
+          },
+          "config_sha256": "9f1ccd682f4990b9e10cdc6fdbc11f19988bccb1274ca38fba454577d8ad328d"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "terran_10v11_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "f2c0c7ba86e20d51a1ff2f24e09f0569c6f3758cb56ec969515ebe172be11f0b"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "zerg_10v10_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_mappo_gru_seed0"
+          },
+          "config_sha256": "d0f5b4ca93358eba10fd762395287a53ce845add7421ec87809145e30ca598dd"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "zerg_10v10_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_arppo_gru_seed0"
+          },
+          "config_sha256": "54dcc382206b7fdad460da88bafe34a14fbc257990940a232c9697015c9055c4"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "zerg_10v10_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_bppo_gru_seed0"
+          },
+          "config_sha256": "5cc3cc014e8bd276cc72b828fee320b5c79d8a8d126dc826a8de49ce8c6348ec"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "zerg_10v10_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_gru_seed0"
+          },
+          "config_sha256": "978b194fe624e769a62455d35799dcf93a2767282f4c0402061c3e4af245cc3b"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "zerg_10v10_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "0f30df227f61933468acb3d9c54fccb9443e41c26e68c49b193cb6cefe919029"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "zerg_10v11_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_mappo_gru_seed0"
+          },
+          "config_sha256": "b8c70ff0a335849ec67d9ed8fd2c9f9ad21b373ac32f48f7aee3d8966233efcc"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "zerg_10v11_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_arppo_gru_seed0"
+          },
+          "config_sha256": "dfc5d7d98606478ace0e405b9f9cb92ee125515e3baf6b6064918fe4eef43209"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "zerg_10v11_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_bppo_gru_seed0"
+          },
+          "config_sha256": "a6aa9cd794f8c5c418572032a234f3387fe0648e6b4e86d2cf812733dae29981"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "zerg_10v11_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_gru_seed0"
+          },
+          "config_sha256": "7098cc2d9bfc200f2540c68b8e11e5e3efb98801942cad1d33094de9ea672887"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "zerg_10v11_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "db6959402205d72dc9c6ae9a97285064d50a00e8d8f7def0f1d0d5ddf4a4ed7c"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "mappo",
+            "variant": "zerg_5v5_mappo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_mappo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_mappo_gru_seed0"
+          },
+          "config_sha256": "265fd21412e655ce61b3f80c2ad8855727a1b2dd92d14d3af2a85e9d5f5981b3"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "arppo",
+            "variant": "zerg_5v5_arppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_arppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_arppo_gru_seed0"
+          },
+          "config_sha256": "2b1b1517e8d06128c00ac185f1a33945539de02e40ee2556ff10fd3514854e5e"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "bppo",
+            "variant": "zerg_5v5_bppo_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_bppo_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_bppo_gru_seed0"
+          },
+          "config_sha256": "38c486799fce7655b7645ec66ecb28522939cc5a482209a02a7428c57acb511d"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "zerg_5v5_agentmixer_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_gru_seed0"
+          },
+          "config_sha256": "64113e46edf9546ae0fe352daba4f476bb28bc08b13fc407f7a0667cfef0a682"
+        },
+        {
+          "entry": {
+            "environment": "smac",
+            "algorithm": "agentmixer",
+            "variant": "zerg_5v5_agentmixer_identity_gru",
+            "seed": 0,
+            "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_identity_gru_seed0.json",
+            "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_identity_gru_seed0"
+          },
+          "config_sha256": "3c156299217eaeddac5de20c2a50779bdaeead613e24cf52d93ba6b980f76d77"
+        }
+      ]
+    }
+  },
+  "branches": {
+    "hc": {
+      "families": [
+        "local_scale",
+        "football"
+      ],
+      "dependency": "afterany:21284586:21280689:21281001",
+      "capacity": "After the whole existing HC confirmation/replay/local-scale/Football gate/final-audit branch. Replaces completed workers; prior18FF learning now waits for this read-only collector or separately verified free capacity.",
+      "verification_output": "experiments/hc_remaining_native_collector_complete_20261029.json",
+      "dispatch": "results/remaining_native_collectors_20261029/hc.sbatch",
+      "dispatch_sha256": "0defdd7a10bd989b8ee420f870e0de16117c6f30b9cef979260a649eed4b2fc5",
+      "allocation": {
+        "cpus": 1,
+        "memory_gib": 2,
+        "wall_minutes": 10,
+        "automatic_requeue": false
+      }
+    },
+    "smac": {
+      "families": [
+        "smac"
+      ],
+      "dependency": "afterany:21281002",
+      "capacity": "After all40remaining SMAC native tasks in the existing SMAC allocation. Replaces completed workers.",
+      "verification_output": "experiments/smac_remaining_native_collector_complete_20261029.json",
+      "dispatch": "results/remaining_native_collectors_20261029/smac.sbatch",
+      "dispatch_sha256": "fb310f44680a624b42167928cdd565405380041db5ce6a20ec15b303e64cfe46",
+      "allocation": {
+        "cpus": 1,
+        "memory_gib": 2,
+        "wall_minutes": 10,
+        "automatic_requeue": false
+      }
+    }
+  },
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "new_training_runs": 0,
+  "failure_policy": "Keep all failures; one attempt per collector,exclusive output creation,no overwrite/requeue/replacement or automatic learning release. Audit each HC family even if its peer audit fails.",
+  "resource_rationale": "Standard-library/NumPy artifact reductions and hashes only; no Torch policy construction or simulator startup. Single1CPU/2GiB task,at most2sequential family checks with180s subprocess limits,10min wall allowance. Reuses its fully completed allocation.",
+  "prepare_script": "results/remaining_native_collectors_20261029/prepare.py",
+  "prepare_script_sha256": "7f7eebc777089d2d1df54e3296f9cd546618e32089023b57613c760d505d581f",
+  "local_scale_study_sha256": "3529477003da89c698239074b69f8e82bdfad54984e51bb9d0bbbe4e67df8327",
+  "discrete_study_sha256": "880472ed6f7ee611a01f07904c34edd055a78bbfc1f55cc768ffd9a06c7258ac",
+  "collector_sha256": "1ffd0cdc792369ea09a9ce1cd413a86887a912b4876ca31aa9987f9f379e366b",
+  "local_scale_auditor_sha256": "a3d5a7fb3f88c2c79f07a22723b21b9741eda2b015c368a0152a152e25308a70",
+  "discrete_auditor_sha256": "13ea3c9fd2f1e64a5b4b6c55de95c995f1354f4d2102885b1efdb512f6a8c96c"
+}

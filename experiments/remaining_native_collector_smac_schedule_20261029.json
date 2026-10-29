@@ -1,0 +1,32 @@
+{
+  "recorded_utc": "2026-10-29T15:48:52.379674+00:00",
+  "job_id": "21288138",
+  "status": "released",
+  "branch": "smac",
+  "plan": "experiments/remaining_native_collectors_plan_20261029.json",
+  "plan_sha256": "cde52508b5f6dc0774462ce9efcbbec5687cdaf383415e633bd020f16600fb33",
+  "preflight": "experiments/remaining_native_collectors_preflight_20261029.json",
+  "preflight_sha256": "29d79e28299328e8f3728fc6a9d74ce5edfb8eaa6f7a385ad508133ce6fb3dfc",
+  "dispatch": "results/remaining_native_collectors_20261029/smac.sbatch",
+  "dispatch_sha256": "fb310f44680a624b42167928cdd565405380041db5ce6a20ec15b303e64cfe46",
+  "dependency": "afterany:21281002",
+  "allocation": {
+    "cpus": 1,
+    "memory_gib": 2,
+    "wall_minutes": 10,
+    "automatic_requeue": false
+  },
+  "capacity": "After all40remaining SMAC native tasks in the existing SMAC allocation. Replaces completed workers.",
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "new_training_runs": 0,
+  "existing_jobs_modified": false,
+  "other_reproduction_modified": false,
+  "submit_script": "results/remaining_native_collectors_20261029/submit.py",
+  "submit_script_sha256": "26cad7932b71e85489ccfe634d38c66df21ed7b3ed52643b3b27e3c1996a19d7",
+  "held_verification": "JobId=21288138 JobName=bpta-agentmixer-native-audit-smac UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21281002_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:10:00 TimeMin=N/A SubmitTime=2026-10-29T17:48:52 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T17:48:52 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2290382 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21281002 /scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac_21288138.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac_21288138.out TresPerTask=cpu=1",
+  "released_verification": "JobId=21288138 JobName=bpta-agentmixer-native-audit-smac UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=186207 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=None Dependency=afterany:21281002_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:10:00 TimeMin=N/A SubmitTime=2026-10-29T17:48:52 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T17:48:52 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2290382 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21281002 /scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac_21288138.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_native_collectors_20261029/smac_21288138.out TresPerTask=cpu=1"
+}

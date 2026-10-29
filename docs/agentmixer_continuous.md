@@ -88,3 +88,10 @@ Conditioned on observations and state, the implementation uses independent Norma
 The implementation supports homogeneous continuous action dimensions, with feedforward or private recurrent local actors. Heterogeneous actuator sets need explicit padding/masking or another adapter convention. The environment adapter owns actuator bounds and simulator details.
 
 `tests/test_agentmixer_continuous.py` verifies exact mean equality, state-independent local execution, local information isolation, bounded positive standard deviations, coordinate-summed likelihoods and entropies, raw action handling, deterministic means, actor and modifier gradients, and checkpoint restoration. Those checks establish implementation properties, not reproduction of benchmark returns.
+
+
+## Automatic local-scale native collection
+
+The six local-scale native gates now have collector **21288137**, which runs after the complete existing HC branch. It checks all six conditions, all 24 original evaluation episodes, twelve exact replay episodes, eighteen optimizer rollouts and three default first-three-update prefixes. Its exact reporting source is frozen, with no change to training configurations or native jobs. [Collector specification](../experiments/remaining_native_collectors_plan_20261029.json); [verified schedule](../experiments/remaining_native_collector_hc_schedule_20261029.json).
+
+This read-only task also audits the fifteen remaining Football gates and reuses the completed HC allocation. The eighteen-run feedforward study retains that reservation after the collector; measured native memory/runtime and a separate learning release remain required. The twelve memory gates and their existing collector keep their original data dependencies. Neither learning family is released automatically.

@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T15:51:53.495877+00:00",
+  "report": "results/benchmark_coverage_20261029_native_collectors.json",
+  "report_sha256": "b0278373dfd7a43d9ecc54ee8b5ea9416780fd87976d4aa4761e54e0087a83b6",
+  "csv": "experiments/benchmark_coverage_20261029_native_collectors.csv",
+  "csv_sha256": "a64886189ada580287feb03795ab99fff40282be056f971c082f50bc04098bf4",
+  "runs": 907,
+  "manifests": 75,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Same24submitted Prey1M development runs; two new read-only native collector jobs add no training declarations;907ledger-indexed runs/75manifests. No setting was selected from native checks. Artifact coverage includes failures and does not establish reproduced performance.36prepared unsubmitted learning runs remain excluded; collectors and synthetic preflights do not add training declarations."
+}

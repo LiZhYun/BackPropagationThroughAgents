@@ -1,0 +1,64 @@
+{
+  "recorded_utc": "2026-10-29T15:48:18.140926+00:00",
+  "scope": "Frozen input and fail-closed preflight only. All61native conditions remain unstarted; no completed native-family or performance claim.",
+  "plan": "experiments/remaining_native_collectors_plan_20261029.json",
+  "plan_sha256": "cde52508b5f6dc0774462ce9efcbbec5687cdaf383415e633bd020f16600fb33",
+  "source_modules": 25,
+  "frozen_native_configs": 61,
+  "corrupted_input_rejections": [
+    {
+      "family": "local_scale",
+      "field": "config_sha256"
+    },
+    {
+      "family": "local_scale",
+      "field": "training_source_sha256"
+    },
+    {
+      "family": "football",
+      "field": "config_sha256"
+    },
+    {
+      "family": "football",
+      "field": "training_source_sha256"
+    },
+    {
+      "family": "smac",
+      "field": "config_sha256"
+    },
+    {
+      "family": "smac",
+      "field": "training_source_sha256"
+    },
+    {
+      "family": "all",
+      "field": "reporter_source_sha256"
+    }
+  ],
+  "unfinished_family_rejections": [
+    {
+      "family": "local_scale",
+      "declared_runs": 6,
+      "exit_code": 1,
+      "expected_missing_family_error": "Native gate incomplete"
+    },
+    {
+      "family": "football",
+      "declared_runs": 15,
+      "exit_code": 1,
+      "expected_missing_family_error": "Incomplete gate family"
+    },
+    {
+      "family": "smac",
+      "declared_runs": 40,
+      "exit_code": 1,
+      "expected_missing_family_error": "Incomplete gate family"
+    }
+  ],
+  "auditor_changes": "Only reporter import directory was changed in the two copies; original audit logic retained and hashed. Actual positive whole-family execution awaits native artifacts.",
+  "production_source_and_jobs_unchanged": true,
+  "new_training_runs": 0,
+  "errors": [],
+  "preflight_script": "results/remaining_native_collectors_20261029/preflight.py",
+  "preflight_script_sha256": "b124c06913f5697f8ccc111eb6a676e346a575bcb4509e47aae325cd2aa3cbcf"
+}

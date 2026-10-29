@@ -1,0 +1,27 @@
+{
+  "recorded_utc": "2026-10-29T15:48:55.468812+00:00",
+  "jobs": [
+    {
+      "branch": "hc",
+      "job_id": "21288137",
+      "dependency": "afterany:21284586:21280689:21281001",
+      "receipt": "experiments/remaining_native_collector_hc_schedule_20261029.json",
+      "receipt_sha256": "718d399f0bc9d2628befe84c7f3ba723d73a9fb41be17b26d766bbad2bcea9d4"
+    },
+    {
+      "branch": "smac",
+      "job_id": "21288138",
+      "dependency": "afterany:21281002",
+      "receipt": "experiments/remaining_native_collector_smac_schedule_20261029.json",
+      "receipt_sha256": "0bf6f9ec48c0ec9be1900c293f24cd0eaaf5f8798fb110e38a8b8f3ca828f6da"
+    }
+  ],
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "new_training_runs": 0,
+  "existing_jobs_modified": false,
+  "other_reproduction_modified": false
+}
