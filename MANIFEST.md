@@ -1916,3 +1916,19 @@ The current installed wheel passes1093tests/oneCUDA skip; six native checks and 
 - [results/readme_academic_20261029/figure_provenance.json](results/readme_academic_20261029/figure_provenance.json)
 - [results/readme_academic_20261029/MANIFEST_before.md](results/readme_academic_20261029/MANIFEST_before.md)
 - [results/readme_academic_20261029/CITATION_before.bib](results/readme_academic_20261029/CITATION_before.bib)
+
+
+## Exact paper-title discovery and citation metadata, 29 October 2026
+
+- [CITATION.cff](CITATION.cff)
+- [experiments/paper_title_discoverability_20261029.json](experiments/paper_title_discoverability_20261029.json)
+- [results/discoverability_20261029/before_MANIFEST.md](results/discoverability_20261029/before_MANIFEST.md)
+- [results/discoverability_20261029/about_plan.json](results/discoverability_20261029/about_plan.json)
+- [results/discoverability_20261029/verify_metadata.py](results/discoverability_20261029/verify_metadata.py)
+- [results/discoverability_20261029/github_title_searches.json](results/discoverability_20261029/github_title_searches.json)
+- [results/discoverability_20261029/before_README.md](results/discoverability_20261029/before_README.md)
+- [results/discoverability_20261029/about_update.json](results/discoverability_20261029/about_update.json)
+- [results/discoverability_20261029/before_pyproject.toml](results/discoverability_20261029/before_pyproject.toml)
+- [results/discoverability_20261029/update_about.py](results/discoverability_20261029/update_about.py)
+- [results/discoverability_20261029/dist/.gitignore](results/discoverability_20261029/dist/.gitignore)
+- [results/discoverability_20261029/dist/bta_repro-0.1.0-py3-none-any.whl](results/discoverability_20261029/dist/bta_repro-0.1.0-py3-none-any.whl)

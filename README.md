@@ -13,7 +13,7 @@
 
 </div>
 
-This repository brings together **Backpropagation Through Agents (BPTA/BPPO)** and **AgentMixer** in a shared PyTorch implementation. Both methods study coordinated policy learning through structured interactions between agents: BPTA propagates learning feedback through autoregressive action dependencies, while AgentMixer combines individual policies through a centralized policy modifier.
+This repository provides the shared research code for **Backpropagation Through Agents** (BPTA/BPPO, AAAI 2024) and **AgentMixer: Multi-Agent Correlated Policy Factorization** (AAAI 2025). Both methods study coordinated policy learning through structured interactions between agents: BPTA propagates learning feedback through autoregressive action dependencies, while AgentMixer combines individual policies through a centralized policy modifier.
 
 The codebase provides explicit algorithm objectives, a common rollout and evaluation pipeline, discrete and continuous policies, and adapters for the benchmark environments used in the papers. Implementation decisions and corrections are documented alongside the corresponding methods.
 
@@ -23,8 +23,8 @@ The codebase provides explicit algorithm objectives, a common rollout and evalua
 
 | Paper | Publication | Resources |
 | --- | --- | --- |
-| **Backpropagation Through Agents** | **AAAI 2024**, 38(12): 13718–13726 | [Paper](https://ojs.aaai.org/index.php/AAAI/article/view/29277) · [arXiv](https://arxiv.org/abs/2401.12574) · [PDF](https://arxiv.org/pdf/2401.12574) |
-| **AgentMixer: Multi-Agent Correlated Policy Factorization** | **AAAI 2025**, 39(17): 18611–18619 | [Paper](https://ojs.aaai.org/index.php/AAAI/article/view/34048) · [arXiv](https://arxiv.org/abs/2401.08728) · [PDF](https://arxiv.org/pdf/2401.08728) |
+| **Backpropagation Through Agents** | **AAAI 2024**, 38(12): 13718–13726 | [Paper](https://ojs.aaai.org/index.php/AAAI/article/view/29277) · [arXiv](https://arxiv.org/abs/2401.12574) · [PDF](https://arxiv.org/pdf/2401.12574) · [Code](https://github.com/LiZhYun/BackPropagationThroughAgents#backpropagation-through-agents) |
+| **AgentMixer: Multi-Agent Correlated Policy Factorization** | **AAAI 2025**, 39(17): 18611–18619 | [Paper](https://ojs.aaai.org/index.php/AAAI/article/view/34048) · [arXiv](https://arxiv.org/abs/2401.08728) · [PDF](https://arxiv.org/pdf/2401.08728) · [Code](https://github.com/LiZhYun/BackPropagationThroughAgents#agentmixer-multi-agent-correlated-policy-factorization) |
 
 ### Backpropagation Through Agents
 
@@ -176,7 +176,7 @@ Historical experiments and their limitations are retained in the [experiment tra
 
 ## Citation
 
-If you use this code or build on these methods, please cite the relevant papers:
+If you use this code or build on these methods, please cite the relevant papers. Structured software and publication metadata are available in [CITATION.cff](CITATION.cff); the entries below are also provided in [CITATION.bib](CITATION.bib).
 
 ```bibtex
 @article{li2024backpropagation,

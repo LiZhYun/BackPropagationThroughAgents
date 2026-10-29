@@ -1,0 +1,69 @@
+{
+  "recorded_utc": "2026-10-29T17:39:32.873337+00:00",
+  "status": "paper_title_discoverability_verified",
+  "repository": "https://github.com/LiZhYun/BackPropagationThroughAgents",
+  "github_description": "Code for Backpropagation Through Agents (BPTA/BPPO, AAAI 2024) and AgentMixer: Multi-Agent Correlated Policy Factorization (AAAI 2025). Unified PyTorch implementations for cooperative multi-agent reinforcement learning.",
+  "topics": [
+    "aaai-2024",
+    "aaai-2025",
+    "agentmixer",
+    "autoregressive-policies",
+    "backpropagation-through-agents",
+    "bppo",
+    "bpta",
+    "correlated-policies",
+    "ctde",
+    "marl",
+    "multi-agent-reinforcement-learning",
+    "policy-factorization",
+    "pytorch"
+  ],
+  "github_searches": [
+    {
+      "query": "\"Backpropagation Through Agents\"",
+      "search_url": "https://github.com/search?q=%22Backpropagation%20Through%20Agents%22&type=repositories",
+      "repositories": [
+        "LiZhYun/BackPropagationThroughAgents"
+      ],
+      "matching_repository_rank": 1
+    },
+    {
+      "query": "\"AgentMixer: Multi-Agent Correlated Policy Factorization\"",
+      "search_url": "https://github.com/search?q=%22AgentMixer%3A%20Multi-Agent%20Correlated%20Policy%20Factorization%22&type=repositories",
+      "repositories": [
+        "LiZhYun/BackPropagationThroughAgents"
+      ],
+      "matching_repository_rank": 1
+    }
+  ],
+  "citation_cff_schema_validation": {
+    "validator": "cffconvert2.0.0",
+    "schema_version": "1.2.0",
+    "exit_code": 0,
+    "result": "Citation metadata are valid according to schema version1.2.0.",
+    "tool_environment": "Isolated uv tool cache; no training/dependency environment modified."
+  },
+  "file_sha256": {
+    "CITATION.cff": "7f02d9fd0e03bf2df8773d9e8f25de799c687c7e02d5250533279cb477e12720",
+    "CITATION.bib": "c23ab0b0f1aefedbb4aa7b337c5593c4828270276f21560b0c279df84b7b05c5",
+    "README.md": "3cb88f0fd74286444bbc8a1e0ffc529e5dc947e5b595bb0b6d3f1d088e732828",
+    "pyproject.toml": "e435c117260a302098356fd351d851f884070fe74768cc7f51f34ba3e447d96e",
+    "uv.lock": "139e1590232063463ec0b6d264da50975e12d498127ac0d5e657b1369e4841a2"
+  },
+  "wheel": "results/discoverability_20261029/dist/bta_repro-0.1.0-py3-none-any.whl",
+  "wheel_sha256": "26640636f6dad00493039657bb8c417855435511bca2a4e4845944ee355cbaed",
+  "wheel_metadata_summary": "Research code for Backpropagation Through Agents and AgentMixer: Multi-Agent Correlated Policy Factorization",
+  "wheel_project_urls": [
+    "Repository, https://github.com/LiZhYun/BackPropagationThroughAgents",
+    "Documentation, https://github.com/LiZhYun/BackPropagationThroughAgents#documentation",
+    "Issues, https://github.com/LiZhYun/BackPropagationThroughAgents/issues",
+    "BPTA Paper, https://doi.org/10.1609/aaai.v38i12.29277",
+    "AgentMixer Paper, https://doi.org/10.1609/aaai.v39i17.34048"
+  ],
+  "dependency_lock_check": "uv lock --check --offline passed",
+  "dependency_configuration_and_cli_entry_points_unchanged": true,
+  "all25_wheel_modules_match_previously_1093_tested_source": true,
+  "relative_readme_links_checked": 44,
+  "new_training_or_research_jobs": 0,
+  "limit": "Google/Bing recrawling and ranking are outside repository control; no immediate external indexing or rank guarantee."
+}

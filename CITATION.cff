@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+type: software
+title: "Backpropagation Through Agents and AgentMixer: Multi-Agent Correlated Policy Factorization"
+message: "If you use this code, cite the relevant papers listed in references and CITATION.bib."
+authors:
+  - family-names: "Li"
+    given-names: "Zhiyuan"
+  - family-names: "Zhao"
+    given-names: "Wenshuai"
+  - family-names: "Wu"
+    given-names: "Lijun"
+  - family-names: "Pajarinen"
+    given-names: "Joni"
+repository-code: https://github.com/LiZhYun/BackPropagationThroughAgents
+url: https://github.com/LiZhYun/BackPropagationThroughAgents
+abstract: "Unified PyTorch research code for Backpropagation Through Agents (BPTA/BPPO, AAAI 2024) and AgentMixer: Multi-Agent Correlated Policy Factorization (AAAI 2025)."
+license: MIT
+version: "0.1.0"
+date-released: "2026-10-29"
+keywords:
+  - "Backpropagation Through Agents"
+  - "BPTA"
+  - "BPPO"
+  - "AgentMixer"
+  - "multi-agent reinforcement learning"
+  - "policy factorization"
+  - "autoregressive policies"
+  - "centralized training decentralized execution"
+  - "PyTorch"
+references:
+  - type: article
+    title: "Backpropagation Through Agents"
+    authors:
+      - family-names: "Li"
+        given-names: "Zhiyuan"
+      - family-names: "Zhao"
+        given-names: "Wenshuai"
+      - family-names: "Wu"
+        given-names: "Lijun"
+      - family-names: "Pajarinen"
+        given-names: "Joni"
+    journal: "Proceedings of the AAAI Conference on Artificial Intelligence"
+    year: 2024
+    volume: "38"
+    issue: "12"
+    start: "13718"
+    end: "13726"
+    doi: 10.1609/aaai.v38i12.29277
+    url: https://arxiv.org/abs/2401.12574
+  - type: article
+    title: "AgentMixer: Multi-Agent Correlated Policy Factorization"
+    authors:
+      - family-names: "Li"
+        given-names: "Zhiyuan"
+      - family-names: "Zhao"
+        given-names: "Wenshuai"
+      - family-names: "Wu"
+        given-names: "Lijun"
+      - family-names: "Pajarinen"
+        given-names: "Joni"
+    journal: "Proceedings of the AAAI Conference on Artificial Intelligence"
+    year: 2025
+    volume: "39"
+    issue: "17"
+    start: "18611"
+    end: "18619"
+    doi: 10.1609/aaai.v39i17.34048
+    url: https://arxiv.org/abs/2401.08728

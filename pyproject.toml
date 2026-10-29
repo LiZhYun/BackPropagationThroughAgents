@@ -5,12 +5,20 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bta-repro"
 version = "0.1.0"
-description = "Readable BPTA and AgentMixer reproduction"
+description = "Research code for Backpropagation Through Agents and AgentMixer: Multi-Agent Correlated Policy Factorization"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.23.5,<3", "torch>=2.6,<2.7"]
+keywords = ["backpropagation-through-agents", "bpta", "bppo", "agentmixer", "multi-agent-reinforcement-learning", "policy-factorization"]
+
+[project.urls]
+Repository = "https://github.com/LiZhYun/BackPropagationThroughAgents"
+Documentation = "https://github.com/LiZhYun/BackPropagationThroughAgents#documentation"
+Issues = "https://github.com/LiZhYun/BackPropagationThroughAgents/issues"
+"BPTA Paper" = "https://doi.org/10.1609/aaai.v38i12.29277"
+"AgentMixer Paper" = "https://doi.org/10.1609/aaai.v39i17.34048"
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9"]
