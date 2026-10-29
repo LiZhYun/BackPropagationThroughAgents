@@ -17,10 +17,11 @@ from bta_repro.core import LOG_STD_MAX, LOG_STD_MIN, initial_log_std
 
 
 class _GaussianActor(nn.Module):
-    """One agent's observation-conditioned mean and diagonal uncertainty."""
+    """One agent's local mean and optional observation-dependent uncertainty."""
 
     def __init__(
-        self, obs_dim: int, action_dim: int, hidden_dim: int, *, initial_std: float = 1.0
+        self, obs_dim: int, action_dim: int, hidden_dim: int, *, initial_std: float = 1.0,
+        local_scale: str = "observation",
     ) -> None:
         super().__init__()
         log_std = initial_log_std(initial_std)
@@ -38,11 +39,18 @@ class _GaussianActor(nn.Module):
         nn.init.zeros_(self.mean_head.bias)
         nn.init.zeros_(self.log_std_head.weight)
         nn.init.constant_(self.log_std_head.bias, log_std)
+        if local_scale == "state_independent":
+            # Initialize the original head first so both choices consume the
+            # same RNG and retain identical mean/modifier initial weights.
+            self.log_std = nn.Parameter(self.log_std_head.bias.detach().clone())
+            self.log_std_head = None
 
     def forward(self, obs: Tensor) -> tuple[Tensor, Tensor]:
         features = self.features(obs)
         mean = self.mean_head(features)
-        log_std = self.log_std_head(features).clamp(LOG_STD_MIN, LOG_STD_MAX)
+        log_std = (self.log_std.expand_as(mean) if self.log_std_head is None
+                   else self.log_std_head(features))
+        log_std = log_std.clamp(LOG_STD_MIN, LOG_STD_MAX)
         return mean, log_std.exp()
 
 
@@ -90,19 +98,24 @@ class ContinuousAgentMixerPolicy(nn.Module):
         *,
         initial_std: float = 1.0,
         modifier_scale: str = "residual",
+        local_scale: str = "observation",
     ) -> None:
         super().__init__()
         if min(obs_dim, state_dim, num_agents, action_dim, hidden_dim) < 1:
             raise ValueError("all policy dimensions must be positive")
         if modifier_scale not in ("residual", "bounded"):
             raise ValueError("modifier_scale must be residual or bounded")
+        if local_scale not in ("observation", "state_independent"):
+            raise ValueError("local_scale must be observation or state_independent")
         self.obs_dim = obs_dim
         self.state_dim = state_dim
         self.num_agents = num_agents
         self.action_dim = action_dim
         self.modifier_scale = modifier_scale
+        self.local_scale = local_scale
         self.local_actors = nn.ModuleList([
-            _GaussianActor(obs_dim, action_dim, hidden_dim, initial_std=initial_std)
+            _GaussianActor(obs_dim, action_dim, hidden_dim, initial_std=initial_std,
+                           local_scale=local_scale)
             for _ in range(num_agents)
         ])
         self.modifier = ContinuousPolicyModifier(state_dim, num_agents, action_dim, hidden_dim)

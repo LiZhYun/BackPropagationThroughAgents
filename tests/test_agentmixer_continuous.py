@@ -12,16 +12,17 @@ from bta_repro.agentmixer_continuous import (
 )
 
 
-def _example(seed=12, initial_std=1.0, modifier_scale="residual"):
+def _example(seed=12, initial_std=1.0, modifier_scale="residual", local_scale="observation"):
     torch.manual_seed(seed)
     policy = ContinuousAgentMixerPolicy(4, 7, 3, 2, hidden_dim=16, initial_std=initial_std,
-                                       modifier_scale=modifier_scale)
+                                       modifier_scale=modifier_scale, local_scale=local_scale)
     return policy, torch.randn(11, 3, 4), torch.randn(11, 7)
 
 
 @pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
-def test_initial_identity_and_exact_mean_consistency_after_modifier_changes(initial_std):
-    policy, obs, state = _example(initial_std=initial_std)
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+def test_initial_identity_and_exact_mean_consistency_after_modifier_changes(initial_std, local_scale):
+    policy, obs, state = _example(initial_std=initial_std, local_scale=local_scale)
     local_mean, local_std = policy.local_parameters(obs)
     mean, std = policy.joint_parameters(obs, state)
     assert torch.equal(mean, local_mean)
@@ -36,8 +37,9 @@ def test_initial_identity_and_exact_mean_consistency_after_modifier_changes(init
 
 
 @pytest.mark.parametrize("modifier_scale", ["residual", "bounded"])
-def test_local_execution_is_independent_of_other_agents_and_modifier(modifier_scale):
-    policy, obs, _ = _example(2, modifier_scale=modifier_scale)
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+def test_local_execution_is_independent_of_other_agents_and_modifier(modifier_scale, local_scale):
+    policy, obs, _ = _example(2, modifier_scale=modifier_scale, local_scale=local_scale)
     obs.requires_grad_()
     mean, _ = policy.local_parameters(obs)
     changed = obs.detach().clone()
@@ -60,11 +62,12 @@ def test_local_execution_is_independent_of_other_agents_and_modifier(modifier_sc
 
 @pytest.mark.parametrize("bias", [-1e30, 1e30])
 @pytest.mark.parametrize("modifier_scale", ["residual", "bounded"])
-def test_local_and_joint_standard_deviations_are_finite_positive_and_bounded(bias, modifier_scale):
-    policy, obs, state = _example(3, modifier_scale=modifier_scale)
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+def test_local_and_joint_standard_deviations_are_finite_positive_and_bounded(bias, modifier_scale, local_scale):
+    policy, obs, state = _example(3, modifier_scale=modifier_scale, local_scale=local_scale)
     with torch.no_grad():
         for actor in policy.local_actors:
-            actor.log_std_head.bias.fill_(bias)
+            (actor.log_std if actor.log_std_head is None else actor.log_std_head.bias).fill_(bias)
         policy.modifier.log_std_head.bias.fill_(-bias)
     for _, std in (policy.local_parameters(obs), policy.joint_parameters(obs, state)):
         assert torch.isfinite(std).all()
@@ -79,8 +82,9 @@ def test_local_and_joint_standard_deviations_are_finite_positive_and_bounded(bia
 
 @pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
 @pytest.mark.parametrize("modifier_scale", ["residual", "bounded"])
-def test_log_probabilities_and_entropies_sum_action_coordinates(initial_std, modifier_scale):
-    policy, obs, state = _example(5, initial_std=initial_std, modifier_scale=modifier_scale)
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+def test_log_probabilities_and_entropies_sum_action_coordinates(initial_std, modifier_scale, local_scale):
+    policy, obs, state = _example(5, initial_std=initial_std, modifier_scale=modifier_scale, local_scale=local_scale)
     nn.init.normal_(policy.modifier.log_std_head.weight, std=0.1)
     mean, std = policy.joint_parameters(obs, state)
     raw_actions = mean.detach() + torch.randn_like(mean) * std.detach()
@@ -113,8 +117,9 @@ def test_raw_actions_are_not_squashed_or_clipped_and_deterministic_actions_are_m
 
 @pytest.mark.parametrize("initial_std", [1.0, 0.36552928931500245])
 @pytest.mark.parametrize("modifier_scale", ["residual", "bounded"])
-def test_gradients_reach_local_means_local_uncertainty_and_modifier(initial_std, modifier_scale):
-    policy, obs, state = _example(7, initial_std=initial_std, modifier_scale=modifier_scale)
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+def test_gradients_reach_local_means_local_uncertainty_and_modifier(initial_std, modifier_scale, local_scale):
+    policy, obs, state = _example(7, initial_std=initial_std, modifier_scale=modifier_scale, local_scale=local_scale)
     nn.init.normal_(policy.modifier.log_std_head.weight, std=0.1)
     actions, _ = policy.sample(obs, state)
     logp, entropy = policy.evaluate_actions(obs, state, actions)
@@ -126,19 +131,21 @@ def test_gradients_reach_local_means_local_uncertainty_and_modifier(initial_std,
         assert sum(gradient.abs().sum() for gradient in grads) > 0
     for actor in policy.local_actors:
         assert actor.mean_head.weight.grad.abs().sum() > 0
-        assert actor.log_std_head.weight.grad.abs().sum() > 0
+        scale_parameter = actor.log_std if actor.log_std_head is None else actor.log_std_head.weight
+        assert scale_parameter.grad.abs().sum() > 0
     assert policy.modifier.policy_embedding.weight.grad.abs().sum() > 0
     assert policy.modifier.state_embedding.weight.grad.abs().sum() > 0
     assert policy.modifier.blocks[0].agent_mlp[0].weight.grad.abs().sum() > 0
 
 
 @pytest.mark.parametrize("modifier_scale", ["residual", "bounded"])
-def test_checkpoint_roundtrip_restores_distribution_and_seeded_samples(tmp_path, modifier_scale):
-    policy, obs, state = _example(9, modifier_scale=modifier_scale)
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+def test_checkpoint_roundtrip_restores_distribution_and_seeded_samples(tmp_path, modifier_scale, local_scale):
+    policy, obs, state = _example(9, modifier_scale=modifier_scale, local_scale=local_scale)
     nn.init.normal_(policy.modifier.log_std_head.weight, std=0.1)
     path = tmp_path / "continuous_policy.pt"
     torch.save(policy.state_dict(), path)
-    restored = ContinuousAgentMixerPolicy(4, 7, 3, 2, hidden_dim=16, modifier_scale=modifier_scale)
+    restored = ContinuousAgentMixerPolicy(4, 7, 3, 2, hidden_dim=16, modifier_scale=modifier_scale, local_scale=local_scale)
     restored.load_state_dict(torch.load(path, weights_only=True))
     for expected, actual in zip(policy.joint_parameters(obs, state), restored.joint_parameters(obs, state)):
         assert torch.equal(expected, actual)
@@ -241,3 +248,51 @@ def test_bounded_scale_replaces_local_std_and_has_analytic_output_gradient(score
 def test_invalid_modifier_scale_is_rejected(modifier_scale):
     with pytest.raises(ValueError, match="modifier_scale"):
         ContinuousAgentMixerPolicy(4, 7, 3, 2, 8, modifier_scale=modifier_scale)
+
+
+@pytest.mark.parametrize("local_scale", ["invalid", True, None])
+def test_invalid_local_scale_is_rejected(local_scale):
+    with pytest.raises(ValueError, match="local_scale"):
+        ContinuousAgentMixerPolicy(4, 7, 3, 2, 8, local_scale=local_scale)
+
+
+@pytest.mark.parametrize("modifier_scale", ["residual", "bounded"])
+def test_local_scale_control_preserves_initial_distribution_weights_and_rng(modifier_scale):
+    conditioned, obs, state = _example(31, initial_std=.36552928931500245,
+                                      modifier_scale=modifier_scale)
+    independent, other_obs, other_state = _example(31, initial_std=.36552928931500245,
+                                                  modifier_scale=modifier_scale,
+                                                  local_scale="state_independent")
+    assert torch.equal(obs, other_obs) and torch.equal(state, other_state)
+    reference = conditioned.state_dict()
+    for name, value in independent.state_dict().items():
+        original_name = name + "_head.bias" if name.endswith(".log_std") else name
+        assert torch.equal(value, reference[original_name])
+    for left, right in zip(conditioned.joint_parameters(obs, state),
+                           independent.joint_parameters(obs, state)):
+        assert torch.equal(left, right)
+    torch.manual_seed(90)
+    actions, logp = conditioned.sample(obs, state)
+    torch.manual_seed(90)
+    other_actions, other_logp = independent.sample(obs, state)
+    assert torch.equal(actions, other_actions) and torch.equal(logp, other_logp)
+
+
+def test_state_independent_local_scales_learn_per_agent_and_remain_constant_across_observations():
+    policy, obs, _ = _example(37, initial_std=.3, local_scale="state_independent")
+    optimizer = torch.optim.Adam(policy.local_actors.parameters(), lr=.01)
+    initial_mean, initial_std = policy.local_parameters(obs)
+    # Opposite entropy objectives make private agent scales move oppositely.
+    directions = torch.tensor([1., -1., 2.]).view(1, 3, 1)
+    (initial_std.log() * directions).sum().backward()
+    optimizer.step()
+    mean, std = policy.local_parameters(obs)
+    changed_mean, changed_std = policy.local_parameters(obs + 10)
+    assert torch.equal(mean, initial_mean)
+    assert not torch.equal(mean, changed_mean)
+    assert torch.equal(std, changed_std)
+    assert (std[:, 0] < initial_std[:, 0]).all()
+    assert (std[:, 1] > initial_std[:, 1]).all()
+    assert all(actor.log_std.grad.abs().sum() > 0 for actor in policy.local_actors)
+    assert len({actor.log_std.data_ptr() for actor in policy.local_actors}) == 3
+    assert not any("log_std_head" in name for name, _ in policy.local_actors.named_parameters())

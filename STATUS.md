@@ -7,10 +7,11 @@ Updated 2026-10-29. **Full reproduction and performance beyond the papers are no
 - **HalfCheetah partitions: 12/12 complete and audited.** At 10M, BPPO 3×2 averages 5431.33±294.34 across three development seeds, all above figure reading bound 5030. Its paired advantage over AR-PPO is small and mixed; 6×1 remains below its upper bound.
 - **Fresh 3×2 confirmation is running:** five unused seeds per method, exact selected source/settings, new evaluation seed. The failed 2×3 independent result remains unchanged.
 - **Entropy control: 9/9 complete.** Zero entropy lowers all three variant means and curve areas compared with 0.01; it does not fix the AgentMixer gap.
-- Football is at about 14.86M/20M for its first two baseline runs. Two of 48 MuJoCo coverage runs are complete; SMAC full-budget controls continue.
+- Football is at about 15.2M/20M and SMAC at 4.05M/10M for their first two baseline runs. Two of 48 MuJoCo coverage runs are complete; the first two fresh HC3×2 confirmation runs are around 2.5M/10M. These are live counters, not final results.
+- An optional state-independent local Gaussian scale now isolates another documented AgentMixer architecture difference. All 975 source tests pass (one CUDA skip), and 24 default-compatibility cases are bitwise identical through one Adam step. Six native gates are queued; the matched 18-run learning plan is frozen and unsubmitted. See the [control specification](docs/agentmixer_continuous.md#local-uncertainty-control).
 - A portable complete-study exporter passes 11 focused tests. The relocated 12-run HalfCheetah bundle reproduces all curves and aggregates; native checkpoint replay is pending separately.
 
-See the [morning progress report](docs/progress_20261029_am.md) for all comparisons and limitations, and the [export guide](docs/portable_studies.md) for portable artifacts.
+See the [new control verification](experiments/continuous_local_scale_verification_20261029.json), the [morning progress report](docs/progress_20261029_am.md) for all comparisons and limitations, and the [export guide](docs/portable_studies.md) for portable artifacts.
 
 ## Active and queued work
 
@@ -21,6 +22,7 @@ See the [morning progress report](docs/progress_20261029_am.md) for all comparis
 | 21272800 | All 48 MuJoCo pilot conditions at 10M | At most 2 × 1 CPU/4 GiB/30 h |
 | 21279129 | Ten fresh-seed HC 3×2 BPPO/AR confirmation runs | At most 2 × 1 CPU/4 GiB/7 h |
 | 21279857 | Native replay from relocated evidence, after confirmation | One 1 CPU/2 GiB/10 min task |
+| 21280689 | Six local-scale native checks and checkpoint replays, after bundle replay | At most 2 × 1 CPU/4 GiB/30 min |
 
 The schedule stays within eight workers/sixteen CPUs/96 GiB. Other reproduction work is untouched. Batches require several days; query recorded jobs for live state.
 
@@ -28,7 +30,7 @@ The schedule stays within eight workers/sixteen CPUs/96 GiB. Other reproduction 
 
 - Shared explicit implementations of MAPPO, AR-PPO, BPPO and AgentMixer; [BPPO guide](docs/bppo.md) and [AgentMixer guide](docs/agentmixer.md), independent rollout/evaluation seeds, legal-action and termination handling, checkpoint replay and optional private GRU actors.
 - All 96 initial MuJoCo/SMAC native integrations and 16 Football integrations pass. Predator–Prey matches 10,240 pinned-release transitions. These short checks do not establish learned performance.
-- The clean installed-wheel check passed 899 tests with 1 CUDA-only skip before three later reporting-only budget tests. Training defaults and frozen snapshots were preserved. Hosted CI remains unverified; [clean-install evidence](docs/clean_checkout.md).
+- The current source suite passes 975 tests with 1 CUDA-only skip. The earlier clean installed-wheel check passed 899 tests with 1 CUDA-only skip; it predates later reporting/export tests and the optional local-scale control. Existing training defaults and frozen snapshots are preserved. Hosted CI remains unverified; [clean-install evidence](docs/clean_checkout.md).
 - Independent BPPO/AR matrix 1M confirmation passes all 20 runs near the games' return ceilings. Both methods succeed; the paired endpoint intervals include zero. [Evidence](docs/matrix_confirmation.md).
 - All 45 canonical targets are indexed. The [latest snapshot](experiments/benchmark_coverage_20261029_am.provenance.json) contains 792 runs/68 manifests with zero provenance errors. Nine targets have completed exact-budget method artifacts, including unsuccessful outcomes; 36 still lack them. Artifact counts are not success counts.
 

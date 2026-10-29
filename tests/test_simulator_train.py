@@ -176,6 +176,55 @@ def test_rejects_unsupported_continuous_modifier_scale(options):
         _config(**options).validate()
 
 
+@pytest.mark.parametrize('modifier_scale,modifier_enabled', [
+    ('residual', True), ('bounded', True), ('residual', False),
+])
+def test_state_independent_local_scale_trains_and_replays_checkpoint(
+    tmp_path, environments, modifier_scale, modifier_enabled
+):
+    config = _config(environment='mujoco', continuous_local_scale='state_independent',
+                     continuous_modifier_scale=modifier_scale, modifier_enabled=modifier_enabled,
+                     initial_std=.3, normalize_observations=True, normalize_value_targets=True)
+    config.validate()
+    output = tmp_path / 'state_independent'
+    summary = training.train(config, output)
+    assert summary['status'] == 'completed'
+    checkpoint = torch.load(output / 'checkpoint.pt', weights_only=True)
+    metadata = json.loads((output / 'config.json').read_text())
+    assert checkpoint['config']['continuous_local_scale'] == 'state_independent'
+    assert metadata['config']['continuous_local_scale'] == 'state_independent'
+    assert _checkpoint_evaluator()(output)['evaluation'] == summary['final_evaluation']
+    if not modifier_enabled:
+        policy = training.make_policy(config, FakeEnvironment(config, 7))
+        policy.load_state_dict(checkpoint['policy'])
+        obs, state = torch.randn(4, 2, 3), torch.randn(4, 4)
+        for local, joint in zip(policy.local_parameters(obs), policy.joint_parameters(obs, state)):
+            assert torch.equal(local, joint)
+
+
+@pytest.mark.parametrize('options', [
+    {'continuous_local_scale': 'invalid'},
+    {'continuous_local_scale': True},
+    {'continuous_local_scale': 'state_independent', 'environment': 'smac'},
+    {'continuous_local_scale': 'state_independent', 'environment': 'prey'},
+    {'continuous_local_scale': 'state_independent', 'environment': 'football'},
+    {'continuous_local_scale': 'state_independent', 'environment': 'mujoco', 'algorithm': 'bppo'},
+    {'continuous_local_scale': 'state_independent', 'environment': 'mujoco', 'algorithm': 'arppo'},
+    {'continuous_local_scale': 'state_independent', 'environment': 'mujoco', 'algorithm': 'mappo'},
+])
+def test_rejects_unsupported_continuous_local_scale(options):
+    with pytest.raises(ValueError, match='local.scale|local_scale'):
+        _config(**options).validate()
+
+
+def test_policy_factory_rejects_local_scale_with_discrete_environment():
+    config = _config(environment='mujoco', continuous_local_scale='state_independent')
+    config.validate()
+    env = FakeEnvironment(_config(), 7)
+    with pytest.raises(ValueError, match='local scale'):
+        training.make_policy(config, env)
+
+
 def _checkpoint_evaluator():
     path = Path(__file__).resolve().parents[1] / 'scripts/evaluate_simulator.py'
     spec = importlib.util.spec_from_file_location('evaluate_simulator_script', path)

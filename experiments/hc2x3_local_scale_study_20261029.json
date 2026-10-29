@@ -1,0 +1,186 @@
+{
+  "recorded_utc": "2026-10-29T10:05:39.573916+00:00",
+  "scope": "Isolate local Gaussian observation dependence after the completed entropy control failed to improve any variant mean/AUC. This hypothesis is untested in native learning; no promised improvement.",
+  "prior_manifest": "results/mujoco_hc2x3_agentmixer10m_20261026T212527Z/manifest.json",
+  "prior_manifest_sha256": "643275e8836d33c092fd7072433a19e9d24dff7b78684b7583b84285e51511d5",
+  "negative_entropy_evidence": "experiments/hc2x3_entropy10m_comparison_20261029.json",
+  "negative_entropy_evidence_sha256": "6e8ee98c3f3c1efe4bbfa3cedc65c329f6d6d7366a6f3ea2b91e17a7e4a4ceae",
+  "default_parity": "experiments/continuous_local_scale_default_parity_20261029.json",
+  "default_parity_sha256": "0338be04bf72f7a3ec27cda5b46442b324a46d75425b2b10f11d9329b2a40066",
+  "gate_manifest": "results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/manifest.json",
+  "gate_manifest_sha256": "10be4e71969c7a4cd3fa43b2aad67536a1ded56083a10da8365e7a92d26a0877",
+  "learning_manifest": "results/mujoco_hc2x3_local_scale1m_20261029T100535Z/manifest.json",
+  "learning_manifest_sha256": "98a970529c069b8516ebc9cfafffee09c14199b325af56dec50e8cc64808cb04",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "ef4aab278aa8280e833843469ca73c125db75e533221e46f9f545707aab817a3",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "config_pairs": [
+    {
+      "study": "mujoco_hc2x3_local_scale_check12k",
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_bounded_observation_seed0.json",
+      "observation_sha256": "7d68e521b70b964cbcd5ce31576427d5eaae7fbd0d975ec621d82b2843a611b0",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_bounded_state_independent_seed0.json",
+      "state_independent_sha256": "434dc7f6b32619e483906a7bcde75fcd652a365959947320ebfc60ab90e86c82"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale_check12k",
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_identity_observation_seed0.json",
+      "observation_sha256": "a83755795630c82857eeb8911f7336b190a379ab404b7b499815b174fb18000d",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_identity_state_independent_seed0.json",
+      "state_independent_sha256": "fd8a1042813148d688157dbf5c8bc100af5020b43514c7c7c4564ce3ff12ee1a"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale_check12k",
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_residual_observation_seed0.json",
+      "observation_sha256": "a9b5343d25c018d8de74f898d689ebcfb1064af44233160c7a93291e1b0ba311",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/agentmixer_residual_state_independent_seed0.json",
+      "state_independent_sha256": "c77c965e290e30a85705f475f1d9a79e81060fd581b2e3828814ad9b363c84c6"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_bounded",
+      "seed": 0,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_observation_seed0.json",
+      "observation_sha256": "d950237fb3572f16920e9ed8adba09e4c3e9811d538e03a1126b039b9f859799",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed0.json",
+      "state_independent_sha256": "a77bf044d5315f5ec5f0b42f8aa0e505c4870682477db45bbdc8753d748c8601"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_bounded",
+      "seed": 1,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_observation_seed1.json",
+      "observation_sha256": "70cfb0f3685b93a5cec50305658596fe83e07a50dae023aa54b9b436b765693f",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed1.json",
+      "state_independent_sha256": "e4a3f3b3bff7f129b00aefa7cfc94db2b60068f3bcaa27f740fb6a23722e3c9c"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_bounded",
+      "seed": 2,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_observation_seed2.json",
+      "observation_sha256": "81a3f639fcd20102f404ad76a1e013d9dfe656101f4be2e9398fad6c401a05e5",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed2.json",
+      "state_independent_sha256": "44745119ca5e176e896f4eab1e8aa3199510e54b8a7ccf36f5a1d91cfd75ebce"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_identity",
+      "seed": 0,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_observation_seed0.json",
+      "observation_sha256": "96913d977b4f3e094631d7919d146f8f39d86d6c7190eecb3a5a6fc21e8bcf1b",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed0.json",
+      "state_independent_sha256": "32c83ce44bc364ab1341b8d47faad8696cacc89cce2960489e7552a2468deaf1"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_identity",
+      "seed": 1,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_observation_seed1.json",
+      "observation_sha256": "fc13b2ed2e19a8941f60e0d6636566fc0e448619e65f2791cd6eeddd4946e627",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed1.json",
+      "state_independent_sha256": "82f7c965b21d165a1fd1e5f91ff608c3eee220c8bab75ab6ef4607a60b7128c3"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_identity",
+      "seed": 2,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_observation_seed2.json",
+      "observation_sha256": "84d3355a8967071900e4c5d1740f19f10ff5f0f3505b098eeeb46bff3d91b4d8",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed2.json",
+      "state_independent_sha256": "b55106c564976c1d08f545502ea3ab9364429f47158b3ece766ed02e409d155e"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_residual",
+      "seed": 0,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_observation_seed0.json",
+      "observation_sha256": "c1088cdc61467351b4b26beddc3983fc2016702a681884cd2400f3ee6e24c698",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed0.json",
+      "state_independent_sha256": "e57365e0d1f627bfaeea71ce9ae2210c534a049ff5412e85beb1e9bb89344f9f"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_residual",
+      "seed": 1,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_observation_seed1.json",
+      "observation_sha256": "99244071caf7cb632ae3263e07b86a22aae7d473aa44d92bb8cfa8f31caa4c20",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed1.json",
+      "state_independent_sha256": "24299cd0fceb145bfa460e7c7a84ac057907f2ba050d05990aa996235ba9373e"
+    },
+    {
+      "study": "mujoco_hc2x3_local_scale1m",
+      "variant": "agentmixer_residual",
+      "seed": 2,
+      "observation_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_observation_seed2.json",
+      "observation_sha256": "aefc437b22d8c67d4ff9f114a3e5161ceaf0133f927e2750d807b468695969db",
+      "state_independent_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed2.json",
+      "state_independent_sha256": "a6f0ea780f70268a1a1cb362d03c25e4bb3fc25bccc13fa9e8c80f4a48a48987"
+    }
+  ],
+  "frozen_parser_validated": true,
+  "native_dispatch": "results/local_scale_control_20261029/native_gate.sbatch",
+  "native_dispatch_sha256": "3cdf7de5a73aad7d4cc0a969f6f1e5280f68433f0fcf07db111e9f9ee809b4e8",
+  "native_runner": "results/local_scale_control_20261029/run_native_gate.py",
+  "native_runner_sha256": "ba02484d073ff9339c70756c671abb0d398de125dd9991208efc018522cfdd34",
+  "native_evaluator_sha256": "58461f02290bcb0dde7da4e76c321fe0ddfc91e4b18e38213ec7aa842678585b",
+  "gate_allocation": {
+    "maximum_workers": 2,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 4,
+    "wall_minutes": 30,
+    "automatic_requeue": false
+  },
+  "gate_resource_rationale": "Same HC2x3 dimensions,40x100 rollout,5epochs and simulator as the completed9-run10M reference using1CPU/4GiB; removes a local scale head only.12k gate is3updates and4complete evaluation episodes plus2final checkpoint replay episodes. Check actual Slurm peak/time before1M release.",
+  "learning_submission_status": "not_submitted",
+  "release_requirements": [
+    "All six native runs complete with exact source/config and raw episode accounting.",
+    "All six native final checkpoints replay every final episode exactly.",
+    "Three observation-dependent controls match prior seed0 first3updates on every common numerical field; any discrepancy must be explained before release.",
+    "Native measured peak RSS/runtime support1CPU/4GiB and2h-per1M-run envelope.",
+    "Retain all18declared learning outcomes; never select seeds or replace final endpoint by peak."
+  ],
+  "endpoints": {
+    "primary": "1M final local-mean return,mean/sampleSD of3development seeds per condition",
+    "secondary": [
+      "normalized0-to1M curve area on shared100k grid",
+      "state_independent minus observation paired within each modifier and seed"
+    ],
+    "limitations": "1M is10% of paper budget; development evidence only. Any selected setting needs full10M and unused final training seeds."
+  },
+  "known_remaining_differences": [
+    "Local map stays exp(clamp(log_std,-5,2)),not released0.5*sigmoid(parameter).",
+    "Shared initial means/modifier tensors and RNG; bounded starts.375,while residual/identity start.365529.",
+    "Recurrent/ReLU/LayerNorm/critic and observation-processing differences are not bundled into this control."
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "recorded_utc": "2026-10-29T10:12:49.682160+00:00",
+  "scope": "Optional continuous local-scale correctness and preparation evidence. Native gate is pending; no new learning or paper-performance claim. Live counters are read-only log tails, not a raw-episode audit.",
+  "tests": [
+    {
+      "name": "focused",
+      "total": 178,
+      "passed": 178,
+      "skipped": 0,
+      "seconds": 14.627,
+      "junit": "results/local_scale_control_20261029/focused.xml",
+      "junit_sha256": "9b47bbb4e44bd9e2e3a9fe348c0b13b2ab57ddd63a43f2d507420c79cc3bf909",
+      "log_sha256": "1bfe5c32e5addfc9b66dbf3f2a4b202b002a99f56bd8a5990657cb4608cbad4b"
+    },
+    {
+      "name": "full_suite",
+      "total": 976,
+      "passed": 975,
+      "skipped": 1,
+      "seconds": 43.415,
+      "junit": "results/local_scale_control_20261029/full_suite.xml",
+      "junit_sha256": "9a103f05d82891752ea67ab5b3c380894d1cc634b7bc6ea6b68f842a91fa4449",
+      "log_sha256": "c8db1c288b99c0296258e7fdab420d9327469209941ad70410a1992cad81307b"
+    }
+  ],
+  "default_compatibility_cases": 24,
+  "default_parity": "experiments/continuous_local_scale_default_parity_20261029.json",
+  "default_parity_sha256": "0338be04bf72f7a3ec27cda5b46442b324a46d75425b2b10f11d9329b2a40066",
+  "study_plan": "experiments/hc2x3_local_scale_study_20261029.json",
+  "study_plan_sha256": "3529477003da89c698239074b69f8e82bdfad54984e51bb9d0bbbe4e67df8327",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "ef4aab278aa8280e833843469ca73c125db75e533221e46f9f545707aab817a3",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "native_gate": {
+    "job_id": "21280689",
+    "status": "pending_dependency",
+    "dependency": "afterany:21279857",
+    "conditions": 6,
+    "steps_per_condition": 12000
+  },
+  "learning": {
+    "status": "not_submitted",
+    "conditions": 6,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "runs": 18,
+    "steps_per_run": 1000000
+  },
+  "artifact_sha256": {
+    "configs/mujoco_hc2x3_local_scale_check12k.json": "39be6164c515bf4a827e17127e6b123a05283a3d8e2b5774f63877aab16aea60",
+    "configs/mujoco_hc2x3_local_scale1m.json": "2203395b8a9aceb6a929f2f5201d169457a0497fd25a2706ec8cc826ca2b958c",
+    "experiments/continuous_local_scale_default_parity_20261029.json": "0338be04bf72f7a3ec27cda5b46442b324a46d75425b2b10f11d9329b2a40066",
+    "experiments/hc2x3_local_scale_study_20261029.json": "3529477003da89c698239074b69f8e82bdfad54984e51bb9d0bbbe4e67df8327",
+    "experiments/hc2x3_local_scale_native_schedule_20261029.json": "e090cd518eab5db3255db9e89d1a452301e605e257358d176448dbaad68321ef"
+  },
+  "local_document_links_checked": 33,
+  "prepared_auditor": "results/local_scale_control_20261029/audit_native_gate.py",
+  "prepared_auditor_sha256": "df69ea48b2012a8483113c07e586e8ed8e1e79c120e2342453c01e950c8d7383",
+  "prepared_auditor_status": "Syntax checked only; native outputs do not yet exist.",
+  "active_project_resources": {
+    "workers": 8,
+    "cpus": 10,
+    "memory_gib": 96
+  },
+  "live_progress": [
+    {
+      "manifest": "results/football_3v1_gru20m_20261028T082219Z/manifest.json",
+      "manifest_sha256": "34dd3866f5c1d432ac5e9698dae9f9b96e73dd8a27da1695904d21e179007f00",
+      "counts": {
+        "completed": 0,
+        "unfinished": 2,
+        "not_started": 3
+      },
+      "active": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "latest_steps": 15230000
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "latest_steps": 15220000
+        }
+      ]
+    },
+    {
+      "manifest": "results/smac_terran5_gru10m_20261028T222334Z/manifest.json",
+      "manifest_sha256": "4cf7d12788d5ca72c7096ab42c662953d34d4de1594d5941f47c77a3b95174fe",
+      "counts": {
+        "completed": 0,
+        "unfinished": 2,
+        "not_started": 3
+      },
+      "active": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "latest_steps": 4060000
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "latest_steps": 4060000
+        }
+      ]
+    },
+    {
+      "manifest": "results/mujoco_coverage10m_20261028T222337Z/manifest.json",
+      "manifest_sha256": "cfab5bfb663f0a49ff82d3b012803ee9933189b0ace512eb577276f734722f30",
+      "counts": {
+        "completed": 2,
+        "unfinished": 2,
+        "not_started": 44
+      },
+      "active": [
+        {
+          "variant": "ant2x4_global_bppo",
+          "seed": 0,
+          "latest_steps": 5720000
+        },
+        {
+          "variant": "ant2x4_local_mappo",
+          "seed": 0,
+          "latest_steps": 3300000
+        }
+      ]
+    },
+    {
+      "manifest": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/manifest.json",
+      "manifest_sha256": "8ca0d50c7bc7a127b114611d2b5ccb42bfea94fc792434481eac27508ad33fef",
+      "counts": {
+        "completed": 0,
+        "unfinished": 2,
+        "not_started": 8
+      },
+      "active": [
+        {
+          "variant": "bppo",
+          "seed": 5000,
+          "latest_steps": 2648000
+        },
+        {
+          "variant": "bppo",
+          "seed": 5001,
+          "latest_steps": 2628000
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No completed group changed in this turn.",
+    "Current full source suite does not replace the older installed-wheel validation.",
+    "Independent confirmation is ongoing; outcomes were not used for this development choice."
+  ]
+}

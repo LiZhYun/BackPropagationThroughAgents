@@ -2,7 +2,7 @@
 
 The accepted source, [`references/agentmixer/aaai25.tex`](../references/agentmixer/aaai25.tex), defines continuous Individual-Global-Consistency by retaining the local Gaussian means while allowing the centralized policy modifier to determine standard deviations. [`src/bta_repro/agentmixer_continuous.py`](../src/bta_repro/agentmixer_continuous.py) implements that construction directly.
 
-Each agent has an independently parameterized actor whose local observation produces a mean vector and diagonal standard deviations. The centralized modifier embeds each agent's mean and standard deviations, concatenates global state features, and applies the same alternating agent/channel mixing blocks as the discrete implementation. Its output is a residual to the local log standard deviations:
+Each agent has an independently parameterized actor whose local observation produces a mean vector. By default, the observation also produces diagonal standard deviations; an optional state-independent scale control is described below. The centralized modifier embeds each agent's mean and standard deviations, concatenates global state features, and applies the same alternating agent/channel mixing blocks as the discrete implementation. Its output is a residual to the local log standard deviations:
 
 ```text
 local_std = exp(clamp(local_log_std, -5, 2))
@@ -31,6 +31,18 @@ Both options use identical network weights and RNG consumption at initialization
 The bounded option requires continuous AgentMixer with the modifier enabled. A frozen zero bounded head would produce constant 0.375 exploration, not an identity modifier, so that combination is rejected. The existing identity control uses the residual map. The selected option is stored in run and checkpoint configurations and reconstructed during saved-policy evaluation.
 
 `configs/mujoco_hc2x3_modifier_scale1m.json` compares residual, bounded and identity variants at the same 1M-step budget in development seeds 0–2. Performance conclusions require those runs; the scale bounds alone do not establish better exploration or learning.
+
+## Local uncertainty control
+
+The simulator option `continuous_local_scale="observation"` retains the original observation-dependent local scale head. Selecting `"state_independent"` gives each agent its own trainable vector, with one log standard deviation per action coordinate. The means still depend only on that agent's observations. Both choices use `exp(clamp(log_std, -5, 2))`, the same initial scale and the same modifier features, with gradients through those features. A state-independent **local** scale can still produce a state-dependent **centralized** scale through the modifier.
+
+This isolates a difference identified in the [release audit](mujoco_optimization_audit.md): the released local Gaussian uses state-independent uncertainty. Its bounded `0.5 * sigmoid(parameter)` map is a separate difference and is not introduced here. Recurrent networks, activation functions and normalization also remain separate questions.
+
+Both choices initialize identical mean and modifier weights, consume identical RNG, and produce identical initial distributions within each modifier variant. The constructor initializes the original scale head before replacing it with its bias vector for the state-independent option; the unused head is then removed. The default retains its existing checkpoint keys. The selected option is recorded in configurations and restored by the saved-policy evaluator. It is supported only for continuous AgentMixer, including the identity control.
+
+The [registered study](../experiments/hc2x3_local_scale_study_20261029.json) compares residual, bounded and identity variants under both local-scale choices, retaining all three development seeds per condition. It keeps entropy at 0.01: the completed matched entropy-zero study lowered all three final means and curve areas. Six native 12k-step integration runs and checkpoint replays precede the 18-run 1M learning comparison. Native checks are queued; learning is unsubmitted. Neither budget establishes paper reproduction, and any selected setting requires a full-budget study and unused confirmation seeds.
+
+The [compatibility audit](../experiments/continuous_local_scale_default_parity_20261029.json) verifies exact default weights, scores, samples, gradients, RNG and one Adam step against the previous committed implementation in 24 cases. Native default-prefix equivalence remains a gate to check when the queued runs finish.
 
 ## Raw policy and actuator commands
 

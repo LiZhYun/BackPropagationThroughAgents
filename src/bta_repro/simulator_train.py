@@ -77,6 +77,7 @@ class Config:
     temperature: float = 1.0
     continuous_peer_noise: str = "fresh"
     continuous_modifier_scale: str = "residual"
+    continuous_local_scale: str = "observation"
     eval_seed: int = 1_000_000
     eval_episodes: int = 32
     eval_max_steps: int = 10_000
@@ -153,6 +154,12 @@ class Config:
             self.environment != "mujoco" or self.algorithm != "agentmixer" or not self.modifier_enabled
         ):
             raise ValueError("bounded modifier scale requires continuous AgentMixer with modifier enabled")
+        if self.continuous_local_scale not in ("observation", "state_independent"):
+            raise ValueError("continuous_local_scale must be observation or state_independent")
+        if self.continuous_local_scale != "observation" and (
+            self.environment != "mujoco" or self.algorithm != "agentmixer"
+        ):
+            raise ValueError("state-independent local scale requires continuous AgentMixer")
         if isinstance(self.action_embed_dim, bool) or not isinstance(self.action_embed_dim, int) or self.action_embed_dim < 0:
             raise ValueError('action_embed_dim must be a nonnegative integer')
         if self.action_embed_dim and (self.environment == 'mujoco' or self.algorithm not in ('arppo', 'bppo')):
@@ -207,6 +214,10 @@ def environment_spec(env) -> dict:
 
 
 def make_policy(config: Config, env):
+    if config.continuous_local_scale != "observation" and (
+        env.is_discrete or config.algorithm != "agentmixer"
+    ):
+        raise ValueError("state-independent local scale requires continuous AgentMixer")
     if config.recurrent_actor and (not env.is_discrete or config.agentmixer_correlation != "factorized"):
         raise ValueError("recurrent actors require discrete policies without the experimental joint modifier")
     if env.is_discrete and config.initial_std != 1.0:
@@ -233,6 +244,7 @@ def make_policy(config: Config, env):
         else:
             from .agentmixer_continuous import ContinuousAgentMixerPolicy as Policy
             scale_arguments['modifier_scale'] = config.continuous_modifier_scale
+            scale_arguments['local_scale'] = config.continuous_local_scale
         policy = Policy(env.obs_dim, env.state_dim, env.num_agents, dimensions[-1], config.hidden_dim,
                         **scale_arguments)
         if not config.modifier_enabled:

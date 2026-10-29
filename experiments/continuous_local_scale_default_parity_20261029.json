@@ -1,0 +1,182 @@
+{
+  "recorded_utc": "2026-10-29T10:02:59.967738+00:00",
+  "scope": "Exact existing-default parity against committed1785192 continuous policy: state keys/values, samples, scores, entropies, loss, every gradient, one Adam update and RNG. Not a native simulator performance result.",
+  "old_module": "results/local_scale_control_20261029/agentmixer_continuous_before.py",
+  "old_sha256": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+  "new_module": "src/bta_repro/agentmixer_continuous.py",
+  "new_sha256": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+  "audit_script": "results/local_scale_control_20261029/check_default_parity.py",
+  "audit_script_sha256": "8bc4e85d35c33bc3eb7a1c4a0ef0f34cdcfc6bed568a678cb21a0a0e0b4cbbbd",
+  "torch_version": "2.6.0+cpu",
+  "cases": [
+    {
+      "seed": 0,
+      "modifier_scale": "residual",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "residual",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "residual",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "residual",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "bounded",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "bounded",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "bounded",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 0,
+      "modifier_scale": "bounded",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "residual",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "residual",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "residual",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "residual",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "bounded",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "bounded",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "bounded",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 1,
+      "modifier_scale": "bounded",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "residual",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "residual",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "residual",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "residual",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "bounded",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "bounded",
+      "initial_std": 1.0,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "bounded",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": false,
+      "bitwise_equal": true
+    },
+    {
+      "seed": 17,
+      "modifier_scale": "bounded",
+      "initial_std": 0.36552928931500245,
+      "nonzero_modifier_head": true,
+      "bitwise_equal": true
+    }
+  ],
+  "all_passed": true
+}
