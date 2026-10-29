@@ -1,0 +1,669 @@
+{
+  "recorded_utc": "2026-10-29T14:13:47.097945+00:00",
+  "scope": "Increase only the existing MuJoCo array concurrency from2to4. Preserve all48 registered scientific trials, current processes, sources, configurations, seeds, budgets, per-task allocations and no-requeue rule.",
+  "job_id": "21272800",
+  "previous_plan": "experiments/mujoco_coverage10m_plan_20261029.json",
+  "previous_plan_sha256": "a9c3d092ba612cf00d0f2dc46295f60876f23d818abae3cb43c1b599b84d28ea",
+  "manifest": "results/mujoco_coverage10m_20261028T222337Z/manifest.json",
+  "manifest_sha256": "cfab5bfb663f0a49ff82d3b012803ee9933189b0ace512eb577276f734722f30",
+  "source_sha256": {
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f"
+  },
+  "dispatch": "results/mujoco_coverage10m_dispatch_20261029/submit.sbatch",
+  "dispatch_sha256": "3789576fc2ca4de154bfc3717c4ce28736d2e70d09ffe19145cd7f3e98c240dc",
+  "all_configurations": [
+    {
+      "variant": "ant2x4_global_mappo",
+      "seed": 0,
+      "config_sha256": "fbd6625f02bd994ae9cf36beecac2ee51f794be3853fff53f5a468bdb0cecebf",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4_global_arppo",
+      "seed": 0,
+      "config_sha256": "2e3681450894964ee83ab60a9887dfafc1729fd54047dfad33d47c34340eef5e",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4_global_bppo",
+      "seed": 0,
+      "config_sha256": "7b9419d9397e0f01b6400448b53dd8f60124e798da7af42f62ee480ba8f2a4c8",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4_local_mappo",
+      "seed": 0,
+      "config_sha256": "3ee1ae0177deb847e92ac3aa767f863a1b3a4e66badf849dd6c6a2ab604daff8",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "0d6b93890b6c992371ccbdab36aa3c5ee5f7151b9f75719b6d8fad46ebded626",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4_local_identity",
+      "seed": 0,
+      "config_sha256": "5de8313bf3be1f0608c10562dfa605bd2ef73395194aacce184c120b8998b256",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker2x3_local_mappo",
+      "seed": 0,
+      "config_sha256": "d90da70e6168a0076134488d6b0e65737b927b0c9862ae27f4e8add78fef9f32",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker2x3_local_arppo",
+      "seed": 0,
+      "config_sha256": "4a9c0b808a251c0517989e5182c1e6461d68914933d956b222d4cbbb84006300",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker2x3_local_bppo",
+      "seed": 0,
+      "config_sha256": "af272ef23ee57e3690669342863c666c82f6c3934b6ae95473e42a3b06a5b739",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker2x3_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "73e7797a8a8b4bb8d7bdfdaf09cd0d802e8bcb568603ee532d5ef821c8baf0d1",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker2x3_local_identity",
+      "seed": 0,
+      "config_sha256": "af9bb1d31bec0c00240bee4844e63cfb70d8b5b1eafebfcb74a3898e396b0aed",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant4x2_global_mappo",
+      "seed": 0,
+      "config_sha256": "a2f58cde83dd42b0ad91ff9871c4c4c6b713a17650dbe0d63ce6b377c5ddcba6",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant4x2_global_arppo",
+      "seed": 0,
+      "config_sha256": "7b782a5a74c40d874c250cc928df0ef895444217449b39799030f5647403d33f",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant4x2_global_bppo",
+      "seed": 0,
+      "config_sha256": "4eac78fa4d72e0f0970fb8cedeb8bd64292a09d29172bea2c21271c226b9fb1e",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant8x1_global_mappo",
+      "seed": 0,
+      "config_sha256": "639390ecae86aa38282a4433b4ac896f016042514beb5d8084fbca2cea1da5cc",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant8x1_global_arppo",
+      "seed": 0,
+      "config_sha256": "13ca06944f92134243d80ab0e848b13cf6beb87aeabc620ee5c788059638f949",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant8x1_global_bppo",
+      "seed": 0,
+      "config_sha256": "5d1e51bbdee9bccc358ad7f491fe66f93d8e74246f795b2bd1da01b4a114af47",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "hc3x2_local_mappo",
+      "seed": 0,
+      "config_sha256": "30d61b7b9abdd498b8437e80ff68b097676e4a6cd69d34602ac85aef6aa8b00c",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "hc3x2_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "5b8f8d580a4160d34018c9b243d80b6750651a32c1072ed51068a70e686abbc0",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "hc3x2_local_identity",
+      "seed": 0,
+      "config_sha256": "7030b07e89283c7da0786ca80470f47b99eba6a47bab2eb8933ade180cc15c85",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "hc6x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "e675a7a89c7d37da431ea5a1dddfedb2cbdb809ca9ed13bf569ba137997aabc7",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "hc6x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "7894d2a91f7afeb7d557b35840b1cb7aacd8a3b1c34e89115a423e69e48d02b0",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "hc6x1_local_identity",
+      "seed": 0,
+      "config_sha256": "774825a0902cb86d0b5166bbd70dc546f878e7a6b1d0bf2781fd576fd8439024",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker3x2_local_mappo",
+      "seed": 0,
+      "config_sha256": "361e9754590ad1a23c471118227722f1e6f7c59710b16b4999e42243160d3cd4",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker3x2_local_arppo",
+      "seed": 0,
+      "config_sha256": "d6b673603f99d106a47c2b0da3aab7eba78dd0fa189c13811147d98e59b71140",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker3x2_local_bppo",
+      "seed": 0,
+      "config_sha256": "fe62bb5862dde7aa4c9f065647c7f6fd2f139af58b421203096e8e26a1e4d396",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker3x2_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "0946fe2c4402af18a88cd1818c34ba44ff39cfe3c5fd8d567cc1d1875c201c5a",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker3x2_local_identity",
+      "seed": 0,
+      "config_sha256": "047bcd90dddcea55ddf364af8d5f6fef2e9b63090f8fee2ed50398ec26857b2e",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker6x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "7a85e4dcca7499cb568ff4ec35772ff179300b318c2b7ef2cd96c0a7c30ac8e9",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker6x1_local_arppo",
+      "seed": 0,
+      "config_sha256": "6028bc8604377d948d2bd354564d357dfc3d4d5915b908d5295e85435def69dc",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker6x1_local_bppo",
+      "seed": 0,
+      "config_sha256": "abeb7152ca86ead36f541913f61c8fd3f8528a694a2a7277f44d0a00a8d13388",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker6x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "ea7e7ec306883ebf0cabbfa6e9587492267e03a324afeafd5d63711a2297729e",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "walker6x1_local_identity",
+      "seed": 0,
+      "config_sha256": "76812b9ed6c0e1a287cea6ba781c856136d6bac31ff53b05a21f31cddc00ba0d",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant4x2_local_mappo",
+      "seed": 0,
+      "config_sha256": "2a1031f28c96398c0a76a61ce395270abefba69862fd87465839b6862107b47a",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant4x2_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "a939d2346edcd226c51fbb9b274433fb752665abc5a0ff06f93f56fe86b72541",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant4x2_local_identity",
+      "seed": 0,
+      "config_sha256": "466605e7c220d0129d1695e2e6915e64f004ef8e15eaa9c40373fde36e519d42",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant8x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "d69df6be86c83135e341f3a46fed2b4bf247618732135bf0ce92b45b1976c021",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant8x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "bed8a9fc410718f0e024f856d3b8908fb5997dffab294b63ec2c4cb70f832665",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant8x1_local_identity",
+      "seed": 0,
+      "config_sha256": "7e37f00bf80ad6dc471730ed078afef4ebc44a6a42a8dc11bcc2a47d3931a2d0",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4d_local_mappo",
+      "seed": 0,
+      "config_sha256": "59d35bf844043b85b2dc3d0ca7112e05177cc54e3adadcc1a53288ed82999bc2",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4d_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "d1c025f92086feb244f6f3e9d88fc8aeb2fc89d4272c1a368c0d859950bae637",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "ant2x4d_local_identity",
+      "seed": 0,
+      "config_sha256": "0bfdf1bfefca6f9981e2ecbcc93e88b7ec7845c61329692f9c5ce5334fd4510b",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "humanoid17x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "11327285fcc00003e724d4cbd4b6c221692ed19ecad3303569c76bee47e15be7",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "humanoid17x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "e9695e4b69e74e2dfc799e0a8e5b3fb4586acf1597a0a583ce2e53bb371824d2",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "humanoid17x1_local_identity",
+      "seed": 0,
+      "config_sha256": "88e502660a3a0dc6659abcd6b2b3f3e5aed1c585df2ae57ce0d67abd5e0b559a",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "humanoidstandup17x1_local_mappo",
+      "seed": 0,
+      "config_sha256": "6f18f20fc90f5ec8c1013014395d8ba5f7c984be70ba7466a93af351dc1e5b0d",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "humanoidstandup17x1_local_agentmixer",
+      "seed": 0,
+      "config_sha256": "0f98f2a07851ab375ef8b5a3128a08806ee5724db9bc9628b84038e95f8a8014",
+      "previous_complete_pilot_verified": true
+    },
+    {
+      "variant": "humanoidstandup17x1_local_identity",
+      "seed": 0,
+      "config_sha256": "3eb7b2688fae100a97d40e33e0f2c716e0b9f9351e683fe6dcff7563fd708d62",
+      "previous_complete_pilot_verified": true
+    }
+  ],
+  "previous_maximum_active_tasks": 2,
+  "maximum_active_tasks": 4,
+  "per_task": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "wall_hours": 30,
+    "automatic_requeue": false
+  },
+  "previous_project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  },
+  "project_ceiling": {
+    "workers": 10,
+    "cpus": 16,
+    "memory_gib": 104
+  },
+  "scheduled_maximum": {
+    "workers": 10,
+    "cpus": 12,
+    "memory_gib": 104
+  },
+  "allocation_layout": [
+    {
+      "allocation": "Football/Prey/Ant/memory chain",
+      "workers": 2,
+      "cpus": 2,
+      "memory_gib": 16
+    },
+    {
+      "allocation": "SMAC and remaining native checks",
+      "workers": 2,
+      "cpus": 4,
+      "memory_gib": 64
+    },
+    {
+      "allocation": "MuJoCo coverage",
+      "workers": 4,
+      "cpus": 4,
+      "memory_gib": 16
+    },
+    {
+      "allocation": "HC confirmation/controls/final audit",
+      "workers": 2,
+      "cpus": 2,
+      "memory_gib": 8
+    }
+  ],
+  "action": [
+    "scontrol",
+    "update",
+    "JobId=21272800",
+    "ArrayTaskThrottle=4"
+  ],
+  "resource_rationale": {
+    "all48_completed_pilots_verified": true,
+    "original_worker_hours_projection": 277.9588907461322,
+    "original_maximum_projected_task_hours": 17.034637948505893,
+    "native_peak_gib": 1.5751380920410156,
+    "ideal_original_whole_campaign_hours_at_two_workers": 138.9794453730661,
+    "ideal_original_whole_campaign_hours_at_four_workers": 69.48972268653306,
+    "interpretation": "Ideal worker-hour division is not a completion forecast. Queueing, already consumed work, task length imbalance and host load affect actual elapsed time."
+  },
+  "active_project_before": [
+    [
+      "21251960_0",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21251960_1",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21272799_0",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272799_1",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272800_4",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_3",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_2",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_5",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ]
+  ],
+  "scheduler_array_before": [
+    {
+      "JobId": "21272800",
+      "ArrayJobId": "21272800",
+      "ArrayTaskId": "6-47%2",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-mujoco10m",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "193004",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "PENDING",
+      "Reason": "JobArrayTaskLimit",
+      "Dependency": "(null)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:00:00",
+      "TimeLimit": "1-06:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-29T00:24:16",
+      "EligibleTime": "Unknown",
+      "AccrueTime": "2026-10-29T06:44:07",
+      "StartTime": "Unknown",
+      "EndTime": "Unknown",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-29T15:39:33",
+      "Scheduler": "Main",
+      "Partition": "batch-milan,batch-skl,batch-csl",
+      "Sid": "login5:2673697",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "",
+      "NumNodes": "1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "AllocTRES": "(null)",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "4G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_dispatch_20261029/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21251961",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_20261028T222337Z/slurm_21272800_4294967294.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_20261028T222337Z/slurm_21272800_4294967294.out",
+      "TresPerTask": "cpu=1"
+    },
+    {
+      "JobId": "21284380",
+      "ArrayJobId": "21272800",
+      "ArrayTaskId": "5",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-mujoco10m",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "192969",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "RUNNING",
+      "Reason": "None",
+      "Dependency": "(null)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "00:34:14",
+      "TimeLimit": "1-06:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-29T00:24:16",
+      "EligibleTime": "2026-10-29T15:39:28",
+      "AccrueTime": "2026-10-29T06:44:07",
+      "StartTime": "2026-10-29T15:39:33",
+      "EndTime": "2026-10-30T21:39:33",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-29T15:39:33",
+      "Scheduler": "Main",
+      "Partition": "batch-milan",
+      "Sid": "login5:2673697",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "milan32",
+      "BatchHost": "milan32",
+      "NumNodes": "1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "AllocTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "4G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_dispatch_20261029/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21251961",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_20261028T222337Z/slurm_21272800_5.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_20261028T222337Z/slurm_21272800_5.out",
+      "TresPerTask": "cpu=1"
+    },
+    {
+      "JobId": "21282252",
+      "ArrayJobId": "21272800",
+      "ArrayTaskId": "4",
+      "ArrayTaskThrottle": "2",
+      "JobName": "bpta-agentmixer-mujoco10m",
+      "UserId": "liz23(3278648)",
+      "GroupId": "liz23(3278648)",
+      "MCS_label": "N/A",
+      "Priority": "200652",
+      "Nice": "0",
+      "Account": "aalto_users",
+      "QOS": "normal",
+      "JobState": "RUNNING",
+      "Reason": "None",
+      "Dependency": "(null)",
+      "Requeue": "0",
+      "Restarts": "0",
+      "BatchFlag": "1",
+      "Reboot": "0",
+      "ExitCode": "0:0",
+      "RunTime": "02:28:26",
+      "TimeLimit": "1-06:00:00",
+      "TimeMin": "N/A",
+      "SubmitTime": "2026-10-29T00:24:16",
+      "EligibleTime": "2026-10-29T13:44:54",
+      "AccrueTime": "2026-10-29T06:44:07",
+      "StartTime": "2026-10-29T13:45:21",
+      "EndTime": "2026-10-30T19:45:21",
+      "Deadline": "N/A",
+      "SuspendTime": "None",
+      "SecsPreSuspend": "0",
+      "LastSchedEval": "2026-10-29T13:45:21",
+      "Scheduler": "Backfill",
+      "Partition": "batch-milan",
+      "Sid": "login5:2673697",
+      "ReqNodeList": "(null)",
+      "ExcNodeList": "(null)",
+      "NodeList": "milan32",
+      "BatchHost": "milan32",
+      "NumNodes": "1",
+      "NumCPUs": "1",
+      "NumTasks": "1",
+      "Task": "1",
+      "T": "0:0:*:*",
+      "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "AllocTRES": "cpu=1,mem=4G,node=1,billing=1",
+      "Node": "*",
+      "C": "0:0:*:*",
+      "CoreSpec": "*",
+      "MinCPUsNode": "1",
+      "MinMemoryNode": "4G",
+      "MinTmpDiskNode": "0",
+      "Features": "(null)",
+      "DelayBoot": "00:00:00",
+      "OverSubscribe": "NO",
+      "Exclusive": "NO",
+      "Contiguous": "0",
+      "Licenses": "(null)",
+      "LicensesAlloc": "(null)",
+      "Network": "(null)",
+      "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_dispatch_20261029/submit.sbatch",
+      "SubmitLine": "sbatch",
+      "dependency": "afterany:21251961",
+      "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+      "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_20261028T222337Z/slurm_21272800_4.err",
+      "StdIn": "/dev/null",
+      "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_coverage10m_20261028T222337Z/slurm_21272800_4.out",
+      "TresPerTask": "cpu=1"
+    }
+  ],
+  "compatible_capacity": "batch-csl|1778/142/0/1920|5-00:00:00\nbatch-skl*|5220/820/40/6080|5-00:00:00\nbatch-milan|2245/1851/0/4096|5-00:00:00\n",
+  "authorizer": "Standing user authorization to loop until reproduction is ready and approve nonrisky commands. The earlier worker/memory ceiling was an autonomous scheduling choice, explicitly recorded as not a user-requested resource count. This bounded revision uses the same already authorized trials; no paid service or new trials.",
+  "failure_policy": "Do not restart or requeue any task. Preserve all outcomes and original records. If an update observation times out, inspect the same array rather than resubmit. Reducing the throttle later would limit new starts without stopping active tasks.",
+  "prepare_script": "results/mujoco_coverage_acceleration_20261029/prepare.py",
+  "prepare_script_sha256": "422fd230310a1ff4469ad5db960cdc5795efa2309de9fb0d768dc2ba20671b41"
+}

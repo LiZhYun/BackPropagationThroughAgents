@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T14:18:26.385039+00:00",
+  "report": "results/benchmark_coverage_20261029_acceleration.json",
+  "report_sha256": "dc3070e3917560ede1b3d854788691161c9ddc773923afb77dc3558799f81c18",
+  "csv": "experiments/benchmark_coverage_20261029_acceleration.csv",
+  "csv_sha256": "f893e42b3b92eb7332f500110048ad8bdf1553e89d28317145cec8cc7262644d",
+  "runs": 883,
+  "manifests": 74,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Only the existing MuJoCo concurrency changes2to4. All883run declarations/74manifests are unchanged; no new trials or seed selection. Artifact coverage includes failures and does not establish reproduced performance.60prepared unsubmitted learning runs remain excluded; collectors and synthetic preflights do not add training declarations."
+}

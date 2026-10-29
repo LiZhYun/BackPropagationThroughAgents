@@ -1,0 +1,56 @@
+{
+  "recorded_utc": "2026-10-29T14:31:44.328074+00:00",
+  "scope": "Scheduling revision and scientific-input/startup checks; no new final benchmark or full-reproduction claim.",
+  "revision_plan": "experiments/mujoco_coverage10m_concurrency_plan_20261029.json",
+  "revision_plan_sha256": "878331aee6cb46a3fcc932ceccb7eccc507df96ac71adde489b5e8e70df50b45",
+  "revision_receipt": "experiments/mujoco_coverage10m_concurrency_schedule_20261029.json",
+  "revision_receipt_sha256": "aeed5fa460e25b7cec14345d1d4fc9c8368e521713dab45d8aa04c452aee2a36",
+  "preserved_configurations": 48,
+  "preserved_training_source_modules": 20,
+  "frozen_manifest_and_dispatch_preserved": true,
+  "new_training_trials": 0,
+  "new_job_submissions": 0,
+  "original_running_handles_preserved": [
+    "21284380",
+    "21282252"
+  ],
+  "newly_dispatched_existing_indices": [
+    6,
+    7
+  ],
+  "native_startup_checks_passed": 2,
+  "active_training_workers": [
+    "21251960_0|21251965|RUNNING",
+    "21251960_1|21251966|RUNNING",
+    "21272799_0|21272803|RUNNING",
+    "21272799_1|21272804|RUNNING",
+    "21272800_4|21282252|RUNNING",
+    "21272800_5|21284380|RUNNING",
+    "21272800_6|21284992|RUNNING",
+    "21272800_7|21284993|RUNNING",
+    "21279129_2|21282391|RUNNING",
+    "21279129_3|21282437|RUNNING"
+  ],
+  "active_muJoCo_workers": 4,
+  "scheduled_maximum": {
+    "workers": 10,
+    "cpus": 12,
+    "memory_gib": 104
+  },
+  "project_ceiling": {
+    "workers": 10,
+    "cpus": 16,
+    "memory_gib": 104
+  },
+  "coverage_runs": 883,
+  "coverage_manifests": 74,
+  "targets": 45,
+  "basic_provenance_errors": 0,
+  "prior_ledger_bytes_preserved": true,
+  "new_ledger_events": 2,
+  "public_local_links_checked": 119,
+  "production_source_tests_configs_environment_ledger_unchanged": true,
+  "initial_helper_syntax_failure_before_execution_retained": true,
+  "checker": "results/mujoco_coverage_acceleration_20261029/final_checks.py",
+  "checker_sha256": "10173effd1c04f1c4af8619509cdcf1f5f78b72a4e78056f6283d75dc5f5cbba"
+}

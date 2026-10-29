@@ -514,3 +514,23 @@ Final auditor **21284586** extends the existing HC allocation after all fifteen 
 The memory checks additionally depend on all of 21280689 for reference data. Every array edge waits for the entire predecessor to terminate. Maximum project reservations remain eight workers, ten CPUs and 96 GiB within the sixteen-CPU ceiling. The unsubmitted eighteen-run feedforward local-scale learning study retains priority after **21284586** or another verified free allocation. Prey and recurrent learning remain unsubmitted and must satisfy their own gates and capacity review.
 
 All six matched HC 3×2 development runs contribute 126 evaluation-call timings. The maximum 32-episode call is 68.25 s; ten calls with a 50% margin estimate 17.06 min, below the 30-minute cap. Fresh-process startup and host load remain uncertain. The held job's command, ownership, one CPU/4 GiB allocation, no-requeue flag and whole-array dependency were verified before release. [Frozen audit](../experiments/hc3x2_confirmation10m_audit_plan_20261029.json), [preflight](../experiments/hc3x2_confirmation10m_audit_preflight_20261029.json), [submission](../experiments/hc3x2_confirmation10m_collector_20261029.json).
+
+
+## Measured MuJoCo concurrency revision, 29 October 2026
+
+The existing MuJoCo array **21272800** now permits four active tasks. The sole scheduler mutation was `ArrayTaskThrottle=2 → 4`; all 48 configurations, the twenty-module training source, manifest, dispatch file, seeds, budgets and per-task limits retain their frozen hashes. The two original running task handles and start times were preserved. The dispatcher still records its original two-task header; the explicit scheduler override below supersedes that scheduling field.
+
+| Allocation | Current chain | Maximum reserved resources |
+| --- | --- | --- |
+| Football, Prey, Ant and memory checks | 21251960 → 21282173 → 21282210 → 21282468 → 21282782 → 21284086 → 21284087 | Two workers, two CPUs, 16 GiB |
+| SMAC | 21272799 → 21281002 | Two workers, four CPUs, 64 GiB |
+| MuJoCo coverage | **21272800**, max four active tasks | Four workers, four CPUs, 16 GiB |
+| HC confirmation, controls and final verification | 21279129 → 21279857 → 21280689 → 21281001 → 21284586 | Two workers, two CPUs, 8 GiB |
+
+The new ceiling is **ten workers, sixteen CPUs and 104 GiB**. This graph reserves at most ten workers/twelve CPUs/104 GiB and supersedes the earlier eight-worker/96-GiB scheduling limit. Each MuJoCo task still uses one CPU/4 GiB/30 h with no requeue. Every existing dependency remains in place; the memory checks also wait for all six local-scale checks in 21280689. Unsubmitted learning studies retain their existing gates and priorities.
+
+All 48 prior 500k pilots and their frozen metadata pass the revision preflight. Native peak 1.58 GiB supports the existing 4-GiB task request. The original pilot-scaled workload estimate is 277.96 worker-hours; dividing it by two versus four workers gives ideal whole-campaign bounds of 138.98 and 69.49 hours. Those figures exclude scheduling imbalance and do not forecast remaining wall time. No new trials, selected outcomes, replacement seeds or additional per-trial steps are introduced.
+
+The two added slots have started Walker 2×3 MAPPO and AR-PPO. Their source/configuration bytes, native versions and training streams match the registered pilots, and each first 4,000-step rollout has finite losses and the expected five actor/critic updates. These are startup checks, not complete benchmark outcomes. All ten live workers remain below their observed memory allocations and linear runtime limits in the [resource snapshot](../experiments/live_resource_check_20261029_acceleration.json).
+
+[Revision plan](../experiments/mujoco_coverage10m_concurrency_plan_20261029.json), [verified scheduler change](../experiments/mujoco_coverage10m_concurrency_schedule_20261029.json), [native startup evidence](../experiments/mujoco_coverage10m_concurrency_startup_20261029.json). The first helper had a syntax error before execution; it changed no scheduler or ledger state. The original file is retained, and the verified action uses `apply_v2.py`.

@@ -1,0 +1,48 @@
+{
+  "recorded_utc": "2026-10-29T14:19:49.297796+00:00",
+  "scope": "Read-only startup verification of two newly dispatched,already registered native learning runs. First-rollout evidence only; no final result or reproduced-performance claim.",
+  "job_id": "21272800",
+  "new_training_trials": 0,
+  "runs": [
+    {
+      "index": 6,
+      "variant": "walker2x3_local_mappo",
+      "seed": 0,
+      "source_modules": 20,
+      "config_sha256": "d90da70e6168a0076134488d6b0e65737b927b0c9862ae27f4e8add78fef9f32",
+      "metadata_sha256": "04d34366f7807f56bbdf59b5c09b7274e8718d5ee494ffc1db83cfaf9fc6d78a",
+      "versions_match_pilot": true,
+      "native_versions_match_pilot": true,
+      "training_streams_match_pilot": true,
+      "first_rollout_steps": 4000,
+      "first_rollout_shape": [
+        100,
+        40
+      ],
+      "first_actor_updates": 5,
+      "first_critic_updates": 5,
+      "metrics_snapshot_sha256": "3ff9ec80c26d76c1141a81076035fe93fc2f971e77a6fdd87cf697c0e0e8cc83"
+    },
+    {
+      "index": 7,
+      "variant": "walker2x3_local_arppo",
+      "seed": 0,
+      "source_modules": 20,
+      "config_sha256": "4a9c0b808a251c0517989e5182c1e6461d68914933d956b222d4cbbb84006300",
+      "metadata_sha256": "051b7a35a6c3312e83f97784f0e820a54733cf6721edaa2ec99f3c0ec6770136",
+      "versions_match_pilot": true,
+      "native_versions_match_pilot": true,
+      "training_streams_match_pilot": true,
+      "first_rollout_steps": 4000,
+      "first_rollout_shape": [
+        100,
+        40
+      ],
+      "first_actor_updates": 5,
+      "first_critic_updates": 5,
+      "metrics_snapshot_sha256": "276c15e927f295a94a066cd9025a1b5a7ae06068bd0783c0bd2857ccf4ae1f5a"
+    }
+  ],
+  "source_and_settings_unchanged": true,
+  "environment_or_engine_modified": false
+}

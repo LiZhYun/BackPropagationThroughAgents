@@ -21,6 +21,8 @@ Anti-claims: improvement only comes from changed simulator physics, more environ
 
 ## Execution order and resource limits
 
+Current ceiling: **ten workers/sixteen CPUs/104 GiB**, with twelve CPUs scheduled at maximum. See the [latest allocation graph](../docs/worker_schedule.md#measured-mujoco-concurrency-revision-29-october-2026). Dated allocations below preserve their historical limits.
+
 | Stage | Gate | Initial resource use |
 |---|---|---|
 | M0 correctness | All relevant tests and all-method smoke runs pass | Single-threaded CPU checks |
@@ -37,9 +39,8 @@ total and2CPUs/8GiB per worker. This is an autonomous scheduling choice under
 the user's standing authorization, not a separately requested resource count.
 The [verified schedule](../docs/worker_schedule.md#eight-worker-schedule-2026-10-26)
 separates already-gated AgentMixer10M and SMAC studies from scheduling-only
-predecessors. No experimental runs or budgets are added. Future submissions
-must preserve the eight-chain ceiling; earlier four-worker records below
-remain historical.
+predecessors. No experimental runs or budgets are added. That revision replaces the earlier
+four-worker limit; the later measured revisions below supersede its eight-chain ceiling.
 
 Do not invent GPU-hour estimates before measuring simulator throughput. Known budgets are in the target manifest. Full reproduction spans dozens of tasks and hundreds of seed runs; measured pilot costs determine scheduling. No paid external compute is assumed. Preserve the concurrent unrelated reproduction.
 
@@ -257,3 +258,12 @@ MuJoCo coverage now has four of48runs raw-audited:4040episodes/10000updates. New
 An exact committed export of f7f9de3 now passes1044installed tests/oneCUDA-only skip in54.93s with source-path injection disabled. This includes28discrete-distillation and41continuous-memory cases, with synthetic continuous checkpoint replays. All25installed module bytes, README and license match. Both matrix commands, recurrent Prey and an additional positive-distillation recurrent Prey CLI run/replay pass outside the export. The tiny64/16-step budgets are integration evidence.
 
 The inactive prior CPU validation prefix was warm-reused with the identical dependency lock and inventory. Only bta-repro was reinstalled without dependencies; the original wheel, modules and README were restored exactly, and no active training environment changed. Fourteen command logs and archive/wheel/JUnit/source hashes are retained in `experiments/core_wheel_controls_verification_20261029.json`. This is not a fresh-environment, hosted-CI or native-engine claim. The earlier975-test fresh install remains separate evidence. Native performance and all independent confirmation requirements remain open; no new study or learning job is submitted by this package check.
+
+
+### Measured coverage acceleration, 29 October 2026
+
+The existing 48-run MuJoCo10M array21272800 now permits four concurrent workers rather than two. All48 complete prior pilots,48unchanged config hashes,20source modules,manifest and frozen dispatcher pass preflight; source and per-task limits remain unchanged. One `scontrol update JobId=21272800 ArrayTaskThrottle=4` is applied. The original two active raw handles/start times are preserved. Two already registered Walker2×3 MAPPO/AR tasks start in the added slots and match pilot native versions, training streams and first-rollout accounting. No new job or scientific trial is submitted.
+
+This measured autonomous revision supersedes the earlier eight-worker/96GiB policy with a ceiling of ten workers/sixteen CPUs/104GiB. Current four allocation branches sum to ten workers/twelve CPUs/104GiB. The original study estimates277.96worker-hours; ideal worker-hour division changes138.98→69.49h for the whole original campaign, not a forecast of remaining time. Queueing, task imbalance and host load remain relevant. No paid service is added and the other reproduction is untouched. Existing independent confirmation criteria, all-run reporting and learning-gate priorities remain unchanged.
+
+Current resources and coverage are recorded in `experiments/live_resource_check_20261029_acceleration.json` and `experiments/benchmark_coverage_20261029_acceleration.provenance.json`. The same883runs/74manifests cover45targets,0basic provenance errors;60prepared learning runs remain unsubmitted. The first helper's syntax error occurred before any execution; its source is retained and successfulv2records the actual scheduler change.
