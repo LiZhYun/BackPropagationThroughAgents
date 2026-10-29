@@ -1,5 +1,7 @@
 # Benchmark evidence coverage
 
+As of 29 October 2026, full-budget coverage is optional and is not a release-readiness percentage. The user requested stopping full-budget studies; all preserved partial outcomes remain indexed. See the [current scope](../experiments/reproduction_scope_reduced_budget_20261029.json).
+
 `python scripts/report_benchmark_coverage.py` lists all 45 paper targets and the
 experiment artifacts recorded in `experiments/jobs.jsonl`. It needs only the
 Python standard library and reads files without querying or changing scheduler

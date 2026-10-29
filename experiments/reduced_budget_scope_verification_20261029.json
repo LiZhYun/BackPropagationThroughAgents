@@ -1,0 +1,18 @@
+{
+  "status": "scope_change_verified",
+  "five_study_arrays_and_two_collectors_absent_from_queue": true,
+  "all206_archived_files_still_match_unchanged_originals": true,
+  "all78_original_frozen_configurations_preserved": true,
+  "original_manifest_hashes_unchanged": true,
+  "job_ledger_original_prefix_preserved": true,
+  "new_ledger_events": 29,
+  "only_explicit_owned_ids_mutated": true,
+  "production_source_tests_and_configs_unchanged": true,
+  "new_full_budget_jobs": 0,
+  "new_learning_jobs": 0,
+  "new_test_run_required": false,
+  "reason": "Scheduling cancellation, artifact preservation and documentation only; previous1093test installed/source evidence retained, no numerical implementation changes.",
+  "historical_accounting_timeout_is_not_job_failure": true,
+  "short_check_receipt": "experiments/reduced_budget_short_checks_schedule_20261029.json",
+  "scope": "experiments/reproduction_scope_reduced_budget_20261029.json"
+}

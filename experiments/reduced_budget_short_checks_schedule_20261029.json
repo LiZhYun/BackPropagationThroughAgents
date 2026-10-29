@@ -1,0 +1,382 @@
+{
+  "recorded_utc": "2026-10-29T16:48:12.826109+00:00",
+  "retired_full_study_collectors": [
+    "21282782",
+    "21284586"
+  ],
+  "released_short_checks": [
+    "21279857",
+    "21280689",
+    "21281001",
+    "21281002",
+    "21284086",
+    "21289017",
+    "21288137",
+    "21288138",
+    "21289365",
+    "21289366"
+  ],
+  "commands": [
+    {
+      "utc": "2026-10-29T16:47:41.911856+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21282782"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:41.935943+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21284586"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:41.959005+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21279857"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:41.982043+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21280689"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:42.005154+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21281001"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:42.029360+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21281002"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:42.052403+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21284086"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:42.075363+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289017"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:42.098194+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288137"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:42.121137+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288138"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:43.146214+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289365"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:44.172451+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289366"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:45.195126+00:00",
+      "command": [
+        "scancel",
+        "21282782"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:46.217598+00:00",
+      "command": [
+        "scancel",
+        "21284586"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:47.290536+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21279857"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:49.318738+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21279857"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:50.344026+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21280689"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:51.368813+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21280689"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:52.393602+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21281001"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:54.457370+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21281001"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:55.481191+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21281002"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:56.506810+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21281002"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:57.531184+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21284086"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:47:59.558036+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21284086"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:00.580004+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21289017"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:01.620898+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289017"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:02.644830+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21288137"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:04.673754+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288137"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:05.696664+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21288138"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:07.723860+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288138"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:08.749326+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21289365"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:09.774865+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289365"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:10.799010+00:00",
+      "command": [
+        "scontrol",
+        "release",
+        "21289366"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:48:12.825070+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289366"
+      ],
+      "returncode": 0
+    }
+  ],
+  "new_training_runs": 0,
+  "new_jobs": 0,
+  "dependencies_edited": false,
+  "maximum_remaining_reserved_resources": {
+    "workers": 8,
+    "cpus": 10,
+    "memory_gib": 88
+  },
+  "resource_reasoning": "At most two 2CPU/32GiB SMAC gates, two 1CPU/4GiB HC-chain gates, two 1CPU/4GiB Ant/memory-chain gates, and two 1CPU/4GiB Prey workers; serial successors fit within each branch. The sigma gates still follow the Prey collector plus the memory audit.",
+  "scientific_dependencies": "Original memory checks still wait for all six feedforward checks; sigma checks still wait for the corrected whole-memory audit. Cancelled Ant/HC full-study collectors represented capacity edges only for their native successors. Portable replay uses an already-completed archived development study.",
+  "no_full_budget_success_claim": true,
+  "unsubmitted_learning_studies_remain_unsubmitted": true,
+  "other_reproduction_untouched": true
+}

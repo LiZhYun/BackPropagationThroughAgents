@@ -1,0 +1,59 @@
+{
+  "recorded_utc": "2026-10-29T16:48:26.891222+00:00",
+  "user_instructions": [
+    "do not need to do full-budget",
+    "Stop full-budget jobs and preserve partial results"
+  ],
+  "supersedes": "Full paper budgets across all 45 canonical targets as a release gate; historical frozen studies remain unchanged.",
+  "release_requirements": [
+    "Preserve and explain both papers core methods, with explicit numerical corrections and method-specific tests.",
+    "Provide a readable shared package, documented private simulator profiles, runnable shorter examples and checkpoint replay.",
+    "Verify native integration for supported methods/environments, clearly separating correctness from learning performance.",
+    "Use predeclared shorter training budgets and matched baselines for selected multi-seed comparisons; retain every outcome and require complete declared groups before pooling.",
+    "Keep development and independent final training/evaluation seeds separate for any claimed improvement; publish actual budgets, protocols and uncertainty.",
+    "Retain failed and interrupted experiments, portable provenance and accurate limitations; claim above-paper performance only when comparable evidence supports it."
+  ],
+  "not_required": [
+    "Completing paper training budgets on every target",
+    "A45-target full-budget performance sweep"
+  ],
+  "performance_goal": "Higher performance remains an empirical goal, not an engineering guarantee or a reason to relabel partial data.",
+  "scheduling": {
+    "cancelled_arrays": [
+      "21251960",
+      "21272799",
+      "21272800",
+      "21279129",
+      "21282468"
+    ],
+    "retired_collectors": [
+      "21282782",
+      "21284586"
+    ],
+    "short_checks_retained": [
+      "21279857",
+      "21280689",
+      "21281001",
+      "21281002",
+      "21284086",
+      "21289017",
+      "21288137",
+      "21288138",
+      "21289365",
+      "21289366"
+    ],
+    "continue_short_prey_development": "21287360",
+    "no_new_full_budget_jobs": true,
+    "no_new_learning_submitted": true
+  },
+  "prior_22_percent": "10/45 was exact-budget artifact coverage, including failures; it is no longer a readiness denominator and never measured validated reproduction.",
+  "reproduction_ready": false,
+  "backups": [
+    "refine-logs/STATUS_20261029T164826Z_before_reduced_budget.md",
+    "refine-logs/EXPERIMENT_PLAN_20261029T164826Z_before_reduced_budget.md",
+    "refine-logs/EXPERIMENT_TRACKER_20261029T164826Z_before_reduced_budget.md",
+    "results/reduced_budget_scope_20261029/before_README.md",
+    "results/reduced_budget_scope_20261029/before_worker_schedule.md",
+    "results/reduced_budget_scope_20261029/before_benchmark_coverage.md"
+  ]
+}

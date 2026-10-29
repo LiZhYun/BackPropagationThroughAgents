@@ -2,6 +2,12 @@
 
 Updated: 2026-10-29. Status: active work; no full benchmark reproduction claimed. Earlier dated plans and allocations remain as history.
 
+## Current scope amendment, 2026-10-29
+
+User instruction: “do not need to do full-budget”, followed by “Stop full-budget jobs and preserve partial results”. This supersedes historical requirements to finish all 45 paper budgets. Five long arrays are stopped and their saved bytes archived; two impossible full-study collectors are retired. Existing short native checks and the 1M Predator–Prey development study continue. No new full-budget or learning jobs are submitted.
+
+Release requires correct documented mechanisms, readable installation/training/evaluation flows, native integration, and selected predeclared shorter-budget multi-seed comparisons with matched controls. All declared seeds remain required before group statistics; independent final seeds and ablations remain required for claims of improvement. Smaller budgets do not prove published endpoint superiority. Keep historical studies/configurations/criteria unchanged and label interrupted runs as partial. [Canonical current scope](../experiments/reproduction_scope_reduced_budget_20261029.json).
+
 ## Claim map
 
 | Claim | Minimum evidence |
@@ -15,9 +21,9 @@ Anti-claims: improvement only comes from changed simulator physics, more environ
 
 1. **Numerical correctness.** Exact matrix payoffs/gradients, scalar PPO reductions, likelihood identity, causal masks, legal actions, termination/truncation, and checkpoint restoration. Failure stops algorithm benchmarking. Unit and integration tests provide evidence; they do not prove convergence.
 2. **Development matrix games.** Independent MAPPO, AR-PPO, BPPO, and AgentMixer on climbing and penalty. Start with training seeds 0, 1, 2 and 100k joint steps per run. Track exact expected reward, greedy reward, optimum probability, first threshold attainment, and all seed outcomes. These are one-step development games, matching pinned released environment termination. Legacy training logs multiply step reward by200; the exact historical figure-to-logger mapping remains unverified.
-3. **Shared simulator benchmarks.** Multi-Agent MuJoCo and SMACv2, with distinct observation protocols where the papers differ. Use `configs/paper_targets.json`; never replace missing numeric thresholds with invented values. Run baseline smoke checks, method pilots, then paper-matched budgets. Compare final performance and learning-curve area; preserve the paper's mean/median statistic and additionally publish seed-level scores.
-4. **Paper-specific coverage and ablations.** BPTA Football, AgentMixer Predator-Prey, no-peer BPPO/AR-PPO, and identity-modifier AgentMixer/MAPPO comparisons. Keep architecture and budget differences explicit. Required for full coverage, with lower priority than shared suites.
-5. **Independent confirmation and release.** Freeze configurations and code snapshots before at least five final training seeds disjoint from development seeds. Record evaluation episode seeds, environment versions, raw returns, all failures, checkpoints, and exact commands. Final seed IDs will be fixed before launch. Add confidence intervals and distinguish point-score improvements from statistically established improvements.
+3. **Shared simulator benchmarks.** Multi-Agent MuJoCo and SMACv2, with distinct observation protocols where the papers differ. Use `configs/paper_targets.json`; never replace missing numeric thresholds with invented values. Run baseline smoke checks and selected shorter-budget method/control studies; report the actual budgets explicitly. Compare final performance and learning-curve area; preserve the paper's mean/median statistic and additionally publish seed-level scores.
+4. **Paper-specific coverage and ablations.** BPTA Football, AgentMixer Predator-Prey, no-peer BPPO/AR-PPO, and identity-modifier AgentMixer/MAPPO comparisons. Keep architecture and budget differences explicit. Retain implementation coverage and explicit limitations; full paper-budget execution is optional.
+5. **Independent confirmation and release.** For selected performance claims, freeze configurations, chosen shorter budgets and code snapshots before at least five final training seeds disjoint from development seeds. Record evaluation episode seeds, environment versions, raw returns, all failures, checkpoints, and exact commands. Final seed IDs will be fixed before launch. Add confidence intervals and distinguish point-score improvements from statistically established improvements.
 
 ## Execution order and resource limits
 
@@ -28,7 +34,7 @@ Current ceiling and scheduled maximum: **fourteen workers/sixteen CPUs/120 GiB**
 | M0 correctness | All relevant tests and all-method smoke runs pass | Single-threaded CPU checks |
 | M1 matrix development | Stable training and interpretable across-seed results | CPU array, at most two concurrent tasks |
 | M2 simulator pilot | Action/observation semantics and metric parity verified | One smoke job per new simulator |
-| M3 full benchmarks | Development configuration frozen; protocol resolved | Start with at most two training jobs; size resources from pilot timings |
+| M3 selected shorter-budget comparisons | Configuration/budget frozen; protocol resolved | Use measured resource bounds; no new full-budget sweeps |
 | M4 release | All required tasks and release artifacts validated | Independent final seeds and documentation checks |
 
 After the100k HalfCheetah pilot (136–186seconds perrun), allow at most four concurrent CPU workers across this project: two for the longer MuJoCo check and two for short matrix/SMAC diagnostics. Each requests at most2CPUs/8GB, so the ceiling is8CPUs/32GB. Record job dependencies to enforce this limit. This supersedes the initial two-worker ceiling above.
@@ -59,8 +65,8 @@ Do not invent GPU-hour estimates before measuring simulator throughput. Known bu
 - [x] All-method end-to-end checks on matrix, SMACv2 and MA-MuJoCo.
 - [ ] Development matrix sweep and diagnosis.
 - [ ] Continuous/recurrent method coverage where required.
-- [ ] All benchmark protocols and numeric/plot targets resolved.
-- [ ] Full baseline and method evidence.
+- [ ] Protocols resolved or qualified for supported comparisons; other target gaps documented.
+- [ ] Complete selected shorter-budget baseline/method evidence with all declared seeds.
 - [ ] Independent final seeds and ablations.
 - [ ] Reproducible community release with verified performance claims.
 

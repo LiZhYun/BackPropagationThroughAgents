@@ -250,3 +250,6 @@
 | R175 | Sigmoid native release |21289365→21289366 |6×44kobserved native+completeaudit | QUEUED |Preybranchafter21288041and21289017;max2×1CPU4GiB30min,then1CPU2GiB5min. Earlier18FF/18GRUallocations preserved;14/16/120ceilingunchanged.6native declarations added;18newlearningstillunsubmitted. Coverage913/76/45,0basicerrors. experiments/continuous_sigmoid_gate_schedule_20261029.json |
 
 | R176 | First Prey learning completion |21287360_0,coefficient0,penalty0,seed0 |1M,100updates/101evals | RAW AUDIT PASS |2020episodes/10100windows;all100updates+101evals repeat original baseline exactly excludingelapsed. AuthoritativeCOMPLETED0:0;originalartifacts unchanged.1/24audited,groups/selection withheld;fullfinalreplay pending. experiments/prey_distillation_learning_first_complete_20261029.json |
+
+
+| R177 | User scope change | Full-budget release gate removed | Five arrays stopped; two obsolete collectors retired | APPLIED | 8 completed/12 interrupted/58 unstarted runs preserved in 206 byte-matched files. Ten unchanged short checks released; Prey1M continues. No full-budget success or readiness percentage claimed. experiments/reproduction_scope_reduced_budget_20261029.json |

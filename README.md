@@ -4,6 +4,8 @@ A readable, shared implementation of [Backpropagation Through Agents](https://ar
 
 **Status: implementation and experiments in progress.** Matrix games, Predator–Prey and a shared SMAC/MuJoCo/Football trainer are runnable. Real simulator checks pass. Full benchmark reproduction and performance beyond the papers are not yet established. This repository documents corrections to the old implementation instead of silently preserving its bugs.
 
+Release validation uses documented shorter training budgets; completing all 45 paper-budget benchmarks is not a requirement. Correctness/native checks and multi-seed learning results are reported separately. Failed and interrupted studies remain available, and performance claims require comparable evidence. See the [current scope and remaining requirements](STATUS.md#current-scope-shorter-budgets-29-october-2026).
+
 ## Quick start
 
 The tested core setup uses Python 3.11.15 and CPU PyTorch 2.6.0. The checked-in
