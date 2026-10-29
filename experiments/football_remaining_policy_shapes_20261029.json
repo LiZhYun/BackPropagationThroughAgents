@@ -1,0 +1,355 @@
+{
+  "recorded_utc": "2026-10-29T10:33:28.624709+00:00",
+  "scope": "Synthetic tensors only: frozen policy construction,recurrent memory,masked action scores,gradients and AgentMixer modes for every new native shape. No simulator execution or performance evidence.",
+  "environment": "football",
+  "manifest": "results/football_remaining_gru_check10k_20261029T102335Z/manifest.json",
+  "manifest_sha256": "fec9e584292938e1f2c2b04edc24d23e0b21e4a805535e2ffc8f933760ff5f4d",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "script": "results/remaining_discrete_gate_20261029/check_shapes.py",
+  "script_sha256": "27e83d65e3db80a0b21f4330463d4e684f1dcc3abe20149465dd19f5e4be66bf",
+  "torch_version": "2.6.0+cpu",
+  "runs": [
+    {
+      "variant": "5_vs_5_mappo_gru",
+      "scenario": "5_vs_5",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 151116,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "5_vs_5_arppo_gru",
+      "scenario": "5_vs_5",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 158412,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "5_vs_5_bppo_gru",
+      "scenario": "5_vs_5",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 158412,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "5_vs_5_agentmixer_gru",
+      "scenario": "5_vs_5",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 317511,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": true
+    },
+    {
+      "variant": "5_vs_5_agentmixer_identity_gru",
+      "scenario": "5_vs_5",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 317511,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": true
+    },
+    {
+      "variant": "academy_corner_mappo_gru",
+      "scenario": "academy_corner",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 10,
+        "obs_dim": 115,
+        "state_dim": 1150,
+        "action_dim": 19
+      },
+      "policy_parameters": 377790,
+      "packed_observation_shape": [
+        3,
+        10,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "academy_corner_arppo_gru",
+      "scenario": "academy_corner",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 10,
+        "obs_dim": 115,
+        "state_dim": 1150,
+        "action_dim": 19
+      },
+      "policy_parameters": 432510,
+      "packed_observation_shape": [
+        3,
+        10,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "academy_corner_bppo_gru",
+      "scenario": "academy_corner",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 10,
+        "obs_dim": 115,
+        "state_dim": 1150,
+        "action_dim": 19
+      },
+      "policy_parameters": 432510,
+      "packed_observation_shape": [
+        3,
+        10,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "academy_corner_agentmixer_gru",
+      "scenario": "academy_corner",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 10,
+        "obs_dim": 115,
+        "state_dim": 1150,
+        "action_dim": 19
+      },
+      "policy_parameters": 588909,
+      "packed_observation_shape": [
+        3,
+        10,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": true
+    },
+    {
+      "variant": "academy_corner_agentmixer_identity_gru",
+      "scenario": "academy_corner",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 10,
+        "obs_dim": 115,
+        "state_dim": 1150,
+        "action_dim": 19
+      },
+      "policy_parameters": 588909,
+      "packed_observation_shape": [
+        3,
+        10,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": true
+    },
+    {
+      "variant": "academy_counterattack_hard_mappo_gru",
+      "scenario": "academy_counterattack_hard",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 151116,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "academy_counterattack_hard_arppo_gru",
+      "scenario": "academy_counterattack_hard",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 158412,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "academy_counterattack_hard_bppo_gru",
+      "scenario": "academy_counterattack_hard",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 158412,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": false
+    },
+    {
+      "variant": "academy_counterattack_hard_agentmixer_gru",
+      "scenario": "academy_counterattack_hard",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 317511,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": true
+    },
+    {
+      "variant": "academy_counterattack_hard_agentmixer_identity_gru",
+      "scenario": "academy_counterattack_hard",
+      "seed": 0,
+      "dimensions": {
+        "is_discrete": true,
+        "num_agents": 4,
+        "obs_dim": 115,
+        "state_dim": 460,
+        "action_dim": 19
+      },
+      "policy_parameters": 317511,
+      "packed_observation_shape": [
+        3,
+        4,
+        179
+      ],
+      "masked_sampling_and_scoring": true,
+      "finite_actor_gradients": true,
+      "local_global_modes_equal": true
+    }
+  ],
+  "all_passed": true
+}

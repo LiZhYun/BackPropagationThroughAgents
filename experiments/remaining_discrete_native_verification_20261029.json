@@ -1,0 +1,59 @@
+{
+  "recorded_utc": "2026-10-29T10:35:56.505027+00:00",
+  "scope": "Configuration,source,synthetic policy-shape and scheduler verification for remaining discrete native gates. Native outputs do not yet exist; no new learned-performance evidence.",
+  "plan": "experiments/remaining_discrete_native_study_20261029.json",
+  "plan_sha256": "880472ed6f7ee611a01f07904c34edd055a78bbfc1f55cc768ffd9a06c7258ac",
+  "conditions": 55,
+  "scenarios": 11,
+  "canonical_targets_related": 16,
+  "policy_preflights": [
+    {
+      "environment": "football",
+      "conditions": 15,
+      "report": "experiments/football_remaining_policy_shapes_20261029.json",
+      "report_sha256": "b02feab1bc89d8c01ee3da15ecd3e0ebe2796b0512f41c23e5aca6231477022d"
+    },
+    {
+      "environment": "smac",
+      "conditions": 40,
+      "report": "experiments/smac_remaining_policy_shapes_20261029.json",
+      "report_sha256": "4bf1c8abc77e818745af44b59d73b4bc13e3c2ab9ebeef907275f97f45bba80a"
+    }
+  ],
+  "native_jobs": [
+    {
+      "environment": "football",
+      "job_id": "21281001",
+      "conditions": 15,
+      "dependency": "afterany:21280689"
+    },
+    {
+      "environment": "smac",
+      "job_id": "21281002",
+      "conditions": 40,
+      "dependency": "afterany:21272799"
+    }
+  ],
+  "current_active_resources": {
+    "workers": 8,
+    "cpus": 10,
+    "memory_gib": 96
+  },
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  },
+  "coverage_provenance": "experiments/benchmark_coverage_20261029_midday.provenance.json",
+  "coverage_provenance_sha256": "d98c12957e820b5b27e0fdaff5f7855de77fc9e862eff3fb4df6c9bccfffe191",
+  "training_package_unchanged": true,
+  "unit_suite": "975passed/1CUDA-only skip from previous turn;not rerun because no training/test change.",
+  "frozen_source_config_checks_passed": true,
+  "native_checks_completed": 0,
+  "new_learning_jobs_submitted": 0,
+  "prepared_native_auditor": "results/remaining_discrete_gate_20261029/audit.py",
+  "prepared_native_auditor_sha256": "d18d630723d72e2e8b2c2f2b139a685f0934c448f209ecd3d41dd25ffb6eb27e",
+  "prepared_native_auditor_status": "Syntax checked only; run per family after all declarations and replays complete.",
+  "local_document_links_checked": 73,
+  "limitation": "A clean target/provenance inventory is not proof of achieved returns,full protocol equivalence,independent final seeds or release readiness."
+}

@@ -1,0 +1,74 @@
+{
+  "recorded_utc": "2026-10-29T10:24:57.141757+00:00",
+  "jobs": [
+    {
+      "environment": "football",
+      "job_id": "21281001",
+      "conditions": 15,
+      "dependency": "afterany:21280689"
+    },
+    {
+      "environment": "smac",
+      "job_id": "21281002",
+      "conditions": 40,
+      "dependency": "afterany:21272799"
+    }
+  ],
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  },
+  "active_project_before": [
+    {
+      "job": "21251960_0",
+      "name": "bpta-agentmixer-football20m",
+      "cpus": 1,
+      "memory_gib": 8
+    },
+    {
+      "job": "21251960_1",
+      "name": "bpta-agentmixer-football20m",
+      "cpus": 1,
+      "memory_gib": 8
+    },
+    {
+      "job": "21272800_3",
+      "name": "bpta-agentmixer-mujoco10m",
+      "cpus": 1,
+      "memory_gib": 4
+    },
+    {
+      "job": "21272800_2",
+      "name": "bpta-agentmixer-mujoco10m",
+      "cpus": 1,
+      "memory_gib": 4
+    },
+    {
+      "job": "21279129_0",
+      "name": "bpta-agentmixer-hc3-confirm10m",
+      "cpus": 1,
+      "memory_gib": 4
+    },
+    {
+      "job": "21279129_1",
+      "name": "bpta-agentmixer-hc3-confirm10m",
+      "cpus": 1,
+      "memory_gib": 4
+    },
+    {
+      "job": "21272799_0",
+      "name": "bpta-agentmixer-smac10m",
+      "cpus": 2,
+      "memory_gib": 32
+    },
+    {
+      "job": "21272799_1",
+      "name": "bpta-agentmixer-smac10m",
+      "cpus": 2,
+      "memory_gib": 32
+    }
+  ],
+  "capacity_reservation": "The two HC confirmation/local-scale4GiB slots next belong to the one8GiB Football native worker. Future18-run local-scale1M release must depend on the whole Football native array or explicitly verify a different freed chain.",
+  "no_existing_jobs_modified": true
+}

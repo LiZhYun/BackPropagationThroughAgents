@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T10:27:01.705314+00:00",
+  "report": "results/benchmark_coverage_20261029_midday.json",
+  "report_sha256": "3957545e7784f4bf5f110ffbd3f5afd6468d201e17327c2b0b479fbfc20c2b63",
+  "csv": "experiments/benchmark_coverage_20261029_midday.csv",
+  "csv_sha256": "fe267600bc1c8d3114d09a476d9ecacdc12514fee76130cc39a91f422ae10060",
+  "runs": 853,
+  "manifests": 71,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 9,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Indexed artifacts and declarations only. New55discrete and6local-scale native gates do not establish learning success; unsubmitted18-run local-scale1M plan is not in the jobs ledger.",
+  "targets_without_exact_budget_method_artifacts": 36
+}

@@ -9,6 +9,7 @@ Updated 2026-10-29. **Full reproduction and performance beyond the papers are no
 - **Entropy control: 9/9 complete.** Zero entropy lowers all three variant means and curve areas compared with 0.01; it does not fix the AgentMixer gap.
 - Football is at about 15.2M/20M and SMAC at 4.05M/10M for their first two baseline runs. Two of 48 MuJoCo coverage runs are complete; the first two fresh HC3×2 confirmation runs are around 2.5M/10M. These are live counters, not final results.
 - An optional state-independent local Gaussian scale now isolates another documented AgentMixer architecture difference. All 975 source tests pass (one CUDA skip), and 24 default-compatibility cases are bitwise identical through one Adam step. Six native gates are queued; the matched 18-run learning plan is frozen and unsubmitted. See the [control specification](docs/agentmixer_continuous.md#local-uncertainty-control).
+- Remaining recurrent native coverage is queued for three Football scenarios and eight SMAC maps: 55 conditions tied to 16 canonical targets, with all five controls retained. No additional learning jobs are released. [Scope and dependencies](docs/discrete_remaining_coverage.md).
 - A portable complete-study exporter passes 11 focused tests. The relocated 12-run HalfCheetah bundle reproduces all curves and aggregates; native checkpoint replay is pending separately.
 
 See the [new control verification](experiments/continuous_local_scale_verification_20261029.json), the [morning progress report](docs/progress_20261029_am.md) for all comparisons and limitations, and the [export guide](docs/portable_studies.md) for portable artifacts.
@@ -23,8 +24,10 @@ See the [new control verification](experiments/continuous_local_scale_verificati
 | 21279129 | Ten fresh-seed HC 3×2 BPPO/AR confirmation runs | At most 2 × 1 CPU/4 GiB/7 h |
 | 21279857 | Native replay from relocated evidence, after confirmation | One 1 CPU/2 GiB/10 min task |
 | 21280689 | Six local-scale native checks and checkpoint replays, after bundle replay | At most 2 × 1 CPU/4 GiB/30 min |
+| 21281001 | Fifteen remaining Football native checks, after local-scale checks | One 1 CPU/8 GiB/45 min worker |
+| 21281002 | Forty remaining SMAC native checks, after current SMAC study | At most 2 × 2 CPUs/32 GiB/60 min |
 
-The schedule stays within eight workers/sixteen CPUs/96 GiB. Other reproduction work is untouched. Batches require several days; query recorded jobs for live state.
+The schedule stays within eight workers/sixteen CPUs/96 GiB. The unsubmitted local-scale learning study must wait for the Football native array or another verified free allocation. Other reproduction work is untouched. Batches require several days; query recorded jobs for live state.
 
 ## What is verified
 
@@ -32,7 +35,7 @@ The schedule stays within eight workers/sixteen CPUs/96 GiB. Other reproduction 
 - All 96 initial MuJoCo/SMAC native integrations and 16 Football integrations pass. Predator–Prey matches 10,240 pinned-release transitions. These short checks do not establish learned performance.
 - The current source suite passes 975 tests with 1 CUDA-only skip. The earlier clean installed-wheel check passed 899 tests with 1 CUDA-only skip; it predates later reporting/export tests and the optional local-scale control. Existing training defaults and frozen snapshots are preserved. Hosted CI remains unverified; [clean-install evidence](docs/clean_checkout.md).
 - Independent BPPO/AR matrix 1M confirmation passes all 20 runs near the games' return ceilings. Both methods succeed; the paired endpoint intervals include zero. [Evidence](docs/matrix_confirmation.md).
-- All 45 canonical targets are indexed. The [latest snapshot](experiments/benchmark_coverage_20261029_am.provenance.json) contains 792 runs/68 manifests with zero provenance errors. Nine targets have completed exact-budget method artifacts, including unsuccessful outcomes; 36 still lack them. Artifact counts are not success counts.
+- All 45 canonical targets are indexed. The [latest snapshot](experiments/benchmark_coverage_20261029_midday.provenance.json) contains 853 runs/71 manifests with zero provenance errors. Nine targets have completed exact-budget method artifacts, including unsuccessful outcomes; 36 still lack them. Artifact counts are not success counts.
 
 ## Required before release
 

@@ -91,3 +91,11 @@ running frozen experiments are unchanged by this report.
 ## Snapshot 29 October 2026
 
 The [new snapshot](../experiments/benchmark_coverage_20261029.provenance.json) indexes 782 runs/67 manifests, all 45targets, and zero manifest/run-provenance errors. Eight targets have completed exact-budget method artifacts and 37 still lack them. This includes unsuccessful outcomes; it is not eight successful reproductions. The 53 newly queued full-budget follow-ups do not count as complete. [Current progress](progress_20261029.md).
+
+The [12:27 Helsinki snapshot](../experiments/benchmark_coverage_20261029_midday.provenance.json)
+indexes 853 runs/71 manifests with zero basic provenance errors. Nine targets
+have completed exact-budget method artifacts and 36 still lack them. It includes
+six queued continuous local-scale checks and 55 queued [remaining discrete
+scenario checks](discrete_remaining_coverage.md); none of those short checks
+establishes learned performance. The unsubmitted 18-run local-scale learning
+plan is not included in the jobs ledger.

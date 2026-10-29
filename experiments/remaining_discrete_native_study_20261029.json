@@ -1,0 +1,796 @@
+{
+  "recorded_utc": "2026-10-29T10:23:40.909668+00:00",
+  "scope": "Close the recurrent training-layout integration gap on all remaining discrete simulator scenarios.55short gates only; no new learning jobs or performance claim.",
+  "targets": "configs/paper_targets.json",
+  "targets_sha256": "d0846376aee067a8ea16552d1b17b127c28b06f615c30b9e433cc73169ae49bc",
+  "studies": [
+    {
+      "environment": "football",
+      "scenarios": [
+        "5_vs_5",
+        "academy_corner",
+        "academy_counterattack_hard"
+      ],
+      "target_ids": [
+        "bpta:academy_counterattack_hard",
+        "bpta:academy_corner",
+        "bpta:5_vs_5"
+      ],
+      "config_plan": "configs/football_remaining_gru_check10k.json",
+      "config_plan_sha256": "767a000fdf3e8dd93fbd30ba72dff33b284e4ed935425e13c0f9dbc00b65fb67",
+      "manifest": "results/football_remaining_gru_check10k_20261029T102335Z/manifest.json",
+      "manifest_sha256": "fec9e584292938e1f2c2b04edc24d23e0b21e4a805535e2ffc8f933760ff5f4d",
+      "reference_manifest": "results/football_3v1_gru20m_20261028T082219Z/manifest.json",
+      "reference_manifest_sha256": "34dd3866f5c1d432ac5e9698dae9f9b96e73dd8a27da1695904d21e179007f00",
+      "completed_reference_audit": "experiments/football_batch1m_complete_20261028.json",
+      "completed_reference_audit_sha256": "f532d111743a3a5eb9de941431f213ad8b8374a3337a4ab7ae5f0e9518d8a1cd",
+      "prior_native_audit": "experiments/football_batch_integration_complete_20261026.json",
+      "prior_native_audit_sha256": "6c137cfd54bec0d9ad58b34320cce5c6215af290211206c742508f74771bfe4a",
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+        "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+        "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+        "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+        "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "all_conditions": [
+        {
+          "variant": "5_vs_5_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "5_vs_5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0.json",
+          "config_sha256": "67ecea77ab70db74f10590a1558b4d30445bc1833ed6607e102caa88b3fcd131",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "368b5e09b8122cad35a31382abd1ea1aaddfd7d6ba5eaead670b4aef4696a5de"
+        },
+        {
+          "variant": "5_vs_5_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "5_vs_5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_arppo_gru_seed0.json",
+          "config_sha256": "317f238a29da6ec2d07fe6bf2e93f656d311f64bdd2872105d21efafc8b68de8",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "ec085a0fde85b6d94c5efc6c993684f2be9481f0ff730607c29f33c0af5816a9"
+        },
+        {
+          "variant": "5_vs_5_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "5_vs_5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_bppo_gru_seed0.json",
+          "config_sha256": "6cb2e78e5499cce7ea96d48baf931ba78106f9289566cdc76455fb09636be0a6",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "05f822f1f65da5351c52bc02528696b82ea67550dcb0111151984c870f088755"
+        },
+        {
+          "variant": "5_vs_5_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "5_vs_5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_gru_seed0.json",
+          "config_sha256": "9a3488ca58c37af025e8ece3c78a76decdf7542f86f8c62b3c5695ba59b8e1c7",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "84990c714e6d59c742e79f62c106240cb03ee9e9a3a867ffe070446a25e2afa5"
+        },
+        {
+          "variant": "5_vs_5_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "5_vs_5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "35a154d3470ca293ae27175afeb01525a78724aa75560ec5fbcd56fd3ab18451",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "18a5888bcfc2b09dfeee6ee09ab76404fcc4093d7e90b73a6d430016e390a5cb"
+        },
+        {
+          "variant": "academy_corner_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "academy_corner",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_mappo_gru_seed0.json",
+          "config_sha256": "bf7e421f7def4053551d3ff667c880018afc4ea54a8ae770c8101046dd134227",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "368b5e09b8122cad35a31382abd1ea1aaddfd7d6ba5eaead670b4aef4696a5de"
+        },
+        {
+          "variant": "academy_corner_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "academy_corner",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_arppo_gru_seed0.json",
+          "config_sha256": "aa2b4a8dec82b4b174469fefd126e473c21ace693e672d5b56f02ba7f31c74ce",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "ec085a0fde85b6d94c5efc6c993684f2be9481f0ff730607c29f33c0af5816a9"
+        },
+        {
+          "variant": "academy_corner_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "academy_corner",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_bppo_gru_seed0.json",
+          "config_sha256": "b6c5891194bf885e2409c0d603bf4e4c924675523fb8d06c5c4696b5b2f86462",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "05f822f1f65da5351c52bc02528696b82ea67550dcb0111151984c870f088755"
+        },
+        {
+          "variant": "academy_corner_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "academy_corner",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_gru_seed0.json",
+          "config_sha256": "f9ea21197cb9c5bbf6c2277b35c1d912973423452637464d97ed235a393ff19d",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "84990c714e6d59c742e79f62c106240cb03ee9e9a3a867ffe070446a25e2afa5"
+        },
+        {
+          "variant": "academy_corner_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "academy_corner",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "2774afb1af0ae9ae66d277b481bf37743b619758436ff3463d265b01109e73b8",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "18a5888bcfc2b09dfeee6ee09ab76404fcc4093d7e90b73a6d430016e390a5cb"
+        },
+        {
+          "variant": "academy_counterattack_hard_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "academy_counterattack_hard",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_mappo_gru_seed0.json",
+          "config_sha256": "4662644d862fd279a8869ad94def66f7427bf3b122296f4e9f77d7ab370f433a",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "368b5e09b8122cad35a31382abd1ea1aaddfd7d6ba5eaead670b4aef4696a5de"
+        },
+        {
+          "variant": "academy_counterattack_hard_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "academy_counterattack_hard",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_arppo_gru_seed0.json",
+          "config_sha256": "6c8f45d2287aca26ce129e58699593ef650e47beea65f21666df40b00e40b390",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "ec085a0fde85b6d94c5efc6c993684f2be9481f0ff730607c29f33c0af5816a9"
+        },
+        {
+          "variant": "academy_counterattack_hard_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "academy_counterattack_hard",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_bppo_gru_seed0.json",
+          "config_sha256": "9520c11e1091727df568e55dc51a2b3b3d8f45c524510ecd471876ef65569ef1",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "05f822f1f65da5351c52bc02528696b82ea67550dcb0111151984c870f088755"
+        },
+        {
+          "variant": "academy_counterattack_hard_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "academy_counterattack_hard",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_gru_seed0.json",
+          "config_sha256": "0bfaa0bfe9b7c0bdfbf00acc0139bcebace45595fdff639546b183c13eea451d",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "84990c714e6d59c742e79f62c106240cb03ee9e9a3a867ffe070446a25e2afa5"
+        },
+        {
+          "variant": "academy_counterattack_hard_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "academy_counterattack_hard",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "f5363b8f0c71f5b2ba8cd983dd8c01338d8d314a36d80fc79af7217bdef4e1f4",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_3v1_gru20m_20261028T082219Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "18a5888bcfc2b09dfeee6ee09ab76404fcc4093d7e90b73a6d430016e390a5cb"
+        }
+      ],
+      "prior_native_shapes": {
+        "academy_counterattack_hard": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 4,
+            "obs_dim": 115,
+            "state_dim": 460,
+            "action_dim": 19
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_integration128_20261025T083008Z/mappo_academy_counterattack_hard_seed0/config.json",
+          "prior_metadata_sha256": "b9a20d17fbcf2bf497b1662ab9901a8189af3ccb39ad2677aa2673c3b4a8466c"
+        },
+        "academy_corner": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 115,
+            "state_dim": 1150,
+            "action_dim": 19
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_integration128_20261025T083008Z/mappo_academy_corner_seed0/config.json",
+          "prior_metadata_sha256": "4d0a3e897d48fd16c0f8cc6bc95d92315c6c61bef44851cb33e07077a9aaf194"
+        },
+        "5_vs_5": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 4,
+            "obs_dim": 115,
+            "state_dim": 460,
+            "action_dim": 19
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_integration128_20261025T083008Z/mappo_5_vs_5_seed0/config.json",
+          "prior_metadata_sha256": "f30090bb31f0e19dd181ed641ad5997c3f9e3023300a92c44d6c5d4ade770796"
+        }
+      },
+      "frozen_parser_validated": true,
+      "dispatch": "results/remaining_discrete_gate_20261029/football.sbatch",
+      "dispatch_sha256": "5c304ff23bcee755f4347ef41d233aa2062adbad5f2dac56dd8f84fdff9c9123",
+      "resources": {
+        "cpus": 1,
+        "memory_gib": 8,
+        "maximum_workers": 1,
+        "wall_minutes": 45,
+        "automatic_requeue": false
+      },
+      "dependency": "afterany:21280689"
+    },
+    {
+      "environment": "smac",
+      "scenarios": [
+        "protoss_10v10",
+        "protoss_10v11",
+        "protoss_5v5",
+        "terran_10v10",
+        "terran_10v11",
+        "zerg_10v10",
+        "zerg_10v11",
+        "zerg_5v5"
+      ],
+      "target_ids": [
+        "bpta:10gen_protoss_5v5",
+        "bpta:10gen_protoss_10v10",
+        "bpta:10gen_protoss_10v11",
+        "bpta:10gen_zerg_5v5",
+        "bpta:10gen_zerg_10v10",
+        "bpta:10gen_zerg_10v11",
+        "bpta:10gen_terran_10v10",
+        "bpta:10gen_terran_10v11",
+        "agentmixer:10gen_protoss_5v5",
+        "agentmixer:10gen_zerg_5v5",
+        "agentmixer:10gen_protoss_10v10",
+        "agentmixer:10gen_terran_10v10",
+        "agentmixer:10gen_zerg_10v10"
+      ],
+      "config_plan": "configs/smac_remaining_gru_check10k.json",
+      "config_plan_sha256": "624664cb85a46ed9adb036161ad831e666df5f3af8de330b93e11661364dd570",
+      "manifest": "results/smac_remaining_gru_check10k_20261029T102338Z/manifest.json",
+      "manifest_sha256": "e6a909a88b90e992b9dd51ba96102945d67414b13a490c7b394692c0949c688a",
+      "reference_manifest": "results/smac_terran5_gru10m_20261028T222334Z/manifest.json",
+      "reference_manifest_sha256": "4cf7d12788d5ca72c7096ab42c662953d34d4de1594d5941f47c77a3b95174fe",
+      "completed_reference_audit": "experiments/smac_layout25_1m_complete_20261029.json",
+      "completed_reference_audit_sha256": "6e06af0fde496d8744a80b3ac36b55dc6c55e98cfeecbfc56822e82ef6902584",
+      "prior_native_audit": "experiments/smac_layout25_native_gate_complete_20261028.json",
+      "prior_native_audit_sha256": "e473c183fd8f8a15ac801f0ea2391ea312794904600ad894ed43e1c32fec66b4",
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+        "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "94c114ca6f6ba6331b0052295400bc1657628a9e0487af0964f4e19ead9ebf71",
+        "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "1b7f32d36d9337374c6a3a5ab7e1dc86d3a73f2ba33fbb13a6a467fb3b639dea",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+        "matrix_validation.py": "226e9f1acd2b751ce6f4a99167277445181fc3b5e3fd23a55e5a76183f5e2e67",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "8e1d91565ec7eb24fa94aba8966f5b8773b13c0440d768dd047e2c177a0529ab",
+        "simulator_train.py": "ed2a828ca620ba8396a152b904886133fc91ec821244e90eff5d8369be6c7903",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      },
+      "all_conditions": [
+        {
+          "variant": "protoss_10v10_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "protoss_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0.json",
+          "config_sha256": "139b27c0fb2f9075168e366379a45eda5403e301a77d829ab05e808cc3c418cb",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "protoss_10v10_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "protoss_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0.json",
+          "config_sha256": "5905d3fa431d888e68aee87bb66d5f78d605837e7a651ef1a906c64a637b260d",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "protoss_10v10_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "protoss_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0.json",
+          "config_sha256": "8c65fc42afdd36280dd08e076db27cfda2570cea02ec7034882502213c84e8b4",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "protoss_10v10_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "protoss_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0.json",
+          "config_sha256": "1279b549dbe16918700887864af978f0ce0df5bcc149e39d306e51caded0bf67",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "protoss_10v10_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "protoss_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "9ba3c7a9377bdc3b53e2039bbb23ab492f2d3de0e090ab19c758885cdf241c56",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "protoss_10v11_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "protoss_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_mappo_gru_seed0.json",
+          "config_sha256": "65b7a2cdcf5e6366cc000a85635f80d83f36fcad6bda6e5849b790204b599493",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "protoss_10v11_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "protoss_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_arppo_gru_seed0.json",
+          "config_sha256": "9424e54e990bff4796fde4bb67dc8eb29814357a7b2612752baeeb00c4f40c14",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "protoss_10v11_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "protoss_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_bppo_gru_seed0.json",
+          "config_sha256": "d47c6959f1c2e43fc80c18a527c1a4477c4c1207c17384762e0d9b5127047b45",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "protoss_10v11_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "protoss_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_gru_seed0.json",
+          "config_sha256": "3b35f0d390abd9f34e0917d643146b955e7ec3cd7a1a09876c5043d0b0291555",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "protoss_10v11_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "protoss_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "c70bbbca03d4d92f142a88f1d172a42fb22673822b00e3675cb7606f56fb46b6",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "protoss_5v5_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "protoss_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_mappo_gru_seed0.json",
+          "config_sha256": "09946cf4d11039d00aeb69c8d249b91ad85549da06337d37602cb38a1e0fa9da",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "protoss_5v5_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "protoss_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_arppo_gru_seed0.json",
+          "config_sha256": "9c6acdb8f443ce02d5d53b3894c1037bb4ae0e1fa21779f63fac3c27890f51be",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "protoss_5v5_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "protoss_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_bppo_gru_seed0.json",
+          "config_sha256": "7083c420b757b246f59272786cff207772cae3debd4bbfc764134f099c8d2fdd",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "protoss_5v5_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "protoss_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_gru_seed0.json",
+          "config_sha256": "196d7585c03fe8d29cf176150ed1ae8d9805a5713fcab72f7554a387a12e40b3",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "protoss_5v5_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "protoss_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "d3fe6b4a74f7e4a3d09d4ba0a8e55f41e5c3d70acd7dce436e72779a1d4a33c7",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "terran_10v10_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "terran_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_mappo_gru_seed0.json",
+          "config_sha256": "1662287d9dfa2ff3c75af795d34fde26f212b10b82be8e0937593b7295e5200e",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "terran_10v10_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "terran_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_arppo_gru_seed0.json",
+          "config_sha256": "d0bb1a6704258919b46b03ebc955ddebcaf898ca97b6e43e51e104d9b7f3cead",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "terran_10v10_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "terran_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_bppo_gru_seed0.json",
+          "config_sha256": "da9443b155ab54d8077dd9560ef371faaa74307c817ec15599b7bccd71ffacaf",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "terran_10v10_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "terran_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_gru_seed0.json",
+          "config_sha256": "3bb23aace738fbad92cc8e6a9be627f7ca06dbfb45de808ed1dd03ff3b43cf2a",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "terran_10v10_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "terran_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "e91a4e92fcd745f306173c0feac7ab9c8b71a9dc6f5fe244c3fc1e2541c39ef4",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "terran_10v11_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "terran_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_mappo_gru_seed0.json",
+          "config_sha256": "efe45852c3f020c759bb4ad9305ae0735217e7df52d0ffa15da16a7cc7b8dc23",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "terran_10v11_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "terran_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_arppo_gru_seed0.json",
+          "config_sha256": "b8e15cea9bccc543a3a696f63d2e817f3efad9d4feb0fcd1d15429ded288e38a",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "terran_10v11_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "terran_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_bppo_gru_seed0.json",
+          "config_sha256": "b8830cb8eeaaa65263354b80a2764fdf44f1311c29032e94be7d7d0574455e03",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "terran_10v11_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "terran_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_gru_seed0.json",
+          "config_sha256": "9f1ccd682f4990b9e10cdc6fdbc11f19988bccb1274ca38fba454577d8ad328d",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "terran_10v11_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "terran_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "f2c0c7ba86e20d51a1ff2f24e09f0569c6f3758cb56ec969515ebe172be11f0b",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "zerg_10v10_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "zerg_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_mappo_gru_seed0.json",
+          "config_sha256": "d0f5b4ca93358eba10fd762395287a53ce845add7421ec87809145e30ca598dd",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "zerg_10v10_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "zerg_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_arppo_gru_seed0.json",
+          "config_sha256": "54dcc382206b7fdad460da88bafe34a14fbc257990940a232c9697015c9055c4",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "zerg_10v10_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "zerg_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_bppo_gru_seed0.json",
+          "config_sha256": "5cc3cc014e8bd276cc72b828fee320b5c79d8a8d126dc826a8de49ce8c6348ec",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "zerg_10v10_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "zerg_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_gru_seed0.json",
+          "config_sha256": "978b194fe624e769a62455d35799dcf93a2767282f4c0402061c3e4af245cc3b",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "zerg_10v10_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "zerg_10v10",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "0f30df227f61933468acb3d9c54fccb9443e41c26e68c49b193cb6cefe919029",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "zerg_10v11_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "zerg_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_mappo_gru_seed0.json",
+          "config_sha256": "b8c70ff0a335849ec67d9ed8fd2c9f9ad21b373ac32f48f7aee3d8966233efcc",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "zerg_10v11_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "zerg_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_arppo_gru_seed0.json",
+          "config_sha256": "dfc5d7d98606478ace0e405b9f9cb92ee125515e3baf6b6064918fe4eef43209",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "zerg_10v11_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "zerg_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_bppo_gru_seed0.json",
+          "config_sha256": "a6aa9cd794f8c5c418572032a234f3387fe0648e6b4e86d2cf812733dae29981",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "zerg_10v11_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "zerg_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_gru_seed0.json",
+          "config_sha256": "7098cc2d9bfc200f2540c68b8e11e5e3efb98801942cad1d33094de9ea672887",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "zerg_10v11_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "zerg_10v11",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "db6959402205d72dc9c6ae9a97285064d50a00e8d8f7def0f1d0d5ddf4a4ed7c",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        },
+        {
+          "variant": "zerg_5v5_mappo_gru",
+          "reference_variant": "mappo_gru",
+          "scenario": "zerg_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_mappo_gru_seed0.json",
+          "config_sha256": "265fd21412e655ce61b3f80c2ad8855727a1b2dd92d14d3af2a85e9d5f5981b3",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/mappo_gru_seed0.json",
+          "reference_config_sha256": "4e07b35fe347e6043040d18a44f105826e3618e0dc0911ccfbeff1ab8c897b78"
+        },
+        {
+          "variant": "zerg_5v5_arppo_gru",
+          "reference_variant": "arppo_gru",
+          "scenario": "zerg_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_arppo_gru_seed0.json",
+          "config_sha256": "2b1b1517e8d06128c00ac185f1a33945539de02e40ee2556ff10fd3514854e5e",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/arppo_gru_seed0.json",
+          "reference_config_sha256": "f85a73f0d4f7b17dbbd9c46b12fa78ba2e9a2a5f4054914260373acf02ea16c7"
+        },
+        {
+          "variant": "zerg_5v5_bppo_gru",
+          "reference_variant": "bppo_gru",
+          "scenario": "zerg_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_bppo_gru_seed0.json",
+          "config_sha256": "38c486799fce7655b7645ec66ecb28522939cc5a482209a02a7428c57acb511d",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/bppo_gru_seed0.json",
+          "reference_config_sha256": "e719286833be47e05f072d868e2c9a9360e03ffb9132400bba06ff0d1ee351a9"
+        },
+        {
+          "variant": "zerg_5v5_agentmixer_gru",
+          "reference_variant": "agentmixer_gru",
+          "scenario": "zerg_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_gru_seed0.json",
+          "config_sha256": "64113e46edf9546ae0fe352daba4f476bb28bc08b13fc407f7a0667cfef0a682",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_gru_seed0.json",
+          "reference_config_sha256": "2cf9ff0eb037cea1dbd6de367900c65a2a0543ba40938881a799eb57d6fa6fa0"
+        },
+        {
+          "variant": "zerg_5v5_agentmixer_identity_gru",
+          "reference_variant": "agentmixer_identity_gru",
+          "scenario": "zerg_5v5",
+          "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_identity_gru_seed0.json",
+          "config_sha256": "3c156299217eaeddac5de20c2a50779bdaeead613e24cf52d93ba6b980f76d77",
+          "reference_config": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/smac_terran5_gru10m_20261028T222334Z/agentmixer_identity_gru_seed0.json",
+          "reference_config_sha256": "572d779cd896b76f88c41c057dc99e3a0015cbd5e1d4360c4648df7119c77ac3"
+        }
+      ],
+      "prior_native_shapes": {
+        "protoss_5v5": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 5,
+            "obs_dim": 92,
+            "state_dim": 130,
+            "action_dim": 11
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_protoss_5v5_mappo_seed0/config.json",
+          "prior_metadata_sha256": "c0437848fdb20b12356b302bf37fdcce20272ea282dada9c975516db8164a5df"
+        },
+        "protoss_10v10": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 182,
+            "state_dim": 310,
+            "action_dim": 16
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_protoss_10v10_mappo_seed0/config.json",
+          "prior_metadata_sha256": "a8adf728dcb01b0595b10c13a9e8cc27ab890e5c2f40e695df037d093ff35d7b"
+        },
+        "protoss_10v11": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 191,
+            "state_dim": 327,
+            "action_dim": 17
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_protoss_10v11_mappo_seed0/config.json",
+          "prior_metadata_sha256": "7b0f2254ead6d029b3abdc06d9f72ed9c3621c4a99a322a9f3383d94a4c723ad"
+        },
+        "terran_10v10": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 162,
+            "state_dim": 290,
+            "action_dim": 16
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_terran_10v10_mappo_seed0/config.json",
+          "prior_metadata_sha256": "5e7197c44e1e7e994b192d60081f602ce8547d459928acf64bde0c2e40eb5801"
+        },
+        "terran_10v11": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 170,
+            "state_dim": 306,
+            "action_dim": 17
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_terran_10v11_mappo_seed0/config.json",
+          "prior_metadata_sha256": "f2549bb0990c18a941091c8c89a08b949e5df570851a70a3d01806d44ef8e720"
+        },
+        "zerg_5v5": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 5,
+            "obs_dim": 82,
+            "state_dim": 120,
+            "action_dim": 11
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_zerg_5v5_mappo_seed0/config.json",
+          "prior_metadata_sha256": "6ad4a1232656199515f8461bd5abcb72e566ee46cf7bc708ddaed393b8f616eb"
+        },
+        "zerg_10v10": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 162,
+            "state_dim": 290,
+            "action_dim": 16
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_zerg_10v10_mappo_seed0/config.json",
+          "prior_metadata_sha256": "e392b36af3f6e181c4b1ee9cdf5b983fbadebd0de952d21a944901c868930ace"
+        },
+        "zerg_10v11": {
+          "environment_spec": {
+            "is_discrete": true,
+            "num_agents": 10,
+            "obs_dim": 170,
+            "state_dim": 306,
+            "action_dim": 17
+          },
+          "prior_metadata": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/all_protocols_integration64_20261025T091301Z/smac_zerg_10v11_mappo_seed0/config.json",
+          "prior_metadata_sha256": "d8a2c02fd74247ea8e304b205338124e99c38aa68fbc5a72027b1e3ba4af49ab"
+        }
+      },
+      "frozen_parser_validated": true,
+      "dispatch": "results/remaining_discrete_gate_20261029/smac.sbatch",
+      "dispatch_sha256": "0a346f940ba868c09b305b30e84b01202cab0dcc9628b601358caa6cc2d8e7d7",
+      "resources": {
+        "cpus": 2,
+        "memory_gib": 32,
+        "maximum_workers": 2,
+        "wall_minutes": 60,
+        "automatic_requeue": false
+      },
+      "dependency": "afterany:21272799"
+    }
+  ],
+  "runner": "results/remaining_discrete_gate_20261029/run_native_gate.py",
+  "runner_sha256": "68230f57e006b91779178559669f880e1304585957f4abe8dd95770bdbad97db",
+  "evaluator_sha256": "58461f02290bcb0dde7da4e76c321fe0ddfc91e4b18e38213ec7aa842678585b",
+  "release_requirements": [
+    "Every declared run completes at10k with finite losses,correct rollout/optimizer/seed counts and matching frozen source/config.",
+    "Every run evaluates four complete episodes at each endpoint and exactly replays its four final episodes from the checkpoint.",
+    "Compare each scenario shape against its prior native integration; check resolved capabilities,simulator versions,return reductions and final-score win semantics.",
+    "All five methods in a scenario must pass together; retain failures and incomplete conditions.",
+    "Review per-task Slurm RSS/runtime before a separate learning pilot; no full-budget learning is authorized by a native score."
+  ],
+  "resource_evidence": {
+    "football": "Prior50-engine 3v1 native workers peak3652120KiB=3.48GiB;8GiB was more than twice that.10-agent corner networks may use more;8GiB/45min is a diagnostic cap,not a measured requirement.",
+    "smac": "Prior25-engine terran5 native peak22274936KiB=21.24GiB;1M peak22GiB.32GiB/60min per new scenario is a diagnostic cap;larger agent/observation shapes must be measured."
+  },
+  "scheduling": {
+    "project_ceiling": {
+      "workers": 8,
+      "cpus": 16,
+      "memory_gib": 96
+    },
+    "football": "One8GiB worker waits for all local-scale gates21280689,thus reusing their two4GiB slots after the entire HC3confirmation/replay chain. Future local-scale1M learning must wait for this Football gate array or another verified free capacity chain.",
+    "smac": "At most two32GiB workers wait for the entire current SMAC10M array21272799,reusing its allocation. No existing job modified."
+  },
+  "limitations": [
+    "Canonical SMAC capability settings are incompletely specified by the papers; current pinned reconstruction remains explicit.",
+    "Football5v5 native complete-match returns cannot be declared equivalent to the historical figure because its exact evaluation reduction remains unresolved.",
+    "Current recurrent actors use one-decision training chunks and a feedforward shared critic; other release architecture differences are unchanged.",
+    "All controls use development seed0. Integration results have no across-training-seed uncertainty or paper-budget performance meaning."
+  ]
+}

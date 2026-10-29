@@ -144,10 +144,11 @@ Central and local scores remain separate. The audited
 [AgentMixer per-seed plots](docs/agentmixer_confirmation.md#audited-local-and-central-scores)
 can be regenerated from the committed reports.
 
-A [paired modifier ablation](docs/matrix_modifier_ablation.md) is queued at the
-1M budget extension on both games, using five fresh seeds per arm. AgentMixer's
-archived Climbing budget is 200k; Penalty is an additional task. The identity
-control freezes only the modifier; every other setting matches.
+A [paired modifier ablation](docs/matrix_modifier_ablation.md) completes all 20
+runs at the 1M budget extension, with five fresh seeds per arm and game.
+Climbing's paired local-return interval is positive; Penalty's includes zero.
+AgentMixer's archived Climbing budget is 200k, and Penalty is an additional task.
+The identity control freezes only the modifier; every other setting matches.
 
 The [simulator confirmation reporter](docs/simulator_confirmation.md) checks the
 frozen independent HalfCheetah study, recomputes scores from raw episodes and

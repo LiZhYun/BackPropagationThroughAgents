@@ -87,6 +87,13 @@ Previously frozen scripts and running jobs are unchanged by preparation changes.
 
 For continuous policies, `initial_std` sets the initial diagonal Gaussian standard deviation in policy action units. It defaults to `1.0` and must lie in `[exp(-5), exp(2)]`. For example, `0.3` reduces initial exploration while preserving the policy family and identity modifier. SMAC configurations reject nondefault values because their actions are categorical. The selected value is saved in the run configuration.
 
+Continuous AgentMixer can also select `continuous_local_scale="state_independent"`
+to learn a private scale vector for each agent. The default `"observation"`
+retains observation-dependent scales. Both keep the same local scale map,
+initial means and modifier weights; see the [controlled comparison](agentmixer_continuous.md#local-uncertainty-control).
+The [remaining discrete coverage study](discrete_remaining_coverage.md) uses
+earlier frozen sources and is separate from this continuous-policy option.
+
 For discrete AgentMixer, `modifier_log_scale_bound` optionally selects the
 existing smooth log-scale bound. For example, `2.302585092994046` constrains
 gap scales to approximately `[0.1, 10]`. The default `null` retains the original
