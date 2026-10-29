@@ -1,0 +1,20 @@
+[
+  {
+    "source": "references/bpta/bpta.pdf",
+    "source_sha256": "27e35eb99f516718f7589ced159b2e84d2122cff937a4fbc18c0245e4aa8903c",
+    "asset": "docs/assets/bpta-framework.png",
+    "asset_sha256": "34dab7aaf50991df2adfa78a039778f3183aae73bbdff437c1079013615104e0",
+    "width": 2000,
+    "renderer": "PyMuPDF 1.26.5",
+    "modifications": "Rendered the complete original framework page to PNG; no diagram/content edits."
+  },
+  {
+    "source": "references/agentmixer/figs/agentmixer.pdf",
+    "source_sha256": "dc4e1c1518af562f9dc5980ebfe52f5cd74e4a2d609b7e69377b19eb5a29b244",
+    "asset": "docs/assets/agentmixer-framework.png",
+    "asset_sha256": "a5a508d547b58f2504856f02cf74d90c1df00355482b58a2be3dd5f23e74b66e",
+    "width": 2000,
+    "renderer": "PyMuPDF 1.26.5",
+    "modifications": "Rendered the complete original framework page to PNG; no diagram/content edits."
+  }
+]

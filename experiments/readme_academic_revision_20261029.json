@@ -1,0 +1,37 @@
+{
+  "recorded_utc": "2026-10-29T17:15:45.814359+00:00",
+  "scope": "Academic README presentation revision; no algorithm,dependency,training configuration or research-job change.",
+  "reference_readme": "https://github.com/NVlabs/GR00T-WholeBodyControl",
+  "reference_elements": "Centered title and badges,publication-focused sections,original research visuals,organized usage/documentation,inline citations.",
+  "readme_sha256": "ce59b1cb31b8668fb9f349dd28b568e8c3b160dbca001556d25d159afecae091",
+  "github_markdown_rendered": true,
+  "rendered_heading_count": 16,
+  "relative_markdown_links_checked": 42,
+  "both_papers_full_titles_authors_verified": true,
+  "aaai2024_and_aaai2025_metadata_verified": true,
+  "canonical_bibtex_included_exactly": true,
+  "original_figures_rendered_and_inspected": [
+    {
+      "source": "references/bpta/bpta.pdf",
+      "source_sha256": "27e35eb99f516718f7589ced159b2e84d2122cff937a4fbc18c0245e4aa8903c",
+      "asset": "docs/assets/bpta-framework.png",
+      "asset_sha256": "34dab7aaf50991df2adfa78a039778f3183aae73bbdff437c1079013615104e0",
+      "width": 2000,
+      "renderer": "PyMuPDF 1.26.5",
+      "modifications": "Rendered the complete original framework page to PNG; no diagram/content edits."
+    },
+    {
+      "source": "references/agentmixer/figs/agentmixer.pdf",
+      "source_sha256": "dc4e1c1518af562f9dc5980ebfe52f5cd74e4a2d609b7e69377b19eb5a29b244",
+      "asset": "docs/assets/agentmixer-framework.png",
+      "asset_sha256": "a5a508d547b58f2504856f02cf74d90c1df00355482b58a2be3dd5f23e74b66e",
+      "width": 2000,
+      "renderer": "PyMuPDF 1.26.5",
+      "modifications": "Rendered the complete original framework page to PNG; no diagram/content edits."
+    }
+  ],
+  "all_four_previously_verified_usage_commands_unchanged": true,
+  "production_source_matches_1093_tested_wheel": true,
+  "new_research_jobs": 0,
+  "validation": "GitHub GFM render,heading/image/link checks,canonical citation equality,unchanged example token lists,source/figure hashes and diff whitespace."
+}

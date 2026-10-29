@@ -6,7 +6,7 @@ Updated 29 October 2026. The priority is a clear, faithful repository that reade
 
 - Shared implementations of MAPPO, AR-PPO, BPPO and AgentMixer use explicit objectives, common rollout/evaluation code and saved configuration/source provenance.
 - [Method fidelity](docs/method_fidelity.md) maps paper mechanisms to modules and tests. BPPO objective repairs and the discrete AgentMixer mode-preserving correction are explicit. Optional experimental variants are labeled.
-- The [README](README.md) leads with short reference examples and a code-reading map. [Runtime guides](docs/environment_versions.md) document the separate optional simulator environments.
+- The [README](README.md) presents both papers with authors, publication venues, original framework figures and BibTeX citations, followed by setup, training examples and a code-reading map. [Runtime guides](docs/environment_versions.md) document the separate optional simulator environments.
 
 ## Validation
 

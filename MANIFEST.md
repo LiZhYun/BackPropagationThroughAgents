@@ -1902,3 +1902,17 @@ The current installed wheel passes1093tests/oneCUDA skip; six native checks and 
 - [results/community_release_focus_20261029/readme_checks/results/prey_example/config.json](results/community_release_focus_20261029/readme_checks/results/prey_example/config.json)
 - [results/community_release_focus_20261029/readme_checks/results/prey_example/metrics.jsonl](results/community_release_focus_20261029/readme_checks/results/prey_example/metrics.jsonl)
 - [results/community_release_focus_20261029/readme_checks/results/prey_example/episodes.jsonl](results/community_release_focus_20261029/readme_checks/results/prey_example/episodes.jsonl)
+
+
+## Academic README and original paper framework figures, 29 October 2026
+
+- [experiments/readme_academic_revision_20261029.json](experiments/readme_academic_revision_20261029.json)
+- [docs/assets/bpta-framework.png](docs/assets/bpta-framework.png)
+- [docs/assets/agentmixer-framework.png](docs/assets/agentmixer-framework.png)
+- [docs/assets/paper_figures.json](docs/assets/paper_figures.json)
+- [docs/assets/README.md](docs/assets/README.md)
+- [results/readme_academic_20261029/README_before.md](results/readme_academic_20261029/README_before.md)
+- [results/readme_academic_20261029/rendered_readme.html](results/readme_academic_20261029/rendered_readme.html)
+- [results/readme_academic_20261029/figure_provenance.json](results/readme_academic_20261029/figure_provenance.json)
+- [results/readme_academic_20261029/MANIFEST_before.md](results/readme_academic_20261029/MANIFEST_before.md)
+- [results/readme_academic_20261029/CITATION_before.bib](results/readme_academic_20261029/CITATION_before.bib)
