@@ -1,0 +1,166 @@
+{
+  "recorded_utc": "2026-10-29T13:18:07.195423+00:00",
+  "study": "experiments/hc2x3_recurrent_study_20261029.json",
+  "study_sha256": "f0a9caba9c32177570a1846c823d5327254a797f8a5c92c8a6bc4a4cceebf8d4",
+  "manifest": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/manifest.json",
+  "manifest_sha256": "d014efcf45fdaec2cfcc16a50f5d031081d6811fb8044539f0b2056faaa71a65",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "agentmixer_continuous.py": "aff393cb30af7c89d5a1d61beabbf8fa231df37465f5c4a5fc2318b8247a001c",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "e179cf4e0250097719e0837728103142e8e5e9cd7ac37cef17fe47310c4feb01",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "a708dbf0355b2e84c9af2e516719b21806338172897c7792db77e32a864454f9",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "helper_directory": "results/continuous_recurrent_gate_20261029",
+  "helper_sha256": {
+    "common.py": "80cc6e424812a32441d9a7337bad1212e424ddd9d7ce36b95c058c75e7870705",
+    "observe.py": "6f9bb8e51d6624121df074d2a77d92d314a463877f580554c8e0a912a964c82c",
+    "train_observed.py": "f328c415656f0c32d21ea005ea299a2f05a1160b1a20e4e8a9706deb5c53ffb1",
+    "run.py": "5c12c195df8c110c9853fbf6b4fddbd99c98383ecdf4a418c94f92891ce9ad60",
+    "evaluate_simulator.py": "58461f02290bcb0dde7da4e76c321fe0ddfc91e4b18e38213ec7aa842678585b",
+    "audit.py": "4f021c7832e7aaed78bbcdf2a6b166526cf894ac9700d394931c3b8b56e3da0f",
+    "submit.sbatch": "840d2dddb782a9e1a8218df036dc91d13a78afe5fca6be9de5bd0fa1ec895232",
+    "audit.sbatch": "a9366a735771fbe54ce8a1ebc62cd36b5771e2debcd49f5720ea277f9f184ff9"
+  },
+  "conditions": [
+    {
+      "variant": "agentmixer_bounded_observation_ff",
+      "seed": 0,
+      "config_sha256": "908fee510c81451c8178e413cef72972a58c0b0614ec63b16dc6e0232309b590"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_ff",
+      "seed": 0,
+      "config_sha256": "a86e8aa5f2ea61cc26448eba5097eda878fdcdd022dca6da2cc0813f33c5b3c2"
+    },
+    {
+      "variant": "agentmixer_identity_observation_ff",
+      "seed": 0,
+      "config_sha256": "c53e8383a8cd8a1eb116ca87b56bcb16eac464bdd19eb5202e7f027c44cedd97"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_ff",
+      "seed": 0,
+      "config_sha256": "6d0f044172b4f63dc8170b59d6ee0b8ae893f18bc3367fdc5ac8d7757b3b3181"
+    },
+    {
+      "variant": "agentmixer_residual_observation_ff",
+      "seed": 0,
+      "config_sha256": "202c496874e449f38524bc99ca3cdbc91d08952da85aff2ad8ccdba88a678157"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_ff",
+      "seed": 0,
+      "config_sha256": "38fc2b189a3498f7dc97ce2ca1ea1559e308c3e51d16efe2825af5ed2d67f4cc"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "seed": 0,
+      "config_sha256": "0aff121d8ce44d0963cc0cf28a2f3a093abd026d5162e15d9d8f86108e473dff"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "seed": 0,
+      "config_sha256": "85b0561a78a7a92abe419b0f147068969f6c79d7219e9dca3499982088390bf1"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "seed": 0,
+      "config_sha256": "972117d9e17910088f9b3500930ad1fce132905f4b782285c2e25cf65859df5d"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "seed": 0,
+      "config_sha256": "1b615609b1aaf9a7ba674ce1b48e5a42edf21aed5c5a6d8413b21dda6116aca8"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "seed": 0,
+      "config_sha256": "d221ab23f525e425f9ef8f9043b65fe6ed61c135f78f16e844bec555e01be08c"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "seed": 0,
+      "config_sha256": "5d97860e5d7e1756120e7c100961a5f6e0d351abb7b8b821508635cbcd6148da"
+    }
+  ],
+  "preflights": [
+    {
+      "path": "experiments/continuous_recurrent_gate_preflight_20261029.json",
+      "sha256": "88a21b22ca0a024361b595e9a104ace5725b757376d369ffca1943a1166a6f60"
+    },
+    {
+      "path": "experiments/continuous_recurrent_gate_private_preflight_20261029.json",
+      "sha256": "7275e4e38232cc78ac2c646d58aac330f9e0472e641a919f82eb7cce597a97fe"
+    }
+  ],
+  "preflight_source_sha256": {
+    "preflight.py": "8a3eab27113364b4b1e526d79132e922b740a8ced99264057d8164c6baf9e998",
+    "preflight_private.py": "4803ecaeb19aab4172f0f5e57e96adff38659f779555e64eb420411fde86e5ff"
+  },
+  "gate_dispatch": "results/continuous_recurrent_gate_20261029/submit.sbatch",
+  "audit_dispatch": "results/continuous_recurrent_gate_20261029/audit.sbatch",
+  "collector_output": "experiments/hc2x3_recurrent_native_complete_20261029.json",
+  "dependency": "afterany:21282782:21280689",
+  "capacity_predecessor": "21282782",
+  "prior_data_predecessor": "21280689",
+  "allocation": {
+    "maximum_workers": 2,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 4,
+    "wall_minutes": 30,
+    "automatic_requeue": false
+  },
+  "collector_allocation": {
+    "maximum_workers": 1,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 2,
+    "wall_minutes": 5,
+    "automatic_requeue": false
+  },
+  "scope": "Twelve observed native44k checks and exact final replays,followed by a complete-family audit. The18GRU1M learning runs remain unsubmitted.",
+  "scheduling": "Append after21282782 in the existingFootball/Prey/Ant chain,and wait for21280689 prior local-scale data. This reuses two originalFootball slots,within8workers/16CPUs/96GiB. Do not change existing jobs; prior local-scale learning retains its other allocation priority.",
+  "native_resource_rationale": "Same40 HalfCheetah instances and100-step rollout as existing1CPU/4GiB studies. Additional GRU states are40x2x64 and observations4000x2x70; read-only recomputation retains no gradient graph.30-minute bounded gate; actual native peak/time remains required before1M release.",
+  "verification_counts_if_complete": {
+    "runs": 12,
+    "rollout_updates": 132,
+    "training_environment_steps": 528000,
+    "recurrent_memory_transitions": 264000,
+    "training_episode_resets": 480,
+    "original_evaluation_episodes": 48,
+    "final_replay_episodes": 24,
+    "exact_feedforward_prefixes": 6
+  },
+  "failure_policy": "No automatic retry,requeue,seed replacement,or learning submission. Incomplete/invalid family stops acceptance; preserve all runs and failure reports.",
+  "versions_from_private_synthetic_check": {
+    "python": "3.10.22",
+    "torch": "2.6.0+cpu",
+    "numpy": "1.23.5",
+    "smacv2": null,
+    "pysc2": null,
+    "mujoco-py": "2.1.2.14",
+    "gym": "0.10.8",
+    "gymnasium": null,
+    "gfootball": null
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "recorded_utc": "2026-10-29T13:16:08.188166+00:00",
+  "scope": "Synthetic observer/replay preflight plus raw-reduction checks on existing native evidence. No new native run executed.",
+  "observer_sha256": "6f9bb8e51d6624121df074d2a77d92d314a463877f580554c8e0a912a964c82c",
+  "auditor_sha256": "4f021c7832e7aaed78bbcdf2a6b166526cf894ac9700d394931c3b8b56e3da0f",
+  "runtime_versions": {
+    "python": "3.10.22",
+    "torch": "2.6.0+cpu",
+    "numpy": "1.23.5",
+    "smacv2": null,
+    "pysc2": null,
+    "mujoco-py": "2.1.2.14",
+    "gym": "0.10.8",
+    "gymnasium": null,
+    "gfootball": null
+  },
+  "fixture_source_sha256": "ff29a37f4a73fcdadb887d9a616a3c3501b419c72e889deae96384d4b9057a83",
+  "comparisons": [
+    {
+      "variant": "agentmixer_bounded_observation_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_identity_observation_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_residual_observation_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    }
+  ],
+  "corrupted_copy_rejections": [
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_bounded_observation_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_identity_observation_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_residual_observation_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "missing_update"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "missing_reset"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "nonzero_post_reset"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "rng_mutation"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "wrong_budget"
+    }
+  ],
+  "synthetic_full_horizon_steps": 44000,
+  "synthetic_training_resets_verified": 40,
+  "synthetic_final_checkpoint_replay_exact": true,
+  "existing_native_evaluation_episodes_checked": 9090,
+  "native_gate_runs_completed": 0
+}

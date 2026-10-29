@@ -480,3 +480,21 @@ The Ant confirmation extends the existing Football/Prey allocation. Every edge b
 The combined bound remains eight workers, ten CPUs and 96 GiB, within the sixteen-CPU ceiling. The unsubmitted 18-run local-scale study retains priority after 21281001 or another verified free allocation. The 24-run Prey learning study still requires its complete native gates and a resource audit; it cannot overlap the new Ant reservation and must wait for 21282782 or another verified free allocation.
 
 Ant uses the selected 20-module trainer unchanged. Its final auditor uses a separately pinned reporter plus the same native training source for replay. Preflight checks pass; no final Ant result exists yet. [Training schedule](../experiments/ant2x4_confirmation10m_schedule_20261029.json), [audit schedule](../experiments/ant2x4_confirmation10m_collector_20261029.json), [study rules](ant2x4_confirmation.md).
+
+
+## Continuous-memory native execution, 29 October 2026
+
+The twelve continuous-memory checks and their auditor extend the existing Football/Prey/Ant allocation. Job **21284086** also waits for all six local-scale gates in **21280689**, which provide the feedforward reference data. This additional dependency reserves no capacity in the HC chain. The scheduler verified both dependencies before release; no existing job or dependency changed.
+
+| Allocation | Current chain | Maximum reserved resources |
+| --- | --- | --- |
+| Football, Prey, Ant and memory checks | 21251960 → 21282173 → 21282210 → 21282468 → 21282782 → **21284086** → **21284087** | Two workers, two CPUs, 16 GiB; memory checks use two 4 GiB workers, audit one 2 GiB worker |
+| SMAC | 21272799 → 21281002 | Two workers, four CPUs, 64 GiB |
+| MuJoCo coverage | 21272800 | Two workers, two CPUs, 8 GiB |
+| HC confirmation and controls | 21279129 → 21279857 → 21280689 → 21281001 | Two workers, two CPUs, 8 GiB |
+
+Every dependency waits for the entire predecessor array or job to terminate. Native checks use batch-milan, one CPU/4 GiB/30 min each, at most two active; the auditor uses one CPU/2 GiB/5 min. Neither requeues automatically. The maximum remains eight workers, ten CPUs and 96 GiB, below the sixteen-CPU ceiling.
+
+The unsubmitted 18-run feedforward local-scale study retains priority after 21281001 or another verified free allocation. The unsubmitted 24-run Prey learning study must now wait for **21284087** or another verified free allocation. The 18-run recurrent learning study remains unsubmitted. Native results, original local-scale validation and measured resources remain separate requirements; an afterany dependency does not mean a predecessor passed. No auditor automatically releases learning.
+
+[Execution specification](../experiments/continuous_recurrent_gate_execution_20261029.json), [native schedule](../experiments/continuous_recurrent_gate_schedule_20261029.json), [collector schedule](../experiments/continuous_recurrent_gate_collector_20261029.json), [live resource snapshot](../experiments/live_resource_check_20261029_memory_gate.json).

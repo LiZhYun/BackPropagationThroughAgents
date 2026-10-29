@@ -1,0 +1,45 @@
+{
+  "recorded_utc": "2026-10-29T13:39:22.818329+00:00",
+  "scope": "Read-only final verification of queued native checks; no new native result or learning release.",
+  "execution_plan": "experiments/continuous_recurrent_gate_execution_20261029.json",
+  "execution_plan_sha256": "733ca0cc4998a66cd65db3ee42e9c1c4d2d01170f22f32d932491d0b915695ed",
+  "frozen_helpers": 8,
+  "frozen_source_modules": 25,
+  "frozen_configurations": 12,
+  "current_training_source_matches_frozen": true,
+  "new_native_output_directories": 0,
+  "preflights": [
+    {
+      "path": "experiments/continuous_recurrent_gate_preflight_20261029.json",
+      "sha256": "88a21b22ca0a024361b595e9a104ace5725b757376d369ffca1943a1166a6f60",
+      "bitwise_conditions": 12,
+      "corruptions_rejected": 47,
+      "native_completions": 0
+    },
+    {
+      "path": "experiments/continuous_recurrent_gate_private_preflight_20261029.json",
+      "sha256": "7275e4e38232cc78ac2c646d58aac330f9e0472e641a919f82eb7cce597a97fe",
+      "bitwise_conditions": 12,
+      "corruptions_rejected": 47,
+      "native_completions": 0
+    }
+  ],
+  "prior_ledger_preserved": true,
+  "new_ledger_events": 4,
+  "registered_job_ids": [
+    21284086,
+    21284087
+  ],
+  "scheduler_verification": [
+    "21284087|bpta-agentmixer-hc2-memory-audit|PENDING|1|2G|afterany:21284086_*(unfulfilled)|Dependency",
+    "21284086_[0-11%2]|bpta-agentmixer-hc2-memory-gate|PENDING|1|4G|afterany:21282782(unfulfilled),afterany:21280689_*(unfulfilled)|Dependency"
+  ],
+  "coverage_runs": 883,
+  "coverage_manifests": 74,
+  "coverage_targets": 45,
+  "coverage_errors": 0,
+  "local_document_links_checked": 104,
+  "production_source_tests_configs_changed_this_turn": false,
+  "verification_script": "results/continuous_recurrent_gate_20261029/final_checks.py",
+  "verification_script_sha256": "a50a6916b9b4e8f01890bf69a583d0752bffc3db0fc3216550166ba8a5bee8ed"
+}

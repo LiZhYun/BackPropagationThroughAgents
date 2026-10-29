@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T13:28:01.114916+00:00",
+  "report": "results/benchmark_coverage_20261029_memory_gate.json",
+  "report_sha256": "2f470f7a0033f13fa59fcae7a1139288390e2d7bef95ca38d390334bbc62d470",
+  "csv": "experiments/benchmark_coverage_20261029_memory_gate.csv",
+  "csv_sha256": "f893e42b3b92eb7332f500110048ad8bdf1553e89d28317145cec8cc7262644d",
+  "runs": 883,
+  "manifests": 74,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Includes12 newly registered continuous-memory native checks. Artifact coverage includes failures and does not establish reproduced performance.60prepared unsubmitted learning runs remain excluded; collectors and synthetic preflights do not add training declarations."
+}
