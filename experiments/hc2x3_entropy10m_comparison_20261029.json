@@ -1,0 +1,306 @@
+{
+  "recorded_utc": "2026-10-29T09:39:43.357066+00:00",
+  "scope": "Complete18-run matched10M development comparison; three shared seeds per variant/entropy coefficient. All endpoints retained.",
+  "audits": {
+    "experiments/hc2x3_agentmixer10m_complete_20261028.json": "fd77ed129663b72b05ccbf382672377cb2604bc7ef7ae3ef7bc2976a950028a8",
+    "experiments/hc2x3_entropy0_10m_complete_20261029.json": "cd96953df286575a8bb57b44b53fb623bfcce4a4930d62a047aa409b3963983d"
+  },
+  "source_and_runtime_identical": true,
+  "only_config_difference": "entropy_coef0.01 versus0",
+  "primary": "Final10M local mean-action episode return",
+  "secondary": [
+    "9.9M aligned endpoint",
+    "full0\u201310M normalized curve area"
+  ],
+  "groups": [
+    {
+      "variant": "agentmixer_bounded",
+      "entropy_arms": {
+        ".01": {
+          "final": {
+            "seed_scores": [
+              1438.9311780706469,
+              3955.1951809332336,
+              6063.214206989285
+            ],
+            "seed_count": 3,
+            "mean": 3819.113521997722,
+            "median": 3955.1951809332336,
+            "sample_sd_across_training_seeds": 2315.1429861479864
+          },
+          "normalized_auc": {
+            "seed_scores": [
+              3976.998734957642,
+              4619.319822280202,
+              4636.717375393518
+            ],
+            "seed_count": 3,
+            "mean": 4411.011977543787,
+            "median": 4619.319822280202,
+            "sample_sd_across_training_seeds": 375.96713921390506
+          },
+          "at9_9m": {
+            "seed_scores": [
+              3162.9537011418424,
+              4335.799011721886,
+              6132.9593580323
+            ],
+            "seed_count": 3,
+            "mean": 4543.90402363201,
+            "median": 4335.799011721886,
+            "sample_sd_across_training_seeds": 1495.899118415715
+          }
+        },
+        "0": {
+          "final": {
+            "seed_scores": [
+              3327.158299870095,
+              3122.7708783667667,
+              2365.8409962530945
+            ],
+            "seed_count": 3,
+            "mean": 2938.5900581633186,
+            "median": 3122.7708783667667,
+            "sample_sd_across_training_seeds": 506.4332833221729
+          },
+          "normalized_auc": {
+            "seed_scores": [
+              2674.9677768330075,
+              2707.3115662027067,
+              2432.5002430795075
+            ],
+            "seed_count": 3,
+            "mean": 2604.926528705074,
+            "median": 2674.9677768330075,
+            "sample_sd_across_training_seeds": 150.19869559576713
+          },
+          "at9_9m": {
+            "seed_scores": [
+              3035.123670955663,
+              3117.70920663964,
+              2344.995159606674
+            ],
+            "seed_count": 3,
+            "mean": 2832.609345733992,
+            "median": 3035.123670955663,
+            "sample_sd_across_training_seeds": 424.30035182699015
+          }
+        }
+      },
+      "pairs": [
+        {
+          "seed": 0,
+          "final_delta_zero_minus_positive": 1888.2271217994482,
+          "normalized_auc_delta_zero_minus_positive": -1302.0309581246343
+        },
+        {
+          "seed": 1,
+          "final_delta_zero_minus_positive": -832.4243025664668,
+          "normalized_auc_delta_zero_minus_positive": -1912.0082560774954
+        },
+        {
+          "seed": 2,
+          "final_delta_zero_minus_positive": -3697.3732107361907,
+          "normalized_auc_delta_zero_minus_positive": -2204.21713231401
+        }
+      ],
+      "mean_final_entropy_delta": -880.5234638344031,
+      "mean_auc_entropy_delta": -1806.0854488387133
+    },
+    {
+      "variant": "agentmixer_identity",
+      "entropy_arms": {
+        ".01": {
+          "final": {
+            "seed_scores": [
+              5376.612533132643,
+              5999.042101704585,
+              5332.700317977428
+            ],
+            "seed_count": 3,
+            "mean": 5569.451650938218,
+            "median": 5376.612533132643,
+            "sample_sd_across_training_seeds": 372.6835617547367
+          },
+          "normalized_auc": {
+            "seed_scores": [
+              4722.098026712046,
+              4724.8583034215435,
+              3859.88700363283
+            ],
+            "seed_count": 3,
+            "mean": 4435.614444588807,
+            "median": 4722.098026712046,
+            "sample_sd_across_training_seeds": 498.5964996709928
+          },
+          "at9_9m": {
+            "seed_scores": [
+              5499.386930347508,
+              5988.082745394429,
+              5342.145899230215
+            ],
+            "seed_count": 3,
+            "mean": 5609.871858324051,
+            "median": 5499.386930347508,
+            "sample_sd_across_training_seeds": 336.8438685661792
+          }
+        },
+        "0": {
+          "final": {
+            "seed_scores": [
+              3605.630421121011,
+              2963.821484444932,
+              3510.964388360105
+            ],
+            "seed_count": 3,
+            "mean": 3360.138764642016,
+            "median": 3510.964388360105,
+            "sample_sd_across_training_seeds": 346.4692690222073
+          },
+          "normalized_auc": {
+            "seed_scores": [
+              2859.48916131983,
+              2876.6076106119012,
+              3175.4938992027455
+            ],
+            "seed_count": 3,
+            "mean": 2970.5302237114925,
+            "median": 2876.6076106119012,
+            "sample_sd_across_training_seeds": 177.7099927682856
+          },
+          "at9_9m": {
+            "seed_scores": [
+              2986.3014683066885,
+              3109.6538971195832,
+              3772.9683630907643
+            ],
+            "seed_count": 3,
+            "mean": 3289.641242839012,
+            "median": 3109.6538971195832,
+            "sample_sd_across_training_seeds": 423.09311540327496
+          }
+        }
+      },
+      "pairs": [
+        {
+          "seed": 0,
+          "final_delta_zero_minus_positive": -1770.9821120116321,
+          "normalized_auc_delta_zero_minus_positive": -1862.6088653922156
+        },
+        {
+          "seed": 1,
+          "final_delta_zero_minus_positive": -3035.2206172596525,
+          "normalized_auc_delta_zero_minus_positive": -1848.2506928096423
+        },
+        {
+          "seed": 2,
+          "final_delta_zero_minus_positive": -1821.735929617323,
+          "normalized_auc_delta_zero_minus_positive": -684.3931044300843
+        }
+      ],
+      "mean_final_entropy_delta": -2209.3128862962026,
+      "mean_auc_entropy_delta": -1465.084220877314
+    },
+    {
+      "variant": "agentmixer_residual",
+      "entropy_arms": {
+        ".01": {
+          "final": {
+            "seed_scores": [
+              3623.196867452071,
+              2851.9607763934546,
+              4207.391593339601
+            ],
+            "seed_count": 3,
+            "mean": 3560.8497457283756,
+            "median": 3623.196867452071,
+            "sample_sd_across_training_seeds": 679.8628888035046
+          },
+          "normalized_auc": {
+            "seed_scores": [
+              3409.6898878826146,
+              2976.1016518250185,
+              3185.912690715109
+            ],
+            "seed_count": 3,
+            "mean": 3190.568076807581,
+            "median": 3185.912690715109,
+            "sample_sd_across_training_seeds": 216.8316030394022
+          },
+          "at9_9m": {
+            "seed_scores": [
+              3602.528045325976,
+              3072.1631393101293,
+              4368.164544408964
+            ],
+            "seed_count": 3,
+            "mean": 3680.95190968169,
+            "median": 3602.528045325976,
+            "sample_sd_across_training_seeds": 651.550180247002
+          }
+        },
+        "0": {
+          "final": {
+            "seed_scores": [
+              3588.3540236473764,
+              2897.051388199078,
+              3565.465462639981
+            ],
+            "seed_count": 3,
+            "mean": 3350.2902914954784,
+            "median": 3565.465462639981,
+            "sample_sd_across_training_seeds": 392.6832045711152
+          },
+          "normalized_auc": {
+            "seed_scores": [
+              2776.598934283088,
+              2675.2677516911067,
+              3174.318686149377
+            ],
+            "seed_count": 3,
+            "mean": 2875.3951240411907,
+            "median": 2776.598934283088,
+            "sample_sd_across_training_seeds": 263.78679672977836
+          },
+          "at9_9m": {
+            "seed_scores": [
+              2990.449378412092,
+              2933.5533968643294,
+              3287.8422763031595
+            ],
+            "seed_count": 3,
+            "mean": 3070.6150171931936,
+            "median": 2990.449378412092,
+            "sample_sd_across_training_seeds": 190.2631066559989
+          }
+        }
+      },
+      "pairs": [
+        {
+          "seed": 0,
+          "final_delta_zero_minus_positive": -34.84284380469444,
+          "normalized_auc_delta_zero_minus_positive": -633.0909535995265
+        },
+        {
+          "seed": 1,
+          "final_delta_zero_minus_positive": 45.09061180562321,
+          "normalized_auc_delta_zero_minus_positive": -300.8339001339118
+        },
+        {
+          "seed": 2,
+          "final_delta_zero_minus_positive": -641.92613069962,
+          "normalized_auc_delta_zero_minus_positive": -11.59400456573212
+        }
+      ],
+      "mean_final_entropy_delta": -210.55945423289708,
+      "mean_auc_entropy_delta": -315.17295276639015
+    }
+  ],
+  "interpretation": "Zero entropy does not resolve the learned-modifier gap: all three final means and all three mean curve areas are below their positive-entropy counterparts. Individual pairs are mixed. No independent-final inference; scale observations did not establish a causal diagnosis.",
+  "limitations": [
+    "Only three development seeds, no confidence interval or superiority claim.",
+    "Historical figure ends near9.904M with unknown smoothing/evaluation details.",
+    "Identity remains a control, not AgentMixer success.",
+    "Bounded versus identity changes initial central scale and output map; not an isolated learning switch."
+  ]
+}

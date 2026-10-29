@@ -1,0 +1,12 @@
+{
+  "bundle": "results/bundles/hc_partitions10m_20261029_moved",
+  "inventory_sha256": "5c3b354df0d22544f7235a56f5fc0fc59ba12f111e5dee15f80a2aae8fa174c9",
+  "runs": 12,
+  "source_modules": 19,
+  "relocated_from": "results/bundles/hc_partitions10m_20261029_export",
+  "standard_library_verification": true,
+  "all_curves_and_groups_identical": true,
+  "original_study_modified": false,
+  "native_replay": "not_yet_run",
+  "tests": "11 passed; relocation test removes its synthetic originals and invokes frozen training source from a different working directory."
+}

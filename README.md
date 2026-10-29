@@ -177,3 +177,6 @@ The repository retains the [MIT license](LICENSE) and copyright notice from
 the [pinned original implementation](https://github.com/LiZhYun/BackPropagationThroughAgents/blob/13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0/LICENSE).
 Separately installed simulator engines and dependencies retain their own licenses.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development and experiment workflow.
+
+
+Completed simulator studies can be shared with exact frozen code and checkpoints using the [portable study exporter](docs/portable_studies.md). It includes every declared run and verifies relocated evidence before training or evaluation.

@@ -4,24 +4,25 @@ Updated 2026-10-29. **Full reproduction and performance beyond the papers are no
 
 ## Latest progress
 
-- **37/37 MuJoCo 500k pilots and 5/5 SMAC 1M layout controls completed and passed raw audits.** Including finished runs from partial studies, 52 newly completed runs verify 10,896 raw episodes and 30,125 updates.
-- HalfCheetah partition 10M: **8/12 complete**. Matched AgentMixer entropy-zero 10M: **2/9 complete**. No aggregate from incomplete cohorts.
-- Football 20M: **0/5 complete**; first two runs are at about 7.8M. At 7.6M, MAPPO wins 90/100 matches and AR-PPO 61/100. These are partial baseline results; BPPO and AgentMixer are queued.
-- SMAC 25×400 ends at 1–2 wins / 32 across five methods, with no consistent improvement over 2×5000. The missing full budget is now being tested for all controls.
+- **HalfCheetah partitions: 12/12 complete and audited.** At 10M, BPPO 3×2 averages 5431.33±294.34 across three development seeds, all above figure reading bound 5030. Its paired advantage over AR-PPO is small and mixed; 6×1 remains below its upper bound.
+- **Fresh 3×2 confirmation is running:** five unused seeds per method, exact selected source/settings, new evaluation seed. The failed 2×3 independent result remains unchanged.
+- **Entropy control: 9/9 complete.** Zero entropy lowers all three variant means and curve areas compared with 0.01; it does not fix the AgentMixer gap.
+- Football is at about 14.86M/20M for its first two baseline runs. Two of 48 MuJoCo coverage runs are complete; SMAC full-budget controls continue.
+- A portable complete-study exporter passes 11 focused tests. The relocated 12-run HalfCheetah bundle reproduces all curves and aggregates; native checkpoint replay is pending separately.
 
-See the [current progress report](docs/progress_20261029.md) for all 48 MuJoCo pilot endpoints, matched SMAC results, raw audits and limitations. The [previous completed studies](docs/progress_20261028.md) retain independent-confirmation failures and other negative results.
+See the [morning progress report](docs/progress_20261029_am.md) for all comparisons and limitations, and the [export guide](docs/portable_studies.md) for portable artifacts.
 
 ## Active and queued work
 
 | Job | Work | Allocation |
 | --- | --- | --- |
 | 21251960 | Five Football 3v1 recurrent 20M controls | At most 2 × 1 CPU/8 GiB/60 h |
-| 21251961 | Twelve HC 3×2/6×1 BPPO/AR 10M development runs | At most 2 × 1 CPU/4 GiB/7 h |
-| 21252423 | Nine matched AgentMixer HC 2×3 entropy-zero 10M runs | At most 2 × 1 CPU/4 GiB/7 h |
-| 21272799 | Five SMAC Terran 5v5 recurrent 10M controls | At most 2 × 2 CPU/ 32 GiB/60 h |
-| 21272800 | All 48 MuJoCo pilot conditions at 10M; after 21251961 | At most 2 × 1 CPU/4 GiB/30 h; reuses its worker slots |
+| 21272799 | Five SMAC Terran 5v5 recurrent 10M controls | At most 2 × 2 CPU/32 GiB/60 h |
+| 21272800 | All 48 MuJoCo pilot conditions at 10M | At most 2 × 1 CPU/4 GiB/30 h |
+| 21279129 | Ten fresh-seed HC 3×2 BPPO/AR confirmation runs | At most 2 × 1 CPU/4 GiB/7 h |
+| 21279857 | Native replay from relocated evidence, after confirmation | One 1 CPU/2 GiB/10 min task |
 
-Both new studies change only the training budget from their audited pilots and retain every declared method/control. They use development seed 0, not independent final seeds. The batches require several days. Source, configurations, dependency and resources were verified before release; maximum schedule remains eight workers/ten CPUs/96 GiB. Other reproduction work is untouched. Query recorded jobs for live state; this is a dated snapshot.
+The schedule stays within eight workers/sixteen CPUs/96 GiB. Other reproduction work is untouched. Batches require several days; query recorded jobs for live state.
 
 ## What is verified
 
@@ -29,7 +30,7 @@ Both new studies change only the training budget from their audited pilots and r
 - All 96 initial MuJoCo/SMAC native integrations and 16 Football integrations pass. Predator–Prey matches 10,240 pinned-release transitions. These short checks do not establish learned performance.
 - The clean installed-wheel check passed 899 tests with 1 CUDA-only skip before three later reporting-only budget tests. Training defaults and frozen snapshots were preserved. Hosted CI remains unverified; [clean-install evidence](docs/clean_checkout.md).
 - Independent BPPO/AR matrix 1M confirmation passes all 20 runs near the games' return ceilings. Both methods succeed; the paired endpoint intervals include zero. [Evidence](docs/matrix_confirmation.md).
-- All 45 canonical targets are indexed. The [latest coverage snapshot](experiments/benchmark_coverage_20261029.provenance.json) contains 782 runs/67 manifests with zero provenance errors. Eight targets have completed exact-budget method artifacts, including unsuccessful outcomes; 37 still lack them. Artifact counts are not success counts.
+- All 45 canonical targets are indexed. The [latest snapshot](experiments/benchmark_coverage_20261029_am.provenance.json) contains 792 runs/68 manifests with zero provenance errors. Nine targets have completed exact-budget method artifacts, including unsuccessful outcomes; 36 still lack them. Artifact counts are not success counts.
 
 ## Required before release
 

@@ -1,0 +1,157 @@
+{
+  "recorded_utc": "2026-10-29T09:23:42.426592+00:00",
+  "scope": "Complete12-run development comparison, three paired training seeds per partition; no independent-final inference.",
+  "raw_audit": "experiments/hc_partitions10m_complete_20261029.json",
+  "raw_audit_sha256": "f8f957899ff1ecddf8582988af44a4e320c68af33d1ce1d5b570be2c5416e82d",
+  "figure_target_file": "configs/curve_estimates_mujoco.json",
+  "figure_target_sha256": "cda00a54df6a71a6609061ddefa3021bb7c27b093b0fd8c77a9b9d5a317d4b8a",
+  "groups": [
+    {
+      "partition": "3x2",
+      "methods": {
+        "bppo": {
+          "seed_final_returns": [
+            5765.668059419422,
+            5317.05721706484,
+            5211.26419588628
+          ],
+          "final": {
+            "seed_count": 3,
+            "mean": 5431.329824123514,
+            "median": 5317.05721706484,
+            "sample_sd_across_training_seeds": 294.33753161652425
+          },
+          "normalized_auc": {
+            "seed_count": 3,
+            "mean": 4580.008172940364,
+            "median": 4669.41796588184,
+            "sample_sd_across_training_seeds": 517.2527454469839
+          }
+        },
+        "arppo": {
+          "seed_final_returns": [
+            4916.44377743399,
+            5745.804351092758,
+            5448.201164336997
+          ],
+          "final": {
+            "seed_count": 3,
+            "mean": 5370.149764287915,
+            "median": 5448.201164336997,
+            "sample_sd_across_training_seeds": 420.15325307810775
+          },
+          "normalized_auc": {
+            "seed_count": 3,
+            "mean": 4668.6324007217545,
+            "median": 4769.713027001339,
+            "sample_sd_across_training_seeds": 220.46528489922613
+          }
+        }
+      },
+      "paired_differences": [
+        {
+          "seed": 0,
+          "final_delta": 849.2242819854318,
+          "auc_delta": 630.9767203825877
+        },
+        {
+          "seed": 1,
+          "final_delta": -428.74713402791804,
+          "auc_delta": -100.29506111949831
+        },
+        {
+          "seed": 2,
+          "final_delta": -236.93696845071736,
+          "auc_delta": -796.5543426072609
+        }
+      ],
+      "mean_paired_final_delta": 61.18005983559882,
+      "mean_paired_auc_delta": -88.6242277813905,
+      "relative_final_delta_percent": 1.1392617063020083,
+      "paper_reading_range": [
+        4960,
+        5030
+      ],
+      "mean_above_upper_reading_bound": true,
+      "all_bppo_development_seeds_above_bound": true,
+      "historical_last_vertex_steps": 9904000.389393572
+    },
+    {
+      "partition": "6x1",
+      "methods": {
+        "bppo": {
+          "seed_final_returns": [
+            4186.399074591203,
+            4626.582598327511,
+            4861.81337314536
+          ],
+          "final": {
+            "seed_count": 3,
+            "mean": 4558.265015354691,
+            "median": 4626.582598327511,
+            "sample_sd_across_training_seeds": 342.8506785472167
+          },
+          "normalized_auc": {
+            "seed_count": 3,
+            "mean": 3998.3327486442354,
+            "median": 4129.157010850013,
+            "sample_sd_across_training_seeds": 273.1459730402139
+          }
+        },
+        "arppo": {
+          "seed_final_returns": [
+            4876.693730557193,
+            4890.939890448678,
+            3756.617229885441
+          ],
+          "final": {
+            "seed_count": 3,
+            "mean": 4508.0836169637705,
+            "median": 4876.693730557193,
+            "sample_sd_across_training_seeds": 650.8279622521853
+          },
+          "normalized_auc": {
+            "seed_count": 3,
+            "mean": 3902.534176712857,
+            "median": 4085.3072809616388,
+            "sample_sd_across_training_seeds": 475.76823714353895
+          }
+        }
+      },
+      "paired_differences": [
+        {
+          "seed": 0,
+          "final_delta": -690.2946559659895,
+          "auc_delta": -575.4334110862292
+        },
+        {
+          "seed": 1,
+          "final_delta": -264.3572921211671,
+          "auc_delta": 43.849729888373986
+        },
+        {
+          "seed": 2,
+          "final_delta": 1105.1961432599192,
+          "auc_delta": 818.9793969919901
+        }
+      ],
+      "mean_paired_final_delta": 50.181398390920855,
+      "mean_paired_auc_delta": 95.79857193137832,
+      "relative_final_delta_percent": 1.1131425824066232,
+      "paper_reading_range": [
+        4550,
+        4610
+      ],
+      "mean_above_upper_reading_bound": false,
+      "all_bppo_development_seeds_above_bound": false,
+      "historical_last_vertex_steps": 9904000.568359263
+    }
+  ],
+  "limitations": [
+    "Final10M versus figure vertex about9.904M; original evaluation and smoothing unknown.",
+    "Digitization reading range is not seed uncertainty.",
+    "Three development seeds do not establish peer-feedback superiority or independent replication.",
+    "Failed HC2x3 independent confirmation remains retained and separate."
+  ],
+  "next_action": "HC3x2 passes its development figure reading in all3 seeds; freeze a separate independent five-seed BPPO/AR confirmation. HC6x1 mean remains below upper reading bound; no success claim."
+}

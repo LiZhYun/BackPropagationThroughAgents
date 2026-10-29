@@ -1,0 +1,1149 @@
+{
+  "scope": "Complete six-run HalfCheetah3x2 task subset of the fully validated12-run partition study; all three BPPO and AR-PPO seeds retained.",
+  "metric": "return_mean",
+  "manifest_sha256": "89304521b293a68616a248da6e64ded7c26d0fe30ee44c52f3bb536de473cb60",
+  "reporter_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+  "area_rule": "trapezoidal integral of logged evaluation means over actual training steps, divided by full budget",
+  "uncertainty": {
+    "unit": "training-seed mean; evaluation episodes are not independent training seeds",
+    "interval": "percentile bootstrap, linear percentile interpolation; omitted below five seeds",
+    "bootstrap_seed": 1729,
+    "bootstrap_samples": 10000
+  },
+  "interpretation": "All declared seeds must complete at the same settings and evaluation grid before aggregation. Intervals do not certify independent final seeds, protocol equivalence or paper superiority.",
+  "runs": [
+    {
+      "variant": "hc3x2_arppo",
+      "algorithm": "arppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_arppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.22220238297553283
+        },
+        {
+          "steps": 500000,
+          "value": 3164.9655777989824
+        },
+        {
+          "steps": 1000000,
+          "value": 3861.6618117087705
+        },
+        {
+          "steps": 1500000,
+          "value": 3850.8266530662327
+        },
+        {
+          "steps": 2000000,
+          "value": 3271.997785043025
+        },
+        {
+          "steps": 2500000,
+          "value": 4008.573860823457
+        },
+        {
+          "steps": 3000000,
+          "value": 4347.664093948334
+        },
+        {
+          "steps": 3500000,
+          "value": 3972.420490596357
+        },
+        {
+          "steps": 4000000,
+          "value": 4411.2750787223795
+        },
+        {
+          "steps": 4500000,
+          "value": 4440.372181688955
+        },
+        {
+          "steps": 5000000,
+          "value": 4878.036357213806
+        },
+        {
+          "steps": 5500000,
+          "value": 4912.4261274191385
+        },
+        {
+          "steps": 6000000,
+          "value": 4991.083114548792
+        },
+        {
+          "steps": 6500000,
+          "value": 5376.25897779954
+        },
+        {
+          "steps": 7000000,
+          "value": 5218.792489503586
+        },
+        {
+          "steps": 7500000,
+          "value": 4137.734318100347
+        },
+        {
+          "steps": 8000000,
+          "value": 5201.179229812617
+        },
+        {
+          "steps": 8500000,
+          "value": 5561.626074025813
+        },
+        {
+          "steps": 9000000,
+          "value": 5392.3430629337345
+        },
+        {
+          "steps": 9500000,
+          "value": 4857.66914207674
+        },
+        {
+          "steps": 10000000,
+          "value": 4916.44377743399
+        }
+      ],
+      "full_budget_auc": {
+        "area": 44157508607.178055,
+        "normalized_by_training_steps": 4415.750860717805
+      },
+      "budget": 10000000,
+      "summary_sha256": "2bd2955ab0f743748be10a049c3f1148cc2f2aafecb853a9cf576ad1e6c3998b",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "513e61739016cf50cee2afeac1b25e638ef74346f47aa6c17253d85ef3926673",
+      "metrics_snapshot_sha256": "403d5c7c100993f47d18911d2b1df72ca1ba9b6833f81901eb67bb17bebd8487",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "hc3x2_arppo",
+      "algorithm": "arppo",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_arppo_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.22124694009539062
+        },
+        {
+          "steps": 500000,
+          "value": 1806.9448195173695
+        },
+        {
+          "steps": 1000000,
+          "value": 3006.418017523734
+        },
+        {
+          "steps": 1500000,
+          "value": 4261.78791194834
+        },
+        {
+          "steps": 2000000,
+          "value": 4465.231965395017
+        },
+        {
+          "steps": 2500000,
+          "value": 4573.435273377941
+        },
+        {
+          "steps": 3000000,
+          "value": 4863.400076794774
+        },
+        {
+          "steps": 3500000,
+          "value": 4888.214638430538
+        },
+        {
+          "steps": 4000000,
+          "value": 4604.685542446566
+        },
+        {
+          "steps": 4500000,
+          "value": 5216.133155535357
+        },
+        {
+          "steps": 5000000,
+          "value": 4777.684279401452
+        },
+        {
+          "steps": 5500000,
+          "value": 5330.480277986077
+        },
+        {
+          "steps": 6000000,
+          "value": 5602.927179579872
+        },
+        {
+          "steps": 6500000,
+          "value": 5649.36713508668
+        },
+        {
+          "steps": 7000000,
+          "value": 5583.044899868063
+        },
+        {
+          "steps": 7500000,
+          "value": 5530.2705544308865
+        },
+        {
+          "steps": 8000000,
+          "value": 5552.739293900236
+        },
+        {
+          "steps": 8500000,
+          "value": 5739.630297642995
+        },
+        {
+          "steps": 9000000,
+          "value": 5720.843955027556
+        },
+        {
+          "steps": 9500000,
+          "value": 5348.229714056994
+        },
+        {
+          "steps": 10000000,
+          "value": 5745.804351092758
+        }
+      ],
+      "full_budget_auc": {
+        "area": 47697130270.01339,
+        "normalized_by_training_steps": 4769.713027001339
+      },
+      "budget": 10000000,
+      "summary_sha256": "1e40f07391a00e43c8a031b01e9a692a876543bd6fed3bc9dea6d656f7cb6c05",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "513e61739016cf50cee2afeac1b25e638ef74346f47aa6c17253d85ef3926673",
+      "metrics_snapshot_sha256": "635a610cabc4a24c66e0b12929b0734bb7d6f4756ee5294698480e12ac933202",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "hc3x2_arppo",
+      "algorithm": "arppo",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_arppo_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.22020127758607355
+        },
+        {
+          "steps": 500000,
+          "value": 2666.8957675492784
+        },
+        {
+          "steps": 1000000,
+          "value": 3453.088626317483
+        },
+        {
+          "steps": 1500000,
+          "value": 4426.5267402846
+        },
+        {
+          "steps": 2000000,
+          "value": 4634.050216333958
+        },
+        {
+          "steps": 2500000,
+          "value": 4510.351431351481
+        },
+        {
+          "steps": 3000000,
+          "value": 4877.688455234798
+        },
+        {
+          "steps": 3500000,
+          "value": 5000.51033079358
+        },
+        {
+          "steps": 4000000,
+          "value": 5002.323355733203
+        },
+        {
+          "steps": 4500000,
+          "value": 5097.32847602662
+        },
+        {
+          "steps": 5000000,
+          "value": 5124.697091606691
+        },
+        {
+          "steps": 5500000,
+          "value": 4885.241528900965
+        },
+        {
+          "steps": 6000000,
+          "value": 5421.864293882332
+        },
+        {
+          "steps": 6500000,
+          "value": 5369.309383396944
+        },
+        {
+          "steps": 7000000,
+          "value": 5574.382325999764
+        },
+        {
+          "steps": 7500000,
+          "value": 5403.230166748077
+        },
+        {
+          "steps": 8000000,
+          "value": 5582.871603238658
+        },
+        {
+          "steps": 8500000,
+          "value": 5559.18702859971
+        },
+        {
+          "steps": 9000000,
+          "value": 5517.449348546075
+        },
+        {
+          "steps": 9500000,
+          "value": 5577.679636848452
+        },
+        {
+          "steps": 10000000,
+          "value": 5448.201164336997
+        }
+      ],
+      "full_budget_auc": {
+        "area": 48204333144.46119,
+        "normalized_by_training_steps": 4820.433314446119
+      },
+      "budget": 10000000,
+      "summary_sha256": "3495c14659748300af369dd285ea7126fa95c25bb08a6db80b4aeeca366dd943",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "513e61739016cf50cee2afeac1b25e638ef74346f47aa6c17253d85ef3926673",
+      "metrics_snapshot_sha256": "0c4680011a268b630beca2e93390d1435d1ac9f2feff8b3df9441ba864a25cc9",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "hc3x2_bppo",
+      "algorithm": "bppo",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_bppo_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.22220238297553283
+        },
+        {
+          "steps": 500000,
+          "value": 2498.1430210613557
+        },
+        {
+          "steps": 1000000,
+          "value": 4760.203883128492
+        },
+        {
+          "steps": 1500000,
+          "value": 4320.933475749014
+        },
+        {
+          "steps": 2000000,
+          "value": 3781.800435074048
+        },
+        {
+          "steps": 2500000,
+          "value": 4940.012332603611
+        },
+        {
+          "steps": 3000000,
+          "value": 5349.482927504585
+        },
+        {
+          "steps": 3500000,
+          "value": 5456.820010430564
+        },
+        {
+          "steps": 4000000,
+          "value": 5546.980757578132
+        },
+        {
+          "steps": 4500000,
+          "value": 5493.297085226216
+        },
+        {
+          "steps": 5000000,
+          "value": 5705.640853087479
+        },
+        {
+          "steps": 5500000,
+          "value": 5771.550306164272
+        },
+        {
+          "steps": 6000000,
+          "value": 5802.540249870063
+        },
+        {
+          "steps": 6500000,
+          "value": 5628.648286983815
+        },
+        {
+          "steps": 7000000,
+          "value": 5096.312300478098
+        },
+        {
+          "steps": 7500000,
+          "value": 5497.620369468588
+        },
+        {
+          "steps": 8000000,
+          "value": 5537.826045432839
+        },
+        {
+          "steps": 8500000,
+          "value": 5660.498188784744
+        },
+        {
+          "steps": 9000000,
+          "value": 5392.741696491368
+        },
+        {
+          "steps": 9500000,
+          "value": 5810.776468372357
+        },
+        {
+          "steps": 10000000,
+          "value": 5765.668059419422
+        }
+      ],
+      "full_budget_auc": {
+        "area": 50467275811.00393,
+        "normalized_by_training_steps": 5046.727581100393
+      },
+      "budget": 10000000,
+      "summary_sha256": "b3340d2f2895589d6a2a93b8ce6a1e7bca6de135a8a6e19c2f58f4992d7c355f",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "fdfd32f68da597021ced5e99e8d0344352e427c3ea96cda99013e9853365136d",
+      "metrics_snapshot_sha256": "9be852aa078691b4b3df4ee49204039ca709669609bb1057b6427f3b1465a3d6",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "hc3x2_bppo",
+      "algorithm": "bppo",
+      "seed": 1,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_bppo_seed1",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.22124694009539062
+        },
+        {
+          "steps": 500000,
+          "value": 2731.5676461304142
+        },
+        {
+          "steps": 1000000,
+          "value": 3438.2417110808183
+        },
+        {
+          "steps": 1500000,
+          "value": 4470.606141213264
+        },
+        {
+          "steps": 2000000,
+          "value": 4515.24876281034
+        },
+        {
+          "steps": 2500000,
+          "value": 5022.177535474492
+        },
+        {
+          "steps": 3000000,
+          "value": 4664.279910642109
+        },
+        {
+          "steps": 3500000,
+          "value": 4209.692374473977
+        },
+        {
+          "steps": 4000000,
+          "value": 4939.238735487836
+        },
+        {
+          "steps": 4500000,
+          "value": 4898.969226452827
+        },
+        {
+          "steps": 5000000,
+          "value": 5093.647231266621
+        },
+        {
+          "steps": 5500000,
+          "value": 5114.321688166749
+        },
+        {
+          "steps": 6000000,
+          "value": 5214.7078903047695
+        },
+        {
+          "steps": 6500000,
+          "value": 5044.5545746914
+        },
+        {
+          "steps": 7000000,
+          "value": 5066.095700472231
+        },
+        {
+          "steps": 7500000,
+          "value": 5204.404697663388
+        },
+        {
+          "steps": 8000000,
+          "value": 5233.2855199622045
+        },
+        {
+          "steps": 8500000,
+          "value": 5278.128217368792
+        },
+        {
+          "steps": 9000000,
+          "value": 5283.07131788438
+        },
+        {
+          "steps": 9500000,
+          "value": 5307.702451027827
+        },
+        {
+          "steps": 10000000,
+          "value": 5317.05721706484
+        }
+      ],
+      "full_budget_auc": {
+        "area": 46694179658.818405,
+        "normalized_by_training_steps": 4669.41796588184
+      },
+      "budget": 10000000,
+      "summary_sha256": "e672cba8b44e45c2f0cc734d9c2e094b045732a1574f57bc2c846c155de6b913",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "fdfd32f68da597021ced5e99e8d0344352e427c3ea96cda99013e9853365136d",
+      "metrics_snapshot_sha256": "e6cc6a3cba50c85cd9c3cec54df011c4a39eaf7031860e5fe5b7c074caa39c75",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    },
+    {
+      "variant": "hc3x2_bppo",
+      "algorithm": "bppo",
+      "seed": 2,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc_partitions10m_20261028T082222Z/hc3x2_bppo_seed2",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.22020127758607355
+        },
+        {
+          "steps": 500000,
+          "value": 2663.228188985088
+        },
+        {
+          "steps": 1000000,
+          "value": 3099.5597789886633
+        },
+        {
+          "steps": 1500000,
+          "value": 3853.116320797789
+        },
+        {
+          "steps": 2000000,
+          "value": 3966.5251738195657
+        },
+        {
+          "steps": 2500000,
+          "value": 4171.804229757253
+        },
+        {
+          "steps": 3000000,
+          "value": 3839.8455086362032
+        },
+        {
+          "steps": 3500000,
+          "value": 4567.499279637651
+        },
+        {
+          "steps": 4000000,
+          "value": 3392.366400895329
+        },
+        {
+          "steps": 4500000,
+          "value": 3538.277731694228
+        },
+        {
+          "steps": 5000000,
+          "value": 3147.9332340769656
+        },
+        {
+          "steps": 5500000,
+          "value": 3975.0384846763336
+        },
+        {
+          "steps": 6000000,
+          "value": 3164.1909980164805
+        },
+        {
+          "steps": 6500000,
+          "value": 4819.461500430494
+        },
+        {
+          "steps": 7000000,
+          "value": 4686.786988659173
+        },
+        {
+          "steps": 7500000,
+          "value": 4677.0770759533125
+        },
+        {
+          "steps": 8000000,
+          "value": 5005.012822996807
+        },
+        {
+          "steps": 8500000,
+          "value": 5144.862905232758
+        },
+        {
+          "steps": 9000000,
+          "value": 4921.338106672005
+        },
+        {
+          "steps": 9500000,
+          "value": 5238.132709546723
+        },
+        {
+          "steps": 10000000,
+          "value": 5211.26419588628
+        }
+      ],
+      "full_budget_auc": {
+        "area": 40238789718.38858,
+        "normalized_by_training_steps": 4023.878971838858
+      },
+      "budget": 10000000,
+      "summary_sha256": "aa5a3ad196971552a24cf31b5bd7b1875ef8b6fa5433bf4ac99f58556053eaf8",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "fdfd32f68da597021ced5e99e8d0344352e427c3ea96cda99013e9853365136d",
+      "metrics_snapshot_sha256": "5b9124940f65012a44c5d1aeb66c87072dbcf72221ead7a459b7451935e02af2",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 1000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      }
+    }
+  ],
+  "groups": [
+    {
+      "variant": "hc3x2_arppo",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 3,
+          "mean": 5370.149764287915,
+          "median": 5448.201164336997,
+          "sample_sd_across_training_seeds": 420.15325307810775,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 4668.6324007217545,
+          "median": 4769.713027001339,
+          "sample_sd_across_training_seeds": 220.46528489922613,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 3,
+            "mean": -0.22121686688566566,
+            "median": -0.22124694009539062,
+            "sample_sd_across_training_seeds": 0.0010008915992194701
+          },
+          {
+            "steps": 500000,
+            "seed_count": 3,
+            "mean": 2546.268721621877,
+            "median": 2666.8957675492784,
+            "sample_sd_across_training_seeds": 686.9994600709816
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 3,
+            "mean": 3440.3894851833293,
+            "median": 3453.088626317483,
+            "sample_sd_across_training_seeds": 427.76329670994824
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 3,
+            "mean": 4179.713768433057,
+            "median": 4261.78791194834,
+            "sample_sd_across_training_seeds": 296.4958201748118
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 3,
+            "mean": 4123.759988924,
+            "median": 4465.231965395017,
+            "sample_sd_across_training_seeds": 742.4614733658929
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 3,
+            "mean": 4364.120188517626,
+            "median": 4510.351431351481,
+            "sample_sd_across_training_seeds": 309.52348236250504
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 3,
+            "mean": 4696.250875325969,
+            "median": 4863.400076794774,
+            "sample_sd_across_training_seeds": 301.96953083552233
+          },
+          {
+            "steps": 3500000,
+            "seed_count": 3,
+            "mean": 4620.3818199401585,
+            "median": 4888.214638430538,
+            "sample_sd_across_training_seeds": 563.9530067962784
+          },
+          {
+            "steps": 4000000,
+            "seed_count": 3,
+            "mean": 4672.761325634049,
+            "median": 4604.685542446566,
+            "sample_sd_across_training_seeds": 301.34739194459246
+          },
+          {
+            "steps": 4500000,
+            "seed_count": 3,
+            "mean": 4917.944604416977,
+            "median": 5097.32847602662,
+            "sample_sd_across_training_seeds": 417.8339409155607
+          },
+          {
+            "steps": 5000000,
+            "seed_count": 3,
+            "mean": 4926.805909407316,
+            "median": 4878.036357213806,
+            "sample_sd_across_training_seeds": 178.57302392722653
+          },
+          {
+            "steps": 5500000,
+            "seed_count": 3,
+            "mean": 5042.71597810206,
+            "median": 4912.4261274191385,
+            "sample_sd_across_training_seeds": 249.5815894952039
+          },
+          {
+            "steps": 6000000,
+            "seed_count": 3,
+            "mean": 5338.624862670332,
+            "median": 5421.864293882332,
+            "sample_sd_across_training_seeds": 314.3006397699696
+          },
+          {
+            "steps": 6500000,
+            "seed_count": 3,
+            "mean": 5464.978498761055,
+            "median": 5376.25897779954,
+            "sample_sd_across_training_seeds": 159.72304505019898
+          },
+          {
+            "steps": 7000000,
+            "seed_count": 3,
+            "mean": 5458.739905123804,
+            "median": 5574.382325999764,
+            "sample_sd_across_training_seeds": 207.84569214593404
+          },
+          {
+            "steps": 7500000,
+            "seed_count": 3,
+            "mean": 5023.745013093104,
+            "median": 5403.230166748077,
+            "sample_sd_across_training_seeds": 769.932483245648
+          },
+          {
+            "steps": 8000000,
+            "seed_count": 3,
+            "mean": 5445.596708983837,
+            "median": 5552.739293900236,
+            "sample_sd_across_training_seeds": 212.20725037054413
+          },
+          {
+            "steps": 8500000,
+            "seed_count": 3,
+            "mean": 5620.147800089506,
+            "median": 5561.626074025813,
+            "sample_sd_across_training_seeds": 103.48206439698757
+          },
+          {
+            "steps": 9000000,
+            "seed_count": 3,
+            "mean": 5543.545455502455,
+            "median": 5517.449348546075,
+            "sample_sd_across_training_seeds": 165.79796176466792
+          },
+          {
+            "steps": 9500000,
+            "seed_count": 3,
+            "mean": 5261.192830994062,
+            "median": 5348.229714056994,
+            "sample_sd_across_training_seeds": 367.8115582813218
+          },
+          {
+            "steps": 10000000,
+            "seed_count": 3,
+            "mean": 5370.149764287915,
+            "median": 5448.201164336997,
+            "sample_sd_across_training_seeds": 420.15325307810775
+          }
+        ]
+      }
+    },
+    {
+      "variant": "hc3x2_bppo",
+      "declared_seeds": [
+        0,
+        1,
+        2
+      ],
+      "eligible_seeds": [
+        0,
+        1,
+        2
+      ],
+      "aggregation_errors": [],
+      "aggregate": {
+        "final": {
+          "seed_count": 3,
+          "mean": 5431.329824123514,
+          "median": 5317.05721706484,
+          "sample_sd_across_training_seeds": 294.33753161652425,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "normalized_auc": {
+          "seed_count": 3,
+          "mean": 4580.008172940364,
+          "median": 4669.41796588184,
+          "sample_sd_across_training_seeds": 517.2527454469839,
+          "bootstrap_95pct_mean": null,
+          "bootstrap_95pct_median": null
+        },
+        "curve": [
+          {
+            "steps": 0,
+            "seed_count": 3,
+            "mean": -0.22121686688566566,
+            "median": -0.22124694009539062,
+            "sample_sd_across_training_seeds": 0.0010008915992194701
+          },
+          {
+            "steps": 500000,
+            "seed_count": 3,
+            "mean": 2630.9796187256193,
+            "median": 2663.228188985088,
+            "sample_sd_across_training_seeds": 120.00725648889964
+          },
+          {
+            "steps": 1000000,
+            "seed_count": 3,
+            "mean": 3766.0017910659913,
+            "median": 3438.2417110808183,
+            "sample_sd_across_training_seeds": 877.4991240323311
+          },
+          {
+            "steps": 1500000,
+            "seed_count": 3,
+            "mean": 4214.885312586689,
+            "median": 4320.933475749014,
+            "sample_sd_across_training_seeds": 322.1150093705062
+          },
+          {
+            "steps": 2000000,
+            "seed_count": 3,
+            "mean": 4087.858123901318,
+            "median": 3966.5251738195657,
+            "sample_sd_across_training_seeds": 381.4811606704144
+          },
+          {
+            "steps": 2500000,
+            "seed_count": 3,
+            "mean": 4711.331365945119,
+            "median": 4940.012332603611,
+            "sample_sd_across_training_seeds": 469.0468293816868
+          },
+          {
+            "steps": 3000000,
+            "seed_count": 3,
+            "mean": 4617.869448927632,
+            "median": 4664.279910642109,
+            "sample_sd_across_training_seeds": 755.8880421923016
+          },
+          {
+            "steps": 3500000,
+            "seed_count": 3,
+            "mean": 4744.670554847397,
+            "median": 4567.499279637651,
+            "sample_sd_across_training_seeds": 642.163593378862
+          },
+          {
+            "steps": 4000000,
+            "seed_count": 3,
+            "mean": 4626.195297987099,
+            "median": 4939.238735487836,
+            "sample_sd_across_training_seeds": 1110.8950903787543
+          },
+          {
+            "steps": 4500000,
+            "seed_count": 3,
+            "mean": 4643.514681124423,
+            "median": 4898.969226452827,
+            "sample_sd_across_training_seeds": 1002.2314786105374
+          },
+          {
+            "steps": 5000000,
+            "seed_count": 3,
+            "mean": 4649.073772810355,
+            "median": 5093.647231266621,
+            "sample_sd_across_training_seeds": 1335.552782955032
+          },
+          {
+            "steps": 5500000,
+            "seed_count": 3,
+            "mean": 4953.6368263357845,
+            "median": 5114.321688166749,
+            "sample_sd_across_training_seeds": 908.9710665377114
+          },
+          {
+            "steps": 6000000,
+            "seed_count": 3,
+            "mean": 4727.146379397104,
+            "median": 5214.7078903047695,
+            "sample_sd_across_training_seeds": 1385.1024741433444
+          },
+          {
+            "steps": 6500000,
+            "seed_count": 3,
+            "mean": 5164.221454035236,
+            "median": 5044.5545746914,
+            "sample_sd_across_training_seeds": 417.65528296915073
+          },
+          {
+            "steps": 7000000,
+            "seed_count": 3,
+            "mean": 4949.731663203168,
+            "median": 5066.095700472231,
+            "sample_sd_across_training_seeds": 228.21741198309985
+          },
+          {
+            "steps": 7500000,
+            "seed_count": 3,
+            "mean": 5126.36738102843,
+            "median": 5204.404697663388,
+            "sample_sd_across_training_seeds": 415.8006628468894
+          },
+          {
+            "steps": 8000000,
+            "seed_count": 3,
+            "mean": 5258.70812946395,
+            "median": 5233.2855199622045,
+            "sample_sd_across_training_seeds": 267.3148224586058
+          },
+          {
+            "steps": 8500000,
+            "seed_count": 3,
+            "mean": 5361.163103795431,
+            "median": 5278.128217368792,
+            "sample_sd_across_training_seeds": 267.6584216568723
+          },
+          {
+            "steps": 9000000,
+            "seed_count": 3,
+            "mean": 5199.050373682584,
+            "median": 5283.07131788438,
+            "sample_sd_across_training_seeds": 246.67787785301414
+          },
+          {
+            "steps": 9500000,
+            "seed_count": 3,
+            "mean": 5452.203876315636,
+            "median": 5307.702451027827,
+            "sample_sd_across_training_seeds": 312.4751431124464
+          },
+          {
+            "steps": 10000000,
+            "seed_count": 3,
+            "mean": 5431.329824123514,
+            "median": 5317.05721706484,
+            "sample_sd_across_training_seeds": 294.33753161652425
+          }
+        ]
+      }
+    }
+  ],
+  "selection": {
+    "full_report": "experiments/hc_partitions10m_curves_20261029.json",
+    "full_report_sha256": "262da187587c56f213a15a163c1791439b6d74656825ff27568ebe11c1ea92bb",
+    "rule": "variant starts with hc3x2_; select task, not performance or seed",
+    "excluded_runs": [
+      {
+        "variant": "hc6x1_arppo",
+        "seed": 0,
+        "reason": "Different6x1 task; retained in full report"
+      },
+      {
+        "variant": "hc6x1_arppo",
+        "seed": 1,
+        "reason": "Different6x1 task; retained in full report"
+      },
+      {
+        "variant": "hc6x1_arppo",
+        "seed": 2,
+        "reason": "Different6x1 task; retained in full report"
+      },
+      {
+        "variant": "hc6x1_bppo",
+        "seed": 0,
+        "reason": "Different6x1 task; retained in full report"
+      },
+      {
+        "variant": "hc6x1_bppo",
+        "seed": 1,
+        "reason": "Different6x1 task; retained in full report"
+      },
+      {
+        "variant": "hc6x1_bppo",
+        "seed": 2,
+        "reason": "Different6x1 task; retained in full report"
+      }
+    ]
+  }
+}

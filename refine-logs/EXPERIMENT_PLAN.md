@@ -188,3 +188,12 @@ The 37 remaining MuJoCo 500k conditions and all five SMAC 25×4001M controls pas
 Extend all 48 audited Ant/Walker/remaining MuJoCo pilot conditions to 10M with every control retained and only budget changed:21272800,1 CPU/4 GiB/30 h each, max 2, after the entire HC partition array 21251961. Exact 20-module source. Both studies use seed 0 development first; no final confirmation claim. All declarations for each task must complete and validate before task-level comparisons, all study outcomes remain visible, no early-peak replacements. Current independent BPPO failure remains unchanged; later selected configurations require new final seeds.
 
 The two arrays reuse existing slots, preserving 8workers/16 CPU/96 GiB; scheduled maximum 8workers/10 CPU/96 GiB. No requeue or unrelated-job changes. Linear worst projections 37.81 h SMAC and 17.03 h MuJoCo have at least 50% wall-time headroom; full batches take several days. [Evidence and all endpoints](../docs/progress_20261029.md).
+
+
+## Fresh HC3×2 confirmation and completed entropy control, 29 October morning
+
+All12 partition development runs are valid. All3 HC3×2 BPPO endpoints exceed the figure reading upper bound5030, while paired AR comparisons remain mixed. Freeze ten independent runs with seeds5000–5004 and evaluation seed3000000, absent from the782-run inventory. Exact19-module source and every other resolved setting remain unchanged. Primary final10M mean; paired effects, AUC, mean/median/SD and whole-seed bootstrap intervals reported separately. No replacement/pooling. Job21279129 reuses completed entropy-array slots, at most two1CPU/4GiB/7h tasks. A revised held registration selects all six3×2 runs instead of mixed-task environment signatures; no training started before validation passed.
+
+All18 entropy-paired10M runs are valid. Zero entropy lowers all three final means and AUCs; it does not resolve the modifier gap. Retain this negative result; do not expand that sweep without a new evidence-based hypothesis. Current long-budget coverage studies continue.
+
+A complete-study exporter now verifies and packages frozen source, all configurations, full logs, summaries and checkpoints with portable operational paths. The actual12-run HC study passes relocation and identical-curve checks. Native replay21279857 waits for entire confirmation21279129 and reuses a freed slot. No active jobs or training source change. [Current evidence](../docs/progress_20261029_am.md).

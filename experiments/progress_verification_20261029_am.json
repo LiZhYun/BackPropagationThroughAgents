@@ -1,0 +1,46 @@
+{
+  "recorded_utc": "2026-10-29T09:47:15.678315+00:00",
+  "previous_goal_turn_classification": "progress: audited completed studies and launched53 full-budget follow-ups in64db903",
+  "current_goal_turn_classification": "progress: completed two cohort audits, registered independent HC3x2 confirmation, implemented and verified portable export",
+  "confirmation_plan": "experiments/hc3x2_confirmation10m_plan_20261029_v2.json",
+  "confirmation_plan_sha256": "f6257ee5b588347c150aebdada1b4417332539cf46fb427271eb644208132ee7",
+  "strict_confirmation_report_errors": [],
+  "confirmation_artifact_status": {
+    "not_started": 8,
+    "unfinished": 2
+  },
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_experiment_bundle.py tests/test_prepare_simulator.py tests/test_simulator_confirmation.py",
+    "passed": 96,
+    "duration_seconds": 15.29,
+    "stdout_saved": false,
+    "evidence": "Observed successful tool output; no JUnit artifact claimed.",
+    "source_sha256": {
+      "scripts/export_simulator_study.py": "f77e60c948f24d51763ec2802fd7a3e5d29827bc2b92ede14547e117a17b4022",
+      "scripts/bundle_runner.py": "28d76ccf74e6c47d204dece9e2ca9c4446eae013e2f66c99c23f5cfd48289a41",
+      "tests/test_experiment_bundle.py": "647a76b6175036618b509e16c1f2db3f8b49aacbc351859407ed6a3845562b7b"
+    }
+  },
+  "canonical_targets": {
+    "total": 45,
+    "numeric": 6,
+    "digitized": 39,
+    "errors": []
+  },
+  "new_json_files_parsed_before_record": 19,
+  "local_links_verified": 108,
+  "figure_review": "PNG visually inspected; labels, complete four-group curves and sample-SD bands legible; PNG/PDF report hashes verified.",
+  "active_owned_workers": 8,
+  "active_owned_cpus": 10,
+  "active_owned_memory_gib": 96,
+  "native_bundle_replay": {
+    "job_id": "21279857",
+    "status": "pending",
+    "dependency": "afterany:21279129_*(unfulfilled)",
+    "verified_native_replay": false
+  },
+  "training_package_changed": false,
+  "training_artifacts_modified": false,
+  "unrelated_jobs_modified": false,
+  "goal_completion": "not_established"
+}

@@ -1,0 +1,21 @@
+{
+  "recorded_utc": "2026-10-29T09:26:39.465473+00:00",
+  "job_id": "21279129",
+  "status": "released",
+  "plan": "experiments/hc3x2_confirmation10m_plan_20261029_v2.json",
+  "plan_sha256": "f6257ee5b588347c150aebdada1b4417332539cf46fb427271eb644208132ee7",
+  "manifest": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/manifest.json",
+  "manifest_sha256": "8ca0d50c7bc7a127b114611d2b5ccb42bfea94fc792434481eac27508ad33fef",
+  "held_verification": "JobId=21279129 ArrayJobId=21279129 ArrayTaskId=0-9%2 ArrayTaskThrottle=2 JobName=bpta-agentmixer-hc3-confirm10m UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21252423_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=07:00:00 TimeMin=N/A SubmitTime=2026-10-29T11:25:11 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T11:25:11 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:2849917 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_confirmation_dispatch_20261029/submit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21252423 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_confirmation_dispatch_20261029/submit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc3x2_confirmation10m_20261029T092509Z/slurm_21279129_4294967294.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc3x2_confirmation10m_20261029T092509Z/slurm_21279129_4294967294.out TresPerTask=cpu=1",
+  "dispatch_script": "results/hc3x2_confirmation_dispatch_20261029/submit.sbatch",
+  "dispatch_script_sha256": "14ed69145c8f1ad37f5fa3a3254034ff7312796fc638c546d70ab70fe0ba9136",
+  "allocation": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 4,
+    "wall_hours_per_task": 7,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "frozen_parser_passed": true,
+  "strict_confirmation_reporter_preflight_passed": true
+}

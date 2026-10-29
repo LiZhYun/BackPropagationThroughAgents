@@ -1,0 +1,10 @@
+{
+  "report": "experiments/hc_partitions10m_curves_20261029.json",
+  "report_sha256": "262da187587c56f213a15a163c1791439b6d74656825ff27568ebe11c1ea92bb",
+  "plotter_sha256": "d6d136c358f1d41d72ceaa0f57165de080683ce2e82c312927b454d835be89e5",
+  "matplotlib": "3.7.1",
+  "statistic": "mean",
+  "band": "sample standard deviation across training seeds",
+  "omitted_groups": [],
+  "title": "HalfCheetah partition development: 10M steps"
+}

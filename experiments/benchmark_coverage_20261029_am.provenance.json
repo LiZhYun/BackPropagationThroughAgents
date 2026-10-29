@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-10-29T09:45:20.728641+00:00",
+  "report": "results/benchmark_coverage_20261029_am.json",
+  "report_sha256": "3260d1bfe422b828824c3567e96d45bfcfeb7239963a2094e76d978bd345ed7d",
+  "csv": "experiments/benchmark_coverage_20261029_am.csv",
+  "csv_sha256": "106ac3e50767c7084c94f9a9c15f26b26ba27d124640509626173d38e24ce8ae",
+  "runs": 792,
+  "manifests": 68,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 9,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Artifact coverage, including unsuccessful outcomes; not performance certification."
+}

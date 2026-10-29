@@ -80,3 +80,8 @@ elapsed time, and all40 raw episodes at shared0/500k evaluations match. This
 supports the intended isolation of the budget/cadence changes in those two
 prefixes. It does not test checkpoint tensors or the other seven full-budget
 runs, and it does not compare curve areas on different evaluation grids.
+
+
+## Completed matched entropy control, 29 October
+
+All nine zero-entropy10M runs are valid:9,090 raw episodes and22,500 updates. Across development seeds0–2, bounded2938.59±506.43,identity3360.14±346.47,residual3350.29±392.68 are all below their positive-entropy counterparts; all mean curve areas also decrease. The [complete18-run comparison](../experiments/hc2x3_entropy10m_comparison_20261029.json) verifies identical source/runtime/grid and onlyentropy0.01→0 configuration differences. Removing entropy does not fix the learned-modifier gap. All individual outcomes,9.9M secondary endpoints and curve areas remain recorded; no independent-final claim.
