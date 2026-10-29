@@ -8,6 +8,12 @@ User instruction: “do not need to do full-budget”, followed by “Stop full-
 
 Release requires correct documented mechanisms, readable installation/training/evaluation flows, native integration, and selected predeclared shorter-budget multi-seed comparisons with matched controls. All declared seeds remain required before group statistics; independent final seeds and ablations remain required for claims of improvement. Smaller budgets do not prove published endpoint superiority. Keep historical studies/configurations/criteria unchanged and label interrupted runs as partial. [Canonical current scope](../experiments/reproduction_scope_reduced_budget_20261029.json).
 
+## Current release-first instruction, 29 October 2026
+
+The user clarified: an open, clear, faithful repository ASAP; neither full-budget runs nor all experiments are needed, and unneeded jobs must stop. This supersedes the earlier performance-based release gates below. All research sweeps and their collectors are now stopped; no new study may be launched as a release prerequisite. Preserve core mechanisms, document corrections and extensions, verify the package and short examples, then push to the specified GitHub repository. [Current scope](../experiments/community_release_scope_20261029.json).
+
+The remaining dated plan is research history, not a to-do list for public release.
+
 ## Claim map
 
 | Claim | Minimum evidence |

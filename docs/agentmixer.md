@@ -1,6 +1,6 @@
 # AgentMixer implementation and discrete correction
 
-The canonical accepted source is [`references/agentmixer/aaai25.tex`](../references/agentmixer/aaai25.tex), especially “Policy Modifier,” “Implementation of IGC,” and equations `mixer`, `igc`, and `cate_joint`. The implementation is [`src/bta_repro/agentmixer.py`](../src/bta_repro/agentmixer.py).
+The canonical accepted source is the accepted AgentMixer LaTeX source (locally supplied; excluded from public checkout), especially “Policy Modifier,” “Implementation of IGC,” and equations `mixer`, `igc`, and `cate_joint`. The implementation is [`src/bta_repro/agentmixer.py`](../src/bta_repro/agentmixer.py).
 
 Each agent has its own actor and parameters. Its logits depend only on its local observation. During centralized training, the policy modifier embeds those logits and the global state, concatenates the features, and applies two blocks of alternating agent mixing and channel mixing MLPs. Agent mixing communicates across agents; channel mixing transforms each agent's features. The modifier changes exploration while retaining each local actor's preferred actions. Greedy deployment uses `local_actions(obs, available_actions)` and requires no state or modifier.
 
@@ -31,4 +31,4 @@ This module handles homogeneous discrete action spaces with feed-forward actors 
 
 ## Optional experimental local distillation
 
-The simulator trainer supports `agentmixer_distillation_coef` (default 0) for factorized discrete policies. It adds a detached current-central-to-local KL to the actor objective, with explicit experimental run labels. The [diagnosis and control specification](prey_distillation.md) gives its gradient, mask reduction, limitations, compatibility checks, completed native gates and the now-submitted 24-run study. No learning improvement is established.
+The simulator trainer supports `agentmixer_distillation_coef` (default 0) for factorized discrete policies. It adds a detached current-central-to-local KL to the actor objective, with explicit experimental run labels. The [diagnosis and control specification](prey_distillation.md) gives its gradient, mask reduction, limitations, compatibility checks, completed native gates and the preserved, interrupted 24-run study. No learning improvement is established. Research sweeps are stopped under the [release-first scope](../STATUS.md).

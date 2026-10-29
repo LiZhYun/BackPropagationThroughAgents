@@ -75,8 +75,11 @@ BPTA also compares HAPPO and, on HalfCheetah-v2 6x1, GCS. AgentMixer includes HA
 
 The manifest retains the additional update-order, execution-order, projection, AIL, full-information, SAC, modifier-architecture and runtime studies. Runtime comparisons require matching hardware allocation; a shared server model alone does not establish comparability.
 
-## Conditions for a completed reproduction
+## Conditions for benchmark-performance claims
 
 The original random seed identifiers, precise package versions, evaluation episode counts, deterministic versus sampled evaluation rule and checkpoint-selection convention are not supplied. Five training seeds are explicit for BPTA and supported by AgentMixer's commented significance analysis. Record all choices made to fill the gaps.
 
 No experiment result is claimed by this audit. Completion requires per-task actual results with configuration, seed-level data, simulator versions, environment-step counts, uncertainty and independent final evaluation seeds. Report both mean and median so each paper's statistic can be recovered. Preserve original budgets for direct comparisons and label any added training or architecture changes. Unresolved plot targets need original data or a documented digitization protocol before claiming numerical improvement over them.
+
+
+The current public-release goal is a clear, faithful implementation with explicit corrections and runnable checks. Completing every experiment or paper budget is not a release prerequisite; the conditions above apply to any future performance claim. See [method fidelity](method_fidelity.md) and [current scope](../STATUS.md).

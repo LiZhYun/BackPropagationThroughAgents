@@ -32,7 +32,7 @@ wheel and checks installed console commands outside the checkout. The
 [clean-install guide](docs/clean_checkout.md) explains how to repeat those checks
 and distinguishes local verification from hosted CI execution.
 
-## Experiments
+## Optional experiments
 
 Use the [configuration guide](configs/README.md) to distinguish a flat training
 configuration from a multi-run plan. Preparation freezes source and settings;
@@ -51,3 +51,5 @@ For a bug report, include the commit, configuration, command, expected behavior,
 observed behavior and a minimal log or failing check. For a result report,
 include the frozen manifest and metric definition. Keep original papers and
 reference captures unchanged; document findings in a separate note.
+
+A clear, faithful implementation and reproducible correctness checks are the public-release priority. Contributors do not need to rerun benchmark sweeps. Keep research variants explicit and report only claims supported by their evidence.

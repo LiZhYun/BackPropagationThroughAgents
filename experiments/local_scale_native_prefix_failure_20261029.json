@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T17:01:15.850908+00:00",
+  "status": "historical_native_prefix_check_failed",
+  "script": "results/short_study_acceleration_20261029/audit_local_scale_early.py",
+  "script_sha256": "65d374d2facf1a0e95efd79c097f0bef35df3a844a6ba384ae915027dff8f33b",
+  "expected_rollout_return_mean": -0.16775678098201752,
+  "observed_rollout_return_mean": -0.16824229061603546,
+  "failing_field": ".rollout_return_mean",
+  "complete_family_valid": false,
+  "root_cause": "unresolved; no hardware/numerical cause asserted",
+  "acceptance_criterion_unchanged": true,
+  "all54_continuous_learning_runs_unsubmitted": true,
+  "no_learning_performance_claim": true,
+  "scope": "Optional research-gate failure retained; not substituted for the source-level mathematical checks."
+}

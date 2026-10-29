@@ -253,3 +253,6 @@
 
 
 | R177 | User scope change | Full-budget release gate removed | Five arrays stopped; two obsolete collectors retired | APPLIED | 8 completed/12 interrupted/58 unstarted runs preserved in 206 byte-matched files. Ten unchanged short checks released; Prey1M continues. No full-budget success or readiness percentage claimed. experiments/reproduction_scope_reduced_budget_20261029.json |
+
+
+| R178 | Release-first scope | Clear faithful community repo ASAP | Research sweeps stopped | APPLIED | Five remaining arrays and five collectors stopped; 6 completed/7 interrupted/84 unstarted declarations preserved in189files. Earlier acceleration receipt remains historical. No new learning released; method-fidelity guide and short default examples replace benchmark-gated readiness. experiments/community_release_scope_20261029.json |

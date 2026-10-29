@@ -87,3 +87,8 @@ The first two learning seeds pass live source/version/stream/raw-accounting chec
 Seed0 of the coefficient-zero,zero-penalty GRU condition is authoritatively completed at1M with exit0:0. Its full raw audit verifies100updates,101evaluations,2,020episodes and10,100windows. All100update records and101evaluation records exactly match the original seed0baseline after excluding elapsed time. Original artifacts are unchanged. [Partial evidence](../experiments/prey_distillation_learning_first_complete_20261029.json).
 
 This is one of24declared development runs. The complete-family collector still requires all24valid runs and all24full final-protocol checkpoint replays before any grouping or coefficient selection. No learned-performance improvement or independent confirmation is established.
+
+
+## Release-first scope, 29 October 2026
+
+The user stopped optional research sweeps to prioritize a clear faithful public repository. The24-run study is interrupted; its two completed runs and partial outcomes are retained without coefficient selection. No distillation learning improvement is established. This experimental auxiliary objective is not enabled by the reference examples and does not gate release. [Current scope](../STATUS.md).

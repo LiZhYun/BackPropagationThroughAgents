@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-10-29T17:01:15.885970+00:00",
+  "user_scope": "Clear faithful shared community repository ASAP; no full-budget requirement or exhaustive experiments; stop unneeded jobs; push to GitHub when finished.",
+  "supersedes": "Previous complete-benchmark and multi-seed performance release gates, including the reduced-budget study gate.",
+  "required": [
+    "Explicit mapping of core mechanisms to readable code.",
+    "Document equation/implementation corrections and optional extensions.",
+    "Pass full existing correctness suite and installed-package/console/replay checks.",
+    "Keep supported simulator protocols and tested environment versions documented.",
+    "Provide short runnable examples with no optional native engine dependency.",
+    "Retain successful,failed and interrupted evidence; do not claim unverified performance.",
+    "Stop research sweeps and preserve the unrelated reproduction.",
+    "Push the verified repository to the user-specified GitHub destination."
+  ],
+  "not_required": [
+    "Full paper budgets",
+    "Running all experiments",
+    "New tuning sweeps",
+    "Above-paper performance as a public-code release gate"
+  ],
+  "all_research_jobs_stopped": true,
+  "new_research_jobs_allowed": false,
+  "other_reproduction_untouched": true,
+  "github_remote_configured": false,
+  "remaining": [
+    "Current documented wheel/examples verification",
+    "GitHub destination and push"
+  ],
+  "production_sources_unchanged": true,
+  "optional_native_prefix_failure": "experiments/local_scale_native_prefix_failure_20261029.json"
+}

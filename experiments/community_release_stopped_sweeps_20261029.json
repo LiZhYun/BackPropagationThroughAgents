@@ -1,0 +1,2957 @@
+{
+  "recorded_utc": "2026-10-29T16:57:58.913060+00:00",
+  "authorization": [
+    "No need to do full-budge, and all experiments. Our purpose is to let the repo open clear and faithful. And we want to reproduce ASAP",
+    "and stop usefulness jobs"
+  ],
+  "cancel_requested": [
+    "21287360",
+    "21284086",
+    "21289365",
+    "21281001",
+    "21281002"
+  ],
+  "retired_dependents": [
+    "21288041",
+    "21289017",
+    "21289366",
+    "21288137",
+    "21288138"
+  ],
+  "manifests": {
+    "21287360": {
+      "path": "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+      "sha256": "28c52ae7c19bca73fe8c2c5950dc4ec23f647dd49bb00389005c7b5ab90adf00"
+    },
+    "21284086": {
+      "path": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/manifest.json",
+      "sha256": "d014efcf45fdaec2cfcc16a50f5d031081d6811fb8044539f0b2056faaa71a65"
+    },
+    "21289365": {
+      "path": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/manifest.json",
+      "sha256": "389c7d36142c6b9a21d793ff11f20e42492c51f2e6af0d21e7e60e508c4f0202"
+    },
+    "21281001": {
+      "path": "results/football_remaining_gru_check10k_20261029T102335Z/manifest.json",
+      "sha256": "fec9e584292938e1f2c2b04edc24d23e0b21e4a805535e2ffc8f933760ff5f4d"
+    },
+    "21281002": {
+      "path": "results/smac_remaining_gru_check10k_20261029T102338Z/manifest.json",
+      "sha256": "e6a909a88b90e992b9dd51ba96102945d67414b13a490c7b394692c0949c688a"
+    }
+  },
+  "purpose": "Stop optional research sweeps and their collectors; engineering correctness, method fidelity and runnable release are the remaining priorities.",
+  "new_experiment_jobs_allowed": false,
+  "other_project_jobs_changed": false,
+  "commands": [
+    {
+      "utc": "2026-10-29T16:56:08.940362+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21287360"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:08.970293+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21284086"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:08.994051+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289365"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.018697+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21281001"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.046599+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21281002"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.069497+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288041"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.092316+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289017"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.114086+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289366"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.135961+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288137"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.158642+00:00",
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21288138"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:09.182855+00:00",
+      "command": [
+        "scancel",
+        "21288041"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:10.219436+00:00",
+      "command": [
+        "scancel",
+        "21289017"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:11.242391+00:00",
+      "command": [
+        "scancel",
+        "21289366"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:13.690074+00:00",
+      "command": [
+        "scancel",
+        "21288137"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:13.712365+00:00",
+      "command": [
+        "scancel",
+        "21288138"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:14.748702+00:00",
+      "command": [
+        "scancel",
+        "21287360"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:15.773498+00:00",
+      "command": [
+        "scancel",
+        "21284086"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:16.795652+00:00",
+      "command": [
+        "scancel",
+        "21289365"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:17.820928+00:00",
+      "command": [
+        "scancel",
+        "21281001"
+      ],
+      "returncode": 0
+    },
+    {
+      "utc": "2026-10-29T16:56:18.846413+00:00",
+      "command": [
+        "scancel",
+        "21281002"
+      ],
+      "returncode": 0
+    }
+  ],
+  "limitations": [
+    "Frozen studies and acceptance criteria are preserved as incomplete where interrupted.",
+    "Stopping a research sweep does not prove its hypotheses or performance."
+  ],
+  "status": "remaining_sweeps_stopped_and_existing_artifacts_preserved",
+  "all_five_arrays_absent_from_queue": true,
+  "controller_states": {
+    "21287360": {
+      "returncode": 1,
+      "states": [],
+      "controller_record_present": false
+    },
+    "21284086": {
+      "returncode": 1,
+      "states": [],
+      "controller_record_present": false
+    },
+    "21289365": {
+      "returncode": 1,
+      "states": [],
+      "controller_record_present": false
+    },
+    "21281001": {
+      "returncode": 1,
+      "states": [],
+      "controller_record_present": false
+    },
+    "21281002": {
+      "returncode": 1,
+      "states": [],
+      "controller_record_present": false
+    }
+  },
+  "historical_accounting": "Unavailable: same read-only sacct query timed out at30s and60s. No job restart/requeue or failed-run inference.",
+  "runs": [
+    {
+      "array_job_id": "21287360",
+      "task_index": 0,
+      "variant": "agentmixer_gru_zero",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 1000000,
+      "update_records": 100,
+      "evaluation_records": 101,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": "completed",
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl",
+        "summary.json"
+      ],
+      "classification": "completed_original_run"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 1,
+      "variant": "agentmixer_gru_zero",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 1000000,
+      "update_records": 100,
+      "evaluation_records": 101,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": "completed",
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl",
+        "summary.json"
+      ],
+      "classification": "completed_original_run"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 2,
+      "variant": "agentmixer_gru_zero",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 520000,
+      "update_records": 52,
+      "evaluation_records": 52,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 3,
+      "variant": "distill001_gru_zero",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 190000,
+      "update_records": 19,
+      "evaluation_records": 20,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 4,
+      "variant": "distill001_gru_zero",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 10000,
+      "update_records": 1,
+      "evaluation_records": 2,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 5,
+      "variant": "distill001_gru_zero",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 20000,
+      "update_records": 2,
+      "evaluation_records": 3,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 6,
+      "variant": "distill01_gru_zero",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 7,
+      "variant": "distill01_gru_zero",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 8,
+      "variant": "distill01_gru_zero",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 9,
+      "variant": "identity_gru_zero",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 10,
+      "variant": "identity_gru_zero",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 11,
+      "variant": "identity_gru_zero",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 12,
+      "variant": "agentmixer_gru_minus1",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 13,
+      "variant": "agentmixer_gru_minus1",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 14,
+      "variant": "agentmixer_gru_minus1",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 15,
+      "variant": "distill001_gru_minus1",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 16,
+      "variant": "distill001_gru_minus1",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 17,
+      "variant": "distill001_gru_minus1",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 18,
+      "variant": "distill01_gru_minus1",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 19,
+      "variant": "distill01_gru_minus1",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 20,
+      "variant": "distill01_gru_minus1",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 21,
+      "variant": "identity_gru_minus1",
+      "seed": 0,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 22,
+      "variant": "identity_gru_minus1",
+      "seed": 1,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21287360",
+      "task_index": 23,
+      "variant": "identity_gru_minus1",
+      "seed": 2,
+      "frozen_budget": 1000000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 0,
+      "variant": "agentmixer_bounded_observation_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 44000,
+      "update_records": 11,
+      "evaluation_records": 5,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": "completed",
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "checkpoint_replay.json",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl",
+        "native_gate_checks.json",
+        "native_memory_checks.json",
+        "summary.json"
+      ],
+      "classification": "completed_original_run"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 1,
+      "variant": "agentmixer_bounded_state_independent_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 44000,
+      "update_records": 11,
+      "evaluation_records": 5,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": "completed",
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "checkpoint_replay.json",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl",
+        "native_gate_checks.json",
+        "native_memory_checks.json",
+        "summary.json"
+      ],
+      "classification": "completed_original_run"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 2,
+      "variant": "agentmixer_identity_observation_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 8000,
+      "update_records": 2,
+      "evaluation_records": 1,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 3,
+      "variant": "agentmixer_identity_state_independent_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 4,
+      "variant": "agentmixer_residual_observation_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 5,
+      "variant": "agentmixer_residual_state_independent_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 6,
+      "variant": "agentmixer_bounded_observation_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 7,
+      "variant": "agentmixer_bounded_state_independent_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 8,
+      "variant": "agentmixer_identity_observation_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 9,
+      "variant": "agentmixer_identity_state_independent_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 10,
+      "variant": "agentmixer_residual_observation_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21284086",
+      "task_index": 11,
+      "variant": "agentmixer_residual_state_independent_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21289365",
+      "task_index": 0,
+      "variant": "agentmixer_bounded_state_independent_sigmoid_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21289365",
+      "task_index": 1,
+      "variant": "agentmixer_identity_state_independent_sigmoid_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21289365",
+      "task_index": 2,
+      "variant": "agentmixer_residual_state_independent_sigmoid_ff",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21289365",
+      "task_index": 3,
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21289365",
+      "task_index": 4,
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21289365",
+      "task_index": 5,
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "seed": 0,
+      "frozen_budget": 44000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 0,
+      "variant": "5_vs_5_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 1,
+      "variant": "5_vs_5_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 2,
+      "variant": "5_vs_5_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 3,
+      "variant": "5_vs_5_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 4,
+      "variant": "5_vs_5_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 5,
+      "variant": "academy_corner_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 6,
+      "variant": "academy_corner_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 7,
+      "variant": "academy_corner_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 8,
+      "variant": "academy_corner_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 9,
+      "variant": "academy_corner_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 10,
+      "variant": "academy_counterattack_hard_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 11,
+      "variant": "academy_counterattack_hard_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 12,
+      "variant": "academy_counterattack_hard_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 13,
+      "variant": "academy_counterattack_hard_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281001",
+      "task_index": 14,
+      "variant": "academy_counterattack_hard_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 0,
+      "variant": "protoss_10v10_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 10000,
+      "update_records": 1,
+      "evaluation_records": 2,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": "completed",
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "checkpoint_replay.json",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl",
+        "summary.json"
+      ],
+      "classification": "completed_original_run"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 1,
+      "variant": "protoss_10v10_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 10000,
+      "update_records": 1,
+      "evaluation_records": 2,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": "completed",
+      "retained_checkpoint": true,
+      "artifacts": [
+        "checkpoint.pt",
+        "checkpoint_replay.json",
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl",
+        "summary.json"
+      ],
+      "classification": "completed_original_run"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 2,
+      "variant": "protoss_10v10_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 1,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 3,
+      "variant": "protoss_10v10_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 1,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [
+        "config.json",
+        "episodes.jsonl",
+        "metrics.jsonl"
+      ],
+      "classification": "interrupted_partial"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 4,
+      "variant": "protoss_10v10_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 5,
+      "variant": "protoss_10v11_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 6,
+      "variant": "protoss_10v11_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 7,
+      "variant": "protoss_10v11_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 8,
+      "variant": "protoss_10v11_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 9,
+      "variant": "protoss_10v11_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 10,
+      "variant": "protoss_5v5_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 11,
+      "variant": "protoss_5v5_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 12,
+      "variant": "protoss_5v5_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 13,
+      "variant": "protoss_5v5_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 14,
+      "variant": "protoss_5v5_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 15,
+      "variant": "terran_10v10_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 16,
+      "variant": "terran_10v10_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 17,
+      "variant": "terran_10v10_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 18,
+      "variant": "terran_10v10_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 19,
+      "variant": "terran_10v10_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 20,
+      "variant": "terran_10v11_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 21,
+      "variant": "terran_10v11_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 22,
+      "variant": "terran_10v11_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 23,
+      "variant": "terran_10v11_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 24,
+      "variant": "terran_10v11_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 25,
+      "variant": "zerg_10v10_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 26,
+      "variant": "zerg_10v10_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 27,
+      "variant": "zerg_10v10_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 28,
+      "variant": "zerg_10v10_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 29,
+      "variant": "zerg_10v10_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 30,
+      "variant": "zerg_10v11_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 31,
+      "variant": "zerg_10v11_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 32,
+      "variant": "zerg_10v11_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 33,
+      "variant": "zerg_10v11_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 34,
+      "variant": "zerg_10v11_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 35,
+      "variant": "zerg_5v5_mappo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 36,
+      "variant": "zerg_5v5_arppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 37,
+      "variant": "zerg_5v5_bppo_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 38,
+      "variant": "zerg_5v5_agentmixer_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    },
+    {
+      "array_job_id": "21281002",
+      "task_index": 39,
+      "variant": "zerg_5v5_agentmixer_identity_gru",
+      "seed": 0,
+      "frozen_budget": 10000,
+      "last_logged_training_steps": 0,
+      "update_records": 0,
+      "evaluation_records": 0,
+      "partial_trailing_metrics_bytes": 0,
+      "summary_status": null,
+      "retained_checkpoint": false,
+      "artifacts": [],
+      "classification": "not_started"
+    }
+  ],
+  "preserved_files": [
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/0/frozen_config.json",
+      "bytes": 1293,
+      "sha256": "226845afe2ca623e7f149277c388b35bed6b95f95142bad64c3052249e74c67e"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/0/output/checkpoint.pt",
+      "bytes": 2580194,
+      "sha256": "273927c5c41d0228b6897299e12c28923a62f1c35cbb8692234a0eed62328d21"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/0/output/config.json",
+      "bytes": 10983,
+      "sha256": "9ac2cc01efae9dd04e9dd35d9cdb045ffd24e2c569c9ea75199979ed7a1ca234"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/0/output/episodes.jsonl",
+      "bytes": 39496736,
+      "sha256": "1a85feb63e9cdcd73a615701a69d1d55244fbc7e1133bdc14480f1e614e3add5"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/0/output/metrics.jsonl",
+      "bytes": 2735126,
+      "sha256": "2672ed7bf964dce5a547bbfd1534a4e0368ceb1c48c2d59329225a9a145775ac"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0/summary.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/0/output/summary.json",
+      "bytes": 80313,
+      "sha256": "be4ae573d9eceec2ded60f567e9649a9bc952385602ee7245ffe37c9ae5687f0"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/1/frozen_config.json",
+      "bytes": 1293,
+      "sha256": "e26fa546ee1b46f402ecaecbee297ba70527694cc49a3b1feddb76ae3b240cb1"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed1/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/1/output/checkpoint.pt",
+      "bytes": 2580194,
+      "sha256": "11b92cc7e0592c4faf57bbc0df0526cfdcf2517a8b6ebf7effed374367ce33f9"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed1/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/1/output/config.json",
+      "bytes": 10989,
+      "sha256": "53e3d43d6ca9a7a0ec6ebb6b90c7581c8f51499452e650a30cbf9637dca96347"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed1/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/1/output/episodes.jsonl",
+      "bytes": 39564923,
+      "sha256": "a2fdd0278946614ebef2a897909a405d0985ce32bd4d032c8de3fc65ea80292e"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed1/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/1/output/metrics.jsonl",
+      "bytes": 2764425,
+      "sha256": "02015d84320fceb5ccd351e6f2d7e723305aa4e916a4c699a77327b04aa61240"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed1/summary.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/1/output/summary.json",
+      "bytes": 80999,
+      "sha256": "71365af378e069167bc5059152bb9a90ac31f0286dcc2801279cfac2d4e57f42"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/2/frozen_config.json",
+      "bytes": 1293,
+      "sha256": "8d15344ade02efa65f7cb3585a413a835f9269f0ed9e9046c5d3e6885a5799c5"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed2/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/2/output/checkpoint.pt",
+      "bytes": 2580258,
+      "sha256": "62a8b371b1b59b8313b872d6ffdbb634458ef1ad4ca4c57f259f26b23d2a7600"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed2/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/2/output/config.json",
+      "bytes": 10975,
+      "sha256": "2cbd86fc7482850cc1e9eed9b21dd8b36098a5c8d132788e7b2cb7d1e586afa8"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed2/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/2/output/episodes.jsonl",
+      "bytes": 16454549,
+      "sha256": "c7fe4a12aac2fb60b2eda7239baf8ead0af8fcbb6e60c12a145875e56ea062b5"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed2/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/2/output/metrics.jsonl",
+      "bytes": 1424767,
+      "sha256": "e13cdac88189097c51f713289fb1be8490416615057b09f6101b4ea467e2a80d"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/3/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "5ec3871fbf13f3411d1558ca689fedf115f8c18d8753e4d6b4cdbfc7af2718f1"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed0/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/3/output/checkpoint.pt",
+      "bytes": 2580194,
+      "sha256": "fbf73bc1de15fc10c19a58ba1271640bcac1acf691da4b457fc725a622703267"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/3/output/config.json",
+      "bytes": 11318,
+      "sha256": "c3e502c097c2629671da02ea7e3d1faae48986b679d3a266c1828123e677dc78"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/3/output/episodes.jsonl",
+      "bytes": 2844438,
+      "sha256": "646178d07b4d10ba5765199a823aaf39b2943f8ef6cbee12950a75ebbb32a36c"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/3/output/metrics.jsonl",
+      "bytes": 554838,
+      "sha256": "625403806d3001410e93c0e30a2eb115f8aa203d28a0a8928ea43cebbbd48690"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/4/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "8e0d0df6da0e58ae95e6df635dbf431332dcbeef8d2f5303fb3c7ea02bbcce58"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed1/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/4/output/config.json",
+      "bytes": 11324,
+      "sha256": "16ae43186d8a22c4490865baa5a7376d50e1c48f073d57c5bb88f4eb4792112d"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed1/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/4/output/episodes.jsonl",
+      "bytes": 42609,
+      "sha256": "65f63ff7026bd748317e3bdb016be2aaeb185bd21c7a3be570fe66f45c3d250f"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed1/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/4/output/metrics.jsonl",
+      "bytes": 55685,
+      "sha256": "7362324cea0a646128990e4d6179d331702e02efef1effc5102aff52e4040411"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/5/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "e6d16788e3d5fa23545713eb1a0146701d364d6210be17e5cb7a83684f9b3360"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed2/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/5/output/config.json",
+      "bytes": 11310,
+      "sha256": "ee1372b9c3362c1430b667b690bd8eeffbaa7a1e62007d26825cdaf69b6858cb"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed2/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/5/output/episodes.jsonl",
+      "bytes": 39665,
+      "sha256": "a48bc4ab4f14c604d90b6c0b6cbc3271a92ab1c44b97ed5612654d201d02266c"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_zero_seed2/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/5/output/metrics.jsonl",
+      "bytes": 84049,
+      "sha256": "dc499bb1ea5b3661afadd72ffd6c991ee65c73b881555b6d81f4b5e79d5b702f"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill01_gru_zero_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/6/frozen_config.json",
+      "bytes": 1293,
+      "sha256": "451251acdaed065ed4f929a3fa6fb344d05262e36f8a1a1e4bf01503a8c5a29a"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill01_gru_zero_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/7/frozen_config.json",
+      "bytes": 1293,
+      "sha256": "286b12e40157154bee6d4aa082ebd95f21cb2937bacf398d5b5372316ae27d13"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill01_gru_zero_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/8/frozen_config.json",
+      "bytes": 1293,
+      "sha256": "46b6bf4f1f12529753346eeb941449a0cab8fb50f6a71b05aeb8057d5529ab27"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/identity_gru_zero_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/9/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "e95f157eca248fdeb7964014a98c88b704105cfba9fc5342df5e4106b07f976e"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/identity_gru_zero_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/10/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "e2b97d280aef9b2fc4a249e51b362a7d0f54373ca05c15ef42e5955f5cf81292"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/identity_gru_zero_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/11/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "e06a3d79ab9bb75887f8d0cd3b94bf282377b9f8294749cc24edafc444d72da6"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_minus1_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/12/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "da09233921ee4834a601b73c258efdb979ab28a7bb4630c7f33e69831e36a853"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_minus1_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/13/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "df7b788e80e6c6a39989f9cb1ee6c3a9dd072f95e9b35bdb424d7302a9413c5b"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_minus1_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/14/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "69b8f0d09272d38220b7765a277e257ba15536ca1119f649e7181cd34db33f48"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_minus1_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/15/frozen_config.json",
+      "bytes": 1295,
+      "sha256": "0b930e7ffd4ca1ee883c686c058ded3521c8f5c09ef62fb6bd501e0aa967c42e"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_minus1_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/16/frozen_config.json",
+      "bytes": 1295,
+      "sha256": "1b88b8243a85cab804fa11959e39b0635271ae6330b2c9f84eb42fddefeae98c"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill001_gru_minus1_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/17/frozen_config.json",
+      "bytes": 1295,
+      "sha256": "87d40b8d1f983052e38a46c0dfc78537a446b014dd11c6711dbb8d7a674fd5de"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill01_gru_minus1_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/18/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "61fc8c6f6ba6e4ac0dcf152a85c6111607e2a6865d6e9631d067699490f54f60"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill01_gru_minus1_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/19/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "8a71db88791effbe2ea16bf6590ef4f3a6609de4990f7ff84742e9a52ff89f64"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/distill01_gru_minus1_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/20/frozen_config.json",
+      "bytes": 1294,
+      "sha256": "f9bbcfb380660413cea4f21b2ce7037148139a3a3a0fa8991dc5e36f1a60611a"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/identity_gru_minus1_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/21/frozen_config.json",
+      "bytes": 1295,
+      "sha256": "cdaca3a4fa03dc8bba7062a55ab6f41c4a45518ea84ac7030a0531a12b0680c4"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/identity_gru_minus1_seed1.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/22/frozen_config.json",
+      "bytes": 1295,
+      "sha256": "256e1b48cbf96e804d4d4b5bc98bac6be9aa7761463a98272495c58b1f3729a9"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/identity_gru_minus1_seed2.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/23/frozen_config.json",
+      "bytes": 1295,
+      "sha256": "441ed9c38e3b7fdac289e0bd52158dbf1ce9f73e8a16eab270b55e64f27d4802"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_0.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_0.out",
+      "bytes": 52887,
+      "sha256": "9ad38342cf74c88e0796b06f4e0d2da838e903c789357ecea8ca4a08bea34bb4"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_1.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_1.out",
+      "bytes": 53573,
+      "sha256": "baf4a98046c4c4003aa97198326f5f6503b5eb5c48c59b4031486099a8a0c073"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_2.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_2.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_3.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_3.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_4.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_4.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_5.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_5.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_0.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_0.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_1.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_1.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_2.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_2.err",
+      "bytes": 123,
+      "sha256": "cfe23489a21cbe2f95d809862ff6710b19e823f52b99b259644093465681aa43"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_3.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_3.err",
+      "bytes": 123,
+      "sha256": "d4c1ac9bfe466c506bfdf517ab5ab4512cdbdb2d737529e579e433644691ffdc"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_4.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_4.err",
+      "bytes": 123,
+      "sha256": "ba17091614bc6fb27f94770da244611c60a157bf763b653a4a582217b215d3e2"
+    },
+    {
+      "original": "results/prey_distillation_gru1m_20261029T112121Z/learning_21287360_5.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21287360/scheduler_logs/learning_21287360_5.err",
+      "bytes": 123,
+      "sha256": "ae26e03fa4bc2baf7453ef7f520cd16d16c5633f0bc03025adb5a0d4b0a7cfe9"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/frozen_config.json",
+      "bytes": 1398,
+      "sha256": "908fee510c81451c8178e413cef72972a58c0b0614ec63b16dc6e0232309b590"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/checkpoint.pt",
+      "bytes": 1883426,
+      "sha256": "067c51759f6896eb2f4080ae7847fd58cac311899babad3226eea5e84380140d"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/checkpoint_replay.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/checkpoint_replay.json",
+      "bytes": 5943,
+      "sha256": "97ce4eccd38f0d203b0681d90d4498ad897041140a092deb5f2e9ef07e83fbb5"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/config.json",
+      "bytes": 16510,
+      "sha256": "36adddafb7a66959ff94574a00923e51c572ae27f64e9dbb8effb60dea136f2d"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/episodes.jsonl",
+      "bytes": 11729,
+      "sha256": "982a4a0ca024fc201420eb273af7e5f16bf461e1e9e208b32cc629d1dbdc860f"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/metrics.jsonl",
+      "bytes": 19837,
+      "sha256": "a5747fe3f1d9ef988462558fa4ad854b7a655225c22340b49318edf1720ffc15"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/native_gate_checks.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/native_gate_checks.json",
+      "bytes": 922,
+      "sha256": "d523f657ec7bf0da9b3348995c56a5390d25537bbf07d85fa2b7a51f1c88cd89"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/native_memory_checks.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/native_memory_checks.json",
+      "bytes": 9642,
+      "sha256": "2e0e2507c1c9ec742fd36189bed9bcfeb0c192444bc4b3ff328755aa59e7a62d"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_ff_seed0/summary.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/0/output/summary.json",
+      "bytes": 3241,
+      "sha256": "557bb3b3410883f1f1af572dd40c152b9f9a0729079488d7a3d608cefb96049c"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/frozen_config.json",
+      "bytes": 1404,
+      "sha256": "a86e8aa5f2ea61cc26448eba5097eda878fdcdd022dca6da2cc0813f33c5b3c2"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/checkpoint.pt",
+      "bytes": 1876418,
+      "sha256": "d723905f732ae2b13439ee5a1f25b8e620d6c47a20c1d468a67632c92d69c6af"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/checkpoint_replay.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/checkpoint_replay.json",
+      "bytes": 5972,
+      "sha256": "f9693f32602f95f3bde500b894956c503ca1804f5b08535bda0474659ef3dfc8"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/config.json",
+      "bytes": 16516,
+      "sha256": "ef69b284a361f61bf3004f4ca9678ffa3aa4f2bc63df1bf514d6b9d7f2380ca4"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/episodes.jsonl",
+      "bytes": 11719,
+      "sha256": "78b7ae4c61d6ccf603a2b93a72b33807fc5c1449ea435cb8758766605f6a85bc"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/metrics.jsonl",
+      "bytes": 19853,
+      "sha256": "e93576b2ec3db8024617e47fc188a8b6c593a5d9f43d4e7ae9bc78caf852913c"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/native_gate_checks.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/native_gate_checks.json",
+      "bytes": 922,
+      "sha256": "b19b456e4a90aaa96dc6b1b88d712d5fc78e010100d25ca52525f012cec72a5a"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/native_memory_checks.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/native_memory_checks.json",
+      "bytes": 9642,
+      "sha256": "2fabc10de89ea745cb839b7bf44425af874b41d7a803f67359c706f8b6b94942"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_ff_seed0/summary.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/1/output/summary.json",
+      "bytes": 3261,
+      "sha256": "05cf6b4a6b99e0074f0af10311778bb94f063cbababdccc573eddbede4778a07"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_observation_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/2/frozen_config.json",
+      "bytes": 1400,
+      "sha256": "c53e8383a8cd8a1eb116ca87b56bcb16eac464bdd19eb5202e7f027c44cedd97"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_observation_ff_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/2/output/config.json",
+      "bytes": 16515,
+      "sha256": "f75670af3eb225c233547a2b4ca75f12562ec00c0dc293984fbf1e3e11499144"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_observation_ff_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/2/output/episodes.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_observation_ff_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/2/output/metrics.jsonl",
+      "bytes": 3705,
+      "sha256": "d5bbeab7923e37551e232a074200c621e449aba790cd3b556219c620fc2e5f2f"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_state_independent_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/3/frozen_config.json",
+      "bytes": 1406,
+      "sha256": "6d0f044172b4f63dc8170b59d6ee0b8ae893f18bc3367fdc5ac8d7757b3b3181"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_residual_observation_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/4/frozen_config.json",
+      "bytes": 1399,
+      "sha256": "202c496874e449f38524bc99ca3cdbc91d08952da85aff2ad8ccdba88a678157"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_residual_state_independent_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/5/frozen_config.json",
+      "bytes": 1405,
+      "sha256": "38fc2b189a3498f7dc97ce2ca1ea1559e308c3e51d16efe2825af5ed2d67f4cc"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_observation_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/6/frozen_config.json",
+      "bytes": 1397,
+      "sha256": "0aff121d8ce44d0963cc0cf28a2f3a093abd026d5162e15d9d8f86108e473dff"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/7/frozen_config.json",
+      "bytes": 1403,
+      "sha256": "85b0561a78a7a92abe419b0f147068969f6c79d7219e9dca3499982088390bf1"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_observation_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/8/frozen_config.json",
+      "bytes": 1399,
+      "sha256": "972117d9e17910088f9b3500930ad1fce132905f4b782285c2e25cf65859df5d"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_identity_state_independent_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/9/frozen_config.json",
+      "bytes": 1405,
+      "sha256": "1b615609b1aaf9a7ba674ce1b48e5a42edf21aed5c5a6d8413b21dda6116aca8"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_residual_observation_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/10/frozen_config.json",
+      "bytes": 1398,
+      "sha256": "d221ab23f525e425f9ef8f9043b65fe6ed61c135f78f16e844bec555e01be08c"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/agentmixer_residual_state_independent_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/11/frozen_config.json",
+      "bytes": 1404,
+      "sha256": "5d97860e5d7e1756120e7c100961a5f6e0d351abb7b8b821508635cbcd6148da"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/native_21284086_0.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/scheduler_logs/native_21284086_0.out",
+      "bytes": 20270,
+      "sha256": "69507ad25641d6fa2f7162eec822375227ae9e4afe80c7917689894eef05511c"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/native_21284086_1.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/scheduler_logs/native_21284086_1.out",
+      "bytes": 20283,
+      "sha256": "ee993c9a6024af1719a1c1c14a1fab239671a390ea131ea59935342892584d4f"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/native_21284086_2.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/scheduler_logs/native_21284086_2.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/native_21284086_0.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/scheduler_logs/native_21284086_0.err",
+      "bytes": 2385,
+      "sha256": "d8addb0102a89b034c4680a7287726f0ba120c1226d7c977e287e956eea006c8"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/native_21284086_1.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/scheduler_logs/native_21284086_1.err",
+      "bytes": 2385,
+      "sha256": "d8addb0102a89b034c4680a7287726f0ba120c1226d7c977e287e956eea006c8"
+    },
+    {
+      "original": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/native_21284086_2.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21284086/scheduler_logs/native_21284086_2.err",
+      "bytes": 1445,
+      "sha256": "b0754ce51bd80200ced65db0640cbeb3eea36b756217e3e510048d190747fa5e"
+    },
+    {
+      "original": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/agentmixer_bounded_state_independent_sigmoid_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21289365/0/frozen_config.json",
+      "bytes": 1412,
+      "sha256": "aeb781a980967c1a69e8032f5ccda9c8c2dece745629d00f36935ae7578d87b2"
+    },
+    {
+      "original": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/agentmixer_identity_state_independent_sigmoid_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21289365/1/frozen_config.json",
+      "bytes": 1414,
+      "sha256": "162268134b093da48fc7eab303c2c471e6f955301fd3112ee8242bc4af13649b"
+    },
+    {
+      "original": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/agentmixer_residual_state_independent_sigmoid_ff_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21289365/2/frozen_config.json",
+      "bytes": 1413,
+      "sha256": "54e23ee56a094cb49ba2ac7796f8940319a376df3a6166255bf71e7635a7ad41"
+    },
+    {
+      "original": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/agentmixer_bounded_state_independent_sigmoid_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21289365/3/frozen_config.json",
+      "bytes": 1411,
+      "sha256": "92c053f7433f56118ccbd0649200c86f09604b3ee427297b08d665533f80c424"
+    },
+    {
+      "original": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/agentmixer_identity_state_independent_sigmoid_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21289365/4/frozen_config.json",
+      "bytes": 1413,
+      "sha256": "e6a5b5949cee995533fbf4365f8ef8a1c50fd3063a19457757e729554a9e840c"
+    },
+    {
+      "original": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/agentmixer_residual_state_independent_sigmoid_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21289365/5/frozen_config.json",
+      "bytes": 1412,
+      "sha256": "b50c8e19429475a6be7265fca0aa526c57a388c38504d9bb528b2198a175aea4"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/0/frozen_config.json",
+      "bytes": 1184,
+      "sha256": "67ecea77ab70db74f10590a1558b4d30445bc1833ed6607e102caa88b3fcd131"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/0/output/config.json",
+      "bytes": 21521,
+      "sha256": "dfb9e2dcd8134d7c31000fb56032d52f57c28be1b7edefbbf1dbf5a0a2aa72d1"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/0/output/episodes.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_mappo_gru_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/0/output/metrics.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/1/frozen_config.json",
+      "bytes": 1184,
+      "sha256": "317f238a29da6ec2d07fe6bf2e93f656d311f64bdd2872105d21efafc8b68de8"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/2/frozen_config.json",
+      "bytes": 1183,
+      "sha256": "6cb2e78e5499cce7ea96d48baf931ba78106f9289566cdc76455fb09636be0a6"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/3/frozen_config.json",
+      "bytes": 1189,
+      "sha256": "9a3488ca58c37af025e8ece3c78a76decdf7542f86f8c62b3c5695ba59b8e1c7"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/5_vs_5_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/4/frozen_config.json",
+      "bytes": 1190,
+      "sha256": "35a154d3470ca293ae27175afeb01525a78724aa75560ec5fbcd56fd3ab18451"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/5/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "bf7e421f7def4053551d3ff667c880018afc4ea54a8ae770c8101046dd134227"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/6/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "aa2b4a8dec82b4b174469fefd126e473c21ace693e672d5b56f02ba7f31c74ce"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/7/frozen_config.json",
+      "bytes": 1191,
+      "sha256": "b6c5891194bf885e2409c0d603bf4e4c924675523fb8d06c5c4696b5b2f86462"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/8/frozen_config.json",
+      "bytes": 1197,
+      "sha256": "f9ea21197cb9c5bbf6c2277b35c1d912973423452637464d97ed235a393ff19d"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_corner_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/9/frozen_config.json",
+      "bytes": 1198,
+      "sha256": "2774afb1af0ae9ae66d277b481bf37743b619758436ff3463d265b01109e73b8"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/10/frozen_config.json",
+      "bytes": 1204,
+      "sha256": "4662644d862fd279a8869ad94def66f7427bf3b122296f4e9f77d7ab370f433a"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/11/frozen_config.json",
+      "bytes": 1204,
+      "sha256": "6c8f45d2287aca26ce129e58699593ef650e47beea65f21666df40b00e40b390"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/12/frozen_config.json",
+      "bytes": 1203,
+      "sha256": "9520c11e1091727df568e55dc51a2b3b3d8f45c524510ecd471876ef65569ef1"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/13/frozen_config.json",
+      "bytes": 1209,
+      "sha256": "0bfaa0bfe9b7c0bdfbf00acc0139bcebace45595fdff639546b183c13eea451d"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/academy_counterattack_hard_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/14/frozen_config.json",
+      "bytes": 1210,
+      "sha256": "f5363b8f0c71f5b2ba8cd983dd8c01338d8d314a36d80fc79af7217bdef4e1f4"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/slurm_21281001_0.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/scheduler_logs/slurm_21281001_0.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/football_remaining_gru_check10k_20261029T102335Z/slurm_21281001_0.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281001/scheduler_logs/slurm_21281001_0.err",
+      "bytes": 486,
+      "sha256": "d46d029d1b12c57dc360d8d8734f64360184d6ad29d6add46bca3b9260683f5d"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/frozen_config.json",
+      "bytes": 1195,
+      "sha256": "139b27c0fb2f9075168e366379a45eda5403e301a77d829ab05e808cc3c418cb"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/output/checkpoint.pt",
+      "bytes": 5452610,
+      "sha256": "7039af4ab4318cb2fed145a7dcf20df23b4abb8ae26845a48a44cab65a38a1d3"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0/checkpoint_replay.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/output/checkpoint_replay.json",
+      "bytes": 6099,
+      "sha256": "4d91c66be510313b6fa2177392c328299e9226722ea4364b0bc9f3b13cdf9df0"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/output/config.json",
+      "bytes": 44968,
+      "sha256": "1853127ee32f67fe7d34a9396aa2b9dd8b19773c0a51eeda9c1f004ce9b22dc0"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/output/episodes.jsonl",
+      "bytes": 39839,
+      "sha256": "961a1be2fc5155066ef89793fc72dc92c2e7da5548ae0d3373c1a88527a8b083"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/output/metrics.jsonl",
+      "bytes": 4201,
+      "sha256": "4f3c8ffa0db668bdf41bb550657741fb4e0f405e74b3c465f032e28c56512a1b"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_mappo_gru_seed0/summary.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/0/output/summary.json",
+      "bytes": 4394,
+      "sha256": "813a61f7db1bc9ab0a1c4451e32635e4cc90dc54ce3fbdc991e10331aadf8599"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/frozen_config.json",
+      "bytes": 1195,
+      "sha256": "5905d3fa431d888e68aee87bb66d5f78d605837e7a651ef1a906c64a637b260d"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0/checkpoint.pt",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/output/checkpoint.pt",
+      "bytes": 6005570,
+      "sha256": "62a439d18c6cff757e1115e91a2b396fa69821e1698e8f80a656a0476c3e9cd6"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0/checkpoint_replay.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/output/checkpoint_replay.json",
+      "bytes": 6102,
+      "sha256": "74f52d04569a395d852842100790b22054f014fcc1fc9c6c9bb1a285b20546f5"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/output/config.json",
+      "bytes": 44968,
+      "sha256": "ed9c5dc8a3d1619cefb98ea4a49ebd7945dad8bfa77245cabbdf30fb4a0b9015"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/output/episodes.jsonl",
+      "bytes": 39104,
+      "sha256": "e7b37a2e9ce8f924a383360e93f1be1e7e6aa92f32ca29b3a6b79cbf4652e8ec"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/output/metrics.jsonl",
+      "bytes": 4206,
+      "sha256": "c2454afb302a442e699e5fe7494a3c6287b19a138991d8e64bb3425bde530d65"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_arppo_gru_seed0/summary.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/1/output/summary.json",
+      "bytes": 4398,
+      "sha256": "5a048f72a272bfc70e9d3ca563b341e7a05e7edd2e064a40aaf9a5f5d6f0b75c"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/2/frozen_config.json",
+      "bytes": 1194,
+      "sha256": "8c65fc42afdd36280dd08e076db27cfda2570cea02ec7034882502213c84e8b4"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/2/output/config.json",
+      "bytes": 44994,
+      "sha256": "24cadfc2531e50fa5b8f1be9034903fd2791be35a545d4aa2742828f8538f3b7"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/2/output/episodes.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_bppo_gru_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/2/output/metrics.jsonl",
+      "bytes": 1417,
+      "sha256": "5f5d499a03a39f2a9a86a69cbbcf3cb498b1e17b8bf162ec2ed60f328d9806d0"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/3/frozen_config.json",
+      "bytes": 1200,
+      "sha256": "1279b549dbe16918700887864af978f0ce0df5bcc149e39d306e51caded0bf67"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0/config.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/3/output/config.json",
+      "bytes": 44988,
+      "sha256": "2e01a30ebdf6a04a75b802b38d339c85d7b707939ca6ad0f0965d6b3de33ce04"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0/episodes.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/3/output/episodes.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_gru_seed0/metrics.jsonl",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/3/output/metrics.jsonl",
+      "bytes": 1419,
+      "sha256": "5bd17e0bb302d34d1b2c1816d64759d8a9b77468eae46b9e5bc2f69daaeb9b21"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v10_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/4/frozen_config.json",
+      "bytes": 1201,
+      "sha256": "9ba3c7a9377bdc3b53e2039bbb23ab492f2d3de0e090ab19c758885cdf241c56"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/5/frozen_config.json",
+      "bytes": 1195,
+      "sha256": "65b7a2cdcf5e6366cc000a85635f80d83f36fcad6bda6e5849b790204b599493"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/6/frozen_config.json",
+      "bytes": 1195,
+      "sha256": "9424e54e990bff4796fde4bb67dc8eb29814357a7b2612752baeeb00c4f40c14"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/7/frozen_config.json",
+      "bytes": 1194,
+      "sha256": "d47c6959f1c2e43fc80c18a527c1a4477c4c1207c17384762e0d9b5127047b45"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/8/frozen_config.json",
+      "bytes": 1200,
+      "sha256": "3b35f0d390abd9f34e0917d643146b955e7ec3cd7a1a09876c5043d0b0291555"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_10v11_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/9/frozen_config.json",
+      "bytes": 1201,
+      "sha256": "c70bbbca03d4d92f142a88f1d172a42fb22673822b00e3675cb7606f56fb46b6"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/10/frozen_config.json",
+      "bytes": 1193,
+      "sha256": "09946cf4d11039d00aeb69c8d249b91ad85549da06337d37602cb38a1e0fa9da"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/11/frozen_config.json",
+      "bytes": 1193,
+      "sha256": "9c6acdb8f443ce02d5d53b3894c1037bb4ae0e1fa21779f63fac3c27890f51be"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/12/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "7083c420b757b246f59272786cff207772cae3debd4bbfc764134f099c8d2fdd"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/13/frozen_config.json",
+      "bytes": 1198,
+      "sha256": "196d7585c03fe8d29cf176150ed1ae8d9805a5713fcab72f7554a387a12e40b3"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/protoss_5v5_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/14/frozen_config.json",
+      "bytes": 1199,
+      "sha256": "d3fe6b4a74f7e4a3d09d4ba0a8e55f41e5c3d70acd7dce436e72779a1d4a33c7"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/15/frozen_config.json",
+      "bytes": 1194,
+      "sha256": "1662287d9dfa2ff3c75af795d34fde26f212b10b82be8e0937593b7295e5200e"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/16/frozen_config.json",
+      "bytes": 1194,
+      "sha256": "d0bb1a6704258919b46b03ebc955ddebcaf898ca97b6e43e51e104d9b7f3cead"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/17/frozen_config.json",
+      "bytes": 1193,
+      "sha256": "da9443b155ab54d8077dd9560ef371faaa74307c817ec15599b7bccd71ffacaf"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/18/frozen_config.json",
+      "bytes": 1199,
+      "sha256": "3bb23aace738fbad92cc8e6a9be627f7ca06dbfb45de808ed1dd03ff3b43cf2a"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v10_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/19/frozen_config.json",
+      "bytes": 1200,
+      "sha256": "e91a4e92fcd745f306173c0feac7ab9c8b71a9dc6f5fe244c3fc1e2541c39ef4"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/20/frozen_config.json",
+      "bytes": 1194,
+      "sha256": "efe45852c3f020c759bb4ad9305ae0735217e7df52d0ffa15da16a7cc7b8dc23"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/21/frozen_config.json",
+      "bytes": 1194,
+      "sha256": "b8e15cea9bccc543a3a696f63d2e817f3efad9d4feb0fcd1d15429ded288e38a"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/22/frozen_config.json",
+      "bytes": 1193,
+      "sha256": "b8830cb8eeaaa65263354b80a2764fdf44f1311c29032e94be7d7d0574455e03"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/23/frozen_config.json",
+      "bytes": 1199,
+      "sha256": "9f1ccd682f4990b9e10cdc6fdbc11f19988bccb1274ca38fba454577d8ad328d"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/terran_10v11_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/24/frozen_config.json",
+      "bytes": 1200,
+      "sha256": "f2c0c7ba86e20d51a1ff2f24e09f0569c6f3758cb56ec969515ebe172be11f0b"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/25/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "d0f5b4ca93358eba10fd762395287a53ce845add7421ec87809145e30ca598dd"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/26/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "54dcc382206b7fdad460da88bafe34a14fbc257990940a232c9697015c9055c4"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/27/frozen_config.json",
+      "bytes": 1191,
+      "sha256": "5cc3cc014e8bd276cc72b828fee320b5c79d8a8d126dc826a8de49ce8c6348ec"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/28/frozen_config.json",
+      "bytes": 1197,
+      "sha256": "978b194fe624e769a62455d35799dcf93a2767282f4c0402061c3e4af245cc3b"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v10_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/29/frozen_config.json",
+      "bytes": 1198,
+      "sha256": "0f30df227f61933468acb3d9c54fccb9443e41c26e68c49b193cb6cefe919029"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/30/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "b8c70ff0a335849ec67d9ed8fd2c9f9ad21b373ac32f48f7aee3d8966233efcc"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/31/frozen_config.json",
+      "bytes": 1192,
+      "sha256": "dfc5d7d98606478ace0e405b9f9cb92ee125515e3baf6b6064918fe4eef43209"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/32/frozen_config.json",
+      "bytes": 1191,
+      "sha256": "a6aa9cd794f8c5c418572032a234f3387fe0648e6b4e86d2cf812733dae29981"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/33/frozen_config.json",
+      "bytes": 1197,
+      "sha256": "7098cc2d9bfc200f2540c68b8e11e5e3efb98801942cad1d33094de9ea672887"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_10v11_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/34/frozen_config.json",
+      "bytes": 1198,
+      "sha256": "db6959402205d72dc9c6ae9a97285064d50a00e8d8f7def0f1d0d5ddf4a4ed7c"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_mappo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/35/frozen_config.json",
+      "bytes": 1190,
+      "sha256": "265fd21412e655ce61b3f80c2ad8855727a1b2dd92d14d3af2a85e9d5f5981b3"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_arppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/36/frozen_config.json",
+      "bytes": 1190,
+      "sha256": "2b1b1517e8d06128c00ac185f1a33945539de02e40ee2556ff10fd3514854e5e"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_bppo_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/37/frozen_config.json",
+      "bytes": 1189,
+      "sha256": "38c486799fce7655b7645ec66ecb28522939cc5a482209a02a7428c57acb511d"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/38/frozen_config.json",
+      "bytes": 1195,
+      "sha256": "64113e46edf9546ae0fe352daba4f476bb28bc08b13fc407f7a0667cfef0a682"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/zerg_5v5_agentmixer_identity_gru_seed0.json",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/39/frozen_config.json",
+      "bytes": 1196,
+      "sha256": "3c156299217eaeddac5de20c2a50779bdaeead613e24cf52d93ba6b980f76d77"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_0.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_0.out",
+      "bytes": 3561,
+      "sha256": "78e54a1e927b214078a153126533e073750d20020fd221fa88b0fba4e52e0d20"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_1.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_1.out",
+      "bytes": 3566,
+      "sha256": "bf986c008d97e038ca49947d7a578d30e6c086ec7023139a4c53a5fe8dfb23c7"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_2.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_2.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_3.out",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_3.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_0.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_0.err",
+      "bytes": 37234,
+      "sha256": "fc84491e06075a3bdfcfdee5b90425859f55a00beafc3a57d86355cfc8afdc17"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_1.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_1.err",
+      "bytes": 37022,
+      "sha256": "0d9cff62c75b8e144a5b8e48469f23dcc89e4ccaeff8175b33c1abd2ef994106"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_2.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_2.err",
+      "bytes": 21490,
+      "sha256": "083167c4c125be5089f122dce727dd1a14306b707e0e23009c7d43f8c3ff11b9"
+    },
+    {
+      "original": "results/smac_remaining_gru_check10k_20261029T102338Z/slurm_21281002_3.err",
+      "preserved": "results/community_release_focus_20261029/artifacts/21281002/scheduler_logs/slurm_21281002_3.err",
+      "bytes": 6549,
+      "sha256": "ca348454bb9875743505587953c76a15041f1f13e520de40319e26c0c803723e"
+    }
+  ],
+  "preserved_file_count": 189,
+  "preserved_bytes": 132683144,
+  "run_classifications": {
+    "completed_original_run": 6,
+    "interrupted_partial": 7,
+    "not_started": 84
+  },
+  "new_experiment_submission_allowed": false,
+  "notes": [
+    "Original manifests, sources, configurations, metrics and checkpoints are not modified.",
+    "Preserved partial trajectories are descriptive development evidence; frozen complete-family criteria remain unmet.",
+    "Existing periodic checkpoints can lag the final logged update; no live-process state was manufactured.",
+    "All remaining research sweeps and dependent collectors are stopped for the release-first scope. No replacement experiment is authorized."
+  ]
+}

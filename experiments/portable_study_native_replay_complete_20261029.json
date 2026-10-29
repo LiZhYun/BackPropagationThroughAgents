@@ -1,0 +1,19 @@
+{
+  "recorded_utc": "2026-10-29T17:01:16.710007+00:00",
+  "status": "exact_relocated_native_replay_verified",
+  "job_id": "21279857",
+  "job_no_longer_in_queue": true,
+  "historical_exit_code": "not_observed_accounting_unavailable",
+  "bundle": "results/bundles/hc_partitions10m_20261029_moved",
+  "inventory_sha256": "5c3b354df0d22544f7235a56f5fc0fc59ba12f111e5dee15f80a2aae8fa174c9",
+  "inventory_files_checked": 85,
+  "replay": "results/portable_study_native_replay_20261029/evaluation.json",
+  "replay_sha256": "e5f87e1b4a361f35a9b6dc002dec1e8aaa0084c6a23dcbf6ee23d96ceb6e4f07",
+  "episodes": 32,
+  "raw_episode_reductions_valid": true,
+  "all32_original_episode_records_repeat_exactly": true,
+  "checkpoint_hash_matches": true,
+  "source_and_versions_match": true,
+  "independent_final_training_confirmation": false,
+  "performance_beyond_papers": "not_established"
+}

@@ -1,0 +1,159 @@
+{
+  "recorded_utc": "2026-10-29T16:52:21.300645+00:00",
+  "scope": "Accelerate only existing shorter-budget development/native jobs after user stopped all full-budget sweeps.",
+  "prey": {
+    "job_id": "21287360",
+    "old_throttle": 2,
+    "new_throttle": 4,
+    "same24_predeclared_runs": true,
+    "manifest": "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+    "manifest_sha256": "28c52ae7c19bca73fe8c2c5950dc4ec23f647dd49bb00389005c7b5ab90adf00",
+    "source_and_config_hashes_unchanged": true,
+    "resources_per_task": {
+      "cpu": 1,
+      "memory_gib": 4,
+      "wall_hours": 4
+    }
+  },
+  "sigmoid_native": {
+    "job_id": "21289365",
+    "old_capacity_predecessor": "21288041",
+    "new_dependency": "afterany:21289017",
+    "six_original44k_conditions_unchanged": true,
+    "scientific_memory_audit_dependency_retained": true,
+    "prior_capacity_record": "experiments/continuous_sigmoid_gate_capacity_20261029.json",
+    "prior_capacity_record_sha256": "cf9c48f9bda778837e1ecfa12c7fa67424a969e99feb8e919d33a1e0c275f16d",
+    "rationale": "Prey contributes no scientific input. Reuse freed former full-budget MuJoCo capacity after the original memory audit, preserving the earlier continuous-learning reservations."
+  },
+  "conservative_remaining_branch_bound": {
+    "workers": 12,
+    "cpus": 14,
+    "memory_gib": 104
+  },
+  "bound_derivation": "SMAC2x2CPU32GiB + HC2x1CPU4GiB + memory2x1CPU4GiB + Prey4x1CPU4GiB + sigmoid2x1CPU4GiB. Memory and sigmoid cannot actually overlap; this sum is conservative.",
+  "historical_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "new_jobs": 0,
+  "new_trials": 0,
+  "new_learning_released": false,
+  "all54_unsubmitted_continuous_learning_runs_still_unsubmitted": true,
+  "full_budget_jobs_remain_stopped": true,
+  "other_reproduction_changed": false,
+  "commands": [
+    {
+      "command": [
+        "squeue",
+        "-h",
+        "-j",
+        "21251960,21272799,21272800,21279129,21282468",
+        "-o",
+        "%i|%T"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21287360"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289365"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "squeue",
+        "-h",
+        "-r",
+        "-j",
+        "21287360",
+        "-o",
+        "%i|%T"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21287360_3"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21287360_2"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "sstat",
+        "-j",
+        "21289529.batch,21289370.batch",
+        "--format=JobID,MaxRSS,AveCPU",
+        "--parsable2",
+        "--noheader"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "update",
+        "JobId=21287360",
+        "ArrayTaskThrottle=4"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21287360"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "update",
+        "JobId=21289365",
+        "Dependency=afterany:21289017"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "scontrol",
+        "show",
+        "job",
+        "-o",
+        "21289365"
+      ],
+      "returncode": 0
+    }
+  ]
+}

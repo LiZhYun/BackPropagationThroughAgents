@@ -1,5 +1,7 @@
 # Choosing a configuration
 
+Start with the two short matrix commands in the [README](../README.md) or the flat `prey_example.json`. Multi-run plans preserve research history and are optional; no experiment sweep is required for release. See [method fidelity](../docs/method_fidelity.md) for defaults, corrections and extensions.
+
 The command depends on the configuration file type.
 
 | File type | Contents | How to use it |
