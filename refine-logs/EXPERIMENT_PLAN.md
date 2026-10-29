@@ -291,3 +291,8 @@ Queued21288137afterany:21284586:21280689:21281001 to audit all6local-scale+15Foo
 ### Gaussian local scale and memory-grid correction, 29 October 2026
 
 Added optional state_independent_sigmoid local map,with explicit exp(-5) floor and initial_std<0.5;requested release scale0.36552928931500245. All1093source tests pass/1CUDA skip;35old modes bitwise across6520tensors/3174scalars through2PPOepochs. Six44k native and18matched1M runs frozen/unsubmitted;all24parsers pass,only local-map field differs from prior paired configurations. Prior18FF+18GRUretainpriority;54learningruns nowprepared/unsubmitted. New wheel not validated. During matching, found oldmemorycollector assumed2evals while12frozenconfigs use5. Corrected preflight2existing synthetic44k runs/20episodes/12corruptions;pendingread-only21284087replacedby21289017withsameafter21284086/resource envelope. All native12configs/source/helpers/trainingjobs unchanged. Newcollectorrequires120originalepisodes/24replays. No paper performance claim.
+
+
+### Sigmoid observed native launch and installed wheel, 29 October 2026
+
+Both runtimes:6neutrality comparisons/26corruptions each,synthetic44k/40resets/exactreplay,5evaluation grid and9090historical episodes checked. Prior12nativeguard rejects unfinished family. Array21289365 waits for21288041+21289017;auditor21289366follows all6. ActualPreyallocation preserves earlierFF/GRU reservations;14/16/120unchanged,no existing job changes. Requires264ktrain,132kGRUtransitions,240resets,60originalep/12replays. No18learningrelease. Coverage913/76/45,0basicerrors,54learningunsubmitted. Exactf311fc2installedwheel passes1093tests/1CUDA skip/57.79s,25modules+README/license,14commands,positiveKLreplay;validationprefix restored,no dependency changes or freshenv claim.

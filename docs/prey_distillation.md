@@ -80,3 +80,10 @@ Each run must reach 1M decisions and contain all 100 rollouts and 101 scheduled 
 Preflight checks all four completed historical GRU runs (404 evaluations, 8,080 episodes and 40,400 windows), all four positive-objective native updates, 60 corrupted copies and nine synthetic decision cases. It rejects the actual unfinished 24-run family. The first draft incorrectly treated cumulative ValueNorm counters as per-rollout counts; preflight rejected it, and the corrected v2 is the only submitted collector. [Preflight evidence](../experiments/prey_distillation_learning_audit_preflight_20261029_v2.json). No training configuration changed.
 
 The first two learning seeds pass live source/version/stream/raw-accounting checks, and seed 0 matches its gate prefix exactly. [Startup evidence](../experiments/prey_distillation_learning_startup_20261029.json). These partial checks do not establish a learning gain. After complete exact replay, the collector reports every seed, means, sample SDs, paired endpoint/AUC differences and the original common-coefficient decision. It does not submit independent confirmation automatically; that still requires a separate registered five-pair study with unused training and evaluation seeds.
+
+
+## First completed learning run
+
+Seed0 of the coefficient-zero,zero-penalty GRU condition is authoritatively completed at1M with exit0:0. Its full raw audit verifies100updates,101evaluations,2,020episodes and10,100windows. All100update records and101evaluation records exactly match the original seed0baseline after excluding elapsed time. Original artifacts are unchanged. [Partial evidence](../experiments/prey_distillation_learning_first_complete_20261029.json).
+
+This is one of24declared development runs. The complete-family collector still requires all24valid runs and all24full final-protocol checkpoint replays before any grouping or coefficient selection. No learned-performance improvement or independent confirmation is established.

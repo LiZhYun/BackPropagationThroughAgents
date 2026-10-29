@@ -1,0 +1,77 @@
+{
+  "recorded_utc": "2026-10-29T16:12:38.003506+00:00",
+  "scope": "All6previously frozen sigmoid native correctness conditions only. Observed44k training and original-protocol replay; no learning release or performance selection.",
+  "study": "experiments/hc2x3_sigmoid_study_20261029.json",
+  "study_sha256": "9e98a4d72a05fb3265cc646cc73332566fad7e02c1b02be8258b6b1d448fbf7c",
+  "helper_sha256": {
+    "common.py": "4308386f6f79bdcb2e056574f549dcfb84cecd51e6e7a98d06e6d094d787a456",
+    "observe.py": "6f9bb8e51d6624121df074d2a77d92d314a463877f580554c8e0a912a964c82c",
+    "train_observed.py": "f328c415656f0c32d21ea005ea299a2f05a1160b1a20e4e8a9706deb5c53ffb1",
+    "run.py": "5c12c195df8c110c9853fbf6b4fddbd99c98383ecdf4a418c94f92891ce9ad60",
+    "evaluate_simulator.py": "58461f02290bcb0dde7da4e76c321fe0ddfc91e4b18e38213ec7aa842678585b",
+    "audit.py": "9952e437f4d939064b9a9d16a6a8eaa6d9185de62ce5eef8401473edea3fb5dd",
+    "submit.sbatch": "1c71afcf1618f65279d4ecfa0d65b57243337aaf90f6df4f15bf8b7edf5ecc66",
+    "audit.sbatch": "fb32a4ddea7e22e6b1479a85e0eaf6bcff3c810aa75c430618ae5aebb39b71df"
+  },
+  "conditions": [
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_ff",
+      "seed": 0,
+      "config_sha256": "aeb781a980967c1a69e8032f5ccda9c8c2dece745629d00f36935ae7578d87b2"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_ff",
+      "seed": 0,
+      "config_sha256": "162268134b093da48fc7eab303c2c471e6f955301fd3112ee8242bc4af13649b"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_ff",
+      "seed": 0,
+      "config_sha256": "54e23ee56a094cb49ba2ac7796f8940319a376df3a6166255bf71e7635a7ad41"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "seed": 0,
+      "config_sha256": "92c053f7433f56118ccbd0649200c86f09604b3ee427297b08d665533f80c424"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "seed": 0,
+      "config_sha256": "e6a5b5949cee995533fbf4365f8ef8a1c50fd3063a19457757e729554a9e840c"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "seed": 0,
+      "config_sha256": "b50c8e19429475a6be7265fca0aa526c57a388c38504d9bb528b2198a175aea4"
+    }
+  ],
+  "dependency": "afterany:21289017",
+  "prior_complete_audit": "experiments/hc2x3_recurrent_native_complete_20261029_v2.json",
+  "prior_execution": "experiments/continuous_recurrent_gate_execution_20261029.json",
+  "prior_execution_sha256": "733ca0cc4998a66cd65db3ee42e9c1c4d2d01170f22f32d932491d0b915695ed",
+  "allocation": {
+    "maximum_workers": 2,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 4,
+    "wall_minutes": 30,
+    "automatic_requeue": false
+  },
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "capacity": "Reuse the Ant/memory allocation only after the corrected full original memory collector21289017. No extra workers/CPUs/memory; prior18FF and18GRU learning retain priority for their reserved or eligible uncommitted allocations.",
+  "expected_counts": {
+    "training_steps": 264000,
+    "training_rollouts": 66,
+    "original_evaluation_episodes": 60,
+    "final_replay_episodes": 12,
+    "gru_memory_transitions": 132000,
+    "training_horizon_resets": 240
+  },
+  "original_controls": "Different scale maps are compared as matched learning pairs; no false claim of cross-map bitwise update equivalence. All35old modes already pass exact before/after code parity.",
+  "failure_policy": "One attempt per registered native condition,no overwrite/requeue/replacement. All6conditions and prior12memory conditions must pass; read-only auditor cannot submit learning.",
+  "prepare_script": "results/continuous_sigmoid_gate_20261029/prepare.py",
+  "prepare_script_sha256": "843dc95ac067179dd9687f50f9fea974e3329ec110ef42cf276a8283d622c8f2"
+}

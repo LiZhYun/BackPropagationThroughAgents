@@ -1,0 +1,2024 @@
+{
+  "recorded_utc": "2026-10-29T16:22:25.210237+00:00",
+  "scope": "Only the first authoritatively completed Prey development run; no all-family aggregation,coefficient selection or paper claim.",
+  "job_id": "21287360_0",
+  "raw_job_id": "21287444",
+  "authoritative_state": "COMPLETED",
+  "exit_code": "0:0",
+  "declared_family_runs": 24,
+  "completed_runs_audited": 1,
+  "raw_evaluation_episodes": 2020,
+  "raw_evaluation_windows": 10100,
+  "training_updates": 100,
+  "training_steps": 1000000,
+  "result": {
+    "variant": "agentmixer_gru_zero",
+    "seed": 0,
+    "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0",
+    "eligible": true,
+    "errors": [],
+    "curve": {
+      "variant": "agentmixer_gru_zero",
+      "algorithm": "agentmixer",
+      "seed": 0,
+      "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gru1m_20261029T112121Z/agentmixer_gru_zero_seed0",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.009
+        },
+        {
+          "steps": 10000,
+          "value": -0.008499999999999997
+        },
+        {
+          "steps": 20000,
+          "value": 0.019499999999999976
+        },
+        {
+          "steps": 30000,
+          "value": 0.02699999999999991
+        },
+        {
+          "steps": 40000,
+          "value": 0.1544999999999998
+        },
+        {
+          "steps": 50000,
+          "value": 0.6284999999999995
+        },
+        {
+          "steps": 60000,
+          "value": 0.8800000000000008
+        },
+        {
+          "steps": 70000,
+          "value": 1.0375000000000012
+        },
+        {
+          "steps": 80000,
+          "value": 1.168000000000002
+        },
+        {
+          "steps": 90000,
+          "value": 1.0550000000000028
+        },
+        {
+          "steps": 100000,
+          "value": 0.8940000000000018
+        },
+        {
+          "steps": 110000,
+          "value": 0.7765000000000014
+        },
+        {
+          "steps": 120000,
+          "value": 0.7445000000000015
+        },
+        {
+          "steps": 130000,
+          "value": 0.7350000000000008
+        },
+        {
+          "steps": 140000,
+          "value": 0.907500000000002
+        },
+        {
+          "steps": 150000,
+          "value": 0.7510000000000014
+        },
+        {
+          "steps": 160000,
+          "value": 0.8665000000000024
+        },
+        {
+          "steps": 170000,
+          "value": 0.8520000000000014
+        },
+        {
+          "steps": 180000,
+          "value": 0.882500000000002
+        },
+        {
+          "steps": 190000,
+          "value": 0.9270000000000022
+        },
+        {
+          "steps": 200000,
+          "value": 0.9535000000000022
+        },
+        {
+          "steps": 210000,
+          "value": 0.9910000000000029
+        },
+        {
+          "steps": 220000,
+          "value": 1.2320000000000026
+        },
+        {
+          "steps": 230000,
+          "value": 1.1690000000000025
+        },
+        {
+          "steps": 240000,
+          "value": 0.8950000000000029
+        },
+        {
+          "steps": 250000,
+          "value": 0.9970000000000022
+        },
+        {
+          "steps": 260000,
+          "value": 1.3900000000000026
+        },
+        {
+          "steps": 270000,
+          "value": 1.4235000000000024
+        },
+        {
+          "steps": 280000,
+          "value": 1.463500000000003
+        },
+        {
+          "steps": 290000,
+          "value": 1.3770000000000022
+        },
+        {
+          "steps": 300000,
+          "value": 1.5955000000000026
+        },
+        {
+          "steps": 310000,
+          "value": 1.5270000000000021
+        },
+        {
+          "steps": 320000,
+          "value": 1.6065000000000023
+        },
+        {
+          "steps": 330000,
+          "value": 1.6275000000000026
+        },
+        {
+          "steps": 340000,
+          "value": 1.5835000000000024
+        },
+        {
+          "steps": 350000,
+          "value": 1.4220000000000024
+        },
+        {
+          "steps": 360000,
+          "value": 1.6555000000000029
+        },
+        {
+          "steps": 370000,
+          "value": 1.669000000000003
+        },
+        {
+          "steps": 380000,
+          "value": 1.6820000000000028
+        },
+        {
+          "steps": 390000,
+          "value": 1.7205000000000028
+        },
+        {
+          "steps": 400000,
+          "value": 1.5610000000000028
+        },
+        {
+          "steps": 410000,
+          "value": 1.6025000000000023
+        },
+        {
+          "steps": 420000,
+          "value": 1.6650000000000023
+        },
+        {
+          "steps": 430000,
+          "value": 1.8140000000000025
+        },
+        {
+          "steps": 440000,
+          "value": 1.8070000000000026
+        },
+        {
+          "steps": 450000,
+          "value": 1.8060000000000025
+        },
+        {
+          "steps": 460000,
+          "value": 1.709500000000003
+        },
+        {
+          "steps": 470000,
+          "value": 1.971000000000003
+        },
+        {
+          "steps": 480000,
+          "value": 1.9580000000000028
+        },
+        {
+          "steps": 490000,
+          "value": 1.7510000000000026
+        },
+        {
+          "steps": 500000,
+          "value": 1.7305000000000026
+        },
+        {
+          "steps": 510000,
+          "value": 2.002000000000003
+        },
+        {
+          "steps": 520000,
+          "value": 2.0335000000000027
+        },
+        {
+          "steps": 530000,
+          "value": 2.060500000000003
+        },
+        {
+          "steps": 540000,
+          "value": 1.9225000000000032
+        },
+        {
+          "steps": 550000,
+          "value": 2.0985000000000027
+        },
+        {
+          "steps": 560000,
+          "value": 2.086500000000003
+        },
+        {
+          "steps": 570000,
+          "value": 2.077500000000003
+        },
+        {
+          "steps": 580000,
+          "value": 1.9865000000000028
+        },
+        {
+          "steps": 590000,
+          "value": 2.115000000000003
+        },
+        {
+          "steps": 600000,
+          "value": 2.049000000000003
+        },
+        {
+          "steps": 610000,
+          "value": 2.094000000000003
+        },
+        {
+          "steps": 620000,
+          "value": 2.145500000000003
+        },
+        {
+          "steps": 630000,
+          "value": 2.1465000000000027
+        },
+        {
+          "steps": 640000,
+          "value": 2.149500000000003
+        },
+        {
+          "steps": 650000,
+          "value": 2.141500000000003
+        },
+        {
+          "steps": 660000,
+          "value": 2.150000000000003
+        },
+        {
+          "steps": 670000,
+          "value": 2.146000000000003
+        },
+        {
+          "steps": 680000,
+          "value": 2.158000000000003
+        },
+        {
+          "steps": 690000,
+          "value": 2.135000000000003
+        },
+        {
+          "steps": 700000,
+          "value": 2.124500000000003
+        },
+        {
+          "steps": 710000,
+          "value": 2.1315000000000026
+        },
+        {
+          "steps": 720000,
+          "value": 2.138000000000003
+        },
+        {
+          "steps": 730000,
+          "value": 1.898000000000003
+        },
+        {
+          "steps": 740000,
+          "value": 1.8185000000000033
+        },
+        {
+          "steps": 750000,
+          "value": 1.8310000000000033
+        },
+        {
+          "steps": 760000,
+          "value": 2.165500000000003
+        },
+        {
+          "steps": 770000,
+          "value": 2.143000000000003
+        },
+        {
+          "steps": 780000,
+          "value": 2.027500000000003
+        },
+        {
+          "steps": 790000,
+          "value": 1.993500000000003
+        },
+        {
+          "steps": 800000,
+          "value": 1.905000000000003
+        },
+        {
+          "steps": 810000,
+          "value": 2.118000000000003
+        },
+        {
+          "steps": 820000,
+          "value": 2.1120000000000028
+        },
+        {
+          "steps": 830000,
+          "value": 1.915000000000003
+        },
+        {
+          "steps": 840000,
+          "value": 1.9315000000000029
+        },
+        {
+          "steps": 850000,
+          "value": 1.971000000000003
+        },
+        {
+          "steps": 860000,
+          "value": 1.846000000000003
+        },
+        {
+          "steps": 870000,
+          "value": 1.915000000000003
+        },
+        {
+          "steps": 880000,
+          "value": 2.063500000000003
+        },
+        {
+          "steps": 890000,
+          "value": 2.080500000000003
+        },
+        {
+          "steps": 900000,
+          "value": 1.9020000000000028
+        },
+        {
+          "steps": 910000,
+          "value": 1.733500000000003
+        },
+        {
+          "steps": 920000,
+          "value": 1.753500000000003
+        },
+        {
+          "steps": 930000,
+          "value": 1.7860000000000034
+        },
+        {
+          "steps": 940000,
+          "value": 1.806000000000003
+        },
+        {
+          "steps": 950000,
+          "value": 1.7725000000000029
+        },
+        {
+          "steps": 960000,
+          "value": 1.810000000000003
+        },
+        {
+          "steps": 970000,
+          "value": 1.8045000000000029
+        },
+        {
+          "steps": 980000,
+          "value": 1.767500000000003
+        },
+        {
+          "steps": 990000,
+          "value": 2.069500000000003
+        },
+        {
+          "steps": 1000000,
+          "value": 2.051500000000003
+        }
+      ],
+      "full_budget_auc": {
+        "area": 1597062.5000000026,
+        "normalized_by_training_steps": 1.5970625000000025
+      },
+      "budget": 1000000,
+      "summary_sha256": "be4ae573d9eceec2ded60f567e9649a9bc952385602ee7245ffe37c9ae5687f0",
+      "environment_versions": {
+        "protocol": "legacy_predator_prey_5x5_2predators_1prey_v1",
+        "legacy_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "numpy": "2.4.6",
+        "seeding": "private_random_and_numpy_randomstate_v1"
+      },
+      "configuration_sha256_without_seed": "0817aa0f7a748ac080e4e3937c939b71e3fd74e36db3e86be5fab7c756ed56f8",
+      "metrics_snapshot_sha256": "2672ed7bf964dce5a547bbfd1534a4e0368ceb1c48c2d59329225a9a145775ac",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "window_count": 100,
+        "steps_per_window": 200,
+        "scope": "all_steps_in_fixed_windows_including_unfinished_episodes",
+        "seed_scheme": "numpy_seed_sequence_bta_win_v1",
+        "seed": 1000000,
+        "deterministic": true,
+        "execution": "decentralized",
+        "window_seeds": [
+          1797459334,
+          4054434446,
+          3798108316,
+          16999917,
+          1860356754,
+          3766823438,
+          2758128749,
+          31038029,
+          1515212889,
+          3368389037,
+          3430472880,
+          1087978334,
+          3927970044,
+          3208542803,
+          2889839320,
+          3976237693,
+          1809397214,
+          125376817,
+          1591544671,
+          2350848001,
+          3973840649,
+          1664713833,
+          823245927,
+          3989451149,
+          3421309987,
+          378331089,
+          2270488444,
+          811180432,
+          241941088,
+          2442297355,
+          2809620729,
+          1700362551,
+          1330451425,
+          62421618,
+          2064893422,
+          2066331534,
+          2843784821,
+          2851744639,
+          1671826521,
+          893216026,
+          252465735,
+          1160499816,
+          741980354,
+          2978105932,
+          966272421,
+          711734674,
+          4087830797,
+          4007410482,
+          3835163551,
+          3922160879,
+          5494160,
+          3795292112,
+          3289629882,
+          1517751734,
+          1369430032,
+          1256072858,
+          2646371358,
+          2487769813,
+          3990166301,
+          1399618952,
+          98950956,
+          1245983906,
+          1498852108,
+          4013535722,
+          4192031135,
+          1721365218,
+          336243432,
+          3713165319,
+          3073339939,
+          1888639762,
+          884619291,
+          1515690504,
+          4095654632,
+          1715954368,
+          1571082747,
+          3777485990,
+          3947034827,
+          1155772482,
+          3202481499,
+          3641508635,
+          443405356,
+          2799308301,
+          940515464,
+          1012039142,
+          2738743841,
+          1033045678,
+          2504734391,
+          2816528874,
+          3227289813,
+          2167038840,
+          1806970047,
+          3013049494,
+          3547647410,
+          2090700463,
+          2052417917,
+          3240486623,
+          1031780449,
+          3969343043,
+          1134931841,
+          3831903232
+        ]
+      }
+    },
+    "raw_evaluation_counts": {
+      "episodes": 2020,
+      "windows": 10100,
+      "steps": 2043517
+    },
+    "training_updates": 100,
+    "final_reward_per_step": 2.051500000000003,
+    "normalized_auc": 1.5970625000000025,
+    "final_episode_diagnostics": {
+      "count": 20,
+      "return_mean": 9.959000000000001,
+      "return_std": 0.019166857359844976,
+      "length_mean": 4.1,
+      "terminated": 20,
+      "truncated": 0,
+      "win_rate": null,
+      "win_records": 0,
+      "capture_rate": 1.0,
+      "capture_records": 20,
+      "reward_per_environment_step": 2.429024390243903,
+      "reward_per_step_scope": "completed_episodes_only",
+      "episodes": [
+        {
+          "episode": 0,
+          "return": 9.92,
+          "length": 8,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 8
+          }
+        },
+        {
+          "episode": 1,
+          "return": 9.97,
+          "length": 3,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 3
+          }
+        },
+        {
+          "episode": 2,
+          "return": 9.98,
+          "length": 2,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 2
+          }
+        },
+        {
+          "episode": 3,
+          "return": 9.96,
+          "length": 4,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 4
+          }
+        },
+        {
+          "episode": 4,
+          "return": 9.94,
+          "length": 6,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 6
+          }
+        },
+        {
+          "episode": 5,
+          "return": 9.97,
+          "length": 3,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 3
+          }
+        },
+        {
+          "episode": 6,
+          "return": 9.99,
+          "length": 1,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 1
+          }
+        },
+        {
+          "episode": 7,
+          "return": 9.94,
+          "length": 6,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 6
+          }
+        },
+        {
+          "episode": 8,
+          "return": 9.99,
+          "length": 1,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 1
+          }
+        },
+        {
+          "episode": 9,
+          "return": 9.98,
+          "length": 2,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 2
+          }
+        },
+        {
+          "episode": 10,
+          "return": 9.96,
+          "length": 4,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 4
+          }
+        },
+        {
+          "episode": 11,
+          "return": 9.97,
+          "length": 3,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 3
+          }
+        },
+        {
+          "episode": 12,
+          "return": 9.950000000000001,
+          "length": 5,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 5
+          }
+        },
+        {
+          "episode": 13,
+          "return": 9.97,
+          "length": 3,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 3
+          }
+        },
+        {
+          "episode": 14,
+          "return": 9.93,
+          "length": 7,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 7
+          }
+        },
+        {
+          "episode": 15,
+          "return": 9.96,
+          "length": 4,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 4
+          }
+        },
+        {
+          "episode": 16,
+          "return": 9.950000000000001,
+          "length": 5,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 5
+          }
+        },
+        {
+          "episode": 17,
+          "return": 9.96,
+          "length": 4,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 4
+          }
+        },
+        {
+          "episode": 18,
+          "return": 9.94,
+          "length": 6,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 6
+          }
+        },
+        {
+          "episode": 19,
+          "return": 9.950000000000001,
+          "length": 5,
+          "terminated": true,
+          "truncated": false,
+          "info": {
+            "prey_alive": [
+              false
+            ],
+            "capture_success": true,
+            "episode_limit": false,
+            "step_count": 5
+          }
+        }
+      ],
+      "seed": 1000000,
+      "environment_steps": 20082,
+      "execution": "decentralized",
+      "deterministic": true,
+      "fixed_window": {
+        "reward_per_environment_step": 2.051500000000003,
+        "reward_sum": 41030.00000000006,
+        "environment_steps": 20000,
+        "steps_per_window": 200,
+        "window_count": 100,
+        "windows": [
+          {
+            "window": 0,
+            "seed": 1797459334,
+            "reward_sum": 308.0000000000002,
+            "steps": 200,
+            "completed_episodes": 31,
+            "captures": 31,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 1,
+            "seed": 4054434446,
+            "reward_sum": 468.00000000000114,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 2,
+            "seed": 3798108316,
+            "reward_sum": 438.00000000000125,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 3,
+            "seed": 16999917,
+            "reward_sum": 418.0000000000011,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 4,
+            "seed": 1860356754,
+            "reward_sum": 478.0000000000012,
+            "steps": 200,
+            "completed_episodes": 48,
+            "captures": 48,
+            "timeouts": 0,
+            "unfinished_episode_steps": 6,
+            "unfinished_episode_return": -0.060000000000000005
+          },
+          {
+            "window": 5,
+            "seed": 3766823438,
+            "reward_sum": 448.00000000000114,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 6,
+            "seed": 2758128749,
+            "reward_sum": 458.00000000000114,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 7,
+            "seed": 31038029,
+            "reward_sum": 478.0000000000012,
+            "steps": 200,
+            "completed_episodes": 48,
+            "captures": 48,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 8,
+            "seed": 1515212889,
+            "reward_sum": 418.0000000000012,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 9,
+            "seed": 3368389037,
+            "reward_sum": 398.0000000000011,
+            "steps": 200,
+            "completed_episodes": 40,
+            "captures": 40,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 10,
+            "seed": 3430472880,
+            "reward_sum": 478.0000000000012,
+            "steps": 200,
+            "completed_episodes": 48,
+            "captures": 48,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 11,
+            "seed": 1087978334,
+            "reward_sum": 378.0000000000011,
+            "steps": 200,
+            "completed_episodes": 38,
+            "captures": 38,
+            "timeouts": 0,
+            "unfinished_episode_steps": 5,
+            "unfinished_episode_return": -0.05
+          },
+          {
+            "window": 12,
+            "seed": 3927970044,
+            "reward_sum": 248.0000000000004,
+            "steps": 200,
+            "completed_episodes": 25,
+            "captures": 25,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 13,
+            "seed": 3208542803,
+            "reward_sum": 388.00000000000114,
+            "steps": 200,
+            "completed_episodes": 39,
+            "captures": 39,
+            "timeouts": 0,
+            "unfinished_episode_steps": 13,
+            "unfinished_episode_return": -0.12999999999999998
+          },
+          {
+            "window": 14,
+            "seed": 2889839320,
+            "reward_sum": 468.0000000000012,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 15,
+            "seed": 3976237693,
+            "reward_sum": 448.00000000000114,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 16,
+            "seed": 1809397214,
+            "reward_sum": 438.0000000000012,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 5,
+            "unfinished_episode_return": -0.05
+          },
+          {
+            "window": 17,
+            "seed": 125376817,
+            "reward_sum": 408.00000000000114,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 18,
+            "seed": 1591544671,
+            "reward_sum": 498.00000000000114,
+            "steps": 200,
+            "completed_episodes": 50,
+            "captures": 50,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 19,
+            "seed": 2350848001,
+            "reward_sum": 448.00000000000125,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 20,
+            "seed": 3973840649,
+            "reward_sum": 378.000000000001,
+            "steps": 200,
+            "completed_episodes": 38,
+            "captures": 38,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 21,
+            "seed": 1664713833,
+            "reward_sum": 438.00000000000114,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 22,
+            "seed": 823245927,
+            "reward_sum": 428.00000000000114,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 23,
+            "seed": 3989451149,
+            "reward_sum": 488.00000000000114,
+            "steps": 200,
+            "completed_episodes": 49,
+            "captures": 49,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 24,
+            "seed": 3421309987,
+            "reward_sum": 458.0000000000013,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 25,
+            "seed": 378331089,
+            "reward_sum": 418.00000000000114,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 26,
+            "seed": 2270488444,
+            "reward_sum": 448.00000000000125,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 27,
+            "seed": 811180432,
+            "reward_sum": 158.00000000000028,
+            "steps": 200,
+            "completed_episodes": 17,
+            "captures": 16,
+            "timeouts": 1,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 28,
+            "seed": 241941088,
+            "reward_sum": 408.00000000000114,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 29,
+            "seed": 2442297355,
+            "reward_sum": 418.00000000000114,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 30,
+            "seed": 2809620729,
+            "reward_sum": 157.99999999999986,
+            "steps": 200,
+            "completed_episodes": 17,
+            "captures": 16,
+            "timeouts": 1,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 31,
+            "seed": 1700362551,
+            "reward_sum": 398.0000000000011,
+            "steps": 200,
+            "completed_episodes": 40,
+            "captures": 40,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 32,
+            "seed": 1330451425,
+            "reward_sum": 458.0000000000011,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 33,
+            "seed": 62421618,
+            "reward_sum": 428.00000000000114,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 5,
+            "unfinished_episode_return": -0.05
+          },
+          {
+            "window": 34,
+            "seed": 2064893422,
+            "reward_sum": 258.0000000000011,
+            "steps": 200,
+            "completed_episodes": 26,
+            "captures": 26,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 35,
+            "seed": 2066331534,
+            "reward_sum": 418.0000000000012,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 36,
+            "seed": 2843784821,
+            "reward_sum": 448.00000000000125,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 37,
+            "seed": 2851744639,
+            "reward_sum": 158.0000000000012,
+            "steps": 200,
+            "completed_episodes": 17,
+            "captures": 16,
+            "timeouts": 1,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 38,
+            "seed": 1671826521,
+            "reward_sum": 428.0000000000011,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 39,
+            "seed": 893216026,
+            "reward_sum": 448.00000000000125,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 40,
+            "seed": 252465735,
+            "reward_sum": 408.0000000000012,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 41,
+            "seed": 1160499816,
+            "reward_sum": 438.0000000000012,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 42,
+            "seed": 741980354,
+            "reward_sum": 448.00000000000114,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 43,
+            "seed": 2978105932,
+            "reward_sum": 478.00000000000114,
+            "steps": 200,
+            "completed_episodes": 48,
+            "captures": 48,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 44,
+            "seed": 966272421,
+            "reward_sum": 498.0000000000012,
+            "steps": 200,
+            "completed_episodes": 50,
+            "captures": 50,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 45,
+            "seed": 711734674,
+            "reward_sum": 428.00000000000114,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 46,
+            "seed": 4087830797,
+            "reward_sum": 418.0000000000011,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 47,
+            "seed": 4007410482,
+            "reward_sum": 418.000000000001,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 48,
+            "seed": 3835163551,
+            "reward_sum": 137.99999999999994,
+            "steps": 200,
+            "completed_episodes": 15,
+            "captures": 14,
+            "timeouts": 1,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 49,
+            "seed": 3922160879,
+            "reward_sum": 438.0000000000011,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 50,
+            "seed": 5494160,
+            "reward_sum": 268.0000000000001,
+            "steps": 200,
+            "completed_episodes": 27,
+            "captures": 27,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 51,
+            "seed": 3795292112,
+            "reward_sum": 418.0000000000011,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 52,
+            "seed": 3289629882,
+            "reward_sum": 378.0000000000011,
+            "steps": 200,
+            "completed_episodes": 38,
+            "captures": 38,
+            "timeouts": 0,
+            "unfinished_episode_steps": 38,
+            "unfinished_episode_return": -0.38000000000000017
+          },
+          {
+            "window": 53,
+            "seed": 1517751734,
+            "reward_sum": 27.999999999999705,
+            "steps": 200,
+            "completed_episodes": 4,
+            "captures": 3,
+            "timeouts": 1,
+            "unfinished_episode_steps": 57,
+            "unfinished_episode_return": -0.5700000000000003
+          },
+          {
+            "window": 54,
+            "seed": 1369430032,
+            "reward_sum": 438.00000000000114,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 55,
+            "seed": 1256072858,
+            "reward_sum": 388.00000000000097,
+            "steps": 200,
+            "completed_episodes": 39,
+            "captures": 39,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 56,
+            "seed": 2646371358,
+            "reward_sum": 428.0000000000011,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 57,
+            "seed": 2487769813,
+            "reward_sum": 468.00000000000114,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 58,
+            "seed": 3990166301,
+            "reward_sum": 438.0000000000011,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 59,
+            "seed": 1399618952,
+            "reward_sum": 438.00000000000125,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 60,
+            "seed": 98950956,
+            "reward_sum": 438.00000000000114,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 61,
+            "seed": 1245983906,
+            "reward_sum": 498.00000000000125,
+            "steps": 200,
+            "completed_episodes": 50,
+            "captures": 50,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 62,
+            "seed": 1498852108,
+            "reward_sum": 438.0000000000012,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 63,
+            "seed": 4013535722,
+            "reward_sum": 458.00000000000125,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 64,
+            "seed": 4192031135,
+            "reward_sum": 398.00000000000114,
+            "steps": 200,
+            "completed_episodes": 40,
+            "captures": 40,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 65,
+            "seed": 1721365218,
+            "reward_sum": 468.0000000000012,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 66,
+            "seed": 336243432,
+            "reward_sum": 458.00000000000114,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 6,
+            "unfinished_episode_return": -0.060000000000000005
+          },
+          {
+            "window": 67,
+            "seed": 3713165319,
+            "reward_sum": 298.00000000000114,
+            "steps": 200,
+            "completed_episodes": 30,
+            "captures": 30,
+            "timeouts": 0,
+            "unfinished_episode_steps": 61,
+            "unfinished_episode_return": -0.6100000000000003
+          },
+          {
+            "window": 68,
+            "seed": 3073339939,
+            "reward_sum": 438.0000000000012,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 69,
+            "seed": 1888639762,
+            "reward_sum": 438.00000000000125,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 70,
+            "seed": 884619291,
+            "reward_sum": 378.00000000000125,
+            "steps": 200,
+            "completed_episodes": 38,
+            "captures": 38,
+            "timeouts": 0,
+            "unfinished_episode_steps": 54,
+            "unfinished_episode_return": -0.5400000000000003
+          },
+          {
+            "window": 71,
+            "seed": 1515690504,
+            "reward_sum": 458.0000000000012,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 72,
+            "seed": 4095654632,
+            "reward_sum": 438.00000000000125,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 73,
+            "seed": 1715954368,
+            "reward_sum": 408.0000000000011,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 74,
+            "seed": 1571082747,
+            "reward_sum": 408.00000000000114,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 75,
+            "seed": 3777485990,
+            "reward_sum": 408.0000000000011,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 76,
+            "seed": 3947034827,
+            "reward_sum": 418.0000000000012,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 77,
+            "seed": 1155772482,
+            "reward_sum": 428.00000000000125,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 78,
+            "seed": 3202481499,
+            "reward_sum": 448.00000000000125,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 79,
+            "seed": 3641508635,
+            "reward_sum": 408.00000000000114,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 80,
+            "seed": 443405356,
+            "reward_sum": 458.0000000000012,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 81,
+            "seed": 2799308301,
+            "reward_sum": 388.0000000000011,
+            "steps": 200,
+            "completed_episodes": 39,
+            "captures": 39,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 82,
+            "seed": 940515464,
+            "reward_sum": 448.0000000000012,
+            "steps": 200,
+            "completed_episodes": 45,
+            "captures": 45,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 83,
+            "seed": 1012039142,
+            "reward_sum": 328.00000000000114,
+            "steps": 200,
+            "completed_episodes": 33,
+            "captures": 33,
+            "timeouts": 0,
+            "unfinished_episode_steps": 50,
+            "unfinished_episode_return": -0.5000000000000002
+          },
+          {
+            "window": 84,
+            "seed": 2738743841,
+            "reward_sum": 428.0000000000012,
+            "steps": 200,
+            "completed_episodes": 43,
+            "captures": 43,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 85,
+            "seed": 1033045678,
+            "reward_sum": 488.00000000000114,
+            "steps": 200,
+            "completed_episodes": 49,
+            "captures": 49,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 86,
+            "seed": 2504734391,
+            "reward_sum": 418.0000000000012,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 87,
+            "seed": 2816528874,
+            "reward_sum": 468.00000000000114,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 88,
+            "seed": 3227289813,
+            "reward_sum": 418.00000000000114,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 2,
+            "unfinished_episode_return": -0.02
+          },
+          {
+            "window": 89,
+            "seed": 2167038840,
+            "reward_sum": 418.000000000001,
+            "steps": 200,
+            "completed_episodes": 42,
+            "captures": 42,
+            "timeouts": 0,
+            "unfinished_episode_steps": 5,
+            "unfinished_episode_return": -0.05
+          },
+          {
+            "window": 90,
+            "seed": 1806970047,
+            "reward_sum": 468.00000000000136,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 91,
+            "seed": 3013049494,
+            "reward_sum": 408.0000000000011,
+            "steps": 200,
+            "completed_episodes": 41,
+            "captures": 41,
+            "timeouts": 0,
+            "unfinished_episode_steps": 3,
+            "unfinished_episode_return": -0.03
+          },
+          {
+            "window": 92,
+            "seed": 3547647410,
+            "reward_sum": 478.0000000000012,
+            "steps": 200,
+            "completed_episodes": 48,
+            "captures": 48,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 93,
+            "seed": 2090700463,
+            "reward_sum": 438.0000000000012,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          },
+          {
+            "window": 94,
+            "seed": 2052417917,
+            "reward_sum": 458.00000000000114,
+            "steps": 200,
+            "completed_episodes": 46,
+            "captures": 46,
+            "timeouts": 0,
+            "unfinished_episode_steps": 1,
+            "unfinished_episode_return": -0.01
+          },
+          {
+            "window": 95,
+            "seed": 3240486623,
+            "reward_sum": 208.00000000000122,
+            "steps": 200,
+            "completed_episodes": 21,
+            "captures": 21,
+            "timeouts": 0,
+            "unfinished_episode_steps": 111,
+            "unfinished_episode_return": -1.1100000000000008
+          },
+          {
+            "window": 96,
+            "seed": 1031780449,
+            "reward_sum": 438.0000000000011,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 97,
+            "seed": 3969343043,
+            "reward_sum": 468.00000000000125,
+            "steps": 200,
+            "completed_episodes": 47,
+            "captures": 47,
+            "timeouts": 0,
+            "unfinished_episode_steps": 4,
+            "unfinished_episode_return": -0.04
+          },
+          {
+            "window": 98,
+            "seed": 1134931841,
+            "reward_sum": 438.00000000000114,
+            "steps": 200,
+            "completed_episodes": 44,
+            "captures": 44,
+            "timeouts": 0,
+            "unfinished_episode_steps": 5,
+            "unfinished_episode_return": -0.05
+          },
+          {
+            "window": 99,
+            "seed": 3831903232,
+            "reward_sum": 488.00000000000125,
+            "steps": 200,
+            "completed_episodes": 49,
+            "captures": 49,
+            "timeouts": 0,
+            "unfinished_episode_steps": 0,
+            "unfinished_episode_return": 0.0
+          }
+        ],
+        "scope": "all_steps_in_fixed_windows_including_unfinished_episodes",
+        "seed_scheme": "numpy_seed_sequence_bta_win_v1",
+        "seed": 1000000,
+        "deterministic": true
+      }
+    },
+    "artifact_sha256": {
+      "config.json": "9ac2cc01efae9dd04e9dd35d9cdb045ffd24e2c569c9ea75199979ed7a1ca234",
+      "metrics.jsonl": "2672ed7bf964dce5a547bbfd1534a4e0368ceb1c48c2d59329225a9a145775ac",
+      "summary.json": "be4ae573d9eceec2ded60f567e9649a9bc952385602ee7245ffe37c9ae5687f0",
+      "checkpoint.pt": "273927c5c41d0228b6897299e12c28923a62f1c35cbb8692234a0eed62328d21"
+    }
+  },
+  "original_artifact_sha256": {
+    "config.json": "9ac2cc01efae9dd04e9dd35d9cdb045ffd24e2c569c9ea75199979ed7a1ca234",
+    "metrics.jsonl": "2672ed7bf964dce5a547bbfd1534a4e0368ceb1c48c2d59329225a9a145775ac",
+    "summary.json": "be4ae573d9eceec2ded60f567e9649a9bc952385602ee7245ffe37c9ae5687f0",
+    "checkpoint.pt": "273927c5c41d0228b6897299e12c28923a62f1c35cbb8692234a0eed62328d21"
+  },
+  "original_artifacts_unchanged": true,
+  "original_seed0_1m_reference": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0",
+  "original_reference_metrics_sha256": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103",
+  "all100updates_and101evaluations_repeat_exactly_excluding_elapsed": true,
+  "groups": null,
+  "selection": null,
+  "full_final_protocol_replay_pending": true,
+  "full24_family_required": true,
+  "paper_reproduction": "not_established"
+}

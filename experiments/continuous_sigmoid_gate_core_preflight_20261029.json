@@ -1,0 +1,160 @@
+{
+  "recorded_utc": "2026-10-29T16:13:51.407573+00:00",
+  "scope": "Synthetic observer/replay preflight plus raw-reduction checks on existing native evidence. No new native run executed.",
+  "observer_sha256": "6f9bb8e51d6624121df074d2a77d92d314a463877f580554c8e0a912a964c82c",
+  "auditor_sha256": "9952e437f4d939064b9a9d16a6a8eaa6d9185de62ce5eef8401473edea3fb5dd",
+  "runtime_versions": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cpu",
+    "numpy": "2.4.6",
+    "smacv2": null,
+    "pysc2": null,
+    "mujoco-py": null,
+    "gym": null,
+    "gymnasium": null,
+    "gfootball": null
+  },
+  "comparisons": [
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_ff",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "updates": 3,
+      "observed_vs_unobserved_bitwise_equal": true
+    }
+  ],
+  "corrupted_copy_rejections": [
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "packed_memory"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "lost_reset"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "final_carry"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "attached_carry"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "attached_input"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "observer_rng_consumption"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "defect": "observer_model_mutation"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "missing_update"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "missing_reset"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "nonzero_post_reset"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "rng_mutation"
+    },
+    {
+      "variant": "synthetic44k",
+      "defect": "wrong_budget"
+    }
+  ],
+  "synthetic_full_horizon_steps": 44000,
+  "synthetic_training_resets_verified": 40,
+  "synthetic_final_checkpoint_replay_exact": true,
+  "existing_native_evaluation_episodes_checked": 9090,
+  "native_gate_runs_completed": 0
+}

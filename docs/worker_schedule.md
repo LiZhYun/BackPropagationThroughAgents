@@ -571,3 +571,10 @@ Each requests one CPU/2 GiB/10 minutes after its branch ends; the maximum stays 
 ## Corrected memory collector, 29 October 2026
 
 The Ant/memory branch now ends **21284086 → 21289017**. Only pending read-only collector21284087 was cancelled/replaced because its grid check contradicted the frozen12000-step cadence. Native training and all other dependencies remain unchanged. The replacement uses the same1CPU/2GiB/5min allocation and requires120original episodes,24replays and all existing memory/prefix checks. The resource ceiling remains14workers/16CPUs/120GiB. [Verified replacement](../experiments/continuous_memory_audit_grid_fix_schedule_20261029.json). Six sigmoid-scale native checks and eighteen further learning runs are frozen but unsubmitted,with no capacity reserved. Existing studies keep priority.
+
+
+## Sigmoid native allocation, 29 October 2026
+
+The Prey branch now continues **21287360 → 21288041 → 21289365 → 21289366**. Sigmoid array21289365 additionally waits for original memory collector21289017 and checks that every prior native condition passed. It replaces the completed Prey workers with at most two1CPU/4GiB/30min workers; its auditor uses one1CPU/2GiB/5min worker. The maximum stays14workers/16CPUs/120GiB.
+
+Actual allocation supersedes the execution preparation's suggested Ant capacity. This preserves Ant/memory capacity for the earlier18recurrent learning runs and the HC reservation for18feedforward runs. No existing job or dependency changes; eighteen sigmoid learning runs are still unsubmitted. [Capacity verification](../experiments/continuous_sigmoid_gate_capacity_20261029.json); [gate](../experiments/continuous_sigmoid_gate_schedule_20261029.json); [auditor](../experiments/continuous_sigmoid_gate_collector_20261029.json).

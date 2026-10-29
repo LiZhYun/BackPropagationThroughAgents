@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T16:17:33.911056+00:00",
+  "report": "results/benchmark_coverage_20261029_sigmoid_native.json",
+  "report_sha256": "74ad59881e6837ecc076deb284fb756e367ce6915e8904a9cc4332f618943221",
+  "csv": "experiments/benchmark_coverage_20261029_sigmoid_native.csv",
+  "csv_sha256": "d6391c33bbb1c54e69e059fe3378437b7fd03674239b2e4e1b0bd807b9e2fc67",
+  "runs": 913,
+  "manifests": 76,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Includes6newly queued sigmoid native checks and the same submitted learning studies;913ledger-indexed runs/76manifests. No setting was selected from native checks. Artifact coverage includes failures and does not establish reproduced performance.54prepared unsubmitted learning runs remain excluded; collectors and synthetic preflights do not add training declarations."
+}

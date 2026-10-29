@@ -1,6 +1,12 @@
 # Clean installation verification
 
-## Current wheel: 29 October 2026
+## Current wheel with sigmoid local scales: 29 October 2026
+
+The exact export of commit `f311fc2` passes **1,093 installed-package tests and one CUDA-only skip** in 57.79 seconds, with pytest source-path injection disabled. All 25 modules import from `site-packages` and match the committed export. The packaged README and MIT license match. The suite includes the new sigmoid scale, private continuous memory, raw likelihoods, optimizer and exact synthetic saved-policy replay checks.
+
+All fourteen top-level commands pass, including offline build/install, dependency consistency, matrix and recurrent Prey console runs, positive-distillation CLI/replay and standard-library reports. The private validation prefix is reused with its locked dependency inventory unchanged. Its original wheel, module bytes and README are restored afterward; no training prefix changes and no new environment is created. This does not repeat the earlier fresh installation or establish optional native simulator behavior. [Current verification](../experiments/core_wheel_sigmoid_verification_20261029.json).
+
+## Preceding wheel: 29 October 2026
 
 The exact committed export of `f7f9de3` passes **1,044 installed-package tests
 and one CUDA-only skip** in 54.93 seconds, with pytest source-path injection

@@ -1,0 +1,23 @@
+{
+  "recorded_utc": "2026-10-29T16:20:14.192802+00:00",
+  "scope": "Installed current wheel and dual-runtime synthetic/native-gate launch integrity; no native learning gain.",
+  "execution_plan": "experiments/continuous_sigmoid_gate_execution_20261029.json",
+  "execution_plan_sha256": "a17d805f4c41e35e36c0ef75a85a48b6ee0defbdbe7aaf829f8d91307700c98f",
+  "gate": "experiments/continuous_sigmoid_gate_schedule_20261029.json",
+  "gate_sha256": "43b3562f36f1e5fda9f103dd6440cfa78db5957408636622fbe488a9225e091b",
+  "collector": "experiments/continuous_sigmoid_gate_collector_20261029.json",
+  "collector_sha256": "19f1a3dcd04f50215382d2e88e00f46fb86ba617abc6a9c153e9d75842bcfb32",
+  "native_conditions": 6,
+  "learning_runs_submitted": 0,
+  "source_modules": 25,
+  "prior_native_guard_required": true,
+  "ledger_prefix_preserved": true,
+  "new_ledger_events": 4,
+  "existing_jobs_modified": false,
+  "other_reproduction_modified": false,
+  "coverage": "experiments/benchmark_coverage_20261029_sigmoid_native.provenance.json",
+  "coverage_sha256": "cbbd93333e4a27b046786c12ee64a68933426721f5f1541798624372d95f9a6a",
+  "wheel": "experiments/core_wheel_sigmoid_verification_20261029.json",
+  "wheel_sha256": "330d2e71e899d3d156b3601d7b2e3ffa7e54c60935d64b147ad479b17b87cb47",
+  "errors": []
+}

@@ -1,0 +1,28 @@
+{
+  "recorded_utc": "2026-10-29T16:16:06.057004+00:00",
+  "execution_plan": "experiments/continuous_sigmoid_gate_execution_20261029.json",
+  "execution_plan_sha256": "a17d805f4c41e35e36c0ef75a85a48b6ee0defbdbe7aaf829f8d91307700c98f",
+  "dependency": "afterany:21288041:21289017",
+  "reserved_branch": "Prey after its entire24-run learning collector; original memory audit additionally remains a scientific prerequisite.",
+  "supersedes_preparation_only_capacity": "The frozen execution preparation suggested Ant/memory capacity. Actual release uses the completed Prey branch so earlier18GRUlearning retains the Ant allocation,while18FFretains HC. No existing job changes.",
+  "allocation": {
+    "maximum_workers": 2,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 4,
+    "wall_minutes": 30,
+    "automatic_requeue": false
+  },
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "parent_verification": {
+    "21288041": "JobId=21288041 JobName=bpta-agentmixer-prey1m-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=186205 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21287360_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A SubmitTime=2026-10-29T17:40:22 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T17:40:22 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:2247489 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/audit_v2.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21287360 /scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/audit_v2.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/slurm_21288041.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/slurm_21288041.out TresPerTask=cpu=1\n",
+    "21289017": "JobId=21289017 JobName=bpta-agentmixer-hc2-memory-audit-v2 UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=186210 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21284086_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-10-29T18:02:42 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T18:02:42 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:2371694 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_memory_audit_grid_fix_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21284086 /scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_memory_audit_grid_fix_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_memory_audit_grid_fix_20261029/audit_21289017.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_memory_audit_grid_fix_20261029/audit_21289017.out TresPerTask=cpu=1\n"
+  },
+  "new_training_conditions": 0,
+  "stdout_override": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/native_%A_%a.out",
+  "stderr_override": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/native_%A_%a.err",
+  "log_rationale": "Keep new sigmoid logs in their own manifest directory; the immutable copied dispatch retains its preparation-time old log path,overridden explicitly by sbatch."
+}

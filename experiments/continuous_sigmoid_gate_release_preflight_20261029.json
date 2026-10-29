@@ -1,0 +1,52 @@
+{
+  "recorded_utc": "2026-10-29T16:16:06.058174+00:00",
+  "scope": "Both existing runtimes pass synthetic memory/raw-reduction/replay checks for the6frozen native conditions. No new native or learning-performance result.",
+  "execution_plan": "experiments/continuous_sigmoid_gate_execution_20261029.json",
+  "execution_plan_sha256": "a17d805f4c41e35e36c0ef75a85a48b6ee0defbdbe7aaf829f8d91307700c98f",
+  "runtime_reports": [
+    {
+      "runtime": "core",
+      "path": "experiments/continuous_sigmoid_gate_core_preflight_20261029.json",
+      "sha256": "151c4732ca165dc669074cab397816488e36765ec3e6af29d9e5f792d0c25e7d",
+      "runtime_versions": {
+        "python": "3.11.15",
+        "torch": "2.6.0+cpu",
+        "numpy": "2.4.6",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": null,
+        "gym": null,
+        "gymnasium": null,
+        "gfootball": null
+      }
+    },
+    {
+      "runtime": "private",
+      "path": "experiments/continuous_sigmoid_gate_private_preflight_20261029.json",
+      "sha256": "cee553ce66b8c9c0145f6c0b88c9a5148153b96e6a50df62dd3c59864c3e7b28",
+      "runtime_versions": {
+        "python": "3.10.22",
+        "torch": "2.6.0+cpu",
+        "numpy": "1.23.5",
+        "smacv2": null,
+        "pysc2": null,
+        "mujoco-py": "2.1.2.14",
+        "gym": "0.10.8",
+        "gymnasium": null,
+        "gfootball": null
+      }
+    }
+  ],
+  "core_and_private_observer_comparisons": 12,
+  "corruption_rejections_per_runtime": 26,
+  "synthetic_horizon_steps_per_runtime": 44000,
+  "synthetic_resets_per_runtime": 40,
+  "historical_native_episodes_checked_per_runtime": 9090,
+  "prior12_native_guard_rejects_unfinished": true,
+  "new6native_outputs_absent": true,
+  "capacity": "experiments/continuous_sigmoid_gate_capacity_20261029.json",
+  "capacity_sha256": "cf9c48f9bda778837e1ecfa12c7fa67424a969e99feb8e919d33a1e0c275f16d",
+  "source_modules": 25,
+  "learning_runs_submitted": 0,
+  "errors": []
+}

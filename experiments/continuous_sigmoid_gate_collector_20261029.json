@@ -1,0 +1,27 @@
+{
+  "recorded_utc": "2026-10-29T16:16:46.846313+00:00",
+  "job_id": "21289366",
+  "status": "released",
+  "execution_plan": "experiments/continuous_sigmoid_gate_execution_20261029.json",
+  "execution_plan_sha256": "a17d805f4c41e35e36c0ef75a85a48b6ee0defbdbe7aaf829f8d91307700c98f",
+  "dependency": "afterany:21289365",
+  "dispatch": "results/continuous_sigmoid_gate_20261029/audit.sbatch",
+  "dispatch_sha256": "fb32a4ddea7e22e6b1479a85e0eaf6bcff3c810aa75c430618ae5aebb39b71df",
+  "allocation": {
+    "cpus": 1,
+    "memory_gib": 2,
+    "wall_minutes": 5,
+    "automatic_requeue": false
+  },
+  "capacity": "Replaces completed sigmoid native workers in the same Prey branch.",
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "learning_runs_submitted": 0,
+  "existing_jobs_modified": false,
+  "other_reproduction_modified": false,
+  "held_verification": "JobId=21289366 JobName=bpta-agentmixer-hc2-sigmoid-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21289365_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-10-29T18:16:46 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T18:16:46 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:2449624 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21289365 /scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit_21289366.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit_21289366.out TresPerTask=cpu=1",
+  "released_verification": "JobId=21289366 JobName=bpta-agentmixer-hc2-sigmoid-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=186210 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=None Dependency=afterany:21289365_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-10-29T18:16:46 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T18:16:46 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:2449624 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21289365 /scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit_21289366.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/continuous_sigmoid_gate_20261029/audit_21289366.out TresPerTask=cpu=1"
+}
