@@ -1,0 +1,81 @@
+{
+  "recorded_utc": "2026-10-29T15:42:40.653019+00:00",
+  "scope": "Full collector release/provenance and partial startup checks only; no complete learning or performance claim.",
+  "checked_linked_hashes": {
+    "experiments/prey_distillation_learning_audit_plan_20261029.json": [
+      "results/prey_distillation_learning_audit_20261029/prepare.py",
+      "experiments/prey_distillation_study_20261029.json",
+      "experiments/prey_distillation_learning_release_20261029.json",
+      "experiments/prey_distillation_learning_schedule_20261029.json",
+      "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+      "experiments/prey_distillation_native_complete_20261029.json",
+      "results/prey_distillation_learning_audit_20261029/checks.py",
+      "results/prey_distillation_learning_audit_20261029/evaluate_simulator.py",
+      "results/prey_distillation_learning_audit_20261029/audit.py",
+      "results/prey_distillation_learning_audit_20261029/audit.sbatch"
+    ],
+    "experiments/prey_distillation_learning_audit_plan_20261029_v2.json": [
+      "results/prey_distillation_learning_audit_20261029/prepare_v2.py",
+      "experiments/prey_distillation_study_20261029.json",
+      "experiments/prey_distillation_learning_release_20261029.json",
+      "experiments/prey_distillation_learning_schedule_20261029.json",
+      "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+      "experiments/prey_distillation_native_complete_20261029.json",
+      "results/prey_distillation_learning_audit_20261029/checks.py",
+      "results/prey_distillation_learning_audit_20261029/evaluate_simulator.py",
+      "results/prey_distillation_learning_audit_20261029/audit_v2.py",
+      "results/prey_distillation_learning_audit_20261029/audit_v2.sbatch",
+      "experiments/prey_distillation_learning_audit_plan_20261029.json"
+    ],
+    "experiments/prey_distillation_learning_audit_preflight_20261029_v2.json": [
+      "experiments/prey_distillation_learning_audit_plan_20261029_v2.json",
+      "results/prey_distillation_learning_audit_20261029/environment_check.json",
+      "results/prey_distillation_learning_audit_20261029/preflight_v2.py"
+    ],
+    "experiments/prey_distillation_learning_audit_schedule_20261029.json": [
+      "experiments/prey_distillation_learning_audit_plan_20261029_v2.json",
+      "experiments/prey_distillation_learning_audit_preflight_20261029_v2.json",
+      "results/prey_distillation_learning_audit_20261029/audit_v2.sbatch",
+      "results/prey_distillation_learning_audit_20261029/submit.py"
+    ],
+    "experiments/prey_distillation_learning_startup_20261029.json": [
+      "experiments/prey_distillation_learning_audit_plan_20261029_v2.json"
+    ],
+    "experiments/benchmark_coverage_20261029_prey_collector.provenance.json": [
+      "results/benchmark_coverage_20261029_prey_collector.json",
+      "experiments/benchmark_coverage_20261029_prey_collector.csv"
+    ]
+  },
+  "records_sha256": {
+    "experiments/prey_distillation_learning_audit_plan_20261029.json": "1f174f0d67ef2184e0160b204fbe7313151fffb35bf91c1e533e420ec845c85c",
+    "experiments/prey_distillation_learning_audit_plan_20261029_v2.json": "6e462be197d04da22b2c3d29d1ba104197be2fd89455d6b4b4624d1b5e0f8cac",
+    "experiments/prey_distillation_learning_audit_preflight_20261029_v2.json": "f3eb526d1fe19633d3f2cf670a285e16c6cc29107de9c8d90fc5ebd95f23a157",
+    "experiments/prey_distillation_learning_audit_schedule_20261029.json": "c75fe5b73459c41bc607daf457f28b2eb92ed642cd3527661e9030e080ab54e3",
+    "experiments/prey_distillation_learning_startup_20261029.json": "ed07192d2917f46ed255559a10f7e0dd0f15f65178f0d655c558afc3e666adf7",
+    "experiments/benchmark_coverage_20261029_prey_collector.provenance.json": "3c23f171f8d9a211d4bb9a2a4266817d9e4e4317d623cbecb2cc16d816d4f3b3"
+  },
+  "submitted_collector": "21288041",
+  "dependency": "afterany:21287360",
+  "original24learning_configs_and_source_preserved": true,
+  "failed_v1_draft_preserved": true,
+  "only_corrected_v2_submitted": true,
+  "ledger_prefix_preserved": true,
+  "new_collector_ledger_events": 2,
+  "new_training_runs": 0,
+  "coverage_runs": 907,
+  "coverage_manifests": 75,
+  "coverage_targets": 45,
+  "corrupted_copies_rejected": 60,
+  "synthetic_decision_cases": 9,
+  "complete_family_aggregation_withheld": true,
+  "final24native_replays_pending": true,
+  "live_allocations": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "local_document_links_checked": 116,
+  "production_source_tests_configs_and_environments_unchanged": true,
+  "other_reproduction_modified": false,
+  "errors": []
+}

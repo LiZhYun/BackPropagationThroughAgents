@@ -1,0 +1,281 @@
+{
+  "recorded_utc": "2026-10-29T15:39:43.584510+00:00",
+  "scope": "Collector preflight only; no new completed learning study,full24native replay or performance acceptance.",
+  "execution_plan": "experiments/prey_distillation_learning_audit_plan_20261029_v2.json",
+  "execution_plan_sha256": "6e462be197d04da22b2c3d29d1ba104197be2fd89455d6b4b4624d1b5e0f8cac",
+  "historical_gru_runs": [
+    "agentmixer_gru_zero",
+    "identity_gru_zero",
+    "agentmixer_gru_minus1",
+    "identity_gru_minus1"
+  ],
+  "historical_raw_counts": {
+    "episodes": 8080,
+    "windows": 40400,
+    "steps": 8489130
+  },
+  "historical_evaluations": 404,
+  "historical_updates": 400,
+  "native_positive_loss_updates_checked": 4,
+  "corrupted_copies_rejected": [
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "episode_reward_algebra"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "window_denominator"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "window_seed"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "summary_final_reward"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "missing_evaluation"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "missing_update"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_training_stream"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_value_update_count"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_minibatch_updates"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_runtime"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_final_budget"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_ending"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "episode_reward_algebra"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "window_denominator"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "window_seed"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "summary_final_reward"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "missing_evaluation"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "missing_update"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_training_stream"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_value_update_count"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_minibatch_updates"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_runtime"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_final_budget"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_ending"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "episode_reward_algebra"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "window_denominator"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "window_seed"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "summary_final_reward"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "missing_evaluation"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "missing_update"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_training_stream"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_value_update_count"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_minibatch_updates"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_runtime"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_final_budget"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_ending"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "episode_reward_algebra"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "window_denominator"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "window_seed"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "summary_final_reward"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "missing_evaluation"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "missing_update"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_training_stream"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_value_update_count"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_minibatch_updates"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_runtime"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_final_budget"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_ending"
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "mutation": "distillation_kl"
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "mutation": "distillation_loss"
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "mutation": "actor_total_loss"
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "mutation": "distillation_kl"
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "mutation": "distillation_loss"
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "mutation": "actor_total_loss"
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "mutation": "distillation_kl"
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "mutation": "distillation_loss"
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "mutation": "actor_total_loss"
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "mutation": "distillation_kl"
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "mutation": "distillation_loss"
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "mutation": "actor_total_loss"
+    }
+  ],
+  "incomplete_actual24_family_rejected": true,
+  "synthetic_selection_cases": [
+    "both_qualify_choose_smaller",
+    "only_larger_qualifies",
+    "different_coefficient_wins_each_penalty",
+    "both_auc_regress",
+    "strict_figure_exceedance",
+    "equal_auc_allowed",
+    "identity_must_be_beaten",
+    "learned_zero_must_be_beaten",
+    "one_invalid_seed_withholds_all_groups"
+  ],
+  "synthetic_paired_statistics_pass": true,
+  "environment_check": "results/prey_distillation_learning_audit_20261029/environment_check.json",
+  "environment_check_sha256": "b3001c8f0c4c1dcbb9d83d5e3bb11300b8773673931bc434668203bc9c33e690",
+  "raw_original_artifacts_unchanged": true,
+  "preflight_script": "results/prey_distillation_learning_audit_20261029/preflight_v2.py",
+  "preflight_script_sha256": "813304da98ca7c7ce8e18c45827c7209c3462cf26772a5aec38dcfa4ce6bcc31",
+  "errors": []
+}

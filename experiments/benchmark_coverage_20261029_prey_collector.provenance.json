@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T15:41:34.326516+00:00",
+  "report": "results/benchmark_coverage_20261029_prey_collector.json",
+  "report_sha256": "20d9f44d6044323a5149283e194598c66ddd1dfd8d63c0153f125c01c2084a32",
+  "csv": "experiments/benchmark_coverage_20261029_prey_collector.csv",
+  "csv_sha256": "a64886189ada580287feb03795ab99fff40282be056f971c082f50bc04098bf4",
+  "runs": 907,
+  "manifests": 75,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Includes the same24submitted Prey1M development runs plus a read-only collector ledger entry;907ledger-indexed runs/75manifests. No setting was selected from native checks. Artifact coverage includes failures and does not establish reproduced performance.36prepared unsubmitted learning runs remain excluded; collectors and synthetic preflights do not add training declarations."
+}

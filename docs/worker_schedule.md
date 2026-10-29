@@ -554,3 +554,8 @@ The new ceiling and scheduled maximum are **fourteen workers/sixteen CPUs/120 Gi
 All eight Prey gates and their family auditor pass, including exact replay and four original prefixes. The measured 1.372-GiB peak and 3.494-h estimate with a 50% margin support the explicitly released learning allocation: two one-CPU/4-GiB/4-h workers. This replaces completed gates and adds no concurrency beyond this graph. All 24 configurations were frozen before the gates; all outcomes remain required before selection.
 
 Ant seeds 6000/6001 run with their registered twenty-module trainer, native versions and streams. HC confirmation has four of ten valid completed runs; aggregate decisions remain withheld. The [resource snapshot](../experiments/live_resource_check_20261029_independent_studies.json) records actual live tasks; the table is the maximum, not a claim that all slots run at each instant. Scheduler-priority waits remain ordinary pending states. No task is restarted or replaced.
+
+
+## Prey learning completion collector, 29 October 2026
+
+The Prey branch now continues **21287360 → 21288041**. The collector replaces completed learning workers with one CPU/4 GiB for 45 minutes; the maximum remains fourteen workers/sixteen CPUs/120 GiB. It audits all 24 complete curves and performs all 24 full-protocol final replays before the frozen common-coefficient rule. It cannot release new training. [Plan](../experiments/prey_distillation_learning_audit_plan_20261029_v2.json); [submission](../experiments/prey_distillation_learning_audit_schedule_20261029.json). Every other allocation, data dependency and unsubmitted study reservation remains as above.

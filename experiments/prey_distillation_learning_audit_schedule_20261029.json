@@ -1,0 +1,146 @@
+{
+  "recorded_utc": "2026-10-29T15:40:22.357633+00:00",
+  "job_id": "21288041",
+  "status": "released",
+  "scope": "Read-only collector prepared after learning starts; original24configurations,all-outcome requirement and selection rule remain as frozen before native gates. No new training,selection choice or final-seed claim.",
+  "plan": "experiments/prey_distillation_learning_audit_plan_20261029_v2.json",
+  "plan_sha256": "6e462be197d04da22b2c3d29d1ba104197be2fd89455d6b4b4624d1b5e0f8cac",
+  "preflight": "experiments/prey_distillation_learning_audit_preflight_20261029_v2.json",
+  "preflight_sha256": "f3eb526d1fe19633d3f2cf670a285e16c6cc29107de9c8d90fc5ebd95f23a157",
+  "dispatch": "results/prey_distillation_learning_audit_20261029/audit_v2.sbatch",
+  "dispatch_sha256": "64b7fad7a1c967149ccdfd2459f1c50ddce21f4427e3456e797f9a042f56c61b",
+  "dependency": "afterany:21287360",
+  "allocation": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "wall_minutes": 45,
+    "automatic_requeue": false
+  },
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "capacity": "Reuse the completed Prey branch after the whole24-run array; no new concurrent worker allocation. Exact replay retains batch-milan CPU family.",
+  "active_project_before": [
+    [
+      "21251960_0",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21251960_1",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21272799_0",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272799_1",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272800_5",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_4",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_6",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_7",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21282468_0",
+      "bpta-agentmixer-ant2-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21282468_1",
+      "bpta-agentmixer-ant2-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_4",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_5",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21287360_1",
+      "bpta-agentmixer-prey-distill1m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21287360_0",
+      "bpta-agentmixer-prey-distill1m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ]
+  ],
+  "new_training_runs": 0,
+  "original_array_modified": false,
+  "other_reproduction_modified": false,
+  "submit_script": "results/prey_distillation_learning_audit_20261029/submit.py",
+  "submit_script_sha256": "f20f934d92d4a44455703f9b5637384fca5f9b7c226ff9c77fe4dc486276cb2e",
+  "held_verification": "JobId=21288041 JobName=bpta-agentmixer-prey1m-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21287360_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A SubmitTime=2026-10-29T17:40:22 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T17:40:22 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:2247489 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/audit_v2.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21287360 /scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/audit_v2.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/slurm_21288041.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/slurm_21288041.out TresPerTask=cpu=1",
+  "released_verification": "JobId=21288041 JobName=bpta-agentmixer-prey1m-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=186205 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=None Dependency=afterany:21287360_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A SubmitTime=2026-10-29T17:40:22 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T17:40:22 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:2247489 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/audit_v2.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21287360 /scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/audit_v2.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/slurm_21288041.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_learning_audit_20261029/slurm_21288041.out TresPerTask=cpu=1"
+}

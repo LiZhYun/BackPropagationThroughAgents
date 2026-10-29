@@ -1,0 +1,45 @@
+{
+  "recorded_utc": "2026-10-29T15:41:10.519107+00:00",
+  "scope": "Read-only startup/protocol check; no reward-based tuning,coefficient choice,aggregate or reproduction claim.",
+  "execution_plan": "experiments/prey_distillation_learning_audit_plan_20261029_v2.json",
+  "execution_plan_sha256": "6e462be197d04da22b2c3d29d1ba104197be2fd89455d6b4b4624d1b5e0f8cac",
+  "runs": [
+    {
+      "job_id": "21287360_0",
+      "variant": "agentmixer_gru_zero",
+      "seed": 0,
+      "source_modules": 25,
+      "metadata_sha256": "9ac2cc01efae9dd04e9dd35d9cdb045ffd24e2c569c9ea75199979ed7a1ca234",
+      "config_sha256": "226845afe2ca623e7f149277c388b35bed6b95f95142bad64c3052249e74c67e",
+      "metrics_snapshot_sha256": "8d056a4df78534e0c3cbc2bb1bf74ae641db8099449c5bdd9c1157f2b8f45b79",
+      "completed_updates": 38,
+      "latest_training_steps": 380000,
+      "completed_evaluations": 39,
+      "raw_episodes": 780,
+      "raw_windows": 3900,
+      "native_versions_and_training_streams_verified": true,
+      "loss_and_cumulative_value_accounting_verified": true,
+      "gate_seed0_prefix_checked": true
+    },
+    {
+      "job_id": "21287360_1",
+      "variant": "agentmixer_gru_zero",
+      "seed": 1,
+      "source_modules": 25,
+      "metadata_sha256": "53e3d43d6ca9a7a0ec6ebb6b90c7581c8f51499452e650a30cbf9637dca96347",
+      "config_sha256": "e26fa546ee1b46f402ecaecbee297ba70527694cc49a3b1feddb76ae3b240cb1",
+      "metrics_snapshot_sha256": "e47b2dc508c14fb2d0e2aea45ca5b154cd1bfba7dcf4578cb8bac38ec243e757",
+      "completed_updates": 31,
+      "latest_training_steps": 310000,
+      "completed_evaluations": 32,
+      "raw_episodes": 640,
+      "raw_windows": 3200,
+      "native_versions_and_training_streams_verified": true,
+      "loss_and_cumulative_value_accounting_verified": true,
+      "gate_seed0_prefix_checked": false
+    }
+  ],
+  "collector_job_id": "21288041",
+  "collector_waits_for_entire_array": true,
+  "errors": []
+}
