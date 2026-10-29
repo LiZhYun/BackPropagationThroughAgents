@@ -275,6 +275,7 @@ def update_rollout(
     num_minibatches: int = 1,
     clip_coef: float = 0.2,
     entropy_coef: float = 0.01,
+    agentmixer_distillation_coef: float = 0.0,
     value_coef: float = 0.5,
     value_clip_coef: float | None = None,
     value_huber_delta: float | None = None,
@@ -300,6 +301,15 @@ def update_rollout(
         raise ValueError("clip_coef must lie in [0, 1).")
     if not math.isfinite(entropy_coef) or entropy_coef < 0:
         raise ValueError("entropy_coef must be finite and nonnegative.")
+    if (isinstance(agentmixer_distillation_coef, bool)
+            or not isinstance(agentmixer_distillation_coef, (int, float))
+            or not math.isfinite(agentmixer_distillation_coef) or agentmixer_distillation_coef < 0):
+        raise ValueError("agentmixer_distillation_coef must be finite and nonnegative.")
+    if agentmixer_distillation_coef:
+        from .agentmixer import AgentMixerPolicy
+        if (algorithm != "agentmixer" or not is_discrete or not isinstance(policy, AgentMixerPolicy)
+                or not any(parameter.requires_grad for parameter in policy.modifier.parameters())):
+            raise ValueError("agentmixer_distillation_coef requires discrete factorized AgentMixer with modifier enabled.")
     if not math.isfinite(value_coef) or value_coef < 0:
         raise ValueError("value_coef must be finite and nonnegative.")
     if not math.isfinite(max_grad_norm) or max_grad_norm <= 0:
@@ -384,6 +394,14 @@ def update_rollout(
                         entropy_coef=entropy_coef, joint=algorithm == "agentmixer",
                         active=mini_live if algorithm == "agentmixer" else mini_active,
                     )
+                    if agentmixer_distillation_coef:
+                        distillation = policy.distillation_loss(
+                            mini.obs, mini.state, mini.available_actions, mini_active,
+                        )
+                        loss = loss + agentmixer_distillation_coef * distillation
+                        metrics["distillation_kl"] = float(distillation.detach())
+                        metrics["distillation_loss"] = float(agentmixer_distillation_coef * distillation.detach())
+                        metrics["actor_total_loss"] = float(loss.detach())
                     if not torch.isfinite(loss):
                         raise FloatingPointError("Non-finite policy loss.")
                     optimizers["policy"].zero_grad(set_to_none=True)
@@ -398,6 +416,8 @@ def update_rollout(
             stats["num_updates"] = float(num_updates)
         else:
             stats = dict.fromkeys(("policy_loss", "entropy", "approx_kl", "clip_fraction", "grad_norm", "num_updates"), 0.0)
+            if agentmixer_distillation_coef:
+                stats.update(distillation_kl=0.0, distillation_loss=0.0, actor_total_loss=0.0)
 
     raw_returns = batch.returns.detach()
     normalized = isinstance(critic, ValueNormalizedCritic)

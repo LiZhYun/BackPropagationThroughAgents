@@ -28,3 +28,7 @@ This module handles homogeneous discrete action spaces with feed-forward actors 
 ## Verification
 
 `tests/test_agentmixer.py` checks randomized mode consistency, tied modes, masked maxima, single valid actions, extreme scales and finite logits, subnormal gaps, differentiation through the maximum, double precision gradient checks away from ties, initial identity probabilities, sampling/evaluation agreement, decentralized information isolation, cross-agent and state dependence in the modifier, and gradients to both local actors and the modifier. These correctness checks are not evidence of benchmark performance.
+
+## Optional experimental local distillation
+
+The simulator trainer supports `agentmixer_distillation_coef` (default 0) for factorized discrete policies. It adds a detached current-central-to-local KL to the actor objective, with explicit experimental run labels. The [diagnosis and control specification](prey_distillation.md) gives its gradient, mask reduction, limitations, compatibility checks, and unsubmitted study plan. No learning improvement is established.

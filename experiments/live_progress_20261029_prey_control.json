@@ -1,0 +1,120 @@
+{
+  "recorded_utc": "2026-10-29T11:25:48.475857+00:00",
+  "scope": "Progress counters only,not final audits;confirmation scores were not read or used for tuning.",
+  "studies": [
+    {
+      "job": "21251960",
+      "manifest": "results/football_3v1_gru20m_20261028T082219Z/manifest.json",
+      "manifest_sha256": "34dd3866f5c1d432ac5e9698dae9f9b96e73dd8a27da1695904d21e179007f00",
+      "declared": 5,
+      "summary_present": [],
+      "progress_counters": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "steps": 15840000,
+          "last_update_line_sha256": "8681cd2ef9670e12b54bbd9dec18b5f32373bf9243c8f16925914195d904c424"
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "steps": 15840000,
+          "last_update_line_sha256": "0026977f39531d4b097aab0fc1576a3605152294911496d62418165c524f39fd"
+        }
+      ]
+    },
+    {
+      "job": "21272799",
+      "manifest": "results/smac_terran5_gru10m_20261028T222334Z/manifest.json",
+      "manifest_sha256": "4cf7d12788d5ca72c7096ab42c662953d34d4de1594d5941f47c77a3b95174fe",
+      "declared": 5,
+      "summary_present": [],
+      "progress_counters": [
+        {
+          "variant": "mappo_gru",
+          "seed": 0,
+          "steps": 4550000,
+          "last_update_line_sha256": "e9686ee5cd7c7e3d3517057fa63fe1bc77b6d402f8f12d32a05ac9f8b76af0e2"
+        },
+        {
+          "variant": "arppo_gru",
+          "seed": 0,
+          "steps": 4550000,
+          "last_update_line_sha256": "b77c75bda742fc5bd2159202f9b24d428a8a3ba96ce8f0f80a7399f3ec29b713"
+        }
+      ]
+    },
+    {
+      "job": "21272800",
+      "manifest": "results/mujoco_coverage10m_20261028T222337Z/manifest.json",
+      "manifest_sha256": "cfab5bfb663f0a49ff82d3b012803ee9933189b0ace512eb577276f734722f30",
+      "declared": 48,
+      "summary_present": [
+        {
+          "variant": "ant2x4_global_mappo",
+          "seed": 0
+        },
+        {
+          "variant": "ant2x4_global_arppo",
+          "seed": 0
+        }
+      ],
+      "progress_counters": [
+        {
+          "variant": "ant2x4_global_bppo",
+          "seed": 0,
+          "steps": 9100000,
+          "last_update_line_sha256": "59d4e69bf352a585659b7748c0fe4b644f8a37989d8da29d45ab35fa323fcc53"
+        },
+        {
+          "variant": "ant2x4_local_mappo",
+          "seed": 0,
+          "steps": 5644000,
+          "last_update_line_sha256": "a350565eec0ef0e8f9448b8b6a377ef67a292ae2a45b3a06b323f800ae69883a"
+        }
+      ]
+    },
+    {
+      "job": "21279129",
+      "manifest": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/manifest.json",
+      "manifest_sha256": "8ca0d50c7bc7a127b114611d2b5ccb42bfea94fc792434481eac27508ad33fef",
+      "declared": 10,
+      "summary_present": [],
+      "progress_counters": [
+        {
+          "variant": "bppo",
+          "seed": 5000,
+          "steps": 7420000,
+          "last_update_line_sha256": "f9843eea7191d97b195eafda71358f1ca7e88a364a4ac9605ce5aa7f700b7b27"
+        },
+        {
+          "variant": "bppo",
+          "seed": 5001,
+          "steps": 7376000,
+          "last_update_line_sha256": "1be07f0b6bd2fc411469c7777c225a0b759309e2bbc5537528180d1d3a91a2ac"
+        }
+      ]
+    }
+  ],
+  "queue_rows": [
+    "21251960_0|RUNNING|1-03:00:31|1|8G|milan32",
+    "21251960_1|RUNNING|1-03:00:31|1|8G|milan32",
+    "21272800_3|RUNNING|2:53:50|1|4G|milan31",
+    "21272800_2|RUNNING|3:05:35|1|4G|milan32",
+    "21279129_0|RUNNING|1:50:08|1|4G|milan32",
+    "21279129_1|RUNNING|1:50:08|1|4G|milan32",
+    "21272799_0|RUNNING|13:01:28|2|32G|milan14",
+    "21272799_1|RUNNING|13:01:28|2|32G|milan14",
+    "21251960_[2-4%2]|PENDING|0:00|1|8G|(JobArrayTaskLimit)",
+    "21272799_[2-4%2]|PENDING|0:00|2|32G|(JobArrayTaskLimit)",
+    "21272800_[4-47%2]|PENDING|0:00|1|4G|(JobArrayTaskLimit)",
+    "21279129_[2-9%2]|PENDING|0:00|1|4G|(JobArrayTaskLimit)",
+    "21279857|PENDING|0:00|1|2G|(Dependency)",
+    "21281002_[0-39%2]|PENDING|0:00|2|32G|(Dependency)",
+    "21281001_[0-14%1]|PENDING|0:00|1|8G|(Dependency)",
+    "21280689_[0-5%2]|PENDING|0:00|1|4G|(Dependency)"
+  ],
+  "active_workers": 8,
+  "job_mutations": false,
+  "new_experimental_studies_submitted": false
+}

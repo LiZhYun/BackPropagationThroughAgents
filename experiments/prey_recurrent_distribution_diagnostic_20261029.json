@@ -1,0 +1,786 @@
+{
+  "recorded_utc": "2026-10-29T10:59:26.743652+00:00",
+  "scope": "Replay all existing diagnostic episodes; inspect distributions on greedy paths.\n\nThe original primary100x200 evaluation windows are not replayed or replaced.\nVisited states follow each checkpoint's own local greedy occupancy; they are\nnot independent samples or centralized training trajectories. No updates occur.\n",
+  "manifest": "results/prey_recurrent_release1m_20261026T184956Z/manifest.json",
+  "manifest_sha256": "ada1b65eacbf60cc046da9d32fe4ca92a36e3871096033c3432e5ad9957ee8ac",
+  "prior_complete_audit": "experiments/prey_recurrent_release1m_complete_20261028.json",
+  "prior_complete_audit_sha256": "f009424a71e94109e7d82d83119b01ac61bba14bbce670248bc6f100a24431e8",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "script": "results/prey_recurrent_distribution_diagnostic_20261029/probe.py",
+  "script_sha256": "035532b58147c50b2e9544ecef191f8d5691c9db5881ef63b34e3f29e18285e6",
+  "elapsed_seconds": 26.840996674029157,
+  "run_count": 8,
+  "exactly_replayed_episodes": 160,
+  "replayed_decisions": 5668,
+  "all_checkpoint_bytes_unchanged": true,
+  "distribution_arithmetic": "Float64 log-softmax of actual frozen float32 local/central logits; raw logits and packed recurrent observations saved.",
+  "runs": [
+    {
+      "variant": "agentmixer_ff_zero",
+      "seed": 0,
+      "penalty": 0,
+      "recurrent": false,
+      "modifier_enabled": true,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_ff_zero_seed0",
+      "checkpoint_sha256": "d09a73b92baf4a3947905e2725b1dd6970530b087dbe1d1063dbe6e2741356bb",
+      "metadata_sha256": "0f311902970044e7420c0c03f71ddf5a9dc8acd1a88d47d0b21c7a82af637063",
+      "summary_sha256": "d4e29fd894b479de9aa39d4c222605f17e80255a5625da6791826ef12b5cefe2",
+      "episodes": 20,
+      "decisions": 81,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 1.9520000000000028,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 20,
+      "episode_mean_length": 4.05,
+      "nonmode_count": 648,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 648,
+        "min": 0.4090070128440857,
+        "median": 57.11032295227051,
+        "mean": 87.61328129134613,
+        "max": 425.3260192871094
+      },
+      "central_to_local_joint_kl": {
+        "count": 81,
+        "min": 0.6443476575982244,
+        "median": 1.7842036910754073,
+        "mean": 1.8007535428677688,
+        "max": 2.8611164233191464
+      },
+      "joint_total_variation": {
+        "count": 81,
+        "min": 0.467399847020424,
+        "median": 0.8251694922858546,
+        "mean": 0.8024154391012351,
+        "max": 0.9424120179873678
+      },
+      "local_joint_greedy_probability": {
+        "count": 81,
+        "min": 0.056860189845501605,
+        "median": 0.13141924119212509,
+        "mean": 0.1464374175051092,
+        "max": 0.4023755215412715
+      },
+      "central_joint_greedy_probability": {
+        "count": 81,
+        "min": 0.3189331595050151,
+        "median": 0.9926350947382133,
+        "mean": 0.9064815622091932,
+        "max": 0.9999999999999998
+      },
+      "local_joint_entropy": {
+        "count": 81,
+        "min": 1.9245143183756896,
+        "median": 2.899079917410793,
+        "mean": 2.8770611238735984,
+        "max": 3.1917597147552406
+      },
+      "central_joint_entropy": {
+        "count": 81,
+        "min": 9.114266577837433e-15,
+        "median": 0.04350698152355345,
+        "mean": 0.22426679726596338,
+        "max": 1.4582292997861308
+      },
+      "stationary_predator_decision_fraction": 0.024691358024691357,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_ff_zero.jsonl",
+      "trace_sha256": "d928a1318ca820bed2a74c687dabf15caebe72e5a29c1ee888e72b31025389e1",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_ff_zero.npz",
+      "arrays_sha256": "3bc3c943a5bdd5ec99b9898c3317a4004fee5751dbcdb2af72fe7d8fa737fb7a"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "seed": 0,
+      "penalty": 0,
+      "recurrent": true,
+      "modifier_enabled": true,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0",
+      "checkpoint_sha256": "fb468f78117dc062f41c98b2689745ac7de8deef90f7f639faebb1c6dddd0a81",
+      "metadata_sha256": "aa6650895d95f7232c43acb25aae86ad9906b7ed7e8a491ec17312c740a2fc23",
+      "summary_sha256": "b3e8b3c721d647e3fb93ffb21a3545789492cde7107f6f250033129341acbf50",
+      "episodes": 20,
+      "decisions": 82,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 2.051500000000003,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 20,
+      "episode_mean_length": 4.1,
+      "nonmode_count": 656,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 656,
+        "min": 0.19614455103874207,
+        "median": 26.931639671325684,
+        "mean": 47.32052728488314,
+        "max": 352.261962890625
+      },
+      "central_to_local_joint_kl": {
+        "count": 82,
+        "min": 0.35366220016557565,
+        "median": 1.3452164026543163,
+        "mean": 1.389973799736517,
+        "max": 2.581289535033135
+      },
+      "joint_total_variation": {
+        "count": 82,
+        "min": 0.3303672864571841,
+        "median": 0.7241094085628345,
+        "mean": 0.7071316878213938,
+        "max": 0.9212360788736568
+      },
+      "local_joint_greedy_probability": {
+        "count": 82,
+        "min": 0.06897174858657121,
+        "median": 0.18979968463736574,
+        "mean": 0.20535267767149487,
+        "max": 0.4165733726844557
+      },
+      "central_joint_greedy_probability": {
+        "count": 82,
+        "min": 0.29899172235486987,
+        "median": 0.9797825857069494,
+        "mean": 0.8589819837625451,
+        "max": 0.9999999999999309
+      },
+      "local_joint_entropy": {
+        "count": 82,
+        "min": 1.9529318616362406,
+        "median": 2.5737141781945496,
+        "mean": 2.6055450046702386,
+        "max": 3.1568108163848696
+      },
+      "central_joint_entropy": {
+        "count": 82,
+        "min": 2.16149982845652e-12,
+        "median": 0.09890977529036205,
+        "mean": 0.32625787974976156,
+        "max": 1.556159180806946
+      },
+      "stationary_predator_decision_fraction": 0.024390243902439025,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_gru_zero.jsonl",
+      "trace_sha256": "edcefe059614b24ae582f4eefc49f76f99ecb75b7f80524b89ae0c9b16bab54d",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_gru_zero.npz",
+      "arrays_sha256": "29bab8d80aa77c0e0cd233da29146371c4c0a67d4decbd7cf5ae10071570ccda"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "seed": 0,
+      "penalty": 0,
+      "recurrent": false,
+      "modifier_enabled": false,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/identity_ff_zero_seed0",
+      "checkpoint_sha256": "e46597d7d8b634955ac841e165b15d7cc048e8200f5328db06ec9bc31baf48ed",
+      "metadata_sha256": "76402e15de20a714929d32e3d57fe3fe42189c364b180b819fb655c8f5d5839f",
+      "summary_sha256": "968a43d2ab0a242398cf312864e78596c3e792e960c35f3b48e42765b6d40f9e",
+      "episodes": 20,
+      "decisions": 87,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 2.216000000000003,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 20,
+      "episode_mean_length": 4.35,
+      "nonmode_count": 696,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 696,
+        "min": 1.0,
+        "median": 1.0,
+        "mean": 1.0,
+        "max": 1.0
+      },
+      "central_to_local_joint_kl": {
+        "count": 87,
+        "min": -5.270269768935044e-16,
+        "median": 1.793578196147308e-17,
+        "mean": 3.39931338937284e-17,
+        "max": 9.800873960978674e-16
+      },
+      "joint_total_variation": {
+        "count": 87,
+        "min": 1.3320590959661182e-12,
+        "median": 6.794945386851645e-11,
+        "mean": 2.876582421782482e-10,
+        "max": 3.3257600366121843e-09
+      },
+      "local_joint_greedy_probability": {
+        "count": 87,
+        "min": 0.4121946877587019,
+        "median": 0.9936601224363665,
+        "mean": 0.922644200930514,
+        "max": 0.9999658216343135
+      },
+      "central_joint_greedy_probability": {
+        "count": 87,
+        "min": 0.41219468771543494,
+        "median": 0.9936601224151846,
+        "mean": 0.9226442008881032,
+        "max": 0.999965821635763
+      },
+      "local_joint_entropy": {
+        "count": 87,
+        "min": 0.000431809410119818,
+        "median": 0.038904785121598034,
+        "mean": 0.19022911006449159,
+        "max": 1.2537571199068953
+      },
+      "central_joint_entropy": {
+        "count": 87,
+        "min": 0.0004318093948347581,
+        "median": 0.03890478533811049,
+        "mean": 0.19022911030064446,
+        "max": 1.253757120629644
+      },
+      "stationary_predator_decision_fraction": 0.022988505747126436,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/identity_ff_zero.jsonl",
+      "trace_sha256": "83b3592e1513c13bc9d0d7d98b54a819176fdb9e1a78f8b1ed6f8942784a934e",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/identity_ff_zero.npz",
+      "arrays_sha256": "453988844b6000d8f57a63d66c30f98570ef34684d7cb2664653ab8947935377"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "seed": 0,
+      "penalty": 0,
+      "recurrent": true,
+      "modifier_enabled": false,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/identity_gru_zero_seed0",
+      "checkpoint_sha256": "1c18c72f04fb4839d8135eb02e292012ec4a93f577894fd3b4d1745fcdd504da",
+      "metadata_sha256": "de7be70e7cac0e9851bf29703161cfbbb609ac9ebb4c4719c5e54e68a2f57bcb",
+      "summary_sha256": "86bf5e32be5685797aa073a0d98a60758dbd8e23411f7da4cd566faae538ea36",
+      "episodes": 20,
+      "decisions": 81,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 2.2465000000000024,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 20,
+      "episode_mean_length": 4.05,
+      "nonmode_count": 648,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 648,
+        "min": 1.0,
+        "median": 1.0,
+        "mean": 1.0,
+        "max": 1.0
+      },
+      "central_to_local_joint_kl": {
+        "count": 81,
+        "min": -4.81367949568862e-16,
+        "median": 7.049848985446792e-18,
+        "mean": 3.2433162018571065e-17,
+        "max": 6.250279882688481e-16
+      },
+      "joint_total_variation": {
+        "count": 81,
+        "min": 1.5549237620257042e-11,
+        "median": 1.1588324335055915e-10,
+        "mean": 4.244968884993835e-10,
+        "max": 4.463048329959115e-09
+      },
+      "local_joint_greedy_probability": {
+        "count": 81,
+        "min": 0.5266765984726989,
+        "median": 0.9961582176773525,
+        "mean": 0.9435095263890924,
+        "max": 0.9998371436953153
+      },
+      "central_joint_greedy_probability": {
+        "count": 81,
+        "min": 0.5266765984887211,
+        "median": 0.9961582175278272,
+        "mean": 0.9435095263910589,
+        "max": 0.999837143683274
+      },
+      "local_joint_entropy": {
+        "count": 81,
+        "min": 0.0018512359633877519,
+        "median": 0.027127491543556016,
+        "mean": 0.15132918876347926,
+        "max": 0.7907187063193042
+      },
+      "central_joint_entropy": {
+        "count": 81,
+        "min": 0.0018512360713244577,
+        "median": 0.02712749286177807,
+        "mean": 0.151329188669425,
+        "max": 0.7907186947879182
+      },
+      "stationary_predator_decision_fraction": 0.0,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/identity_gru_zero.jsonl",
+      "trace_sha256": "0c8fd5afaa3def4057bc3f850d2da0c28ebd27c1cddf49a9e34fb7cfeafd937c",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/identity_gru_zero.npz",
+      "arrays_sha256": "5a51c37ef8161d1101535cd0801caabdd48b72fbb7c76b1a2cbcae00b3ce1a3d"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "seed": 0,
+      "penalty": -1,
+      "recurrent": false,
+      "modifier_enabled": true,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_ff_minus1_seed0",
+      "checkpoint_sha256": "824761b675006fe97cbb26e68df63cd88d51704647039d92b0c93beba1f4a4a0",
+      "metadata_sha256": "17a7c3868ecbf35fe0fbb3b90c0af95243fb1db001e546040e3f386c1e464024",
+      "summary_sha256": "a3f9d40555434890649c3cd427308cde82d7a1a9e8bcb260a0dac682c9bdee48",
+      "episodes": 20,
+      "decisions": 1227,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 0.07124999999999991,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 15,
+      "episode_mean_length": 61.35,
+      "nonmode_count": 9816,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 9816,
+        "min": 0.964712381362915,
+        "median": 4.009142160415649,
+        "mean": 6.572090031811398,
+        "max": 62.60858154296875
+      },
+      "central_to_local_joint_kl": {
+        "count": 1227,
+        "min": 0.014069246151339553,
+        "median": 0.3592369364643848,
+        "mean": 0.514745653556833,
+        "max": 2.0846178107740725
+      },
+      "joint_total_variation": {
+        "count": 1227,
+        "min": 0.06443739405516409,
+        "median": 0.351071580678282,
+        "mean": 0.3658345263575635,
+        "max": 0.862920272213866
+      },
+      "local_joint_greedy_probability": {
+        "count": 1227,
+        "min": 0.05033254400385718,
+        "median": 0.06627653160413509,
+        "mean": 0.0831592165579299,
+        "max": 0.41520663466081464
+      },
+      "central_joint_greedy_probability": {
+        "count": 1227,
+        "min": 0.06791421450006944,
+        "median": 0.2178873982535578,
+        "mean": 0.29440032406854905,
+        "max": 0.9999996192290446
+      },
+      "local_joint_entropy": {
+        "count": 1227,
+        "min": 2.1455024130261005,
+        "median": 3.1613869859240813,
+        "mean": 3.099051898620036,
+        "max": 3.210673295899691
+      },
+      "central_joint_entropy": {
+        "count": 1227,
+        "min": 6.010640339969566e-06,
+        "median": 2.548647383543358,
+        "mean": 2.264998191187469,
+        "max": 3.145691101641329
+      },
+      "stationary_predator_decision_fraction": 0.5762021189894051,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_ff_minus1.jsonl",
+      "trace_sha256": "fe0a4d14dfebeec339d7a79458b86795ecac515fc78f25042f7761e78050dbde",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_ff_minus1.npz",
+      "arrays_sha256": "aabeab1191cb40fcf04be83629267c1dbee961c064a459f5d815a49f98d2c3f2"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "seed": 0,
+      "penalty": -1,
+      "recurrent": true,
+      "modifier_enabled": true,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0",
+      "checkpoint_sha256": "cf2953fa673dcfb4c18b2ccb18a05c11eee94fa8be003e1f8c2bda0e2c900282",
+      "metadata_sha256": "4a06100d16f32513e1adb78ccc0a2229b576f2dfdf6df4d653f5e4e42afbfa1c",
+      "summary_sha256": "95d9fcba2809e288745cc9814baf6aa53e3ab8900027b27167d0ba65cfb885ad",
+      "episodes": 20,
+      "decisions": 1171,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 0.04054999999999994,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 17,
+      "episode_mean_length": 58.55,
+      "nonmode_count": 9368,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 9368,
+        "min": 0.6452186703681946,
+        "median": 2.388637661933899,
+        "mean": 4.026990613488944,
+        "max": 24.4794864654541
+      },
+      "central_to_local_joint_kl": {
+        "count": 1171,
+        "min": 0.02425691555605977,
+        "median": 0.3028073708421062,
+        "mean": 0.38654911309927653,
+        "max": 1.39428041394915
+      },
+      "joint_total_variation": {
+        "count": 1171,
+        "min": 0.041355681238847086,
+        "median": 0.31167995321409114,
+        "mean": 0.3166080100983801,
+        "max": 0.7500526376510488
+      },
+      "local_joint_greedy_probability": {
+        "count": 1171,
+        "min": 0.057092186926504515,
+        "median": 0.14363024220232307,
+        "mean": 0.1620101391836598,
+        "max": 0.6361678829145038
+      },
+      "central_joint_greedy_probability": {
+        "count": 1171,
+        "min": 0.08960590448693269,
+        "median": 0.2709342562211109,
+        "mean": 0.3461567292364715,
+        "max": 0.9846763103322923
+      },
+      "local_joint_entropy": {
+        "count": 1171,
+        "min": 1.45173245148708,
+        "median": 2.8432026213332513,
+        "mean": 2.7463597023773505,
+        "max": 3.145522693723993
+      },
+      "central_joint_entropy": {
+        "count": 1171,
+        "min": 0.08537923080007163,
+        "median": 2.1469307852478376,
+        "mean": 1.9948458167780223,
+        "max": 2.939716691616736
+      },
+      "stationary_predator_decision_fraction": 0.17250213492741248,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_gru_minus1.jsonl",
+      "trace_sha256": "fda7959497798cb3a240ca11d5e2850104b3edf46f95c4d5733e04765372155a",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/agentmixer_gru_minus1.npz",
+      "arrays_sha256": "10c6ff32e91ba89687eb44cc3e6d7f7af80e99f525e5f371aba7b1782504a6da"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "seed": 0,
+      "penalty": -1,
+      "recurrent": false,
+      "modifier_enabled": false,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/identity_ff_minus1_seed0",
+      "checkpoint_sha256": "564a979b1754f6de447fd2f9fdb7ae57b3696a4fe844dea55da6383a4ab3a8de",
+      "metadata_sha256": "dad94c2298c24af41e69e52d6246a4b26ed1ec46fd6ca267b2c6380569066134",
+      "summary_sha256": "5580e9b598699e80e35ee9ded08eaad14d97562d847ad87490161da4a3ecfbbf",
+      "episodes": 20,
+      "decisions": 2313,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": -0.008749999999999918,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 2,
+      "episode_mean_length": 115.65,
+      "nonmode_count": 18504,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 18504,
+        "min": 1.0,
+        "median": 1.0,
+        "mean": 1.0,
+        "max": 1.0
+      },
+      "central_to_local_joint_kl": {
+        "count": 2313,
+        "min": -4.002650133895316e-16,
+        "median": 2.5737309783753654e-16,
+        "mean": 3.0390123111634674e-16,
+        "max": 1.5923611136981502e-15
+      },
+      "joint_total_variation": {
+        "count": 2313,
+        "min": 0.0,
+        "median": 6.270917470025048e-09,
+        "mean": 6.626854842577444e-09,
+        "max": 1.9137910112665586e-08
+      },
+      "local_joint_greedy_probability": {
+        "count": 2313,
+        "min": 0.0865957611780678,
+        "median": 0.12348390991266525,
+        "mean": 0.18052985988022313,
+        "max": 0.8326544834446055
+      },
+      "central_joint_greedy_probability": {
+        "count": 2313,
+        "min": 0.08659576073482501,
+        "median": 0.12348391002603717,
+        "mean": 0.1805298599262322,
+        "max": 0.8326544809837417
+      },
+      "local_joint_entropy": {
+        "count": 2313,
+        "min": 0.6947817965168335,
+        "median": 2.6952490198192613,
+        "mean": 2.5677983031990514,
+        "max": 3.0475678051225494
+      },
+      "central_joint_entropy": {
+        "count": 2313,
+        "min": 0.6947818060366128,
+        "median": 2.6952490127722535,
+        "mean": 2.56779830265002,
+        "max": 3.047567810861704
+      },
+      "stationary_predator_decision_fraction": 0.8772157371379161,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/identity_ff_minus1.jsonl",
+      "trace_sha256": "7bb4f090aaad96a9dcbb6cfcd37d007cb5fa56b0c2c96d86bcc9549bb67d692a",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/identity_ff_minus1.npz",
+      "arrays_sha256": "1ac7a520322f8815d61cca9a85b85917961ceae083cc817ddbfcbf6ee7c506d6"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "seed": 0,
+      "penalty": -1,
+      "recurrent": true,
+      "modifier_enabled": false,
+      "run_path": "results/prey_recurrent_release1m_20261026T184956Z/identity_gru_minus1_seed0",
+      "checkpoint_sha256": "0cd2a01b516744e6e369aca819fb6fb23f7276a6c57cd4b6e7d0ee03681daffa",
+      "metadata_sha256": "75bc216d234a54c238ca2cdcac345b2e569587b88a156523f855393c4d6cd3e0",
+      "summary_sha256": "1189aa0523d0eea96f613b9800ea3ef7d7c380780d1e0e8e67cdb592417b4b50",
+      "episodes": 20,
+      "decisions": 626,
+      "exact_episode_replay": true,
+      "all_mode_sets_equal": true,
+      "original_primary_window_reward_per_step": 0.2675999999999997,
+      "primary_windows_replayed": false,
+      "complete_episode_capture_count": 18,
+      "episode_mean_length": 31.3,
+      "nonmode_count": 5008,
+      "hard_clamp_count": 0,
+      "hard_clamp_fraction": 0.0,
+      "positive_gap_floor_count": 0,
+      "scale_nonmode": {
+        "count": 5008,
+        "min": 1.0,
+        "median": 1.0,
+        "mean": 1.0,
+        "max": 1.0
+      },
+      "central_to_local_joint_kl": {
+        "count": 626,
+        "min": -2.279066093466583e-16,
+        "median": 4.40978173226493e-16,
+        "mean": 4.887067896846613e-16,
+        "max": 1.864593262404272e-15
+      },
+      "joint_total_variation": {
+        "count": 626,
+        "min": 0.0,
+        "median": 8.438461069511425e-09,
+        "mean": 8.451499651967562e-09,
+        "max": 1.9643020546776264e-08
+      },
+      "local_joint_greedy_probability": {
+        "count": 626,
+        "min": 0.09434163555496074,
+        "median": 0.3533944659460102,
+        "mean": 0.3927881338675332,
+        "max": 0.9840687461466562
+      },
+      "central_joint_greedy_probability": {
+        "count": 626,
+        "min": 0.09434163645401315,
+        "median": 0.3533944643677901,
+        "mean": 0.3927881336321176,
+        "max": 0.9840687457331632
+      },
+      "local_joint_entropy": {
+        "count": 626,
+        "min": 0.10898774601582217,
+        "median": 1.9767928286611283,
+        "mean": 1.9080170390928755,
+        "max": 3.005368357277879
+      },
+      "central_joint_entropy": {
+        "count": 626,
+        "min": 0.10898774794543217,
+        "median": 1.9767928441128295,
+        "mean": 1.9080170395195333,
+        "max": 3.005368357965546
+      },
+      "stationary_predator_decision_fraction": 0.48242811501597443,
+      "trace": "results/prey_recurrent_distribution_diagnostic_20261029/identity_gru_minus1.jsonl",
+      "trace_sha256": "28593846c8f188ef1d8b7da33911f46c43183a561a61609586e9e6405efdc44d",
+      "arrays": "results/prey_recurrent_distribution_diagnostic_20261029/identity_gru_minus1.npz",
+      "arrays_sha256": "3d033476e67b765d0151c0e57981dad688221fead0ecffaf9ede7337bb39b4d5"
+    }
+  ],
+  "limitations": [
+    "The same training seed0 was used in all source runs; there is no across-training-seed uncertainty.",
+    "Each policy visits its own original greedy trajectories. State-weighted distribution summaries are not a common-occupancy causal comparison.",
+    "No central or local stochastic policy was executed; their probabilities describe the visited states only.",
+    "The original100x200window scores are retained from the completed audit,not recomputed or replaced by episode returns.",
+    "Stationary predator steps can be tactical or unsuccessful; they are not by themselves a failure mechanism."
+  ],
+  "raw_summary": "results/prey_recurrent_distribution_diagnostic_20261029/summary.json",
+  "raw_summary_sha256": "949785bbe227cbc9dcf9b9ddbf6eee3dff46aad8a6c97be76b85f2c686f57c9c",
+  "gradient_reference": {
+    "recorded_utc": "2026-10-29T11:08:30.478787+00:00",
+    "scope": "Check a detached central-to-local KL reference, without optimizer steps.\n\nThis is a candidate auxiliary objective, absent from the production trainer.\nChecks use the recorded original greedy-path observations and frozen models.\n",
+    "diagnostic_sha256": "949785bbe227cbc9dcf9b9ddbf6eee3dff46aad8a6c97be76b85f2c686f57c9c",
+    "script_sha256": "592890761b7c29a819dfc3c0459e08208b6c42afdb175bf2e71d3666f15d3804",
+    "source_sha256": {
+      "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+      "agentmixer.py": "7e6dbda396ce7cebb39053d21259a59a67e47630d9d2a2140103adf512f997dc",
+      "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+      "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+      "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+      "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+      "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+      "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+      "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+      "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+      "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+      "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+      "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+      "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+      "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+      "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+      "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+      "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+      "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+      "runner.py": "ccabd1b90b76b500a2645d8909b4778fa0c4d694b7d9357f33cba48d7b6443ef",
+      "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+      "simulator_train.py": "8130219c1a9f8000ce3133a2851bb93b7dd0377acc1c04c64c27f582484ad822",
+      "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+      "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+      "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+    },
+    "formula": "mean_state sum_agent sum_action stopgrad(q_central)*(log(stopgrad(q_central))-log(p_local)); gradient wrt local logits=(p_local-stopgrad(q_central))/state_count",
+    "teacher": "Current centralized distribution evaluated on the same batch, detached before the KL target; no gradient into the modifier through this term.",
+    "masked_or_inactive_agents_checked": false,
+    "production_trainer_modified": false,
+    "all_checkpoint_bytes_unchanged": true,
+    "runs": [
+      {
+        "variant": "agentmixer_ff_zero",
+        "states": 81,
+        "joint_kl_nats": 1.8007535596705233,
+        "actor_gradient_norm": 0.7924988861741716,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "agentmixer_gru_zero",
+        "states": 82,
+        "joint_kl_nats": 1.3899738816126674,
+        "actor_gradient_norm": 0.9302735056939115,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "identity_ff_zero",
+        "states": 87,
+        "joint_kl_nats": 7.08343537865025e-17,
+        "actor_gradient_norm": 2.1915797907890134e-09,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "identity_gru_zero",
+        "states": 81,
+        "joint_kl_nats": 5.2759637118464105e-17,
+        "actor_gradient_norm": 3.1049019393114733e-09,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "agentmixer_ff_minus1",
+        "states": 1227,
+        "joint_kl_nats": 0.5147456505192461,
+        "actor_gradient_norm": 0.7782119619718475,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "agentmixer_gru_minus1",
+        "states": 1171,
+        "joint_kl_nats": 0.3865491103016818,
+        "actor_gradient_norm": 1.089704478674023,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "identity_ff_minus1",
+        "states": 2313,
+        "joint_kl_nats": 3.278960153982591e-16,
+        "actor_gradient_norm": 3.4488865209384003e-09,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      },
+      {
+        "variant": "identity_gru_minus1",
+        "states": 626,
+        "joint_kl_nats": 4.552860714720768e-16,
+        "actor_gradient_norm": 3.1363111760760543e-09,
+        "analytic_student_logit_gradient_matches": true,
+        "modifier_received_gradient": false,
+        "optimizer_steps": 0
+      }
+    ],
+    "limitation": "Checks the auxiliary gradient on the original all-active Prey states only. No parameter update,learning gain,masked-state implementation or native gate is established."
+  },
+  "gradient_reference_path": "results/prey_recurrent_distribution_diagnostic_20261029/alignment_gradient.json",
+  "gradient_reference_sha256": "316f9287e991a8635415008f06760954410b14f3bce4bc48e3f534bc4cd1df74",
+  "implementation_note": "Reference-gradient evidence predates the optional production implementation. It contains no optimizer steps. See separate implementation verification; no learning result is established."
+}

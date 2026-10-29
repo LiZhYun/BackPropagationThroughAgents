@@ -1,0 +1,106 @@
+{
+  "recorded_utc": "2026-10-29T11:21:27.136932+00:00",
+  "status": "FROZEN_UNSUBMITTED",
+  "hypothesis": "Actor-only KL supervision may reduce the local/central distribution gap without removing the mode-preserving modifier. Greedy modes already agree; diagnosis does not establish a causal performance mechanism.",
+  "original_manifest": "results/prey_recurrent_release1m_20261026T184956Z/manifest.json",
+  "original_manifest_sha256": "ada1b65eacbf60cc046da9d32fe4ca92a36e3871096033c3432e5ad9957ee8ac",
+  "studies": {
+    "gate": {
+      "manifest": "results/prey_distillation_gru_check10k_20261029T112121Z/manifest.json",
+      "manifest_sha256": "2b89a17750e99c1116356573abf2b0dc1acb1bcb5a348bce167d06befb267ce9",
+      "plan": "configs/prey_distillation_gru_check10k.json",
+      "plan_sha256": "f0417bd74e22f894fe363f7de1382db90c7502d7618b48d0b33ed689712daeaf",
+      "run_count": 8,
+      "frozen_parser_count": 8,
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+        "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+        "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+        "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+        "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+        "simulator_train.py": "3acfa51e44c6f092f3f30b2a19dfd5eb1cda531a4ece0075e2815a170cc9f6bc",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      }
+    },
+    "learning": {
+      "manifest": "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+      "manifest_sha256": "28c52ae7c19bca73fe8c2c5950dc4ec23f647dd49bb00389005c7b5ab90adf00",
+      "plan": "configs/prey_distillation_gru1m.json",
+      "plan_sha256": "8fd26db47dd603fd1295cc75f73ccf218d91c1c83780b85e33bb78d796209300",
+      "run_count": 24,
+      "frozen_parser_count": 24,
+      "source_sha256": {
+        "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+        "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+        "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+        "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+        "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+        "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+        "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+        "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+        "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+        "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+        "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+        "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+        "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+        "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+        "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+        "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+        "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+        "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+        "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+        "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+        "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+        "simulator_train.py": "3acfa51e44c6f092f3f30b2a19dfd5eb1cda531a4ece0075e2815a170cc9f6bc",
+        "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+        "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+        "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+      }
+    }
+  },
+  "job_ids": [],
+  "capacity_reserved": false,
+  "release_requirements": [
+    "All8 native gates and their final4episode/4x200window checkpoint replays must pass.",
+    "The4coefficient0 gates must match original seed0 first-update rollout/loss/critic records,excluding elapsed time.",
+    "Measure per-task native memory/runtime and validate a new dependency/capacity schedule before learning. Existing arrays and continuous-local-scale plans retain priority; no new capacity is reserved.",
+    "Every24 learning run must be complete and audited before group aggregation or selection."
+  ],
+  "analysis": {
+    "primary": "Final1M released100x200 fixed-window team reward per environment decision,local greedy; unfinished episodes included.",
+    "secondary": [
+      "Trapezoidal whole-curve area divided by1M at0:10000:1000000",
+      "All20 final complete diagnostic episodes,capture rate,length and return",
+      "All individual seeds,means,sample SDs and paired differences to coefficient0 and identity"
+    ],
+    "development_seeds": [
+      0,
+      1,
+      2
+    ],
+    "selection": "Carry a coefficient to independent confirmation only if the same nonzero coefficient exceeds the learned0 and identity mean plus the figure upper reading in both penalties,with no lower mean curve area than learned0 in either. If both qualify,select the smaller coefficient. Otherwise record failure; no per-seed winners or peak replacement.",
+    "figure_upper_readings": {
+      "zero": 2.23,
+      "minus1": 0.36
+    },
+    "final_confirmation": "Requires a separate registered five-pair study with unused training/evaluation seeds; development success alone is not reproduction."
+  }
+}

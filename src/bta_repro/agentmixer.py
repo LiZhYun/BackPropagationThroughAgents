@@ -179,6 +179,38 @@ class AgentMixerPolicy(nn.Module):
             return raw.clamp(-8., 8.)
         return self.log_scale_bound * torch.tanh(raw / self.log_scale_bound)
 
+    def distillation_loss(
+        self, obs: Tensor, state: Tensor, available_actions: Tensor | None = None,
+        active_agents: Tensor | None = None,
+    ) -> Tensor:
+        """Experimental KL(stopgrad(central) || local), summed over live agents.
+
+        The teacher is the current centralized policy on this minibatch, not
+        the rollout behavior policy. Only local actors receive this gradient.
+        Average over states with at least one active agent, matching the joint
+        PPO reduction. This optional objective is not the paper's PPO loss.
+        """
+        local = self.local_logits(obs)
+        mask = _action_mask(local, available_actions)
+        if active_agents is None:
+            active = torch.ones_like(local[..., 0], dtype=torch.bool)
+        else:
+            if (active_agents.shape != local.shape[:2] or active_agents.device != local.device
+                    or not ((active_agents == 0) | (active_agents == 1)).all()):
+                raise ValueError("active_agents must be a binary [batch, agents] mask on the logits device")
+            active = active_agents.bool()
+        dtype = torch.float64 if local.dtype == torch.float64 else torch.float32
+        student_logp = local.to(dtype).masked_fill(~mask, -torch.inf).log_softmax(-1)
+        with torch.no_grad():
+            teacher_logp = self.joint_logits(obs, state, available_actions).to(dtype).log_softmax(-1)
+            teacher_prob = teacher_logp.exp()
+        # Zero unavailable log terms before subtraction: -inf - -inf and
+        # subsequently 0 * nan would otherwise poison both loss and gradient.
+        difference = teacher_logp.masked_fill(~mask, 0) - student_logp.masked_fill(~mask, 0)
+        agent_kl = (teacher_prob * difference).sum(-1)
+        live = active.any(-1)
+        return agent_kl.masked_fill(~active, 0).sum() / live.sum().clamp_min(1)
+
     def local_actions(self, obs: Tensor, available_actions: Tensor | None = None) -> Tensor:
         """Execute greedily using only each agent's local observation and mask."""
         logits = self.local_logits(obs)

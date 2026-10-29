@@ -64,6 +64,7 @@ class Config:
     num_minibatches: int = 1
     clip_coef: float = 0.2
     entropy_coef: float = 0.01
+    agentmixer_distillation_coef: float = 0.0
     value_coef: float = 0.5
     normalize_value_targets: bool = False
     value_clip_coef: float | None = None
@@ -130,6 +131,13 @@ class Config:
             value = getattr(self, name)
             if not math.isfinite(value) or value < 0:
                 raise ValueError(f"{name} must be finite and nonnegative")
+        coefficient = self.agentmixer_distillation_coef
+        if (isinstance(coefficient, bool) or not isinstance(coefficient, (int, float))
+                or not math.isfinite(coefficient) or coefficient < 0):
+            raise ValueError("agentmixer_distillation_coef must be finite and nonnegative")
+        if coefficient and (self.environment == "mujoco" or self.algorithm != "agentmixer"
+                            or self.agentmixer_correlation != "factorized" or not self.modifier_enabled):
+            raise ValueError("agentmixer_distillation_coef requires discrete factorized AgentMixer with modifier enabled")
         if not 0 <= self.clip_coef < 1 or not 0 <= self.gamma <= 1 or not 0 <= self.gae_lambda <= 1:
             raise ValueError("invalid PPO clipping, discount, or GAE coefficient")
         for name in ("normalize_advantages", "normalize_observations", "normalize_value_targets", "modifier_enabled", "recurrent_actor"):
@@ -214,6 +222,9 @@ def environment_spec(env) -> dict:
 
 
 def make_policy(config: Config, env):
+    if config.agentmixer_distillation_coef and (not env.is_discrete or config.algorithm != "agentmixer"
+            or config.agentmixer_correlation != "factorized" or not config.modifier_enabled):
+        raise ValueError("agentmixer_distillation_coef requires discrete factorized AgentMixer with modifier enabled")
     if config.continuous_local_scale != "observation" and (
         env.is_discrete or config.algorithm != "agentmixer"
     ):
@@ -610,6 +621,14 @@ def train(config: Config, output: Path) -> dict:
         metadata['method_variant'] = ('experimental_joint_bounded_gap_scaling'
                                       if config.agentmixer_correlation == 'joint'
                                       else 'mode_consistent_bounded_gap_modifier')
+    if config.agentmixer_distillation_coef:
+        metadata['method_variant'] += '_experimental_local_distillation'
+        metadata['auxiliary_objective'] = {
+            'name': 'detached_central_to_local_kl', 'coefficient': config.agentmixer_distillation_coef,
+            'teacher': 'current_central_policy_on_same_minibatch_detached',
+            'reduction': 'sum_active_agents_mean_live_states',
+            'occupancy': 'centralized_training_rollout', 'paper_objective': False,
+        }
     _write_json(output / "config.json", metadata)
     try:
         for environment_seed in environment_seeds:
@@ -663,6 +682,7 @@ def train(config: Config, output: Path) -> dict:
                     policy, critic, optimizers, batch, config.algorithm, spec["is_discrete"],
                     epochs=config.epochs, num_minibatches=config.num_minibatches,
                     clip_coef=config.clip_coef, entropy_coef=config.entropy_coef,
+                    agentmixer_distillation_coef=config.agentmixer_distillation_coef,
                     value_coef=config.value_coef, max_grad_norm=config.max_grad_norm,
                     value_clip_coef=config.value_clip_coef, value_huber_delta=config.value_huber_delta,
                     normalize_advantages=config.normalize_advantages, temperature=config.temperature,
