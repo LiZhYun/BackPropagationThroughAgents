@@ -21,7 +21,7 @@ Anti-claims: improvement only comes from changed simulator physics, more environ
 
 ## Execution order and resource limits
 
-Current ceiling: **ten workers/sixteen CPUs/104 GiB**, with twelve CPUs scheduled at maximum. See the [latest allocation graph](../docs/worker_schedule.md#measured-mujoco-concurrency-revision-29-october-2026). Dated allocations below preserve their historical limits.
+Current ceiling and scheduled maximum: **fourteen workers/sixteen CPUs/120 GiB**. See the [latest allocation graph](../docs/worker_schedule.md#independent-allocations-and-prey-learning-29-october-2026). Dated allocations below preserve their historical limits.
 
 | Stage | Gate | Initial resource use |
 |---|---|---|
@@ -267,3 +267,12 @@ The existing 48-run MuJoCo10M array21272800 now permits four concurrent workers 
 This measured autonomous revision supersedes the earlier eight-worker/96GiB policy with a ceiling of ten workers/sixteen CPUs/104GiB. Current four allocation branches sum to ten workers/twelve CPUs/104GiB. The original study estimates277.96worker-hours; ideal worker-hour division changes138.98→69.49h for the whole original campaign, not a forecast of remaining time. Queueing, task imbalance and host load remain relevant. No paid service is added and the other reproduction is untouched. Existing independent confirmation criteria, all-run reporting and learning-gate priorities remain unchanged.
 
 Current resources and coverage are recorded in `experiments/live_resource_check_20261029_acceleration.json` and `experiments/benchmark_coverage_20261029_acceleration.provenance.json`. The same883runs/74manifests cover45targets,0basic provenance errors;60prepared learning runs remain unsubmitted. The first helper's syntax error occurred before any execution; its source is retained and successfulv2records the actual scheduler change.
+
+
+### Independent studies and complete Prey learning release, 29 October 2026
+
+Preflight verifies all18unstarted Ant/Prey configurations,25/20source modules,complete reference artifacts and strict Ant registration. Only capacity dependencies of21282173/21282468 are cleared; task limits/concurrency remain. Collectors and the continuous-memory data edge remain. Six allocations total14workers/16CPUs/120GiB, superseding10/16/104 without exceeding16CPUs. No paid service or unrelated reproduction changes.
+
+All8Prey native tasks and their auditor complete0:0. All80000training interactions,64episodes/64windows,32exact replayepisodes/32windows and4prefixes pass. Peak1.372GiB; full1M prior phase maxima plus auxiliary overhead and50%margin give3.494h worst. All24frozen1Mconfigs are released under21287360,max2×1CPU/4GiB/4h,no requeue,in the completed Prey branch. All24parsers pass; no coefficient is selected from gates. Prior18FF and18GRU studies remain unsubmitted with their reservations/gates.
+
+Release evidence: experiments/prey_distillation_learning_release_20261029.json,resource audit and submission receipt. Every24run requires full budget/raw episode-window/curve provenance audit and final original-protocol replay before acceptance. Common-coefficient selection and unused final seeds remain as registered. HC3×2now4/10valid with no aggregate decisions. Coverage907runs/75manifests/45targets has0basic errors;36prepared learning runs remain excluded.

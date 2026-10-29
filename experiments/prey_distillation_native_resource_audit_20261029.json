@@ -1,0 +1,131 @@
+{
+  "recorded_utc": "2026-10-29T15:00:50.521950+00:00",
+  "scope": "All8native gates and exact replays pass; measured runtime/memory audit for the already frozen24-run Prey1M development study. No performance selection.",
+  "native_audit": "experiments/prey_distillation_native_complete_20261029.json",
+  "native_audit_sha256": "0326182899b449dbf3633d5dba8e477122fb5f50a0ad3bcadf9c1fa7bf9919e5",
+  "completed_gates": 8,
+  "training_steps_verified": 80000,
+  "raw_evaluation_episodes": 64,
+  "raw_evaluation_windows": 64,
+  "replay_episodes": 32,
+  "replay_windows": 32,
+  "default_prefix_checks": 4,
+  "all_native_artifacts_hash_verified": true,
+  "accounting": "results/independent_study_release_20261029/prey_gate_final_accounting.stdout",
+  "accounting_sha256": "d501766bb1561ac59472f6caf7625137b51767828697b75eeac2e5df57d3b07a",
+  "peak_rss_gib": 1.3715629577636719,
+  "maximum_native_elapsed_seconds": 61,
+  "conditions": [
+    {
+      "variant": "agentmixer_gru_zero",
+      "native_update_seconds": 22.673297607107088,
+      "matched_native_baseline_seconds": 22.673297607107088,
+      "native_update_slowdown_ratio": 1.0,
+      "prior_full_max_update_seconds": 38.35804476693738,
+      "prior_full_max_evaluation_seconds": 32.89445364102721,
+      "conservative_learning_projection_seconds": 7158.144294437487,
+      "projection_with_50pct_margin_hours": 2.982560122682286,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103"
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "native_update_seconds": 29.921998558100313,
+      "matched_native_baseline_seconds": 22.673297607107088,
+      "native_update_slowdown_ratio": 1.3197021040609935,
+      "prior_full_max_update_seconds": 38.35804476693738,
+      "prior_full_max_evaluation_seconds": 32.89445364102721,
+      "conservative_learning_projection_seconds": 8384.459056403053,
+      "projection_with_50pct_margin_hours": 3.4935246068346055,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103"
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "native_update_seconds": 29.299054040107876,
+      "matched_native_baseline_seconds": 22.673297607107088,
+      "native_update_slowdown_ratio": 1.2922272952004963,
+      "prior_full_max_update_seconds": 38.35804476693738,
+      "prior_full_max_evaluation_seconds": 32.89445364102721,
+      "conservative_learning_projection_seconds": 8279.071061579652,
+      "projection_with_50pct_margin_hours": 3.449612942324855,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "native_update_seconds": 16.268032192019746,
+      "matched_native_baseline_seconds": 16.268032192019746,
+      "native_update_slowdown_ratio": 1.0,
+      "prior_full_max_update_seconds": 30.997144958004355,
+      "prior_full_max_evaluation_seconds": 50.97676951799076,
+      "conservative_learning_projection_seconds": 8248.368217117502,
+      "projection_with_50pct_margin_hours": 3.436820090465626,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/identity_gru_zero_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "4180f22048dde2a621b3b3dc4d982e7f4fd44ed8ce13448dc2885317f0db925a"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "native_update_seconds": 21.431503309868276,
+      "matched_native_baseline_seconds": 21.431503309868276,
+      "native_update_slowdown_ratio": 1.0,
+      "prior_full_max_update_seconds": 27.100597101962194,
+      "prior_full_max_evaluation_seconds": 26.360054931021295,
+      "conservative_learning_projection_seconds": 5372.42525822937,
+      "projection_with_50pct_margin_hours": 2.2385105242622374,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "9efc74b5fe9ed51e58aa0ca3e132000bcc5d67d315804845fb73727186ebee36"
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "native_update_seconds": 29.581200862070546,
+      "matched_native_baseline_seconds": 21.431503309868276,
+      "native_update_slowdown_ratio": 1.380267190517134,
+      "prior_full_max_update_seconds": 27.100597101962194,
+      "prior_full_max_evaluation_seconds": 26.360054931021295,
+      "conservative_learning_projection_seconds": 6402.972050359364,
+      "projection_with_50pct_margin_hours": 2.667905020983069,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "9efc74b5fe9ed51e58aa0ca3e132000bcc5d67d315804845fb73727186ebee36"
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "native_update_seconds": 29.59704197314568,
+      "matched_native_baseline_seconds": 21.431503309868276,
+      "native_update_slowdown_ratio": 1.3810063412358724,
+      "prior_full_max_update_seconds": 27.100597101962194,
+      "prior_full_max_evaluation_seconds": 26.360054931021295,
+      "conservative_learning_projection_seconds": 6404.975192941981,
+      "projection_with_50pct_margin_hours": 2.6687396637258254,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "9efc74b5fe9ed51e58aa0ca3e132000bcc5d67d315804845fb73727186ebee36"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "native_update_seconds": 26.174609975889325,
+      "matched_native_baseline_seconds": 26.174609975889325,
+      "native_update_slowdown_ratio": 1.0,
+      "prior_full_max_update_seconds": 17.605021359981038,
+      "prior_full_max_evaluation_seconds": 23.476517342962325,
+      "conservative_learning_projection_seconds": 4988.589249228127,
+      "projection_with_50pct_margin_hours": 2.078578853845053,
+      "prior_metrics": "results/prey_recurrent_release1m_20261026T184956Z/identity_gru_minus1_seed0/metrics.jsonl",
+      "prior_metrics_sha256": "6b0a8ae81017a1d8964cac194a237f281e3b2b5144058ba1f1035ff901719a3b"
+    }
+  ],
+  "formula": "100 * max(prior full-run maximum update phase * observed auxiliary/native-baseline slowdown ratio,native update phase) +101 * prior matched full100x200+20episode evaluation maximum;then50%margin.",
+  "maximum_projection_with_margin_hours": 3.4935246068346055,
+  "proposed_per_task": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "wall_hours": 4,
+    "maximum_workers": 2,
+    "automatic_requeue": false
+  },
+  "learning_manifest": "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+  "learning_manifest_sha256": "28c52ae7c19bca73fe8c2c5950dc4ec23f647dd49bb00389005c7b5ab90adf00",
+  "limitations": [
+    "Maxima and a margin are conservative measured estimates,not guarantees of later host load or episode behavior.",
+    "Full development results remain required for all24conditions; no coefficient is selected from native checks."
+  ]
+}

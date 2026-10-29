@@ -1,0 +1,826 @@
+{
+  "recorded_utc": "2026-10-29T15:04:13.268421+00:00",
+  "scope": "Release all24 already frozen Prey1M development configurations after all8native gates,exact replays,4prefix checks and measured resource audit. No coefficient selection or independent-confirmation claim.",
+  "study": "experiments/prey_distillation_study_20261029.json",
+  "study_sha256": "a65095a9ebc0932035f48667314c509d247ccbdf697ed00575cf17edb3369b09",
+  "native_complete_audit": "experiments/prey_distillation_native_complete_20261029.json",
+  "native_complete_audit_sha256": "0326182899b449dbf3633d5dba8e477122fb5f50a0ad3bcadf9c1fa7bf9919e5",
+  "resource_audit": "experiments/prey_distillation_native_resource_audit_20261029.json",
+  "resource_audit_sha256": "3aec11ff13ab0e59a07d9b4f638b365dfb2c31abb355d55b38cfdefddd87c48e",
+  "manifest": "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+  "manifest_sha256": "28c52ae7c19bca73fe8c2c5950dc4ec23f647dd49bb00389005c7b5ab90adf00",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "3acfa51e44c6f092f3f30b2a19dfd5eb1cda531a4ece0075e2815a170cc9f6bc",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "all_configurations": [
+    {
+      "variant": "agentmixer_gru_zero",
+      "seed": 0,
+      "config_sha256": "226845afe2ca623e7f149277c388b35bed6b95f95142bad64c3052249e74c67e",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "seed": 1,
+      "config_sha256": "e26fa546ee1b46f402ecaecbee297ba70527694cc49a3b1feddb76ae3b240cb1",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "seed": 2,
+      "config_sha256": "8d15344ade02efa65f7cb3585a413a835f9269f0ed9e9046c5d3e6885a5799c5",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "seed": 0,
+      "config_sha256": "5ec3871fbf13f3411d1558ca689fedf115f8c18d8753e4d6b4cdbfc7af2718f1",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "seed": 1,
+      "config_sha256": "8e0d0df6da0e58ae95e6df635dbf431332dcbeef8d2f5303fb3c7ea02bbcce58",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "seed": 2,
+      "config_sha256": "e6d16788e3d5fa23545713eb1a0146701d364d6210be17e5cb7a83684f9b3360",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "seed": 0,
+      "config_sha256": "451251acdaed065ed4f929a3fa6fb344d05262e36f8a1a1e4bf01503a8c5a29a",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "seed": 1,
+      "config_sha256": "286b12e40157154bee6d4aa082ebd95f21cb2937bacf398d5b5372316ae27d13",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "seed": 2,
+      "config_sha256": "46b6bf4f1f12529753346eeb941449a0cab8fb50f6a71b05aeb8057d5529ab27",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "identity_gru_zero",
+      "seed": 0,
+      "config_sha256": "e95f157eca248fdeb7964014a98c88b704105cfba9fc5342df5e4106b07f976e",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "identity_gru_zero",
+      "seed": 1,
+      "config_sha256": "e2b97d280aef9b2fc4a249e51b362a7d0f54373ca05c15ef42e5955f5cf81292",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "identity_gru_zero",
+      "seed": 2,
+      "config_sha256": "e06a3d79ab9bb75887f8d0cd3b94bf282377b9f8294749cc24edafc444d72da6",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "seed": 0,
+      "config_sha256": "da09233921ee4834a601b73c258efdb979ab28a7bb4630c7f33e69831e36a853",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "seed": 1,
+      "config_sha256": "df7b788e80e6c6a39989f9cb1ee6c3a9dd072f95e9b35bdb424d7302a9413c5b",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "seed": 2,
+      "config_sha256": "69b8f0d09272d38220b7765a277e257ba15536ca1119f649e7181cd34db33f48",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "seed": 0,
+      "config_sha256": "0b930e7ffd4ca1ee883c686c058ded3521c8f5c09ef62fb6bd501e0aa967c42e",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "seed": 1,
+      "config_sha256": "1b88b8243a85cab804fa11959e39b0635271ae6330b2c9f84eb42fddefeae98c",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "seed": 2,
+      "config_sha256": "87d40b8d1f983052e38a46c0dfc78537a446b014dd11c6711dbb8d7a674fd5de",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "seed": 0,
+      "config_sha256": "61fc8c6f6ba6e4ac0dcf152a85c6111607e2a6865d6e9631d067699490f54f60",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "seed": 1,
+      "config_sha256": "8a71db88791effbe2ea16bf6590ef4f3a6609de4990f7ff84742e9a52ff89f64",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "seed": 2,
+      "config_sha256": "f9bbcfb380660413cea4f21b2ce7037148139a3a3a0fa8991dc5e36f1a60611a",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "seed": 0,
+      "config_sha256": "cdaca3a4fa03dc8bba7062a55ab6f41c4a45518ea84ac7030a0531a12b0680c4",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "seed": 1,
+      "config_sha256": "256e1b48cbf96e804d4d4b5bc98bac6be9aa7761463a98272495c58b1f3729a9",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 1
+        }
+      },
+      "unstarted_at_release": true
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "seed": 2,
+      "config_sha256": "441ed9c38e3b7fdac289e0bd52158dbf1ce9f73e8a16eab270b55e64f27d4802",
+      "changes_from_native_gate": {
+        "eval_episodes": {
+          "native": 4,
+          "learning": 20
+        },
+        "checkpoint_every_updates": {
+          "native": 0,
+          "learning": 10
+        },
+        "eval_windows": {
+          "native": 4,
+          "learning": 100
+        },
+        "eval_every_steps": {
+          "native": 0,
+          "learning": 10000
+        },
+        "steps": {
+          "native": 10000,
+          "learning": 1000000
+        },
+        "seed": {
+          "native": 0,
+          "learning": 2
+        }
+      },
+      "unstarted_at_release": true
+    }
+  ],
+  "dispatch": "results/prey_distillation_learning_release_20261029/submit.sbatch",
+  "dispatch_sha256": "bb32c9659e676f85af0b35b4cf7c0ac3dc21e39fc68d52dd8fe1a7690a54c8e5",
+  "launcher": "results/prey_distillation_gru1m_20261029T112121Z/run_simulator_array.py",
+  "launcher_sha256": "fc2b1ac704f19f30726e7bb52047452b881e9b5def4cf222e0fe6dc429a84a6e",
+  "config_count": 24,
+  "frozen_parser_count": 24,
+  "allocation": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 4,
+    "wall_hours_per_task": 4,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "capacity": "Reuse the completed independent Prey native-gate allocation:two1CPU/4GiB slots. Existing HC-chain reservations and priority of the prior18-run local-scale study remain. No existing job/dependency changes for this learning submission.",
+  "completed_predecessors": [
+    "21282173",
+    "21282210"
+  ],
+  "dependency_policy": "Both predecessors must be authoritatively COMPLETED0:0 and all8audit checks valid before submission. They have already finished; no pending scheduler dependency remains.",
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "analysis": {
+    "primary": "Final1M released100x200 fixed-window team reward per environment decision,local greedy; unfinished episodes included.",
+    "secondary": [
+      "Trapezoidal whole-curve area divided by1M at0:10000:1000000",
+      "All20 final complete diagnostic episodes,capture rate,length and return",
+      "All individual seeds,means,sample SDs and paired differences to coefficient0 and identity"
+    ],
+    "development_seeds": [
+      0,
+      1,
+      2
+    ],
+    "selection": "Carry a coefficient to independent confirmation only if the same nonzero coefficient exceeds the learned0 and identity mean plus the figure upper reading in both penalties,with no lower mean curve area than learned0 in either. If both qualify,select the smaller coefficient. Otherwise record failure; no per-seed winners or peak replacement.",
+    "figure_upper_readings": {
+      "zero": 2.23,
+      "minus1": 0.36
+    },
+    "final_confirmation": "Requires a separate registered five-pair study with unused training/evaluation seeds; development success alone is not reproduction."
+  },
+  "complete_set_required": true,
+  "failure_policy": "Retain every declared run including failures/incomplete outputs;no replacement seed,early-peak selection,development pooling with final seeds or automatic requeue. All24must pass a complete audit before grouping/selection.",
+  "learning_curve_audit": "Require101scheduled evaluations/100rollouts per run,raw20episode+100x200window reductions,source/config/runtime provenance,budget accounting,and final checkpoint. Selection remains exactly the predeclared common-coefficient rule across both penalties.",
+  "final_replay": "A separate native final audit must replay all24 original full final protocols before acceptance;learning release is not replay evidence.",
+  "prepare_script": "results/prey_distillation_learning_release_20261029/prepare.py",
+  "prepare_script_sha256": "80f7d9d79e679bb1c7b6bf1244adb9e191614419f5b4002ce7f4b868c9a19b4b"
+}

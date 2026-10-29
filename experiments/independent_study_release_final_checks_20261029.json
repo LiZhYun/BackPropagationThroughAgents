@@ -1,0 +1,80 @@
+{
+  "recorded_utc": "2026-10-29T15:35:01.169983+00:00",
+  "scope": "Final evidence check for independent allocations, completed Prey native family and all24frozen learning submissions. No performance acceptance.",
+  "immutable_linked_hashes": {
+    "experiments/independent_study_capacity_plan_20261029.json": [
+      "experiments/prey_distillation_gate_execution_20261029.json",
+      "experiments/ant2x4_confirmation10m_plan_20261029.json",
+      "experiments/ant2x4_confirmation10m_schedule_20261029.json",
+      "results/independent_study_release_20261029/prepare.py"
+    ],
+    "experiments/independent_study_capacity_preflight_20261029.json": [
+      "experiments/independent_study_capacity_plan_20261029.json"
+    ],
+    "experiments/independent_study_capacity_schedule_20261029.json": [
+      "experiments/independent_study_capacity_plan_20261029.json"
+    ],
+    "experiments/prey_distillation_learning_release_20261029.json": [
+      "experiments/prey_distillation_study_20261029.json",
+      "experiments/prey_distillation_native_complete_20261029.json",
+      "experiments/prey_distillation_native_resource_audit_20261029.json",
+      "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+      "results/prey_distillation_learning_release_20261029/submit.sbatch",
+      "results/prey_distillation_gru1m_20261029T112121Z/run_simulator_array.py",
+      "results/prey_distillation_learning_release_20261029/prepare.py"
+    ],
+    "experiments/prey_distillation_learning_schedule_20261029.json": [
+      "experiments/prey_distillation_learning_release_20261029.json",
+      "experiments/prey_distillation_study_20261029.json",
+      "results/prey_distillation_gru1m_20261029T112121Z/manifest.json",
+      "results/prey_distillation_learning_release_20261029/submit.sbatch"
+    ],
+    "experiments/prey_distillation_native_complete_20261029.json": [
+      "results/prey_distillation_gru_check10k_20261029T112121Z/manifest.json",
+      "/scratch/work/liz23/reproduce/bpta-agentmixer/experiments/prey_distillation_gate_execution_20261029.json",
+      "results/prey_distillation_gate_20261029/audit.py"
+    ],
+    "experiments/prey_distillation_native_resource_audit_20261029.json": [
+      "experiments/prey_distillation_native_complete_20261029.json",
+      "results/independent_study_release_20261029/prey_gate_final_accounting.stdout",
+      "results/prey_distillation_gru1m_20261029T112121Z/manifest.json"
+    ],
+    "experiments/benchmark_coverage_20261029_independent_studies.provenance.json": [
+      "results/benchmark_coverage_20261029_independent_studies.json",
+      "experiments/benchmark_coverage_20261029_independent_studies.csv"
+    ]
+  },
+  "receipt_sha256": {
+    "experiments/independent_study_capacity_plan_20261029.json": "7b26143e31aa303feb7744461d3a451fb99eea04923b3d0fc7b99c962d2d5995",
+    "experiments/independent_study_capacity_preflight_20261029.json": "f6962766c015c0b70e82fe17d8f6e5c73e3e34f7b03ce064b10114729cc7dd5b",
+    "experiments/independent_study_capacity_schedule_20261029.json": "a243ad6ea5aad0f23caef433fefcc90c7142b677bae39153d3405b36fb3bd1a4",
+    "experiments/prey_distillation_learning_release_20261029.json": "957173b3419c99ac22602aad3b91526e8f0be2b99ecbe8306e3cc2313cd8369d",
+    "experiments/prey_distillation_learning_schedule_20261029.json": "582f0d1359be97d3e045a2b8e61a609df16c46082f1fc89e140c048a7387de18",
+    "experiments/prey_distillation_native_complete_20261029.json": "0326182899b449dbf3633d5dba8e477122fb5f50a0ad3bcadf9c1fa7bf9919e5",
+    "experiments/prey_distillation_native_resource_audit_20261029.json": "3aec11ff13ab0e59a07d9b4f638b365dfb2c31abb355d55b38cfdefddd87c48e",
+    "experiments/benchmark_coverage_20261029_independent_studies.provenance.json": "7daf66bfbedfcc3e2c030dba6c71fd5c6d473171d74f7437755f8547961328e9"
+  },
+  "ledger_prefix_preserved": true,
+  "new_ledger_events": 6,
+  "learning_runs": 24,
+  "native_gates": 8,
+  "original_evaluation_episodes": 64,
+  "original_evaluation_windows": 64,
+  "exact_replay_episodes": 32,
+  "exact_replay_windows": 32,
+  "default_prefix_checks": 4,
+  "coverage_runs": 907,
+  "coverage_manifests": 75,
+  "coverage_targets": 45,
+  "hc_valid_completed": 4,
+  "hc_aggregate_decisions_withheld": true,
+  "source_tests_configs_scripts_environment_specs_unchanged": true,
+  "local_document_links_checked": 152,
+  "live_allocations": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "other_reproduction_modified": false,
+  "errors": []
+}

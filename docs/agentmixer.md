@@ -31,4 +31,4 @@ This module handles homogeneous discrete action spaces with feed-forward actors 
 
 ## Optional experimental local distillation
 
-The simulator trainer supports `agentmixer_distillation_coef` (default 0) for factorized discrete policies. It adds a detached current-central-to-local KL to the actor objective, with explicit experimental run labels. The [diagnosis and control specification](prey_distillation.md) gives its gradient, mask reduction, limitations, compatibility checks, and unsubmitted study plan. No learning improvement is established.
+The simulator trainer supports `agentmixer_distillation_coef` (default 0) for factorized discrete policies. It adds a detached current-central-to-local KL to the actor objective, with explicit experimental run labels. The [diagnosis and control specification](prey_distillation.md) gives its gradient, mask reduction, limitations, compatibility checks, completed native gates and the now-submitted 24-run study. No learning improvement is established.

@@ -1,0 +1,45 @@
+{
+  "recorded_utc": "2026-10-29T14:51:26.089284+00:00",
+  "scope": "Startup integrity of two fresh registered Ant seeds; no confirmation outcome used for selection and no aggregate decision.",
+  "job_id": "21282468",
+  "runs": [
+    {
+      "algorithm": "bppo",
+      "seed": 6000,
+      "config_sha256": "69609226ece642211de7e289b93800428a74df58be646f5968408d4121dd0a29",
+      "metadata_sha256": "5878b09d7d9b3a66b65de259abf56fa3d6aaacaa4d26669cdd73d9033818f886",
+      "source_modules": 20,
+      "versions_match_plan": true,
+      "native_versions_and_task_spec_match_selected_development": true,
+      "training_streams_match_registration": true,
+      "first_rollout_steps": 4000,
+      "first_rollout_shape": [
+        100,
+        40
+      ],
+      "first_actor_updates": 10.0,
+      "first_critic_updates": 5,
+      "first_losses_finite": true
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 6001,
+      "config_sha256": "1c2d9914cd2d6118d1bdcbdc82df0c6ed77d5bf51583cfafb9224880c5000129",
+      "metadata_sha256": "d70dca6dfc4cceb9d67c23c9e49015d9df828540b8a93bcd838e0c0787383747",
+      "source_modules": 20,
+      "versions_match_plan": true,
+      "native_versions_and_task_spec_match_selected_development": true,
+      "training_streams_match_registration": true,
+      "first_rollout_steps": 4000,
+      "first_rollout_shape": [
+        100,
+        40
+      ],
+      "first_actor_updates": 10.0,
+      "first_critic_updates": 5,
+      "first_losses_finite": true
+    }
+  ],
+  "new_trials": 0,
+  "scientific_settings_unchanged": true
+}

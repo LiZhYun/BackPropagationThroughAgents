@@ -1,6 +1,6 @@
 # Ant 2×4: independent confirmation
 
-Ten runs are registered and queued as **21282468**: BPPO and matched AR-PPO on five unused training seeds each. No confirmation run has started at registration. The selected development result, BPPO **6,562.40** at 10M, comes from seed 0 only and remains separate. [Development evidence](ant2x4_development.md).
+Ten runs are registered as **21282468**, with the first two BPPO seeds now running: BPPO and matched AR-PPO on five unused training seeds each. No confirmation run has started at registration. The selected development result, BPPO **6,562.40** at 10M, comes from seed 0 only and remains separate. [Development evidence](ant2x4_development.md).
 
 | Choice | Frozen value |
 | --- | --- |
@@ -24,7 +24,7 @@ The peer-feedback comparison is separate. Support requires the lower 95% bootstr
 
 ## Execution and final verification
 
-The array has at most two workers, each using one CPU, 4 GiB and seven hours. It waits for the complete Football → Prey native checks → Prey auditor chain, ending at `21282210`. This dependency reserves capacity; Ant does not require a positive Prey result. Existing jobs and dependencies are unchanged. [Verified submission](../experiments/ant2x4_confirmation10m_schedule_20261029.json).
+The array has at most two workers, each using one CPU, 4 GiB and seven hours. Its original Football/Prey wait reserved capacity. A [verified scheduling revision](../experiments/independent_study_capacity_schedule_20261029.json) removes that wait and assigns an independent allocation within the existing sixteen-CPU ceiling. No scientific input, setting, seed, per-task limit or acceptance rule changes. The first two fresh seeds match the registered source, native task versions, training streams and first-rollout accounting. [Startup evidence](../experiments/independent_study_ant_startup_20261029.json); [original submission](../experiments/ant2x4_confirmation10m_schedule_20261029.json).
 
 Job **21282782** follows the entire Ant array. It uses a separately frozen reporter and the original training source for native replay. It first audits every declared seed, then replays all ten final checkpoints with their original ten-episode evaluation protocol, checks exact episode-record equality, and verifies that training artifacts remain unchanged. Missing or invalid runs stop acceptance; complete negative results are retained. No follow-up training is submitted automatically.
 

@@ -534,3 +534,23 @@ All 48 prior 500k pilots and their frozen metadata pass the revision preflight. 
 The two added slots have started Walker 2×3 MAPPO and AR-PPO. Their source/configuration bytes, native versions and training streams match the registered pilots, and each first 4,000-step rollout has finite losses and the expected five actor/critic updates. These are startup checks, not complete benchmark outcomes. All ten live workers remain below their observed memory allocations and linear runtime limits in the [resource snapshot](../experiments/live_resource_check_20261029_acceleration.json).
 
 [Revision plan](../experiments/mujoco_coverage10m_concurrency_plan_20261029.json), [verified scheduler change](../experiments/mujoco_coverage10m_concurrency_schedule_20261029.json), [native startup evidence](../experiments/mujoco_coverage10m_concurrency_startup_20261029.json). The first helper had a syntax error before execution; it changed no scheduler or ledger state. The original file is retained, and the verified action uses `apply_v2.py`.
+
+
+## Independent allocations and Prey learning, 29 October 2026
+
+The Ant confirmation and Prey native checks had no scientific dependence on Football or each other. Their required selection/reference data was already complete. Two capacity waits were removed after every input/configuration hash and the Ant strict registration passed preflight. Only `Dependency` changed on the pending arrays; source, seeds, per-task limits, partitions, maximum concurrency and acceptance rules remain fixed. [Plan](../experiments/independent_study_capacity_plan_20261029.json), [verified revision](../experiments/independent_study_capacity_schedule_20261029.json).
+
+| Allocation | Current chain | Maximum reserved resources |
+| --- | --- | --- |
+| Football | 21251960 | Two workers, two CPUs, 16 GiB |
+| Prey | 21282173 → 21282210 (both complete), then explicitly released **21287360** (24×1M) | Two workers, two CPUs, 8 GiB |
+| Ant and continuous-memory checks | 21282468 → 21282782 → 21284086 → 21284087 | Two workers, two CPUs, 8 GiB |
+| SMAC | 21272799 → 21281002 | Two workers, four CPUs, 64 GiB |
+| MuJoCo coverage | 21272800, max four active | Four workers, four CPUs, 16 GiB |
+| HC confirmation/controls/final verification | 21279129 → 21279857 → 21280689 → 21281001 → 21284586 | Two workers, two CPUs, 8 GiB |
+
+The new ceiling and scheduled maximum are **fourteen workers/sixteen CPUs/120 GiB**. The sixteen-CPU limit is unchanged. Memory checks still require all six local-scale gates in 21280689; all audit/data dependencies remain. The prior eighteen-run local-scale study keeps its HC-chain reservation and priority for eligible uncommitted capacity. Eighteen recurrent development runs also remain unsubmitted.
+
+All eight Prey gates and their family auditor pass, including exact replay and four original prefixes. The measured 1.372-GiB peak and 3.494-h estimate with a 50% margin support the explicitly released learning allocation: two one-CPU/4-GiB/4-h workers. This replaces completed gates and adds no concurrency beyond this graph. All 24 configurations were frozen before the gates; all outcomes remain required before selection.
+
+Ant seeds 6000/6001 run with their registered twenty-module trainer, native versions and streams. HC confirmation has four of ten valid completed runs; aggregate decisions remain withheld. The [resource snapshot](../experiments/live_resource_check_20261029_independent_studies.json) records actual live tasks; the table is the maximum, not a claim that all slots run at each instant. Scheduler-priority waits remain ordinary pending states. No task is restarted or replaced.

@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-29T14:41:18.332129+00:00",
+  "plan": "experiments/independent_study_capacity_plan_20261029.json",
+  "plan_sha256": "7b26143e31aa303feb7744461d3a451fb99eea04923b3d0fc7b99c962d2d5995",
+  "status": "passed",
+  "prey_sources": 25,
+  "ant_sources": 20,
+  "unchanged_configs": 18,
+  "unstarted_ant_runs": 10,
+  "unstarted_prey_gates": 8,
+  "new_trials": 0,
+  "new_maximum": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  }
+}

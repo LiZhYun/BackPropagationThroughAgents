@@ -1,0 +1,479 @@
+{
+  "recorded_utc": "2026-10-29T14:41:18.329752+00:00",
+  "scope": "Remove only the capacity dependencies of two already registered pending arrays. Prey consumes completed Prey references,Ant consumes completed Ant selection evidence;neither needs Football or the other study as scientific input. No trial,source,seed,budget,partition,per-task resource or acceptance-rule change.",
+  "prey_execution": "experiments/prey_distillation_gate_execution_20261029.json",
+  "prey_execution_sha256": "f33bfc1500f5e34faa0ae0478318fec24fe2fbcb190153b91ff27f9bac0d9a8b",
+  "prey_source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "3acfa51e44c6f092f3f30b2a19dfd5eb1cda531a4ece0075e2815a170cc9f6bc",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "prey_configurations": [
+    {
+      "variant": "agentmixer_gru_zero",
+      "seed": 0,
+      "config_sha256": "4d0748ff5dcdb902386180ad88a4d89ce20d475801cd63b2be535c314374ae0c",
+      "default_prefix_required": true
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "seed": 0,
+      "config_sha256": "a2e3a3ea46320618ee5d0c767a69bd424077412475af7de2f3bbfc3489102add",
+      "default_prefix_required": false
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "seed": 0,
+      "config_sha256": "1ab4dadc882aa65920f782bc176008319e68a309e62d4c294ab7cc866b0755f4",
+      "default_prefix_required": false
+    },
+    {
+      "variant": "identity_gru_zero",
+      "seed": 0,
+      "config_sha256": "2341f8bcc0d73e1eaf93a6e6a46149ca242701d64f705501add595ef87870c2d",
+      "default_prefix_required": true
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "seed": 0,
+      "config_sha256": "09d22da0ae850aeedd64e08fdd53e005b4dd291207589c59994536f479a398ec",
+      "default_prefix_required": true
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "seed": 0,
+      "config_sha256": "ab263ffd8611b775778e5be10c46945b8c1445843f3ba1618e3032010468024f",
+      "default_prefix_required": false
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "seed": 0,
+      "config_sha256": "6d3cb267feb06244052cfe401eebb9c495b146968f78558541c9eae982095f75",
+      "default_prefix_required": false
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "seed": 0,
+      "config_sha256": "db897d4c64584e18897c1007a519690eee5df079d3802eb219622065d24b7c53",
+      "default_prefix_required": true
+    }
+  ],
+  "ant_confirmation_plan": "experiments/ant2x4_confirmation10m_plan_20261029.json",
+  "ant_confirmation_plan_sha256": "f8eee3c8ba46e1961890ac8f4211d78f75f0f325580dfc9caa90f932bdf61d60",
+  "ant_source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "b3cbb3cdcd4b9b61633a5e85cce8ca24904e954bd2e0acdb5295a0aad7bb2047",
+    "agentmixer_continuous.py": "cffce699930861bd26d783cc63ffd7095c3c0d58b374428837693ab0795571d5",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "bppo.py": "1b317113053dc969cde35aff7038b864579f17489ce2c143dc0f38c6374dc1e9",
+    "bppo_continuous.py": "5d1ebf30559e3f3d47c063543a763effdb9afe33e4409948e68cd957cc96fcb2",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "58a5ecdcbbf7b54253d36c963f84bb612404d89d8148d07bcb558ab2de4a0375",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "bd1df149649195fd58b93ea8d64f52e324c052073dbaa8f6ddc0f0bcf244ff3f",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "runner.py": "487934a292af498488d79e36438fc8b737a38284d8bd00bde8e1b20b51eb2470",
+    "simulator_train.py": "d32e914fda4e784c37a6fc37435458ded73da988c5614be8755367fc63844139",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "e07e9427cd6f7f44efade55e10d82a95872ef28f345fa6e19875624ff10f3436",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "ant_configurations": [
+    {
+      "algorithm": "bppo",
+      "seed": 6000,
+      "config_sha256": "69609226ece642211de7e289b93800428a74df58be646f5968408d4121dd0a29"
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 6001,
+      "config_sha256": "1c2d9914cd2d6118d1bdcbdc82df0c6ed77d5bf51583cfafb9224880c5000129"
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 6002,
+      "config_sha256": "eb3fa28c0a7a5e3c501376426009ef586b6205dac3eed9fae84c41adb64803fb"
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 6003,
+      "config_sha256": "9203a20cf99d44ca245e5756cb2fadc2578e9016df5dedcd621c37f663e0a4bf"
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 6004,
+      "config_sha256": "dff2f471d26c6644e8b2e224a399a25f52f7a1ae7f428135fc4805a101b1df9c"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 6000,
+      "config_sha256": "682adfe3b65d105cc68423459e81ba81c448942125f8eb2b4caaec804beebd83"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 6001,
+      "config_sha256": "434fc7244154c38304f5e51af7d0404663eee144ef3233bae6347ff47d8f8653"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 6002,
+      "config_sha256": "b607c9bbed3dd608cd6c10178ee3492140c21892bccfec1ea51465f162ab9158"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 6003,
+      "config_sha256": "c22c24cb825ff826e59beabf2a831fa9598968194dfd75f7aa65cc2739e69fd0"
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 6004,
+      "config_sha256": "1304ba01a73b895ca50c1679c41b3f7db29073727d7597f7e654b97b8de8669c"
+    }
+  ],
+  "ant_schedule": "experiments/ant2x4_confirmation10m_schedule_20261029.json",
+  "ant_schedule_sha256": "f81cfad4a88ceab81bad07482d2a45974c127de9191a5a58d5d7076adc29bbf0",
+  "unchanged_trial_counts": {
+    "prey_native_gates": 8,
+    "ant_confirmation_runs": 10,
+    "new_trials": 0,
+    "prey_learning_runs_still_unsubmitted": 24
+  },
+  "jobs": {
+    "21282173": {
+      "before": {
+        "JobId": "21282173",
+        "ArrayJobId": "21282173",
+        "ArrayTaskId": "0-7%2",
+        "ArrayTaskThrottle": "2",
+        "JobName": "bpta-agentmixer-prey-distill-gate",
+        "UserId": "liz23(3278648)",
+        "GroupId": "liz23(3278648)",
+        "MCS_label": "N/A",
+        "Priority": "190883",
+        "Nice": "0",
+        "Account": "aalto_users",
+        "QOS": "normal",
+        "JobState": "PENDING",
+        "Reason": "Dependency",
+        "Dependency": "afterany:21251960_*(unfulfilled)",
+        "Requeue": "0",
+        "Restarts": "0",
+        "BatchFlag": "1",
+        "Reboot": "0",
+        "ExitCode": "0:0",
+        "RunTime": "00:00:00",
+        "TimeLimit": "00:30:00",
+        "TimeMin": "N/A",
+        "SubmitTime": "2026-10-29T13:37:03",
+        "EligibleTime": "Unknown",
+        "AccrueTime": "Unknown",
+        "StartTime": "Unknown",
+        "EndTime": "Unknown",
+        "Deadline": "N/A",
+        "SuspendTime": "None",
+        "SecsPreSuspend": "0",
+        "LastSchedEval": "2026-10-29T13:37:03",
+        "Scheduler": "Main",
+        "Partition": "batch-milan",
+        "Sid": "login5:321996",
+        "ReqNodeList": "(null)",
+        "ExcNodeList": "(null)",
+        "NodeList": "",
+        "NumNodes": "1-1",
+        "NumCPUs": "1",
+        "NumTasks": "1",
+        "Task": "1",
+        "T": "0:0:*:*",
+        "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+        "AllocTRES": "(null)",
+        "Node": "*",
+        "C": "0:0:*:*",
+        "CoreSpec": "*",
+        "MinCPUsNode": "1",
+        "MinMemoryNode": "4G",
+        "MinTmpDiskNode": "0",
+        "Features": "(null)",
+        "DelayBoot": "00:00:00",
+        "OverSubscribe": "NO",
+        "Exclusive": "NO",
+        "Contiguous": "0",
+        "Licenses": "(null)",
+        "LicensesAlloc": "(null)",
+        "Network": "(null)",
+        "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/submit.sbatch",
+        "SubmitLine": "sbatch",
+        "partition": "batch-milan",
+        "dependency": "afterany:21251960",
+        "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+        "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gru_check10k_20261029T112121Z/native_21282173_4294967294.err",
+        "StdIn": "/dev/null",
+        "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gru_check10k_20261029T112121Z/native_21282173_4294967294.out",
+        "TresPerTask": "cpu=1"
+      },
+      "dispatch": "results/prey_distillation_gate_20261029/submit.sbatch",
+      "dispatch_sha256": "31e091da3c38c3e64610871f0fec16e3d979de69fc24055776fc5eaf9fc44edf",
+      "action": [
+        "scontrol",
+        "update",
+        "JobId=21282173",
+        "Dependency="
+      ],
+      "previous_dependency": "afterany:21251960_*(unfulfilled)"
+    },
+    "21282468": {
+      "before": {
+        "JobId": "21282468",
+        "ArrayJobId": "21282468",
+        "ArrayTaskId": "0-9%2",
+        "ArrayTaskThrottle": "2",
+        "JobName": "bpta-agentmixer-ant2-confirm10m",
+        "UserId": "liz23(3278648)",
+        "GroupId": "liz23(3278648)",
+        "MCS_label": "N/A",
+        "Priority": "190882",
+        "Nice": "0",
+        "Account": "aalto_users",
+        "QOS": "normal",
+        "JobState": "PENDING",
+        "Reason": "Dependency",
+        "Dependency": "afterany:21282210(unfulfilled)",
+        "Requeue": "0",
+        "Restarts": "0",
+        "BatchFlag": "1",
+        "Reboot": "0",
+        "ExitCode": "0:0",
+        "RunTime": "00:00:00",
+        "TimeLimit": "07:00:00",
+        "TimeMin": "N/A",
+        "SubmitTime": "2026-10-29T14:07:36",
+        "EligibleTime": "Unknown",
+        "AccrueTime": "Unknown",
+        "StartTime": "Unknown",
+        "EndTime": "Unknown",
+        "Deadline": "N/A",
+        "SuspendTime": "None",
+        "SecsPreSuspend": "0",
+        "LastSchedEval": "2026-10-29T14:07:36",
+        "Scheduler": "Main",
+        "Partition": "batch-milan,batch-skl,batch-csl",
+        "Sid": "login5:550786",
+        "ReqNodeList": "(null)",
+        "ExcNodeList": "(null)",
+        "NodeList": "",
+        "NumNodes": "1-1",
+        "NumCPUs": "1",
+        "NumTasks": "1",
+        "Task": "1",
+        "T": "0:0:*:*",
+        "ReqTRES": "cpu=1,mem=4G,node=1,billing=1",
+        "AllocTRES": "(null)",
+        "Node": "*",
+        "C": "0:0:*:*",
+        "CoreSpec": "*",
+        "MinCPUsNode": "1",
+        "MinMemoryNode": "4G",
+        "MinTmpDiskNode": "0",
+        "Features": "(null)",
+        "DelayBoot": "00:00:00",
+        "OverSubscribe": "NO",
+        "Exclusive": "NO",
+        "Contiguous": "0",
+        "Licenses": "(null)",
+        "LicensesAlloc": "(null)",
+        "Network": "(null)",
+        "Command": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_dispatch_20261029/submit.sbatch",
+        "SubmitLine": "sbatch",
+        "dependency": "afterany:21282210",
+        "WorkDir": "/scratch/work/liz23/reproduce/bpta-agentmixer",
+        "StdErr": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_ant2x4_confirmation10m_20261029T115843Z/slurm_21282468_4294967294.err",
+        "StdIn": "/dev/null",
+        "StdOut": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_ant2x4_confirmation10m_20261029T115843Z/slurm_21282468_4294967294.out",
+        "TresPerTask": "cpu=1"
+      },
+      "dispatch": "results/ant2x4_confirmation_dispatch_20261029/submit.sbatch",
+      "dispatch_sha256": "a24f60346ef79efa4ff635ccb7e6b3c5b01170b3f17a4096f1a56383665c5951",
+      "action": [
+        "scontrol",
+        "update",
+        "JobId=21282468",
+        "Dependency="
+      ],
+      "previous_dependency": "afterany:21282210(unfulfilled)"
+    }
+  },
+  "allocation_layout": [
+    {
+      "allocation": "Football",
+      "workers": 2,
+      "cpus": 2,
+      "memory_gib": 16
+    },
+    {
+      "allocation": "Prey native gates and audit",
+      "workers": 2,
+      "cpus": 2,
+      "memory_gib": 8
+    },
+    {
+      "allocation": "Ant confirmation/audit and continuous-memory gates",
+      "workers": 2,
+      "cpus": 2,
+      "memory_gib": 8
+    },
+    {
+      "allocation": "SMAC and remaining native checks",
+      "workers": 2,
+      "cpus": 4,
+      "memory_gib": 64
+    },
+    {
+      "allocation": "MuJoCo coverage",
+      "workers": 4,
+      "cpus": 4,
+      "memory_gib": 16
+    },
+    {
+      "allocation": "HC confirmation/controls/final audit",
+      "workers": 2,
+      "cpus": 2,
+      "memory_gib": 8
+    }
+  ],
+  "scheduled_maximum": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "previous_project_ceiling": {
+    "workers": 10,
+    "cpus": 16,
+    "memory_gib": 104
+  },
+  "project_ceiling": {
+    "workers": 14,
+    "cpus": 16,
+    "memory_gib": 120
+  },
+  "active_project_before": [
+    [
+      "21251960_0",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21251960_1",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21272799_0",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272799_1",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21279129_3",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_2",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_5",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_4",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_6",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_7",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ]
+  ],
+  "compatible_capacity": "batch-csl|1914/6/0/1920|5-00:00:00\nbatch-skl*|5706/334/40/6080|5-00:00:00\nbatch-milan|1949/2147/0/4096|5-00:00:00\n",
+  "prerequisites_verified": {
+    "prey_reference_artifacts_complete_and_unchanged": true,
+    "prey_gate_helpers_unchanged": true,
+    "ant_strict_registration_inputs_pass": true,
+    "all18run_configs_unchanged": true,
+    "all18outputs_absent_before_revision": true
+  },
+  "downstream_dependencies": "Prey auditor21282210 still follows its entire gate array. Ant auditor21282782 still follows all10Ant runs;memory gates21284086 still wait for21282782 and reference data21280689. HC and SMAC chains unchanged.",
+  "learning_release": "No automatic learning release. All scientific gates,resource audits,complete-set selection rules and priority of the prior18-run feedforward local-scale study remain in force.",
+  "authorization": "Standing user instruction to continue until reproduction is ready and approve nonrisky commands. Resource ceilings were autonomous scheduling choices;the original sixteen-CPU ceiling remains unchanged. Same existing trials,no paid service,no other reproduction changes.",
+  "failure_policy": "One dependency update per owned pending array. A timeout triggers observation of the same array,never task resubmission. No cancellation,requeue,restart,seed replacement or early-checkpoint selection.",
+  "prepare_script": "results/independent_study_release_20261029/prepare.py",
+  "prepare_script_sha256": "d1cf1ae1ad716e7bb1df3b302d1ff9a06f39eaec53b14a7446f01d676c631e60"
+}
