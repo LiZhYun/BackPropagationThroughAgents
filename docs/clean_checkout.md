@@ -1,5 +1,35 @@
 # Clean installation verification
 
+## Latest committed export: 29 October 2026
+
+Commit `ddde9dc` now passes a fresh, non-editable wheel installation with
+**975 tests passed and one CUDA-only skip**, in about 65 seconds. Pytest's
+source-path injection was disabled. All 25 installed Python modules match the
+committed export byte for byte, and the installed package imports from
+`site-packages`. This includes the optional continuous local-scale control,
+portable-study exporter tests and later reporting checks.
+
+The export contains no local experiment results, paper archives or preexisting
+environment. Locked dependencies, wheel construction and installation succeed
+offline using the project cache. CPU PyTorch 2.6.0, NumPy 2.4.6 and Python
+3.11.15 are recorded; SMACv2, mujoco-py and Football are absent. The dependency
+check passes. The wheel includes the matching README and MIT notice.
+
+Both matrix console checks and recurrent Predator–Prey training/replay pass
+from outside the checkout. Saved-policy replay exactly matches every final
+episode and fixed-window record. Their 64/16-step budgets are interface checks.
+All three standard-library reports run successfully: absent local manifests
+remain unknown or explicit missing-artifact errors, never completed evidence.
+
+The [verification record](../experiments/core_wheel_verification_20261029.json)
+contains the exact commit, archive, wheel, modules, dependency versions,
+commands, JUnit/stdout hashes and installed-command replay evidence. This
+validates the core CPU installation on the recorded platform. An uncached
+online installation and hosted GitHub Actions were not repeated. Native
+engines and full benchmark performance remain separate requirements.
+
+## Earlier verification history
+
 On 2026-10-26, two tracked source exports were installed in fresh private
 environments. Neither export contained the local paper archives, experiment
 results or an existing environment. The machine-readable
