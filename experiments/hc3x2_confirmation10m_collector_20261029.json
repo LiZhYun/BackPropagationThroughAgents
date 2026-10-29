@@ -1,0 +1,100 @@
+{
+  "recorded_utc": "2026-10-29T13:49:14.673052+00:00",
+  "job_id": "21284586",
+  "status": "released",
+  "scope": "Audit every registered HC3x2 confirmation run and replay all ten final native policies; retain negative results. No training or follow-up submission.",
+  "audit_plan": "experiments/hc3x2_confirmation10m_audit_plan_20261029.json",
+  "audit_plan_sha256": "d183d180d4f802d5a78b97cdf75cdb25f83e4e3d3520574b13b2812552d34951",
+  "preflight": "experiments/hc3x2_confirmation10m_audit_preflight_20261029.json",
+  "preflight_sha256": "af749d5c07a1d380295d6ebd1d3b1bcdd0434b6af6783c2e2edf42945096b36e",
+  "dependency": "afterany:21281001",
+  "dispatch": "results/hc3x2_final_audit_20261029/audit.sbatch",
+  "dispatch_sha256": "d7ea84f7c34d57abbc96ce9958b88985487f4c75041f570ae79ec169ed077c1c",
+  "resources": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "wall_minutes": 30,
+    "maximum_workers": 1,
+    "automatic_requeue": false
+  },
+  "no_existing_jobs_modified": true,
+  "capacity": "Append after the existing HC confirmation -> bundle replay -> local-scale native -> remaining Football native chain. Reuses one of its two original 4GiB slots; no existing dependency changes. Prior 18-run local-scale learning must now wait for this auditor or another verified free allocation.",
+  "project_ceiling": {
+    "workers": 8,
+    "cpus": 16,
+    "memory_gib": 96
+  },
+  "active_project_before": [
+    [
+      "21251960_0",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21251960_1",
+      "bpta-agentmixer-football20m",
+      "RUNNING",
+      "1",
+      "8G",
+      "(null)"
+    ],
+    [
+      "21272799_0",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272799_1",
+      "bpta-agentmixer-smac10m",
+      "RUNNING",
+      "2",
+      "32G",
+      "(null)"
+    ],
+    [
+      "21272800_4",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_3",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21279129_2",
+      "bpta-agentmixer-hc3-confirm10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ],
+    [
+      "21272800_5",
+      "bpta-agentmixer-mujoco10m",
+      "RUNNING",
+      "1",
+      "4G",
+      "(null)"
+    ]
+  ],
+  "capacity_predecessor_before": "JobId=21281001 ArrayJobId=21281001 ArrayTaskId=0-14%1 ArrayTaskThrottle=1 JobName=bpta-agentmixer-football-maps-gate UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=192442 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21280689_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A SubmitTime=2026-10-29T12:24:56 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T12:24:56 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:3569703 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_discrete_gate_20261029/football.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21280689 /scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_discrete_gate_20261029/football.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/slurm_21281001_4294967294.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/slurm_21281001_4294967294.out TresPerTask=cpu=1",
+  "new_training_runs": 0,
+  "native_replays_planned": 10,
+  "native_episodes_planned": 320,
+  "held_verification": "JobId=21284586 JobName=bpta-agentmixer-hc3-confirm-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21281001_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-29T15:49:14 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T15:49:14 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:1427745 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21281001 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/bpta-agentmixer-hc3-confirm-audit_21284586.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/bpta-agentmixer-hc3-confirm-audit_21284586.out TresPerTask=cpu=1",
+  "released_verification": "JobId=21284586 JobName=bpta-agentmixer-hc3-confirm-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=192442 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=None Dependency=afterany:21281001_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-29T15:49:14 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T15:49:14 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:1427745 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21281001 /scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/bpta-agentmixer-hc3-confirm-audit_21284586.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/hc3x2_final_audit_20261029/bpta-agentmixer-hc3-confirm-audit_21284586.out TresPerTask=cpu=1",
+  "capacity_predecessor_after": "JobId=21281001 ArrayJobId=21281001 ArrayTaskId=0-14%1 ArrayTaskThrottle=1 JobName=bpta-agentmixer-football-maps-gate UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=192442 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=Dependency Dependency=afterany:21280689_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A SubmitTime=2026-10-29T12:24:56 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T12:24:56 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:3569703 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=8G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=8G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_discrete_gate_20261029/football.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21280689 /scratch/work/liz23/reproduce/bpta-agentmixer/results/remaining_discrete_gate_20261029/football.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/slurm_21281001_4294967294.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/football_remaining_gru_check10k_20261029T102335Z/slurm_21281001_4294967294.out TresPerTask=cpu=1"
+}

@@ -83,8 +83,8 @@ have separate setup instructions: [SMACv2](docs/smac.md),
 [Predator–Prey](docs/predator_prey_protocol.md) needs only the core dependencies.
 Optional engines are not needed for numerical tests or matrix games.
 
-Discrete simulator runs can enable [private recurrent actor memory](docs/recurrent_actors.md)
-with `recurrent_actor: true`. The default remains feed-forward; the guide states
+Discrete simulator policies and continuous AgentMixer can enable
+[private recurrent actor memory](docs/recurrent_actors.md) with `recurrent_actor: true`. The default remains feed-forward; the guide states
 the one-decision gradient truncation and differences from the released networks.
 
 [Matrix development notes](docs/matrix_development.md) retain negative results and explain subsequent controls. The [two-agent joint modifier](docs/agentmixer_joint.md) is an experimental correlated redesign with exact mode-preservation checks; it is not silently substituted for the factorized AgentMixer reference.

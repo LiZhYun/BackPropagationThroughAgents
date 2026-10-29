@@ -1,7 +1,9 @@
 # Reporting an independent simulator confirmation
 
-The current reporter audits the frozen BPPO/AR-PPO episodic-return study in
-[HalfCheetah 2×3](halfcheetah_confirmation.md). It uses only Python's standard
+The reporter audits frozen BPPO/AR-PPO episodic-return studies in
+[HalfCheetah 2×3](halfcheetah_confirmation.md),
+[HalfCheetah 3×2](halfcheetah3x2_confirmation.md), and
+[Ant 2×4](ant2x4_confirmation.md). It uses only Python's standard
 library and does not load checkpoints, execute archived source or start engines.
 
 ```bash

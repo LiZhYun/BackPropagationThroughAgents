@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T13:50:24.830914+00:00",
+  "report": "results/benchmark_coverage_20261029_hc3_audit.json",
+  "report_sha256": "79d4419ebdbffe6b5873865d0d24bc182ea2046d5a49b6072a0da98bb5c6135d",
+  "csv": "experiments/benchmark_coverage_20261029_hc3_audit.csv",
+  "csv_sha256": "f893e42b3b92eb7332f500110048ad8bdf1553e89d28317145cec8cc7262644d",
+  "runs": 883,
+  "manifests": 74,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "The new HC3x2 final collector adds no training declarations. The fourth MuJoCo coverage run has completed; all study outcomes remain visible. Artifact coverage includes failures and does not establish reproduced performance.60prepared unsubmitted learning runs remain excluded; collectors and synthetic preflights do not add training declarations."
+}

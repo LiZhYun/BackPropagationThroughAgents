@@ -1,0 +1,109 @@
+{
+  "recorded_utc": "2026-10-29T13:48:27.367027+00:00",
+  "scope": "Full-study guard, schema and frozen-evaluator import preflight. No native engine created or final native replay performed.",
+  "audit_plan": "experiments/hc3x2_confirmation10m_audit_plan_20261029.json",
+  "audit_plan_sha256": "d183d180d4f802d5a78b97cdf75cdb25f83e4e3d3520574b13b2812552d34951",
+  "preflight_script": "results/hc3x2_final_audit_20261029/preflight.py",
+  "preflight_script_sha256": "f6af2b4dcb1a787fb423006d33aca552b5c542dd1e9c0082ce4d66c1e9c18fdb",
+  "frozen_reporter_modules": 25,
+  "previous_complete_negative_confirmation_accepted_as_valid_data": true,
+  "current_confirmation_valid_complete_runs": 2,
+  "current_incomplete_family_rejected": true,
+  "all_current_aggregate_decisions_withheld": true,
+  "corrupted_report_rejections": [
+    "missing_run",
+    "invalid_seed",
+    "run_integrity_error",
+    "missing_group",
+    "missing_aggregate",
+    "incomplete_group",
+    "missing_pair",
+    "missing_figure",
+    "global_error"
+  ],
+  "native_hc3x2_schema_runs": [
+    {
+      "algorithm": "arppo",
+      "seed": 0,
+      "episodes": 32,
+      "environment_steps": 32000,
+      "original_artifact_sha256": {
+        "config.json": "558bb89c0e91894531c36997e6d2ba5882a430bdc54faed973695bea71f43367",
+        "summary.json": "2bd2955ab0f743748be10a049c3f1148cc2f2aafecb853a9cf576ad1e6c3998b",
+        "metrics.jsonl": "403d5c7c100993f47d18911d2b1df72ca1ba9b6833f81901eb67bb17bebd8487",
+        "episodes.jsonl": "df26def05949c095c0cc1643b02547d048e815d603a93de49ed45038d883b269",
+        "checkpoint.pt": "e6c8e080ff9a90f34f88eff5ae31434be4e79ccd17cd28ff7c35cd2650f671c8"
+      }
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 1,
+      "episodes": 32,
+      "environment_steps": 32000,
+      "original_artifact_sha256": {
+        "config.json": "af6017ae782c87670c297e2c90062f4388badae70243e802f31582b3fd3ec734",
+        "summary.json": "1e40f07391a00e43c8a031b01e9a692a876543bd6fed3bc9dea6d656f7cb6c05",
+        "metrics.jsonl": "635a610cabc4a24c66e0b12929b0734bb7d6f4756ee5294698480e12ac933202",
+        "episodes.jsonl": "b32e3b3cf8e25bd0ae3c9f2dddc2a6434d70092385c508ee219cbd39d94330d9",
+        "checkpoint.pt": "0c3e0b666b9b5b5d623f79409c918b52f0423480687d3390c0ad4df24d281d10"
+      }
+    },
+    {
+      "algorithm": "arppo",
+      "seed": 2,
+      "episodes": 32,
+      "environment_steps": 32000,
+      "original_artifact_sha256": {
+        "config.json": "e6555f4f8c6c0eec3b1eb75c659b2e394e1d832e81e68ec2156e43a040f97bc6",
+        "summary.json": "3495c14659748300af369dd285ea7126fa95c25bb08a6db80b4aeeca366dd943",
+        "metrics.jsonl": "0c4680011a268b630beca2e93390d1435d1ac9f2feff8b3df9441ba864a25cc9",
+        "episodes.jsonl": "39aead3bc222d8b08ef2c24a606f7a5e406d8501a143f3ec92ec604f7967636e",
+        "checkpoint.pt": "0b098457c4c5775f0b36ab79c62dc5431a36add6ec6d71f2d72eed493f588d9d"
+      }
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 0,
+      "episodes": 32,
+      "environment_steps": 32000,
+      "original_artifact_sha256": {
+        "config.json": "9632a09efb2400c859546f6a0b21c33b50cee7740ce5ca802e7d6b2def1002f9",
+        "summary.json": "b3340d2f2895589d6a2a93b8ce6a1e7bca6de135a8a6e19c2f58f4992d7c355f",
+        "metrics.jsonl": "9be852aa078691b4b3df4ee49204039ca709669609bb1057b6427f3b1465a3d6",
+        "episodes.jsonl": "40e9c3d1ded0b030a3bc4666c9408bca0b9c2a55e90bbb691702e5b5a3f02895",
+        "checkpoint.pt": "8205d7820baf397d2ad63eca4a093a2f5f9d06e4017e3b1d4f47cd22142bebfc"
+      }
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 1,
+      "episodes": 32,
+      "environment_steps": 32000,
+      "original_artifact_sha256": {
+        "config.json": "dfdd678d0fd5b0c4340079a983ec3b84e82edd0040034733557b642ffdfa5aab",
+        "summary.json": "e672cba8b44e45c2f0cc734d9c2e094b045732a1574f57bc2c846c155de6b913",
+        "metrics.jsonl": "e6cc6a3cba50c85cd9c3cec54df011c4a39eaf7031860e5fe5b7c074caa39c75",
+        "episodes.jsonl": "24d6a8d18ff796e9d9e8dc9a60a5c2a56eb972a56a57a64b87693e105f0c0ffe",
+        "checkpoint.pt": "615054880a435e15a1cce7c61bba5583a32f4a236cee6c5476406ec00c9626aa"
+      }
+    },
+    {
+      "algorithm": "bppo",
+      "seed": 2,
+      "episodes": 32,
+      "environment_steps": 32000,
+      "original_artifact_sha256": {
+        "config.json": "0735862d3563a910df29b62fc6c35def060e36164faad42a2a58a3ad0431a3d9",
+        "summary.json": "aa5a3ad196971552a24cf31b5bd7b1875ef8b6fa5433bf4ac99f58556053eaf8",
+        "metrics.jsonl": "5b9124940f65012a44c5d1aeb66c87072dbcf72221ead7a459b7451935e02af2",
+        "episodes.jsonl": "78e47d2616b3ac0c1312d146204873e3add88c1ab511c1102638c2aa60b55dfa",
+        "checkpoint.pt": "1db252966b05687fe1d20613aea8613e6bd1becad65b519fc6dc7d69cc71d1af"
+      }
+    }
+  ],
+  "evaluator_matches_tested_utility": true,
+  "frozen_evaluator_help_in_private_runtime_passed": true,
+  "native_replays_performed": 0,
+  "shell_syntax_passed": true,
+  "source_config_and_existing_jobs_changed": false
+}

@@ -498,3 +498,19 @@ Every dependency waits for the entire predecessor array or job to terminate. Nat
 The unsubmitted 18-run feedforward local-scale study retains priority after 21281001 or another verified free allocation. The unsubmitted 24-run Prey learning study must now wait for **21284087** or another verified free allocation. The 18-run recurrent learning study remains unsubmitted. Native results, original local-scale validation and measured resources remain separate requirements; an afterany dependency does not mean a predecessor passed. No auditor automatically releases learning.
 
 [Execution specification](../experiments/continuous_recurrent_gate_execution_20261029.json), [native schedule](../experiments/continuous_recurrent_gate_schedule_20261029.json), [collector schedule](../experiments/continuous_recurrent_gate_collector_20261029.json), [live resource snapshot](../experiments/live_resource_check_20261029_memory_gate.json).
+
+
+## HC 3×2 final verification, 29 October 2026
+
+Final auditor **21284586** extends the existing HC allocation after all fifteen remaining Football native checks. It audits the complete registered ten-run HC 3×2 study and replays every final checkpoint using the original 32 episodes. It adds no training runs and releases no learning jobs. Existing jobs and dependencies were unchanged at submission.
+
+| Allocation | Current chain | Maximum reserved resources |
+| --- | --- | --- |
+| Football, Prey, Ant and memory checks | 21251960 → 21282173 → 21282210 → 21282468 → 21282782 → 21284086 → 21284087 | Two workers, two CPUs, 16 GiB |
+| SMAC | 21272799 → 21281002 | Two workers, four CPUs, 64 GiB |
+| MuJoCo coverage | 21272800 | Two workers, two CPUs, 8 GiB |
+| HC confirmation, controls and final verification | 21279129 → 21279857 → 21280689 → 21281001 → **21284586** | Two workers, two CPUs, 8 GiB; final audit one CPU/4 GiB/30 min |
+
+The memory checks additionally depend on all of 21280689 for reference data. Every array edge waits for the entire predecessor to terminate. Maximum project reservations remain eight workers, ten CPUs and 96 GiB within the sixteen-CPU ceiling. The unsubmitted eighteen-run feedforward local-scale learning study retains priority after **21284586** or another verified free allocation. Prey and recurrent learning remain unsubmitted and must satisfy their own gates and capacity review.
+
+All six matched HC 3×2 development runs contribute 126 evaluation-call timings. The maximum 32-episode call is 68.25 s; ten calls with a 50% margin estimate 17.06 min, below the 30-minute cap. Fresh-process startup and host load remain uncertain. The held job's command, ownership, one CPU/4 GiB allocation, no-requeue flag and whole-array dependency were verified before release. [Frozen audit](../experiments/hc3x2_confirmation10m_audit_plan_20261029.json), [preflight](../experiments/hc3x2_confirmation10m_audit_preflight_20261029.json), [submission](../experiments/hc3x2_confirmation10m_collector_20261029.json).

@@ -1,0 +1,532 @@
+{
+  "study_id": "hc3x2_confirmation10m_20261029",
+  "scope": "Independent five-seed BPPO/AR-PPO confirmation for HalfCheetah3x2 at10M under the pinned reconstruction. Changes only training/evaluation seeds from the complete development cohort. Separate from the failed HalfCheetah2x3 study and all other targets.",
+  "plan_sha256": "f6257ee5b588347c150aebdada1b4417332539cf46fb427271eb644208132ee7",
+  "reporter_sha256": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+  "curve_reader_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 5000,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/bppo_seed5000",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.18587157768635085
+        },
+        {
+          "steps": 500000,
+          "value": 3037.9568850667906
+        },
+        {
+          "steps": 1000000,
+          "value": 3523.577406054541
+        },
+        {
+          "steps": 1500000,
+          "value": 3663.899810445096
+        },
+        {
+          "steps": 2000000,
+          "value": 4523.021504026067
+        },
+        {
+          "steps": 2500000,
+          "value": 4900.447811886013
+        },
+        {
+          "steps": 3000000,
+          "value": 4792.653633737667
+        },
+        {
+          "steps": 3500000,
+          "value": 5040.249078867056
+        },
+        {
+          "steps": 4000000,
+          "value": 4794.73634151289
+        },
+        {
+          "steps": 4500000,
+          "value": 4894.907254457321
+        },
+        {
+          "steps": 5000000,
+          "value": 4720.183416801763
+        },
+        {
+          "steps": 5500000,
+          "value": 4688.5799839945585
+        },
+        {
+          "steps": 6000000,
+          "value": 4628.1506191256985
+        },
+        {
+          "steps": 6500000,
+          "value": 4946.880975770921
+        },
+        {
+          "steps": 7000000,
+          "value": 3990.94603556904
+        },
+        {
+          "steps": 7500000,
+          "value": 4713.2265604226
+        },
+        {
+          "steps": 8000000,
+          "value": 5316.038058557517
+        },
+        {
+          "steps": 8500000,
+          "value": 5286.74273827865
+        },
+        {
+          "steps": 9000000,
+          "value": 4691.154321959649
+        },
+        {
+          "steps": 9500000,
+          "value": 4983.619110577963
+        },
+        {
+          "steps": 10000000,
+          "value": 4785.039728534103
+        }
+      ],
+      "full_budget_auc": {
+        "area": 44764699237.795006,
+        "normalized_by_training_steps": 4476.4699237795
+      },
+      "budget": 10000000,
+      "summary_sha256": "e765fed0c8fbc61e8fffb75e5286735e4ca023bad755f78ded27b3709614589c",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "cacbb4d018e8093b576c25f4c0b491dc451703c2302079977bd4918f85334c08",
+      "metrics_snapshot_sha256": "eb6051a0b9d7679d9999dfba5f928ca05639143ee0f4abb1bbb0c23f11cf1e91",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 3000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "60b3b1ee3470209328ab585e8966843cf9ddd902c4589da5ce5797655a7f882c",
+      "checkpoint_sha256": "36d41769b3e808180e69e69c3aafc00268afed2fa7856114ad30bc9f662fd30d",
+      "final_return": 4785.039728534103,
+      "normalized_auc": 4476.4699237795
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 5001,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/bppo_seed5001",
+      "status": "completed",
+      "eligible": true,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.18285446661805985
+        },
+        {
+          "steps": 500000,
+          "value": 1009.2289672092513
+        },
+        {
+          "steps": 1000000,
+          "value": 3945.2014304059194
+        },
+        {
+          "steps": 1500000,
+          "value": 4727.255616071779
+        },
+        {
+          "steps": 2000000,
+          "value": 3616.9095872537805
+        },
+        {
+          "steps": 2500000,
+          "value": 4868.028584495594
+        },
+        {
+          "steps": 3000000,
+          "value": 5104.747722137398
+        },
+        {
+          "steps": 3500000,
+          "value": 5222.95497161523
+        },
+        {
+          "steps": 4000000,
+          "value": 5184.976984482042
+        },
+        {
+          "steps": 4500000,
+          "value": 5337.462039302363
+        },
+        {
+          "steps": 5000000,
+          "value": 5671.27807467997
+        },
+        {
+          "steps": 5500000,
+          "value": 5646.8379152735315
+        },
+        {
+          "steps": 6000000,
+          "value": 4832.54003684362
+        },
+        {
+          "steps": 6500000,
+          "value": 5683.536291428638
+        },
+        {
+          "steps": 7000000,
+          "value": 5219.849223814631
+        },
+        {
+          "steps": 7500000,
+          "value": 5818.286135431055
+        },
+        {
+          "steps": 8000000,
+          "value": 5465.299414350485
+        },
+        {
+          "steps": 8500000,
+          "value": 5654.927901605062
+        },
+        {
+          "steps": 9000000,
+          "value": 5515.958532131656
+        },
+        {
+          "steps": 9500000,
+          "value": 5889.707044843216
+        },
+        {
+          "steps": 10000000,
+          "value": 5845.380987669826
+        }
+      ],
+      "full_budget_auc": {
+        "area": 48668792769.98842,
+        "normalized_by_training_steps": 4866.879276998842
+      },
+      "budget": 10000000,
+      "summary_sha256": "7d1c00290cbfb239152b3f1fafe4b2d178565e29169722782a758f42f1036cda",
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "cacbb4d018e8093b576c25f4c0b491dc451703c2302079977bd4918f85334c08",
+      "metrics_snapshot_sha256": "0c0f8f8893f68b79cfd22d592f89c87d3c21575a866a10a1962d2ea6ef2aab05",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 3000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "e5f58d50d861a547c3c351b7a9943663a1e8a295cc692c018af85a56d408260f",
+      "checkpoint_sha256": "59dd3a38ca2e4143170b2e0327fd733c821173ebaad3603fbb60a4c4dbfe16e0",
+      "final_return": 5845.380987669826,
+      "normalized_auc": 4866.879276998842
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 5002,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/bppo_seed5002",
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.18185719943758624
+        },
+        {
+          "steps": 500000,
+          "value": 1815.75810673928
+        },
+        {
+          "steps": 1000000,
+          "value": 2665.5743582570944
+        },
+        {
+          "steps": 1500000,
+          "value": 3551.646030493829
+        },
+        {
+          "steps": 2000000,
+          "value": 4007.4233221255377
+        },
+        {
+          "steps": 2500000,
+          "value": 4325.891707669965
+        },
+        {
+          "steps": 3000000,
+          "value": 4427.585209199352
+        },
+        {
+          "steps": 3500000,
+          "value": 4456.877195990255
+        },
+        {
+          "steps": 4000000,
+          "value": 4567.673179382106
+        },
+        {
+          "steps": 4500000,
+          "value": 4560.91723236617
+        },
+        {
+          "steps": 5000000,
+          "value": 4709.991403098836
+        },
+        {
+          "steps": 5500000,
+          "value": 4640.370626194511
+        },
+        {
+          "steps": 6000000,
+          "value": 4556.474508924835
+        }
+      ],
+      "full_budget_auc": null,
+      "budget": 10000000,
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "cacbb4d018e8093b576c25f4c0b491dc451703c2302079977bd4918f85334c08",
+      "metrics_snapshot_sha256": "5948ce84739b9009228cbfdccb971ec5eb8eee32c9da4951d3994860f6e947ee",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 3000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "f53e83f4b61af7ec22872e610a0ad48ba42540feec94a7819e221246834d163c"
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 5003,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/bppo_seed5003",
+      "status": "unfinished",
+      "eligible": false,
+      "errors": [],
+      "points": [
+        {
+          "steps": 0,
+          "value": -0.18698321585097455
+        },
+        {
+          "steps": 500000,
+          "value": 2576.103516992179
+        },
+        {
+          "steps": 1000000,
+          "value": 3235.096143690805
+        },
+        {
+          "steps": 1500000,
+          "value": 3590.2394533608613
+        },
+        {
+          "steps": 2000000,
+          "value": 3265.4435853501523
+        },
+        {
+          "steps": 2500000,
+          "value": 4509.688445911566
+        },
+        {
+          "steps": 3000000,
+          "value": 4492.263163151394
+        },
+        {
+          "steps": 3500000,
+          "value": 4768.646557708684
+        },
+        {
+          "steps": 4000000,
+          "value": 4506.534852153445
+        },
+        {
+          "steps": 4500000,
+          "value": 4887.805964432152
+        },
+        {
+          "steps": 5000000,
+          "value": 5009.477641905094
+        },
+        {
+          "steps": 5500000,
+          "value": 4925.522016602957
+        },
+        {
+          "steps": 6000000,
+          "value": 5042.713854245161
+        }
+      ],
+      "full_budget_auc": null,
+      "budget": 10000000,
+      "environment_versions": {
+        "gym": "0.10.8",
+        "mujoco-py": "2.1.2.14",
+        "MAMujoco": "1.1.0",
+        "mujoco_engine": 210,
+        "ma_mujoco_commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+        "python": "3.10.22",
+        "numpy": "1.23.5",
+        "partition_extension": "paper-partitions-v1",
+        "partition_author_commit": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+        "partition_actuator_corrections": []
+      },
+      "configuration_sha256_without_seed": "cacbb4d018e8093b576c25f4c0b491dc451703c2302079977bd4918f85334c08",
+      "metrics_snapshot_sha256": "cc0197ff07620e96fcf07076ded5ed6309e1522b7d044e06041b0153f274c7fe",
+      "ignored_unfinished_tail": false,
+      "evaluation_protocol": {
+        "count": 32,
+        "seed": 3000000,
+        "execution": "autoregressive",
+        "deterministic": true
+      },
+      "metadata_sha256": "8d8498c7d867a8d14905e0eeff6c59648d2548a642702cfb0d03f43bbf895e54"
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 5004,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/bppo_seed5004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 5000,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/arppo_seed5000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 5001,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/arppo_seed5001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 5002,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/arppo_seed5002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 5003,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/arppo_seed5003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 5004,
+      "output_path": "results/mujoco_hc3x2_confirmation10m_20261029T092509Z/arppo_seed5004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "bppo",
+      "declared_seeds": [
+        5000,
+        5001,
+        5002,
+        5003,
+        5004
+      ],
+      "eligible_seeds": [
+        5000,
+        5001
+      ],
+      "complete": false,
+      "aggregate": null
+    },
+    {
+      "algorithm": "arppo",
+      "declared_seeds": [
+        5000,
+        5001,
+        5002,
+        5003,
+        5004
+      ],
+      "eligible_seeds": [],
+      "complete": false,
+      "aggregate": null
+    }
+  ],
+  "paired_comparison": null,
+  "figure_comparison": null,
+  "validation_decision": "incomplete_or_invalid",
+  "paper_reproduction": "not_established",
+  "uncertainty": {
+    "unit": "whole training seed; paired differences retain the same seed pairs",
+    "method": "two-sided 95% percentile bootstrap with linear percentile interpolation",
+    "resamples": 10000,
+    "rng_seed": 1729
+  },
+  "interpretation": "Intervals describe independent training-seed scores under the frozen reconstruction. Historical evaluation, smoothing and simulator equivalence remain unverified. Figure comparison and paired peer-feedback evidence are separate conclusions."
+}
