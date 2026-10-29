@@ -16,7 +16,7 @@ from bta_repro.runner import collect_rollout, update_rollout
 from test_runner import CounterEnv, IdentityCritic
 from test_simulator_train import FakeEnvironment
 
-VARIANTS = [(modifier, local, enabled) for local in ("observation", "state_independent")
+VARIANTS = [(modifier, local, enabled) for local in ("observation", "state_independent", "state_independent_sigmoid")
             for modifier, enabled in (("residual", True), ("bounded", True), ("residual", False))]
 
 
@@ -113,7 +113,7 @@ def test_modes_stay_equal_and_only_local_history_controls_local_actions(variant,
     assert torch.count_nonzero(independent.grad[:, 0, :1]) > 0
 
 
-@pytest.mark.parametrize("local_scale", ["observation", "state_independent"])
+@pytest.mark.parametrize("local_scale", ["observation", "state_independent", "state_independent_sigmoid"])
 def test_gaussian_gru_gradient_matches_finite_difference_and_stops_at_incoming_memory(local_scale):
     torch.manual_seed(117)
     actor = RecurrentGaussianActor(3 + 8, 2, 8, raw_obs_dim=3, initial_std=.3, local_scale=local_scale).double()

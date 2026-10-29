@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T16:05:24.410621+00:00",
+  "report": "results/benchmark_coverage_20261029_sigmoid_control.json",
+  "report_sha256": "5a5f3fb31381cd8d225a080621ad51c15179fb873059a97b25e9a6243a4a9c42",
+  "csv": "experiments/benchmark_coverage_20261029_sigmoid_control.csv",
+  "csv_sha256": "a64886189ada580287feb03795ab99fff40282be056f971c082f50bc04098bf4",
+  "runs": 907,
+  "manifests": 75,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Same submitted learning runs; corrected read-only memory collector adds no training declarations;907ledger-indexed runs/75manifests. No setting was selected from native checks. Artifact coverage includes failures and does not establish reproduced performance.54prepared unsubmitted learning runs and6new unsubmitted native gates remain excluded; collectors and synthetic preflights do not add training declarations."
+}

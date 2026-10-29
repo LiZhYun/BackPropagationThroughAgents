@@ -1,0 +1,103 @@
+{
+  "recorded_utc": "2026-10-29T16:02:04.997239+00:00",
+  "scope": "Corrected grid/episode audit on2existing complete synthetic44k runs; no new native execution or performance claim.",
+  "plan": "experiments/continuous_memory_audit_grid_fix_plan_20261029.json",
+  "plan_sha256": "1c38c013e65bb2a5b5a33173060646f5b819b778c69fb39393a239196bc2b3cd",
+  "fixtures": [
+    {
+      "fixture": "synthetic44k",
+      "config_sha256": "66a3357bc6fd99db88eac4e499e6424499168e8620c6e440b0cce73a2aab5320",
+      "metrics_sha256": "cd2b672ad27dc2180a9f61feb18a3591c11bb4292c6cd4399b2c56ff81c2c13d",
+      "evaluation_grid": [
+        0,
+        12000,
+        24000,
+        36000,
+        44000
+      ],
+      "original_episodes": 10,
+      "final_replay_exact": true,
+      "memory_transitions_verified": 44000
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "config_sha256": "62f002947a52275304cc2b2ccaa543eb33270a4a1470251fadc4be833295139c",
+      "metrics_sha256": "3046d058c9e44c45866a03fb7ec963277c565ec49f69ee21cd29f24a59768930",
+      "evaluation_grid": [
+        0,
+        12000,
+        24000,
+        36000,
+        44000
+      ],
+      "original_episodes": 10,
+      "final_replay_exact": true,
+      "memory_transitions_verified": 44000
+    }
+  ],
+  "corrupted_copy_rejections": [
+    {
+      "fixture": "synthetic44k",
+      "defect": "missing_evaluation",
+      "index": 0
+    },
+    {
+      "fixture": "synthetic44k",
+      "defect": "missing_evaluation",
+      "index": 1
+    },
+    {
+      "fixture": "synthetic44k",
+      "defect": "missing_evaluation",
+      "index": 2
+    },
+    {
+      "fixture": "synthetic44k",
+      "defect": "missing_evaluation",
+      "index": 3
+    },
+    {
+      "fixture": "synthetic44k",
+      "defect": "missing_evaluation",
+      "index": 4
+    },
+    {
+      "fixture": "synthetic44k",
+      "defect": "wrong_stage"
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "defect": "missing_evaluation",
+      "index": 0
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "defect": "missing_evaluation",
+      "index": 1
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "defect": "missing_evaluation",
+      "index": 2
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "defect": "missing_evaluation",
+      "index": 3
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "defect": "missing_evaluation",
+      "index": 4
+    },
+    {
+      "fixture": "synthetic44k_private",
+      "defect": "wrong_stage"
+    }
+  ],
+  "native12_unstarted_rejected": true,
+  "original_native_configs_unchanged": true,
+  "new_native_runs_completed": 0,
+  "new_training_runs_submitted": 0,
+  "errors": []
+}

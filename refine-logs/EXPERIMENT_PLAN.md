@@ -286,3 +286,8 @@ The original24-run settings/selection rule remain fixed. Collector21288041 waits
 ### Complete remaining native-family collectors, 29 October 2026
 
 Queued21288137afterany:21284586:21280689:21281001 to audit all6local-scale+15Football native conditions independently;queued21288138afterany:21281002 for all40SMAC. Each1CPU/2GiB/10min,no requeue,replaces its completed branch. Existing jobs/dependencies/trials untouched;14/16/120ceiling unchanged. Prior18FFlearning keepsHCreservation after21288137. All61configurations/native sources and frozen25module reporting package match;7corrupted inputs and3actual unstarted families rejected. Copies change only mutable-reporting-import path to frozen source; positive native completion still pending. No automatic learning/resource acceptance,score selection or paper claim.
+
+
+### Gaussian local scale and memory-grid correction, 29 October 2026
+
+Added optional state_independent_sigmoid local map,with explicit exp(-5) floor and initial_std<0.5;requested release scale0.36552928931500245. All1093source tests pass/1CUDA skip;35old modes bitwise across6520tensors/3174scalars through2PPOepochs. Six44k native and18matched1M runs frozen/unsubmitted;all24parsers pass,only local-map field differs from prior paired configurations. Prior18FF+18GRUretainpriority;54learningruns nowprepared/unsubmitted. New wheel not validated. During matching, found oldmemorycollector assumed2evals while12frozenconfigs use5. Corrected preflight2existing synthetic44k runs/20episodes/12corruptions;pendingread-only21284087replacedby21289017withsameafter21284086/resource envelope. All native12configs/source/helpers/trainingjobs unchanged. Newcollectorrequires120originalepisodes/24replays. No paper performance claim.

@@ -163,12 +163,14 @@ class Config:
             self.environment != "mujoco" or self.algorithm != "agentmixer" or not self.modifier_enabled
         ):
             raise ValueError("bounded modifier scale requires continuous AgentMixer with modifier enabled")
-        if self.continuous_local_scale not in ("observation", "state_independent"):
-            raise ValueError("continuous_local_scale must be observation or state_independent")
+        if self.continuous_local_scale not in ("observation", "state_independent", "state_independent_sigmoid"):
+            raise ValueError("continuous_local_scale must be observation, state_independent or state_independent_sigmoid")
         if self.continuous_local_scale != "observation" and (
             self.environment != "mujoco" or self.algorithm != "agentmixer"
         ):
             raise ValueError("state-independent local scale requires continuous AgentMixer")
+        if self.continuous_local_scale == "state_independent_sigmoid" and self.initial_std >= 0.5:
+            raise ValueError("sigmoid local scale requires initial_std below 0.5")
         if isinstance(self.action_embed_dim, bool) or not isinstance(self.action_embed_dim, int) or self.action_embed_dim < 0:
             raise ValueError('action_embed_dim must be a nonnegative integer')
         if self.action_embed_dim and (self.environment == 'mujoco' or self.algorithm not in ('arppo', 'bppo')):

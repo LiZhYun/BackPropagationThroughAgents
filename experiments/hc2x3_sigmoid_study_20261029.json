@@ -1,0 +1,346 @@
+{
+  "recorded_utc": "2026-10-29T16:05:04.542215+00:00",
+  "status": "FROZEN_UNSUBMITTED",
+  "scope": "Isolate the documented released local Gaussian scale map after current negative continuous results. Six44k native gates and18matched1M development runs only; no promised improvement or publication claim.",
+  "native_plan": "configs/mujoco_hc2x3_sigmoid_check44k.json",
+  "native_manifest": "results/mujoco_hc2x3_sigmoid_check44k_20261029T160359Z/manifest.json",
+  "native_runs": 6,
+  "learning_plan": "configs/mujoco_hc2x3_sigmoid1m.json",
+  "learning_manifest": "results/mujoco_hc2x3_sigmoid1m_20261029T160359Z/manifest.json",
+  "learning_runs": 18,
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "agentmixer_continuous.py": "ad5a51e328fdcef71fa51c82a6614032f225736405507abbbee51b100d8e9f9e",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "8e19efa44ede46936c522a62d6cf9099361ace540c75f1af4d4578288824bbd1",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "bea23ac8fffb3c64705a634c44e412a04ef85d7dd8a052ff7eb8afcf8fcae602",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "prior_gate_manifest": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/manifest.json",
+  "prior_learning_manifests": [
+    {
+      "path": "results/mujoco_hc2x3_local_scale1m_20261029T100535Z/manifest.json",
+      "sha256": "98a970529c069b8516ebc9cfafffee09c14199b325af56dec50e8cc64808cb04"
+    },
+    {
+      "path": "results/mujoco_hc2x3_recurrent1m_20261029T124222Z/manifest.json",
+      "sha256": "1b6df499b2fff25b160d2919e1a30710684b7fca5a0f1e2aa493e3b42a91bad8"
+    }
+  ],
+  "matched_pairs": [
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_ff",
+      "seed": 0,
+      "new_config_sha256": "5ca10cc95a67d74e94c3ff5bbfdc9322e4457490a9bbe05007a774db0e69e840",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_bounded_state_independent",
+        "seed": 0,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed0.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed0"
+      },
+      "prior_config_sha256": "a77bf044d5315f5ec5f0b42f8aa0e505c4870682477db45bbdc8753d748c8601",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_ff",
+      "seed": 1,
+      "new_config_sha256": "f16d2e0129b5113240e850e9ebde2151a413c44e80863b87809eff494180c57d",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_bounded_state_independent",
+        "seed": 1,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed1.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed1"
+      },
+      "prior_config_sha256": "e4a3f3b3bff7f129b00aefa7cfc94db2b60068f3bcaa27f740fb6a23722e3c9c",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_ff",
+      "seed": 2,
+      "new_config_sha256": "6b61bf7c76a6e5815a6a75a8ca22678f78a87ab37f7c197854e5e540c10b12f0",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_bounded_state_independent",
+        "seed": 2,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed2.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_bounded_state_independent_seed2"
+      },
+      "prior_config_sha256": "44745119ca5e176e896f4eab1e8aa3199510e54b8a7ccf36f5a1d91cfd75ebce",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_ff",
+      "seed": 0,
+      "new_config_sha256": "dc13ac19e8caf7ee091e424a8ceea7050da89b2b9575e0d7e1d86a75565e8029",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_identity_state_independent",
+        "seed": 0,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed0.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed0"
+      },
+      "prior_config_sha256": "32c83ce44bc364ab1341b8d47faad8696cacc89cce2960489e7552a2468deaf1",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_ff",
+      "seed": 1,
+      "new_config_sha256": "0e04d4b392e8df1335ede827454fbf45ed3a6b7e8eaaf1bd83be21ebefbe76d3",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_identity_state_independent",
+        "seed": 1,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed1.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed1"
+      },
+      "prior_config_sha256": "82f7c965b21d165a1fd1e5f91ff608c3eee220c8bab75ab6ef4607a60b7128c3",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_ff",
+      "seed": 2,
+      "new_config_sha256": "ca145f5de49847958304eb8cfbc0f2ca23a6037022e952fa8b308f2ebbb429b1",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_identity_state_independent",
+        "seed": 2,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed2.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_identity_state_independent_seed2"
+      },
+      "prior_config_sha256": "b55106c564976c1d08f545502ea3ab9364429f47158b3ece766ed02e409d155e",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_ff",
+      "seed": 0,
+      "new_config_sha256": "45660323c3f5b853878918cf8ff07858eeeb5b33a0a83a48bb0fb2a01fb4ace2",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_residual_state_independent",
+        "seed": 0,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed0.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed0"
+      },
+      "prior_config_sha256": "e57365e0d1f627bfaeea71ce9ae2210c534a049ff5412e85beb1e9bb89344f9f",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_ff",
+      "seed": 1,
+      "new_config_sha256": "b17bcded6fa31741fe7ea5d315a4a6aedca58cb77451a2610135fbdaa13e0f6f",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_residual_state_independent",
+        "seed": 1,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed1.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed1"
+      },
+      "prior_config_sha256": "24299cd0fceb145bfa460e7c7a84ac057907f2ba050d05990aa996235ba9373e",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_ff",
+      "seed": 2,
+      "new_config_sha256": "65ff241f9e27dad2ee2595e3bbc22133d52ae46df5d67a0c1af04693203cd171",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_residual_state_independent",
+        "seed": 2,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed2.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_local_scale1m_20261029T100535Z/agentmixer_residual_state_independent_seed2"
+      },
+      "prior_config_sha256": "a6f0ea780f70268a1a1cb362d03c25e4bb3fc25bccc13fa9e8c80f4a48a48987",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "seed": 0,
+      "new_config_sha256": "68918aaee08ed2bb440df028d8ad46dc75a886c268255cf35fdcbcabea843b22",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_bounded_state_independent_gru",
+        "seed": 0,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed0.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed0"
+      },
+      "prior_config_sha256": "a2c94bf4d92595870ec8ba346d476959e964b051e021058c9a46af45c9a1712a",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "seed": 1,
+      "new_config_sha256": "515975adfddc6586919bb3715a0add456da00003154e3ba2362a42fce448073b",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_bounded_state_independent_gru",
+        "seed": 1,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed1.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed1"
+      },
+      "prior_config_sha256": "4870b519fe4f266a271b285d840d040e2c7f2c16afe14f6bd02a1c69e41cb63f",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_bounded_state_independent_sigmoid_gru",
+      "seed": 2,
+      "new_config_sha256": "04658e52fff51fa4ca502e2eb10c3dc7a308f5c6c8ee4d82c7339f37bb3b25b4",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_bounded_state_independent_gru",
+        "seed": 2,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed2.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_bounded_state_independent_gru_seed2"
+      },
+      "prior_config_sha256": "b38e053c804727bc741871ca1934bc069e5e84df6d22dde8564357e6c5bfa026",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "seed": 0,
+      "new_config_sha256": "996a74d2153c53962918ebefea7d272e22bfdbbb6ba69a94f4b303a23831cc63",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_identity_state_independent_gru",
+        "seed": 0,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_identity_state_independent_gru_seed0.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_identity_state_independent_gru_seed0"
+      },
+      "prior_config_sha256": "04ed7d8c388d00d3391e28862b0c0433d09ebe39e112532d10c44d46d5c02467",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "seed": 1,
+      "new_config_sha256": "a872392ddf6f2a7a949976542e53082f0d2421d6afa0c40a86808868aad037fd",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_identity_state_independent_gru",
+        "seed": 1,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_identity_state_independent_gru_seed1.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_identity_state_independent_gru_seed1"
+      },
+      "prior_config_sha256": "13bab8553765e24855906e57682cd5865a9e991a9cdc034930aaa6c4f75adbfd",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_identity_state_independent_sigmoid_gru",
+      "seed": 2,
+      "new_config_sha256": "de78669104a5475f1fe4e59fc84315e1bf34500366d14e26e405976667425ce8",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_identity_state_independent_gru",
+        "seed": 2,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_identity_state_independent_gru_seed2.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_identity_state_independent_gru_seed2"
+      },
+      "prior_config_sha256": "44b00da7fac33834b0f2fd5196d5b14fadaef40a7be05238314dd686b1996b70",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "seed": 0,
+      "new_config_sha256": "b3b46b10a148e0947b5df80025930835076347eb8dcc7cfeace6d3cc27e66091",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_residual_state_independent_gru",
+        "seed": 0,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_residual_state_independent_gru_seed0.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_residual_state_independent_gru_seed0"
+      },
+      "prior_config_sha256": "6f22ed99f35aa4a88ef2fbd68114e3f8ac3e122b233cf539664841dd82565c4d",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "seed": 1,
+      "new_config_sha256": "7d8f8f5a9fc9ef532d8a7b2856fb17025e551a0fff5b9e7d028e81f34b91a09d",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_residual_state_independent_gru",
+        "seed": 1,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_residual_state_independent_gru_seed1.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_residual_state_independent_gru_seed1"
+      },
+      "prior_config_sha256": "ccae402a0030533741d6467399de4778b9f93c73be1ac516a53f27dabd9a2466",
+      "only_changed_field": "continuous_local_scale"
+    },
+    {
+      "variant": "agentmixer_residual_state_independent_sigmoid_gru",
+      "seed": 2,
+      "new_config_sha256": "1a0a2cf3db000f22638096ce17de7e94701a3daf255308fb90dc2c555bc01cf2",
+      "prior_entry": {
+        "environment": "mujoco",
+        "algorithm": "agentmixer",
+        "variant": "agentmixer_residual_state_independent_gru",
+        "seed": 2,
+        "config_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_residual_state_independent_gru_seed2.json",
+        "output_path": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/mujoco_hc2x3_recurrent1m_20261029T124222Z/agentmixer_residual_state_independent_gru_seed2"
+      },
+      "prior_config_sha256": "0c9036e310ed9fb74dd2856ea56fb5a9776c54a187f59b45a3dcd499c9d570b3",
+      "only_changed_field": "continuous_local_scale"
+    }
+  ],
+  "frozen_parser_count": 24,
+  "job_ids": [],
+  "capacity_reserved": false,
+  "native_requirements": [
+    "All6full44k native runs with11rollouts and40training horizon resets each.",
+    "All configured evaluations at0/12000/24000/36000/44000:60original episodes total.",
+    "All12final checkpoint episodes replay exactly.",
+    "Read-only memory witness for all3GRU conditions:132000transitions;240total training resets.",
+    "Measured per-task runtime/memory and verified available allocation before learning. Existing18FF/18GRU studies retain priority."
+  ],
+  "learning_analysis": {
+    "primary": "All1Mfinal local-mean episode returns,3training seeds per condition,means/sampleSD and individual scores.",
+    "secondary": "Whole0:100k:1M curve normalized area and sigmoid-minus-exponential paired differences at identical modifier/memory/seed.",
+    "complete_set": "Retain all18new and36priorFF/GRU outcomes. No aggregate selection from an incomplete family,per-seed winners or peak substitution.",
+    "later_requirements": "Any promising candidate requires separately registered full10M development and unused final training/evaluation seeds. No automatic full-budget/confirmation release."
+  },
+  "numerical_difference": "Local sigma=max(exp(-5),0.5*sigmoid(score));positive floor is an explicit numerical repair absent from release. Initial scale is0.5*sigmoid(1),same requested scale as exponential controls,butfloat32inverse-map scales need not be bitwise identical.",
+  "core_invariant": "Centralized and decentralized raw Gaussian means remain exactly equal. Global state only changes centralized uncertainty.",
+  "prepare_script": "results/continuous_sigmoid_control_20261029/prepare_study_v2.py",
+  "prepare_script_sha256": "df36586f86463f07ddbd8688615769cb732459a77965a9a98a85b117b26d0798",
+  "native_plan_sha256": "63f024aa088256d04508c74a22058838924755275a5e54b9d5c4e3d37998fd10",
+  "native_manifest_sha256": "389c7d36142c6b9a21d793ff11f20e42492c51f2e6af0d21e7e60e508c4f0202",
+  "learning_plan_sha256": "c7ce30345743f94a894d8da5e985c23960011285c634b8bd572b9bd337607f5b",
+  "learning_manifest_sha256": "8e90ddefcd8d40c8cad30ee5d13566d0bd5c37fc5e26c596ec1883ed77459b84",
+  "prior_gate_manifest_sha256": "d014efcf45fdaec2cfcc16a50f5d031081d6811fb8044539f0b2056faaa71a65"
+}

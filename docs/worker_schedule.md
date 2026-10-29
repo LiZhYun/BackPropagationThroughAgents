@@ -566,3 +566,8 @@ The Prey branch now continues **21287360 → 21288041**. The collector replaces 
 The HC branch now ends **21284586 → 21288137**, and the SMAC branch ends **21281002 → 21288138**. The HC collector additionally waits directly for **21280689** and **21281001**. It audits the six local-scale and fifteen Football gates independently. The SMAC collector audits all forty remaining gates. These are artifact-only tasks: no simulator starts and no training is submitted.
 
 Each requests one CPU/2 GiB/10 minutes after its branch ends; the maximum stays fourteen workers/sixteen CPUs/120 GiB. The unsubmitted eighteen-run local-scale learning study keeps its reserved HC allocation after **21288137**, or may use separately verified free capacity. Every existing job, configuration, source, seed, resource limit and dependency remains unchanged. [Plan](../experiments/remaining_native_collectors_plan_20261029.json); [verified jobs](../experiments/remaining_native_collectors_schedules_20261029.json).
+
+
+## Corrected memory collector, 29 October 2026
+
+The Ant/memory branch now ends **21284086 → 21289017**. Only pending read-only collector21284087 was cancelled/replaced because its grid check contradicted the frozen12000-step cadence. Native training and all other dependencies remain unchanged. The replacement uses the same1CPU/2GiB/5min allocation and requires120original episodes,24replays and all existing memory/prefix checks. The resource ceiling remains14workers/16CPUs/120GiB. [Verified replacement](../experiments/continuous_memory_audit_grid_fix_schedule_20261029.json). Six sigmoid-scale native checks and eighteen further learning runs are frozen but unsubmitted,with no capacity reserved. Existing studies keep priority.

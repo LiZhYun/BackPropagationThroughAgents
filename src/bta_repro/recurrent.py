@@ -15,7 +15,7 @@ from torch import nn
 from .agentmixer import AgentMixerPolicy
 from .agentmixer_continuous import ContinuousAgentMixerPolicy, _GaussianActor
 from .bppo import AutoregressivePolicy
-from .core import IndependentPolicy, LOG_STD_MAX, LOG_STD_MIN
+from .core import IndependentPolicy
 
 
 class RecurrentActor(nn.Module):
@@ -129,10 +129,8 @@ class RecurrentGaussianActor(_GaussianActor):
     def forward(self, inputs):
         memory = self.memory_step(inputs)
         mean = self.mean_head(memory)
-        log_std = (self.log_std.expand_as(mean) if self.log_std_head is None
-                   else self.log_std_head(memory))
         # Use the same local scale map as the feed-forward policy.
-        return mean, log_std.clamp(LOG_STD_MIN, LOG_STD_MAX).exp()
+        return mean, self.standard_deviation(memory, mean)
 
 
 class RecurrentContinuousAgentMixerPolicy(_LocalMemory, ContinuousAgentMixerPolicy):

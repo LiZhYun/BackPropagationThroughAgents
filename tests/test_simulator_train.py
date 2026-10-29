@@ -179,10 +179,11 @@ def test_rejects_unsupported_continuous_modifier_scale(options):
 @pytest.mark.parametrize('modifier_scale,modifier_enabled', [
     ('residual', True), ('bounded', True), ('residual', False),
 ])
+@pytest.mark.parametrize('local_scale', ['state_independent', 'state_independent_sigmoid'])
 def test_state_independent_local_scale_trains_and_replays_checkpoint(
-    tmp_path, environments, modifier_scale, modifier_enabled
+    tmp_path, environments, modifier_scale, modifier_enabled, local_scale
 ):
-    config = _config(environment='mujoco', continuous_local_scale='state_independent',
+    config = _config(environment='mujoco', continuous_local_scale=local_scale,
                      continuous_modifier_scale=modifier_scale, modifier_enabled=modifier_enabled,
                      initial_std=.3, normalize_observations=True, normalize_value_targets=True)
     config.validate()
@@ -191,8 +192,8 @@ def test_state_independent_local_scale_trains_and_replays_checkpoint(
     assert summary['status'] == 'completed'
     checkpoint = torch.load(output / 'checkpoint.pt', weights_only=True)
     metadata = json.loads((output / 'config.json').read_text())
-    assert checkpoint['config']['continuous_local_scale'] == 'state_independent'
-    assert metadata['config']['continuous_local_scale'] == 'state_independent'
+    assert checkpoint['config']['continuous_local_scale'] == local_scale
+    assert metadata['config']['continuous_local_scale'] == local_scale
     assert _checkpoint_evaluator()(output)['evaluation'] == summary['final_evaluation']
     if not modifier_enabled:
         policy = training.make_policy(config, FakeEnvironment(config, 7))

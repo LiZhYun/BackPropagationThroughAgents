@@ -1,0 +1,109 @@
+{
+  "label": "mujoco_hc2x3_sigmoid1m",
+  "scope": "Eighteen matched1M development runs,seeds0-2; isolate sigmoid vs exponential state-independent local scale with every prior FF/GRU modifier/identity outcome retained. No native or resource approval and no full-budget/final claim.",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "variants": {
+    "agentmixer_bounded_state_independent_sigmoid_ff": {
+      "algorithm": "agentmixer",
+      "continuous_modifier_scale": "bounded",
+      "modifier_enabled": true,
+      "recurrent_actor": false,
+      "continuous_local_scale": "state_independent_sigmoid"
+    },
+    "agentmixer_identity_state_independent_sigmoid_ff": {
+      "algorithm": "agentmixer",
+      "continuous_modifier_scale": "residual",
+      "modifier_enabled": false,
+      "recurrent_actor": false,
+      "continuous_local_scale": "state_independent_sigmoid"
+    },
+    "agentmixer_residual_state_independent_sigmoid_ff": {
+      "algorithm": "agentmixer",
+      "continuous_modifier_scale": "residual",
+      "modifier_enabled": true,
+      "recurrent_actor": false,
+      "continuous_local_scale": "state_independent_sigmoid"
+    },
+    "agentmixer_bounded_state_independent_sigmoid_gru": {
+      "algorithm": "agentmixer",
+      "continuous_modifier_scale": "bounded",
+      "modifier_enabled": true,
+      "recurrent_actor": true,
+      "continuous_local_scale": "state_independent_sigmoid"
+    },
+    "agentmixer_identity_state_independent_sigmoid_gru": {
+      "algorithm": "agentmixer",
+      "continuous_modifier_scale": "residual",
+      "modifier_enabled": false,
+      "recurrent_actor": true,
+      "continuous_local_scale": "state_independent_sigmoid"
+    },
+    "agentmixer_residual_state_independent_sigmoid_gru": {
+      "algorithm": "agentmixer",
+      "continuous_modifier_scale": "residual",
+      "modifier_enabled": true,
+      "recurrent_actor": true,
+      "continuous_local_scale": "state_independent_sigmoid"
+    }
+  },
+  "dispatch_mode": "one_run_per_task",
+  "wall_time_minutes": 120,
+  "base_config": {
+    "environment": "mujoco",
+    "env_config": {
+      "scenario": "HalfCheetah-v2",
+      "agent_conf": "2x3",
+      "agent_obsk": 0,
+      "episode_limit": 1000,
+      "action_units": "normalized"
+    },
+    "algorithm": "agentmixer",
+    "seed": 0,
+    "steps": 1000000,
+    "num_envs": 40,
+    "rollout_steps": 100,
+    "hidden_dim": 64,
+    "recurrent_actor": true,
+    "initial_std": 0.36552928931500245,
+    "action_embed_dim": 0,
+    "agentmixer_correlation": "factorized",
+    "joint_distribution_float64": false,
+    "modifier_enabled": true,
+    "modifier_log_scale_bound": null,
+    "learning_rate": 0.0003,
+    "modifier_learning_rate": 3e-05,
+    "critic_learning_rate": 0.0003,
+    "epochs": 5,
+    "num_minibatches": 1,
+    "clip_coef": 0.2,
+    "entropy_coef": 0.01,
+    "agentmixer_distillation_coef": 0.0,
+    "value_coef": 0.5,
+    "normalize_value_targets": true,
+    "value_clip_coef": 0.2,
+    "value_huber_delta": 10.0,
+    "max_grad_norm": 10.0,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "normalize_advantages": true,
+    "normalize_observations": true,
+    "observation_clip": 10.0,
+    "temperature": 1.0,
+    "continuous_peer_noise": "fresh",
+    "continuous_modifier_scale": "bounded",
+    "continuous_local_scale": "state_independent_sigmoid",
+    "eval_seed": 1000000,
+    "eval_episodes": 10,
+    "eval_max_steps": 10000,
+    "eval_every_steps": 100000,
+    "eval_window_steps": 0,
+    "eval_windows": 0,
+    "checkpoint_every_updates": 125,
+    "device": "cpu",
+    "threads": 1
+  }
+}

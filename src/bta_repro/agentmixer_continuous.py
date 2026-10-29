@@ -25,6 +25,9 @@ class _GaussianActor(nn.Module):
     ) -> None:
         super().__init__()
         log_std = initial_log_std(initial_std)
+        if local_scale == "state_independent_sigmoid" and float(initial_std) >= 0.5:
+            raise ValueError("sigmoid local scale requires initial_std below 0.5")
+        self.local_scale = local_scale
         self.features = nn.Sequential(
             nn.Linear(obs_dim, hidden_dim), nn.Tanh(),
             nn.Linear(hidden_dim, hidden_dim), nn.Tanh(),
@@ -44,14 +47,26 @@ class _GaussianActor(nn.Module):
             # same RNG and retain identical mean/modifier initial weights.
             self.log_std = nn.Parameter(self.log_std_head.bias.detach().clone())
             self.log_std_head = None
+        elif local_scale == "state_independent_sigmoid":
+            # Initialize the original head first to preserve mean/modifier RNG.
+            # The released Gaussian names this unconstrained score `log_std`.
+            score = math.log(float(initial_std) / (0.5 - float(initial_std)))
+            self.scale_score = nn.Parameter(torch.full_like(self.log_std_head.bias, score))
+            self.log_std_head = None
+
+    def standard_deviation(self, features: Tensor, mean: Tensor) -> Tensor:
+        if self.local_scale == "state_independent_sigmoid":
+            # The floor is a numerical safeguard, not part of the release map.
+            std = (0.5 * self.scale_score.sigmoid()).clamp_min(math.exp(LOG_STD_MIN))
+            return std.expand_as(mean)
+        log_std = (self.log_std.expand_as(mean) if self.log_std_head is None
+                   else self.log_std_head(features))
+        return log_std.clamp(LOG_STD_MIN, LOG_STD_MAX).exp()
 
     def forward(self, obs: Tensor) -> tuple[Tensor, Tensor]:
         features = self.features(obs)
         mean = self.mean_head(features)
-        log_std = (self.log_std.expand_as(mean) if self.log_std_head is None
-                   else self.log_std_head(features))
-        log_std = log_std.clamp(LOG_STD_MIN, LOG_STD_MAX)
-        return mean, log_std.exp()
+        return mean, self.standard_deviation(features, mean)
 
 
 class ContinuousPolicyModifier(nn.Module):
@@ -106,8 +121,10 @@ class ContinuousAgentMixerPolicy(nn.Module):
             raise ValueError("all policy dimensions must be positive")
         if modifier_scale not in ("residual", "bounded"):
             raise ValueError("modifier_scale must be residual or bounded")
-        if local_scale not in ("observation", "state_independent"):
-            raise ValueError("local_scale must be observation or state_independent")
+        if local_scale not in ("observation", "state_independent", "state_independent_sigmoid"):
+            raise ValueError("local_scale must be observation, state_independent or state_independent_sigmoid")
+        if local_scale == "state_independent_sigmoid" and initial_log_std(initial_std) >= math.log(0.5):
+            raise ValueError("sigmoid local scale requires initial_std below 0.5")
         self.obs_dim = obs_dim
         self.state_dim = state_dim
         self.num_agents = num_agents
