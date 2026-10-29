@@ -1,0 +1,238 @@
+{
+  "recorded_utc": "2026-10-29T11:35:40.576103+00:00",
+  "scope": "Native gate launcher/auditor preflight; no new native gate or learning run executed.",
+  "execution_plan": "experiments/prey_distillation_gate_execution_20261029.json",
+  "execution_plan_sha256": "f33bfc1500f5e34faa0ae0478318fec24fe2fbcb190153b91ff27f9bac0d9a8b",
+  "raw_evaluations_checked": 808,
+  "raw_records_checked": {
+    "episodes": 16160,
+    "windows": 80800,
+    "steps": 17091895
+  },
+  "historical_runs_checked": 8,
+  "corrupted_copy_rejections": [
+    {
+      "variant": "agentmixer_ff_zero",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "agentmixer_ff_zero",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "agentmixer_ff_zero",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "agentmixer_ff_zero",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "agentmixer_ff_zero",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "agentmixer_ff_zero",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "agentmixer_gru_zero",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "identity_ff_zero",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "identity_gru_zero",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "agentmixer_ff_minus1",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "identity_ff_minus1",
+      "mutation": "invalid_episode_ending"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "fractional_unexplained_reward"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_window_denominator"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_derived_seed"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "invalid_partial_return"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "wrong_capture_reduction"
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "mutation": "invalid_episode_ending"
+    }
+  ],
+  "unstarted_gate_rejected": "('Native gate incomplete; no learning release', ['agentmixer_gru_zero', 'distill001_gru_zero', 'distill01_gru_zero', 'identity_gru_zero', 'agentmixer_gru_minus1', 'distill001_gru_minus1', 'distill01_gru_minus1', 'identity_gru_minus1'])",
+  "compiled_helpers": [
+    "results/prey_distillation_gate_20261029/run.py",
+    "results/prey_distillation_gate_20261029/checks.py",
+    "results/prey_distillation_gate_20261029/audit.py",
+    "results/prey_distillation_gate_20261029/evaluate_simulator.py"
+  ],
+  "environment_check": "results/prey_distillation_gate_20261029/environment_check.json",
+  "environment_check_sha256": "b3001c8f0c4c1dcbb9d83d5e3bb11300b8773673931bc434668203bc9c33e690",
+  "original_placement": {
+    "job": "21219719",
+    "tasks": [
+      0,
+      1
+    ],
+    "state": "COMPLETED",
+    "nodes": [
+      "milan1"
+    ],
+    "partition": "batch-milan",
+    "source": "sacct read2026-10-29"
+  },
+  "submission_override": {
+    "partition": "batch-milan",
+    "reason": "Match original Prey CPU family before requiring exact default-update prefixes; native check still verifies equality."
+  },
+  "limitations": [
+    "Raw checks do not independently re-execute historical policies or prove new native gate completion.",
+    "Whole8gate completion and exact fresh native replay remain required.",
+    "Slurm memory/runtime evidence must be audited before learning release."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T11:50:32.762735+00:00",
+  "report": "results/benchmark_coverage_20261029_ant_complete.json",
+  "report_sha256": "843c5f5f91be8f4357fc7dc5e7e0105bfb03e7d949c56c2062da5eb513d5e0f2",
+  "csv": "experiments/benchmark_coverage_20261029_ant_complete.csv",
+  "csv_sha256": "ab94a2dc0d07d1880ef84bf2f8105078db0646ea7410cc5ec47cec8de9cf8bf9",
+  "runs": 861,
+  "manifests": 72,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Includes the completed global Ant2x4 BPPO run. Artifact coverage includes failures and does not establish reproduced performance;42unsubmitted learning runs remain excluded."
+}

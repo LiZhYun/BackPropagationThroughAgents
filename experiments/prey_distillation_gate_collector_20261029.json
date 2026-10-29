@@ -1,0 +1,25 @@
+{
+  "recorded_utc": "2026-10-29T11:40:52.133562+00:00",
+  "job_id": "21282210",
+  "status": "released",
+  "scope": "Read-only complete-family audit after all8native gates; never releases learning.",
+  "execution_plan": "experiments/prey_distillation_gate_execution_20261029.json",
+  "execution_plan_sha256": "f33bfc1500f5e34faa0ae0478318fec24fe2fbcb190153b91ff27f9bac0d9a8b",
+  "gate_schedule": "experiments/prey_distillation_gate_schedule_20261029.json",
+  "gate_schedule_sha256": "bc63a8d6a7a358027efa75471094f9695dc17b9b6dd71a2d85ec1af3b4655f91",
+  "dependency": "afterany:21282173",
+  "dispatch": "results/prey_distillation_gate_20261029/audit.sbatch",
+  "dispatch_sha256": "5a10c12d88d98325692593d4efe672e30a71c881ec2276fa2f1120d1477ff7ef",
+  "output": "experiments/prey_distillation_native_complete_20261029.json",
+  "resources": {
+    "cpus": 1,
+    "memory_gib": 2,
+    "wall_minutes": 5,
+    "maximum_workers": 1,
+    "automatic_requeue": false
+  },
+  "frozen_pythonpath": "/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gru_check10k_20261029T112121Z/source",
+  "no_existing_jobs_modified": true,
+  "held_verification": "JobId=21282210 JobName=bpta-agentmixer-prey-gate-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21282173_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-10-29T13:40:52 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T13:40:52 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:348745 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21282173 /scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit_21282210.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit_21282210.out TresPerTask=cpu=1",
+  "released_verification": "JobId=21282210 JobName=bpta-agentmixer-prey-gate-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=200244 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=None Dependency=afterany:21282173_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-10-29T13:40:52 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T13:40:52 Scheduler=Main Partition=batch-milan AllocNode:Sid=login5:348745 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=2G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=2G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21282173 /scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit_21282210.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/prey_distillation_gate_20261029/audit_21282210.out TresPerTask=cpu=1"
+}

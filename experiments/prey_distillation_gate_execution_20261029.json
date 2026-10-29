@@ -1,0 +1,147 @@
+{
+  "recorded_utc": "2026-10-29T11:33:36.099651+00:00",
+  "scope": "Only8one-full-rollout Prey correctness gates,then exact checkpoint replay. No1M learning release.",
+  "study": "experiments/prey_distillation_study_20261029.json",
+  "study_sha256": "a65095a9ebc0932035f48667314c509d247ccbdf697ed00575cf17edb3369b09",
+  "manifest": "results/prey_distillation_gru_check10k_20261029T112121Z/manifest.json",
+  "manifest_sha256": "2b89a17750e99c1116356573abf2b0dc1acb1bcb5a348bce167d06befb267ce9",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "agentmixer_continuous.py": "31d42b48acdd30cbaf1577ff579340cfba6f39c13a0b9c48367a9bde581e5cdb",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "cf9d8364a53c1f628775ed31765739ddc836e3f48a9aa67007ae22c7c0126db5",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "3acfa51e44c6f092f3f30b2a19dfd5eb1cda531a4ece0075e2815a170cc9f6bc",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "conditions": [
+    {
+      "variant": "agentmixer_gru_zero",
+      "config_sha256": "4d0748ff5dcdb902386180ad88a4d89ce20d475801cd63b2be535c314374ae0c",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0",
+      "default_prefix_required": true,
+      "original_artifacts": {
+        "config.json": "aa6650895d95f7232c43acb25aae86ad9906b7ed7e8a491ec17312c740a2fc23",
+        "metrics.jsonl": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103",
+        "summary.json": "b3e8b3c721d647e3fb93ffb21a3545789492cde7107f6f250033129341acbf50"
+      }
+    },
+    {
+      "variant": "distill001_gru_zero",
+      "config_sha256": "a2e3a3ea46320618ee5d0c767a69bd424077412475af7de2f3bbfc3489102add",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0",
+      "default_prefix_required": false,
+      "original_artifacts": {
+        "config.json": "aa6650895d95f7232c43acb25aae86ad9906b7ed7e8a491ec17312c740a2fc23",
+        "metrics.jsonl": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103",
+        "summary.json": "b3e8b3c721d647e3fb93ffb21a3545789492cde7107f6f250033129341acbf50"
+      }
+    },
+    {
+      "variant": "distill01_gru_zero",
+      "config_sha256": "1ab4dadc882aa65920f782bc176008319e68a309e62d4c294ab7cc866b0755f4",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_zero_seed0",
+      "default_prefix_required": false,
+      "original_artifacts": {
+        "config.json": "aa6650895d95f7232c43acb25aae86ad9906b7ed7e8a491ec17312c740a2fc23",
+        "metrics.jsonl": "fd18cd84ab791e42b7dc32cb3b052374f95efabb8b94a749fd2fcf824953a103",
+        "summary.json": "b3e8b3c721d647e3fb93ffb21a3545789492cde7107f6f250033129341acbf50"
+      }
+    },
+    {
+      "variant": "identity_gru_zero",
+      "config_sha256": "2341f8bcc0d73e1eaf93a6e6a46149ca242701d64f705501add595ef87870c2d",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/identity_gru_zero_seed0",
+      "default_prefix_required": true,
+      "original_artifacts": {
+        "config.json": "de7be70e7cac0e9851bf29703161cfbbb609ac9ebb4c4719c5e54e68a2f57bcb",
+        "metrics.jsonl": "4180f22048dde2a621b3b3dc4d982e7f4fd44ed8ce13448dc2885317f0db925a",
+        "summary.json": "86bf5e32be5685797aa073a0d98a60758dbd8e23411f7da4cd566faae538ea36"
+      }
+    },
+    {
+      "variant": "agentmixer_gru_minus1",
+      "config_sha256": "09d22da0ae850aeedd64e08fdd53e005b4dd291207589c59994536f479a398ec",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0",
+      "default_prefix_required": true,
+      "original_artifacts": {
+        "config.json": "4a06100d16f32513e1adb78ccc0a2229b576f2dfdf6df4d653f5e4e42afbfa1c",
+        "metrics.jsonl": "9efc74b5fe9ed51e58aa0ca3e132000bcc5d67d315804845fb73727186ebee36",
+        "summary.json": "95d9fcba2809e288745cc9814baf6aa53e3ab8900027b27167d0ba65cfb885ad"
+      }
+    },
+    {
+      "variant": "distill001_gru_minus1",
+      "config_sha256": "ab263ffd8611b775778e5be10c46945b8c1445843f3ba1618e3032010468024f",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0",
+      "default_prefix_required": false,
+      "original_artifacts": {
+        "config.json": "4a06100d16f32513e1adb78ccc0a2229b576f2dfdf6df4d653f5e4e42afbfa1c",
+        "metrics.jsonl": "9efc74b5fe9ed51e58aa0ca3e132000bcc5d67d315804845fb73727186ebee36",
+        "summary.json": "95d9fcba2809e288745cc9814baf6aa53e3ab8900027b27167d0ba65cfb885ad"
+      }
+    },
+    {
+      "variant": "distill01_gru_minus1",
+      "config_sha256": "6d3cb267feb06244052cfe401eebb9c495b146968f78558541c9eae982095f75",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/agentmixer_gru_minus1_seed0",
+      "default_prefix_required": false,
+      "original_artifacts": {
+        "config.json": "4a06100d16f32513e1adb78ccc0a2229b576f2dfdf6df4d653f5e4e42afbfa1c",
+        "metrics.jsonl": "9efc74b5fe9ed51e58aa0ca3e132000bcc5d67d315804845fb73727186ebee36",
+        "summary.json": "95d9fcba2809e288745cc9814baf6aa53e3ab8900027b27167d0ba65cfb885ad"
+      }
+    },
+    {
+      "variant": "identity_gru_minus1",
+      "config_sha256": "db897d4c64584e18897c1007a519690eee5df079d3802eb219622065d24b7c53",
+      "original_run": "results/prey_recurrent_release1m_20261026T184956Z/identity_gru_minus1_seed0",
+      "default_prefix_required": true,
+      "original_artifacts": {
+        "config.json": "75bc216d234a54c238ca2cdcac345b2e569587b88a156523f855393c4d6cd3e0",
+        "metrics.jsonl": "6b0a8ae81017a1d8964cac194a237f281e3b2b5144058ba1f1035ff901719a3b",
+        "summary.json": "1189aa0523d0eea96f613b9800ea3ef7d7c380780d1e0e8e67cdb592417b4b50"
+      }
+    }
+  ],
+  "dependency": "afterany:21251960",
+  "predecessor_name": "bpta-agentmixer-football20m",
+  "resources": {
+    "cpus_per_task": 1,
+    "memory_gib_per_task": 4,
+    "wall_minutes_per_task": 30,
+    "maximum_active_tasks": 2,
+    "automatic_requeue": false
+  },
+  "scheduling": "Reuse the two Football20M slots after its entire5-run array terminates. This reserves2workers/2CPUs/8GiB in place of2workers/2CPUs/16GiB. Other active/pending chains and the continuous-local-scale follow-up retain their reservations; project ceiling8workers/16CPUs/96GiB.",
+  "audit_command": ".venv/bin/python results/prey_distillation_gate_20261029/audit.py experiments/prey_distillation_gate_execution_20261029.json --output experiments/prey_distillation_native_complete_20261029.json",
+  "learning_release": "All8native checks,4exact original first-update prefixes,and a separate measured resource audit must pass before24-run1M learning release.",
+  "runner": "results/prey_distillation_gate_20261029/run.py",
+  "runner_sha256": "b1703d5e2230f4c96fda5390f481de571467acf5be2f8fddfa7fa6627057c4af",
+  "checks": "results/prey_distillation_gate_20261029/checks.py",
+  "checks_sha256": "185f18fbe0e8ce50fa1b243b8d0ea3ce3546cb4486deee188c1aaeb0ec83bea8",
+  "evaluator": "results/prey_distillation_gate_20261029/evaluate_simulator.py",
+  "evaluator_sha256": "58461f02290bcb0dde7da4e76c321fe0ddfc91e4b18e38213ec7aa842678585b",
+  "auditor": "results/prey_distillation_gate_20261029/audit.py",
+  "auditor_sha256": "838e713ac37aa732a9f8c6f7c16c120875091a468d67b93e5b2bbaaa8c7b1261",
+  "dispatch": "results/prey_distillation_gate_20261029/submit.sbatch",
+  "dispatch_sha256": "31e091da3c38c3e64610871f0fec16e3d979de69fc24055776fc5eaf9fc44edf"
+}

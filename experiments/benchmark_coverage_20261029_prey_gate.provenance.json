@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-29T11:42:38.806636+00:00",
+  "report": "results/benchmark_coverage_20261029_prey_gate.json",
+  "report_sha256": "3407f6bd7230f7ef89889764b95a9037f02d714f0785b80c3933000503a94eb9",
+  "csv": "experiments/benchmark_coverage_20261029_prey_gate.csv",
+  "csv_sha256": "126ad7049e0cc3d57b31d79e67601b5558f8f6dd4e36bbe3f5da7f15cd4b6b57",
+  "runs": 861,
+  "manifests": 72,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 9,
+  "targets_without_exact_budget_method_artifacts": 36,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "ledger_snapshot_prefix_bytes": 158808,
+  "ledger_snapshot_prefix_sha256": "f1c3d3b9902286ad4b658a14ada5b8c3dde3d90714aadecc4ae2f87484364e66",
+  "interpretation": "Artifact snapshot after8Prey native checks were queued; the subsequent read-only collector adds no experiment manifest. Includes unsuccessful outcomes. The24Prey and18continuous-local-scale unsubmitted learning runs remain excluded;9exact-budget targets are not9reproduced targets."
+}

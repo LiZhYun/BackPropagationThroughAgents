@@ -1,9 +1,6 @@
 # Recorded worker schedule
 
-This page retains successive scheduling snapshots. The [latest verified
-graph](#remaining-mujoco-native-gates-2026-10-26) inserts37 native checks into
-two of the eight serial chains, bounded by16 CPUs and64 GiB. Earlier
-four-worker ceilings below are historical and superseded.
+This page retains successive scheduling snapshots. The [current graph](#native-controls-and-automatic-prey-audit-29-october-2026) uses at most eight workers, sixteen CPUs, and 96 GiB. Earlier ceilings and graphs below are historical. Query the recorded job IDs for live state.
 
 The initial arrays used two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -451,3 +448,19 @@ The [nine-run entropy-zero study](../experiments/hc2x3_entropy0_10m_plan_2026102
 MuJoCo coverage 21251756 (37/37) and SMAC layout 21252369 (5/5) completed 0:0. NewSMAC array **21272799** uses the same two 2 CPU/ 32 GiB slots, now 60 h/task for five full 10M controls. NewMuJoCo array **21272800** uses two 1 CPU/4 GiB/30 h slots only after the entire HC partition array 21251961 finishes. Both held allocations and dependencies were verified before release; no automatic requeue. Other project jobs remain untouched.
 
 The maximum schedule is still 8workers/10 CPUs/96 GiB, below the 16 CPU ceiling. Source-identical plans and resource projections: [SMAC](../experiments/smac_terran5_gru10m_plan_20261029.json), [MuJoCo](../experiments/mujoco_coverage10m_plan_20261029.json). Both are development studies; full batches take several days. [Latest dated state](progress_20261029.md).
+
+
+## Native controls and automatic Prey audit, 29 October 2026
+
+The current reservations are four separate chains. Array edges wait for the **entire** predecessor array to terminate. Failure permits an independent next check to run; it never authorizes a retry or a performance claim.
+
+| Allocation | Current chain | Maximum reserved resources |
+| --- | --- | --- |
+| Football | 21251960 (5×20M) → 21282173 (8 Prey native gates) → 21282210 (complete gate audit) | Two workers, two CPUs, 16 GiB; Prey uses 8 GiB total, audit 2 GiB |
+| SMAC | 21272799 (5×10M) → 21281002 (40 remaining native checks) | Two workers, four CPUs, 64 GiB |
+| MuJoCo coverage | 21272800 (48×10M) | Two workers, two CPUs, 8 GiB |
+| HC confirmation and controls | 21279129 (10×10M) → 21279857 (bundle replay) → 21280689 (6 local-scale checks) → 21281001 (15 Football native checks) | Two workers, two CPUs, 8 GiB; Football native checks use one 8 GiB worker |
+
+The sum is eight workers, ten CPUs, and 96 GiB, within the sixteen-CPU ceiling. Unsubmitted 18-run local-scale learning must wait for 21281001 or another verified free allocation. Unsubmitted 24-run Prey learning has no allocation and still requires all native checks plus a resource audit. Other future follow-ups must respect these reservations. No existing job was modified by the Prey addition.
+
+The [Prey gate receipt](../experiments/prey_distillation_gate_schedule_20261029.json), [automatic-audit receipt](../experiments/prey_distillation_gate_collector_20261029.json), and [current status](../STATUS.md) record the constraints and pending work. Native gates and collectors establish correctness evidence, not reproduced performance.
