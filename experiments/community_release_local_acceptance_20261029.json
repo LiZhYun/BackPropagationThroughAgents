@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-10-29T17:07:17.629326+00:00",
+  "status": "local_community_release_requirements_verified",
+  "latest_user_scope": "clear faithful open shared repo ASAP; no exhaustive/full-budget research; stop unneeded jobs; push to specified existing repo",
+  "method_mapping": "docs/method_fidelity.md",
+  "explicit_corrections_documented": true,
+  "reference_examples_do_not_enable_research_extensions": true,
+  "current_source_module_count": 25,
+  "source_matches_installed_wheel_and_readme_checks": true,
+  "installed_suite": {
+    "passed": 1093,
+    "skipped": 1,
+    "skip_reason": "CUDA-only test in CPU environment",
+    "seconds": 73.205,
+    "source_path_injection": false
+  },
+  "installed_commands_pass": 14,
+  "readme_commands_pass": 4,
+  "exact_saved_policy_replay": true,
+  "local_links_checked": 89,
+  "all_research_jobs_stopped": true,
+  "unrelated_reproduction_unchanged": true,
+  "all54_continuous_studies_unsubmitted": true,
+  "performance_superiority_claimed": false,
+  "optional_failed_prefix_audit_retained": true,
+  "github_repository": "LiZhYun/BackPropagationThroughAgents",
+  "fetched_upstream_main": "13607d0de0fd02c6e66c4811d6e2ca3ed06bf8a0",
+  "publication_method": "Merge existing upstream as a parent while keeping the reviewed unified tree; normal non-force main push; verify remote head and tree afterward.",
+  "remaining": "GitHub push and remote verification",
+  "hosted_ci": "not_yet_observed"
+}

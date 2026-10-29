@@ -1,6 +1,12 @@
 # Clean installation verification
 
-## Current wheel with sigmoid local scales: 29 October 2026
+## Community release wheel: 29 October 2026
+
+The clean committed export of `e5c4116` passes **1,093 installed-package tests and one CUDA-only skip**, in 73.21 seconds, with pytest source-path injection disabled. All 25 modules, the simplified public README and MIT license match the export. Fourteen build/install/dependency/CLI/replay/report commands pass, including exact saved-policy replay. The inactive private validation prefix and its complete dependency inventory are restored afterward. No research sweep or new dependency environment is created.
+
+This reuses the recorded CPU stack; an uncached online installation, hosted CI and all-task benchmark reproduction are not claimed. [Exact wheel verification](../experiments/community_release_wheel_verification_20261029.json). All four public README commands also pass: the default BPPO and factorized AgentMixer matrix examples at 4,096 decisions each, the 10,240-decision Predator–Prey example, and exact complete-episode/window checkpoint replay. No research extension is enabled in these examples. [README checks](../experiments/community_release_readme_examples_20261029.json).
+
+## Preceding wheel with sigmoid local scales: 29 October 2026
 
 The exact export of commit `f311fc2` passes **1,093 installed-package tests and one CUDA-only skip** in 57.79 seconds, with pytest source-path injection disabled. All 25 modules import from `site-packages` and match the committed export. The packaged README and MIT license match. The suite includes the new sigmoid scale, private continuous memory, raw likelihoods, optimizer and exact synthetic saved-policy replay checks.
 
@@ -196,6 +202,6 @@ are retained in the chosen directory.
 
 This verifies the core CPU installation on the recorded platform. Separate
 native-engine installations are covered by the [SMAC](smac.md),
-[MuJoCo](mujoco_setup.md) and [Football](football.md) guides. Full benchmark
-results, independent training seeds and qualified paper comparisons remain
-release requirements in [STATUS.md](../STATUS.md).
+[MuJoCo](mujoco_setup.md) and [Football](football.md) guides. Performance claims require matching evidence and qualified paper comparisons.
+Full benchmark runs and new tuning sweeps are not public-code release
+requirements; see [STATUS.md](../STATUS.md).

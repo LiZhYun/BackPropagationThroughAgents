@@ -10,7 +10,7 @@ Updated 29 October 2026. The priority is a clear, faithful repository that reade
 
 ## Validation
 
-The preceding exact-source wheel passes 1,093 tests with one CUDA-only skip, installed command checks and saved-policy replay. Current documentation/README wheel verification is the final local release check. [Evidence and limitations](docs/clean_checkout.md).
+The exact-source community wheel (`e5c4116`) passes 1,093 tests with one CUDA-only skip, all fourteen build/install/CLI/replay/report commands, and source/README/license checks. The original validation prefix and dependencies are restored. [Evidence and limitations](docs/clean_checkout.md).
 
 Initial native integrations cover MuJoCo/SMAC and Football; the Predator–Prey adapter matches 10,240 pinned-release transitions. These integration checks do not establish benchmark performance. An optional local-scale historical-prefix comparison failed and remains documented; exact historical trajectory equivalence is unproven. [Failure record](experiments/local_scale_native_prefix_failure_20261029.json).
 
@@ -20,8 +20,8 @@ All five earlier full-budget arrays and all five remaining optional research arr
 
 [Full-budget preservation](experiments/reduced_budget_stop_and_preservation_20261029.json); [remaining-sweep preservation](experiments/community_release_stopped_sweeps_20261029.json). The 54 prepared continuous learning runs remain unsubmitted. Do not restart sweeps as a release gate.
 
-## Remaining release work
+## Publication
 
-Finish the current installed-wheel and documented-example checks, then push to the user-specified GitHub repository. This checkout has no configured remote. [Current scope](experiments/community_release_scope_20261029.json).
+All four public README commands pass, including the complete Predator–Prey episode/window replay. The unified code targets the user-specified `LiZhYun/BackPropagationThroughAgents` repository. Publication preserves its existing commit history and uses a normal fast-forward push. No further experiment is needed for the public-code release. [Current scope](experiments/community_release_scope_20261029.json).
 
 The [experiment tracker](refine-logs/EXPERIMENT_TRACKER.md), preserved dated status files and [source audit](docs/source_audit.md) retain research history. Benchmark coverage percentages are not release-readiness percentages.

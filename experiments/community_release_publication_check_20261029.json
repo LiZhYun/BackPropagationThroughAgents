@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-10-29T17:04:12.859771+00:00",
+  "scope": "Tracked-checkout publication hygiene, not a general security guarantee.",
+  "tracked_file_count": 727,
+  "excluded_local_artifact_prefixes_absent": true,
+  "credential_pattern_match_filenames": [],
+  "largest_tracked_blob_bytes": 3858990,
+  "readme_sha256": "6050687745e535b8c5079b60c217277bbb1bda24c751206202b07b2f2da90b8c",
+  "private_paper_archives_environments_and_training_checkpoints_not_tracked": true,
+  "git_remote": "none_configured",
+  "connected_github_account": "LiZhYun",
+  "normal_ssh_push_auth": "public_key_unavailable",
+  "github_connector_can_access_original_repo": true
+}

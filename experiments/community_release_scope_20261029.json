@@ -21,11 +21,12 @@
   "all_research_jobs_stopped": true,
   "new_research_jobs_allowed": false,
   "other_reproduction_untouched": true,
-  "github_remote_configured": false,
+  "github_remote_configured": true,
   "remaining": [
-    "Current documented wheel/examples verification",
-    "GitHub destination and push"
+    "History-preserving GitHub push and remote-tree verification"
   ],
   "production_sources_unchanged": true,
-  "optional_native_prefix_failure": "experiments/local_scale_native_prefix_failure_20261029.json"
+  "optional_native_prefix_failure": "experiments/local_scale_native_prefix_failure_20261029.json",
+  "github_destination": "https://github.com/LiZhYun/BackPropagationThroughAgents",
+  "local_release_validation": "complete"
 }

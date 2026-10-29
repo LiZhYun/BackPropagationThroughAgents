@@ -256,3 +256,6 @@
 
 
 | R178 | Release-first scope | Clear faithful community repo ASAP | Research sweeps stopped | APPLIED | Five remaining arrays and five collectors stopped; 6 completed/7 interrupted/84 unstarted declarations preserved in189files. Earlier acceleration receipt remains historical. No new learning released; method-fidelity guide and short default examples replace benchmark-gated readiness. experiments/community_release_scope_20261029.json |
+
+
+| R179 | Community release verification | Exacte5c4116wheel and public examples |1093tests/1CUDA skip;14wheel commands;4README commands | PASS LOCAL |25module/README/license matches; restored validation prefix;4096BPPO+4096factorizedAM+10240Prey and exact episode/window replay. No live project research jobs. Target LiZhYun/BackPropagationThroughAgents; push verification remains. experiments/community_release_local_acceptance_20261029.json |
