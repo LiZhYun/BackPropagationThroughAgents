@@ -1,0 +1,15 @@
+{
+  "recorded_utc": "2026-10-29T12:15:30.888683+00:00",
+  "report": "results/benchmark_coverage_20261029_ant_confirmation.json",
+  "report_sha256": "ddd2b4bb9f3ec287e27871a41151f8f8c6e419aa44d4bce61a574c49a7a0bf02",
+  "csv": "experiments/benchmark_coverage_20261029_ant_confirmation.csv",
+  "csv_sha256": "0bfc8f29e8dbb64c13c003f03fc85bb0f33effa8162a07521f066aa87aa19a97",
+  "runs": 871,
+  "manifests": 73,
+  "targets": 45,
+  "targets_with_exact_budget_method_artifacts": 10,
+  "targets_without_exact_budget_method_artifacts": 35,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "interpretation": "Includes10 newly registered Ant confirmation runs and the first2 completed HC3x2 confirmation runs. Artifact coverage includes failures and does not establish reproduced performance.42prepared unsubmitted learning runs remain excluded; collectors do not add training declarations."
+}

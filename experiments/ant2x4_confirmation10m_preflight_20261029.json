@@ -1,0 +1,139 @@
+{
+  "study_id": "ant2x4_confirmation10m_20261029",
+  "scope": "Independent five-pair BPPO/AR-PPO confirmation for global-observation Ant2x4 at10M under the pinned reconstruction. Exact20-module source and settings selected after one completed development seed; only training/evaluation seeds change. No claim from the single development seed and no pooling with it.",
+  "plan_sha256": "f8eee3c8ba46e1961890ac8f4211d78f75f0f325580dfc9caa90f932bdf61d60",
+  "reporter_sha256": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+  "curve_reader_sha256": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+  "errors": [],
+  "runs": [
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 6000,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/bppo_seed6000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 6001,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/bppo_seed6001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 6002,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/bppo_seed6002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 6003,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/bppo_seed6003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "bppo",
+      "variant": "bppo",
+      "seed": 6004,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/bppo_seed6004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 6000,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/arppo_seed6000",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 6001,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/arppo_seed6001",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 6002,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/arppo_seed6002",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 6003,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/arppo_seed6003",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    },
+    {
+      "algorithm": "arppo",
+      "variant": "arppo",
+      "seed": 6004,
+      "output_path": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/arppo_seed6004",
+      "status": "not_started",
+      "eligible": false,
+      "errors": []
+    }
+  ],
+  "groups": [
+    {
+      "algorithm": "bppo",
+      "declared_seeds": [
+        6000,
+        6001,
+        6002,
+        6003,
+        6004
+      ],
+      "eligible_seeds": [],
+      "complete": false,
+      "aggregate": null
+    },
+    {
+      "algorithm": "arppo",
+      "declared_seeds": [
+        6000,
+        6001,
+        6002,
+        6003,
+        6004
+      ],
+      "eligible_seeds": [],
+      "complete": false,
+      "aggregate": null
+    }
+  ],
+  "paired_comparison": null,
+  "figure_comparison": null,
+  "validation_decision": "incomplete_or_invalid",
+  "paper_reproduction": "not_established",
+  "uncertainty": {
+    "unit": "whole training seed; paired differences retain the same seed pairs",
+    "method": "two-sided 95% percentile bootstrap with linear percentile interpolation",
+    "resamples": 10000,
+    "rng_seed": 1729
+  },
+  "interpretation": "Intervals describe independent training-seed scores under the frozen reconstruction. Historical evaluation, smoothing and simulator equivalence remain unverified. Figure comparison and paired peer-feedback evidence are separate conclusions."
+}

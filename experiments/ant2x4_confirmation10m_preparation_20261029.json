@@ -1,0 +1,29 @@
+{
+  "recorded_utc": "2026-10-29T11:58:45.966187+00:00",
+  "plan": "experiments/ant2x4_confirmation10m_plan_20261029.json",
+  "plan_sha256": "f8eee3c8ba46e1961890ac8f4211d78f75f0f325580dfc9caa90f932bdf61d60",
+  "manifest": "results/mujoco_ant2x4_confirmation10m_20261029T115843Z/manifest.json",
+  "manifest_sha256": "5aafaa85da75723d769f5f7a0d84caea1363d10273ebfa34a33a754d93f01519",
+  "dispatch": "results/ant2x4_confirmation_dispatch_20261029/submit.sbatch",
+  "dispatch_sha256": "a24f60346ef79efa4ff635ccb7e6b3c5b01170b3f17a4096f1a56383665c5951",
+  "source_modules": 20,
+  "exact_source_match": true,
+  "frozen_config_parsers_passed": 10,
+  "only_config_changes": [
+    "seed",
+    "eval_seed"
+  ],
+  "prior_inventory_runs": 903,
+  "ledger_inventory_runs": 861,
+  "additional_prepared_inventory_runs": 42,
+  "training_environment_streams_unique": 200,
+  "training_seeds": [
+    6000,
+    6001,
+    6002,
+    6003,
+    6004
+  ],
+  "evaluation_seed": 4000000,
+  "status": "prepared_unsubmitted"
+}

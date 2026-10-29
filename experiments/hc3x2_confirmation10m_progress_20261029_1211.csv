@@ -1,0 +1,11 @@
+algorithm,variant,seed,status,eligible,final_return,normalized_auc,errors
+bppo,bppo,5000,completed,True,4785.039728534103,4476.4699237795,
+bppo,bppo,5001,completed,True,5845.380987669826,4866.879276998842,
+bppo,bppo,5002,unfinished,False,,,
+bppo,bppo,5003,unfinished,False,,,
+bppo,bppo,5004,not_started,False,,,
+arppo,arppo,5000,not_started,False,,,
+arppo,arppo,5001,not_started,False,,,
+arppo,arppo,5002,not_started,False,,,
+arppo,arppo,5003,not_started,False,,,
+arppo,arppo,5004,not_started,False,,,

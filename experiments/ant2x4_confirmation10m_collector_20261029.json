@@ -1,0 +1,24 @@
+{
+  "recorded_utc": "2026-10-29T12:14:42.963816+00:00",
+  "job_id": "21282782",
+  "status": "released",
+  "scope": "Audit every registered run and replay all10 final native policies, preserving negative results. No training or follow-up submission.",
+  "audit_plan": "experiments/ant2x4_confirmation10m_audit_plan_20261029_v2.json",
+  "audit_plan_sha256": "f1d36a2a21f9517e0d4852ec1729ff54b55287557b0ba32abf81b4812603ac79",
+  "preflight": "experiments/ant2x4_confirmation10m_audit_preflight_20261029.json",
+  "preflight_sha256": "6fa9515436c60782de237a1676e64a939c500beced6786524d360d587ae5dab7",
+  "dependency": "afterany:21282468",
+  "dispatch": "results/ant2x4_confirmation_audit_20261029/audit_v2.sbatch",
+  "dispatch_sha256": "79603a4c9c544b91b583ffe1b86c409a9f1112b290ce04c396734b90ab76c3e7",
+  "resources": {
+    "cpus": 1,
+    "memory_gib": 4,
+    "wall_minutes": 30,
+    "maximum_workers": 1,
+    "automatic_requeue": false
+  },
+  "no_existing_jobs_modified": true,
+  "capacity": "One of the two Ant confirmation slots, after the entire array; retain8workers/16CPUs/96GiB ceiling.",
+  "held_verification": "JobId=21282782 JobName=bpta-agentmixer-ant2-confirm-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=0 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=JobHeldUser Dependency=afterany:21282468_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-29T14:14:42 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T14:14:42 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:605905 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_v2.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21282468 /scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_v2.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_21282782.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_21282782.out TresPerTask=cpu=1",
+  "released_verification": "JobId=21282782 JobName=bpta-agentmixer-ant2-confirm-audit UserId=liz23(3278648) GroupId=liz23(3278648) MCS_label=N/A Priority=198680 Nice=0 Account=aalto_users QOS=normal JobState=PENDING Reason=None Dependency=afterany:21282468_*(unfulfilled) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-10-29T14:14:42 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-29T14:14:42 Scheduler=Main Partition=batch-milan,batch-skl,batch-csl AllocNode:Sid=login5:605905 ReqNodeList=(null) ExcNodeList=(null) NodeList= NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* ReqTRES=cpu=1,mem=4G,node=1,billing=1 AllocTRES=(null) Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null) Command=/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_v2.sbatch SubmitLine=sbatch --hold --parsable --dependency=afterany:21282468 /scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_v2.sbatch WorkDir=/scratch/work/liz23/reproduce/bpta-agentmixer StdErr=/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_21282782.err StdIn=/dev/null StdOut=/scratch/work/liz23/reproduce/bpta-agentmixer/results/ant2x4_confirmation_audit_20261029/audit_21282782.out TresPerTask=cpu=1"
+}

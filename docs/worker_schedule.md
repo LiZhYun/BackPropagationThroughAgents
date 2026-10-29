@@ -1,6 +1,6 @@
 # Recorded worker schedule
 
-This page retains successive scheduling snapshots. The [current graph](#native-controls-and-automatic-prey-audit-29-october-2026) uses at most eight workers, sixteen CPUs, and 96 GiB. Earlier ceilings and graphs below are historical. Query the recorded job IDs for live state.
+This page retains successive scheduling snapshots. The [current graph](#ant-confirmation-and-final-audit-29-october-2026) uses at most eight workers, sixteen CPUs, and 96 GiB. Earlier ceilings and graphs below are historical. Query the recorded job IDs for live state.
 
 The initial arrays used two independent workers each. Worker `i` executes
 its assigned runs sequentially: indices `i, i+2, i+4, …` in the frozen manifest.
@@ -464,3 +464,19 @@ The current reservations are four separate chains. Array edges wait for the **en
 The sum is eight workers, ten CPUs, and 96 GiB, within the sixteen-CPU ceiling. Unsubmitted 18-run local-scale learning must wait for 21281001 or another verified free allocation. Unsubmitted 24-run Prey learning has no allocation and still requires all native checks plus a resource audit. Other future follow-ups must respect these reservations. No existing job was modified by the Prey addition.
 
 The [Prey gate receipt](../experiments/prey_distillation_gate_schedule_20261029.json), [automatic-audit receipt](../experiments/prey_distillation_gate_collector_20261029.json), and [current status](../STATUS.md) record the constraints and pending work. Native gates and collectors establish correctness evidence, not reproduced performance.
+
+
+## Ant confirmation and final audit, 29 October 2026
+
+The Ant confirmation extends the existing Football/Prey allocation. Every edge below waits for the entire predecessor array or single job to terminate. Existing jobs, configurations and dependencies are unchanged.
+
+| Allocation | Current chain | Maximum reserved resources |
+| --- | --- | --- |
+| Football, Prey and Ant confirmation | 21251960 → 21282173 → 21282210 → **21282468** (ten Ant confirmation runs) → **21282782** (full audit and ten native replays) | Two workers, two CPUs, 16 GiB; Ant uses two 4 GiB workers, final audit one 4 GiB worker |
+| SMAC | 21272799 → 21281002 | Two workers, four CPUs, 64 GiB |
+| MuJoCo coverage | 21272800 | Two workers, two CPUs, 8 GiB |
+| HC confirmation and controls | 21279129 → 21279857 → 21280689 → 21281001 | Two workers, two CPUs, 8 GiB |
+
+The combined bound remains eight workers, ten CPUs and 96 GiB, within the sixteen-CPU ceiling. The unsubmitted 18-run local-scale study retains priority after 21281001 or another verified free allocation. The 24-run Prey learning study still requires its complete native gates and a resource audit; it cannot overlap the new Ant reservation and must wait for 21282782 or another verified free allocation.
+
+Ant uses the selected 20-module trainer unchanged. Its final auditor uses a separately pinned reporter plus the same native training source for replay. Preflight checks pass; no final Ant result exists yet. [Training schedule](../experiments/ant2x4_confirmation10m_schedule_20261029.json), [audit schedule](../experiments/ant2x4_confirmation10m_collector_20261029.json), [study rules](ant2x4_confirmation.md).

@@ -16,4 +16,4 @@ The [raw audit](../experiments/mujoco_coverage10m_progress_20261029_pm.json) ver
 
 The paper figure shows a five-seed centerline near 9.904M decisions with unresolved smoothing and train/evaluation convention. Our primary endpoint is the final 10M evaluation. The adjacent 9.9M BPPO evaluation is 6,519.64; it is recorded as a secondary point, not selected as a replacement. The reading range is digitization precision, not a confidence interval. [Target extraction and caveats](curve_targets.md); [complete development evidence](../experiments/ant2x4_global10m_development_20261029.json).
 
-Further training seeds and a separately registered independent comparison remain required. No new learning job is submitted by this result report, and no paper-level reproduction claim is made.
+A [separate independent confirmation](ant2x4_confirmation.md) is now registered and queued: five unused paired training seeds, the same source/settings and a fresh evaluation stream. The development result above remains a single-seed observation; no paper-level reproduction claim is made.

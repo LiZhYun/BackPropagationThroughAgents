@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-10-29T12:13:57.566543+00:00",
+  "audit_plan": "experiments/ant2x4_confirmation10m_audit_plan_20261029_v2.json",
+  "audit_plan_sha256": "f1d36a2a21f9517e0d4852ec1729ff54b55287557b0ba32abf81b4812603ac79",
+  "frozen_reporter_modules": 25,
+  "previous_complete_negative_confirmation_accepted_as_valid_data": true,
+  "not_started_ant_confirmation_rejected_as_incomplete": true,
+  "corrupted_report_rejections": [
+    "missing_run",
+    "invalid_seed",
+    "missing_aggregate",
+    "missing_pair",
+    "missing_figure",
+    "global_error"
+  ],
+  "native_evaluation_schema_verified_against_complete_ant_runs": 2,
+  "evaluator_matches_existing_tested_utility": true,
+  "native_replays_performed": 0,
+  "scope": "Reporter/guard/schema preflight only; final native replay remains pending after all10 training runs."
+}
