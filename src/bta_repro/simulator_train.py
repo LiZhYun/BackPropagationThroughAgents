@@ -143,8 +143,9 @@ class Config:
         for name in ("normalize_advantages", "normalize_observations", "normalize_value_targets", "modifier_enabled", "recurrent_actor"):
             if not isinstance(getattr(self, name), bool):
                 raise ValueError(f"{name} must be boolean")
-        if self.recurrent_actor and (self.environment == "mujoco" or self.agentmixer_correlation != "factorized"):
-            raise ValueError("recurrent actors currently require discrete policies without the experimental joint modifier")
+        if self.recurrent_actor and (self.agentmixer_correlation != "factorized"
+                                     or (self.environment == "mujoco" and self.algorithm != "agentmixer")):
+            raise ValueError("recurrent actors require discrete factorized policies or continuous AgentMixer")
         validate_value_loss_options(self.value_clip_coef, self.value_huber_delta)
         if (isinstance(self.initial_std, bool) or not isinstance(self.initial_std, (int, float))
                 or not math.isfinite(self.initial_std)
@@ -229,8 +230,9 @@ def make_policy(config: Config, env):
         env.is_discrete or config.algorithm != "agentmixer"
     ):
         raise ValueError("state-independent local scale requires continuous AgentMixer")
-    if config.recurrent_actor and (not env.is_discrete or config.agentmixer_correlation != "factorized"):
-        raise ValueError("recurrent actors require discrete policies without the experimental joint modifier")
+    if config.recurrent_actor and (config.agentmixer_correlation != "factorized"
+                                   or (not env.is_discrete and config.algorithm != "agentmixer")):
+        raise ValueError("recurrent actors require discrete factorized policies or continuous AgentMixer")
     if env.is_discrete and config.initial_std != 1.0:
         raise ValueError("nondefault initial_std requires a continuous environment")
     if env.is_discrete and config.continuous_modifier_scale != "residual":
@@ -253,7 +255,10 @@ def make_policy(config: Config, env):
                 else:
                     from .agentmixer import AgentMixerPolicy as Policy
         else:
-            from .agentmixer_continuous import ContinuousAgentMixerPolicy as Policy
+            if config.recurrent_actor:
+                from .recurrent import RecurrentContinuousAgentMixerPolicy as Policy
+            else:
+                from .agentmixer_continuous import ContinuousAgentMixerPolicy as Policy
             scale_arguments['modifier_scale'] = config.continuous_modifier_scale
             scale_arguments['local_scale'] = config.continuous_local_scale
         policy = Policy(env.obs_dim, env.state_dim, env.num_agents, dimensions[-1], config.hidden_dim,

@@ -167,7 +167,7 @@ def test_evaluation_starts_fresh_memory_at_each_episode_boundary(monkeypatch, wi
         assert incoming_was_empty == [True, False] * 3
 
 
-@pytest.mark.parametrize("options", [{"recurrent_actor": 1}, {"environment": "mujoco"},
+@pytest.mark.parametrize("options", [{"recurrent_actor": 1}, {"environment": "mujoco", "algorithm": "bppo"},
                                      {"agentmixer_correlation": "joint"}])
 def test_unsupported_recurrence_is_rejected(options):
     with pytest.raises(ValueError, match="recurrent"):

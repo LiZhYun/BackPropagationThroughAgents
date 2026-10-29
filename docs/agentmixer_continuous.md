@@ -44,6 +44,31 @@ The [registered study](../experiments/hc2x3_local_scale_study_20261029.json) com
 
 The [compatibility audit](../experiments/continuous_local_scale_default_parity_20261029.json) verifies exact default weights, scores, samples, gradients, RNG and one Adam step against the previous committed implementation in 24 cases. Native default-prefix equivalence remains a gate to check when the queued runs finish.
 
+## Optional local history
+
+Set `recurrent_actor=true` for continuous AgentMixer to give each local Gaussian actor a private GRU. The identity control and both local-scale choices support it. The default remains feedforward; continuous MAPPO, AR-PPO and BPPO still reject recurrence.
+
+```text
+features = two_layer_tanh_encoder(local_observation)
+memory = GRU(features, stop_gradient(incoming_memory))
+local_mean = mean_head(memory)
+local_std = exp(clamp(local_scale_head(memory), -5, 2))
+joint_mean = local_mean
+joint_std = existing_modifier_scale_map(local_mean, local_std, state)
+```
+
+With `continuous_local_scale="state_independent"`, the learned per-agent vector replaces `local_scale_head(memory)`. The modifier receives the resulting means and scales, so it can use local history through those features. Global state enters only the modifier, and no other agent's observation or memory enters a local actor. The modifier and shared critic remain feedforward. Local and centralized raw Gaussian modes remain exactly equal for the same incoming histories, including after PPO updates.
+
+The shared runner stores incoming memory with each raw observation, recomputes the encoder and GRU during PPO, and holds the incoming memory fixed. Gradients span one decision. Memory continues across rollout boundaries and resets separately for each terminated or truncated environment. Evaluation starts from empty memory for each episode; checkpoints reconstruct the architecture from the existing configuration flag. [Memory contract](recurrent_actors.md).
+
+This tests the documented local-history difference from the release. It does not add the released recurrent modifier/critics, ReLU/LayerNorm architecture, or bounded local scale map. GRU construction adds random draws, so feedforward and recurrent models do not promise identical common initial tensors. All existing modes are unchanged: [29 compatibility cases](../experiments/continuous_recurrent_default_parity_20261029.json) match bitwise through two PPO epochs, including gradients, Adam states, samples, memory advancement and RNG.
+
+The [frozen study](../experiments/hc2x3_recurrent_study_20261029.json) contains twelve native checks: residual, bounded and identity modifiers × two local-scale choices × feedforward/GRU. Each trains for 44k decisions, eleven 40×100 rollouts, crossing the 1,000-step horizon in all 40 training environments before a further rollout. A read-only memory observer, exact final checkpoint replay, six feedforward prefix comparisons and resource review are required before learning. These checks are prepared and **unsubmitted**; their observer and complete-family execution audit remain to be implemented.
+
+Eighteen recurrent 1M development configurations are separately frozen, to be compared with all eighteen earlier feedforward local-scale configurations. Both families retain seeds 0–2 and every modifier/scale combination. The earlier study keeps priority; no allocation or learning job is added here. One million steps is only 10% of the paper budget. Any selected setting still needs full-budget development and unused final training seeds.
+
+The current [verification](../experiments/continuous_recurrent_verification_20261029.json) includes 41 new checks for continuous memory, finite-difference gradients, mode equality, raw Normal likelihoods, independent resets, optimizer ownership, and exact saved-policy replay on synthetic environments. The full source suite passes 1,044 tests with one CUDA-only skip. This is correctness evidence; native MuJoCo behavior and performance improvement remain unverified.
+
 ## Raw policy and actuator commands
 
 `sample` returns raw Normal actions `[batch, agents, action_dim]`, together with log probabilities summed over action coordinates `[batch, agents]`. `evaluate_actions` accepts those same raw actions and also returns coordinate-summed differential entropies. It does not sum across agents.
@@ -56,6 +81,6 @@ Clipping can introduce probability mass at actuator boundaries. The equality of 
 
 Conditioned on observations and state, the implementation uses independent Normal noise across agents and action coordinates. State-dependent standard deviations alone do not create conditionally correlated samples. Mode consistency does not establish convergence or performance superiority.
 
-The implementation currently supports homogeneous continuous action dimensions and feedforward observations. Heterogeneous actuator sets need explicit padding/masking or another adapter convention; recurrence is a separate extension. The environment adapter owns actuator bounds and simulator details.
+The implementation supports homogeneous continuous action dimensions, with feedforward or private recurrent local actors. Heterogeneous actuator sets need explicit padding/masking or another adapter convention. The environment adapter owns actuator bounds and simulator details.
 
 `tests/test_agentmixer_continuous.py` verifies exact mean equality, state-independent local execution, local information isolation, bounded positive standard deviations, coordinate-summed likelihoods and entropies, raw action handling, deterministic means, actor and modifier gradients, and checkpoint restoration. Those checks establish implementation properties, not reproduction of benchmark returns.

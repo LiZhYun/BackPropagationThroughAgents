@@ -42,7 +42,7 @@ This is a heuristic under centralized rollout occupancy with a changing teacher.
 
 ## Correctness and planned comparison
 
-The full source suite passes **1,003 tests with one CUDA-only skip**. Analytic categorical gradients cover unavailable actions, single legal actions, partial/all-dead agents, and float32/float64. FF/GRU policies route the auxiliary gradient only into actors; modes still agree after an update. Runner updates match an independent coefficient/reduction reference. Short real Prey training and exact episode/window checkpoint replay pass for FF and GRU. These 16-step checks are not learning evidence.
+At introduction, the full source suite passed **1,003 tests with one CUDA-only skip**. Analytic categorical gradients cover unavailable actions, single legal actions, partial/all-dead agents, and float32/float64. FF/GRU policies route the auxiliary gradient only into actors; modes still agree after an update. Runner updates match an independent coefficient/reduction reference. Short real Prey training and exact episode/window checkpoint replay pass for FF and GRU. These 16-step checks are not learning evidence.
 
 Across 21 default policy cases, pre-change and current source produce bitwise-identical policy/critic tensors, gradients, Adam states, metrics, actions, likelihoods, and final Torch RNG after two epochs with unequal minibatches. The zero-coefficient path does not compute the auxiliary term. [Verification](../experiments/agentmixer_distillation_verification_20261029.json); [default compatibility](../experiments/agentmixer_distillation_default_parity_20261029.json). The earlier installed-wheel report applies to the prior source.
 

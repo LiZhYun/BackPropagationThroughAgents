@@ -99,6 +99,7 @@ class ContinuousAgentMixerPolicy(nn.Module):
         initial_std: float = 1.0,
         modifier_scale: str = "residual",
         local_scale: str = "observation",
+        actor_factory=_GaussianActor,
     ) -> None:
         super().__init__()
         if min(obs_dim, state_dim, num_agents, action_dim, hidden_dim) < 1:
@@ -114,8 +115,8 @@ class ContinuousAgentMixerPolicy(nn.Module):
         self.modifier_scale = modifier_scale
         self.local_scale = local_scale
         self.local_actors = nn.ModuleList([
-            _GaussianActor(obs_dim, action_dim, hidden_dim, initial_std=initial_std,
-                           local_scale=local_scale)
+            actor_factory(obs_dim, action_dim, hidden_dim, initial_std=initial_std,
+                          local_scale=local_scale)
             for _ in range(num_agents)
         ])
         self.modifier = ContinuousPolicyModifier(state_dim, num_agents, action_dim, hidden_dim)

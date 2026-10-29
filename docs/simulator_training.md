@@ -4,7 +4,9 @@
 
 `recurrent_actor` defaults to `false`. Discrete policies can enable private GRU
 actor memory with `true`; factorized AgentMixer and its identity control are
-supported. The shared critic remains feed-forward. See the [recurrent actor
+supported. Continuous AgentMixer also supports private Gaussian actor memory
+with either local-scale choice; other continuous methods currently reject it.
+The shared critic and AgentMixer modifier remain feed-forward. See the [recurrent actor
 guide](recurrent_actors.md) for buffer layout, episode resets, one-decision
 gradient truncation, checkpoint replay and the explicit architecture differences.
 

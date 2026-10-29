@@ -1,0 +1,217 @@
+{
+  "recorded_utc": "2026-10-29T12:42:26.455052+00:00",
+  "scope": "Eighteen matched development runs: three modifier variants x two local-scale choices x seeds0-2,with private continuous GRU actors. Compare every group with the separately frozen18 feed-forward local-scale runs. Native gates, exact default-prefix verification, measured resource review and a verified allocation are required before submission.1M is10% of the paper budget; all outcomes retained.",
+  "status_at_freeze": "native_and_learning_unsubmitted",
+  "motivation": "Pinned release uses recurrent local actors; current learned continuous modifiers underperform identity. Test local history without changing IGC or bundling critic/modifier recurrence, activation or normalization changes. This is a hypothesis,not a causal diagnosis.",
+  "prior_study": "experiments/hc2x3_local_scale_study_20261029.json",
+  "prior_study_sha256": "3529477003da89c698239074b69f8e82bdfad54984e51bb9d0bbbe4e67df8327",
+  "negative_entropy_evidence": "experiments/hc2x3_entropy10m_comparison_20261029.json",
+  "negative_entropy_evidence_sha256": "6e8ee98c3f3c1efe4bbfa3cedc65c329f6d6d7366a6f3ea2b91e17a7e4a4ceae",
+  "gate_manifest": "results/mujoco_hc2x3_recurrent_check44k_20261029T124222Z/manifest.json",
+  "gate_manifest_sha256": "d014efcf45fdaec2cfcc16a50f5d031081d6811fb8044539f0b2056faaa71a65",
+  "learning_manifest": "results/mujoco_hc2x3_recurrent1m_20261029T124222Z/manifest.json",
+  "learning_manifest_sha256": "1b6df499b2fff25b160d2919e1a30710684b7fca5a0f1e2aa493e3b42a91bad8",
+  "prior_gate_manifest": "results/mujoco_hc2x3_local_scale_check12k_20261029T100535Z/manifest.json",
+  "prior_gate_manifest_sha256": "10be4e71969c7a4cd3fa43b2aad67536a1ded56083a10da8365e7a92d26a0877",
+  "prior_learning_manifest": "results/mujoco_hc2x3_local_scale1m_20261029T100535Z/manifest.json",
+  "prior_learning_manifest_sha256": "98a970529c069b8516ebc9cfafffee09c14199b325af56dec50e8cc64808cb04",
+  "source_sha256": {
+    "__init__.py": "7e652317860dd7a3c884944ef02278d227b56b4028cbaa0fac117f3133ff125f",
+    "agentmixer.py": "31549af12f5df67338d32235dbdef95f39abab4eda6980929e41b33fd843a6c7",
+    "agentmixer_continuous.py": "aff393cb30af7c89d5a1d61beabbf8fa231df37465f5c4a5fc2318b8247a001c",
+    "agentmixer_joint.py": "82ac73e83b4e13e2fb89fe5316ab0c2729e5bea9058c70f639cc3a4d6040af93",
+    "benchmark_coverage.py": "f5a6da8d407e1f211a140dcac4a49d34d5f8e0d8366bdeb347b1a34fd6a4f7a6",
+    "bppo.py": "863713570d87946ea17060c0c0ac230e14102023cbf6fd4f6194242a915a3c63",
+    "bppo_continuous.py": "f15f83f0cc3b49522150b946d9056a7e0c4d117d6d707e7e8646b43553a416ef",
+    "checkpoint.py": "a8bece5fa71b01bdc7748ffb4634740bcdde06e9c80ff221067dce27bb4af652",
+    "core.py": "e49de7b19733ed92a0d083d56b288c87425a545b3cea43c269a72230a1b8ebd7",
+    "envs.py": "5a4bc7be1440d0062ac8d907b43e5851f5ec983d12c561746baf0034d67bd4b8",
+    "experiment_source.py": "958efb3c77c352160f8badfcfc68c40452852877389f8b774964ccc1f4d5f2d4",
+    "football_env.py": "94bb70bf8660704cb6790466a47dbf2c57b87e311f2a3ad8954938d0b08f104f",
+    "learning_curves.py": "34b84cd6b76dceba988e9f6abc749efecefcc0fd1dd35377967dd428f879ff67",
+    "matrix_validation.py": "3058bd3d81294c92448985ec7304b738519de88d3918015a4c9d08fead6e9a04",
+    "mujoco_env.py": "4f84da3acd4994be5806f2802721c084fe6a111543ee35e42fb98816db36714b",
+    "mujoco_partitions.py": "1ae07356e7d6a32fa0722f7fc2de35e3165da6a7a4c005696f922a3cba6224b4",
+    "normalization.py": "350a536f74548a782d32c89938b3cae32ec317de6625c3e184a1043bc905a63a",
+    "prey_env.py": "17b24d4f4da44e7af7ac35e5524cc1717c6b33802d6f922488ef41934a71d295",
+    "recurrent.py": "e179cf4e0250097719e0837728103142e8e5e9cd7ac37cef17fe47310c4feb01",
+    "runner.py": "8ba05a91ac3b3e93f9bd8c464b4c8ecb03b2b5d6796f2eb2ee5c3ce13e89324f",
+    "simulator_confirmation.py": "9bfbe203d3b5e5402d450de14d47774a96891dc659b8fb6a18d17a350c5625ae",
+    "simulator_train.py": "a708dbf0355b2e84c9af2e516719b21806338172897c7792db77e32a864454f9",
+    "smac_env.py": "dc645b4b6e28081654536a11f027c4f7765fcab2b99ae901db2d165c08ef6af9",
+    "train.py": "604627f01bb1ba1679686f4929d559c66d7913128776de6a02edfdc895d6f702",
+    "value_normalization.py": "319a0a26ed105ae731a4e4103882b6e4410f2daadbeea0e23be70168d28e3da9"
+  },
+  "default_parity": "experiments/continuous_recurrent_default_parity_20261029.json",
+  "default_parity_sha256": "ea6885c2343cb205fc4fcb1965ff123413ba21c4587ad7284c7bcf0ebf499f73",
+  "matched_learning_pairs": [
+    {
+      "new_variant": "agentmixer_bounded_observation_gru",
+      "prior_variant": "agentmixer_bounded_observation",
+      "seed": 0,
+      "new_config_sha256": "865f9576106fa716f3e5307ab9b81c8b6517ba0e13d6d9b0015c72f9a69c17a4",
+      "prior_config_sha256": "d950237fb3572f16920e9ed8adba09e4c3e9811d538e03a1126b039b9f859799"
+    },
+    {
+      "new_variant": "agentmixer_bounded_observation_gru",
+      "prior_variant": "agentmixer_bounded_observation",
+      "seed": 1,
+      "new_config_sha256": "c15dd9509bccfaaaf3ffad4f986bc70bf973b5f29380e2d46bf376a0b10ccce4",
+      "prior_config_sha256": "70cfb0f3685b93a5cec50305658596fe83e07a50dae023aa54b9b436b765693f"
+    },
+    {
+      "new_variant": "agentmixer_bounded_observation_gru",
+      "prior_variant": "agentmixer_bounded_observation",
+      "seed": 2,
+      "new_config_sha256": "d1e57d3a6bce35d1140c616caf38b43bec9f3970b8536c488bb4de9d8faf469a",
+      "prior_config_sha256": "81a3f639fcd20102f404ad76a1e013d9dfe656101f4be2e9398fad6c401a05e5"
+    },
+    {
+      "new_variant": "agentmixer_bounded_state_independent_gru",
+      "prior_variant": "agentmixer_bounded_state_independent",
+      "seed": 0,
+      "new_config_sha256": "a2c94bf4d92595870ec8ba346d476959e964b051e021058c9a46af45c9a1712a",
+      "prior_config_sha256": "a77bf044d5315f5ec5f0b42f8aa0e505c4870682477db45bbdc8753d748c8601"
+    },
+    {
+      "new_variant": "agentmixer_bounded_state_independent_gru",
+      "prior_variant": "agentmixer_bounded_state_independent",
+      "seed": 1,
+      "new_config_sha256": "4870b519fe4f266a271b285d840d040e2c7f2c16afe14f6bd02a1c69e41cb63f",
+      "prior_config_sha256": "e4a3f3b3bff7f129b00aefa7cfc94db2b60068f3bcaa27f740fb6a23722e3c9c"
+    },
+    {
+      "new_variant": "agentmixer_bounded_state_independent_gru",
+      "prior_variant": "agentmixer_bounded_state_independent",
+      "seed": 2,
+      "new_config_sha256": "b38e053c804727bc741871ca1934bc069e5e84df6d22dde8564357e6c5bfa026",
+      "prior_config_sha256": "44745119ca5e176e896f4eab1e8aa3199510e54b8a7ccf36f5a1d91cfd75ebce"
+    },
+    {
+      "new_variant": "agentmixer_identity_observation_gru",
+      "prior_variant": "agentmixer_identity_observation",
+      "seed": 0,
+      "new_config_sha256": "18a6c3c6edd411d83397effe2ee57c44570b39f1058180b38183f3522c96277d",
+      "prior_config_sha256": "96913d977b4f3e094631d7919d146f8f39d86d6c7190eecb3a5a6fc21e8bcf1b"
+    },
+    {
+      "new_variant": "agentmixer_identity_observation_gru",
+      "prior_variant": "agentmixer_identity_observation",
+      "seed": 1,
+      "new_config_sha256": "e5da5c34ec3aa7b64fcf7d899704b994517a42c5d671a4e9de5c72c65f01544c",
+      "prior_config_sha256": "fc13b2ed2e19a8941f60e0d6636566fc0e448619e65f2791cd6eeddd4946e627"
+    },
+    {
+      "new_variant": "agentmixer_identity_observation_gru",
+      "prior_variant": "agentmixer_identity_observation",
+      "seed": 2,
+      "new_config_sha256": "efc386031a6280ea3e7587d654edf7fc6fab41e6763c5659e0e3f6bcd3decded",
+      "prior_config_sha256": "84d3355a8967071900e4c5d1740f19f10ff5f0f3505b098eeeb46bff3d91b4d8"
+    },
+    {
+      "new_variant": "agentmixer_identity_state_independent_gru",
+      "prior_variant": "agentmixer_identity_state_independent",
+      "seed": 0,
+      "new_config_sha256": "04ed7d8c388d00d3391e28862b0c0433d09ebe39e112532d10c44d46d5c02467",
+      "prior_config_sha256": "32c83ce44bc364ab1341b8d47faad8696cacc89cce2960489e7552a2468deaf1"
+    },
+    {
+      "new_variant": "agentmixer_identity_state_independent_gru",
+      "prior_variant": "agentmixer_identity_state_independent",
+      "seed": 1,
+      "new_config_sha256": "13bab8553765e24855906e57682cd5865a9e991a9cdc034930aaa6c4f75adbfd",
+      "prior_config_sha256": "82f7c965b21d165a1fd1e5f91ff608c3eee220c8bab75ab6ef4607a60b7128c3"
+    },
+    {
+      "new_variant": "agentmixer_identity_state_independent_gru",
+      "prior_variant": "agentmixer_identity_state_independent",
+      "seed": 2,
+      "new_config_sha256": "44b00da7fac33834b0f2fd5196d5b14fadaef40a7be05238314dd686b1996b70",
+      "prior_config_sha256": "b55106c564976c1d08f545502ea3ab9364429f47158b3ece766ed02e409d155e"
+    },
+    {
+      "new_variant": "agentmixer_residual_observation_gru",
+      "prior_variant": "agentmixer_residual_observation",
+      "seed": 0,
+      "new_config_sha256": "3e72bd8ef45253a3db675a1272c3f0ca0240a3574b7a5fed26341c11c3e98b22",
+      "prior_config_sha256": "c1088cdc61467351b4b26beddc3983fc2016702a681884cd2400f3ee6e24c698"
+    },
+    {
+      "new_variant": "agentmixer_residual_observation_gru",
+      "prior_variant": "agentmixer_residual_observation",
+      "seed": 1,
+      "new_config_sha256": "10f0e7c3c940f0572c1026eb993a7cdcb3cf722a86cbb02e799b5345f360dbd0",
+      "prior_config_sha256": "99244071caf7cb632ae3263e07b86a22aae7d473aa44d92bb8cfa8f31caa4c20"
+    },
+    {
+      "new_variant": "agentmixer_residual_observation_gru",
+      "prior_variant": "agentmixer_residual_observation",
+      "seed": 2,
+      "new_config_sha256": "d1f6ed89934ba610278d4955843fd64877131af4e137852805c02fe8bf1fcf03",
+      "prior_config_sha256": "aefc437b22d8c67d4ff9f114a3e5161ceaf0133f927e2750d807b468695969db"
+    },
+    {
+      "new_variant": "agentmixer_residual_state_independent_gru",
+      "prior_variant": "agentmixer_residual_state_independent",
+      "seed": 0,
+      "new_config_sha256": "6f22ed99f35aa4a88ef2fbd68114e3f8ac3e122b233cf539664841dd82565c4d",
+      "prior_config_sha256": "e57365e0d1f627bfaeea71ce9ae2210c534a049ff5412e85beb1e9bb89344f9f"
+    },
+    {
+      "new_variant": "agentmixer_residual_state_independent_gru",
+      "prior_variant": "agentmixer_residual_state_independent",
+      "seed": 1,
+      "new_config_sha256": "ccae402a0030533741d6467399de4778b9f93c73be1ac516a53f27dabd9a2466",
+      "prior_config_sha256": "24299cd0fceb145bfa460e7c7a84ac057907f2ba050d05990aa996235ba9373e"
+    },
+    {
+      "new_variant": "agentmixer_residual_state_independent_gru",
+      "prior_variant": "agentmixer_residual_state_independent",
+      "seed": 2,
+      "new_config_sha256": "0c9036e310ed9fb74dd2856ea56fb5a9776c54a187f59b45a3dcd499c9d570b3",
+      "prior_config_sha256": "a6f0ea780f70268a1a1cb362d03c25e4bb3fc25bccc13fa9e8c80f4a48a48987"
+    }
+  ],
+  "frozen_config_parsers_passed": 30,
+  "config_difference": {
+    "substantive": "recurrent_actor false to true",
+    "explicit_new_default": "agentmixer_distillation_coef=0; objective bypass verified against prior source",
+    "native_budget_only": "12k to44k,allowing all40 training environments to cross their1000-step limit"
+  },
+  "native_requirements": [
+    "All12conditions finish with the pinned source/config/native versions and eleven40x100 rollouts,five PPO epochs per rollout.",
+    "Validate raw episodes,complete budget accounting and all optimizer/value-normalizer counts.",
+    "A read-only rollout observer must verify incoming memory,detached carry,all40episode resets at40k,and the following rollout; its checks must not consume RNG or modify model parameters.",
+    "All12final checkpoints must exactly replay their original two complete final evaluation episodes.",
+    "All six feed-forward controls must exactly match the prior native gate first3updates and initial evaluation episodes,excluding elapsed time only.",
+    "Native peak RSS and timings must justify the proposed learning allocation before submission."
+  ],
+  "native_execution_status": "not_ready_for_submission; versioned observer,replay runner and complete-family auditor still required; generated generic submit.sbatch is preparation output only",
+  "proposed_resources": {
+    "gate_maximum_workers": 2,
+    "cpus_per_worker": 1,
+    "memory_gib_per_worker": 4,
+    "gate_wall_minutes": 30,
+    "learning_wall_minutes_unvalidated": 120,
+    "automatic_requeue": false
+  },
+  "capacity": "No allocation reserved. Existing submitted studies and the earlier local-scale learning plan retain priority. A future gate may follow21282782 and the prior six local-scale gates,or another verified free allocation,within8workers/16CPUs/96GiB.",
+  "reporting": {
+    "required_runs": "Retain all18new GRU and all18prior feed-forward declarations; no group aggregation until every declared seed in that group completes validly; no study selection until all36 are valid.",
+    "primary": "Final1M local-mean evaluation return; mean,median and sampleSD across developmentseeds0-2.",
+    "secondary": [
+      "normalized0-to1M learning-curve area on the fixed100k grid",
+      "paired GRU-minus-feedforward by modifier/local-scale/trainingseed",
+      "paired learned-minus-identity within each recurrence/local-scale/trainingseed"
+    ],
+    "selection": "A GRU learned-modifier candidate must exceed both its matching feed-forward endpoint mean and the GRU identity endpoint mean at the same local scale,with no lower mean normalized area than either. If multiple qualify,select largest final mean; ties prefer bounded then observation-dependent. This is development selection,not independent superiority. If none qualify,retain the negative result.",
+    "followup": "Selected settings require full10M development with matched identity controls and at least five unused final training seeds; never use the ongoing BPPO confirmation scores for this tuning.",
+    "no_substitution": "No earlier peak replaces a final endpoint; identity success is not AgentMixer success;1M results are not paper-budget reproduction."
+  },
+  "limitations": [
+    "Only local actors are recurrent; modifier and shared critic remain feed-forward.",
+    "Two tanh encoder layers,exp/clamp local scales,and current running observation normalization remain; this is not the entire released architecture.",
+    "GRU initialization adds random draws; common FF/GRU tensors are not promised to be identical. Training seed labels and settings are paired.",
+    "Current synthetic checks do not validate native MuJoCo behavior or improved return."
+  ]
+}

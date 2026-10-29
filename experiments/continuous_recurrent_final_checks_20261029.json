@@ -1,0 +1,16 @@
+{
+  "recorded_utc": "2026-10-29T12:52:59.496248+00:00",
+  "source_hashes_match_tested_and_frozen_source": true,
+  "frozen_configurations_not_started": 30,
+  "indexed_runs": 871,
+  "indexed_manifests": 73,
+  "manifest_errors": 0,
+  "run_errors": 0,
+  "documentation_local_links_checked": 48,
+  "test_file_sha256": {
+    "tests/test_recurrent_continuous.py": "8a442805000582623f8a20dae1dfefd265ad08e3430e0461c22a5f72ec1b39cc",
+    "tests/test_recurrent.py": "b745b2c8706be976e666ebea0901f957c939b534f1d8deb4af0bae1af8449824"
+  },
+  "no_new_jobs_submitted": true,
+  "scope": "Final local integrity and documentation checks. Native memory observer/replay/auditor implementation and resource audit remain required before submitting the new controls."
+}

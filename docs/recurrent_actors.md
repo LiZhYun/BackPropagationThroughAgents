@@ -1,18 +1,25 @@
 # Optional recurrent actors
 
-Set `recurrent_actor: true` in a discrete simulator configuration to give each
-actor a private GRU memory. MAPPO, AR-PPO, BPPO and factorized AgentMixer use the
-same actor construction. AgentMixer's identity-modifier control is supported.
-The default remains feed-forward. Continuous policies and the experimental
-enumerated joint modifier currently reject this option.
+Set `recurrent_actor: true` to give each actor a private GRU memory. Discrete
+MAPPO, AR-PPO, BPPO and factorized AgentMixer share one actor construction.
+Continuous AgentMixer has a Gaussian actor construction; its identity control
+is also supported. The default remains feed-forward. Continuous MAPPO, AR-PPO
+and BPPO, and the experimental enumerated joint modifier, reject this option.
 
-[`recurrent.py`](../src/bta_repro/recurrent.py) contains the actor and three thin
-policy subclasses. Each actor encodes its own current observation with a linear
-layer and tanh, updates a GRU cell, then computes logits with a tanh action head.
+[`recurrent.py`](../src/bta_repro/recurrent.py) contains the actors and four thin
+policy subclasses. Each discrete actor encodes its own current observation with
+a linear layer and tanh, updates a GRU cell, then computes logits with a tanh action head.
 Hidden width is `hidden_dim`. For AR-PPO and BPPO, the head also receives current
 predecessor actions or their optional learned projections. Those actions do not
 enter the recurrent cell. No agent's observation or hidden state enters another
 agent's memory. Parameters are independent across agents.
+
+Continuous AgentMixer keeps the existing two-layer tanh observation encoder,
+then applies a GRU. Gaussian mean and observation-dependent scale heads read
+its output; the state-independent scale option uses a separate learned vector.
+The centralized Gaussian retains these exact local means. Its modifier receives
+current local Gaussian parameters and global state, with no separate recurrent
+state. [Continuous memory control](agentmixer_continuous.md#optional-local-history).
 
 The runner explicitly carries a `[environments, agents, hidden_dim]` tensor.
 Before each action, it appends the incoming memory to the raw observation and
@@ -32,9 +39,11 @@ same recorded incoming states; its successor ratio and action derivative retain
 their existing definitions. Each BPPO actor optimizer owns its encoder, GRU,
 head and optional predecessor projection.
 
-AgentMixer's modifier still consumes the raw centralized state and local policy
-logits during training. Local evaluation uses only each actor's observation and
-private memory. Positive gap scaling preserves its local greedy modes as before.
+Discrete AgentMixer's modifier still consumes the centralized state and local
+policy logits during training; the continuous modifier consumes local means
+and scales with the centralized state. Local evaluation uses only each actor's
+observation and private memory. Discrete policies preserve greedy modes through
+positive gap scaling; continuous policies retain identical local and centralized means.
 Evaluation starts fresh memory for every episode and every fixed Prey window,
 and resets it at episode boundaries within a window. Evaluation does not consume
 or alter the training carry. Saved-policy replay reconstructs the recurrent
@@ -88,3 +97,10 @@ shows a modest call-time improvement under normal restart settings, with exact
 trace parity, but does not validate training-state or optimizer equivalence.
 This learning study retains the existing sequential backend. The 1M budget and
 single development seed remain below the paper-level evidence requirements.
+
+
+## Continuous AgentMixer control, 29 October 2026
+
+The [new verification](../experiments/continuous_recurrent_verification_20261029.json) adds 41 continuous-memory checks. The full suite passes 1,044 tests and one CUDA-only skip. All 29 existing policy configurations in the compatibility audit remain bitwise unchanged, including discrete recurrence and projected autoregressive actors. Synthetic continuous training and saved-policy replay pass for all six modifier/local-scale combinations.
+
+Twelve native 44k checks and eighteen recurrent 1M development runs are frozen but unsubmitted. The native checks must observe memory across rollout and environment boundaries, replay final checkpoints, and establish runtime/memory before learning. No native continuous recurrence result is claimed. The original discrete native validations above remain evidence for those exact frozen studies.
